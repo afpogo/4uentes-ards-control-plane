@@ -1,0 +1,39 @@
+solution_id: sst
+name: SST
+status: active
+services:
+  core:
+    - sst-fend
+    - sst-bend
+  shared:
+    - 4uentes-auth
+  optional:
+    - sst-extension
+  infrastructure:
+    - sst-4uentes-infra
+relationships:
+  - from: sst-fend
+    to: 4uentes-auth
+    type: consumes-bff
+    alias_observed: node-auth
+  - from: sst-extension
+    to: 4uentes-auth
+    type: consumes-bff
+    alias_observed: node-auth
+  - from: sst-4uentes-infra
+    to: sst-fend
+    type: deploys
+  - from: sst-4uentes-infra
+    to: sst-bend
+    type: deploys
+  - from: sst-4uentes-infra
+    to: 4uentes-auth
+    type: deploys
+observed_deployment_targets:
+  - local
+  - docker-compose
+  - kubernetes
+notes:
+  - The solution is modeled logically; no sst-solution repo is required for Phase 0.
+  - sst-extension is a real optional runtime and remains separate from the web frontend.
+  - Local paths are evidence only and must not define canonical identity.

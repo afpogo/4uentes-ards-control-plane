@@ -1,0 +1,53 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-TODO"
+title: "TODO"
+status: "inbox"
+created_at: "YYYY-MM-DD"
+requester: "TODO"
+
+business_context: >
+  TODO
+
+requested_change: >
+  TODO
+
+expected_outcome: >
+  TODO
+
+initial_scope:
+  solution: "TODO"
+  services: []
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services: []
+  affected_ards: []
+  capabilities: []
+  risks: []
+
+required_context: []
+
+required_checks: []
+
+risk:
+  level: "TODO"
+  score: 0
+  drivers: []
+
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "one-branch-per-repo"
+
+validation:
+  required_checks: []
+  evidence_required:
+    - "command_output"
+    - "changed_files_summary"
+    - "impacted_services_summary"
+
+decision:
+  status: "pending"
+  approver: "TODO"

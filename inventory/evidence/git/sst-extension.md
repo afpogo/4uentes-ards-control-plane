@@ -1,0 +1,24 @@
+# Git Evidence - sst-extension
+
+- Observed at: 2026-05-17
+- Local path: `C:\Users\andre\Desktop\4uentes\apps\4uentes-sst\sst-extension`
+- Remote: `git@github.com:afpogo/sst-extension.git`
+- Branch: `main`
+- Upstream: `origin/main` observed as gone
+- HEAD: TODO, no valid HEAD because the repo has no commits
+- Working tree: bootstrap state, untracked files observed
+- Stash: none observed
+- Package name: `sst-extension`
+- ARDS/SDD artifacts:
+  - `AGENTS.md`: present
+  - `specs/00-index.yaml`: present
+  - `docs/00-overview.md`: present
+  - `docs/ai/policy.md`: present
+- Check command: `pnpm run check`
+- Notes:
+  - Represents the SST browser extension runtime.
+  - Manifest V3 runtime with popup, background, side panel/options, storage and messaging boundaries.
+  - Participates in SST quick-save, sessions, dictionary and text-article-pdf flows.
+  - Delegates auth and ingestion boundaries to `node-auth`.
+  - Does not own graph materialization; that remains with `sst-fend`.
+  - Repo state is bootstrap evidence only until the initial commit exists.

@@ -1,0 +1,38 @@
+service_id: sst-4uentes-infra
+canonical_identity: sst-4uentes-infra
+kind: gitops-infrastructure
+status: active
+shared: false
+solution_ids:
+  - sst
+repo:
+  canonical_repo: sst-4uentes-infra
+  remote: git@github.com:afpogo/sst-4uentes-infra.git
+  branch_observed: develop
+  head_observed: 77fe235
+  working_tree_observed: dirty-25-entries
+  observed_at: 2026-05-17
+local_binding_evidence:
+  - id: local-sst-4uentes-infra
+    role: repo-working-copy
+    observed_at: 2026-05-17
+    path_record: inventory/phase-0.md
+package:
+  name: TODO
+  runtime: kubernetes-gitops-platform
+ards:
+  kind: infra-gitops
+  status: ready
+  agents_md: true
+  specs_index: true
+  docs_overview: true
+  docs_ai_policy: true
+validation:
+  check_command: TODO
+deployment_targets_observed:
+  - kubernetes
+  - argocd
+  - kind
+notes:
+  - Provides observed Kubernetes and GitOps desired state for SST.
+  - Includes manifests for sst-fend, sst-bend and node-auth.

@@ -1,0 +1,145 @@
+request_id: CR-SST-0002
+observed_at: "2026-05-18"
+mode: dry-run-read-only
+limitations:
+  - "environments/local/bindings.local.yaml was not present; local paths came from inventory evidence only."
+  - "Functional repositories were inspected read-only."
+  - "Functional repository checks were not executed."
+  - "Runtime status is based on source/documentation evidence, not live endpoint execution."
+findings:
+  - concept: "Study Store Tag purpose"
+    status: ards-documented
+    service: sst-bend
+    ards_kind: backend-api
+    evidence_files:
+      - "sst-bend:specs/api/diccionario-sst-tag.yaml"
+      - "sst-bend:docs/api/20-diccionario-sst-tag.md"
+      - "control-plane:knowledge/business-intake/sst-tags-dictionary-2026-05-18.md"
+    confidence: high
+    gap: "Purpose is documented, but not validated through a runtime acceptance check in this dry-run."
+    next_action: "Promote the purpose text into the canonical dictionary/tag capability narrative before Fase 4 execution."
+
+  - concept: "Tags as living resources"
+    status: runtime-partial
+    service: sst-bend
+    ards_kind: backend-api
+    evidence_files:
+      - "sst-bend:specs/api/diccionario-sst-tag.yaml"
+      - "sst-bend:specs/capabilities/outbound/dictionary-domain-v1.yaml"
+      - "sst-bend:db/models/dictionary-tag-value.js"
+      - "sst-bend:db/models/dictionary-tag-occurrence.js"
+      - "sst-bend:src/apps/sst/application/diccionario/list-dictionary-tag-values.usecase.js"
+      - "sst-bend:src/apps/sst/application/diccionario/list-dictionary-tag-occurrences.usecase.js"
+    confidence: high
+    gap: "TagValue and TagOccurrence exist, but TagDefinition CRUD/governance is explicitly out of scope."
+    next_action: "Keep TagDefinition governance as a separate request; do not treat current tag runtime as complete."
+
+  - concept: "tag grammar scope/key"
+    status: runtime-partial
+    service: sst-bend
+    ards_kind: backend-api
+    evidence_files:
+      - "sst-bend:specs/api/diccionario-sst-tag.yaml"
+      - "sst-bend:src/apps/sst/infrastructure/filesystem/diccionario/diccionario-legacy-parser.js"
+      - "sst-bend:src/apps/sst/application/diccionario/diccionario-tag-lifecycle.js"
+    confidence: high
+    gap: "Scope/key grammar is defined for dictionary and legacy parsing, but not generalized for all SST domains."
+    next_action: "Model the dictionary scope as v1 and defer multi-domain tag grammar."
+
+  - concept: "Dictionary Entry"
+    status: runtime-implemented
+    service: sst-bend
+    ards_kind: backend-api
+    evidence_files:
+      - "sst-bend:src/apps/sst/presentation/routes/diccionario.routes.js"
+      - "sst-bend:src/apps/sst/domain/diccionario/dictionary-entry.entity.js"
+      - "sst-bend:src/apps/sst/application/diccionario/create-dictionary-entry.usecase.js"
+      - "sst-bend:db/models/dictionary-entry.js"
+      - "sst-bend:db/migrations/20260502120000-create-dictionary-domain-tables.js"
+      - "4uentes-auth:src/presentation/dictionary/routes.ts"
+      - "sst-fend:src/services/dictionaryService.ts"
+      - "sst-extension:src/features/dictionary/create-dictionary-service.ts"
+    confidence: high
+    gap: "Implemented by source evidence, but not validated by live API/check execution in this dry-run."
+    next_action: "Run targeted dictionary checks in Fase 4 only after approval."
+
+  - concept: "Dictionary Sheet"
+    status: runtime-implemented
+    service: sst-bend
+    ards_kind: backend-api
+    evidence_files:
+      - "sst-bend:src/apps/sst/presentation/routes/diccionario.routes.js"
+      - "sst-bend:src/apps/sst/domain/diccionario/dictionary-sheet.entity.js"
+      - "sst-bend:src/apps/sst/application/diccionario/list-dictionary-sheets.usecase.js"
+      - "sst-bend:db/models/dictionary-sheet.js"
+      - "sst-fend:src/pages/Dictionary/index.tsx"
+      - "sst-extension:src/ui/quick-save/QuickSaveSurface.tsx"
+    confidence: high
+    gap: "Implemented by source evidence, but not validated through endpoint execution."
+    next_action: "Use Fase 4 ARDS-only/request execution to require test evidence for sheet create/list/delete/root behavior."
+
+  - concept: "translations"
+    status: runtime-partial
+    service: sst-bend
+    ards_kind: backend-api
+    evidence_files:
+      - "sst-bend:specs/api/diccionario-sst-tag.yaml"
+      - "sst-bend:src/apps/sst/domain/diccionario/dictionary-translation.entity.js"
+    confidence: medium
+    gap: "Translation/alias aggregate is documented and has a domain artifact, but no clear public endpoint adoption was found."
+    next_action: "Create a follow-up request to decide whether translations are runtime v1 or deferred target-state."
+
+  - concept: "aliases"
+    status: ards-documented
+    service: sst-bend
+    ards_kind: backend-api
+    evidence_files:
+      - "sst-bend:specs/api/diccionario-sst-tag.yaml"
+      - "sst-bend:docs/capabilities/outbound/dictionary-domain-v1.md"
+    confidence: medium
+    gap: "Alias semantics are documented with translations, but runtime adoption is not established."
+    next_action: "Keep aliases tied to the translations decision; do not infer runtime support."
+
+  - concept: "account relation"
+    status: runtime-partial
+    service: sst
+    ards_kind: multi-service
+    evidence_files:
+      - "sst-bend:src/apps/sst/presentation/middlewares/resolve-account-context.middleware.js"
+      - "sst-bend:src/apps/sst/presentation/controllers/diccionario.controller.js"
+      - "4uentes-auth:src/presentation/dictionary/controller.ts"
+      - "4uentes-auth:src/infrastructure/datasources/dictionary.datasource.impl.ts"
+      - "sst-extension:specs/integration/inbound/node-auth--dictionary-domain-management-v1.yaml"
+    confidence: high
+    gap: "API/BFF account context is implemented, but sst-extension explicitly records local account context wiring as a gap."
+    next_action: "Before enabling extension account headers, define how local account context is selected and persisted."
+
+  - concept: "endpoint planning"
+    status: runtime-implemented
+    service: sst
+    ards_kind: multi-service
+    evidence_files:
+      - "sst-bend:src/apps/sst/presentation/routes/diccionario.routes.js"
+      - "4uentes-auth:src/presentation/dictionary/routes.ts"
+      - "sst-fend:src/services/dictionaryService.ts"
+      - "sst-extension:specs/runtime/internal-messaging-contracts.yaml"
+      - "sst-extension:docs/integration/node-auth-extension-dictionary.md"
+    confidence: high
+    gap: "Endpoint surfaces exist in source, but no live endpoint validation was run."
+    next_action: "Convert the route list into explicit validation evidence in Fase 4."
+
+  - concept: "security/offline/encryption"
+    status: runtime-partial
+    service: sst
+    ards_kind: multi-service
+    evidence_files:
+      - "sst-bend:specs/api/diccionario-sst-tag.yaml"
+      - "sst-bend:src/apps/sst/presentation/routes/diccionario.routes.js"
+      - "sst-fend:src/pages/Dictionary/index.tsx"
+      - "sst-fend:src/pages/Dictionary/__tests__/Dictionary.test.tsx"
+      - "sst-extension:specs/features/dictionary.yaml"
+      - "sst-4uentes-infra:specs/infra/security/secrets-provider.yaml"
+      - "sst-4uentes-infra:specs/infra/security/no-plaintext-secrets.yaml"
+    confidence: high
+    gap: "Secure masking/reveal and secret-management governance exist, but final encryption-at-rest and offline-server model are explicitly not implemented."
+    next_action: "Split security, offline, and encryption into separate requests before implementation."

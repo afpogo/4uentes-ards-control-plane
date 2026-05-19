@@ -1,0 +1,41 @@
+service_id: sst-bend
+canonical_identity: sst-bend
+kind: api
+status: active
+shared: false
+solution_ids:
+  - sst
+legacy_aliases:
+  - package-name-sst
+repo:
+  canonical_repo: sst-bend
+  remote: git@github.com:afpogo/sst-bend.git
+  branch_observed: develop
+  head_observed: 7b19cb2
+  working_tree_observed: dirty-42-entries
+  stash_observed: 1-stash
+  observed_at: 2026-05-17
+local_binding_evidence:
+  - id: local-sst-bend
+    role: repo-working-copy
+    observed_at: 2026-05-17
+    path_record: inventory/phase-0.md
+package:
+  name: sst
+  runtime: node-express-api
+ards:
+  kind: backend-api
+  status: ready
+  agents_md: true
+  specs_index: true
+  docs_overview: true
+  docs_ai_policy: true
+validation:
+  check_command: npm run check
+deployment_targets_observed:
+  - local
+  - docker-compose
+  - kubernetes
+notes:
+  - Repo contains the SST API and an observed scrapper runtime.
+  - Working tree was dirty during Phase 0 and must not be treated as a stable baseline.

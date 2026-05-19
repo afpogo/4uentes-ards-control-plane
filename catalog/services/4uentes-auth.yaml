@@ -1,0 +1,41 @@
+service_id: 4uentes-auth
+canonical_identity: 4uentes-auth
+kind: shared-auth-provider
+status: active
+shared: true
+solution_ids:
+  - sst
+  - fulbito
+legacy_aliases:
+  - node-auth
+repo:
+  canonical_repo: 4uentes-auth
+  remote: git@github.com:afpogo/4uentes-auth.git
+  branch_observed: main
+  head_observed: dfe576f
+  working_tree_observed: clean
+  observed_at: 2026-05-17
+local_binding_evidence:
+  - id: local-node-auth
+    role: local-legacy-alias
+    observed_at: 2026-05-17
+    path_record: inventory/phase-0.md
+package:
+  name: 4uentes-auth
+  runtime: node-express-service
+ards:
+  kind: shared-auth-provider
+  status: ready
+  agents_md: true
+  specs_index: true
+  docs_overview: true
+  docs_ai_policy: true
+validation:
+  check_command: npm run check
+deployment_targets_observed:
+  - local
+  - docker-compose
+  - kubernetes
+notes:
+  - The local folder name is legacy evidence only; the service identity is 4uentes-auth.
+  - Shared auth/BFF boundary for SST and planned Fulbito.

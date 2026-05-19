@@ -1,0 +1,54 @@
+service_id: sst-fend
+canonical_identity: sst-fend
+kind: frontend-spa
+status: active
+shared: false
+solution_ids:
+  - sst
+legacy_aliases:
+  - AGENTS.ms
+repo:
+  canonical_repo: sst-fend
+  remote: git@github.com:afpogo/sst-fend.git
+  branch_observed: develop
+  upstream_observed: origin/develop
+  divergence_observed: 0-ahead-0-behind
+  head_observed: 8c66870
+  working_tree_observed: dirty-258-entries
+  observed_at: 2026-05-17
+local_binding_evidence:
+  - id: local-sst-fend
+    role: repo-working-copy
+    observed_at: 2026-05-17
+    path_record: inventory/evidence/git/sst-fend.md
+package:
+  name: sst-fend
+  description: SST frontend SPA
+  runtime: web-app
+  stack:
+    - React 18
+    - TypeScript
+    - Redux Toolkit
+    - Webpack
+ards:
+  kind: frontend-web
+  status: ready
+  agents_md: true
+  specs_index: true
+  docs_overview: true
+  docs_ai_policy: true
+validation:
+  check_command: npm run check
+integrations:
+  consumes:
+    - service_id: 4uentes-auth
+      via_alias_observed: node-auth
+      purpose: auth-and-bff-api
+deployment_targets_observed:
+  - local
+  - docker-compose
+  - kubernetes
+notes:
+  - Frontend web SPA for SST, with visible auth and articles flows.
+  - Uses node-auth as observed BFF/API boundary under /api/*.
+  - Working tree was dirty during Phase 0 and must not be treated as a stable baseline.

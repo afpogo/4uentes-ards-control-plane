@@ -1,0 +1,53 @@
+service_id: sst-extension
+canonical_identity: sst-extension
+kind: browser-extension
+status: optional-active
+shared: false
+solution_ids:
+  - sst
+repo:
+  canonical_repo: sst-extension
+  remote: git@github.com:afpogo/sst-extension.git
+  branch_observed: main
+  head_observed: TODO-no-valid-head
+  commits_observed: none
+  working_tree_observed: bootstrap-no-commits-untracked
+  observed_at: 2026-05-17
+local_binding_evidence:
+  - id: local-sst-extension
+    role: repo-working-copy
+    observed_at: 2026-05-17
+    path_record: inventory/evidence/git/sst-extension.md
+package:
+  name: sst-extension
+  runtime: manifest-v3-browser-extension
+  stack:
+    - WXT
+    - React
+    - TypeScript
+ards:
+  kind: frontend-extension
+  status: ready
+  agents_md: true
+  specs_index: true
+  docs_overview: true
+  docs_ai_policy: true
+validation:
+  check_command: pnpm run check
+integrations:
+  consumes:
+    - service_id: 4uentes-auth
+      via_alias_observed: node-auth
+      purpose: auth-and-ingestion-bff
+  participates_in:
+    - quick-save
+    - sessions
+    - dictionary
+    - text-article-pdf
+deployment_targets_observed:
+  - browser-extension-runtime
+notes:
+  - Real SST browser extension runtime; include in the manifest as optional-active instead of treating it as not-needed-now.
+  - Optional runtime for SST; not required for the default SST service baseline.
+  - Does not own SST graph materialization; that remains with sst-fend.
+  - Git has no valid HEAD yet, so catalog consumers must treat repo state as bootstrap evidence.

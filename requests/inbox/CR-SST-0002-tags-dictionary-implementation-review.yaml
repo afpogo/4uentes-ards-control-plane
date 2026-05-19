@@ -1,0 +1,77 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-SST-0002"
+title: "SST tags and dictionary implementation review"
+status: "inbox"
+created_at: "2026-05-18"
+requester: "4uentes"
+
+business_context: >
+  SST needs a read-only implementation and documentation review for the initial
+  Study Store Tag and dictionary model. The review must determine whether the
+  concepts are only intake ideas, ARDS/SDD documented, capability modeled,
+  partially implemented at runtime, implemented, validated, or blocked.
+
+requested_change: >
+  Perform a dry-run review across the SST solution using the control-plane
+  catalog and solution routing. Inspect ARDS artifacts first and runtime code
+  only when documentation is insufficient. Do not modify functional
+  repositories and do not create specs in child repositories.
+
+expected_outcome: >
+  Produce control-plane evidence describing the implementation state for Study
+  Store Tag purpose, tags as living resources, tag grammar scope/key,
+  Dictionary Entry, Dictionary Sheet, translations, aliases, account relation,
+  endpoint planning, and security/offline/encryption.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - sst-bend
+    - 4uentes-auth
+    - sst-fend
+    - sst-extension
+    - sst-4uentes-infra
+  include_optional_services: true
+
+impact_analysis:
+  required: true
+  affected_services: []
+  affected_ards: []
+  capabilities: []
+  risks: []
+
+required_context:
+  - "knowledge/business-intake/sst-tags-dictionary-2026-05-18.md"
+  - "catalog/services/sst-bend.yaml"
+  - "catalog/services/4uentes-auth.yaml"
+  - "catalog/services/sst-fend.yaml"
+  - "catalog/services/sst-extension.yaml"
+  - "catalog/services/sst-4uentes-infra.yaml"
+  - "solutions/sst.yaml"
+
+required_checks: []
+
+risk:
+  level: "TODO"
+  score: 0
+  drivers: []
+
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "control-plane-evidence-only"
+
+validation:
+  required_checks:
+    - "npm run check"
+    - "git diff --check"
+  evidence_required:
+    - "implementation-state-report"
+    - "findings"
+    - "searched-artifacts"
+    - "next-steps"
+
+decision:
+  status: "pending"
+  approver: "TODO"

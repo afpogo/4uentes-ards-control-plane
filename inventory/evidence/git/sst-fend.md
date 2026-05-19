@@ -1,0 +1,25 @@
+# Git Evidence - sst-fend
+
+- Observed at: 2026-05-17
+- Local path: `C:\Users\andre\Desktop\4uentes\apps\sst-fend`
+- Remote: `git@github.com:afpogo/sst-fend.git`
+- Branch: `develop`
+- Upstream: `origin/develop`
+- Divergence: `0 ahead / 0 behind`
+- HEAD: `8c66870`
+- Working tree: dirty, `258` porcelain entries observed
+  - Modified: `126`
+  - Untracked: `132`
+- Stash: none observed
+- Package name: `sst-fend`
+- ARDS/SDD artifacts:
+  - `AGENTS.md`: present
+  - `specs/00-index.yaml`: present
+  - `docs/00-overview.md`: present
+  - `docs/ai/policy.md`: present
+- Check command: `npm run check`
+- Notes:
+  - Represents the SST frontend SPA.
+  - Consumes `node-auth` as the observed BFF/API boundary.
+  - `AGENTS.ms` exists as a deprecated alias artifact and is not source of truth.
+  - Dirty working tree is evidence only; do not freeze it as stable configuration.

@@ -1,0 +1,11 @@
+{
+  "name": "4uentes-ards-control-plane",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Logical ARDS/SDD control plane for 4uentes services and solutions.",
+  "scripts": {
+    "check": "node scripts/verify-catalog.js && node scripts/verify-local-bindings.js --optional",
+    "plan:change": "node scripts/plan-change.js"
+  },
+  "license": "UNLICENSED"
+}

@@ -1,0 +1,42 @@
+schema_version: "1.0"
+kind: "control_plane_index"
+repo: "4uentes-ards-control-plane"
+status: "active"
+standard_source:
+  repo: "4uentes-ards-core"
+  kind_model: "standard/ARDS_KIND_MODEL_v1.md"
+catalog:
+  services: "catalog/services/*.yaml"
+solutions:
+  path: "solutions/*.yaml"
+environments:
+  local:
+    example: "environments/local/bindings.local.example.yaml"
+    ignored: "environments/local/bindings.local.yaml"
+scripts:
+  verify_catalog: "scripts/verify-catalog.js"
+  verify_local_bindings: "scripts/verify-local-bindings.js"
+  plan_change: "scripts/plan-change.js"
+docs:
+  overview: "docs/00-overview.md"
+  service_catalog: "docs/service-catalog.md"
+  solutions_model: "docs/solutions-model.md"
+  execution_model: "docs/execution-model.md"
+  ai_policy: "docs/ai/policy.md"
+requests:
+  status: "active"
+  path: "requests/"
+  inbox: "requests/inbox/"
+  planned: "requests/planned/"
+  queued: "requests/queued/"
+  running: "requests/running/"
+  done: "requests/done/"
+  rejected: "requests/rejected/"
+templates:
+  change_request: "templates/change-request.template.yaml"
+inventory:
+  phase_0: "inventory/phase-0.md"
+  gate_0_decision: "inventory/phase-0-decision.md"
+validation:
+  check_command: "npm run check"
+  plan_change_command: "npm run plan:change -- requests/inbox/TODO.yaml"
