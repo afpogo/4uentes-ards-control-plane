@@ -1,0 +1,73 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0003"
+title: "Backend deployment workflows and GitOps manifest handoff"
+status: "inbox"
+created_at: "2026-05-19"
+requester: "4uentes"
+
+business_context: >
+  SST backend deployment currently depends on mutable image tags and partial or
+  outdated GitHub Actions workflows. The control-plane needs an explicit
+  cross-repo request to align `sst-bend`, `4uentes-auth` and
+  `sst-4uentes-infra` around a single GitOps deployment model.
+
+requested_change: >
+  Analyze and then implement the minimum cross-repo handoff required so that
+  `sst-bend` and `4uentes-auth` publish deployment-ready artifacts for the
+  cluster model governed by `sst-4uentes-infra`. The target model must avoid
+  direct cluster mutation from app CI, define the expected deployment manifests
+  or deployment contracts, and define the workflow responsibilities for image
+  build, publish and GitOps consumption.
+
+expected_outcome: >
+  Produce a request-controlled execution plan and, after approval, the required
+  app-repo workflow/manifests changes so that backend services can participate
+  in the GitOps cluster path with reviewable contracts and validation evidence.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - sst-bend
+    - 4uentes-auth
+    - sst-4uentes-infra
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services: []
+  affected_ards: []
+  capabilities: []
+  risks: []
+
+required_context:
+  - "catalog/services/sst-bend.yaml"
+  - "catalog/services/4uentes-auth.yaml"
+  - "catalog/services/sst-4uentes-infra.yaml"
+  - "solutions/sst.yaml"
+  - "docs/cross-repo/sst-cluster-dependency-map.md"
+
+required_checks: []
+
+risk:
+  level: "TODO"
+  score: 0
+  drivers: []
+
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "one-branch-per-repo"
+
+validation:
+  required_checks:
+    - "npm run check"
+  evidence_required:
+    - "workflow-gap-analysis"
+    - "deployment-contract-decision"
+    - "affected-services-summary"
+    - "validation-results"
+
+decision:
+  status: "pending"
+  approver: "TODO"

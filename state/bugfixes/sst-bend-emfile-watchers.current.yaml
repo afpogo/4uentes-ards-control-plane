@@ -1,0 +1,21 @@
+schema_version: "1.0"
+kind: "bugfix_state"
+id: "sst-bend-emfile-watchers"
+title: "SST backend EMFILE watcher exhaustion"
+status: "validated-local"
+updated_at: "2026-05-24"
+markers:
+  - reproduced
+  - root-caused
+  - fix-implemented-local
+  - regression-tested
+affected_services:
+  - sst-bend
+request_ids: []
+symptom: "Local backend watcher exhausted file handles and interrupted development feedback loops."
+root_cause_status: "confirmed"
+validation_refs: []
+evidence_refs: []
+open_gaps:
+  - "Create formal request/evidence if this bugfix must be governed historically."
+

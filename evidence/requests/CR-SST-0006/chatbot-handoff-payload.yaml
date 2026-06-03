@@ -1,0 +1,112 @@
+schema_version: "1.0"
+kind: orchestrator_handoff_context
+source_request_id: "CR-SST-0006"
+created_at: "2026-05-20"
+producer: "4uentes-orchestor"
+intended_consumer: "sst_chatbot"
+status: "validated_for_handoff"
+
+handoff_boundary:
+  mode: "context_only"
+  execution_authorized: false
+  functional_repo_changes_authorized: false
+  request_lifecycle_change_authorized: false
+  reason: >
+    CR-SST-0006 is a read-only cross-repo investigation. The output can be used
+    by sst_chatbot as context for planning or summarization, but it must not
+    trigger direct repository changes or server operations.
+
+recommended_operation_intent:
+  preferred_type: "user_history.propose_update"
+  alternate_type: "workspace.generate_bundle"
+  forbidden_for_now:
+    - "workspace.apply_patch"
+    - "server.restart_service"
+    - "server.refresh_cache"
+  capability_context:
+    - "agent-lifecycle-and-orchestrator-boundary"
+    - "users-accounts-robots"
+
+summary:
+  answer: >
+    Robots exists in SST as ARDS/SDD design and partial persistence/model work
+    in sst-bend. It is not a complete runtime feature across the SST repos.
+  classification:
+    sst-bend: "runtime-partial"
+    4uentes-auth: "not-implemented"
+    sst-fend: "not-implemented"
+    sst-extension: "not-implemented"
+    sst-4uentes-infra: "not-implemented"
+  canonical_statement: >
+    sst-bend has Robot persistence and account-scoping model evidence, but no
+    published Robot administration HTTP surface, controller, use cases, UI, or
+    cross-repo runtime handoff.
+
+semantic_findings:
+  - "Robot is an operational actor inside an SST account."
+  - "Each Robot belongs to exactly one account."
+  - "Each Robot has one role."
+  - "Owner can create and destroy Robots."
+  - "Member cannot destroy Robots."
+  - "Robot destruction uses soft delete in v1."
+  - "Destruction must preserve audit, runtime, and documentary context."
+
+evidence:
+  sst-bend:
+    docs_and_specs:
+      - "specs/api/users-accounts-robots.yaml"
+      - "docs/api/18-users-accounts-robots.md"
+      - "specs/states/feature.users-accounts-robots-rollout.yaml"
+      - "docs/tasks/2026-04-18-users-accounts-robots-rollout.md"
+    runtime_model:
+      - "db/models/robot.js"
+      - "db/models/account.js"
+      - "db/models/index.js"
+      - "db/migrations/20260419000000-create-account-core-tables.js"
+      - "scripts/reconcile-users-account-scope.js"
+    current_http_surface:
+      - "GET /4uentes/v1/me"
+      - "GET /4uentes/v1/accounts"
+    planned_not_observed_http_surface:
+      - "GET /4uentes/v1/accounts/:id/robots"
+      - "POST /4uentes/v1/accounts/:id/robots"
+      - "DELETE /4uentes/v1/robots/:id"
+  4uentes-auth:
+    related_only:
+      - "specs/capabilities/inbound/sst-bend--account-context-forwarding.yaml"
+      - "src/presentation/helpers/auth.ts"
+    interpretation: "Forwards account context; does not own Robots."
+  sst-fend:
+    interpretation: "No Robot UI, service, store, route, or tests observed."
+  sst-extension:
+    interpretation: "No Robots; account context local wiring remains a gap."
+  sst-4uentes-infra:
+    interpretation: "No Robot-specific manifests, docs, or policies observed."
+
+gaps:
+  - "No robots.routes.js."
+  - "No robots.controller.js."
+  - "No createRobot/listRobots/deleteRobot use cases observed."
+  - "No published Robot runtime endpoint."
+  - "No outbound users-accounts-robots runtime capability."
+  - "No frontend UI."
+  - "No extension support."
+  - "No dedicated Robot QA/smoke."
+  - "Robot destroyed-context snapshot shape remains undefined."
+
+recommended_next_request:
+  title: "Design and publish SST Robots runtime surface"
+  owner: "sst-bend"
+  required_before_frontend_or_bff_work:
+    - "Define Robot HTTP contract."
+    - "Implement controller/use cases."
+    - "Define owner/member authorization."
+    - "Define destroyed Robot audit/runtime snapshot."
+    - "Add focused tests or smoke validation."
+    - "Publish outbound capability only after runtime is observable."
+
+source_artifacts:
+  - "evidence/requests/CR-SST-0006/cross-repo-summary.md"
+  - "evidence/requests/CR-SST-0006/implementation-state-report.md"
+  - "evidence/requests/CR-SST-0006/searched-artifacts.md"
+  - "evidence/requests/CR-SST-0006/validation-results.md"

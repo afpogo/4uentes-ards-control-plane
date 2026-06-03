@@ -1,0 +1,18 @@
+schema_version: "1.0"
+kind: "policy_specs_index"
+status: "active"
+updated_at: "2026-06-02"
+purpose: >
+  Policies are first-class ARDS/SDD governance components. They define
+  constraints, obligations, inheritance, adoption, enforcement, exceptions, and
+  evidence requirements for repos and cross-repo work.
+specs:
+  - id: "ards-sdd-policy-component-model"
+    path: "specs/policies/ards-sdd-policy-component-model.yaml"
+    status: "active"
+policy_read_model:
+  root: "specs/policies/"
+  state_links: "state/policy-links.yaml"
+  related_state: "state/features/ards-sdd-policy-unification.current.yaml"
+validation:
+  command: "npm run check"

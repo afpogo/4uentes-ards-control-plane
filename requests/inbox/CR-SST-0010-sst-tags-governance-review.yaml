@@ -1,0 +1,83 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0010"
+title: "Review SST tags governance outside dictionary ownership"
+status: "inbox"
+created_at: "2026-05-24"
+requester: "4uentes"
+
+business_context: >
+  SST tags are becoming the governance mechanism for how information enters
+  SST and remains available for later processing. Previous dictionary work
+  implemented tag-related behavior inside the dictionary context, but the target
+  direction is that tags are governed by SST rather than owned by dictionary.
+
+requested_change: >
+  Review the current implementation state of SST tags and determine what is
+  already implemented under dictionary, what must be promoted to SST-level tag
+  governance, and what remains as planned work before tags can guide ingestion,
+  classification, retrieval, and downstream processing in SST.
+
+expected_outcome: >
+  Produce control-plane evidence that separates dictionary-owned behavior from
+  SST-governed tag behavior, identifies affected services, records open gaps,
+  and proposes the next request boundary before any functional repository is
+  modified.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - sst-bend
+    - 4uentes-auth
+    - sst-fend
+    - sst-extension
+  include_optional_services: true
+
+impact_analysis:
+  required: true
+  affected_services: []
+  affected_ards: []
+  capabilities: []
+  risks: []
+
+required_context:
+  - "state/features/dictionary-tags.current.yaml"
+  - "evidence/requests/CR-SST-0002/implementation-state-report.md"
+  - "evidence/requests/CR-SST-0002/findings.yaml"
+  - "evidence/requests/CR-SST-0002/runtime-readiness-summary.md"
+  - "evidence/requests/CR-SST-0002/next-steps.md"
+  - "knowledge/business-intake/sst-tags-dictionary-2026-05-18.md"
+  - "catalog/services/sst-bend.yaml"
+  - "catalog/services/4uentes-auth.yaml"
+  - "catalog/services/sst-fend.yaml"
+  - "catalog/services/sst-extension.yaml"
+  - "solutions/sst.yaml"
+
+required_checks: []
+
+risk:
+  level: "medium"
+  score: 3
+  drivers:
+    - "Tags affect ingestion and downstream treatment of SST information."
+    - "Current implementation evidence is mixed with dictionary behavior."
+    - "Incorrect ownership could force later cross-service refactors."
+
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "control-plane-evidence-only"
+
+validation:
+  required_checks:
+    - "npm run check"
+  evidence_required:
+    - "implementation_state_review"
+    - "dictionary_vs_sst_tag_boundary"
+    - "affected_services_summary"
+    - "next_request_boundary"
+
+decision:
+  status: "pending"
+  approver: "TODO"
+

@@ -1,0 +1,35 @@
+schema_version: "1.0"
+kind: "feature_state"
+id: "sst-tags-governance"
+title: "SST Tags Governance"
+status: "runtime-partial"
+updated_at: "2026-05-26"
+solution_id: "sst"
+affected_services:
+  - sst-bend
+  - 4uentes-auth
+  - sst-fend
+  - sst-extension
+request_ids:
+  - CR-SST-0010
+  - CR-SST-0014
+  - CR-SST-0015
+  - CR-SST-0016
+capability_refs:
+  - "sst-tags-governance"
+  - "article-tags"
+spec_refs: []
+evidence_refs:
+  - "evidence/requests/CR-SST-0002/implementation-state-report.md"
+  - "evidence/requests/CR-SST-0002/findings.yaml"
+  - "evidence/requests/CR-SST-0002/runtime-readiness-summary.md"
+  - "evidence/requests/CR-SST-0014/implementation-state-analysis.md"
+  - "evidence/requests/CR-SST-0014/course-tags-analysis.md"
+  - "evidence/requests/CR-SST-0014/next-request-boundary.md"
+  - "evidence/requests/CR-SST-0015/java-spring-course-structure-analysis.md"
+  - "evidence/requests/CR-SST-0016/backend-poc-summary.md"
+open_gaps:
+  - "Promote article-tags from draft to an active governed SST capability."
+  - "Adopt structured article tags in BFF and frontend create/update flows."
+  - "Promote sst-tag-prefix-engine from backend POC to runtime preview/import endpoint."
+  - "Keep real-time transcription as a separate future intake request."

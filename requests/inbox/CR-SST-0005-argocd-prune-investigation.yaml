@@ -1,0 +1,65 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0005"
+title: "Argo CD prune investigation and comparison with self-heal"
+status: "inbox"
+created_at: "2026-05-19"
+requester: "4uentes"
+
+business_context: >
+  The SST platform currently enables both `prune` and `selfHeal` in Argo CD.
+  Operators need a clear explanation of what `prune` does, how it differs from
+  `selfHeal`, and how both settings should evolve as SST moves beyond local
+  development.
+
+requested_change: >
+  Investigate the current Argo CD prune behavior used by `sst-4uentes-infra`,
+  explain what it does in practice, compare it with self-heal, and produce
+  operational guidance for current usage and future evolution.
+
+expected_outcome: >
+  Produce a control-plane tutorial that explains prune, contrasts it with
+  self-heal, and defines practical usage, risks and evolution paths for the SST
+  GitOps model.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - sst-4uentes-infra
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services: []
+  affected_ards: []
+  capabilities: []
+  risks: []
+
+required_context:
+  - "catalog/services/sst-4uentes-infra.yaml"
+  - "solutions/sst.yaml"
+  - "docs/platform/argocd-self-heal-tutorial.md"
+
+required_checks: []
+
+risk:
+  level: "TODO"
+  score: 0
+  drivers: []
+
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "control-plane-docs-only"
+
+validation:
+  required_checks:
+    - "npm run check"
+  evidence_required:
+    - "tutorial"
+    - "comparison"
+    - "operational-recommendations"
+
+decision:
+  status: "pending"
+  approver: "TODO"

@@ -1,0 +1,79 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0016"
+title: "Implement SST tag prefix engine backend POC"
+status: "inbox"
+created_at: "2026-05-26"
+requester: "4uentes"
+
+business_context: >
+  SST needs a reusable tag/prefix engine that can interpret resource-specific
+  scopes without flattening every prefix into a global tag. Dictionary,
+  articles, learning content, and bitacora need different local semantics while
+  still being able to reference each other visually through imported references.
+
+requested_change: >
+  Implement the first backend-only proof of concept in sst-bend using a
+  versioned code registry for TagDefinitions, a prefix parser, alias
+  normalization, structural ContentBlocks, AssetRefs, ExternalReferences, and
+  cross-scope ImportedReferences that preserve external ownership.
+
+expected_outcome: >
+  Produce a tested backend POC with no database migration, no new HTTP endpoint,
+  and no frontend/BFF mutation. Record orchestrator evidence and update the
+  feature state for SST tag prefix engine and learning-content tags.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - sst-bend
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services: []
+  affected_ards: []
+  capabilities:
+    - "sst-tag-prefix-engine"
+    - "learning-content-tags"
+    - "sst-tags-governance"
+  risks: []
+
+required_context:
+  - "state/features/sst-tags-governance.current.yaml"
+  - "state/features/learning-content-tags.current.yaml"
+  - "evidence/requests/CR-SST-0014/implementation-state-analysis.md"
+  - "evidence/requests/CR-SST-0015/java-spring-course-structure-analysis.md"
+  - "evidence/requests/CR-SST-0015/parser-boundary-recommendation.md"
+
+required_checks: []
+
+risk:
+  level: "medium"
+  score: 3
+  drivers:
+    - "The engine defines reusable semantics for multiple SST resource scopes."
+    - "The POC must not break existing dictionary runtime behavior."
+    - "Cross-scope imports must preserve ownership and avoid silent data copying."
+
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "control-plane-plus-sst-bend-backend-poc"
+
+validation:
+  required_checks:
+    - "sst-bend: npm.cmd run test:tag-engine"
+    - "sst-bend: npm.cmd run test:diccionario:stage2"
+    - "sst-bend: npm.cmd run test:diccionario:stage3"
+    - "sst-bend: npm.cmd run check"
+    - "4uentes-orchestor: npm.cmd run check:state"
+    - "4uentes-orchestor: npm.cmd run check"
+  evidence_required:
+    - "backend_poc_summary"
+    - "validation_results"
+
+decision:
+  status: "pending"
+  approver: "TODO"
+

@@ -1,86 +1,126 @@
-# CR-SST-0002 - Implementation State Report
+# CR-SST-0002 - Reporte De Estado De Implementacion
 
-Observed at: 2026-05-18
+Observado el: 2026-05-18
 
-## Executive Summary
+## Resumen Ejecutivo
 
-The SST dictionary/tag model is not just concept intake. The backend API (`sst-bend`) has ARDS documentation, outbound capabilities, route handlers, use cases, database models, and migrations for Dictionary Sheet, Dictionary Entry, TagValue, TagOccurrence, account scoping, and secure reveal semantics.
+El modelo SST dictionary/tag no es solo concept intake. El backend API
+(`sst-bend`) tiene documentacion ARDS, outbound capabilities, route handlers, use
+cases, database models y migrations para `Dictionary Sheet`, `Dictionary Entry`,
+`TagValue`, `TagOccurrence`, account scoping y secure reveal semantics.
 
-The BFF/shared auth boundary (`4uentes-auth`, observed locally as `node-auth`) has implemented inbound adoption from `sst-bend` and outbound capabilities for `sst-fend` and `sst-extension`, plus read/write pass-through routes under `/api/diccionario/*`.
+El boundary BFF/shared auth (`4uentes-auth`, observado localmente como
+`node-auth`) tiene inbound adoption implementada desde `sst-bend`, outbound
+capabilities para `sst-fend` y `sst-extension`, y rutas read/write pass-through
+bajo `/api/diccionario/*`.
 
-The web frontend (`sst-fend`) has implemented dictionary UI/service/state/test surfaces. The browser extension (`sst-extension`) has optional-active dictionary support through popup/background messaging and the BFF, with a documented account-context gap.
+El web frontend (`sst-fend`) tiene superficies implementadas de UI/service/state
+/test para dictionary. La browser extension (`sst-extension`) tiene soporte
+optional-active de dictionary mediante popup/background messaging y BFF, con un
+gap documentado de account-context.
 
-Security is partial: masking/reveal, owner-role constraints, auth/BFF routing, no-plaintext-secret governance, and manual local secret handling exist. Final encryption-at-rest and offline-server policy are not implemented and should remain separate future requests.
+Seguridad es parcial: existen masking/reveal, restricciones owner-role,
+auth/BFF routing, gobierno no-plaintext-secret y manejo manual local de secrets.
+La encryption-at-rest final y la politica de offline-server no estan
+implementadas y deben permanecer como future requests separados.
 
-## Services Inspected
+## Servicios Inspeccionados
 
-| Service | ARDS kind | Inspection mode | Result |
+| Service | ARDS kind | Modo de inspeccion | Resultado |
 |---|---|---|---|
-| `sst-bend` | `backend-api` | read-only docs/specs/code | Strong backend implementation evidence |
-| `4uentes-auth` | `shared-auth-provider` | read-only docs/specs/code | BFF capability and proxy implementation evidence |
-| `sst-fend` | `frontend-web` | read-only docs/specs/code | Frontend runtime implementation evidence |
-| `sst-extension` | `frontend-extension` | read-only docs/specs/code | Optional runtime implementation evidence with account-context gap |
-| `sst-4uentes-infra` | `infra-gitops` | read-only docs/manifests | Deployment/security governance evidence, not domain owner |
+| `sst-bend` | `backend-api` | read-only docs/specs/code | Evidencia fuerte de backend implementation |
+| `4uentes-auth` | `shared-auth-provider` | read-only docs/specs/code | Evidencia de BFF capability y proxy implementation |
+| `sst-fend` | `frontend-web` | read-only docs/specs/code | Evidencia de frontend runtime implementation |
+| `sst-extension` | `frontend-extension` | read-only docs/specs/code | Evidencia optional runtime con account-context gap |
+| `sst-4uentes-infra` | `infra-gitops` | read-only docs/manifests | Evidencia de deployment/security governance, no domain owner |
 
-## Concept Status
+## Estado Conceptual
 
-| Concept | Status | Primary service | Confidence | Notes |
+| Concepto | Estado | Servicio primario | Confianza | Notas |
 |---|---|---|---|---|
-| Study Store Tag purpose | `ards-documented` | `sst-bend` | high | Purpose and dictionary scope are documented in ARDS/specs and business intake. |
-| Tags as living resources | `runtime-partial` | `sst-bend` | high | TagValue/TagOccurrence runtime exists; TagDefinition governance remains out of scope. |
-| tag grammar scope/key | `runtime-partial` | `sst-bend` | high | Dictionary scope/key grammar and legacy parser exist; multi-domain grammar remains open. |
-| Dictionary Entry | `runtime-implemented` | `sst-bend` | high | API routes, use cases, DB models, BFF, frontend and extension surfaces exist. |
-| Dictionary Sheet | `runtime-implemented` | `sst-bend` | high | Sheets have API routes, use cases, DB models, frontend UI and extension UI. |
-| translations | `runtime-partial` | `sst-bend` | medium | Documented and domain artifact observed, but no clear public endpoint adoption found. |
-| aliases | `ards-documented` | `sst-bend` | medium | Alias semantics are documented with translations; runtime support is not established. |
-| account relation | `runtime-partial` | `sst` | high | API/BFF preserve account context; extension records account-context wiring gap. |
-| endpoint planning | `runtime-implemented` | `sst` | high | Routes exist across backend, BFF, frontend and extension messaging surfaces. |
-| security/offline/encryption | `runtime-partial` | `sst` | high | Security/reveal exists; encryption-at-rest and offline model are deferred. |
+| Study Store Tag purpose | `ards-documented` | `sst-bend` | high | Purpose y dictionary scope estan documentados en ARDS/specs e intake de negocio. |
+| Tags as living resources | `runtime-partial` | `sst-bend` | high | Existe runtime TagValue/TagOccurrence; TagDefinition governance queda fuera de scope. |
+| tag grammar scope/key | `runtime-partial` | `sst-bend` | high | Existen gramatica dictionary scope/key y legacy parser; multi-domain grammar sigue abierta. |
+| Dictionary Entry | `runtime-implemented` | `sst-bend` | high | Existen API routes, use cases, DB models, BFF, frontend y extension surfaces. |
+| Dictionary Sheet | `runtime-implemented` | `sst-bend` | high | Sheets tienen API routes, use cases, DB models, frontend UI y extension UI. |
+| translations | `runtime-partial` | `sst-bend` | medium | Documentado y domain artifact observado, pero sin public endpoint adoption claro. |
+| aliases | `ards-documented` | `sst-bend` | medium | Semantica de aliases documentada con translations; runtime support no establecido. |
+| account relation | `runtime-partial` | `sst` | high | API/BFF preservan account context; extension registra gap de account-context wiring. |
+| endpoint planning | `runtime-implemented` | `sst` | high | Existen routes en backend, BFF, frontend y extension messaging surfaces. |
+| security/offline/encryption | `runtime-partial` | `sst` | high | Existe security/reveal; encryption-at-rest y offline model estan diferidos. |
 
-## Key Evidence
+## Evidencia Clave
 
 ### sst-bend
 
-- `specs/api/diccionario-sst-tag.yaml` defines Study Store Tag purpose, dictionary scope, scope/key grammar, DictionaryEntry, DictionarySheet, translation/alias aggregate, account scoping, endpoints, and secure semantics.
-- `specs/capabilities/outbound/dictionary-domain-read-v1.yaml` and `dictionary-domain-management-v1.yaml` publish read/import/export and management capabilities.
-- `src/apps/sst/presentation/routes/diccionario.routes.js` exposes `/rf`, `/sheets`, `/entries`, `/entries/:id/reveal`, `/tag-values`, `/tag-occurrences`, `/imports`, and `/exports`.
-- `db/models/dictionary-*.js` and migrations define persisted dictionary sheets, entries, tag values, entry tags, import runs, audit events, and tag occurrences.
+- `specs/api/diccionario-sst-tag.yaml` define Study Store Tag purpose,
+  dictionary scope, scope/key grammar, `DictionaryEntry`, `DictionarySheet`,
+  aggregate translation/alias, account scoping, endpoints y secure semantics.
+- `specs/capabilities/outbound/dictionary-domain-read-v1.yaml` y
+  `dictionary-domain-management-v1.yaml` publican capabilities de read/import
+  /export y management.
+- `src/apps/sst/presentation/routes/diccionario.routes.js` expone `/rf`,
+  `/sheets`, `/entries`, `/entries/:id/reveal`, `/tag-values`,
+  `/tag-occurrences`, `/imports` y `/exports`.
+- `db/models/dictionary-*.js` y migrations definen persisted dictionary sheets,
+  entries, tag values, entry tags, import runs, audit events y tag occurrences.
 
 ### 4uentes-auth
 
-- `specs/capabilities/inbound/sst-bend--dictionary-*.yaml` records implemented adoption of SST dictionary capabilities.
-- `specs/capabilities/outbound/dictionary-*.yaml` publishes BFF facades for `sst-fend` and `sst-extension`.
-- `src/presentation/dictionary/routes.ts` exposes BFF routes under `/api/diccionario/*`.
-- `src/presentation/dictionary/controller.ts` and `src/infrastructure/datasources/dictionary.datasource.impl.ts` forward Authorization and account-context headers to SST.
+- `specs/capabilities/inbound/sst-bend--dictionary-*.yaml` registra adopcion
+  implementada de capabilities SST dictionary.
+- `specs/capabilities/outbound/dictionary-*.yaml` publica BFF facades para
+  `sst-fend` y `sst-extension`.
+- `src/presentation/dictionary/routes.ts` expone rutas BFF bajo
+  `/api/diccionario/*`.
+- `src/presentation/dictionary/controller.ts` y
+  `src/infrastructure/datasources/dictionary.datasource.impl.ts` reenvian
+  headers Authorization y account-context hacia SST.
 
 ### sst-fend
 
-- `specs/34-dictionary-frontend.yml` and `docs/34-dictionary-frontend.md` define frontend consumption through `node-auth`, not direct `sst-bend`.
-- `src/services/dictionaryService.ts` calls sheets, entries, tag-values, tag-occurrences, reveal, import and export surfaces.
-- `src/pages/Dictionary/index.tsx` implements sheet/entry management, root-sheet behavior, tag filtering, secure masking and explicit reveal.
-- `src/pages/Dictionary/__tests__/Dictionary.test.tsx` includes test evidence for masked secure values, reveal action, create entry defaults, move, and root delete block.
+- `specs/34-dictionary-frontend.yml` y `docs/34-dictionary-frontend.md` definen
+  consumo frontend mediante `node-auth`, no directo a `sst-bend`.
+- `src/services/dictionaryService.ts` llama superficies de sheets, entries,
+  tag-values, tag-occurrences, reveal, import y export.
+- `src/pages/Dictionary/index.tsx` implementa gestion de sheet/entry,
+  root-sheet behavior, tag filtering, secure masking y explicit reveal.
+- `src/pages/Dictionary/__tests__/Dictionary.test.tsx` incluye evidencia de
+  tests para masked secure values, reveal action, create entry defaults, move y
+  root delete block.
 
 ### sst-extension
 
-- `specs/features/dictionary.yaml` defines the optional-active extension dictionary feature.
-- `specs/integration/node-auth-extension-dictionary.yaml` and inbound specs model BFF consumption and forbid direct `sst-bend` access.
-- `src/shared/extension-messages.ts` defines dictionary message contracts.
-- `src/ui/quick-save/QuickSaveSurface.tsx` renders sheets, entries, tag values, create/move/delete entry and root delete protection.
-- Account context remains a documented gap before sending `x-active-account-id`.
+- `specs/features/dictionary.yaml` define la feature optional-active dictionary
+  de extension.
+- `specs/integration/node-auth-extension-dictionary.yaml` y specs inbound modelan
+  consumo BFF y prohiben acceso directo a `sst-bend`.
+- `src/shared/extension-messages.ts` define contratos de dictionary messages.
+- `src/ui/quick-save/QuickSaveSurface.tsx` renderiza sheets, entries, tag
+  values, create/move/delete entry y root delete protection.
+- Account context sigue como gap documentado antes de enviar
+  `x-active-account-id`.
 
 ### sst-4uentes-infra
 
-- Deployment contracts reference `sst-bend`, `node-auth`, `sst-fend`, and `sst-extension`.
-- Security specs cover no plaintext secrets and manual local secret provisioning.
-- Infra does not own dictionary/tag business semantics.
+- Deployment contracts referencian `sst-bend`, `node-auth`, `sst-fend` y
+  `sst-extension`.
+- Security specs cubren no plaintext secrets y provision manual local de
+  secrets.
+- Infra no es duena de la semantica de negocio dictionary/tag.
 
-## Limitations
+## Limitaciones
 
-- `bindings.local.yaml` was absent, so local paths are evidence-only from inventory.
-- Functional repo checks were not executed.
-- No runtime endpoints were called.
-- No repository outside the control-plane was modified.
+- `bindings.local.yaml` estaba ausente, por lo que los paths locales son solo
+  evidence-only desde inventory.
+- No se ejecutaron checks de repos funcionales generales.
+- No se llamaron endpoints runtime.
+- No se modifico ningun repo fuera del control-plane.
 
-## Recommendation
+## Recomendacion
 
-Proceed to Fase 4 only as ARDS/request-controlled work. The first execution should not change product runtime code. It should formalize capability/request evidence, then require targeted checks for dictionary routes and frontend/extension dictionary behavior before any runtime change is approved.
+Avanzar a Fase 4 solo como trabajo ARDS/request-controlled. La primera ejecucion
+no debe cambiar product runtime code. Debe formalizar evidencia de
+capability/request, luego exigir checks focalizados de dictionary routes y
+comportamiento dictionary de frontend/extension antes de aprobar cualquier
+cambio runtime.

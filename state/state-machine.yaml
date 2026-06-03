@@ -1,0 +1,65 @@
+schema_version: "1.0"
+kind: "feature_bugfix_state_machine"
+status: "active"
+updated_at: "2026-05-24"
+scope:
+  - feature_state
+  - bugfix_state
+states:
+  canonical:
+    - unknown
+    - intake
+    - discovered
+    - ards-documented
+    - planned
+    - implementation-pending
+    - runtime-partial
+    - implemented-local
+    - validated-local
+    - validated-live
+    - ready-for-release
+    - released
+    - done
+    - blocked
+    - deferred
+    - rejected
+    - deprecated
+  terminal:
+    - done
+    - rejected
+    - deprecated
+bugfix_markers:
+  canonical:
+    - reproduced
+    - root-caused
+    - fix-proposed
+    - fix-implemented-local
+    - regression-tested
+    - hotfixed
+request_lifecycle:
+  documented_only: true
+  states:
+    - inbox
+    - planned
+    - queued
+    - running
+    - done
+    - rejected
+  transitions:
+    - from: inbox
+      to: planned
+    - from: planned
+      to: queued
+    - from: queued
+      to: running
+    - from: running
+      to: done
+    - from: planned
+      to: rejected
+rules:
+  - "The current state read-model is declarative and document-only."
+  - "Request lifecycle references are documented in V1, not strictly enforced."
+  - "A done state requires validation evidence."
+  - "Absolute local paths are not allowed in state documents."
+  - "Governed capability_refs should be linked through state/capability-links.yaml."
+  - "Child repositories that start governed work outside the orchestrator must leave orchestrator_link metadata for reconciliation."

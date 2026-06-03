@@ -1,0 +1,28 @@
+schema_version: "1.0"
+kind: "feature_state"
+id: "child-repo-orchestrator-rules-adoption"
+title: "Child Repository Orchestrator Rules Adoption"
+status: "done"
+updated_at: "2026-05-24"
+solution_id: "sst"
+affected_services:
+  - 4uentes-auth
+  - sst-fend
+  - sst-bend
+  - sst-extension
+  - sst-4uentes-infra
+request_ids:
+  - CR-SST-0013
+capability_refs:
+  - "child-repo-orchestrator-rules-adoption"
+spec_refs:
+  - "docs/cross-repo/child-repo-onboarding.md"
+  - "docs/cross-repo/child-repo-orchestrator-link-rule.md"
+evidence_refs:
+  - "evidence/requests/CR-SST-0013/repo-status-before.md"
+  - "evidence/requests/CR-SST-0013/changed-files-by-repo.md"
+  - "evidence/requests/CR-SST-0013/validation-results.md"
+  - "evidence/requests/CR-SST-0013/adoption-summary.md"
+open_gaps:
+  - "Future child repositories must continue to enter through templates/service-catalog-entry.template.yaml."
+

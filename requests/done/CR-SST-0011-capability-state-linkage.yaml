@@ -1,0 +1,99 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0011"
+title: "Link child repository capabilities to orchestrator state"
+status: "done"
+created_at: "2026-05-24"
+completed_at: "2026-05-24"
+requester: "4uentes"
+
+business_context: >
+  Repositories governed by the orchestrator expose ARDS/SDD capabilities. The
+  control-plane state model must be able to link those capabilities to feature
+  or bugfix state, even when work starts in a child repository instead of
+  entering through the orchestrator first.
+
+requested_change: >
+  Define the capability-state linkage contract, add a living map from
+  capability ids to state documents, and validate that linked capabilities point
+  to known state files, services, and source evidence.
+
+expected_outcome: >
+  The control-plane can reconcile child repository capability metadata with
+  feature_state and bugfix_state documents, preserving agentic clarity across
+  repos instead of forcing all context to live only in the orchestrator.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - sst-bend
+    - 4uentes-auth
+    - sst-fend
+    - sst-extension
+  include_optional_services: true
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: sst-bend
+      role: "capability-producer"
+    - service_id: 4uentes-auth
+      role: "capability-adopter"
+    - service_id: sst-fend
+      role: "capability-consumer"
+    - service_id: sst-extension
+      role: "optional-capability-consumer"
+  affected_ards:
+    - backend-api
+    - shared-auth-provider
+    - frontend-web
+    - frontend-extension
+  capabilities:
+    - id: "capability-state-linkage"
+      status: "done"
+  risks:
+    - id: "CHILD_REPO_ADOPTION_PENDING"
+      severity: "medium"
+      note: "The control-plane contract exists; child repos still need local adoption."
+
+required_context:
+  - "docs/requests/capability-state-linkage.md"
+  - "specs/states/capability-state-linkage.yaml"
+  - "state/capability-links.yaml"
+  - "scripts/verify-state-model.js"
+
+required_checks:
+  - command: "npm.cmd run check:state"
+  - command: "npm.cmd run check"
+
+risk:
+  level: "medium"
+  score: 2
+  drivers:
+    - id: "CHILD_REPO_ADOPTION_PENDING"
+      severity: "medium"
+
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "control-plane-docs-only"
+  functional_repositories_modified: false
+
+validation:
+  required_checks:
+    - "npm.cmd run check:state"
+    - "npm.cmd run check"
+  evidence_required:
+    - "contract_summary"
+    - "validation_results"
+
+evidence:
+  refs:
+    - "evidence/requests/CR-SST-0011/contract-summary.md"
+    - "evidence/requests/CR-SST-0011/validation-results.md"
+
+decision:
+  status: "approved-done"
+  approver: "4uentes"
+  decided_at: "2026-05-24"
+

@@ -1,0 +1,69 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0019"
+title: "Make model selection produce auditable subagent deployment plans"
+status: "done"
+created_at: "2026-05-28"
+completed_at: "2026-05-28"
+requester: "4uentes"
+
+business_context: >
+  Model selection must not stop at classifying a task. The orchestrator and
+  child repositories must require an explicit decision about task weight, model
+  profile, subagent deployment, fallback, and evidence.
+
+implemented_change: >
+  Extended the orchestrator policy, execution model, request template, and
+  planner output to emit task_weight, model_selection, and
+  subagent_deployment_plan. Propagated the same operational rule to child
+  repository model-selection annexes and AGENTS guidance.
+
+affected_repos:
+  - service_id: 4uentes-orchestor
+    local_binding: "current"
+  - service_id: 4uentes-auth
+    alias_observed: node-auth
+    local_binding: "environments/local/bindings.local.yaml"
+  - service_id: sst-fend
+    local_binding: "environments/local/bindings.local.yaml"
+  - service_id: sst-bend
+    local_binding: "environments/local/bindings.local.yaml"
+  - service_id: sst-extension
+    local_binding: "environments/local/bindings.local.yaml"
+  - service_id: sst-chatbot
+    local_binding: "environments/local/bindings.local.yaml"
+  - service_id: sst-4uentes-infra
+    local_binding: "environments/local/bindings.local.yaml"
+
+model_selection:
+  classification: "complex-high-risk-task"
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+
+subagent_deployment:
+  required: true
+  evidence_refs:
+    - "evidence/requests/CR-SST-0019/subagent-deployment-evidence.md"
+
+validation:
+  required_checks:
+    - "4uentes-orchestor: npm run plan:change -- requests/inbox/CR-SST-0019-agentic-model-deployment-policy.yaml"
+    - "4uentes-orchestor: npm run check"
+    - "4uentes-auth: npm run check"
+    - "sst-fend: npm run check"
+    - "sst-bend: npm run check"
+    - "sst-extension: pnpm run check"
+    - "sst-chatbot: .\\.venv\\Scripts\\python.exe scripts\\check.py"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0019/implementation-summary.md"
+    - "evidence/requests/CR-SST-0019/validation-results.md"
+    - "evidence/requests/CR-SST-0019/subagent-deployment-evidence.md"
+
+decision:
+  status: "approved-done"
+  approver: "4uentes"
+  decided_at: "2026-05-28"
+
+residual_risks:
+  - "sst-4uentes-infra has no cataloged automated check command; validation was documented as manual-review/TODO by the planner."
+  - "Some child repositories had pre-existing dirty working trees."

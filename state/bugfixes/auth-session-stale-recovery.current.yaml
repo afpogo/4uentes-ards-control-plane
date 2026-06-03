@@ -1,0 +1,28 @@
+schema_version: "1.0"
+kind: "bugfix_state"
+id: "auth-session-stale-recovery"
+title: "Recover stale auth sessions without frontend lockup"
+status: "validated-local"
+updated_at: "2026-05-28"
+markers:
+  - reproduced
+  - root-caused
+  - fix-proposed
+  - fix-implemented-local
+  - regression-tested
+affected_services:
+  - sst-fend
+  - 4uentes-auth
+  - sst-4uentes-infra
+request_ids:
+  - CR-SST-0018
+symptom: "Stale browser sessions could leave the frontend attempting refresh/logout with an invalid or expired session boundary."
+root_cause_status: "confirmed"
+validation_refs:
+  - "evidence/requests/CR-SST-0018/validation-results.md"
+evidence_refs:
+  - "evidence/requests/CR-SST-0018/implementation-summary.md"
+  - "evidence/requests/CR-SST-0018/lifecycle-notes.md"
+open_gaps:
+  - "Run browser-level validation through Chrome DevTools MCP after the MCP profile lock is cleared."
+  - "Decide whether controlled 400/401 auth errors should avoid stack traces in node-auth logs."

@@ -1,0 +1,85 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0013"
+title: "Adopt orchestrator governance rules in child repositories"
+status: "inbox"
+created_at: "2026-05-24"
+requester: "4uentes"
+
+business_context: >
+  Child repositories governed by 4uentes-orchestor must understand the
+  orchestrator_link contract, capability-state linkage, human documentation
+  language policy, and documentation information architecture so work started
+  outside the orchestrator can still be reconciled into feature_state or
+  bugfix_state.
+
+requested_change: >
+  Add local ARDS/SDD documentation rules to every SST child repository. The
+  change is documentation/specs only and must preserve existing dirty working
+  trees without reverting, stashing, formatting, or changing runtime behavior.
+
+expected_outcome: >
+  Each child repo exposes local rules telling agents where to document human
+  context, how to preserve technical identifiers, and how to emit
+  orchestrator_link metadata when a governed capability changes.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - 4uentes-auth
+    - sst-fend
+    - sst-bend
+    - sst-extension
+    - sst-4uentes-infra
+  include_optional_services: true
+
+impact_analysis:
+  required: true
+  affected_services: []
+  affected_ards: []
+  capabilities: []
+  risks: []
+
+required_context:
+  - "docs/idioma-markdown.md"
+  - "docs/documentation-information-architecture.md"
+  - "docs/cross-repo/child-repo-orchestrator-link-rule.md"
+  - "docs/cross-repo/child-repo-onboarding.md"
+  - "templates/child-orchestrator-link-rule.md"
+  - "catalog/services/4uentes-auth.yaml"
+  - "catalog/services/sst-fend.yaml"
+  - "catalog/services/sst-bend.yaml"
+  - "catalog/services/sst-extension.yaml"
+  - "catalog/services/sst-4uentes-infra.yaml"
+  - "inventory/phase-0.md"
+
+required_checks: []
+
+risk:
+  level: "medium"
+  score: 3
+  drivers:
+    - "Several child repositories have existing dirty working trees."
+    - "The change touches agent-facing rules and documentation indices."
+    - "sst-4uentes-infra has no unified check command."
+
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "control-plane-coordinated-docs-only"
+  preserve_existing_working_trees: true
+
+validation:
+  required_checks:
+    - "npm.cmd run check"
+    - "child repo ARDS checks where available"
+  evidence_required:
+    - "repo_status_before"
+    - "changed_files_by_repo"
+    - "validation_results"
+    - "adoption_summary"
+
+decision:
+  status: "pending"
+  approver: "TODO"
+

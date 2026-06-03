@@ -1,0 +1,48 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0017"
+title: "Complete local bindings, Git evidence, and app documentation"
+status: "done"
+created_at: "2026-05-26"
+completed_at: "2026-05-26"
+requester: "4uentes"
+
+business_context: >
+  The control plane needs complete host-local bindings, current Git evidence,
+  and per-repository app documentation so orchestration requests can resolve
+  local working copies and understand repo boundaries without relying on stale
+  Phase 0 notes.
+
+implemented_change: >
+  Completed ignored local bindings, refreshed catalog Git observations, added
+  missing inventory/evidence/git files, and added docs/apps pages for every
+  cataloged service plus the consumed 4uentes-ards-core standard source.
+
+affected_repos:
+  - service_id: 4uentes-auth
+    local_binding: "environments/local/bindings.local.yaml"
+  - service_id: sst-fend
+    local_binding: "environments/local/bindings.local.yaml"
+  - service_id: sst-bend
+    local_binding: "environments/local/bindings.local.yaml"
+  - service_id: sst-extension
+    local_binding: "environments/local/bindings.local.yaml"
+  - service_id: sst-chatbot
+    local_binding: "environments/local/bindings.local.yaml"
+  - service_id: sst-4uentes-infra
+    local_binding: "environments/local/bindings.local.yaml"
+  - service_id: 4uentes-ards-core
+    local_binding: "environments/local/bindings.local.yaml"
+    note: "standard source, not cataloged as an SST service"
+
+validation:
+  required_checks:
+    - "npm run check"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0017/reconciliation-summary.md"
+    - "evidence/requests/CR-SST-0017/validation-results.md"
+
+decision:
+  status: "approved-done"
+  approver: "4uentes"
+  decided_at: "2026-05-26"

@@ -1,0 +1,18 @@
+schema_version: "1.0"
+kind: "state_specs_index"
+status: "active"
+updated_at: "2026-05-24"
+specs:
+  - id: "feature-bugfix-state-model"
+    path: "specs/states/feature-bugfix-state-model.yaml"
+    status: "active"
+  - id: "capability-state-linkage"
+    path: "specs/states/capability-state-linkage.yaml"
+    status: "active"
+state_read_model:
+  root: "state/"
+  index: "state/00-index.yaml"
+  machine: "state/state-machine.yaml"
+  capability_links: "state/capability-links.yaml"
+validation:
+  command: "npm run check:state"

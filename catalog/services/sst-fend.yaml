@@ -13,13 +13,14 @@ repo:
   branch_observed: develop
   upstream_observed: origin/develop
   divergence_observed: 0-ahead-0-behind
-  head_observed: 8c66870
-  working_tree_observed: dirty-258-entries
-  observed_at: 2026-05-17
+  head_observed: 3f7e7a5
+  working_tree_observed: dirty-28-entries
+  stash_observed: no-stash
+  observed_at: 2026-05-26
 local_binding_evidence:
   - id: local-sst-fend
     role: repo-working-copy
-    observed_at: 2026-05-17
+    observed_at: 2026-05-26
     path_record: inventory/evidence/git/sst-fend.md
 package:
   name: sst-fend
@@ -39,6 +40,13 @@ ards:
   docs_ai_policy: true
 validation:
   check_command: npm run check
+orchestrator_link_contract:
+  required: true
+  status: adopted
+  rule_ref: "docs/cross-repo/child-repo-orchestrator-link-rule.md"
+  template_ref: "templates/child-orchestrator-link-rule.md"
+  metadata_key: "orchestrator_link"
+  capability_state_map: "state/capability-links.yaml"
 integrations:
   consumes:
     - service_id: 4uentes-auth

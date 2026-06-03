@@ -36,6 +36,24 @@ risk:
   score: 0
   drivers: []
 
+task_weight:
+  classification: "TODO"
+  risk_level: "TODO"
+  drivers: []
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "TODO"
+  fallback_profile: "TODO"
+  reason: "TODO"
+
+subagent_deployment_plan:
+  required: false
+  roles: []
+  parallelizable: false
+  fallback: "TODO"
+  evidence_required: true
+
 execution:
   requires_human_approval: true
   allowed_window: "manual"

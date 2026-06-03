@@ -1,0 +1,59 @@
+service_id: sst-chatbot
+canonical_identity: sst-chatbot
+kind: agent-runtime
+status: active
+shared: false
+solution_ids:
+  - sst
+legacy_aliases:
+  - sst_chatbot
+repo:
+  canonical_repo: sst-chatbot
+  remote: git@github.com:afpogo/sst-chatbot.git
+  branch_observed: main
+  head_observed: 584f16b
+  working_tree_observed: dirty-6-entries
+  stash_observed: no-stash
+  observed_at: 2026-05-26
+local_binding_evidence:
+  - id: local-sst-chatbot
+    role: repo-working-copy
+    observed_at: 2026-05-26
+    path_record: inventory/evidence/git/sst-chatbot.md
+package:
+  name: sst-chatbot-agent-lab
+  runtime: python-agent-runtime
+ards:
+  kind: backend-api
+  status: ready
+  agents_md: true
+  specs_index: true
+  docs_overview: true
+  docs_ai_policy: false
+validation:
+  check_command: ".\\.venv\\Scripts\\python.exe scripts\\check.py"
+orchestrator_link_contract:
+  required: true
+  status: pending-child-adoption
+  rule_ref: "docs/cross-repo/child-repo-orchestrator-link-rule.md"
+  template_ref: "templates/child-orchestrator-link-rule.md"
+  metadata_key: "orchestrator_link"
+  capability_state_map: "state/capability-links.yaml"
+deployment_targets_observed:
+  - local
+capabilities_observed:
+  - provider-abstraction
+  - ards-structure-generation
+  - retrieval-augmented-generation
+  - retriever-strategies
+  - user-workspace-provisioning
+  - generated-workspace-governance
+  - agent-lifecycle-and-orchestrator-boundary
+  - user-activity-ards-memory
+  - application-context-connector
+  - plaud-transcript-derivations
+  - prompt-catalog-and-versioning
+notes:
+  - Repo owns provider-agnostic agent contracts, private prompts, retrieval, ARDS workspace generation, and orchestrator handoff payloads.
+  - Modeled as backend-api ARDS because it publishes runtime/cross-repo capabilities consumed by SST and the orchestrator.
+  - Child orchestrator_link metadata has not been adopted in the child repo yet.

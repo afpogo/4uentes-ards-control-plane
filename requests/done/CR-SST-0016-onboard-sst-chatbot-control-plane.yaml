@@ -1,0 +1,36 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0016"
+title: "Onboard sst-chatbot into the control plane"
+status: "done"
+created_at: "2026-05-26"
+completed_at: "2026-05-26"
+requester: "4uentes"
+
+business_context: >
+  sst-chatbot is now an independent Git repository that owns SST agent runtime
+  contracts, provider abstraction, prompt governance, generated ARDS/SDD
+  workspace proposals, and orchestrator handoff payloads.
+
+implemented_change: >
+  Cataloged sst-chatbot as a logical SST service, linked it to the SST solution,
+  recorded local Git and ARDS/SDD evidence, and created the orchestrator inbound
+  capability needed to govern chatbot handoff payloads.
+
+affected_repos:
+  - service_id: sst-chatbot
+    local_binding: "environments/local/bindings.local.yaml"
+
+validation:
+  required_checks:
+    - "npm run check"
+    - ".\\.venv\\Scripts\\python.exe scripts\\check.py"
+  evidence_refs:
+    - "inventory/evidence/git/sst-chatbot.md"
+    - "evidence/requests/CR-SST-0016/onboarding-summary.md"
+    - "evidence/requests/CR-SST-0016/validation-results.md"
+
+decision:
+  status: "approved-done"
+  approver: "4uentes"
+  decided_at: "2026-05-26"

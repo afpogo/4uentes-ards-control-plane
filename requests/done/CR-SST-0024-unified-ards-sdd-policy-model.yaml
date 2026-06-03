@@ -1,0 +1,59 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0024"
+title: "Design unified ARDS/SDD policy model"
+status: "done"
+created_at: "2026-06-02"
+completed_at: "2026-06-02"
+requester: "4uentes"
+
+implemented_change: >
+  Documented the unified ARDS/SDD policy model in the orchestrator, including
+  inheritance, taxonomy, adoption metadata, initial policies, observed gaps, and
+  handoff requirements for moving universal canon and the orchestrator-defined
+  human documentation language policy into 4uentes-core.
+
+affected_repos:
+  - service_id: 4uentes-orchestor
+    local_binding: "current-workspace"
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "cross-repo governance contract"
+    - "ARDS/SDD policy inheritance"
+    - "source validation and canon boundary"
+    - "child repository modification boundary"
+    - "identity reconciliation for core standard source"
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The completed phase defines governance contracts and validation responsibilities across the ARDS/SDD control plane."
+
+subagent_deployment_plan:
+  required: true
+  roles:
+    - architecture-reviewer
+    - security-contract-reviewer
+    - cross-repo-impact-reviewer
+    - validation-reviewer
+  fallback: "Subagent tools were available, but their runtime contract only permits spawning when the user explicitly requests delegation. No explicit delegation was requested, so the main agent performed the review roles sequentially."
+  evidence_ref: "evidence/requests/CR-SST-0024/subagent-deployment-evidence.md"
+
+validation:
+  required_checks:
+    - "npm run check"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0024/policy-model.md"
+    - "evidence/requests/CR-SST-0024/subagent-deployment-evidence.md"
+    - "evidence/requests/CR-SST-0024/implementation-summary.md"
+    - "evidence/requests/CR-SST-0024/changed-files-summary.md"
+    - "evidence/requests/CR-SST-0024/validation-results.md"
+
+decision:
+  status: "approved-done"
+  approver: "4uentes"
+  decided_at: "2026-06-02"

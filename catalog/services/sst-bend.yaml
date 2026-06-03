@@ -11,15 +11,16 @@ repo:
   canonical_repo: sst-bend
   remote: git@github.com:afpogo/sst-bend.git
   branch_observed: develop
-  head_observed: 7b19cb2
-  working_tree_observed: dirty-42-entries
+  upstream_observed: origin/develop
+  head_observed: 08f6c3f
+  working_tree_observed: dirty-23-entries
   stash_observed: 1-stash
-  observed_at: 2026-05-17
+  observed_at: 2026-05-26
 local_binding_evidence:
   - id: local-sst-bend
     role: repo-working-copy
-    observed_at: 2026-05-17
-    path_record: inventory/phase-0.md
+    observed_at: 2026-05-26
+    path_record: inventory/evidence/git/sst-bend.md
 package:
   name: sst
   runtime: node-express-api
@@ -32,6 +33,13 @@ ards:
   docs_ai_policy: true
 validation:
   check_command: npm run check
+orchestrator_link_contract:
+  required: true
+  status: adopted
+  rule_ref: "docs/cross-repo/child-repo-orchestrator-link-rule.md"
+  template_ref: "templates/child-orchestrator-link-rule.md"
+  metadata_key: "orchestrator_link"
+  capability_state_map: "state/capability-links.yaml"
 deployment_targets_observed:
   - local
   - docker-compose

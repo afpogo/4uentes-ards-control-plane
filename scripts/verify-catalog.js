@@ -12,6 +12,12 @@ const ALLOWED_ARDS_KINDS = new Set([
   'infra-gitops',
   'shared-auth-provider',
 ]);
+const ALLOWED_ORCHESTRATOR_LINK_STATUSES = new Set([
+  'pending-child-adoption',
+  'adopted',
+  'blocked',
+  'not-applicable',
+]);
 const ABSOLUTE_PATH_RE = /(^|['":\s])([A-Za-z]:\\|\/Users\/|~[\\/])/;
 
 const results = [];
@@ -104,6 +110,10 @@ function failIfAbsolute(files, label) {
   }
 }
 
+function repoPathExists(repoPath) {
+  return fs.existsSync(path.join(ROOT, repoPath.replace(/\//g, path.sep)));
+}
+
 const serviceFiles = listYamlFiles(SERVICE_DIR);
 const solutionFiles = listYamlFiles(SOLUTION_DIR);
 
@@ -128,6 +138,12 @@ for (const file of serviceFiles) {
   const repoRemote = nested(text, 'repo', 'remote');
   const ardsKind = nested(text, 'ards', 'kind');
   const legacyAliases = listUnder(text, 'legacy_aliases');
+  const linkRequired = nested(text, 'orchestrator_link_contract', 'required');
+  const linkStatus = nested(text, 'orchestrator_link_contract', 'status');
+  const linkRuleRef = nested(text, 'orchestrator_link_contract', 'rule_ref');
+  const linkTemplateRef = nested(text, 'orchestrator_link_contract', 'template_ref');
+  const linkMetadataKey = nested(text, 'orchestrator_link_contract', 'metadata_key');
+  const linkStateMap = nested(text, 'orchestrator_link_contract', 'capability_state_map');
 
   if (!serviceId) report('FAIL', `${rel} missing service_id`);
   if (!type) report('FAIL', `${rel} missing kind`);
@@ -143,6 +159,26 @@ for (const file of serviceFiles) {
   if (legacyAliases.includes('node-auth') && serviceId !== '4uentes-auth') {
     report('WARN', `${rel} mentions node-auth alias outside 4uentes-auth`);
   }
+
+  if (!linkRequired) report('FAIL', `${rel} missing orchestrator_link_contract.required`);
+  else if (linkRequired !== 'true') report('FAIL', `${rel} orchestrator_link_contract.required must be true`);
+
+  if (!linkStatus) report('FAIL', `${rel} missing orchestrator_link_contract.status`);
+  else if (!ALLOWED_ORCHESTRATOR_LINK_STATUSES.has(linkStatus)) {
+    report('FAIL', `${rel} has invalid orchestrator_link_contract.status: ${linkStatus}`);
+  }
+
+  if (!linkRuleRef) report('FAIL', `${rel} missing orchestrator_link_contract.rule_ref`);
+  else if (!repoPathExists(linkRuleRef)) report('FAIL', `${rel} references missing orchestrator link rule: ${linkRuleRef}`);
+
+  if (!linkTemplateRef) report('FAIL', `${rel} missing orchestrator_link_contract.template_ref`);
+  else if (!repoPathExists(linkTemplateRef)) report('FAIL', `${rel} references missing orchestrator link template: ${linkTemplateRef}`);
+
+  if (!linkMetadataKey) report('FAIL', `${rel} missing orchestrator_link_contract.metadata_key`);
+  else if (linkMetadataKey !== 'orchestrator_link') report('FAIL', `${rel} orchestrator metadata_key must be orchestrator_link`);
+
+  if (!linkStateMap) report('FAIL', `${rel} missing orchestrator_link_contract.capability_state_map`);
+  else if (!repoPathExists(linkStateMap)) report('FAIL', `${rel} references missing capability state map: ${linkStateMap}`);
 
   if (serviceId) services.set(serviceId, { file, text, type, status, ardsKind, legacyAliases });
 }

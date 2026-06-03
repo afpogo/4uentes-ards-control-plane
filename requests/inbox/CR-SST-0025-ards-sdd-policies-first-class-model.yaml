@@ -1,0 +1,122 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0025"
+title: "Promote policies as first-class ARDS/SDD components"
+status: "inbox"
+created_at: "2026-06-02"
+requester: "4uentes"
+
+business_context: >
+  ARDS/SDD already treats capabilities and states as identifiable operational
+  components. Policies must become equally identifiable so governance,
+  inheritance, adoption, exceptions, evidence, and validation can scale across
+  core, the orchestrator, and child repositories.
+
+requested_change: >
+  Define policies as first-class ARDS/SDD components in the orchestrator,
+  including stable identifiers, policy classes, source authority, adoption,
+  enforcement, exceptions, evidence, and state linkage.
+
+expected_outcome: >
+  The control-plane has a reusable policy model that can be handed off to
+  4uentes-core and adopted by child repositories without ambiguity.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - 4uentes-auth
+    - sst-fend
+    - sst-bend
+    - sst-extension
+    - sst-chatbot
+    - sst-4uentes-infra
+  include_optional_services: true
+
+impact_analysis:
+  required: true
+  affected_services:
+    - 4uentes-auth
+    - sst-fend
+    - sst-bend
+    - sst-extension
+    - sst-chatbot
+    - sst-4uentes-infra
+  affected_ards:
+    - control-plane
+    - shared-auth-provider
+    - frontend-web
+    - backend-api
+    - frontend-extension
+    - infra-gitops
+  capabilities:
+    - policy-unification
+    - policy-state-linkage
+  risks:
+    - "Policy definitions could duplicate core authority instead of preparing handoff."
+    - "Policies could be confused with capabilities unless their separate purpose is explicit."
+    - "Child repositories could appear required to adopt manifests before approved requests exist."
+
+required_context:
+  - "AGENTS.md"
+  - "specs/00-index.yaml"
+  - "specs/capabilities/inbound/00-index.yaml"
+  - "specs/states/00-index.yaml"
+  - "state/capability-links.yaml"
+  - "evidence/requests/CR-SST-0024/policy-model.md"
+  - "docs/idioma-markdown.md"
+  - "docs/ai/model-selection-policy.md"
+
+required_checks:
+  - service_id: 4uentes-orchestor
+    command: "npm run check"
+
+risk:
+  level: "high"
+  score: 8
+  drivers:
+    - "ARDS/SDD component model change"
+    - "cross-repo governance scaling"
+    - "core handoff boundary"
+    - "child-repo adoption contract"
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "ARDS/SDD component model change"
+    - "cross-repo governance scaling"
+    - "core handoff boundary"
+    - "child-repo adoption contract"
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The request promotes policies into the ARDS/SDD component model and affects future cross-repo governance contracts."
+
+subagent_deployment_plan:
+  required: true
+  roles:
+    - architecture-reviewer
+    - cross-repo-impact-reviewer
+    - validation-reviewer
+  parallelizable: true
+  fallback: "Subagent tools require explicit user delegation in this runtime. No explicit delegation was requested, so the main agent performs the reviews sequentially and records this fallback."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "orchestrator-only"
+
+validation:
+  required_checks:
+    - "npm run check"
+  evidence_required:
+    - "policy_component_model"
+    - "changed_files_summary"
+    - "validation_results"
+
+decision:
+  status: "approved-for-orchestrator-design"
+  approver: "4uentes"

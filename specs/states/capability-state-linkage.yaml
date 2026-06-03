@@ -1,0 +1,46 @@
+schema_version: "1.0"
+kind: "state_model_spec"
+id: "capability-state-linkage"
+title: "Capability to state linkage"
+status: "active"
+updated_at: "2026-05-24"
+scope:
+  control_plane_map: "state/capability-links.yaml"
+  child_repo_metadata_key: "orchestrator_link"
+required_fields:
+  capability_link:
+    - capability_id
+    - producer_service
+    - producer_repo
+    - state_kind
+    - state_id
+    - state_file
+    - link_status
+    - source_ref
+  child_repo_orchestrator_link:
+    - orchestrator_repo
+    - state_kind
+    - state_id
+    - capability_id
+    - work_origin
+    - request_id
+    - evidence_ref
+    - status_hint
+    - correlation_id
+allowed_work_origins:
+  - orchestrator-request
+  - child-repo
+  - imported-evidence
+  - manual-reconciliation
+allowed_link_statuses:
+  - linked
+  - pending-child-adoption
+  - orphan-observed
+  - deprecated
+rules:
+  - "Every governed capability should link to a feature_state or bugfix_state."
+  - "A child repo may start work outside the orchestrator only if it leaves orchestrator_link metadata for reconciliation."
+  - "The orchestrator reconciles status_hint against requests, evidence, and validation before changing state."
+  - "The control-plane map validates producer_service, state_file, state_id, state_kind, and source_ref."
+  - "producer_service must exist in catalog/services/*.yaml unless it is the internal 4uentes-orchestor producer."
+  - "Child repository adoption is expected but not automatically enforced by V1."

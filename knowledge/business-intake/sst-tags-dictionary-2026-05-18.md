@@ -1,53 +1,101 @@
-# SST Tags and Dictionary — Business Intake
+# SST Tags And Dictionary - Business Intake
 
-Date: 2026-05-18  
-Source: User mental dump / brainstorming  
-Status: intake  
-Related request: CR-SST-0002  
-Solution: SST  
+Fecha: 2026-05-18
+Fuente: descarga mental / brainstorming del usuario
+Estado: intake
+Request relacionado: CR-SST-0002
+Solucion: SST
 
-## Purpose
+## Proposito
 
 Este documento captura una descarga mental inicial sobre Study Store Tag, tags,
 diccionario, dictionary entries, dictionary sheets, translations, aliases,
-seguridad y relación con account.
+seguridad y relacion con account.
 
-## Raw Intake
+## Intake Sin Procesar
 
-Aquí tienes un resumen de tu descarga mental, organizado en categorías con una visión general de los temas tratados.
-## Resumen de la Descarga Mental
+Resumen organizado de la descarga mental inicial, agrupado por categorias y con
+una vision general de los temas tratados.
+
+## Resumen De La Descarga Mental
+
 ### Reflexiones
-- El propósito de SST (Study Store Tag) es permitir a los usuarios aprovechar la plataforma para gestionar todo tipo de información (sensible, importante, banal) de forma segura.
-- Al hacer de los "tags" una funcionalidad principal, la información etiquetada se convierte en un "recurso vivo" que la plataforma y el usuario pueden gestionar activamente.
-- Se busca dar la máxima seguridad al usuario, explorando opciones como servidores offline y cifrado para que la información no se filtre y pueda ser usada en aplicaciones externas (como llaves o puentes) con confianza.
+
+- El proposito de SST (Study Store Tag) es permitir que los usuarios aprovechen
+  la plataforma para gestionar informacion sensible, importante o banal de forma
+  segura.
+- Al hacer de los `tags` una funcionalidad principal, la informacion etiquetada
+  se convierte en un recurso vivo que la plataforma y el usuario pueden
+  gestionar activamente.
+- Se busca dar maxima seguridad al usuario, explorando opciones como servidores
+  offline y cifrado para que la informacion no se filtre y pueda ser usada en
+  aplicaciones externas con confianza.
+
 ### Ideas
-- **Propósito de los Tags:** Convertir la información del usuario en recursos vivos y gestionables. El usuario podrá visualizar y consumir su información etiquetada en diferentes paneles (información sensible, segura, general).
-- **Gramática de los Tags:** Se imagina un sistema de `keys`. Cada `key` existirá dentro de un "scope" o ámbito específico. Por ejemplo, las `keys` del recurso "diccionario" serán distintas a las de "artículos" o "bitácora". Para empezar, las `keys` de diccionario vivirán únicamente en el ámbito del diccionario.
-- **Diferencia entre `Dictionary Entry` y `Dictionary Sheet`:**
-  - **`Dictionary Entry`:** Es una entrada individual que se guarda en la aplicación.
-  - **`Dictionary Sheet`:** Es un conjunto de `Dictionary Entries` agrupadas que definen un concepto mayor. Esta "hoja" contendrá las entradas junto con comentarios, indicaciones, etc.
-- **Manejo de Traducciones:** Para campos que requieren múltiples idiomas (como en el diccionario de conceptos con inglés y español), se propone crear una tabla separada llamada "traducciones" (o similar) que luego sea referenciada desde la tabla principal del diccionario.
+
+- Proposito de los `tags`: convertir la informacion del usuario en recursos
+  vivos y gestionables. El usuario podra visualizar y consumir informacion
+  etiquetada en distintos paneles: informacion sensible, segura o general.
+- Gramatica de los `tags`: se imagina un sistema de `keys`. Cada `key` existira
+  dentro de un `scope` especifico. Por ejemplo, las `keys` del recurso
+  diccionario seran distintas a las de articulos o bitacora. Para empezar, las
+  `keys` de diccionario viviran solo en el scope del diccionario.
+- Diferencia entre `Dictionary Entry` y `Dictionary Sheet`:
+  - `Dictionary Entry`: entrada individual que se guarda en la aplicacion.
+  - `Dictionary Sheet`: conjunto de `Dictionary Entries` agrupadas que definen
+    un concepto mayor. La sheet contiene entradas junto con comentarios,
+    indicaciones y contexto.
+- Manejo de translations: para campos que requieren multiples idiomas, como en
+  el diccionario de conceptos con ingles y espanol, se propone crear una tabla
+  separada llamada `translations` o equivalente, referenciada desde la tabla
+  principal del diccionario.
+
 ### Tareas
-- Definir la entrada de información para SST en el contexto de la construcción de un diccionario.
-- Definir el propósito de "Study Store Tag" (SST).
-- Establecer la gramática mínima de los tags.
-- Definir qué es una `Dictionary Sheet`.
-- Definir qué es una `Dictionary Entry`.
-- Definir el manejo de traducciones y alias.
-- (Pospuesto) Definir reglas de seguridad y tamaño.
-- (Pospuesto) Definir la relación con `account` y el `endpoint` previsto.
+
+- Definir la entrada de informacion para SST en el contexto de construccion de
+  un diccionario.
+- Definir el proposito de Study Store Tag (SST).
+- Establecer la gramatica minima de los tags.
+- Definir que es una `Dictionary Sheet`.
+- Definir que es una `Dictionary Entry`.
+- Definir el manejo de translations y aliases.
+- Pospuesto: definir reglas de seguridad y tamano.
+- Pospuesto: definir la relacion con `account` y el `endpoint` previsto.
+
 ### Preguntas
-- ¿Cómo va a funcionar el sistema de tags en su totalidad? (Aunque hay una buena idea inicial, aún no está completamente claro).
+
+- Como va a funcionar el sistema de tags en su totalidad? Hay una idea inicial,
+  pero todavia no esta completamente cerrado.
+
 ### Bloqueos
-- El funcionamiento detallado y completo del sistema de tags aún no está definido, por lo que esta sesión es un primer brainstorming.
-- Los siguientes puntos quedan pendientes para una futura sesión:
-  - Reglas de seguridad y tamaño.
-  - Relación con la cuenta (`account`).
-  - Endpoint previsto.
-## Visión General de los Temas
-El tema principal de tu monólogo del 22 de abril de 2026 es la **conceptualización inicial del sistema "Study Store Tag" (SST)**, con un enfoque específico en su aplicación para construir un **diccionario**.
-Los puntos clave que abordaste son:
-1. **El Propósito y la Filosofía de SST:** Buscas crear un sistema donde los datos del usuario, organizados mediante "tags", se conviertan en recursos dinámicos y seguros dentro de la plataforma. La seguridad y la portabilidad de la información son fundamentales.
-2. **Estructura de Datos del Diccionario:** Estás definiendo la jerarquía y las entidades clave. Diferenciaste claramente entre una entrada individual (`Dictionary Entry`) y una colección de ellas con contexto (`Dictionary Sheet`), y propusiste una solución para gestionar las traducciones de manera escalable.
-3. **Arquitectura de los Tags:** Has comenzado a esbozar la "gramática" de los tags, introduciendo el concepto de `keys` que operan dentro de "scopes" específicos (diccionario, artículos, etc.), lo que previene colisiones de nombres entre diferentes tipos de recursos.
-En resumen, estás sentando las bases de la arquitectura y la lógica de negocio de una funcionalidad central de tu plataforma, usando el caso de uso del diccionario como primer campo de pruebas.
+
+- El funcionamiento detallado y completo del sistema de tags todavia no esta
+  definido, por lo que esta sesion es un primer brainstorming.
+- Los siguientes puntos quedan pendientes para una sesion futura:
+  - reglas de seguridad y tamano
+  - relacion con la cuenta (`account`)
+  - endpoint previsto
+
+## Vision General De Los Temas
+
+El tema principal del monologo del 22 de abril de 2026 es la conceptualizacion
+inicial del sistema Study Store Tag (SST), con foco especifico en su aplicacion
+para construir un diccionario.
+
+Puntos clave:
+
+1. Proposito y filosofia de SST: crear un sistema donde los datos del usuario,
+   organizados mediante `tags`, se conviertan en recursos dinamicos y seguros
+   dentro de la plataforma. La seguridad y portabilidad de la informacion son
+   fundamentales.
+2. Estructura de datos del diccionario: definir jerarquia y entidades clave,
+   diferenciando una entrada individual (`Dictionary Entry`) de una coleccion
+   contextual (`Dictionary Sheet`) y proponiendo un manejo escalable de
+   translations.
+3. Arquitectura de tags: empezar a definir la gramatica de tags mediante `keys`
+   que operan dentro de `scopes` especificos como diccionario, articulos u otros
+   recursos, evitando colisiones de nombres entre dominios.
+
+En resumen, este intake sienta bases de arquitectura y logica de negocio para
+una funcionalidad central de SST, usando el diccionario como primer campo de
+prueba.

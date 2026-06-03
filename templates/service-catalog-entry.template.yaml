@@ -1,0 +1,36 @@
+service_id: TODO
+canonical_identity: TODO
+kind: TODO
+status: TODO
+shared: false
+solution_ids:
+  - TODO
+repo:
+  canonical_repo: TODO
+  remote: TODO
+  branch_observed: TODO
+  head_observed: TODO
+  working_tree_observed: TODO
+  observed_at: YYYY-MM-DD
+package:
+  name: TODO
+  runtime: TODO
+ards:
+  kind: TODO
+  status: TODO
+  agents_md: true
+  specs_index: true
+  docs_overview: true
+  docs_ai_policy: true
+validation:
+  check_command: TODO
+orchestrator_link_contract:
+  required: true
+  status: pending-child-adoption
+  rule_ref: "docs/cross-repo/child-repo-orchestrator-link-rule.md"
+  template_ref: "templates/child-orchestrator-link-rule.md"
+  metadata_key: "orchestrator_link"
+  capability_state_map: "state/capability-links.yaml"
+notes:
+  - TODO
+

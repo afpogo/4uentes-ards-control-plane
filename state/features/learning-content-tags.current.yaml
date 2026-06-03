@@ -1,0 +1,24 @@
+schema_version: "1.0"
+kind: "feature_state"
+id: "learning-content-tags"
+title: "SST Learning Content Tags"
+status: "implemented-local"
+updated_at: "2026-05-26"
+solution_id: "sst"
+affected_services:
+  - sst-bend
+  - sst-fend
+request_ids:
+  - CR-SST-0015
+  - CR-SST-0016
+capability_refs:
+  - "learning-content-tags"
+spec_refs: []
+evidence_refs:
+  - "evidence/requests/CR-SST-0015/java-spring-course-structure-analysis.md"
+  - "evidence/requests/CR-SST-0015/parser-boundary-recommendation.md"
+  - "evidence/requests/CR-SST-0016/backend-poc-summary.md"
+open_gaps:
+  - "Promote learning-content parser from POC module to runtime import/preview endpoint."
+  - "Define frontend rendering for clase, nota, recordar, ejemplo, image, docs, and code blocks."
+  - "Keep generated lab artifacts excluded from ingestion by default."

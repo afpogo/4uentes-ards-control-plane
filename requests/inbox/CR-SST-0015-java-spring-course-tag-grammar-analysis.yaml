@@ -1,0 +1,73 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0015"
+title: "Analyze complete Java Spring course folder tag grammar"
+status: "inbox"
+created_at: "2026-05-25"
+requester: "4uentes"
+
+business_context: >
+  SST course material is not only a set of tagged text files. A complete course
+  has directory structure, ordered lesson files, assets, scripts, labs, exams,
+  and prefix-based content blocks such as clase, nota, ejemplo, recordar, image,
+  docs, and definicion.
+
+requested_change: >
+  Review the Java Spring Gradle course folder as a complete course specimen and
+  determine how folder structure and line prefixes should map to the future SST
+  learning-content tag grammar.
+
+expected_outcome: >
+  Produce control-plane evidence that separates course-level metadata, lesson
+  resources, content blocks, assets, lab/runtime artifacts, and prefix aliases
+  so the future parser can preserve the intended learning structure.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - sst-bend
+    - sst-fend
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services: []
+  affected_ards: []
+  capabilities:
+    - "sst-tags-governance"
+    - "article-tags"
+    - "learning-content-tags"
+  risks: []
+
+required_context:
+  - "state/features/sst-tags-governance.current.yaml"
+  - "evidence/requests/CR-SST-0014/course-tags-analysis.md"
+  - "TODO: record inventory evidence for the javaSpringGraddle course source before execution"
+
+required_checks: []
+
+risk:
+  level: "medium"
+  score: 3
+  drivers:
+    - "Course folder structure introduces resource hierarchy beyond flat article tags."
+    - "Prefix aliases and typos require normalization before parser implementation."
+    - "The folder contains lab/runtime artifacts that must not be blindly ingested as lesson content."
+
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "control-plane-evidence-only"
+
+validation:
+  required_checks:
+    - "npm run check:state"
+    - "npm run check"
+  evidence_required:
+    - "complete_course_structure_analysis"
+    - "prefix_tag_grammar_analysis"
+    - "parser_boundary_recommendation"
+
+decision:
+  status: "pending"
+  approver: "TODO"

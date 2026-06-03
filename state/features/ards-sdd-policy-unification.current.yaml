@@ -1,0 +1,42 @@
+schema_version: "1.0"
+kind: "feature_state"
+id: "ards-sdd-policy-unification"
+title: "ARDS/SDD Policy Unification"
+status: "ards-documented"
+updated_at: "2026-06-02"
+solution_id: "sst"
+affected_services:
+  - 4uentes-auth
+  - sst-fend
+  - sst-bend
+  - sst-extension
+  - sst-chatbot
+  - sst-4uentes-infra
+request_ids:
+  - CR-SST-0024
+  - CR-SST-0025
+spec_refs:
+  - "specs/policies/00-index.yaml"
+  - "specs/policies/ards-sdd-policy-component-model.yaml"
+  - "docs/idioma-markdown.md"
+  - "docs/ai/model-selection-policy.md"
+  - "docs/cross-repo/child-repo-orchestrator-link-rule.md"
+  - "docs/requests/capability-state-linkage.md"
+evidence_refs:
+  - "evidence/requests/CR-SST-0024/policy-model.md"
+  - "evidence/requests/CR-SST-0024/subagent-deployment-evidence.md"
+  - "evidence/requests/CR-SST-0024/implementation-summary.md"
+  - "evidence/requests/CR-SST-0024/changed-files-summary.md"
+  - "evidence/requests/CR-SST-0024/validation-results.md"
+  - "evidence/requests/CR-SST-0025/policy-component-model.md"
+  - "evidence/requests/CR-SST-0025/subagent-deployment-evidence.md"
+  - "evidence/requests/CR-SST-0025/changed-files-summary.md"
+  - "evidence/requests/CR-SST-0025/validation-results.md"
+open_gaps:
+  - "Move universal policy canon into 4uentes-core with source validation."
+  - "Have 4uentes-core adopt policies as first-class ARDS/SDD components."
+  - "Handoff human-doc-language from docs/idioma-markdown.md to 4uentes-core as a reusable policy while preserving its orchestrator origin."
+  - "Resolve canonical identity for 4uentes-core versus 4uentes-ards-core."
+  - "Define and adopt a child-repo policy_adoption manifest through future approved requests."
+  - "Close observed gaps for sst-chatbot docs_ai_policy and orchestrator_link adoption."
+  - "Close observed validation.check_command TODO for sst-4uentes-infra."

@@ -1,0 +1,25 @@
+schema_version: "1.0"
+kind: "feature_state"
+id: "robots"
+title: "SST Robots"
+status: "runtime-partial"
+updated_at: "2026-05-24"
+solution_id: "sst"
+affected_services:
+  - sst-fend
+  - sst-bend
+  - 4uentes-auth
+  - sst-extension
+  - sst-4uentes-infra
+request_ids:
+  - CR-SST-0006
+capability_refs: []
+spec_refs: []
+evidence_refs:
+  - "evidence/requests/CR-SST-0006/implementation-state-report.md"
+  - "evidence/requests/CR-SST-0006/cross-repo-summary.md"
+  - "evidence/requests/CR-SST-0006/validation-results.md"
+open_gaps:
+  - "Future work needs a request boundary before functional repository changes."
+  - "Capability ownership is not yet formalized."
+

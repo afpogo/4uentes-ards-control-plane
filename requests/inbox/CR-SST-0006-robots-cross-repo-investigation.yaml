@@ -1,0 +1,67 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0006"
+title: "Robots cross-repo investigation for SST"
+status: "inbox"
+created_at: "2026-05-20"
+requester: "4uentes"
+
+business_context: >
+  SST needs a cross-repo understanding of the "Robots" topic: whether it was
+  discussed in documentation or specs, whether any runtime implementation exists
+  in functional repositories, and which service should own future work if the
+  concept is still only exploratory.
+
+requested_change: >
+  Investigate all SST-related repositories read-only for Robot/Robots evidence,
+  including docs, specs, source code, tests, package metadata, migrations,
+  routes, UI surfaces, extension surfaces, BFF/auth boundaries, and infra
+  deployment artifacts.
+
+expected_outcome: >
+  Produce control-plane evidence that documents what was discussed about Robots
+  in SST, what implementation exists or does not exist by service, open gaps,
+  and recommended next request boundaries.
+
+initial_scope:
+  solution: "sst"
+  services: []
+  include_optional_services: true
+
+impact_analysis:
+  required: true
+  affected_services: []
+  affected_ards: []
+  capabilities: []
+  risks: []
+
+required_context:
+  - "catalog/services/*.yaml"
+  - "solutions/sst.yaml"
+  - "inventory/phase-0.md"
+  - "inventory/evidence/git/*.md"
+  - "docs/idioma-markdown.md"
+
+required_checks: []
+
+risk:
+  level: "TODO"
+  score: 0
+  drivers: []
+
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "control-plane-evidence-only"
+
+validation:
+  required_checks:
+    - "npm run check"
+  evidence_required:
+    - "searched_artifacts"
+    - "implementation_state_report"
+    - "cross_repo_summary"
+
+decision:
+  status: "pending"
+  approver: "TODO"

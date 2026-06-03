@@ -96,6 +96,9 @@ const affectedServices = affected.map((item) => {
 const requiredContext = buildRequiredContext(request, solution, affectedServices);
 const requiredChecks = buildRequiredChecks(affectedServices);
 const risk = classifyRisk(affectedServices, requiredChecks);
+const taskWeight = classifyTaskWeight(request, affectedServices, risk);
+const modelSelection = buildModelSelection(taskWeight);
+const subagentDeploymentPlan = buildSubagentDeploymentPlan(taskWeight);
 const planned = renderPlannedRequest({
   sourceRequest: path.relative(ROOT, requestPath).replace(/\\/g, '/'),
   request,
@@ -104,6 +107,9 @@ const planned = renderPlannedRequest({
   requiredContext,
   requiredChecks,
   risk,
+  taskWeight,
+  modelSelection,
+  subagentDeploymentPlan,
 });
 
 fs.writeFileSync(plannedPath, planned, 'utf8');
@@ -262,6 +268,110 @@ function classifyRisk(affectedServices, requiredChecks) {
   return { level, score, drivers };
 }
 
+function classifyTaskWeight(request, affectedServices, risk) {
+  const drivers = [...risk.drivers.map((driver) => driver.id)];
+  const title = request.title || '';
+  const securityKeywords = [
+    'auth',
+    'authentication',
+    'authorization',
+    'session',
+    'security',
+    'rbac',
+    'secret',
+    'token',
+    'cookie',
+    'csrf',
+    'contract',
+    'migration',
+    'incident',
+  ];
+  const hasSecurityKeyword = securityKeywords.some((keyword) => title.toLowerCase().includes(keyword));
+  const hasHighRiskDriver = risk.drivers.some((driver) => driver.severity === 'high');
+
+  if (risk.level === 'high' || hasHighRiskDriver || hasSecurityKeyword) {
+    if (hasSecurityKeyword) drivers.push('SECURITY_OR_CONTRACT_KEYWORD');
+    return {
+      classification: 'complex-high-risk-task',
+      riskLevel: risk.level,
+      drivers: unique(drivers),
+    };
+  }
+
+  if (affectedServices.length > 1 || risk.level === 'medium') {
+    if (affectedServices.length > 1) drivers.push('MULTI_REPO_OR_SERVICE_CONTEXT');
+    return {
+      classification: 'long-context-task',
+      riskLevel: risk.level,
+      drivers: unique(drivers),
+    };
+  }
+
+  drivers.push('SINGLE_SERVICE_LOW_RISK_SCOPE');
+  return {
+    classification: 'short-defined-task',
+    riskLevel: risk.level,
+    drivers: unique(drivers),
+  };
+}
+
+function buildModelSelection(taskWeight) {
+  if (taskWeight.classification === 'complex-high-risk-task') {
+    return {
+      policyRef: 'docs/ai/model-selection-policy.md',
+      primaryProfile: 'gpt-5.5',
+      fallbackProfile: 'highest-available-reasoning-profile',
+      reason: 'High-risk or security/contract-sensitive task.',
+    };
+  }
+
+  if (taskWeight.classification === 'long-context-task') {
+    return {
+      policyRef: 'docs/ai/model-selection-policy.md',
+      primaryProfile: 'gpt-5.4-fast-high',
+      fallbackProfile: 'highest-available-fast-high-context-profile',
+      reason: 'Long-context or multi-service task.',
+    };
+  }
+
+  return {
+    policyRef: 'docs/ai/model-selection-policy.md',
+    primaryProfile: 'gpt-5.3-spark',
+    fallbackProfile: 'default-available-coding-profile',
+    reason: 'Short, bounded, low-risk task.',
+  };
+}
+
+function buildSubagentDeploymentPlan(taskWeight) {
+  if (taskWeight.classification === 'complex-high-risk-task') {
+    return {
+      required: true,
+      parallelizable: true,
+      roles: ['architecture-reviewer', 'security-contract-reviewer', 'cross-repo-impact-reviewer', 'validation-reviewer'],
+      fallback: 'If subagents or exact model aliases are unavailable, record the limitation and run the same review steps sequentially with the highest available reasoning profile.',
+      evidenceRequired: true,
+    };
+  }
+
+  if (taskWeight.classification === 'long-context-task') {
+    return {
+      required: true,
+      parallelizable: true,
+      roles: ['repo-context-explorer', 'ards-sdd-validator', 'implementation-planner'],
+      fallback: 'If subagents or exact model aliases are unavailable, record the limitation and run the exploration/validation steps sequentially.',
+      evidenceRequired: true,
+    };
+  }
+
+  return {
+    required: false,
+    parallelizable: false,
+    roles: [],
+    fallback: 'Subagents are optional for short-defined tasks unless the user explicitly requests delegation or a parallel sidecar task appears.',
+    evidenceRequired: false,
+  };
+}
+
 function renderPlannedRequest(data) {
   const affectedKinds = unique(data.affectedServices.map((item) => item.ardsKind));
   const lines = [];
@@ -323,6 +433,30 @@ function renderPlannedRequest(data) {
     if (driver.serviceId) lines.push(`      service_id: ${driver.serviceId}`);
     lines.push(`      severity: ${driver.severity}`);
   }
+  lines.push('');
+  lines.push('task_weight:');
+  lines.push(`  classification: ${data.taskWeight.classification}`);
+  lines.push(`  risk_level: ${data.taskWeight.riskLevel}`);
+  lines.push('  drivers:');
+  for (const driver of data.taskWeight.drivers) lines.push(`    - ${driver}`);
+  lines.push('');
+  lines.push('model_selection:');
+  lines.push(`  policy_ref: ${quote(data.modelSelection.policyRef)}`);
+  lines.push(`  primary_profile: ${quote(data.modelSelection.primaryProfile)}`);
+  lines.push(`  fallback_profile: ${quote(data.modelSelection.fallbackProfile)}`);
+  lines.push(`  reason: ${quote(data.modelSelection.reason)}`);
+  lines.push('');
+  lines.push('subagent_deployment_plan:');
+  lines.push(`  required: ${data.subagentDeploymentPlan.required ? 'true' : 'false'}`);
+  lines.push(`  parallelizable: ${data.subagentDeploymentPlan.parallelizable ? 'true' : 'false'}`);
+  if (data.subagentDeploymentPlan.roles.length === 0) {
+    lines.push('  roles: []');
+  } else {
+    lines.push('  roles:');
+    for (const role of data.subagentDeploymentPlan.roles) lines.push(`    - ${role}`);
+  }
+  lines.push(`  fallback: ${quote(data.subagentDeploymentPlan.fallback)}`);
+  lines.push(`  evidence_required: ${data.subagentDeploymentPlan.evidenceRequired ? 'true' : 'false'}`);
   lines.push('');
   lines.push('execution:');
   lines.push('  requires_human_approval: true');

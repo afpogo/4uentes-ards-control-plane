@@ -1,6 +1,6 @@
 # Fase 0 - Inventario ARDS/SDD
 
-Observed at: 2026-05-17
+Observado el: 2026-05-17
 
 ## Resumen
 
@@ -11,7 +11,7 @@ Observed at: 2026-05-17
 - Alias legacy principal: `node-auth`
 - Runtime adicional opcional confirmado: `sst-extension`
 
-## Repos detectados relevantes
+## Repos Detectados Relevantes
 
 | Repo detectado | Path local observado | Remote Git | Branch | Working tree | Package name | Identidad canonica | Alias legacy | Observaciones |
 |---|---|---|---|---|---|---|---|---|
@@ -21,9 +21,9 @@ Observed at: 2026-05-17
 | `sst-extension` | `C:\Users\andre\Desktop\4uentes\apps\4uentes-sst\sst-extension` | `git@github.com:afpogo/sst-extension.git` | `main` | bootstrap/no commits | `sst-extension` | `sst-extension` | TODO | Runtime Manifest V3 real con ARDS/SDD ready |
 | `sst-4uentes-infra` | `C:\Users\andre\Desktop\4uentes\apps\4uentes-infra\sst-4uentes-infra` | `git@github.com:afpogo/sst-4uentes-infra.git` | `develop` | dirty `25` | TODO | `sst-4uentes-infra` | TODO | GitOps/Kubernetes SST |
 
-## ARDS/SDD readiness
+## ARDS/SDD Readiness
 
-| Repo | AGENTS.md | specs/00-index.yaml | docs/00-overview.md | docs/ai/policy.md | check command | Estado ARDS | Accion sugerida |
+| Repo | AGENTS.md | specs/00-index.yaml | docs/00-overview.md | docs/ai/policy.md | Check command | Estado ARDS | Accion sugerida |
 |---|---|---|---|---|---|---|---|
 | `4uentes-auth` | si | si | si | si | `npm run check` | ready | Catalogar como shared auth |
 | `sst-fend` | si | si | si | si | `npm run check` | ready | Catalogar como frontend SST |
@@ -31,7 +31,7 @@ Observed at: 2026-05-17
 | `sst-extension` | si | si | si | si | `pnpm run check` | ready | Catalogar como browser extension SST |
 | `sst-4uentes-infra` | si | si | si | si | TODO | ready | Catalogar como infraestructura SST |
 
-## Servicios logicos inferidos
+## Servicios Logicos Inferidos
 
 | Service ID | Repo canonico | Tipo | Compartido | Soluciones consumidoras | Alias legacy | Runtime esperado | Estado |
 |---|---|---|---|---|---|---|---|
@@ -41,17 +41,21 @@ Observed at: 2026-05-17
 | `sst-extension` | `sst-extension` | `browser-extension` | no | `sst` | TODO | Manifest V3 app | optional-active |
 | `sst-4uentes-infra` | `sst-4uentes-infra` | `gitops-infrastructure` | no | `sst` | TODO | Kubernetes/GitOps | active |
 
-## Solucion logica SST
+## Solucion Logica SST
 
 | Solution ID | Nombre | Servicios incluidos | Servicios compartidos | Infraestructura | Estado |
 |---|---|---|---|---|---|
 | `sst` | `SST` | `sst-fend`, `sst-bend`; optional: `sst-extension` | `4uentes-auth` | `sst-4uentes-infra` | active |
 
-## Decisiones recomendadas
+## Decisiones Recomendadas
 
-1. Mantener `4uentes-auth` como identidad canonica y `node-auth` como alias legacy/local.
-2. Incluir `sst-fend` en el manifest porque existe repo remoto, ARDS/SDD completo y runtime frontend activo.
-3. Incluir `sst-extension` en el manifest como `optional-active` porque existe runtime Manifest V3 real y ARDS/SDD completo, pero no debe ser obligatorio por defecto.
+1. Mantener `4uentes-auth` como identidad canonica y `node-auth` como alias
+   legacy/local.
+2. Incluir `sst-fend` en el manifest porque existe repo remoto, ARDS/SDD
+   completo y runtime frontend activo.
+3. Incluir `sst-extension` en el manifest como `optional-active` porque existe
+   runtime Manifest V3 real y ARDS/SDD completo, pero no debe ser obligatorio
+   por defecto.
 4. No crear `sst-solution` en Fase 0; modelar SST como solucion logica.
 5. No crear `node-auth` como repo nuevo.
 
@@ -64,8 +68,10 @@ Observed at: 2026-05-17
 | Repo sin commits | `sst-extension` no tiene HEAD valido | Catalogar como runtime real con riesgo de bootstrap Git |
 | Dependencia de jerarquia local | `4uentes-sst` parece agrupador local | No derivar identidad canonica desde carpetas contenedoras |
 
-## Proximos pasos
+## Proximos Pasos
 
-1. Agregar verificador `verify-catalog` para parsear YAML y validar referencias.
-2. Agregar verificador `verify-local-bindings` para revisar paths observados sin hacerlos canonicos.
-3. Completar catalogo con `fulbito` solo despues de resolver identidad `fulbito` vs `fulvito`.
+1. Agregar verifier `verify-catalog` para parsear YAML y validar referencias.
+2. Agregar verifier `verify-local-bindings` para revisar paths observados sin
+   hacerlos canonicos.
+3. Completar catalogo con `fulbito` solo despues de resolver identidad
+   `fulbito` vs `fulvito`.

@@ -1,0 +1,134 @@
+schema_version: "1.0"
+kind: "ards_sdd_policy_component_model"
+status: "active"
+updated_at: "2026-06-02"
+
+definition: >
+  A policy is an identifiable ARDS/SDD governance component that states a rule,
+  obligation, constraint, or exception path. Policies are separate from
+  capabilities: a capability says what a repo can provide or consume; a policy
+  says under which rules that work may be planned, implemented, validated, or
+  accepted.
+
+relationship_to_capabilities:
+  - "Capabilities publish or consume operational behavior."
+  - "Policies constrain, authorize, classify, or validate behavior."
+  - "A capability may be governed by many policies."
+  - "A policy may apply to many capabilities, states, requests, repos, or profiles."
+
+identifiable_parts:
+  - id: "policy_definition"
+    required: true
+    purpose: "Stable rule identity, class, title, scope, normative text, and status."
+    minimum_fields:
+      - "policy_id"
+      - "policy_class"
+      - "title"
+      - "status"
+      - "scope"
+      - "rule"
+  - id: "policy_source"
+    required: true
+    purpose: "Authority and provenance for the policy."
+    minimum_fields:
+      - "source_repo"
+      - "source_path"
+      - "source_version"
+      - "source_status"
+      - "owner"
+  - id: "policy_adoption"
+    required: true
+    purpose: "How a repo declares whether it follows the policy."
+    minimum_fields:
+      - "adopting_repo"
+      - "adoption_status"
+      - "local_implementation_path"
+      - "validation_ref"
+  - id: "policy_enforcement"
+    required: true
+    purpose: "How the policy is checked or applied."
+    minimum_fields:
+      - "enforcement_mode"
+      - "check_ref"
+      - "failure_behavior"
+  - id: "policy_exception"
+    required: true
+    purpose: "How a repo documents a gap, waiver, or temporary deviation."
+    minimum_fields:
+      - "exception_status"
+      - "owner"
+      - "reason"
+      - "expires_at"
+      - "closure_plan"
+  - id: "policy_evidence"
+    required: true
+    purpose: "Evidence proving adoption, validation, exception, or handoff."
+    minimum_fields:
+      - "evidence_ref"
+      - "observed_at"
+      - "result"
+  - id: "policy_state_link"
+    required: true
+    purpose: "Link from a policy to feature_state, bugfix_state, capability, request, or repo adoption state."
+    minimum_fields:
+      - "policy_id"
+      - "state_kind"
+      - "state_id"
+      - "state_file"
+      - "link_status"
+
+policy_classes:
+  - id: "core-required"
+    owner: "4uentes-core"
+    meaning: "Universal ARDS/SDD policy expected for all compatible repos."
+  - id: "orchestrator-required"
+    owner: "4uentes-orchestor"
+    meaning: "Policy required for repos governed by the control-plane."
+  - id: "profile-required"
+    owner: "4uentes-core"
+    meaning: "Policy required by ARDS kind or profile."
+  - id: "repo-local"
+    owner: "adopting-repo"
+    meaning: "Local repo policy that must not contradict inherited policies."
+  - id: "exception"
+    owner: "declared-owner"
+    meaning: "Documented temporary or scoped deviation."
+
+statuses:
+  definition:
+    - "draft"
+    - "active"
+    - "needs-review"
+    - "deprecated"
+  adoption:
+    - "adopted"
+    - "partial"
+    - "gap"
+    - "exception"
+    - "not-applicable"
+    - "TODO"
+  link:
+    - "linked"
+    - "pending-core-handoff"
+    - "pending-child-adoption"
+    - "exception-open"
+    - "deprecated"
+
+initial_policy_ids:
+  - "repo-minimum-contract"
+  - "ai-guardrails"
+  - "source-validation"
+  - "model-selection"
+  - "orchestrator-link"
+  - "capability-state-linkage"
+  - "human-doc-language"
+  - "child-repo-boundary"
+
+handoff_to_core:
+  required: true
+  reason: "Policies must become part of the reusable ARDS/SDD standard, not only local orchestrator evidence."
+  next_artifacts:
+    - "core policy component model"
+    - "policy adoption manifest template"
+    - "policy exception template"
+    - "source validation entries for core-required policies"

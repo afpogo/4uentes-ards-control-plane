@@ -1,0 +1,57 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0022"
+title: "Implement local fake orchestrator handoff adapter for sst-chatbot"
+status: "done"
+created_at: "2026-05-31"
+completed_at: "2026-05-31"
+requester: "4uentes"
+
+implemented_change: >
+  Implemented a local fake orchestrator handoff adapter in sst-chatbot with
+  in-memory receipts, deterministic validation, duplicate/conflict idempotency
+  behavior, human-review gating, and proposal-only boundary documentation.
+
+affected_repos:
+  - service_id: sst-chatbot
+    local_binding: "environments/local/bindings.local.yaml"
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "orchestrator boundary simulation"
+    - "idempotency conflict semantics"
+    - "proposal-only authority boundary"
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "Handoff boundary semantics and authority guarantees."
+
+subagent_deployment_plan:
+  required: true
+  roles:
+    - architecture-reviewer
+    - security-contract-reviewer
+    - cross-repo-impact-reviewer
+    - validation-reviewer
+  fallback: "Runtime thread limit prevented subagent deployment; reviews were performed sequentially in the main agent."
+  evidence_ref: "evidence/requests/CR-SST-0022/subagent-deployment-evidence.md"
+
+validation:
+  required_checks:
+    - "npm run check"
+    - ".\\.venv\\Scripts\\python.exe scripts\\check.py"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0022/baseline.md"
+    - "evidence/requests/CR-SST-0022/subagent-deployment-evidence.md"
+    - "evidence/requests/CR-SST-0022/implementation-summary.md"
+    - "evidence/requests/CR-SST-0022/changed-files-summary.md"
+    - "evidence/requests/CR-SST-0022/validation-results.md"
+
+decision:
+  status: "approved-done"
+  approver: "4uentes"
+  decided_at: "2026-05-31"

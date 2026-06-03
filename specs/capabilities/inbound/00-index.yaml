@@ -1,0 +1,35 @@
+schema_version: "1.0"
+kind: "inbound_capabilities_index"
+consumer:
+  repo: "4uentes-orchestor"
+  ards_kind: "control-plane"
+capabilities:
+  - id: "capability.inbound.sst-document-agent-workflows"
+    title: "Document Agent workflow handoff"
+    status: "draft"
+    spec: "specs/capabilities/inbound/4uentes-orchestor--document-agent-workflows.yaml"
+    upstream:
+      repo: "sst-fend"
+      ards_kind: "frontend-web"
+      outbound_capability: "document-agent-workflows"
+  - id: "capability.inbound.sst-chatbot-agent-handoff"
+    title: "SST Chatbot agent handoff"
+    status: "draft"
+    spec: "specs/capabilities/inbound/4uentes-orchestor--sst-chatbot-agent-handoff.yaml"
+    upstream:
+      repo: "sst-chatbot"
+      ards_kind: "backend-api"
+      outbound_capability: "agent-lifecycle-and-orchestrator-boundary"
+states:
+  allowed:
+    - "draft"
+    - "implemented"
+    - "blocked"
+    - "deprecated"
+rules:
+  - "This folder only stores control-plane inbound contracts for orchestrator handoff."
+  - "Inbound specs define local adoption contracts; they do not redefine upstream runtime models."
+  - "Backend-first workflows in scope must map to persisted job-based execution plans."
+open_questions:
+  - "What is the durable job artifact name expected by the current 4uentes-orchestor runner?"
+  - "Which transport should sst-chatbot use first for orchestrator handoff?"

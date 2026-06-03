@@ -1,0 +1,52 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0018"
+title: "Recover stale auth sessions across SST frontend, auth BFF, and infra contracts"
+status: "done"
+created_at: "2026-05-28"
+completed_at: "2026-05-28"
+requester: "4uentes"
+
+business_context: >
+  Stale auth sessions needed deterministic recovery across the SST frontend,
+  the auth BFF, and infra runtime contracts.
+
+implemented_change: >
+  Added an idle-session policy, removed frontend logout null-body behavior,
+  made stale logout recoverable by clearing cookies, documented runtime envs,
+  and validated the local runtime with HTTP and focused frontend tests.
+
+affected_repos:
+  - service_id: 4uentes-auth
+    alias_observed: node-auth
+    local_binding: "environments/local/bindings.local.yaml"
+  - service_id: sst-fend
+    local_binding: "environments/local/bindings.local.yaml"
+  - service_id: sst-4uentes-infra
+    local_binding: "environments/local/bindings.local.yaml"
+
+model_selection:
+  classification: "complex-high-risk-task"
+  policy_ref: "docs/ai/model-selection-policy.md"
+
+validation:
+  required_checks:
+    - "4uentes-auth: npm run build"
+    - "4uentes-auth: npm run check"
+    - "sst-fend: npm test -- --runTestsByPath src/__tests__/authService.refresh.test.ts src/__tests__/auth.idle.test.ts"
+    - "sst-fend: npm run check"
+    - "sst-fend: npm run build"
+    - "sst-4uentes-infra: kubectl kustomize k8s-manifests\\overlays\\development"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0018/implementation-summary.md"
+    - "evidence/requests/CR-SST-0018/validation-results.md"
+    - "evidence/requests/CR-SST-0018/lifecycle-notes.md"
+
+decision:
+  status: "approved-done-retroactive"
+  approver: "4uentes"
+  decided_at: "2026-05-28"
+
+residual_risks:
+  - "Chrome DevTools MCP browser validation was blocked by an existing MCP profile lock."
+  - "node-auth still logs stack traces for controlled 400/401 auth errors."

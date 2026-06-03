@@ -1,0 +1,61 @@
+Asumo la posicion de orchestrator-boundary asi:
+
+  sst_chatbot puede proponer trabajo, pero 4uentes-orchestor decide si ese trabajo se acepta, se
+  planifica, se encola o se rechaza. En corto plazo, la opcion viable no es ejecutar operaciones de
+  servidor, sino aceptar operation_intent estructurados y convertirlos en requests/evidencia del
+  control-plane.
+
+  Lectura De Viabilidad
+  Sí es viable en corto plazo, pero con un scope chico.
+
+  Viable ahora:
+
+  - workspace.generate_bundle
+  - user_history.propose_update
+  - ui_customization.enqueue_change como request, no como cambio directo
+  - workspace.apply_patch solo si termina en un request planificado, no en patch automatico
+  - handoff documentado hacia requests/inbox/
+  - validacion de schema local
+  - audit trail en evidence/requests/<id>/
+
+  No viable todavia:
+
+  - server.restart_service
+  - server.refresh_cache
+  - mutaciones directas de repos
+  - cambios en servidores
+  - ejecucion sin aprobacion humana
+  - scheduling real de trabajos productivos
+
+  MVP Recomendado
+  El primer corte deberia ser:
+
+  1. sst_chatbot genera un operation_intent.
+  2. 4uentes-orchestor valida shape, tenant_id, user_id, capability_id, idempotency_key,
+     correlation_id.
+  3. Si pasa, crea un request en requests/inbox/.
+  4. El planner lo expande a requests/planned/.
+  5. La ejecucion queda pending hasta aprobacion humana.
+  6. Se registra evidencia en evidence/requests/<request-id>/.
+
+  Eso encaja con el modelo actual del control-plane y no exige infraestructura nueva.
+
+  Contrato Minimo
+  Para aceptar handoffs, 4uentes-orchestor necesitaria una spec propia, algo como:
+
+  specs/capabilities/inbound/sst-chatbot--agent-lifecycle-and-orchestrator-boundary.yaml
+  specs/schemas/operation-intent.schema.yaml
+  specs/schemas/orchestrator-handoff-payload.schema.yaml
+
+  Estados iniciales mapeables:
+
+  handoff_requested -> requests/inbox
+  handoff_accepted -> requests/planned
+  rejected -> requests/rejected
+
+  Pero queued y running no deberian usarse automaticamente todavia.
+
+  Decision Corta
+  Mi recomendacion: avanzar, pero solo como handoff de intenciones a requests, no como ejecucion.
+  agent-lifecycle-and-orchestrator-boundary, con allowlist inicial de intent types no destructivos.
+  Esto convierte a sst_chatbot en productor de requests auditables, no en ejecutor.

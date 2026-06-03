@@ -1,0 +1,144 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0024"
+title: "Design unified ARDS/SDD policy model"
+status: planned
+source_request: "requests/inbox/CR-SST-0024-unified-ards-sdd-policy-model.yaml"
+created_at: "2026-06-02"
+requester: "4uentes"
+
+initial_scope:
+  solution: "sst"
+  services:
+    - 4uentes-auth
+    - sst-fend
+    - sst-bend
+    - sst-extension
+    - sst-chatbot
+    - sst-4uentes-infra
+  include_optional_services: true
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: 4uentes-auth
+      via: initial_scope.services
+      service_kind: shared-auth-provider
+      ards_kind: shared-auth-provider
+      status: active
+    - service_id: sst-fend
+      via: initial_scope.services
+      service_kind: frontend-spa
+      ards_kind: frontend-web
+      status: active
+    - service_id: sst-bend
+      via: initial_scope.services
+      service_kind: api
+      ards_kind: backend-api
+      status: active
+    - service_id: sst-extension
+      via: initial_scope.services
+      service_kind: browser-extension
+      ards_kind: frontend-extension
+      status: optional-active
+    - service_id: sst-chatbot
+      via: initial_scope.services
+      service_kind: agent-runtime
+      ards_kind: backend-api
+      status: active
+    - service_id: sst-4uentes-infra
+      via: initial_scope.services
+      service_kind: gitops-infrastructure
+      ards_kind: infra-gitops
+      status: active
+  affected_ards:
+    - shared-auth-provider
+    - frontend-web
+    - backend-api
+    - frontend-extension
+    - infra-gitops
+  capabilities:
+    - policy-unification
+    - child-repo-orchestrator-link-rule
+    - capability-state-linkage
+  risks:
+    - id: CORE_CANON_BOUNDARY
+      severity: high
+    - id: CHILD_REPO_MODIFICATION_BOUNDARY
+      severity: high
+    - id: POLICY_SOURCE_VALIDATION_DRIFT
+      severity: high
+    - id: CORE_IDENTITY_RECONCILIATION
+      severity: medium
+
+required_context:
+  - "AGENTS.md"
+  - "docs/idioma-markdown.md"
+  - "docs/ai/model-selection-policy.md"
+  - "docs/cross-repo/child-repo-orchestrator-link-rule.md"
+  - "docs/requests/capability-state-linkage.md"
+  - "docs/apps/4uentes-ards-core.md"
+  - "4uentes-core/governance/repo-minimum-contract.md"
+  - "4uentes-core/governance/ai-guardrails.md"
+  - "4uentes-core/governance/source-validation.md"
+  - "4uentes-core/standard/ARDS_CORE_STANDARD_BASE_v1.md"
+
+required_checks:
+  - service_id: 4uentes-orchestor
+    command: "npm run check"
+
+risk:
+  level: high
+  score: 8
+  drivers:
+    - id: CORE_CANON_BOUNDARY
+      severity: high
+    - id: CHILD_REPO_MODIFICATION_BOUNDARY
+      severity: high
+    - id: POLICY_SOURCE_VALIDATION_DRIFT
+      severity: high
+    - id: CORE_IDENTITY_RECONCILIATION
+      severity: medium
+
+task_weight:
+  classification: complex-high-risk-task
+  risk_level: high
+  drivers:
+    - CORE_CANON_BOUNDARY
+    - CHILD_REPO_MODIFICATION_BOUNDARY
+    - POLICY_SOURCE_VALIDATION_DRIFT
+    - CORE_IDENTITY_RECONCILIATION
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "Complex high-risk governance work defining ARDS/SDD policy inheritance, source authority, adoption status, exceptions, and validation across core, orchestrator, profiles, and child repositories."
+
+subagent_deployment_plan:
+  required: true
+  parallelizable: true
+  roles:
+    - architecture-reviewer
+    - security-contract-reviewer
+    - cross-repo-impact-reviewer
+    - validation-reviewer
+  fallback: "Subagent tools were available, but their runtime contract only permits spawning when the user explicitly requests delegation. No explicit delegation was requested, so the main agent performed architecture, security, cross-repo, and validation reviews sequentially."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  allowed_window: manual
+  branch_strategy: orchestrator-only
+
+decision:
+  status: approved-for-orchestrator-design
+  approver: "4uentes"
+
+planner_notes:
+  - Request id CR-SST-0023 was already occupied by local infra/auth/scraper investigation artifacts; this policy model lifecycle was renumbered to CR-SST-0024 to avoid duplicate request ids.
+  - Functional repositories must not be modified in this phase.
+  - 4uentes-core must not be modified from this workflow.
+  - Universal policy canon remains a handoff target for 4uentes-core, not an orchestrator-local redefinition.
+  - human-doc-language is canonical in the orchestrator through docs/idioma-markdown.md; child repos should generate human-facing docs from that rule, and core should receive a future handoff to adopt it as reusable policy.
+  - The observed labels 4uentes-core and 4uentes-ards-core must be reconciled by the standard-source workflow before final canon references are frozen.

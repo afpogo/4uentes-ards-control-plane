@@ -8,15 +8,16 @@ solution_ids:
 repo:
   canonical_repo: sst-extension
   remote: git@github.com:afpogo/sst-extension.git
-  branch_observed: main
-  head_observed: TODO-no-valid-head
-  commits_observed: none
-  working_tree_observed: bootstrap-no-commits-untracked
-  observed_at: 2026-05-17
+  branch_observed: develop
+  upstream_observed: origin/develop
+  head_observed: 0b71e6b
+  working_tree_observed: dirty-6-entries
+  stash_observed: no-stash
+  observed_at: 2026-05-26
 local_binding_evidence:
   - id: local-sst-extension
     role: repo-working-copy
-    observed_at: 2026-05-17
+    observed_at: 2026-05-26
     path_record: inventory/evidence/git/sst-extension.md
 package:
   name: sst-extension
@@ -34,6 +35,13 @@ ards:
   docs_ai_policy: true
 validation:
   check_command: pnpm run check
+orchestrator_link_contract:
+  required: true
+  status: adopted
+  rule_ref: "docs/cross-repo/child-repo-orchestrator-link-rule.md"
+  template_ref: "templates/child-orchestrator-link-rule.md"
+  metadata_key: "orchestrator_link"
+  capability_state_map: "state/capability-links.yaml"
 integrations:
   consumes:
     - service_id: 4uentes-auth
@@ -50,4 +58,4 @@ notes:
   - Real SST browser extension runtime; include in the manifest as optional-active instead of treating it as not-needed-now.
   - Optional runtime for SST; not required for the default SST service baseline.
   - Does not own SST graph materialization; that remains with sst-fend.
-  - Git has no valid HEAD yet, so catalog consumers must treat repo state as bootstrap evidence.
+  - Git has a valid develop HEAD; the working tree remains dirty and must be treated as observed evidence.

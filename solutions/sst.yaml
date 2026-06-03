@@ -9,6 +9,7 @@ services:
     - 4uentes-auth
   optional:
     - sst-extension
+    - sst-chatbot
   infrastructure:
     - sst-4uentes-infra
 relationships:
@@ -29,6 +30,15 @@ relationships:
   - from: sst-4uentes-infra
     to: 4uentes-auth
     type: deploys
+  - from: sst-bend
+    to: sst-chatbot
+    type: requests-agent-derivations
+  - from: sst-chatbot
+    to: sst-bend
+    type: returns-validated-agent-results
+  - from: sst-chatbot
+    to: 4uentes-orchestor
+    type: requests-orchestrator-handoff
 observed_deployment_targets:
   - local
   - docker-compose
@@ -36,4 +46,5 @@ observed_deployment_targets:
 notes:
   - The solution is modeled logically; no sst-solution repo is required for Phase 0.
   - sst-extension is a real optional runtime and remains separate from the web frontend.
+  - sst-chatbot is a logical agent runtime participant and remains transport-agnostic until a runtime handoff is implemented.
   - Local paths are evidence only and must not define canonical identity.

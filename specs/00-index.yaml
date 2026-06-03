@@ -16,12 +16,14 @@ environments:
 scripts:
   verify_catalog: "scripts/verify-catalog.js"
   verify_local_bindings: "scripts/verify-local-bindings.js"
+  verify_state_model: "scripts/verify-state-model.js"
   plan_change: "scripts/plan-change.js"
 docs:
   overview: "docs/00-overview.md"
-  service_catalog: "docs/service-catalog.md"
-  solutions_model: "docs/solutions-model.md"
-  execution_model: "docs/execution-model.md"
+  service_catalog: "docs/apps/service-catalog.md"
+  solutions_model: "docs/cross-repo/solutions-model.md"
+  execution_model: "docs/requests/execution-model.md"
+  state_read_model: "docs/requests/state-read-model.md"
   ai_policy: "docs/ai/policy.md"
 requests:
   status: "active"
@@ -37,6 +39,16 @@ templates:
 inventory:
   phase_0: "inventory/phase-0.md"
   gate_0_decision: "inventory/phase-0-decision.md"
+states:
+  index: "state/00-index.yaml"
+  machine: "state/state-machine.yaml"
+  capability_links: "state/capability-links.yaml"
+  specs: "specs/states/00-index.yaml"
+policies:
+  index: "specs/policies/00-index.yaml"
+  model: "specs/policies/ards-sdd-policy-component-model.yaml"
+  policy_links: "state/policy-links.yaml"
 validation:
   check_command: "npm run check"
+  check_state_command: "npm run check:state"
   plan_change_command: "npm run plan:change -- requests/inbox/TODO.yaml"

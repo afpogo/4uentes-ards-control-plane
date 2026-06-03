@@ -1,0 +1,47 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0014"
+title: "Deep analysis of SST dictionary tags and article expansion"
+status: "done"
+created_at: "2026-05-25"
+completed_at: "2026-05-25"
+requester: "4uentes"
+
+source_request: "requests/inbox/CR-SST-0014-sst-tags-dictionary-articles-deep-analysis.yaml"
+planned_request: "requests/planned/CR-SST-0014-sst-tags-dictionary-articles-deep-analysis.yaml"
+
+business_context: >
+  SST needs to close dictionary tags with explicit evidence and expand the
+  model toward articles, classes, courses, and bitacora.
+
+implemented_change: >
+  Produced control-plane analysis evidence for current dictionary tag status,
+  backend article-tag support, course note tag grammar, next request boundaries,
+  and the SST tags governance state.
+
+affected_repos:
+  - service_id: sst-bend
+    access: "read-only evidence review"
+  - service_id: 4uentes-auth
+    access: "read-only evidence review"
+  - service_id: sst-fend
+    access: "read-only evidence review"
+  - service_id: sst-extension
+    access: "read-only evidence review"
+
+validation:
+  required_checks:
+    - "npm.cmd run check:state"
+    - "npm.cmd run check"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0014/source-material-summary.md"
+    - "evidence/requests/CR-SST-0014/implementation-state-analysis.md"
+    - "evidence/requests/CR-SST-0014/course-tags-analysis.md"
+    - "evidence/requests/CR-SST-0014/next-request-boundary.md"
+    - "evidence/requests/CR-SST-0014/validation-results.md"
+
+decision:
+  status: "approved-done"
+  approver: "4uentes"
+  decided_at: "2026-05-25"
+

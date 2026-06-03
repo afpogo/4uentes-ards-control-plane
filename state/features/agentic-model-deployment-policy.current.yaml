@@ -1,0 +1,25 @@
+schema_version: "1.0"
+kind: "feature_state"
+id: "agentic-model-deployment-policy"
+title: "Agentic model deployment policy"
+status: "done"
+updated_at: "2026-05-28"
+solution_id: "sst"
+affected_services:
+  - 4uentes-auth
+  - sst-fend
+  - sst-bend
+  - sst-extension
+  - sst-chatbot
+  - sst-4uentes-infra
+request_ids:
+  - CR-SST-0019
+spec_refs:
+  - "docs/ai/model-selection-policy.md"
+  - "docs/requests/execution-model.md"
+evidence_refs:
+  - "evidence/requests/CR-SST-0019/implementation-summary.md"
+  - "evidence/requests/CR-SST-0019/validation-results.md"
+  - "evidence/requests/CR-SST-0019/subagent-deployment-evidence.md"
+open_gaps:
+  - "Add an automated check command to catalog/services/sst-4uentes-infra.yaml when the infra repo exposes a stable validation entrypoint."

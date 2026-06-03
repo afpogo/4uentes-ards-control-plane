@@ -1,0 +1,50 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0013"
+title: "Adopt orchestrator governance rules in child repositories"
+status: "done"
+created_at: "2026-05-24"
+completed_at: "2026-05-24"
+requester: "4uentes"
+
+source_request: "requests/inbox/CR-SST-0013-adopt-orchestrator-rules-in-child-repos.yaml"
+planned_request: "requests/planned/CR-SST-0013-adopt-orchestrator-rules-in-child-repos.yaml"
+
+business_context: >
+  Child repositories governed by 4uentes-orchestor must understand the
+  orchestrator_link contract, capability-state linkage, human documentation
+  language policy, and documentation information architecture so work started
+  outside the orchestrator can still be reconciled into feature_state or
+  bugfix_state.
+
+implemented_change: >
+  Added local ARDS/SDD documentation rules to each cataloged child repository
+  and marked the orchestrator link contract as adopted in the control-plane
+  catalog.
+
+affected_repos:
+  - service_id: 4uentes-auth
+    local_binding_evidence: "inventory/evidence/git/4uentes-auth.md"
+  - service_id: sst-fend
+    local_binding_evidence: "inventory/evidence/git/sst-fend.md"
+  - service_id: sst-bend
+    local_binding_evidence: "inventory/evidence/git/sst-bend.md"
+  - service_id: sst-extension
+    local_binding_evidence: "inventory/evidence/git/sst-extension.md"
+  - service_id: sst-4uentes-infra
+    local_binding_evidence: "inventory/evidence/git/sst-4uentes-infra.md"
+
+validation:
+  required_checks:
+    - "npm.cmd run check"
+    - "child repo ARDS checks where available"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0013/repo-status-before.md"
+    - "evidence/requests/CR-SST-0013/changed-files-by-repo.md"
+    - "evidence/requests/CR-SST-0013/validation-results.md"
+    - "evidence/requests/CR-SST-0013/adoption-summary.md"
+
+decision:
+  status: "approved-done"
+  approver: "4uentes"
+  decided_at: "2026-05-24"

@@ -1,0 +1,77 @@
+schema_version: "1.0"
+kind: "state_model_spec"
+id: "feature-bugfix-state-model"
+title: "Feature and bugfix state read-model"
+status: "active"
+updated_at: "2026-05-24"
+scope:
+  kinds:
+    - feature_state
+    - bugfix_state
+  state_root: "state/"
+canonical_statuses:
+  - unknown
+  - intake
+  - discovered
+  - ards-documented
+  - planned
+  - implementation-pending
+  - runtime-partial
+  - implemented-local
+  - validated-local
+  - validated-live
+  - ready-for-release
+  - released
+  - done
+  - blocked
+  - deferred
+  - rejected
+  - deprecated
+terminal_statuses:
+  - done
+  - rejected
+  - deprecated
+bugfix_markers:
+  - reproduced
+  - root-caused
+  - fix-proposed
+  - fix-implemented-local
+  - regression-tested
+  - hotfixed
+required_fields:
+  common:
+    - schema_version
+    - kind
+    - id
+    - title
+    - status
+    - updated_at
+  feature_state:
+    - solution_id
+    - affected_services
+  bugfix_state:
+    - affected_services
+    - symptom
+    - root_cause_status
+validation_rules:
+  - "state/00-index.yaml must list every current feature and bugfix state file."
+  - "kind must be feature_state or bugfix_state."
+  - "status must be one of canonical_statuses."
+  - "affected_services must exist in catalog/services/*.yaml."
+  - "solution_id must exist in solutions/*.yaml when provided."
+  - "request_ids must exist somewhere under requests/ when provided."
+  - "capability_refs must be linked by state/capability-links.yaml when provided."
+  - "spec_refs, evidence_refs, and validation_refs must exist when provided."
+  - "Absolute local paths are forbidden inside state/."
+  - "done requires evidence_refs or validation_refs."
+  - "Bugfixes without request_ids are warnings in V1."
+  - "Non-terminal states without evidence_refs are warnings in V1."
+request_lifecycle:
+  documented_only: true
+  states:
+    - inbox
+    - planned
+    - queued
+    - running
+    - done
+    - rejected

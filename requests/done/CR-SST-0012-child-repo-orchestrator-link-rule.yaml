@@ -1,0 +1,101 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0012"
+title: "Require orchestrator_link rule for governed child repositories"
+status: "done"
+created_at: "2026-05-24"
+completed_at: "2026-05-24"
+requester: "4uentes"
+
+business_context: >
+  Child repositories governed by the orchestrator need local ARDS/SDD rules so
+  they can publish capability-state metadata even when work starts outside the
+  orchestrator request lifecycle.
+
+requested_change: >
+  Add a required orchestrator_link contract to every cataloged child service,
+  provide reusable child-repo and service-catalog templates, document onboarding
+  rules, and enforce the contract in catalog validation.
+
+expected_outcome: >
+  Existing child services and future child services cannot be cataloged without
+  the rule that tells them how to emit orchestrator_link metadata.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - sst-bend
+    - 4uentes-auth
+    - sst-fend
+    - sst-extension
+    - sst-4uentes-infra
+  include_optional_services: true
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: sst-bend
+      role: "child-repo-rule-required"
+    - service_id: 4uentes-auth
+      role: "child-repo-rule-required"
+    - service_id: sst-fend
+      role: "child-repo-rule-required"
+    - service_id: sst-extension
+      role: "child-repo-rule-required"
+    - service_id: sst-4uentes-infra
+      role: "child-repo-rule-required"
+  affected_ards:
+    - backend-api
+    - shared-auth-provider
+    - frontend-web
+    - frontend-extension
+    - infra-gitops
+  capabilities:
+    - id: "child-repo-orchestrator-link-rule"
+      status: "done"
+  risks:
+    - id: "CHILD_REPOS_NOT_EDITED"
+      severity: "medium"
+      note: "The control-plane enforces catalog readiness; child repo local files still need follow-up adoption."
+
+required_context:
+  - "docs/cross-repo/child-repo-orchestrator-link-rule.md"
+  - "docs/cross-repo/child-repo-onboarding.md"
+  - "templates/child-orchestrator-link-rule.md"
+  - "templates/service-catalog-entry.template.yaml"
+  - "scripts/verify-catalog.js"
+  - "catalog/services/*.yaml"
+
+required_checks:
+  - command: "npm.cmd run check"
+
+risk:
+  level: "medium"
+  score: 2
+  drivers:
+    - id: "CHILD_REPOS_NOT_EDITED"
+      severity: "medium"
+
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "control-plane-docs-only"
+  functional_repositories_modified: false
+
+validation:
+  required_checks:
+    - "npm.cmd run check"
+  evidence_required:
+    - "contract_summary"
+    - "validation_results"
+
+evidence:
+  refs:
+    - "evidence/requests/CR-SST-0012/contract-summary.md"
+    - "evidence/requests/CR-SST-0012/validation-results.md"
+
+decision:
+  status: "approved-done"
+  approver: "4uentes"
+  decided_at: "2026-05-24"
+

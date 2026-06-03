@@ -1,0 +1,98 @@
+schema_version: "1.0"
+kind: "inbound_capability"
+id: "capability.inbound.sst-document-agent-workflows"
+title: "Document Agent workflow handoff (backend-first, persisted jobs)"
+status: "draft"
+consumer:
+  repo: "4uentes-orchestor"
+  ards_kind: "control-plane"
+upstream:
+  repo: "sst-fend"
+  ards_kind: "frontend-web"
+  outbound_capability: "document-agent-workflows"
+usage:
+  mode: "consume-adapt-protect"
+  summary: "Consume document-agent events and convert them into durable orchestrator workflows."
+runtime_specs:
+  - "specs/capabilities/inbound/00-index.yaml"
+producer_refs:
+  outbound_capability: "document-agent-workflows"
+  docs:
+    - "docs/cross-repo/orchestrator-boundary.md"
+local_adoption:
+  implementation_status: "todo"
+  code_anchors:
+    - path: "requests/inbox/CR-SST-0008-sst-document-agent-workflows.yaml"
+      note: "control-plane request draft for persisted document-agent workflows"
+expected_behaviors:
+  - "Only structured operation_intent payloads are accepted."
+  - "All handoff payloads are idempotent."
+  - "Requests remain backend-first and persisted before execution."
+risks:
+  - "Incompatible document event fields can create false positive scheduling."
+  - "Missing idempotency can duplicate persisted jobs."
+validation:
+  check_refs:
+    - "npm run check"
+architecture_exceptions:
+  direct_backend_api_to_frontend: false
+open_questions:
+  - "Which service owns the first durable job state machine: sst-bend or 4uentes-auth?"
+
+schema:
+  operation_intent:
+    required_fields:
+      - operation_intent_id
+      - capability_id
+      - tenant_id
+      - user_id
+      - payload
+      - preferred_execution_window
+      - priority
+      - idempotency_key
+      - correlation_id
+    allowed_capability_ids:
+      - "document-agent.document_ingest"
+      - "document-agent.document_process"
+      - "document-agent.document_tagging"
+    payload_shape:
+      - key: "document_agent_event_id"
+        type: "string"
+      - key: "document_id"
+        type: "string"
+      - key: "status"
+        type: "string"
+      - key: "storage_uri"
+        type: "string"
+      - key: "attempt"
+        type: "integer"
+      - key: "requested_operation"
+        type: "string"
+  handoff_payload:
+    required_fields:
+      - operation_intent_id
+      - capability_id
+      - tenant_id
+      - payload
+      - priority
+      - requested_retry_policy
+      - idempotency_key
+      - correlation_id
+      - audit_metadata
+    audit_metadata:
+      required_fields:
+        - origin_service
+        - created_at
+        - created_by
+        - reason
+  document_agent_event:
+    required_fields:
+      - document_agent_event_id
+      - tenant_id
+      - user_id
+      - document_id
+      - event_type
+      - document_state
+      - persisted
+      - received_at
+      - source_service

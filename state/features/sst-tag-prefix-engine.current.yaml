@@ -1,0 +1,21 @@
+schema_version: "1.0"
+kind: "feature_state"
+id: "sst-tag-prefix-engine"
+title: "SST Tag Prefix Engine"
+status: "implemented-local"
+updated_at: "2026-05-26"
+solution_id: "sst"
+affected_services:
+  - sst-bend
+request_ids:
+  - CR-SST-0016
+capability_refs:
+  - "sst-tag-prefix-engine"
+spec_refs: []
+evidence_refs:
+  - "evidence/requests/CR-SST-0016/backend-poc-summary.md"
+open_gaps:
+  - "Expose parser preview or import runtime endpoint in a later request."
+  - "Decide when TagDefinition moves from code registry to persisted DB governance."
+  - "Adopt reference-chip rendering in BFF/frontend after runtime API is published."
+

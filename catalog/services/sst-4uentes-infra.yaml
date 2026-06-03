@@ -9,14 +9,16 @@ repo:
   canonical_repo: sst-4uentes-infra
   remote: git@github.com:afpogo/sst-4uentes-infra.git
   branch_observed: develop
-  head_observed: 77fe235
-  working_tree_observed: dirty-25-entries
-  observed_at: 2026-05-17
+  upstream_observed: origin/develop
+  head_observed: 2acf47c
+  working_tree_observed: dirty-68-entries
+  stash_observed: no-stash
+  observed_at: 2026-05-26
 local_binding_evidence:
   - id: local-sst-4uentes-infra
     role: repo-working-copy
-    observed_at: 2026-05-17
-    path_record: inventory/phase-0.md
+    observed_at: 2026-05-26
+    path_record: inventory/evidence/git/sst-4uentes-infra.md
 package:
   name: TODO
   runtime: kubernetes-gitops-platform
@@ -29,6 +31,13 @@ ards:
   docs_ai_policy: true
 validation:
   check_command: TODO
+orchestrator_link_contract:
+  required: true
+  status: adopted
+  rule_ref: "docs/cross-repo/child-repo-orchestrator-link-rule.md"
+  template_ref: "templates/child-orchestrator-link-rule.md"
+  metadata_key: "orchestrator_link"
+  capability_state_map: "state/capability-links.yaml"
 deployment_targets_observed:
   - kubernetes
   - argocd

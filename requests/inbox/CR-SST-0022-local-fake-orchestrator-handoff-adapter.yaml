@@ -1,0 +1,116 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0022"
+title: "Implement local fake orchestrator handoff adapter for sst-chatbot"
+status: "inbox"
+created_at: "2026-05-31"
+requester: "4uentes"
+
+business_context: >
+  CR-SST-0021 implemented local ARDS operational memory, proposal-only phases,
+  validation, and handoff payload mapping inside sst-chatbot. The next step is
+  Route B: a complete local/fake adapter that simulates the orchestrator
+  boundary without selecting real transport or giving sst-chatbot authority over
+  SST business state.
+
+requested_change: >
+  Add a local fake orchestrator handoff adapter in sst-chatbot that validates
+  handoff payloads, stores handoff receipts in memory, handles duplicate and
+  conflicting idempotency keys, returns accepted/rejected receipts, and proves
+  proposal-only behavior through automated tests.
+
+expected_outcome: >
+  sst-chatbot can test a complete local handoff flow from OperationalRecord to
+  handoff payload to fake orchestrator receipt, while preserving the rule that
+  4uentes-orchestor owns real acceptance, queueing, scheduling, retries,
+  execution approval, evidence, and reconciliation.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - sst-chatbot
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services:
+    - sst-chatbot
+  affected_ards:
+    - backend-api
+  capabilities:
+    - agent-lifecycle-and-orchestrator-boundary
+    - user-activity-ards-memory
+  risks:
+    - "Fake adapter must not become real transport."
+    - "sst-chatbot must remain proposal-only and must not own business state."
+    - "Server operations must remain blocked."
+    - "Idempotency conflict behavior must be deterministic."
+
+required_context:
+  - "requests/done/CR-SST-0021-ards-core-memory-runtime-phases.yaml"
+  - "evidence/requests/CR-SST-0021/implementation-summary.md"
+  - "catalog/services/sst-chatbot.yaml"
+  - "docs/apps/sst-chatbot.md"
+  - "docs/cross-repo/orchestrator-boundary.md"
+  - "specs/capabilities/inbound/4uentes-orchestor--sst-chatbot-agent-handoff.yaml"
+  - "state/features/sst-chatbot.current.yaml"
+
+required_checks:
+  - service_id: 4uentes-orchestor
+    command: "npm run check"
+  - service_id: sst-chatbot
+    command: ".\\.venv\\Scripts\\python.exe scripts\\check.py"
+
+risk:
+  level: "high"
+  score: 8
+  drivers:
+    - "orchestrator boundary simulation"
+    - "idempotency and conflict semantics"
+    - "proposal-only authority boundary"
+    - "dirty working tree observed before implementation"
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "cross-repo handoff contract"
+    - "security and execution boundary"
+    - "local adapter must not become transport"
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The work affects handoff semantics, execution authority boundaries, idempotency, and fake orchestrator behavior."
+
+subagent_deployment_plan:
+  required: true
+  roles:
+    - architecture-reviewer
+    - security-contract-reviewer
+    - cross-repo-impact-reviewer
+    - validation-reviewer
+  parallelizable: true
+  fallback: "If subagents cannot be spawned due runtime thread limits, record the limitation and perform the reviews sequentially in the main agent."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "one-branch-per-repo"
+
+validation:
+  required_checks:
+    - "npm run check"
+    - ".\\.venv\\Scripts\\python.exe scripts\\check.py"
+  evidence_required:
+    - "subagent_deployment_evidence"
+    - "command_output"
+    - "changed_files_summary"
+    - "impacted_services_summary"
+    - "residual_risks"
+
+decision:
+  status: "approved-for-implementation"
+  approver: "4uentes"

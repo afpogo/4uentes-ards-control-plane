@@ -1,0 +1,39 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0018"
+title: "Recover stale auth sessions across SST frontend, auth BFF, and infra contracts"
+status: "inbox"
+created_at: "2026-05-28"
+requester: "4uentes"
+
+business_context: >
+  SST users reported session-related failures after container restarts and
+  frontend relaunch. The system needs a recoverable session boundary across
+  sst-fend, 4uentes-auth/node-auth, and infra contracts so stale sessions do not
+  leave the browser locked in refresh/logout loops.
+
+model_selection:
+  classification: "complex-high-risk-task"
+  policy_ref: "docs/ai/model-selection-policy.md"
+  reason: >
+    The work touches authentication, session cookies, CSRF, API contracts,
+    frontend refresh behavior, and cross-repo infra documentation.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - sst-fend
+    - 4uentes-auth
+    - sst-4uentes-infra
+
+requested_outcome:
+  - "Diagnose stale session behavior across frontend and auth BFF."
+  - "Define a scalable idle-session policy."
+  - "Implement recoverable logout/refresh behavior where approved."
+  - "Update infra contracts and evidence so the behavior is discoverable."
+
+constraints:
+  - "Respect existing ARDS/SDD structure."
+  - "Do not redefine service identities; node-auth remains an alias of 4uentes-auth."
+  - "Do not modify unrelated functional behavior."
+  - "Record validation evidence before closing the request."

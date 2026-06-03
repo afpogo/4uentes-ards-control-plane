@@ -1,8 +1,8 @@
-# CR-SST-0002 - Searched Artifacts
+# CR-SST-0002 - Artefactos Buscados
 
-Observed at: 2026-05-18
+Observado el: 2026-05-18
 
-## Control-Plane Inputs
+## Inputs Del Control-Plane
 
 - `requests/inbox/CR-SST-0002-tags-dictionary-implementation-review.yaml`
 - `requests/planned/CR-SST-0002-tags-dictionary-implementation-review.yaml`
@@ -13,17 +13,19 @@ Observed at: 2026-05-18
 - `inventory/evidence/git/sst-fend.md`
 - `inventory/evidence/git/sst-extension.md`
 
-## Routing Limitation
+## Limitacion De Routing
 
-`environments/local/bindings.local.yaml` was not present. Local repo paths were taken from Phase 0 inventory evidence only and must not be treated as stable catalog configuration.
+`environments/local/bindings.local.yaml` no estaba presente. Los paths locales
+de repos se tomaron solo desde evidencia de inventario de Fase 0 y no deben
+tratarse como configuracion estable de catalogo.
 
-## Repositories Inspected Read-Only
+## Repositorios Inspeccionados Read-Only
 
 ### sst-bend
 
-Observed path source: `inventory/phase-0.md`
+Fuente del path observado: `inventory/phase-0.md`
 
-Primary ARDS/docs:
+ARDS/docs principales:
 
 - `AGENTS.md`
 - `docs/00-overview.md`
@@ -39,7 +41,7 @@ Primary ARDS/docs:
 - `docs/capabilities/outbound/dictionary-domain-read-v1.md`
 - `docs/capabilities/outbound/dictionary-domain-management-v1.md`
 
-Runtime evidence:
+Evidencia runtime:
 
 - `src/apps/sst/presentation/routes/diccionario.routes.js`
 - `src/apps/sst/presentation/controllers/diccionario.controller.js`
@@ -53,9 +55,10 @@ Runtime evidence:
 
 ### 4uentes-auth
 
-Observed path source: `inventory/phase-0.md`; local folder is legacy alias `node-auth`.
+Fuente del path observado: `inventory/phase-0.md`; la carpeta local es el alias
+legacy `node-auth`.
 
-Primary ARDS/docs:
+ARDS/docs principales:
 
 - `AGENTS.md`
 - `specs/capabilities/inbound/sst-bend--dictionary-legacy-read.yaml`
@@ -71,7 +74,7 @@ Primary ARDS/docs:
 - `docs/capabilities/outbound/dictionary-domain-read-v1.md`
 - `docs/capabilities/outbound/dictionary-domain-management-v1.md`
 
-Runtime evidence:
+Evidencia runtime:
 
 - `src/presentation/dictionary/routes.ts`
 - `src/presentation/dictionary/controller.ts`
@@ -81,9 +84,9 @@ Runtime evidence:
 
 ### sst-fend
 
-Observed path source: `inventory/evidence/git/sst-fend.md`
+Fuente del path observado: `inventory/evidence/git/sst-fend.md`
 
-Primary ARDS/docs:
+ARDS/docs principales:
 
 - `AGENTS.md`
 - `specs/34-dictionary-frontend.yml`
@@ -95,7 +98,7 @@ Primary ARDS/docs:
 - `docs/capabilities/inbound/node-auth--dictionary-domain-read-v1.md`
 - `docs/capabilities/inbound/node-auth--dictionary-domain-management-v1.md`
 
-Runtime evidence:
+Evidencia runtime:
 
 - `src/services/dictionaryService.ts`
 - `src/services/types/dictionary.ts`
@@ -107,9 +110,9 @@ Runtime evidence:
 
 ### sst-extension
 
-Observed path source: `inventory/evidence/git/sst-extension.md`
+Fuente del path observado: `inventory/evidence/git/sst-extension.md`
 
-Primary ARDS/docs:
+ARDS/docs principales:
 
 - `AGENTS.md`
 - `specs/features/dictionary.yaml`
@@ -121,7 +124,7 @@ Primary ARDS/docs:
 - `docs/integration/inbound/node-auth--dictionary-legacy-read.md`
 - `docs/integration/inbound/node-auth--dictionary-domain-management-v1.md`
 
-Runtime evidence:
+Evidencia runtime:
 
 - `src/features/dictionary/create-dictionary-service.ts`
 - `src/platform/api/dictionary-bff-gateway.ts`
@@ -132,9 +135,9 @@ Runtime evidence:
 
 ### sst-4uentes-infra
 
-Observed path source: `inventory/phase-0.md`
+Fuente del path observado: `inventory/phase-0.md`
 
-Primary ARDS/docs/manifests:
+ARDS/docs/manifests principales:
 
 - `AGENTS.md`
 - `specs/infra/deployment-contracts/sst-bend.yaml`
@@ -146,7 +149,7 @@ Primary ARDS/docs/manifests:
 - `k8s-manifests/base/*.yml`
 - `argocd/argocd-configmap.yml`
 
-## Search Terms
+## Terminos De Busqueda
 
 - `tag`
 - `tags`

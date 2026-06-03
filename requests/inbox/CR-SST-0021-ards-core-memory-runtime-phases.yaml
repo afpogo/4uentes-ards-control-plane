@@ -1,0 +1,127 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0021"
+title: "Divide ARDS core memory runtime into programmable phases"
+status: "inbox"
+created_at: "2026-05-31"
+requester: "4uentes"
+
+business_context: >
+  sst-chatbot is the agent-runtime service for SST and already owns
+  provider-agnostic contracts, private prompt handling, prompt governance,
+  generated ARDS/SDD workspace proposals, and structured handoff payloads for
+  4uentes-orchestor. The next implementation step is to professionalize ARDS
+  operational memory as a runtime capability without turning it into generic
+  chat memory or coupling it to a specific model provider, framework, storage
+  backend, transport, frontend, or database.
+
+requested_change: >
+  Implement the first small, testable runtime phases inside sst-chatbot for
+  structured ARDS operational records, programmable phase transitions,
+  deterministic validation, an abstract memory store port, a fake provider
+  adapter, visibility candidate generation, and orchestrator handoff mapping.
+
+expected_outcome: >
+  sst-chatbot can persist and advance structured operational records such as
+  intents, actions, decisions, evidence references, reminders, runtime events,
+  model executions, agent executions, phase runs, validation results, and
+  visibility candidates through deterministic phases. The runtime remains
+  provider-agnostic and adapter-based, and 4uentes-orchestor remains the owner
+  of request lifecycle acceptance, queueing, execution approval, evidence, and
+  reconciliation.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - sst-chatbot
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services:
+    - sst-chatbot
+  affected_ards:
+    - backend-api
+  capabilities:
+    - provider-abstraction
+    - user-activity-ards-memory
+    - prompt-catalog-and-versioning
+    - agent-lifecycle-and-orchestrator-boundary
+  risks:
+    - "ARDS core standards must not be redefined locally in the control-plane."
+    - "Agent output must remain proposal data until deterministic validation accepts it."
+    - "The runtime must not couple to OpenAI, LangChain, filesystem storage, frontend, database, memory backend, model provider, or transport."
+    - "Handoff payloads require idempotency, correlation, scope, and audit metadata."
+
+required_context:
+  - "AGENTS.md"
+  - "docs/ai/model-selection-policy.md"
+  - "docs/requests/execution-model.md"
+  - "docs/cross-repo/orchestrator-boundary.md"
+  - "docs/apps/sst-chatbot.md"
+  - "catalog/services/sst-chatbot.yaml"
+  - "specs/capabilities/inbound/4uentes-orchestor--sst-chatbot-agent-handoff.yaml"
+  - "state/features/sst-chatbot.current.yaml"
+  - "inventory/evidence/git/sst-chatbot.md"
+
+required_checks:
+  - service_id: 4uentes-orchestor
+    command: "npm run check"
+  - service_id: sst-chatbot
+    command: ".\\.venv\\Scripts\\python.exe scripts\\check.py"
+
+risk:
+  level: "high"
+  score: 8
+  drivers:
+    - "agent-runtime architecture"
+    - "structured memory and evidence contracts"
+    - "provider and storage abstraction boundary"
+    - "orchestrator handoff contract"
+    - "dirty working tree observed before implementation"
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "runtime architecture with adapter boundaries"
+    - "cross-repo control-plane lifecycle"
+    - "agent output validation and evidence handling"
+    - "future canonical ARDS core contract impact"
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest available reasoning profile"
+  reason: "The work changes agent-runtime architecture, memory contracts, validation gates, and orchestrator handoff behavior."
+
+subagent_deployment_plan:
+  required: true
+  roles:
+    - architecture-reviewer
+    - security-contract-reviewer
+    - cross-repo-impact-reviewer
+    - validation-reviewer
+  parallelizable: true
+  fallback: "If a role cannot be spawned because of runtime limits, record the fallback and perform that review sequentially in the main agent."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "one-branch-per-repo"
+
+validation:
+  required_checks:
+    - "npm run check"
+    - ".\\.venv\\Scripts\\python.exe scripts\\check.py"
+  evidence_required:
+    - "subagent_deployment_evidence"
+    - "command_output"
+    - "changed_files_summary"
+    - "impacted_services_summary"
+    - "residual_risks"
+
+decision:
+  status: "approved-for-implementation"
+  approver: "4uentes"

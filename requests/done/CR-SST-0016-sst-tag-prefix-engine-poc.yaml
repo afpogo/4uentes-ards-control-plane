@@ -1,0 +1,43 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0016"
+title: "Implement SST tag prefix engine backend POC"
+status: "done"
+created_at: "2026-05-26"
+completed_at: "2026-05-26"
+requester: "4uentes"
+
+source_request: "requests/inbox/CR-SST-0016-sst-tag-prefix-engine-poc.yaml"
+planned_request: "requests/planned/CR-SST-0016-sst-tag-prefix-engine-poc.yaml"
+
+business_context: >
+  SST needs a reusable backend tag/prefix engine that preserves resource scopes
+  and supports visual cross-scope references without copying ownership.
+
+implemented_change: >
+  Added a backend-only POC in sst-bend with a versioned code registry, prefix
+  parser, alias normalization, structural blocks, assets, external references,
+  imported references, automated tests, and outbound capability documentation.
+
+affected_repos:
+  - service_id: sst-bend
+    local_binding_evidence: "inventory/evidence/git/sst-bend.md"
+  - service_id: 4uentes-orchestor
+    local_binding: "current-workspace"
+
+validation:
+  required_checks:
+    - "sst-bend: npm.cmd run test:tag-engine"
+    - "sst-bend: npm.cmd run test:diccionario:stage2"
+    - "sst-bend: npm.cmd run test:diccionario:stage3"
+    - "sst-bend: npm.cmd run check"
+    - "4uentes-orchestor: npm.cmd run check:state"
+    - "4uentes-orchestor: npm.cmd run check"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0016/backend-poc-summary.md"
+    - "evidence/requests/CR-SST-0016/validation-results.md"
+
+decision:
+  status: "approved-done"
+  approver: "4uentes"
+  decided_at: "2026-05-26"

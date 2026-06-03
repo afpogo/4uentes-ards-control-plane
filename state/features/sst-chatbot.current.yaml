@@ -1,0 +1,42 @@
+schema_version: "1.0"
+kind: "feature_state"
+id: "sst-chatbot"
+title: "SST Chatbot Capability Trace"
+status: "implemented-local"
+updated_at: "2026-05-31"
+solution_id: "sst"
+affected_services:
+  - sst-chatbot
+  - sst-fend
+  - sst-bend
+  - 4uentes-auth
+  - sst-extension
+  - sst-4uentes-infra
+request_ids:
+  - CR-SST-0007
+  - CR-SST-0016
+  - CR-SST-0021
+  - CR-SST-0022
+capability_refs:
+  - "capability.inbound.sst-chatbot-agent-handoff"
+spec_refs:
+  - "catalog/services/sst-chatbot.yaml"
+  - "specs/capabilities/inbound/4uentes-orchestor--sst-chatbot-agent-handoff.yaml"
+evidence_refs:
+  - "inventory/evidence/git/sst-chatbot.md"
+  - "evidence/requests/CR-SST-0007/capabilities-trace.md"
+  - "evidence/requests/CR-SST-0007/orchestrator-boundary-summary.md"
+  - "evidence/requests/CR-SST-0007/adoption-gaps.md"
+  - "evidence/requests/CR-SST-0016/onboarding-summary.md"
+  - "evidence/requests/CR-SST-0021/baseline.md"
+  - "evidence/requests/CR-SST-0021/implementation-summary.md"
+  - "evidence/requests/CR-SST-0021/changed-files-summary.md"
+  - "evidence/requests/CR-SST-0022/baseline.md"
+  - "evidence/requests/CR-SST-0022/implementation-summary.md"
+  - "evidence/requests/CR-SST-0022/changed-files-summary.md"
+validation_refs:
+  - "evidence/requests/CR-SST-0016/validation-results.md"
+  - "evidence/requests/CR-SST-0021/validation-results.md"
+  - "evidence/requests/CR-SST-0022/validation-results.md"
+open_gaps:
+  - "Transport for runtime orchestrator handoff is not selected; CR-SST-0022 implements a local/fake adapter only."

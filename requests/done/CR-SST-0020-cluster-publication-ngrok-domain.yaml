@@ -1,0 +1,77 @@
+schema_version: "1.0"
+phase: 4
+id: "CR-SST-0020"
+title: "Analyze and validate SST cluster publication through ngrok with productive domain and branch policy"
+status: "done"
+source_request: "requests/planned/CR-SST-0020-cluster-publication-ngrok-domain.yaml"
+created_at: "2026-05-29"
+started_at: "2026-05-31"
+completed_at: "2026-06-02"
+requester: "4uentes"
+
+completed_scope:
+  solution: "sst"
+  services:
+    - sst-fend
+    - sst-bend
+    - 4uentes-auth
+    - sst-4uentes-infra
+  outcome: "non-destructive-public-development-edge-validated"
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+
+subagent_deployment:
+  required: true
+  deployed: true
+  evidence_ref: "evidence/requests/CR-SST-0020/subagent-deployment-evidence.md"
+
+validated_decisions:
+  public_origin: "https://leilani-gymnastic-amphiboly.ngrok-free.dev"
+  edge_protection: "ngrok GitHub OAuth"
+  oauth_scope: "read:user"
+  oauth_allowlist_model: "individual-github-users"
+  initial_allowed_user: "afpogo"
+  origin_model: "single-origin"
+  jwks_policy: "protected-by-ngrok-oauth-for-this-phase"
+  upstream: "http://127.0.0.1:8088"
+  host_strategy: "host rewrite to localhost for current Ingress rule"
+  direct_sst_bend_public_exposure: false
+  persistence_smoke: "deferred"
+  app_login_smoke: "deferred"
+  image_changes: "none"
+  kubernetes_mutation: "none"
+
+evidence_refs:
+  - "evidence/requests/CR-SST-0020/intake-summary.md"
+  - "evidence/requests/CR-SST-0020/analysis-plan.md"
+  - "evidence/requests/CR-SST-0020/current-cluster-state.md"
+  - "evidence/requests/CR-SST-0020/ingress-ngrok-edge-analysis.md"
+  - "evidence/requests/CR-SST-0020/auth-public-exposure-analysis.md"
+  - "evidence/requests/CR-SST-0020/branch-image-policy-analysis.md"
+  - "evidence/requests/CR-SST-0020/validation-release-gates.md"
+  - "evidence/requests/CR-SST-0020/subagent-deployment-evidence.md"
+  - "evidence/requests/CR-SST-0020/infra-operational-edge-result.md"
+  - "evidence/requests/CR-SST-0020/stage-close-validation.md"
+
+validation:
+  orchestrator_check: "npm run check"
+  expected_result: "0 FAIL"
+  infra_validation_summary: "sst-4uentes-infra reported npm run check passed, including kubectl kustomize and kubectl apply --dry-run=client without applying real manifests."
+
+decision:
+  status: "approved-done"
+  approver: "4uentes"
+  decided_at: "2026-06-02"
+
+residual_risks:
+  - "ngrok is running as a local agent; Windows service durability remains pending."
+  - "Persistence smoke requires a later approved phase with real app credentials outside Git."
+  - "App login, refresh/logout and extension bearer flow remain deferred."
+  - "Image promotion by immutable tag or digest remains a later release-readiness gate."
+  - "Infra orchestrator_link.state_id still needs reconciliation with this feature_state id."

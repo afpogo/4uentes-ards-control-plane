@@ -1,0 +1,146 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0006"
+title: "Robots cross-repo investigation for SST"
+status: planned
+source_request: "requests/inbox/CR-SST-0006-robots-cross-repo-investigation.yaml"
+created_at: "2026-05-20"
+requester: "4uentes"
+
+initial_scope:
+  solution: "sst"
+  services: []
+  include_optional_services: true
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: sst-fend
+      via: solution.core
+      service_kind: frontend-spa
+      ards_kind: frontend-web
+      status: active
+    - service_id: sst-bend
+      via: solution.core
+      service_kind: api
+      ards_kind: backend-api
+      status: active
+    - service_id: 4uentes-auth
+      via: solution.shared
+      service_kind: shared-auth-provider
+      ards_kind: shared-auth-provider
+      status: active
+    - service_id: sst-4uentes-infra
+      via: solution.infrastructure
+      service_kind: gitops-infrastructure
+      ards_kind: infra-gitops
+      status: active
+    - service_id: sst-extension
+      via: solution.optional
+      service_kind: browser-extension
+      ards_kind: frontend-extension
+      status: optional-active
+  affected_ards:
+    - frontend-web
+    - backend-api
+    - shared-auth-provider
+    - infra-gitops
+    - frontend-extension
+  capabilities: []
+  risks:
+    - id: MULTI_SERVICE_SCOPE
+      severity: high
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: sst-fend
+      severity: medium
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: sst-bend
+      severity: medium
+    - id: SHARED_AUTH_PROVIDER
+      service_id: 4uentes-auth
+      severity: high
+    - id: INFRA_GITOPS_SCOPE
+      service_id: sst-4uentes-infra
+      severity: high
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: sst-4uentes-infra
+      severity: medium
+    - id: NON_ACTIVE_SERVICE_STATUS
+      service_id: sst-extension
+      severity: medium
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: sst-extension
+      severity: medium
+    - id: MISSING_CHECK_COMMAND
+      service_id: sst-4uentes-infra
+      severity: high
+
+required_context:
+  - catalog/services/sst-fend.yaml
+  - inventory/evidence/git/sst-fend.md
+  - catalog/services/sst-bend.yaml
+  - inventory/phase-0.md
+  - catalog/services/4uentes-auth.yaml
+  - catalog/services/sst-4uentes-infra.yaml
+  - catalog/services/sst-extension.yaml
+  - inventory/evidence/git/sst-extension.md
+  - solutions/sst.yaml
+  - inventory/phase-0-decision.md
+  - AGENTS.md
+
+required_checks:
+  - service_id: sst-fend
+    command: "npm run check"
+  - service_id: sst-bend
+    command: "npm run check"
+  - service_id: 4uentes-auth
+    command: "npm run check"
+  - service_id: sst-4uentes-infra
+    command: "TODO"
+    fallback: manual-review
+  - service_id: sst-extension
+    command: "pnpm run check"
+
+risk:
+  level: high
+  score: 13
+  drivers:
+    - id: MULTI_SERVICE_SCOPE
+      severity: high
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: sst-fend
+      severity: medium
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: sst-bend
+      severity: medium
+    - id: SHARED_AUTH_PROVIDER
+      service_id: 4uentes-auth
+      severity: high
+    - id: INFRA_GITOPS_SCOPE
+      service_id: sst-4uentes-infra
+      severity: high
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: sst-4uentes-infra
+      severity: medium
+    - id: NON_ACTIVE_SERVICE_STATUS
+      service_id: sst-extension
+      severity: medium
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: sst-extension
+      severity: medium
+    - id: MISSING_CHECK_COMMAND
+      service_id: sst-4uentes-infra
+      severity: high
+
+execution:
+  requires_human_approval: true
+  allowed_window: manual
+  branch_strategy: one-branch-per-repo
+
+decision:
+  status: pending
+  approver: TODO
+
+planner_notes:
+  - Functional repositories were not modified.
+  - Functional repository checks were not executed.

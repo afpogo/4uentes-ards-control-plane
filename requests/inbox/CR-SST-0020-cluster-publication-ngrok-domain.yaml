@@ -1,0 +1,67 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0020"
+title: "Analyze SST cluster publication through ngrok with productive domain and branch policy"
+status: "inbox"
+created_at: "2026-05-29"
+requester: "4uentes"
+
+business_context: >
+  SST is currently deployed locally in a Kubernetes cluster and reachable on
+  the workstation through the local ingress endpoint. The next objective is to
+  analyze the deployed application deeply and define the steps required to
+  publish it to the internet with a productive accessible domain through ngrok.
+  The analysis must also review whether GitOps/image build sources should move
+  from the current development branch to main or another release branch.
+
+requested_change: >
+  Start the orchestrator lifecycle for a cluster publication analysis. The
+  first deliverable is an auditable plan and evidence trail before changing
+  child repositories, manifests, CI, GitOps, ngrok configuration, DNS, or branch
+  policies.
+
+expected_outcome: >
+  A deep analysis plan for publishing SST through ngrok, including current
+  cluster state, ingress behavior, public URL/domain options, branch/build
+  policy, risks, validation gates, and the sequence of changes needed to reach a
+  production-like internet-accessible deployment.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - sst-fend
+    - sst-bend
+    - 4uentes-auth
+    - sst-4uentes-infra
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services: []
+  affected_ards: []
+  capabilities: []
+  risks: []
+
+required_context: []
+
+required_checks: []
+
+risk:
+  level: "TODO"
+  score: 0
+  drivers: []
+
+validation:
+  required_checks: []
+  evidence_required:
+    - "current_cluster_state"
+    - "ingress_and_url_map"
+    - "ngrok_publication_options"
+    - "dns_domain_decision"
+    - "gitops_branch_policy_review"
+    - "changed_files_summary"
+    - "subagent_deployment_evidence"
+
+decision:
+  status: "pending"
+  approver: "TODO"

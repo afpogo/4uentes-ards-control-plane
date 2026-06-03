@@ -1,0 +1,64 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0019"
+title: "Make model selection produce auditable subagent deployment plans"
+status: "inbox"
+created_at: "2026-05-28"
+requester: "4uentes"
+
+business_context: >
+  The existing model-selection annex classifies work, but future agents must
+  also analyze the weight of each feature or bugfix and decide whether to deploy
+  subagents. That decision must be visible in the orchestrator lifecycle and in
+  child repository guidance.
+
+requested_change: >
+  Extend the control-plane policy, planner output, request template, and child
+  repository annexes so planned work records task weight, selected model
+  profile, subagent deployment requirements, roles, fallback behavior, and
+  evidence requirements.
+
+expected_outcome: >
+  Future cross-repo and child-repo work does not silently skip subagent
+  deployment when the model-selection policy requires it. If subagents or exact
+  model aliases are unavailable, the fallback is documented in the plan and
+  evidence.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - 4uentes-auth
+    - sst-fend
+    - sst-bend
+    - sst-extension
+    - sst-chatbot
+    - sst-4uentes-infra
+  include_optional_services: true
+
+impact_analysis:
+  required: true
+  affected_services: []
+  affected_ards: []
+  capabilities: []
+  risks: []
+
+required_context: []
+
+required_checks: []
+
+risk:
+  level: "TODO"
+  score: 0
+  drivers: []
+
+validation:
+  required_checks: []
+  evidence_required:
+    - "orchestrator_check_output"
+    - "changed_files_summary"
+    - "impacted_services_summary"
+    - "subagent_deployment_evidence"
+
+decision:
+  status: "pending"
+  approver: "TODO"

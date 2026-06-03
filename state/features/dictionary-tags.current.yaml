@@ -1,0 +1,30 @@
+schema_version: "1.0"
+kind: "feature_state"
+id: "dictionary-tags"
+title: "SST Dictionary Tags"
+status: "validated-local"
+updated_at: "2026-05-25"
+solution_id: "sst"
+affected_services:
+  - sst-bend
+  - 4uentes-auth
+  - sst-fend
+  - sst-extension
+  - sst-4uentes-infra
+request_ids:
+  - CR-SST-0002
+  - CR-SST-0014
+capability_refs:
+  - "dictionary-legacy-read"
+  - "dictionary-domain-read-v1"
+  - "dictionary-domain-management-v1"
+spec_refs: []
+evidence_refs:
+  - "evidence/requests/CR-SST-0002/implementation-state-report.md"
+  - "evidence/requests/CR-SST-0002/findings.yaml"
+  - "evidence/requests/CR-SST-0002/validation-results.md"
+  - "evidence/requests/CR-SST-0014/implementation-state-analysis.md"
+open_gaps:
+  - "Live runtime endpoint validation was not executed."
+  - "TagDefinition governance is not closed as a public managed surface."
+  - "Dictionary close criteria must explicitly exclude or accept broader SST-level article/course/bitacora tag expansion."

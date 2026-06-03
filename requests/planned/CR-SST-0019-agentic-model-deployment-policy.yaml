@@ -1,0 +1,205 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0019"
+title: "Make model selection produce auditable subagent deployment plans"
+status: planned
+source_request: "requests/inbox/CR-SST-0019-agentic-model-deployment-policy.yaml"
+created_at: "2026-05-28"
+requester: "4uentes"
+
+initial_scope:
+  solution: "sst"
+  services:
+    - 4uentes-auth
+    - sst-fend
+    - sst-bend
+    - sst-extension
+    - sst-chatbot
+    - sst-4uentes-infra
+  include_optional_services: true
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: 4uentes-auth
+      via: initial_scope.services
+      service_kind: shared-auth-provider
+      ards_kind: shared-auth-provider
+      status: active
+    - service_id: sst-fend
+      via: initial_scope.services
+      service_kind: frontend-spa
+      ards_kind: frontend-web
+      status: active
+    - service_id: sst-bend
+      via: initial_scope.services
+      service_kind: api
+      ards_kind: backend-api
+      status: active
+    - service_id: sst-extension
+      via: initial_scope.services
+      service_kind: browser-extension
+      ards_kind: frontend-extension
+      status: optional-active
+    - service_id: sst-chatbot
+      via: initial_scope.services
+      service_kind: agent-runtime
+      ards_kind: backend-api
+      status: active
+    - service_id: sst-4uentes-infra
+      via: initial_scope.services
+      service_kind: gitops-infrastructure
+      ards_kind: infra-gitops
+      status: active
+  affected_ards:
+    - shared-auth-provider
+    - frontend-web
+    - backend-api
+    - frontend-extension
+    - infra-gitops
+  capabilities: []
+  risks:
+    - id: MULTI_SERVICE_SCOPE
+      severity: high
+    - id: SHARED_AUTH_PROVIDER
+      service_id: 4uentes-auth
+      severity: high
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: 4uentes-auth
+      severity: medium
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: sst-fend
+      severity: medium
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: sst-bend
+      severity: medium
+    - id: NON_ACTIVE_SERVICE_STATUS
+      service_id: sst-extension
+      severity: medium
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: sst-extension
+      severity: medium
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: sst-chatbot
+      severity: medium
+    - id: INFRA_GITOPS_SCOPE
+      service_id: sst-4uentes-infra
+      severity: high
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: sst-4uentes-infra
+      severity: medium
+    - id: MISSING_CHECK_COMMAND
+      service_id: sst-4uentes-infra
+      severity: high
+
+required_context:
+  - catalog/services/4uentes-auth.yaml
+  - inventory/evidence/git/4uentes-auth.md
+  - catalog/services/sst-fend.yaml
+  - inventory/evidence/git/sst-fend.md
+  - catalog/services/sst-bend.yaml
+  - inventory/evidence/git/sst-bend.md
+  - catalog/services/sst-extension.yaml
+  - inventory/evidence/git/sst-extension.md
+  - catalog/services/sst-chatbot.yaml
+  - inventory/evidence/git/sst-chatbot.md
+  - catalog/services/sst-4uentes-infra.yaml
+  - inventory/evidence/git/sst-4uentes-infra.md
+  - solutions/sst.yaml
+  - inventory/phase-0.md
+  - inventory/phase-0-decision.md
+  - AGENTS.md
+
+required_checks:
+  - service_id: 4uentes-auth
+    command: "npm run check"
+  - service_id: sst-fend
+    command: "npm run check"
+  - service_id: sst-bend
+    command: "npm run check"
+  - service_id: sst-extension
+    command: "pnpm run check"
+  - service_id: sst-chatbot
+    command: ".\\.venv\\Scripts\\python.exe scripts\\check.py"
+  - service_id: sst-4uentes-infra
+    command: "TODO"
+    fallback: manual-review
+
+risk:
+  level: high
+  score: 15
+  drivers:
+    - id: MULTI_SERVICE_SCOPE
+      severity: high
+    - id: SHARED_AUTH_PROVIDER
+      service_id: 4uentes-auth
+      severity: high
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: 4uentes-auth
+      severity: medium
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: sst-fend
+      severity: medium
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: sst-bend
+      severity: medium
+    - id: NON_ACTIVE_SERVICE_STATUS
+      service_id: sst-extension
+      severity: medium
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: sst-extension
+      severity: medium
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: sst-chatbot
+      severity: medium
+    - id: INFRA_GITOPS_SCOPE
+      service_id: sst-4uentes-infra
+      severity: high
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: sst-4uentes-infra
+      severity: medium
+    - id: MISSING_CHECK_COMMAND
+      service_id: sst-4uentes-infra
+      severity: high
+
+task_weight:
+  classification: complex-high-risk-task
+  risk_level: high
+  drivers:
+    - MULTI_SERVICE_SCOPE
+    - SHARED_AUTH_PROVIDER
+    - DIRTY_WORKING_TREE_OBSERVED
+    - NON_ACTIVE_SERVICE_STATUS
+    - INFRA_GITOPS_SCOPE
+    - MISSING_CHECK_COMMAND
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "High-risk or security/contract-sensitive task."
+
+subagent_deployment_plan:
+  required: true
+  parallelizable: true
+  roles:
+    - architecture-reviewer
+    - security-contract-reviewer
+    - cross-repo-impact-reviewer
+    - validation-reviewer
+  fallback: "If subagents or exact model aliases are unavailable, record the limitation and run the same review steps sequentially with the highest available reasoning profile."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  allowed_window: manual
+  branch_strategy: one-branch-per-repo
+
+decision:
+  status: "approved"
+  approver: "4uentes"
+  decided_at: "2026-05-28"
+
+planner_notes:
+  - Functional repositories were not modified.
+  - Functional repository checks were not executed.

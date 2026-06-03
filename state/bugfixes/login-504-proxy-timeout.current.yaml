@@ -1,0 +1,22 @@
+schema_version: "1.0"
+kind: "bugfix_state"
+id: "login-504-proxy-timeout"
+title: "Login proxy 504 caused by node-auth watcher failure"
+status: "validated-local"
+updated_at: "2026-05-24"
+markers:
+  - reproduced
+  - root-caused
+  - fix-implemented-local
+  - regression-tested
+affected_services:
+  - sst-fend
+  - 4uentes-auth
+request_ids: []
+symptom: "Login POST returned 504 through frontend dev proxy."
+root_cause_status: "confirmed"
+validation_refs: []
+evidence_refs: []
+open_gaps:
+  - "Create formal request/evidence if this bugfix must be governed historically."
+

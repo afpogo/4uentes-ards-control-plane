@@ -1,0 +1,185 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0023"
+title: "Investigate local SST infra unauthorized resource APIs and scraper 500 errors"
+status: planned
+source_request: "requests/inbox/CR-SST-0023-local-infra-auth-scraper-errors.yaml"
+created_at: "2026-06-02"
+requester: "4uentes"
+
+initial_scope:
+  solution: "sst"
+  services:
+    - sst-fend
+    - sst-bend
+    - 4uentes-auth
+    - sst-chatbot
+    - sst-4uentes-infra
+  include_optional_services: true
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: sst-fend
+      via: initial_scope.services
+      service_kind: frontend-spa
+      ards_kind: frontend-web
+      status: active
+    - service_id: sst-bend
+      via: initial_scope.services
+      service_kind: api
+      ards_kind: backend-api
+      status: active
+    - service_id: 4uentes-auth
+      via: initial_scope.services
+      service_kind: shared-auth-provider
+      ards_kind: shared-auth-provider
+      status: active
+    - service_id: sst-chatbot
+      via: initial_scope.services
+      service_kind: agent-runtime
+      ards_kind: agent-runtime
+      status: active
+    - service_id: sst-4uentes-infra
+      via: initial_scope.services
+      service_kind: gitops-infrastructure
+      ards_kind: infra-gitops
+      status: active
+  affected_ards:
+    - frontend-web
+    - backend-api
+    - shared-auth-provider
+    - agent-runtime
+    - infra-gitops
+  capabilities: []
+  risks:
+    - id: SHARED_AUTH_PROVIDER
+      severity: high
+    - id: API_AUTHORIZATION_CONTRACT
+      severity: high
+    - id: SCRAPER_RUNTIME_ERROR
+      severity: high
+    - id: MULTI_SERVICE_SCOPE
+      severity: high
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      severity: medium
+
+required_context:
+  - AGENTS.md
+  - docs/ai/model-selection-policy.md
+  - solutions/sst.yaml
+  - catalog/services/sst-fend.yaml
+  - catalog/services/sst-bend.yaml
+  - catalog/services/4uentes-auth.yaml
+  - catalog/services/sst-chatbot.yaml
+  - catalog/services/sst-4uentes-infra.yaml
+  - environments/local/bindings.local.yaml
+  - docs/cross-repo/sst-cluster-dependency-map.md
+  - docs/cross-repo/deployment-request-playbook.md
+
+required_checks:
+  - service_id: 4uentes-orchestor
+    command: "npm run check"
+  - service_id: sst-fend
+    command: "TODO"
+    fallback: "inspect only until diagnosis is complete"
+  - service_id: sst-bend
+    command: "TODO"
+    fallback: "inspect only until diagnosis is complete"
+  - service_id: 4uentes-auth
+    command: "TODO"
+    fallback: "inspect only until diagnosis is complete"
+  - service_id: sst-chatbot
+    command: "TODO"
+    fallback: "inspect only until diagnosis is complete"
+  - service_id: sst-4uentes-infra
+    command: "TODO"
+    fallback: "inspect only until diagnosis is complete"
+
+risk:
+  level: high
+  score: 13
+  drivers:
+    - id: SHARED_AUTH_PROVIDER
+      severity: high
+    - id: API_AUTHORIZATION_CONTRACT
+      severity: high
+    - id: SCRAPER_RUNTIME_ERROR
+      severity: high
+    - id: MULTI_SERVICE_SCOPE
+      severity: high
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      severity: medium
+
+task_weight:
+  classification: complex-high-risk-task
+  risk_level: high
+  drivers:
+    - authentication and authorization failures
+    - API contract impact across frontend, backend, auth, scraper, and infra
+    - local runtime debugging through browser and container/service state
+    - dirty working tree observed in the control-plane before execution
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "Security-sensitive cross-repo debugging with authentication, authorization, API contracts, and runtime failures."
+
+subagent_deployment_plan:
+  required: true
+  parallelizable: true
+  roles:
+    - security-contract-reviewer
+    - cross-repo-impact-reviewer
+    - validation-reviewer
+  fallback: "If subagents or exact model aliases are unavailable, record the limitation and run the same review steps sequentially with the highest available reasoning profile."
+  evidence_required: true
+
+diagnosis_plan:
+  local_entrypoint_observed: "http://localhost:8088/"
+  target_symptoms:
+    - "GET article/resource APIs return unauthorized"
+    - "creating a resource returns unauthorized"
+    - "scraper consultation returns HTTP 500"
+  analysis_tracks:
+    - id: browser-network-console
+      owner_role: validation-reviewer
+      required_evidence:
+        - "Chrome DevTools network requests and console errors from localhost:8088"
+    - id: auth-and-api-contract
+      owner_role: security-contract-reviewer
+      required_evidence:
+        - "frontend token/session behavior"
+        - "backend authentication guard and authorization contract"
+        - "auth provider cookie/JWT/JWKS behavior"
+    - id: infra-and-runtime-routing
+      owner_role: cross-repo-impact-reviewer
+      required_evidence:
+        - "local proxy, docker-compose, ingress, service URLs, and scraper routing"
+  constraints:
+    - "Do not modify child repositories until evidence identifies a concrete fix scope."
+    - "Do not commit local paths, tokens, cookies, or secrets."
+    - "Do not treat legacy aliases as canonical identities."
+
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "one-branch-per-repo"
+
+validation:
+  required_checks:
+    - "npm run check"
+  evidence_required:
+    - "browser_network_console_summary"
+    - "runtime_service_state"
+    - "root_cause_summary"
+    - "changed_files_summary"
+
+decision:
+  status: pending
+  approver: TODO
+
+planner_notes:
+  - "Functional repositories were not modified before this lifecycle entry."
+  - "Control-plane working tree was already dirty before this request was created."

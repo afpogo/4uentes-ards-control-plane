@@ -1,0 +1,135 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0024"
+title: "Design unified ARDS/SDD policy model"
+status: "inbox"
+created_at: "2026-06-02"
+requester: "4uentes"
+
+business_context: >
+  4uentes has core ARDS/SDD governance rules in 4uentes-core and additional
+  orchestration rules in 4uentes-orchestor. Child repositories also carry local
+  ARDS/SDD policies. The current model needs an explicit inheritance and
+  adoption contract so policies can be validated without confusing core canon,
+  orchestrator requirements, profile requirements, repo-local rules, and
+  exceptions.
+
+requested_change: >
+  Define the unified ARDS/SDD policy model in the orchestrator as a planning and
+  evidence artifact only. The model must cover policy taxonomy, inheritance,
+  adoption metadata, initial policies, current child-repo gaps, and a handoff
+  path for moving universal canon into 4uentes-core.
+
+expected_outcome: >
+  CR-SST-0024 leaves an auditable model for policy inheritance and gradual
+  adoption while preserving the boundary that 4uentes-core owns universal canon
+  and functional repositories are not modified in this phase.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - 4uentes-auth
+    - sst-fend
+    - sst-bend
+    - sst-extension
+    - sst-chatbot
+    - sst-4uentes-infra
+  include_optional_services: true
+
+impact_analysis:
+  required: true
+  affected_services:
+    - 4uentes-auth
+    - sst-fend
+    - sst-bend
+    - sst-extension
+    - sst-chatbot
+    - sst-4uentes-infra
+  affected_ards:
+    - shared-auth-provider
+    - frontend-web
+    - backend-api
+    - frontend-extension
+    - infra-gitops
+  capabilities:
+    - policy-unification
+    - child-repo-orchestrator-link-rule
+    - capability-state-linkage
+  risks:
+    - "Universal canon could be confused with orchestrator-local policy."
+    - "Child repository adoption could be implied before request approval."
+    - "4uentes-core and 4uentes-ards-core identity labels need reconciliation."
+    - "Policy validation could drift across repos without source metadata."
+
+required_context:
+  - "AGENTS.md"
+  - "docs/idioma-markdown.md"
+  - "docs/ai/model-selection-policy.md"
+  - "docs/cross-repo/child-repo-orchestrator-link-rule.md"
+  - "docs/requests/capability-state-linkage.md"
+  - "docs/apps/4uentes-ards-core.md"
+  - "4uentes-core/governance/repo-minimum-contract.md"
+  - "4uentes-core/governance/ai-guardrails.md"
+  - "4uentes-core/governance/source-validation.md"
+  - "4uentes-core/standard/ARDS_CORE_STANDARD_BASE_v1.md"
+
+required_checks:
+  - service_id: 4uentes-orchestor
+    command: "npm run check"
+
+risk:
+  level: "high"
+  score: 8
+  drivers:
+    - "cross-repo governance contract"
+    - "ARDS/SDD policy inheritance"
+    - "source validation and canon boundary"
+    - "child repository modification boundary"
+    - "identity reconciliation for core standard source"
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "cross-repo governance contract"
+    - "ARDS/SDD policy inheritance"
+    - "source validation and canon boundary"
+    - "child repository modification boundary"
+    - "identity reconciliation for core standard source"
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The work defines policy inheritance, validation, source authority, and child-repo governance contracts across the ARDS/SDD control plane."
+
+subagent_deployment_plan:
+  required: true
+  roles:
+    - architecture-reviewer
+    - security-contract-reviewer
+    - cross-repo-impact-reviewer
+    - validation-reviewer
+  parallelizable: true
+  fallback: "Subagent tools were available, but their runtime contract only permits spawning when the user explicitly requests delegation. No explicit delegation was requested, so the main agent performed the reviews sequentially and recorded this limitation."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "orchestrator-only"
+
+validation:
+  required_checks:
+    - "npm run check"
+  evidence_required:
+    - "policy_model"
+    - "subagent_deployment_evidence"
+    - "command_output"
+    - "changed_files_summary"
+    - "core_handoff"
+    - "residual_gaps"
+
+decision:
+  status: "approved-for-orchestrator-design"
+  approver: "4uentes"

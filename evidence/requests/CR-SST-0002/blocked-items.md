@@ -1,28 +1,29 @@
-# CR-SST-0002 - Blocked Items
+# CR-SST-0002 - Items Bloqueados
 
-Observed at: 2026-05-18
+Observado el: 2026-05-18
 
-## Operational Blockers
+## Bloqueos Operativos
 
-| Blocker | Status | Detail | Required Action |
+| Blocker | Estado | Detalle | Accion requerida |
 |---|---|---|---|
-| Missing local bindings | accepted warning | `environments/local/bindings.local.yaml` does not exist. | Create ignored local bindings before future execution that depends on host paths. |
-| Infra overlay render | blocked | `kubectl kustomize k8s-manifests/overlays/development` failed with access denied while resolving the overlay path. | Fix local filesystem/access issue and rerun. |
-| Kubernetes dry-run | blocked | `kubectl apply --dry-run=client -k ...` failed because kube config access was denied. | Fix kubeconfig access or provide a clean local kube context. |
-| Live SST API QA | skipped | Requires SST API running on port 3005. | Run only in an approved local/staging environment. |
-| Protected dictionary QA | skipped | Requires JWT/account context and mutates local DB via API. | Run only with owner JWT and disposable database or explicit approval. |
+| Local bindings faltantes | accepted warning | `environments/local/bindings.local.yaml` no existe. | Crear ignored local bindings antes de ejecucion futura que dependa de host paths. |
+| Render de infra overlay | blocked | `kubectl kustomize k8s-manifests/overlays/development` fallo con access denied al resolver el overlay path. | Corregir issue local de filesystem/access y reejecutar. |
+| Kubernetes dry-run | blocked | `kubectl apply --dry-run=client -k ...` fallo porque kube config no era legible. | Corregir kubeconfig access o proveer un kube context local limpio. |
+| Live SST API QA | skipped | Requiere SST API corriendo en puerto 3005. | Ejecutar solo en ambiente local/staging aprobado. |
+| Protected dictionary QA | skipped | Requiere JWT/account context y muta DB local via API. | Ejecutar solo con owner JWT y DB descartable o aprobacion explicita. |
 
-## Product/Architecture Items Not Closed
+## Items De Producto/Arquitectura No Cerrados
 
-| Item | Status | Reason |
+| Item | Estado | Motivo |
 |---|---|---|
-| translations | deferred | Domain artifact exists, but public endpoint/adoption is not fully established. |
-| aliases | deferred | Documented with translations; runtime adoption is not established. |
-| extension account context | gap | Extension does not have local account-context selection/persistence wired. |
-| final encryption-at-rest | deferred | Secure masking/reveal exists, but encryption-at-rest is explicitly outside current stage. |
-| offline/server isolation model | deferred | Concept exists in intake, not implemented as runtime. |
-| `article-tags` handoff | deferred | Adjacent capability exists in `sst-bend`; it is not the completion target for CR-SST-0002. |
+| translations | deferred | Existe domain artifact, pero public endpoint/adoption no esta completamente establecido. |
+| aliases | deferred | Documentado con translations; runtime adoption no esta establecida. |
+| extension account context | gap | La extension no tiene cableada seleccion/persistencia local de account-context. |
+| final encryption-at-rest | deferred | Secure masking/reveal existe, pero encryption-at-rest queda explicitamente fuera del stage actual. |
+| offline/server isolation model | deferred | El concepto existe en intake, no implementado como runtime. |
+| `article-tags` handoff | deferred | Existe capability adyacente en `sst-bend`; no es target de completion para CR-SST-0002. |
 
 ## Decision
 
-These blockers do not invalidate the dictionary implementation evidence. They prevent closing the request as fully done.
+Estos bloqueos no invalidan la evidencia de implementacion de dictionary.
+Impiden cerrar el request como completamente `done`.

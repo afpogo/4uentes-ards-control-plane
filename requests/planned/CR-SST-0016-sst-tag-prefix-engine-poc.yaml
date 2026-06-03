@@ -1,0 +1,63 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0016"
+title: "Implement SST tag prefix engine backend POC"
+status: planned
+source_request: "requests/inbox/CR-SST-0016-sst-tag-prefix-engine-poc.yaml"
+created_at: "2026-05-26"
+requester: "4uentes"
+
+initial_scope:
+  solution: "sst"
+  services:
+    - sst-bend
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: sst-bend
+      via: initial_scope.services
+      service_kind: api
+      ards_kind: backend-api
+      status: active
+  affected_ards:
+    - backend-api
+  capabilities: []
+  risks:
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: sst-bend
+      severity: medium
+
+required_context:
+  - catalog/services/sst-bend.yaml
+  - inventory/evidence/git/sst-bend.md
+  - solutions/sst.yaml
+  - inventory/phase-0.md
+  - inventory/phase-0-decision.md
+  - AGENTS.md
+
+required_checks:
+  - service_id: sst-bend
+    command: "npm run check"
+
+risk:
+  level: low
+  score: 1
+  drivers:
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: sst-bend
+      severity: medium
+
+execution:
+  requires_human_approval: true
+  allowed_window: manual
+  branch_strategy: one-branch-per-repo
+
+decision:
+  status: pending
+  approver: TODO
+
+planner_notes:
+  - Functional repositories were not modified.
+  - Functional repository checks were not executed.

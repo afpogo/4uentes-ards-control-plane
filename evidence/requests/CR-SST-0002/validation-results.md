@@ -1,35 +1,37 @@
-# CR-SST-0002 - Validation Results
+# CR-SST-0002 - Resultados De Validacion
 
-Observed at: 2026-05-18
+Observado el: 2026-05-18
 
-| Service | ARDS kind | Command | Result | Notes |
+| Service | ARDS kind | Command | Resultado | Notas |
 |---|---|---|---|---|
-| control-plane | orchestrator | `npm run check` | PASS | Catalog OK; local bindings missing warning accepted. |
+| control-plane | orchestrator | `npm run check` | PASS | Catalog OK; warning aceptado por local bindings faltantes. |
 | sst-bend | backend-api | `npm run test:diccionario` | PASS | 10/10 tests. |
 | sst-bend | backend-api | `npm run test:diccionario:stage2` | PASS | 9/9 tests. |
 | sst-bend | backend-api | `npm run test:diccionario:stage3` | PASS | 11/11 tests. |
-| 4uentes-auth | shared-auth-provider | `tsc --noEmit --pretty false` | PASS | TypeScript validation produced no errors. |
-| sst-fend | frontend-web | `npm run css:types:check` | PASS | CSS module declarations are in sync. |
+| 4uentes-auth | shared-auth-provider | `tsc --noEmit --pretty false` | PASS | Validacion TypeScript sin errores. |
+| sst-fend | frontend-web | `npm run css:types:check` | PASS | CSS module declarations sincronizadas. |
 | sst-fend | frontend-web | focused Jest dictionary suites | PASS | 4 suites, 17 tests. |
-| sst-extension | frontend-extension | `pnpm run check` | PASS | Baseline, 78 tests, WXT build passed. |
-| sst-extension | frontend-extension | `pnpm run build:safe` | PASS | Safe WXT build passed. |
-| sst-4uentes-infra | infra-gitops | `kubectl kustomize k8s-manifests/overlays/development` | BLOCKED | Access denied resolving overlay path. |
+| sst-extension | frontend-extension | `pnpm run check` | PASS | Baseline, 78 tests, WXT build pasado. |
+| sst-extension | frontend-extension | `pnpm run build:safe` | PASS | Safe WXT build pasado. |
+| sst-4uentes-infra | infra-gitops | `kubectl kustomize k8s-manifests/overlays/development` | BLOCKED | Access denied al resolver overlay path. |
 | sst-4uentes-infra | infra-gitops | `kubectl apply --dry-run=client -k k8s-manifests/overlays/development` | BLOCKED | Kube config access denied. |
 
-## Skipped Validations
+## Validaciones Salteadas
 
-| Service | Command | Status | Reason |
+| Service | Command | Estado | Motivo |
 |---|---|---|---|
-| sst-bend | `npm run qa:diccionario:stage1` | SKIPPED | Requires local SST API running on port 3005. |
-| sst-bend | `npm run qa:diccionario:stage2` | SKIPPED | Requires JWT/account context and mutates local DB through API. |
-| sst-bend | `npm run qa:diccionario:stage3` | SKIPPED | Requires JWT/account context and mutates local DB through API. |
-| sst-bend | `npm run check` | SKIPPED | Broad gate crosses non-dictionary domains and live service dependencies. |
-| 4uentes-auth | `npm run check` | SKIPPED | Builds to `dist`; avoided in evidence-first pass. |
+| sst-bend | `npm run qa:diccionario:stage1` | SKIPPED | Requiere SST API local corriendo en puerto 3005. |
+| sst-bend | `npm run qa:diccionario:stage2` | SKIPPED | Requiere JWT/account context y muta DB local via API. |
+| sst-bend | `npm run qa:diccionario:stage3` | SKIPPED | Requiere JWT/account context y muta DB local via API. |
+| sst-bend | `npm run check` | SKIPPED | Gate amplio cruza dominios no-dictionary y dependencias live service. |
+| 4uentes-auth | `npm run check` | SKIPPED | Construye a `dist`; evitado en pase evidence-first. |
 | 4uentes-auth | `npm test` | SKIPPED | Placeholder failure by design. |
-| sst-fend | `npm run check` | SKIPPED | Runs build and can write/clean `dist`. |
-| sst-fend | `npm run lint` | SKIPPED | Uses `--fix` and can rewrite files. |
-| sst-fend | `npm run format` | SKIPPED | Uses `prettier --write`. |
+| sst-fend | `npm run check` | SKIPPED | Ejecuta build y puede escribir/limpiar `dist`. |
+| sst-fend | `npm run lint` | SKIPPED | Usa `--fix` y puede reescribir archivos. |
+| sst-fend | `npm run format` | SKIPPED | Usa `prettier --write`. |
 
-## Final Interpretation
+## Interpretacion Final
 
-Dictionary/tag behavior has strong local test evidence across the backend API, BFF, web frontend and extension. The only blockers are infrastructure/environment blockers, not direct dictionary implementation failures.
+El comportamiento dictionary/tag tiene evidencia local fuerte de tests a traves
+de backend API, BFF, web frontend y extension. Los unicos bloqueos son de
+infraestructura/ambiente, no fallas directas de implementacion dictionary.

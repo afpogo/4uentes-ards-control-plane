@@ -1,34 +1,37 @@
-# CR-SST-0002 - Runtime Readiness Summary
+# CR-SST-0002 - Resumen De Runtime Readiness
 
-Observed at: 2026-05-18
+Observado el: 2026-05-18
 
 ## Readiness
 
-| Area | Readiness | Reason |
+| Area | Readiness | Motivo |
 |---|---|---|
-| Backend dictionary domain | ready-for-controlled-validation | In-memory Stage 1/2/3 tests passed. |
-| BFF dictionary facade | ready-for-controlled-validation | TypeScript validation passed; route/proxy evidence exists. |
-| Web frontend dictionary | ready-for-controlled-validation | Focused dictionary Jest suites and CSS type check passed. |
-| Extension dictionary optional path | ready-for-controlled-validation | `pnpm check` and safe build passed. |
-| Infra/GitOps | blocked-operationally | Kustomize/kubectl checks blocked by filesystem/kubeconfig access. |
-| Live endpoint QA | not-run | Requires services, JWT/account context and/or DB mutation approval. |
+| Backend dictionary domain | ready-for-controlled-validation | Tests in-memory Stage 1/2/3 pasaron. |
+| BFF dictionary facade | ready-for-controlled-validation | Validacion TypeScript paso; existe evidencia de route/proxy. |
+| Web frontend dictionary | ready-for-controlled-validation | Suites focalizadas Jest de dictionary y CSS type check pasaron. |
+| Extension dictionary optional path | ready-for-controlled-validation | `pnpm check` y safe build pasaron. |
+| Infra/GitOps | blocked-operationally | Checks Kustomize/kubectl bloqueados por acceso filesystem/kubeconfig. |
+| Live endpoint QA | not-run | Requiere servicios, JWT/account context y/o aprobacion de mutacion DB. |
 
-## Ready For Fase 4B
+## Listo Para Fase 4B
 
-The following can be promoted to a stricter execution phase after explicit approval:
+Lo siguiente puede promoverse a una fase de ejecucion mas estricta despues de
+aprobacion explicita:
 
-- live dictionary legacy read smoke through `sst-bend`;
-- BFF `/api/diccionario/*` smoke through `4uentes-auth`;
-- web frontend `/dictionary` manual QA;
-- extension popup dictionary manual QA;
-- infra overlay render/dry-run after filesystem and kubeconfig access are fixed.
+- live smoke de dictionary legacy read mediante `sst-bend`;
+- smoke de BFF `/api/diccionario/*` mediante `4uentes-auth`;
+- QA manual de web frontend `/dictionary`;
+- QA manual de extension popup dictionary;
+- render/dry-run de infra overlay despues de corregir acceso filesystem y
+  kubeconfig.
 
-## Not Ready To Close As Done
+## No Listo Para Cerrar Como `done`
 
-The request should not be moved to `done` yet because:
+El request no debe moverse a `done` todavia porque:
 
-- live endpoint QA was intentionally skipped;
-- infra checks are blocked;
-- extension account context remains a known gap;
-- translations/aliases are not fully promoted as runtime capability;
-- final encryption-at-rest and offline model remain separate future work.
+- live endpoint QA fue salteado intencionalmente;
+- los checks de infra estan bloqueados;
+- extension account context sigue siendo un gap conocido;
+- translations/aliases no estan completamente promovidos como runtime
+  capability;
+- final encryption-at-rest y offline model siguen como trabajo futuro separado.

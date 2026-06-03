@@ -1,0 +1,150 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0003"
+title: "Backend deployment workflows and GitOps manifest handoff"
+status: planned
+source_request: "requests/inbox/CR-SST-0003-backend-deployment-workflows-and-manifests.yaml"
+created_at: "2026-05-19"
+requester: "4uentes"
+
+initial_scope:
+  solution: "sst"
+  services:
+    - sst-bend
+    - 4uentes-auth
+    - sst-4uentes-infra
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: sst-bend
+      via: initial_scope.services
+      service_kind: api
+      ards_kind: backend-api
+      status: active
+    - service_id: 4uentes-auth
+      via: initial_scope.services
+      service_kind: shared-auth-provider
+      ards_kind: shared-auth-provider
+      status: active
+    - service_id: sst-4uentes-infra
+      via: initial_scope.services
+      service_kind: gitops-infrastructure
+      ards_kind: infra-gitops
+      status: active
+  affected_ards:
+    - backend-api
+    - shared-auth-provider
+    - infra-gitops
+  capabilities:
+    - id: capability.platform.gitops-deployment
+      flow: sst-4uentes-infra -> sst-bend, 4uentes-auth
+      status: available-from-infra
+      notes:
+        - Argo CD owns cluster reconciliation from infra desired state.
+        - App CI must publish artifacts or open reviewable manifest/tag PRs, not deploy directly.
+    - id: capability.platform.ci-gates
+      flow: sst-4uentes-infra -> sst-bend, 4uentes-auth
+      status: draft-platform-expectation
+      notes:
+        - Infra already defines the target CI behavior.
+        - Child repos are not yet aligned around build, publish and validation gates.
+  risks:
+    - id: MULTI_SERVICE_SCOPE
+      severity: high
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: sst-bend
+      severity: medium
+    - id: SHARED_AUTH_PROVIDER
+      service_id: 4uentes-auth
+      severity: high
+    - id: INFRA_GITOPS_SCOPE
+      service_id: sst-4uentes-infra
+      severity: high
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: sst-4uentes-infra
+      severity: medium
+    - id: MISSING_CHECK_COMMAND
+      service_id: sst-4uentes-infra
+      severity: high
+
+required_context:
+  - catalog/services/sst-bend.yaml
+  - inventory/phase-0.md
+  - catalog/services/4uentes-auth.yaml
+  - catalog/services/sst-4uentes-infra.yaml
+  - solutions/sst.yaml
+  - inventory/phase-0-decision.md
+  - AGENTS.md
+
+required_checks:
+  - service_id: sst-bend
+    command: "npm run check"
+  - service_id: 4uentes-auth
+    command: "npm run check"
+  - service_id: sst-4uentes-infra
+    command: "TODO"
+    fallback: manual-review
+
+risk:
+  level: high
+  score: 10
+  drivers:
+    - id: MULTI_SERVICE_SCOPE
+      severity: high
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: sst-bend
+      severity: medium
+    - id: SHARED_AUTH_PROVIDER
+      service_id: 4uentes-auth
+      severity: high
+    - id: INFRA_GITOPS_SCOPE
+      service_id: sst-4uentes-infra
+      severity: high
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: sst-4uentes-infra
+      severity: medium
+    - id: MISSING_CHECK_COMMAND
+      service_id: sst-4uentes-infra
+      severity: high
+
+execution:
+  requires_human_approval: true
+  allowed_window: manual
+  branch_strategy: one-branch-per-repo
+
+decision:
+  status: pending
+  approver: TODO
+
+orchestration:
+  interaction_model:
+    - "Use control-plane request first to authorize cross-repo deployment work."
+    - "Use infra outbound capabilities as the platform source of truth."
+    - "Use child-repo ARDS artifacts to record adoption or rollout of platform expectations."
+  child_repo_adoption:
+    4uentes-auth:
+      preferred_artifact: "specs/capabilities/inbound/platform-gitops-deployment.yaml"
+      additional_artifact: "specs/capabilities/inbound/platform-ci-gates.yaml"
+      rationale: "This repo already supports inbound capability adoption."
+    sst-bend:
+      preferred_artifact: "specs/states/deployment-gitops-rollout.yaml"
+      alternative_artifact: "specs/capabilities/inbound/platform-gitops-deployment.yaml"
+      rationale: "Current repo rules model sst-bend as outbound-only for capabilities, so platform adoption needs either a state artifact or an explicit policy exception."
+  workflow_gap_summary:
+    - "sst-bend still contains a direct deploy workflow that calls Argo CD sync."
+    - "sst-bend CI builds a Docker image locally but does not publish the tag consumed by infra."
+    - "4uentes-auth has no versioned GitHub Actions workflow for image build/publish."
+    - "Infra manifests already define the runtime image references and GitOps path."
+  expected_execution_slices:
+    - repo: sst-4uentes-infra
+      outcome: "Confirm deployment contract, tag strategy and CI/GitOps boundary."
+    - repo: sst-bend
+      outcome: "Replace direct deploy semantics with build/publish and deployment adoption evidence."
+    - repo: 4uentes-auth
+      outcome: "Add build/publish workflow and deployment adoption evidence for the shared auth/BFF runtime."
+
+planner_notes:
+  - Functional repositories were not modified.
+  - Functional repository checks were not executed.

@@ -1,0 +1,21 @@
+schema_version: "1.0"
+kind: "feature_state"
+id: "document-agent"
+title: "SST Document Agent Workflows"
+status: "implemented-local"
+updated_at: "2026-05-24"
+solution_id: "sst"
+affected_services:
+  - sst-fend
+  - 4uentes-auth
+  - sst-bend
+request_ids:
+  - CR-SST-0008
+capability_refs:
+  - "capability.inbound.sst-document-agent-workflows"
+spec_refs:
+  - "specs/capabilities/inbound/4uentes-orchestor--document-agent-workflows.yaml"
+evidence_refs: []
+open_gaps:
+  - "CR-SST-0008 needs planned request and formal evidence."
+

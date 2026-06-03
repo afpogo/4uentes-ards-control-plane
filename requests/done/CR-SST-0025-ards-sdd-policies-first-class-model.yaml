@@ -1,0 +1,55 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0025"
+title: "Promote policies as first-class ARDS/SDD components"
+status: "done"
+created_at: "2026-06-02"
+completed_at: "2026-06-02"
+requester: "4uentes"
+
+implemented_change: >
+  Defined policies as first-class ARDS/SDD components in the orchestrator,
+  including policy definitions, source authority, adoption, enforcement,
+  exceptions, evidence, and state linkage.
+
+affected_repos:
+  - service_id: 4uentes-orchestor
+    local_binding: "current-workspace"
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "ARDS/SDD component model change"
+    - "cross-repo governance scaling"
+    - "core handoff boundary"
+    - "child-repo adoption contract"
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "Policies are now modeled as a first-class governance component next to capabilities and states."
+
+subagent_deployment_plan:
+  required: true
+  roles:
+    - architecture-reviewer
+    - cross-repo-impact-reviewer
+    - validation-reviewer
+  fallback: "Subagent tools require explicit user delegation in this runtime. No explicit delegation was requested, so the main agent performed the reviews sequentially."
+  evidence_ref: "evidence/requests/CR-SST-0025/subagent-deployment-evidence.md"
+
+validation:
+  required_checks:
+    - "npm run check"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0025/policy-component-model.md"
+    - "evidence/requests/CR-SST-0025/subagent-deployment-evidence.md"
+    - "evidence/requests/CR-SST-0025/changed-files-summary.md"
+    - "evidence/requests/CR-SST-0025/validation-results.md"
+
+decision:
+  status: "approved-done"
+  approver: "4uentes"
+  decided_at: "2026-06-02"

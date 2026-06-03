@@ -1,0 +1,24 @@
+schema_version: "1.0"
+kind: "feature_state"
+id: "capability-state-linkage"
+title: "Capability State Linkage"
+status: "done"
+updated_at: "2026-05-24"
+solution_id: "sst"
+affected_services:
+  - sst-bend
+  - 4uentes-auth
+  - sst-fend
+  - sst-extension
+request_ids:
+  - CR-SST-0011
+capability_refs:
+  - "capability-state-linkage"
+spec_refs:
+  - "specs/states/capability-state-linkage.yaml"
+evidence_refs:
+  - "evidence/requests/CR-SST-0011/contract-summary.md"
+  - "evidence/requests/CR-SST-0011/validation-results.md"
+open_gaps:
+  - "Child repositories still need local ARDS/SDD adoption of orchestrator_link metadata."
+

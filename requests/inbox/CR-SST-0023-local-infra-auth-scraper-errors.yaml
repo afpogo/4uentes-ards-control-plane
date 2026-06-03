@@ -1,0 +1,137 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0023"
+title: "Investigate local SST infra unauthorized resource APIs and scraper 500 errors"
+status: inbox
+created_at: "2026-06-02"
+requester: "4uentes"
+
+business_context: >
+  Local SST access through localhost:8088 is returning unauthorized errors when
+  listing or creating resources such as articles, and scraper access returns a
+  server error. The issue may involve frontend routing, backend authorization,
+  shared auth, scraper integration, or local infrastructure wiring.
+
+requested_change: >
+  Investigate localhost:8088 with Chrome DevTools and inspect involved
+  repositories to identify the root cause and required remediation path.
+
+expected_outcome: >
+  Produce evidence-backed diagnosis for unauthorized resource API failures and
+  scraper 500 failures, with any required fixes scoped through the request
+  lifecycle before modifying child repositories.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - sst-fend
+    - sst-bend
+    - 4uentes-auth
+    - sst-chatbot
+    - sst-4uentes-infra
+  include_optional_services: true
+
+impact_analysis:
+  required: true
+  affected_services: []
+  affected_ards: []
+  capabilities: []
+  risks:
+    - id: SHARED_AUTH_PROVIDER
+      severity: high
+    - id: API_AUTHORIZATION_CONTRACT
+      severity: high
+    - id: SCRAPER_RUNTIME_ERROR
+      severity: high
+    - id: MULTI_SERVICE_SCOPE
+      severity: high
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      severity: medium
+
+required_context:
+  - AGENTS.md
+  - docs/ai/model-selection-policy.md
+  - solutions/sst.yaml
+  - catalog/services/sst-fend.yaml
+  - catalog/services/sst-bend.yaml
+  - catalog/services/4uentes-auth.yaml
+  - catalog/services/sst-chatbot.yaml
+  - catalog/services/sst-4uentes-infra.yaml
+  - environments/local/bindings.local.yaml
+
+required_checks:
+  - service_id: 4uentes-orchestor
+    command: "npm run check"
+  - service_id: sst-fend
+    command: "TODO"
+    fallback: "inspect only until diagnosis is complete"
+  - service_id: sst-bend
+    command: "TODO"
+    fallback: "inspect only until diagnosis is complete"
+  - service_id: 4uentes-auth
+    command: "TODO"
+    fallback: "inspect only until diagnosis is complete"
+  - service_id: sst-chatbot
+    command: "TODO"
+    fallback: "inspect only until diagnosis is complete"
+  - service_id: sst-4uentes-infra
+    command: "TODO"
+    fallback: "inspect only until diagnosis is complete"
+
+risk:
+  level: high
+  score: 13
+  drivers:
+    - id: SHARED_AUTH_PROVIDER
+      severity: high
+    - id: API_AUTHORIZATION_CONTRACT
+      severity: high
+    - id: SCRAPER_RUNTIME_ERROR
+      severity: high
+    - id: MULTI_SERVICE_SCOPE
+      severity: high
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      severity: medium
+
+task_weight:
+  classification: complex-high-risk-task
+  risk_level: high
+  drivers:
+    - authentication and authorization failures
+    - API contract impact across frontend, backend, auth, scraper, and infra
+    - local runtime debugging through browser and container/service state
+    - dirty working tree observed in the control-plane before execution
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "Security-sensitive cross-repo debugging with authentication, authorization, API contracts, and runtime failures."
+
+subagent_deployment_plan:
+  required: true
+  parallelizable: true
+  roles:
+    - security-contract-reviewer
+    - cross-repo-impact-reviewer
+    - validation-reviewer
+  fallback: "If subagents or exact model aliases are unavailable, record the limitation and run the same review steps sequentially with the highest available reasoning profile."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "one-branch-per-repo"
+
+validation:
+  required_checks:
+    - "npm run check"
+  evidence_required:
+    - "browser_network_console_summary"
+    - "runtime_service_state"
+    - "root_cause_summary"
+    - "changed_files_summary"
+
+decision:
+  status: "pending"
+  approver: "TODO"

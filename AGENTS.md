@@ -24,6 +24,8 @@ This repository consumes the standard. It does not redefine it.
 - Use `environments/local/bindings.local.yaml` only for host-specific paths.
 - Validate catalog, solutions, local bindings, requests, and evidence.
 - Plan cross-repo requests before any repo is modified.
+- For cross-repo work, create or advance the internal request lifecycle before
+  modifying child repositories whenever feasible.
 
 ## Non-goals
 
@@ -41,6 +43,31 @@ This repository consumes the standard. It does not redefine it.
 - Absolute local paths may appear only in `inventory/` evidence or ignored local bindings.
 - Do not modify `4uentes-core` from this repo workflow.
 - Do not modify `sst-fend`, `sst-bend`, `sst-extension`, `4uentes-auth`, or infra repos without a request.
+- If child repositories were already modified before the lifecycle was created,
+  record a retroactive request/evidence entry and make the ordering deviation
+  explicit.
+
+## Model and Subagent Selection Annex
+
+This repo has an operational annex for model and subagent selection:
+
+- `docs/ai/model-selection-policy.md`
+
+Before planning or executing a task, agents must classify it as:
+
+- `short-defined-task`
+- `long-context-task`
+- `complex-high-risk-task`
+
+Then apply the policy defined in the ARDS/SDD annex. For planned work, the
+classification must become an auditable `task_weight`, `model_selection`, and
+`subagent_deployment_plan` entry. If subagents are required by policy but cannot
+be spawned by the runtime, record the fallback instead of silently skipping the
+step.
+
+This rule complements the existing ARDS/SDD; it does not replace working
+agreements, specs, docs, playbooks, requests, handoffs, or current repository
+decisions.
 
 ## Validation
 

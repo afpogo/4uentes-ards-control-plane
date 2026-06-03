@@ -1,0 +1,78 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0008"
+title: "Define persisted document-agent workflows for SST backend handoff"
+status: "inbox"
+created_at: "2026-05-23"
+requester: "4uentes"
+
+business_context: >
+  SST needs backend-first document workflows where document ingestion and
+  processing requests are persisted as durable jobs and routed through the
+  orchestrator instead of ad-hoc execution.
+
+requested_change: >
+  Add control-plane documentation and contract artifacts for the new
+  `document_agent` workflow. The workflow must describe a minimal
+  `document_agent_event` schema, the `operation_intent` schema accepted by
+  orchestrator validation, and a `handoff_payload` contract for generating durable,
+  queued execution requests.
+
+expected_outcome: >
+  A persistent workflow contract that allows document-related intents from
+  `sst-fend` to be converted into validated, auditable, backend-first
+  orchestrator jobs covering `sst-bend` and `4uentes-auth` services. The contract
+  must require tenant/account scope and idempotency metadata.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - sst-fend
+    - sst-bend
+    - 4uentes-auth
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services: []
+  affected_ards: []
+  capabilities: []
+  risks: []
+
+required_context:
+  - "solutions/sst.yaml"
+  - "catalog/services/sst-fend.yaml"
+  - "catalog/services/sst-bend.yaml"
+  - "catalog/services/4uentes-auth.yaml"
+  - "docs/cross-repo/orchestrator-boundary.md"
+  - "specs/capabilities/inbound/00-index.yaml"
+  - "specs/capabilities/inbound/4uentes-orchestor--document-agent-workflows.yaml"
+
+required_checks: []
+
+risk:
+  level: "medium"
+  score: 3
+  drivers:
+    - "Schema mismatch could create unstable or unprocessable handoff payloads."
+    - "Poorly scoped event IDs could duplicate or overwrite persisted jobs."
+    - "Noisy operation intent types could bypass backend-first execution policy."
+
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "control-plane-docs-only"
+
+validation:
+  required_checks:
+    - "npm run check"
+  evidence_required:
+    - "operation_intent_schema"
+    - "handoff_payload_schema"
+    - "document_agent_event_schema"
+    - "backend-first-persistence-flow"
+    - "changed_files_summary"
+
+decision:
+  status: "pending"
+  approver: "TODO"

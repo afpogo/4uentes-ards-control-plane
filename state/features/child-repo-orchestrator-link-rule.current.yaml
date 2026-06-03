@@ -1,0 +1,25 @@
+schema_version: "1.0"
+kind: "feature_state"
+id: "child-repo-orchestrator-link-rule"
+title: "Child Repository Orchestrator Link Rule"
+status: "done"
+updated_at: "2026-05-24"
+solution_id: "sst"
+affected_services:
+  - sst-bend
+  - 4uentes-auth
+  - sst-fend
+  - sst-extension
+  - sst-4uentes-infra
+request_ids:
+  - CR-SST-0012
+capability_refs:
+  - "child-repo-orchestrator-link-rule"
+spec_refs:
+  - "specs/states/capability-state-linkage.yaml"
+evidence_refs:
+  - "evidence/requests/CR-SST-0012/contract-summary.md"
+  - "evidence/requests/CR-SST-0012/validation-results.md"
+open_gaps:
+  - "Functional repositories still need local adoption of templates/child-orchestrator-link-rule.md."
+

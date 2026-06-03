@@ -1,0 +1,107 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0009"
+title: "Close feature and bugfix state read-model V1"
+status: "done"
+created_at: "2026-05-24"
+completed_at: "2026-05-24"
+requester: "4uentes"
+
+business_context: >
+  The control-plane needs a current-state projection for SST features and
+  bugfixes so agents and humans can understand implementation status without
+  rewriting historical request evidence.
+
+requested_change: >
+  Add a document-first state read-model under state/, define the feature/bugfix
+  state contract, wire deterministic validation, and include the validator in
+  the repository check command.
+
+expected_outcome: >
+  The repository can validate current feature and bugfix state documents,
+  enforce structural references, and distinguish warnings for historical debt
+  from blocking structural failures.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - sst-fend
+    - sst-bend
+    - 4uentes-auth
+    - sst-extension
+    - sst-4uentes-infra
+  include_optional_services: true
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: sst-fend
+      role: "state-covered-service"
+    - service_id: sst-bend
+      role: "state-covered-service"
+    - service_id: 4uentes-auth
+      role: "state-covered-service"
+    - service_id: sst-extension
+      role: "state-covered-service"
+    - service_id: sst-4uentes-infra
+      role: "state-covered-service"
+  affected_ards:
+    - frontend-web
+    - backend-api
+    - shared-auth-provider
+    - frontend-extension
+    - infra-gitops
+  capabilities:
+    - id: "feature-bugfix-state-read-model"
+      status: "done"
+  risks:
+    - id: "DOCUMENTAL_MODEL_ONLY"
+      severity: "low"
+      note: "The model does not execute runtime product changes."
+
+required_context:
+  - "state/README.md"
+  - "state/00-index.yaml"
+  - "state/state-machine.yaml"
+  - "docs/requests/state-read-model.md"
+  - "specs/states/feature-bugfix-state-model.yaml"
+  - "scripts/verify-state-model.js"
+  - "package.json"
+
+required_checks:
+  - command: "npm.cmd run check:state"
+  - command: "npm.cmd run check"
+
+risk:
+  level: "low"
+  score: 1
+  drivers:
+    - id: "CONTROL_PLANE_DOCUMENTATION_ONLY"
+      severity: "low"
+
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "control-plane-docs-only"
+  functional_repositories_modified: false
+
+validation:
+  required_checks:
+    - "npm.cmd run check:state"
+    - "npm.cmd run check"
+  evidence_required:
+    - "changed_files_summary"
+    - "validation_results"
+    - "done_decision"
+
+evidence:
+  refs:
+    - "evidence/requests/CR-SST-0009/changed-files-summary.md"
+    - "evidence/requests/CR-SST-0009/validation-results.md"
+    - "evidence/requests/CR-SST-0009/done-decision.md"
+
+decision:
+  status: "approved-done"
+  approver: "4uentes"
+  decided_at: "2026-05-24"
+

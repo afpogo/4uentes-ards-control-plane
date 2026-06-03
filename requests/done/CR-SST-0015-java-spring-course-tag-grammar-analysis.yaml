@@ -1,0 +1,40 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0015"
+title: "Analyze complete Java Spring course folder tag grammar"
+status: "done"
+created_at: "2026-05-25"
+completed_at: "2026-05-25"
+requester: "4uentes"
+
+source_request: "requests/inbox/CR-SST-0015-java-spring-course-tag-grammar-analysis.yaml"
+planned_request: "requests/planned/CR-SST-0015-java-spring-course-tag-grammar-analysis.yaml"
+
+business_context: >
+  SST course material uses folder structure plus prefix-based content blocks.
+  This must be represented before article/course parser implementation starts.
+
+implemented_change: >
+  Produced control-plane evidence that maps the Java Spring Gradle course
+  folder to the future SST learning-content grammar and parser boundary.
+
+affected_repos:
+  - service_id: sst-bend
+    access: "read-only future parser boundary"
+  - service_id: sst-fend
+    access: "read-only future rendering boundary"
+
+validation:
+  required_checks:
+    - "npm.cmd run check:state"
+    - "npm.cmd run check"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0015/java-spring-course-structure-analysis.md"
+    - "evidence/requests/CR-SST-0015/parser-boundary-recommendation.md"
+    - "evidence/requests/CR-SST-0015/validation-results.md"
+
+decision:
+  status: "approved-done"
+  approver: "4uentes"
+  decided_at: "2026-05-25"
+

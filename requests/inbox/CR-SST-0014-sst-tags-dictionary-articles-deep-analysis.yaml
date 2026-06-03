@@ -1,0 +1,83 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0014"
+title: "Deep analysis of SST dictionary tags and article expansion"
+status: "inbox"
+created_at: "2026-05-25"
+requester: "4uentes"
+
+business_context: >
+  SST needs to close the dictionary tags feature with clear evidence and expand
+  the same tag governance model to articles, classes, courses, and future
+  bitacora content. The April 30 brain dump describes tags as the organizing
+  mechanism for SST information and asks how the current dictionary
+  implementation should become a broader SST content model.
+
+requested_change: >
+  Analyze the implemented dictionary tag system, the draft article-tag
+  capability, and the AWS course material currently tagged in local notes.
+  Determine how much is implemented, what is only documented, what remains a
+  gap, and what request boundary should be opened before functional repositories
+  are modified.
+
+expected_outcome: >
+  Produce control-plane evidence that explains the current implementation state,
+  maps the AWS course note tags to the SST tag model, identifies the missing tag
+  concept, and updates the SST tags governance state with the analysis result.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - sst-bend
+    - 4uentes-auth
+    - sst-fend
+    - sst-extension
+  include_optional_services: true
+
+impact_analysis:
+  required: true
+  affected_services: []
+  affected_ards: []
+  capabilities:
+    - "dictionary-domain-management-v1"
+    - "dictionary-domain-read-v1"
+    - "article-tags"
+    - "sst-tags-governance"
+  risks: []
+
+required_context:
+  - "state/features/dictionary-tags.current.yaml"
+  - "state/features/sst-tags-governance.current.yaml"
+  - "evidence/requests/CR-SST-0002/implementation-state-report.md"
+  - "evidence/requests/CR-SST-0002/runtime-readiness-summary.md"
+  - "knowledge/business-intake/sst-tags-dictionary-2026-05-18.md"
+  - "requests/planned/CR-SST-0010-sst-tags-governance-review.yaml"
+  - "TODO: record inventory evidence for the fundamentos_aws docs source before execution"
+
+required_checks: []
+
+risk:
+  level: "medium"
+  score: 3
+  drivers:
+    - "Tags define how SST information enters, is classified, and remains processable."
+    - "Dictionary behavior is implemented, but broader SST tag governance is not fully adopted."
+    - "Course notes are outside child repos and must be treated as source material, not as governed runtime code."
+
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "control-plane-evidence-only"
+
+validation:
+  required_checks:
+    - "npm run check:state"
+    - "npm run check"
+  evidence_required:
+    - "implementation_state_analysis"
+    - "course_tag_source_analysis"
+    - "next_request_boundary"
+
+decision:
+  status: "pending"
+  approver: "TODO"

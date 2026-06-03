@@ -35,3 +35,9 @@ Absolute paths may appear only in:
 - ignored `environments/local/bindings.local.yaml`
 
 They must not appear in `catalog/` or `solutions/`.
+
+## Model selection annex
+
+Model and subagent selection is documented in
+`docs/ai/model-selection-policy.md`. This annex complements these AI rules and
+does not redefine ARDS/SDD contracts.

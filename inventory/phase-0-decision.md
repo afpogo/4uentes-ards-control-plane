@@ -1,56 +1,60 @@
-# Gate 0 Decision - Phase 0 Bootstrap
+# Decision Gate 0 - Bootstrap De Fase 0
 
-Observed at: 2026-05-17
-Decision status: accepted-with-warnings
+Observado el: 2026-05-17
+Estado de decision: accepted-with-warnings
 
 ## Decision
 
-The initial 4uentes ARDS/SDD control-plane catalog is accepted for Phase 0.
+El catalogo inicial del control-plane ARDS/SDD de 4uentes queda aceptado para
+Fase 0.
 
-The stable catalog models logical identities only. Local absolute paths remain
-evidence in inventory files and must not be used as canonical configuration.
+El catalogo estable modela solo identidades logicas. Los paths absolutos locales
+siguen siendo evidencia en archivos de inventario y no deben usarse como
+configuracion canonica.
 
-## Accepted catalog
+## Catalogo Aceptado
 
-| Service ID | Decision | Notes |
+| Service ID | Decision | Notas |
 |---|---|---|
-| `4uentes-auth` | accepted | Shared auth provider for SST and planned Fulbito |
-| `sst-fend` | accepted | Required SST frontend SPA |
-| `sst-bend` | accepted | Required SST API/backend |
-| `sst-extension` | accepted optional | Real Manifest V3 runtime, not required by default |
-| `sst-4uentes-infra` | accepted | GitOps/Kubernetes deployment governance |
+| `4uentes-auth` | accepted | Shared auth provider para SST y Fulbito planificado |
+| `sst-fend` | accepted | Frontend SPA requerido para SST |
+| `sst-bend` | accepted | API/backend requerido para SST |
+| `sst-extension` | accepted optional | Runtime Manifest V3 real, no requerido por defecto |
+| `sst-4uentes-infra` | accepted | Gobierno de deployment GitOps/Kubernetes |
 
-## Gate confirmations
+## Confirmaciones Del Gate
 
-| Check | Result |
+| Check | Resultado |
 |---|---|
-| `4uentes-auth` kind is `shared-auth-provider` | pass |
-| `node-auth` is only a legacy/local alias, not canonical identity | pass |
-| `sst-extension` is optional-active or equivalent | pass |
-| `sst-4uentes-infra` is infra/GitOps/deployment governance | pass |
-| Stable catalog contains no absolute local paths | pass |
-| `solutions/sst.yaml` references existing services | pass |
-| Service files include minimum required fields | pass |
+| `4uentes-auth` kind es `shared-auth-provider` | pass |
+| `node-auth` es solo alias legacy/local, no identidad canonica | pass |
+| `sst-extension` es optional-active o equivalente | pass |
+| `sst-4uentes-infra` es infra/GitOps/deployment governance | pass |
+| El catalogo estable no contiene paths locales absolutos | pass |
+| `solutions/sst.yaml` referencia servicios existentes | pass |
+| Los archivos de servicio incluyen campos minimos requeridos | pass |
 
-## Accepted warnings
+## Warnings Aceptados
 
-| Warning | Reason accepted |
+| Warning | Motivo de aceptacion |
 |---|---|
-| Dirty working trees observed for `sst-fend`, `sst-bend`, and `sst-4uentes-infra` | Phase 0 records evidence only and does not freeze those changes as stable baseline |
-| `sst-extension` has no valid HEAD/initial commit | Runtime and ARDS/SDD exist locally, but Git bootstrap must be resolved later |
-| `sst-4uentes-infra` has no check command captured | Infra validation will be handled by later verifier work |
-| Absolute paths exist in inventory evidence | They are explicitly evidence-only and not stable catalog configuration |
+| Dirty working trees observados en `sst-fend`, `sst-bend` y `sst-4uentes-infra` | Fase 0 solo registra evidencia y no congela esos cambios como baseline estable |
+| `sst-extension` no tiene HEAD/commit inicial valido | El runtime y ARDS/SDD existen localmente, pero el bootstrap Git debe resolverse despues |
+| `sst-4uentes-infra` no tiene check command capturado | La validacion de infra se tratara con trabajo posterior del verifier |
+| Existen paths absolutos en evidencia de inventory | Son explicitamente evidence-only y no configuracion estable de catalogo |
 
-## Not blockers for Phase 1
+## No Bloquean Fase 1
 
-- Dirty working trees in functional repos.
-- Missing initial commit for `sst-extension`.
-- Missing automated verifier scripts in the control-plane.
+- Dirty working trees en repos funcionales.
+- Commit inicial faltante para `sst-extension`.
+- Scripts automatizados de verifier faltantes en el control-plane.
 
-## Phase 1 entry criteria
+## Criterios De Entrada Para Fase 1
 
-Phase 1 may start with verifier implementation:
+Fase 1 puede empezar con implementacion de verifiers:
 
-1. `verify-catalog` for YAML parsing, required fields, and solution references.
-2. `verify-local-bindings` for evidence-only local path checks.
-3. Request modeling after catalog checks are deterministic.
+1. `verify-catalog` para parseo YAML, campos requeridos y referencias de
+   soluciones.
+2. `verify-local-bindings` para checks de paths locales evidence-only.
+3. Modelado de requests despues de que los checks de catalogo sean
+   deterministas.

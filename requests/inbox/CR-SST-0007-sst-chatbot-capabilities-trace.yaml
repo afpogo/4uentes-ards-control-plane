@@ -1,0 +1,65 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0007"
+title: "Trace sst_chatbot capabilities for 4uentes-orchestor"
+status: "inbox"
+created_at: "2026-05-20"
+requester: "4uentes"
+
+business_context: >
+  A local SST chatbot integration repository exists under the SST workspace and
+  defines ARDS/SDD capabilities, including a boundary for handoff to the
+  4uentes-orchestor repository. The control-plane needs trace evidence before
+  deciding whether this repository becomes a cataloged service or an external
+  capability producer.
+
+requested_change: >
+  Inspect the local sst_chatbot repository read-only, enumerate its capability
+  specs and orchestrator-related contracts, and document whether 4uentes-
+  orchestor currently catalogs or consumes those capabilities.
+
+expected_outcome: >
+  Produce control-plane evidence that lists the capabilities defined by
+  sst_chatbot, identifies the orchestrator boundary contract, and records
+  missing adoption/catalog gaps in 4uentes-orchestor.
+
+initial_scope:
+  solution: "sst"
+  services: []
+  include_optional_services: true
+
+impact_analysis:
+  required: true
+  affected_services: []
+  affected_ards: []
+  capabilities: []
+  risks: []
+
+required_context:
+  - "solutions/sst.yaml"
+  - "inventory/phase-0.md"
+  - "inventory/evidence/git/sst-chatbot.md"
+
+required_checks: []
+
+risk:
+  level: "TODO"
+  score: 0
+  drivers: []
+
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "control-plane-evidence-only"
+
+validation:
+  required_checks:
+    - "npm run check"
+  evidence_required:
+    - "capabilities-trace"
+    - "orchestrator-boundary-summary"
+    - "adoption-gaps"
+
+decision:
+  status: "pending"
+  approver: "TODO"

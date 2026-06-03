@@ -1,0 +1,36 @@
+schema_version: "1.0"
+kind: "feature_state"
+id: "cluster-publication-ngrok-domain"
+title: "Cluster publication through ngrok and productive domain"
+status: "validated-live"
+updated_at: "2026-06-02"
+solution_id: "sst"
+affected_services:
+  - sst-fend
+  - sst-bend
+  - 4uentes-auth
+  - sst-4uentes-infra
+request_ids:
+  - CR-SST-0020
+spec_refs:
+  - "docs/requests/execution-model.md"
+  - "docs/ai/model-selection-policy.md"
+  - "docs/cross-repo/sst-cluster-dependency-map.md"
+  - "docs/cross-repo/deployment-request-playbook.md"
+evidence_refs:
+  - "evidence/requests/CR-SST-0020/intake-summary.md"
+  - "evidence/requests/CR-SST-0020/analysis-plan.md"
+  - "evidence/requests/CR-SST-0020/current-cluster-state.md"
+  - "evidence/requests/CR-SST-0020/ingress-ngrok-edge-analysis.md"
+  - "evidence/requests/CR-SST-0020/auth-public-exposure-analysis.md"
+  - "evidence/requests/CR-SST-0020/branch-image-policy-analysis.md"
+  - "evidence/requests/CR-SST-0020/validation-release-gates.md"
+  - "evidence/requests/CR-SST-0020/subagent-deployment-evidence.md"
+  - "evidence/requests/CR-SST-0020/infra-operational-edge-result.md"
+  - "evidence/requests/CR-SST-0020/stage-close-validation.md"
+open_gaps:
+  - "Install or reconcile ngrok as a Windows service if startup durability is required."
+  - "Run app login, refresh/logout and protected-route smokes in a later approved phase with credentials outside Git."
+  - "Run persistence create/read/delete smoke in a later approved phase."
+  - "Promote app images by immutable release tag or digest before release readiness."
+  - "Reconcile infra orchestrator_link.state_id with feature_state id cluster-publication-ngrok-domain."

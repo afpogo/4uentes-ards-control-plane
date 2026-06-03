@@ -1,0 +1,101 @@
+schema_version: "1.0"
+kind: "inbound_capability"
+id: "capability.inbound.sst-chatbot-agent-handoff"
+title: "SST Chatbot agent handoff"
+status: "draft"
+consumer:
+  repo: "4uentes-orchestor"
+  ards_kind: "control-plane"
+upstream:
+  repo: "sst-chatbot"
+  ards_kind: "backend-api"
+  outbound_capability: "agent-lifecycle-and-orchestrator-boundary"
+usage:
+  mode: "consume-adapt-protect"
+  summary: "Accept validated agent operation intents from sst-chatbot and reconcile them into orchestrator-owned work."
+runtime_specs:
+  - "specs/capabilities/inbound/00-index.yaml"
+producer_refs:
+  outbound_capability: "agent-lifecycle-and-orchestrator-boundary"
+  related_capabilities:
+    - "plaud-transcript-derivations"
+    - "ards-structure-generation"
+    - "user-activity-ards-memory"
+    - "generated-workspace-governance"
+    - "prompt-catalog-and-versioning"
+  docs:
+    - "docs/cross-repo/sst-chatbot-orchestrator-handoff.md"
+local_adoption:
+  implementation_status: "control-plane-cataloged"
+  code_anchors:
+    - path: "catalog/services/sst-chatbot.yaml"
+      note: "logical service identity and child repo ARDS/SDD status"
+    - path: "state/features/sst-chatbot.current.yaml"
+      note: "control-plane feature state for chatbot adoption"
+expected_behaviors:
+  - "Only structured operation_intent payloads are accepted."
+  - "Agent output is treated as proposal data until orchestrator validation accepts it."
+  - "The orchestrator owns queueing, retry, idempotency, scheduling, audit, and reconciliation."
+  - "The child repo must not mutate SST services, user workspaces, or servers directly."
+risks:
+  - "Prompt/provider output can be syntactically valid but semantically unsafe."
+  - "Missing idempotency can duplicate cross-repo work."
+  - "Transport coupling can leak provider/runtime assumptions into the orchestrator."
+validation:
+  check_refs:
+    - "npm run check"
+    - ".\\.venv\\Scripts\\python.exe scripts\\check.py"
+architecture_exceptions:
+  direct_backend_api_to_frontend: false
+open_questions:
+  - "Which transport will be used first: HTTP, queue, or worker handoff?"
+  - "Which operation intent type should be promoted first beyond Plaud derivations?"
+
+schema:
+  operation_intent:
+    required_fields:
+      - operation_intent_id
+      - capability_id
+      - tenant_id
+      - user_id
+      - payload
+      - priority
+      - preferred_execution_window
+      - idempotency_key
+      - correlation_id
+    allowed_initial_types:
+      - "workspace.generate_bundle"
+      - "workspace.apply_patch"
+      - "user_history.propose_update"
+      - "ui_customization.enqueue_change"
+      - "server.refresh_cache"
+      - "server.restart_service"
+      - "plaud.transcript_derivation"
+  handoff_payload:
+    required_fields:
+      - operation_intent_id
+      - capability_id
+      - tenant_id
+      - user_id
+      - payload
+      - priority
+      - requested_retry_policy
+      - idempotency_key
+      - correlation_id
+      - audit_metadata
+    audit_metadata:
+      required_fields:
+        - origin_service
+        - created_at
+        - created_by
+        - reason
+  agent_result:
+    required_fields:
+      - result_id
+      - operation_intent_id
+      - capability_id
+      - tenant_id
+      - status
+      - structured_output
+      - validation_summary
+      - correlation_id

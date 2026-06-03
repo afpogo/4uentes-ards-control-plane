@@ -1,38 +1,75 @@
 # 4uentes ARDS/SDD Control Plane
 
-`4uentes-ards-control-plane` is the logical orchestration repo for 4uentes
-ARDS/SDD governance.
+`4uentes-ards-control-plane` es el repo de orquestacion logica para gobierno
+ARDS/SDD de 4uentes.
 
-It catalogs real services and solutions without depending on local folder
-layout. It separates stable logical identity from observed evidence and
-host-local bindings.
+Cataloga servicios y soluciones reales sin depender del layout de carpetas
+locales. Separa la identidad logica estable de la evidencia observada y de los
+bindings host-locales.
 
-## What it contains
+## Que Contiene
 
-- `catalog/services/`: logical service catalog.
-- `solutions/`: logical solution maps.
-- `environments/local/`: local binding examples and ignored host-specific files.
-- `scripts/`: deterministic validation scripts.
-- `inventory/`: observed evidence and phase decisions.
-- `requests/`: cross-ARDS/SDD request lifecycle.
-- `templates/`: reusable request templates.
-- `docs/`: human-readable operating model.
-- `specs/`: control-plane index and future specs.
+- `catalog/services/`: catalogo logico de servicios.
+- `solutions/`: mapas logicos de soluciones.
+- `environments/local/`: ejemplos de bindings locales y archivos
+  host-specific ignorados.
+- `scripts/`: scripts de validacion determinista.
+- `inventory/`: evidencia observada y decisiones de fase.
+- `requests/`: lifecycle de requests cross-ARDS/SDD.
+- `templates/`: templates reutilizables de requests.
+- `docs/`: modelo operativo legible por humanos.
+- `specs/`: indice del control-plane y specs futuras.
 
-## What it does not contain
+## Secciones De Documentacion
 
-- Product runtime code.
-- Service implementations.
-- Kubernetes or Docker Compose desired state.
-- Canonical ARDS/SDD standards.
+La documentacion del control-plane debe separarse por responsabilidad:
 
-The canonical standard lives in `4uentes-ards-core`.
+- `docs/apps/`: material cuyo dueno principal es una app o un repo.
+- `docs/platform/`: infraestructura compartida, nodos y comportamiento GitOps.
+- `docs/requests/`: lifecycle de request/response y semantica del
+  orchestrator.
+- `docs/cross-repo/`: handoffs, mapas de dependencia y modelo operativo
+  multi-repo.
+- `docs/ai/`: politicas operativas para trabajo con agentes IA.
 
-## Operating model
+La regla de clasificacion esta definida en:
 
-The control-plane validates catalog consistency first. Phase 2 adds request
-planning: a request enters `requests/inbox`, the planner reads catalog and
-solutions, computes impact, and writes the planned result to `requests/planned`.
+- [documentation-information-architecture.md](documentation-information-architecture.md)
 
-Planning is not execution. Functional repositories are not modified and their
-checks are not executed by the Phase 2 planner.
+La politica de idioma para Markdown humano esta definida en:
+
+- [idioma-markdown.md](idioma-markdown.md)
+
+La politica complementaria de seleccion de modelos y subagentes esta definida
+en:
+
+- [model-selection-policy.md](ai/model-selection-policy.md)
+
+## Que No Contiene
+
+- Codigo runtime de producto.
+- Implementaciones de servicios.
+- Desired state de Kubernetes o Docker Compose.
+- Estandares ARDS/SDD canonicos.
+
+El estandar canonico vive en `4uentes-ards-core`.
+
+## Modelo Operativo
+
+El control-plane valida primero la consistencia del catalogo. La Fase 2 agrega
+planificacion de requests: un request entra en `requests/inbox`, el planner lee
+catalogo y soluciones, calcula impacto y escribe el resultado planificado en
+`requests/planned`.
+
+Planificar no es ejecutar. Los repos funcionales no se modifican y sus checks no
+se ejecutan desde el planner de Fase 2.
+
+El lifecycle de request y su separacion documental se describen en:
+
+- [docs/requests/README.md](requests/README.md)
+- [execution-model.md](requests/execution-model.md)
+
+El boundary operativo para handoffs de agentes y `sst_chatbot` esta documentado
+en:
+
+- [orchestrator-boundary.md](cross-repo/orchestrator-boundary.md)
