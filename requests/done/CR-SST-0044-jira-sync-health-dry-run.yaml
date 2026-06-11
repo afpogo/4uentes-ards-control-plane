@@ -1,0 +1,92 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0044"
+title: "Implement Jira sync health dry-run command"
+status: "done"
+source_request: "requests/inbox/CR-SST-0044-jira-sync-health-dry-run.yaml"
+planned_request: "requests/planned/CR-SST-0044-jira-sync-health-dry-run.yaml"
+created_at: "2026-06-07"
+completed_at: "2026-06-07"
+requester: "4uentes"
+
+summary: >
+  Implemented a local Jira sync-health dry-run command that consolidates feature
+  states, Jira reconciliation evidence, Jira status observations, and local
+  status proposals into an auditable health report. The command does not connect
+  to Jira, write Jira, mutate feature_state, or move request lifecycle state.
+
+scope:
+  solution: "sst"
+  repository: "4uentes-orchestor"
+  functional_repositories_modified: false
+  jira_write_executed: false
+  local_state_transitions_executed: false
+
+depends_on:
+  - "requests/done/CR-SST-0043-jira-mcp-access-sync-health-contract.yaml"
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - SYNC_HEALTH_AND_DRIFT_MODEL
+    - JIRA_CONTROL_PLANE_AUTHORITY_DRIFT
+    - LOCAL_DRY_RUN_HEALTH_REPORT
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The completed phase implemented the first health classification layer between Jira evidence and control-plane state."
+
+subagent_deployment_plan:
+  required: true
+  roles:
+    - architecture-reviewer
+    - security-contract-reviewer
+    - validation-reviewer
+  fallback: "The main agent performed architecture, write-boundary, and validation review sequentially."
+  evidence_ref: "evidence/requests/CR-SST-0044/subagent-deployment-evidence.md"
+
+results:
+  command_added: "npm run jira:mcp:sync-health"
+  command_file: "scripts/jira-mcp/generate-sync-health.js"
+  source_input_dir: "evidence/requests/CR-SST-0042"
+  source_observation_dir: "evidence/requests/CR-SST-0040"
+  source_reconciliation_dir: "evidence/requests/CR-SST-0040"
+  feature_states_checked: 9
+  jira_issues_observed: 9
+  proposals_observed: 9
+  by_status:
+    IN_SYNC: 7
+    STATUS_SIGNAL_PENDING: 2
+  orphan_jira_items: 0
+  external_write_required: 0
+  jira_writes: 0
+  automatic_local_transitions: 0
+
+evidence:
+  required:
+    - "evidence/requests/CR-SST-0044/jira-sync-health-summary.md"
+    - "evidence/requests/CR-SST-0044/jira-sync-health-results.json"
+    - "evidence/requests/CR-SST-0044/implementation-summary.md"
+    - "evidence/requests/CR-SST-0044/subagent-deployment-evidence.md"
+    - "evidence/requests/CR-SST-0044/changed-files-summary.md"
+    - "evidence/requests/CR-SST-0044/validation-results.md"
+
+validation:
+  required_checks:
+    - "node --check scripts/jira-mcp/generate-sync-health.js"
+    - "npm.cmd run jira:mcp:sync-health -- --request-id CR-SST-0044 --input-dir evidence/requests/CR-SST-0042 --output-dir evidence/requests/CR-SST-0044"
+    - "npm.cmd run check"
+  status: "approved-done"
+
+decision:
+  status: "approved-done"
+  approver: "4uentes"
+  note: "Dry-run sync health command implemented with no external writes and no local state transitions."
+
+next_sequence:
+  next_request_id: "CR-SST-0045"
+  note: "Define approval/intake flow for STATUS_SIGNAL_PENDING proposals."
+

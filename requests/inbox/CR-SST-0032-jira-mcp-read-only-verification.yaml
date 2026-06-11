@@ -1,0 +1,119 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0032"
+title: "Implement Jira MCP read-only project verification"
+status: "inbox"
+created_at: "2026-06-05"
+requester: "4uentes"
+
+business_context: >
+  CR-SST-0029 established the Jira MCP ticketing workflow and implemented a
+  local dry-run generator for the nine SST feature states that are not done.
+  The next step is to connect the orchestrator to Atlassian MCP in read-only
+  mode and verify that Jira project key SST and board SST-Team are visible
+  before any Jira write capability is introduced.
+
+requested_change: >
+  Implement the read-only Jira MCP verification phase in 4uentes-orchestor,
+  including a jira:mcp:verify command, non-secret local configuration loading,
+  Atlassian MCP connectivity, project/resource discovery, and evidence output
+  that confirms whether project key SST is visible to the authenticated user.
+
+expected_outcome: >
+  The orchestrator can verify Jira MCP connectivity and project visibility
+  without creating, editing, commenting, or transitioning Jira issues.
+
+initial_scope:
+  solution: "sst"
+  services: []
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services: []
+  affected_ards: []
+  capabilities:
+    - jira-mcp-ticketing
+    - feature-bugfix-state-read-model
+  risks:
+    - id: EXTERNAL_MCP_CONNECTIVITY
+      severity: high
+    - id: OAUTH_AND_PERMISSION_BOUNDARY
+      severity: high
+    - id: READ_ONLY_RUNTIME_ASSURANCE
+      severity: medium
+
+required_context:
+  - "requests/planned/CR-SST-0029-jira-mcp-ticketing-integration.yaml"
+  - "evidence/requests/CR-SST-0029/implementation-plan.md"
+  - "evidence/requests/CR-SST-0029/jira-mcp-connection-summary.md"
+  - "evidence/requests/CR-SST-0029/jira-project-and-issue-type-summary.md"
+  - "environments/local/jira-mcp.local.example.yaml"
+  - "scripts/jira-mcp/generate-dry-run.js"
+  - "docs/requests/jira-mcp-ticketing-playbook.md"
+  - "docs/ai/model-selection-policy.md"
+
+required_checks:
+  - service_id: 4uentes-orchestor
+    command: "npm run check"
+  - service_id: 4uentes-orchestor
+    command: "npm run jira:mcp:dry-run"
+  - service_id: 4uentes-orchestor
+    command: "npm run jira:mcp:verify"
+
+risk:
+  level: "high"
+  score: 7
+  drivers:
+    - EXTERNAL_MCP_CONNECTIVITY
+    - OAUTH_AND_PERMISSION_BOUNDARY
+    - READ_ONLY_RUNTIME_ASSURANCE
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - EXTERNAL_MCP_CONNECTIVITY
+    - OAUTH_AND_PERMISSION_BOUNDARY
+    - CONTROL_PLANE_EXTERNAL_CONNECTOR
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The task introduces external MCP connectivity and OAuth/permission boundaries, even though the planned behavior is read-only."
+
+subagent_deployment_plan:
+  required: true
+  roles:
+    - security-contract-reviewer
+    - implementation-planner
+    - validation-reviewer
+  parallelizable: true
+  fallback: "If subagent tools are unavailable, the main agent must perform connector security, implementation planning, and validation review sequentially."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "control-plane-only"
+
+validation:
+  required_checks:
+    - "npm run check"
+    - "npm run jira:mcp:dry-run"
+    - "npm run jira:mcp:verify"
+  evidence_required:
+    - "jira_mcp_project_verification"
+    - "changed_files_summary"
+    - "validation_results"
+
+decision:
+  status: "pending"
+  approver: "TODO"
+
+planner_notes:
+  - "This request must remain read-only against Jira."
+  - "Jira issue creation, comments, edits, and transitions are explicitly out of scope."
+  - "Any OAuth tokens, API tokens, cookies, private site URLs, or secrets must remain outside Git."
+  - "CR-SST-0032 follows the existing sequence after CR-SST-0031."

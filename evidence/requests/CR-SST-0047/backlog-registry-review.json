@@ -1,0 +1,59 @@
+{
+  "schema_version": "1.0",
+  "kind": "jira_backlog_registry_review",
+  "request_id": "CR-SST-0047",
+  "registry_ref": "state/jira-backlog-registry.yaml",
+  "external_write": false,
+  "automatic_local_transition": false,
+  "summary": {
+    "backlog_items": 6,
+    "assigned_cr_sst_items": 0,
+    "jira_linked_items": 0,
+    "findings": 0,
+    "next_by_priority": [
+      {
+        "backlog_id": "SST-BL-JIRA-001",
+        "title": "Generic Jira writer not limited to CR-SST-0039",
+        "priority": "medium",
+        "status": "deferred",
+        "assigned_cr_sst": null
+      },
+      {
+        "backlog_id": "SST-BL-JIRA-005",
+        "title": "Operational Jira/MCP/API/SST E2E runbook",
+        "priority": "medium",
+        "status": "deferred",
+        "assigned_cr_sst": null
+      },
+      {
+        "backlog_id": "SST-BL-JIRA-002",
+        "title": "Jira issue properties for structured control-plane metadata",
+        "priority": "low-medium",
+        "status": "deferred",
+        "assigned_cr_sst": null
+      },
+      {
+        "backlog_id": "SST-BL-JIRA-003",
+        "title": "Controlled Jira workflow transitions",
+        "priority": "low-medium",
+        "status": "deferred",
+        "assigned_cr_sst": null
+      },
+      {
+        "backlog_id": "SST-BL-JIRA-004",
+        "title": "Jira webhook/gateway intake",
+        "priority": "low",
+        "status": "deferred",
+        "assigned_cr_sst": null
+      },
+      {
+        "backlog_id": "SST-BL-JIRA-006",
+        "title": "Synchronize deferred backlog to Jira when prioritized",
+        "priority": "low",
+        "status": "deferred",
+        "assigned_cr_sst": null
+      }
+    ]
+  },
+  "findings": []
+}

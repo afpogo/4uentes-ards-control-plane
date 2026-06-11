@@ -1,0 +1,133 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0057"
+title: "Start SST-4 work for SST Tags Governance"
+status: "done"
+source_request: "requests/inbox/CR-SST-0057-sst-4-work-start-transition.yaml"
+planned_request: "requests/planned/CR-SST-0057-sst-4-work-start-transition.yaml"
+created_at: "2026-06-07"
+completed_at: "2026-06-07"
+requester: "4uentes"
+
+summary: >
+  Prepared the controlled transition intake for SST-4 / sst-tags-governance.
+  CR-SST-0057 is the governing request for the current action. Historical
+  requests CR-SST-0010, CR-SST-0014, CR-SST-0015, and CR-SST-0016 remain
+  provenance only. No Jira transition was executed by this request.
+
+scope:
+  solution: "sst"
+  repository: "4uentes-orchestor"
+  feature_state: "sst-tags-governance"
+  jira_issue_key: "SST-4"
+  functional_repositories_modified: false
+  jira_write_executed: false
+  jira_transition_executed: false
+  local_state_transitions_executed: false
+
+origin_requests:
+  role: "provenance-only"
+  requests:
+    - "CR-SST-0010"
+    - "CR-SST-0014"
+    - "CR-SST-0015"
+    - "CR-SST-0016"
+
+task_weight:
+  classification: "long-context-task"
+  risk_level: "medium"
+  drivers:
+    - HISTORICAL_CR_SCOPE_CONFUSION
+    - JIRA_TRANSITION_WITHOUT_LOCAL_EVIDENCE
+    - CONTROLLED_TRANSITION_WRITER_MISSING
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.4-fast-high"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The task reconciled Jira transition intent with historical request provenance and current feature-state authority."
+
+subagent_deployment_plan:
+  required: true
+  roles:
+    - ards-sdd-validator
+    - implementation-planner
+  fallback: "The main agent performed transition scope and provenance review sequentially."
+  evidence_ref: "evidence/requests/CR-SST-0057/subagent-deployment-evidence.md"
+
+results:
+  governing_request: "CR-SST-0057"
+  jira_issue_key: "SST-4"
+  state_id: "sst-tags-governance"
+  current_feature_status: "runtime-partial"
+  proposed_jira_action: "move-to-active-work"
+  preferred_active_status_order:
+    - "En curso"
+    - "In Progress"
+  jira_transition_executed: false
+  jira_writes: 0
+  automatic_local_transitions: 0
+  operator_reported_transition:
+    reported_at: "2026-06-07"
+    jira_issue_key: "SST-4"
+    reported_status: "En curso"
+    evidence_ref: "evidence/requests/CR-SST-0057/post-transition-operator-confirmation.md"
+  mcp_post_transition_verification:
+    attempted: true
+    elevated_retry_attempted: true
+    result: "partial-pass-via-v1-mcp-endpoint"
+    jira_writes: 0
+    endpoint_default_result: "blocked-by-authv2-oauth-404-before-tools"
+    endpoint_operational: "https://mcp.atlassian.com/v1/mcp"
+    jira_issue_observed_status: "En curso"
+    write_tools_exposed: true
+    transition_tools_exposed: true
+    transition_options_observed:
+      - "Por hacer"
+      - "En curso"
+      - "In Review"
+      - "Listo"
+    agent_write_attempt:
+      attempted: true
+      result: "blocked-by-external-write-policy"
+      intended_transition: "In Review"
+      intended_comment: true
+      evidence_ref: "evidence/requests/CR-SST-0057/mcp-sst-4-in-review-manual-test.md"
+    evidence_refs:
+      - "evidence/requests/CR-SST-0057/elevated-mcp-verification-attempt.md"
+      - "evidence/requests/CR-SST-0057/mcp-oauth-write-capability-verification.md"
+      - "evidence/requests/CR-SST-0057/jira-status-observation-summary.md"
+      - "evidence/requests/CR-SST-0057/mcp-sst-4-in-review-manual-test.md"
+
+evidence:
+  required:
+    - "evidence/requests/CR-SST-0057/transition-scope-review.md"
+    - "evidence/requests/CR-SST-0057/involved-cr-sst-matrix.md"
+    - "evidence/requests/CR-SST-0057/sst-4-start-transition-proposal.md"
+    - "evidence/requests/CR-SST-0057/sst-4-start-transition-proposal.json"
+    - "evidence/requests/CR-SST-0057/post-transition-operator-confirmation.md"
+    - "evidence/requests/CR-SST-0057/elevated-mcp-verification-attempt.md"
+    - "evidence/requests/CR-SST-0057/mcp-oauth-write-capability-verification.md"
+    - "evidence/requests/CR-SST-0057/jira-required-fields-summary.md"
+    - "evidence/requests/CR-SST-0057/duplicate-search-summary.md"
+    - "evidence/requests/CR-SST-0057/jira-reconciliation-summary.md"
+    - "evidence/requests/CR-SST-0057/jira-status-observation-summary.md"
+    - "evidence/requests/CR-SST-0057/jira-backlog-observation-summary.md"
+    - "evidence/requests/CR-SST-0057/mcp-sst-4-in-review-manual-test.md"
+    - "evidence/requests/CR-SST-0057/subagent-deployment-evidence.md"
+    - "evidence/requests/CR-SST-0057/changed-files-summary.md"
+    - "evidence/requests/CR-SST-0057/validation-results.md"
+
+validation:
+  required_checks:
+    - "npm.cmd run check"
+  status: "approved-pass"
+
+decision:
+  status: "approved-transition-intake"
+  approver: "4uentes"
+  note: "Proposal only. A separate explicit Jira transition action or manual operator move is required."
+
+remaining_gaps:
+  - "Implement or use future controlled transition writer for non-manual Jira transitions."
+  - "Operator must execute or approve an external writer path for the SST-4 transition to In Review."

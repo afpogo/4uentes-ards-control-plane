@@ -1,0 +1,136 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0033"
+title: "Create Jira issues for non-done feature states"
+status: planned
+source_request: "requests/inbox/CR-SST-0033-jira-create-feature-state-issues.yaml"
+created_at: "2026-06-05"
+requester: "4uentes"
+
+initial_scope:
+  solution: "sst"
+  services: []
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services: []
+  affected_ards: []
+  capabilities:
+    - jira-mcp-ticketing
+    - feature-bugfix-state-read-model
+  risks:
+    - id: EXTERNAL_JIRA_WRITE
+      severity: high
+    - id: DUPLICATE_TICKET_RISK
+      severity: medium
+    - id: REQUIRED_FIELD_MISMATCH
+      severity: medium
+
+control_plane_scope:
+  repository: "4uentes-orchestor"
+  reason: "Jira issue creation is a control-plane external connector operation."
+
+required_context:
+  - "docs/requests/jira-feature-ticket-policy.md"
+  - "requests/done/CR-SST-0032-jira-mcp-read-only-verification.yaml"
+  - "evidence/requests/CR-SST-0029/ticket-payload-dry-run.md"
+  - "evidence/requests/CR-SST-0032/jira-mcp-project-verification.md"
+  - "state/features/*.current.yaml"
+  - "scripts/jira-mcp/generate-dry-run.js"
+  - "scripts/jira-mcp/verify-project.js"
+
+required_checks:
+  - service_id: 4uentes-orchestor
+    command: "npm run check"
+  - service_id: 4uentes-orchestor
+    command: "npm run jira:mcp:dry-run"
+  - service_id: 4uentes-orchestor
+    command: "npm run jira:mcp:policy-check -- --request-id CR-SST-0033 --output-dir evidence/requests/CR-SST-0033 --expected-count 9"
+  - service_id: 4uentes-orchestor
+    command: "npm run jira:mcp:metadata -- --connect"
+  - service_id: 4uentes-orchestor
+    command: "npm run jira:mcp:duplicates -- --connect"
+  - service_id: 4uentes-orchestor
+    command: "npm run jira:mcp:create -- --connect --approved"
+
+risk:
+  level: high
+  score: 8
+  drivers:
+    - id: EXTERNAL_JIRA_WRITE
+      severity: high
+    - id: DUPLICATE_TICKET_RISK
+      severity: medium
+    - id: REQUIRED_FIELD_MISMATCH
+      severity: medium
+
+task_weight:
+  classification: complex-high-risk-task
+  risk_level: high
+  drivers:
+    - EXTERNAL_JIRA_WRITE
+    - OAUTH_AND_PERMISSION_BOUNDARY
+    - CONTROL_PLANE_EXTERNAL_CONNECTOR
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The task creates external Jira issues and must preserve approval, duplicate, and evidence boundaries."
+
+subagent_deployment_plan:
+  required: true
+  parallelizable: true
+  roles:
+    - security-contract-reviewer
+    - implementation-planner
+    - validation-reviewer
+  fallback: "If subagent tools are unavailable, the main agent must perform connector security, implementation planning, and validation review sequentially."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  allowed_window: manual
+  branch_strategy: control-plane-only
+  policy_gate:
+    required: true
+    policy_ref: "docs/requests/jira-feature-ticket-policy.md"
+    template_required: true
+    maintenance_scope: "create-only for the initial nine non-done feature states; edits, comments, transitions, and closes require separate approval."
+  write_boundary:
+    allowed:
+      - "create Jira issues from approved non-duplicate feature-state payloads that pass the Jira feature ticket policy template"
+    forbidden:
+      - "edit Jira issues"
+      - "comment on Jira issues"
+      - "transition Jira issues"
+      - "add worklogs"
+      - "create issue links"
+      - "store tokens, cookies, private URLs, or secrets in Git"
+
+validation:
+  required_checks:
+    - "npm run check"
+    - "npm run jira:mcp:dry-run"
+    - "npm run jira:mcp:policy-check -- --request-id CR-SST-0033 --output-dir evidence/requests/CR-SST-0033 --expected-count 9"
+    - "npm run jira:mcp:metadata -- --connect"
+    - "npm run jira:mcp:duplicates -- --connect"
+    - "npm run jira:mcp:create -- --connect --approved"
+  evidence_required:
+    - "jira_feature_ticket_policy"
+    - "jira_policy_check_summary"
+    - "jira_required_fields_summary"
+    - "duplicate_search_summary"
+    - "created_ticket_summary"
+    - "changed_files_summary"
+    - "validation_results"
+
+decision:
+  status: pending
+  approver: TODO
+
+planner_notes:
+  - "The user explicitly requested moving the nine open feature states into Jira issues."
+  - "The user requested a control-plane-only ticket generation and maintenance policy before publication."
+  - "CR-SST-0032 must remain done before this request is executed."

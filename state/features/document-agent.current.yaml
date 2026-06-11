@@ -2,8 +2,8 @@ schema_version: "1.0"
 kind: "feature_state"
 id: "document-agent"
 title: "SST Document Agent Workflows"
-status: "implemented-local"
-updated_at: "2026-05-24"
+status: "validated-live"
+updated_at: "2026-06-07"
 solution_id: "sst"
 affected_services:
   - sst-fend
@@ -11,11 +11,28 @@ affected_services:
   - sst-bend
 request_ids:
   - CR-SST-0008
+  - CR-SST-0048
+  - CR-SST-0052
+  - CR-SST-0053
 capability_refs:
   - "capability.inbound.sst-document-agent-workflows"
 spec_refs:
   - "specs/capabilities/inbound/4uentes-orchestor--document-agent-workflows.yaml"
-evidence_refs: []
-open_gaps:
-  - "CR-SST-0008 needs planned request and formal evidence."
-
+evidence_refs:
+  - "evidence/requests/CR-SST-0008/document-agent-workflow-contract-summary.md"
+  - "evidence/requests/CR-SST-0008/backend-first-persistence-flow.md"
+  - "evidence/requests/CR-SST-0008/jira-status-observation-summary.md"
+  - "evidence/requests/CR-SST-0008/jira-status-transition-proposals.md"
+  - "evidence/requests/CR-SST-0008/jira-sync-health-summary.md"
+  - "evidence/requests/CR-SST-0048/intake-review.md"
+  - "evidence/requests/CR-SST-0048/repo-runtime-inventory.md"
+  - "evidence/requests/CR-SST-0048/contract-gap-matrix.md"
+  - "evidence/requests/CR-SST-0048/e2e-validation-plan-or-results.md"
+  - "evidence/requests/CR-SST-0052/runtime-contract-alignment-summary.md"
+  - "evidence/requests/CR-SST-0052/authenticated-e2e-results-or-blocker.md"
+  - "evidence/requests/CR-SST-0052/validation-results.md"
+  - "evidence/requests/CR-SST-0053/authenticated-e2e-results.md"
+  - "evidence/requests/CR-SST-0053/runtime-artifacts.md"
+  - "evidence/requests/CR-SST-0053/validation-results.md"
+  - "evidence/requests/CR-SST-0056/sst-8-close-resolution-proposal.md"
+open_gaps: []

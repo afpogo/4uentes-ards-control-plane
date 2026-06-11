@@ -1,0 +1,84 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0055"
+title: "Build unified Jira radar for feature-state and backlog mirror tickets"
+status: "done"
+source_request: "requests/inbox/CR-SST-0055-unified-jira-radar-next-issue-review.yaml"
+planned_request: "requests/planned/CR-SST-0055-unified-jira-radar-next-issue-review.yaml"
+created_at: "2026-06-07"
+completed_at: "2026-06-07"
+requester: "4uentes"
+
+summary: >
+  Corrected the previous backlog-only radar by reading both feature-state Jira
+  tickets and Jira Backlog Mirror Tickets. The unified radar observes 15 Jira
+  issues: 9 feature-state tickets and 6 backlog mirror tickets. The corrected
+  next issue recommendation is SST-8 / document-agent because it is currently
+  in progress in Jira.
+
+scope:
+  solution: "sst"
+  repository: "4uentes-orchestor"
+  functional_repositories_modified: false
+  jira_read_executed: true
+  jira_write_executed: false
+  local_state_transitions_executed: false
+
+task_weight:
+  classification: "long-context-task"
+  risk_level: "medium"
+  drivers:
+    - INCOMPLETE_JIRA_RADAR
+    - PREMATURE_BACKLOG_SELECTION
+    - JIRA_READ_ONLY_RECONCILIATION
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.4-fast-high"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The request reconciled multiple Jira ticket families and corrected a prior recommendation."
+
+subagent_deployment_plan:
+  required: true
+  roles:
+    - ards-sdd-validator
+    - implementation-planner
+  fallback: "The main agent performed radar and policy review sequentially."
+  evidence_ref: "evidence/requests/CR-SST-0055/subagent-deployment-evidence.md"
+
+results:
+  feature_state_tickets_observed: 9
+  backlog_mirror_tickets_observed: 6
+  total_jira_tickets_in_radar: 15
+  jira_writes: 0
+  corrected_next_issue: "SST-8"
+  corrected_next_state_id: "document-agent"
+  corrected_next_reason: "Only observed issue currently in progress in Jira."
+  previous_backlog_only_recommendation: "SST-13"
+  previous_recommendation_status: "superseded-by-unified-radar"
+
+evidence:
+  required:
+    - "evidence/requests/CR-SST-0055/duplicate-search-summary.md"
+    - "evidence/requests/CR-SST-0055/jira-reconciliation-summary.md"
+    - "evidence/requests/CR-SST-0055/jira-status-observation-summary.md"
+    - "evidence/requests/CR-SST-0055/jira-backlog-observation-summary.md"
+    - "evidence/requests/CR-SST-0055/unified-jira-radar.md"
+    - "evidence/requests/CR-SST-0055/subagent-deployment-evidence.md"
+    - "evidence/requests/CR-SST-0055/changed-files-summary.md"
+    - "evidence/requests/CR-SST-0055/validation-results.md"
+
+validation:
+  required_checks:
+    - "node --check scripts/jira-mcp/backlog-observe.js"
+    - "npm.cmd run check"
+  status: "approved-done"
+
+decision:
+  status: "approved-done"
+  approver: "4uentes"
+  note: "Use unified Jira radar before selecting the next issue. SST-8 supersedes SST-13 as the next issue to address unless explicitly blocked."
+
+next_sequence:
+  next_request_id: "CR-SST-0056"
+  note: "Use only for the next real prioritized process after deciding whether SST-8 continues or is blocked."

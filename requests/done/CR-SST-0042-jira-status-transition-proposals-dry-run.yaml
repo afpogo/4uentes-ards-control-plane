@@ -1,0 +1,91 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0042"
+title: "Implement Jira status transition proposals dry-run command"
+status: "done"
+source_request: "requests/inbox/CR-SST-0042-jira-status-transition-proposals-dry-run.yaml"
+planned_request: "requests/planned/CR-SST-0042-jira-status-transition-proposals-dry-run.yaml"
+created_at: "2026-06-07"
+completed_at: "2026-06-07"
+requester: "4uentes"
+
+summary: >
+  Implemented a local dry-run command that reads Jira status observations and
+  generates auditable control-plane transition proposals without connecting to
+  Jira, writing Jira, mutating feature_state, or moving request lifecycle state.
+
+scope:
+  solution: "sst"
+  repository: "4uentes-orchestor"
+  functional_repositories_modified: false
+  jira_write_executed: false
+  local_state_transitions_executed: false
+
+depends_on:
+  - "requests/done/CR-SST-0041-jira-status-event-transition-proposal-flow.yaml"
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - JIRA_CONTROL_PLANE_AUTHORITY_DRIFT
+    - CONTROL_PLANE_PROCESS_LIFECYCLE
+    - LOCAL_DRY_RUN_PROPOSAL_GENERATOR
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The completed phase implemented the first executable boundary between Jira operational signals and local transition proposals."
+
+subagent_deployment_plan:
+  required: true
+  roles:
+    - architecture-reviewer
+    - security-contract-reviewer
+    - validation-reviewer
+  fallback: "The main agent performed architecture, write-boundary, and validation review sequentially."
+  evidence_ref: "evidence/requests/CR-SST-0042/subagent-deployment-evidence.md"
+
+results:
+  command_added: "npm run jira:mcp:status-proposals"
+  command_file: "scripts/jira-mcp/generate-status-proposals.js"
+  source_observation_dir: "evidence/requests/CR-SST-0040"
+  observations_read: 9
+  proposals_generated: 9
+  proposals_blocked: 0
+  actions:
+    no_op: 7
+    record_signal: 2
+    continue_request: 0
+    open_request_candidate: 0
+    record_blocker_candidate: 0
+    require_local_done_evidence_review: 0
+  jira_writes: 0
+  automatic_local_transitions: 0
+
+evidence:
+  required:
+    - "evidence/requests/CR-SST-0042/jira-status-transition-proposals.md"
+    - "evidence/requests/CR-SST-0042/jira-status-transition-proposals.json"
+    - "evidence/requests/CR-SST-0042/implementation-summary.md"
+    - "evidence/requests/CR-SST-0042/subagent-deployment-evidence.md"
+    - "evidence/requests/CR-SST-0042/changed-files-summary.md"
+    - "evidence/requests/CR-SST-0042/validation-results.md"
+
+validation:
+  required_checks:
+    - "node --check scripts/jira-mcp/generate-status-proposals.js"
+    - "npm.cmd run jira:mcp:status-proposals -- --request-id CR-SST-0042 --input-dir evidence/requests/CR-SST-0040 --output-dir evidence/requests/CR-SST-0042"
+    - "npm.cmd run check"
+  status: "approved-done"
+
+decision:
+  status: "approved-done"
+  approver: "4uentes"
+  note: "Dry-run proposal generator implemented with no external writes and no local state transitions."
+
+next_sequence:
+  next_request_id: "CR-SST-0043"
+  note: "Define approval/intake flow for selected proposals before any local state event is recorded."
+

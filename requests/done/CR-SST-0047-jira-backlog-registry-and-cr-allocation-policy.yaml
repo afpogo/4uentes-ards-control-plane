@@ -1,0 +1,87 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0047"
+title: "Define Jira backlog registry and CR-SST allocation policy"
+status: "done"
+source_request: "requests/inbox/CR-SST-0047-jira-backlog-registry-and-cr-allocation-policy.yaml"
+planned_request: "requests/planned/CR-SST-0047-jira-backlog-registry-and-cr-allocation-policy.yaml"
+created_at: "2026-06-07"
+completed_at: "2026-06-07"
+requester: "4uentes"
+
+summary: >
+  Created a local Jira backlog registry with stable SST-BL-JIRA IDs and defined
+  the CR-SST allocation policy. Deferred backlog work no longer reserves CR-SST
+  process numbers; each backlog item receives assigned_cr_sst only when it is
+  activated as real control-plane work.
+
+scope:
+  solution: "sst"
+  repository: "4uentes-orchestor"
+  functional_repositories_modified: false
+  jira_write_executed: false
+  local_state_transitions_executed: false
+  jira_tickets_created: false
+
+depends_on:
+  - "requests/done/CR-SST-0046-control-plane-jira-mcp-deferred-backlog.yaml"
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - CONTROL_PLANE_BACKLOG_GOVERNANCE
+    - CR_SST_ALLOCATION_POLICY
+    - JIRA_BACKLOG_TRACEABILITY
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The completed phase corrected request identity governance and future Jira backlog traceability."
+
+subagent_deployment_plan:
+  required: true
+  roles:
+    - architecture-reviewer
+    - security-contract-reviewer
+    - validation-reviewer
+  fallback: "The main agent performed architecture, write-boundary, and validation review sequentially."
+  evidence_ref: "evidence/requests/CR-SST-0047/subagent-deployment-evidence.md"
+
+results:
+  registry_ref: "state/jira-backlog-registry.yaml"
+  policy_ref: "docs/requests/jira-backlog-registry-policy.md"
+  backlog_items: 6
+  assigned_cr_sst_items: 0
+  jira_linked_items: 0
+  registry_findings: 0
+  cr_sst_reserved_by_deferred_items: 0
+  jira_writes: 0
+  automatic_local_transitions: 0
+
+evidence:
+  required:
+    - "evidence/requests/CR-SST-0047/backlog-registry-review.md"
+    - "evidence/requests/CR-SST-0047/backlog-registry-review.json"
+    - "evidence/requests/CR-SST-0047/implementation-summary.md"
+    - "evidence/requests/CR-SST-0047/subagent-deployment-evidence.md"
+    - "evidence/requests/CR-SST-0047/changed-files-summary.md"
+    - "evidence/requests/CR-SST-0047/validation-results.md"
+
+validation:
+  required_checks:
+    - "node --check scripts/jira-mcp/backlog-review.js"
+    - "npm.cmd run jira:mcp:backlog-review -- --request-id CR-SST-0047 --output-dir evidence/requests/CR-SST-0047"
+    - "npm.cmd run check"
+  status: "approved-done"
+
+decision:
+  status: "approved-done"
+  approver: "4uentes"
+  note: "Backlog registry and CR-SST allocation policy implemented without creating Jira tickets."
+
+next_sequence:
+  next_request_id: "CR-SST-0048"
+  note: "Use only for the next real prioritized process, not for deferred backlog reservations."
+

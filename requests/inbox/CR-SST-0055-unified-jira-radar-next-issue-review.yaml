@@ -1,0 +1,58 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0055"
+title: "Build unified Jira radar for feature-state and backlog mirror tickets"
+status: "inbox"
+created_at: "2026-06-07"
+requester: "4uentes"
+
+summary: >
+  Correct the previous backlog-only recommendation by reviewing both Jira
+  feature-state tickets and Jira Backlog Mirror Tickets before selecting the
+  next issue.
+
+business_context: >
+  The control-plane has two Jira ticket families: feature-state tickets
+  (`SST-4` through `SST-12`) and backlog mirror tickets (`SST-13` through
+  `SST-18`). Recommendations must consider both families so existing Jira work
+  is not ignored.
+
+requested_change: >
+  Produce a unified Jira radar, prefer read-only live Jira observations when
+  available, and update the next issue recommendation using both ticket
+  families.
+
+expected_outcome: >
+  The control-plane can explain which ticket family each issue belongs to and
+  select the next issue without omitting existing Jira tickets.
+
+initial_scope:
+  solution: "sst"
+  repository: "4uentes-orchestor"
+  include_functional_repositories: false
+
+validation:
+  required_checks:
+    - "node --check scripts/jira-mcp/backlog-observe.js"
+    - "npm run check"
+  evidence_required:
+    - "unified_radar"
+    - "validation_results"
+
+execution:
+  requires_human_approval: false
+  jira_read_allowed: true
+  jira_write_allowed: false
+  functional_repo_changes_allowed: false
+
+risk:
+  level: "medium"
+  score: 5
+  drivers:
+    - "Previous recommendation considered only backlog mirror tickets."
+    - "Feature-state tickets must remain in the operational radar."
+
+decision:
+  status: "approved"
+  approver: "4uentes"
+  note: "Approved as read-only radar correction."

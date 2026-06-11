@@ -1,0 +1,55 @@
+schema_version: "1.0"
+kind: "jira_writer_local_config_example"
+description: >
+  Copy this file to jira-writer.local.yaml for host-specific Jira writer
+  settings. The local file is ignored by Git. Do not store OAuth tokens, API
+  tokens, cookies, private Jira site URLs, cloudId, or secrets in this example.
+
+connection:
+  mode: "gateway"
+  allowed_modes:
+    - "gateway"
+    - "manual-operator"
+  source_repository: "4uentes-orchestor"
+  source_of_truth: "control-plane"
+  external_mirror: "jira"
+
+jira:
+  project_key: "SST"
+  board_name: "SST-Team"
+  issue_type: "Tarea"
+  site_alias: "TODO"
+
+writer:
+  actor_type: "service-account"
+  actor_name: "TODO"
+  auth_method: "TODO"
+  token_storage: "external"
+  allowed_actions:
+    - "edit_issue_description"
+    - "create_issue"
+  forbidden_actions:
+    - "delete_issue"
+    - "transition_issue"
+    - "bulk_unscoped_update"
+
+network:
+  domain_allowlist_required: true
+  ip_allowlist_required: true
+  allowed_origin_domain: "TODO"
+  allowed_origin_static_ip: "TODO"
+
+policy:
+  required_request_id: "CR-SST-0039"
+  required_artifacts:
+    - "correction-plan-preview.json"
+    - "jira-policy-check-summary.md"
+    - "doctor-summary.md"
+  required_gates:
+    - "policy-check PASS"
+    - "blocked correction items equals 0"
+    - "human approval names write action"
+
+secrets:
+  storage: "external"
+  git_storage_allowed: false

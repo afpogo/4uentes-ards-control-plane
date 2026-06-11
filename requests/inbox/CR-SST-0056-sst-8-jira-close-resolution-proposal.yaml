@@ -1,0 +1,50 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0056"
+title: "Propose Jira closure for SST-8 after Document Agent validated-live"
+status: "inbox"
+created_at: "2026-06-07"
+requester: "4uentes"
+
+summary: >
+  Generate an auditable, read-only proposal to close or resolve Jira issue
+  SST-8 after the Document Agent feature state reached validated-live through
+  CR-SST-0053 authenticated E2E evidence.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - sst-fend
+    - 4uentes-auth
+    - sst-bend
+  include_optional_services: false
+
+dependencies:
+  - "requests/done/CR-SST-0008-sst-document-agent-workflows.yaml"
+  - "requests/done/CR-SST-0052-document-agent-contract-e2e-gap-closure.yaml"
+  - "requests/done/CR-SST-0053-document-agent-authenticated-e2e-smoke.yaml"
+
+task_weight:
+  classification: "short-defined-task"
+  risk_level: "medium"
+  drivers:
+    - JIRA_STATUS_TRANSITION_PROPOSAL
+    - CONTROL_PLANE_EVIDENCE_REVIEW
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The task is a bounded evidence-backed Jira transition proposal with no external write."
+
+execution_intent:
+  jira_write_executed: false
+  jira_transition_executed: false
+  local_state_transition_expected: false
+  output: "read-only closure/resolution proposal"
+
+acceptance_criteria:
+  - "Proposal references SST-8 and document-agent validated-live state."
+  - "Proposal includes evidence refs for CR-SST-0008, CR-SST-0052, and CR-SST-0053."
+  - "Proposal states no Jira write was executed."
+  - "Control-plane validation passes."

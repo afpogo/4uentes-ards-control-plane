@@ -1,0 +1,83 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0059"
+title: "Operational MCP OAuth session playbook"
+status: "done"
+source_request: "requests/inbox/CR-SST-0059-operational-mcp-oauth-session-playbook.yaml"
+planned_request: "requests/planned/CR-SST-0059-operational-mcp-oauth-session-playbook.yaml"
+created_at: "2026-06-08"
+completed_at: "2026-06-08"
+requester: "4uentes"
+
+summary: >
+  Created the first integral Jira/MCP OAuth session playbook for the
+  control-plane. The playbook separates local dry-run, MCP read-only, approved
+  write, OAuth init, OAuth recovery, port-blocker, re-registration, write gate,
+  and agent limitation scenarios.
+
+scope:
+  solution: "sst"
+  repository: "4uentes-orchestor"
+  backlog_id: "SST-BL-JIRA-005"
+  functional_repositories_modified: false
+  jira_write_executed: false
+  external_write_executed: false
+  local_state_transitions_executed: false
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - OAUTH_SESSION_HANDLING
+    - EXTERNAL_JIRA_WRITE_GATING
+    - OPERATOR_RUNBOOK_AUTHORITY
+    - LOCAL_PROCESS_DISRUPTION_RISK
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The request defines operational handling for OAuth sessions and external Jira write gates."
+
+subagent_deployment_plan:
+  required: true
+  roles:
+    - security-contract-reviewer
+    - validation-reviewer
+    - operator-runbook-reviewer
+  fallback: "The main agent performed the security, validation, and operator-runbook review sequentially."
+  evidence_ref: "evidence/requests/CR-SST-0059/subagent-deployment-evidence.md"
+
+results:
+  playbook_ref: "docs/requests/jira-mcp-oauth-session-playbook.md"
+  docs_index_updated: true
+  backlog_registry_updated: true
+  backlog_status: "active"
+  assigned_cr_sst: "CR-SST-0059"
+  oauth_blocker_case_ref: "evidence/requests/CR-SST-0058/jira-mcp-oauth-port-blocker.md"
+  jira_writes: 0
+
+evidence:
+  required:
+    - "evidence/requests/CR-SST-0059/implementation-summary.md"
+    - "evidence/requests/CR-SST-0059/oauth-session-scenarios.md"
+    - "evidence/requests/CR-SST-0059/operational-endpoint-validation.md"
+    - "evidence/requests/CR-SST-0059/subagent-deployment-evidence.md"
+    - "evidence/requests/CR-SST-0059/changed-files-summary.md"
+    - "evidence/requests/CR-SST-0059/validation-results.md"
+
+validation:
+  required_checks:
+    - "npm.cmd run check"
+    - "node --check scripts\\jira-mcp\\lib\\mcp-stdio-client.js"
+    - "node --check scripts\\jira-mcp\\transition-sst-8-close.js"
+  status: "pass-with-inherited-warnings"
+
+decision:
+  status: "approved-done"
+  approver: "4uentes"
+  note: "First operational playbook version completed. It does not authorize Jira writes."
+
+remaining_gaps:
+  - "Run an operator validation of the playbook during the next successful OAuth init."
+  - "Generalize the SST-8 transition script before using controlled transitions for other Jira issues."

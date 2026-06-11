@@ -1,0 +1,172 @@
+{
+  "issues": [
+    {
+      "issueKey": "SST-10",
+      "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10018\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10018\",\"key\":\"SST-10\",\"fields\":{\"summary\":\"[SST][feature-state] Completar validacion live y cierre de gobernanza de SST Dictionary Tags\",\"issuetype\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issuetype/10008\",\"id\":\"10008\",\"description\":\"Un trabajo pequeño e independiente.\",\"iconUrl\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/2/universal_avatar/view/type/issuetype/avatar/10318?size=medium\",\"name\":\"Tarea\",\"subtask\":false,\"avatarId\":10318,\"entityId\":\"[cloudId-redacted]\",\"hierarchyLevel\":0},\"description\":\"Proceso de sincronizacion:\\n\\n* CR-SST-0039\\n\\nProcesos origen:\\n\\n* CR-SST-0002\\n* CR-SST-0014\\n\\nEstado actual: validated-local.\\n\\nObjetivo:  \\nAvanzar esta funcionalidad desde el read-model del control-plane y cerrar los gaps abiertos mediante el lifecycle aprobado.\\n\\nGaps abiertos:\\n\\n* Live runtime endpoint validation was not executed.\\n* TagDefinition governance is not closed as a public managed surface.\\n* Dictionary close criteria must explicitly exclude or accept broader SST-level article/course/bitacora tag expansion.\\n\\nState id:\\n\\n* dictionary-tags\\n\\nServicios afectados:\\n\\n* sst-bend\\n* 4uentes-auth\\n* sst-fend\\n* sst-extension\\n* sst-4uentes-infra\\n\\nRequest ids relacionados:\\n\\n* CR-SST-0002\\n* CR-SST-0014\\n\\nFuente control-plane:\\n\\n* state/features/dictionary-tags.current.yaml\\n\\nEvidence refs:\\n\\n* evidence/requests/CR-SST-0002/implementation-state-report.md\\n* evidence/requests/CR-SST-0002/findings.yaml\\n* evidence/requests/CR-SST-0002/validation-results.md\\n* evidence/requests/CR-SST-0014/implementation-state-analysis.md\\n\\nValidation refs:\\n\\n* ninguno\\n\\nCriterio de cierre esperado:\\n\\n* La decision o implementacion pendiente queda registrada en evidencia.\\n* Los cambios en repos funcionales, si hacen falta, entran por request aprobado.\\n* El feature_state se actualiza solo cuando la evidencia soporte una transicion de estado.\\n\\n\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10005\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted] por hacer\",\"id\":\"10005\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/2\",\"id\":2,\"key\":\"new\",\"colorName\":\"blue-gray\",\"name\":\"Por hacer\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"feature-state\",\"not-done\",\"validated-local\"]}}",
+      "summary": "[SST][feature-state] Completar validacion live y cierre de gobernanza de SST Dictionary Tags",
+      "hasSyncProcess": true,
+      "hasOriginProcesses": true,
+      "hasLegacyControlPlaneProcess": false
+    },
+    {
+      "issueKey": "SST-11",
+      "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10019\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10019\",\"key\":\"SST-11\",\"fields\":{\"summary\":\"[SST][feature-state] Cerrar gaps release-readiness de Cluster publication\",\"issuetype\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issuetype/10008\",\"id\":\"10008\",\"description\":\"Un trabajo pequeño e independiente.\",\"iconUrl\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/2/universal_avatar/view/type/issuetype/avatar/10318?size=medium\",\"name\":\"Tarea\",\"subtask\":false,\"avatarId\":10318,\"entityId\":\"[cloudId-redacted]\",\"hierarchyLevel\":0},\"description\":\"Proceso de sincronizacion:\\n\\n* CR-SST-0039\\n\\nProcesos origen:\\n\\n* CR-SST-0020\\n\\nEstado actual: validated-live.\\n\\nObjetivo:  \\nAvanzar esta funcionalidad desde el read-model del control-plane y cerrar los gaps abiertos mediante el lifecycle aprobado.\\n\\nGaps abiertos:\\n\\n* Install or reconcile ngrok as a Windows service if startup durability is required.\\n* Run app login, refresh/logout and protected-route smokes in a later approved phase with credentials outside Git.\\n* Run persistence create/read/delete smoke in a later approved phase.\\n* Promote app images by immutable release tag or digest before release readiness.\\n* Reconcile infra orchestrator_link.state_id with feature_state id cluster-publication-ngrok-domain.\\n\\nState id:\\n\\n* cluster-publication-ngrok-domain\\n\\nServicios afectados:\\n\\n* sst-fend\\n* sst-bend\\n* 4uentes-auth\\n* sst-4uentes-infra\\n\\nRequest ids relacionados:\\n\\n* CR-SST-0020\\n\\nFuente control-plane:\\n\\n* state/features/cluster-publication-ngrok-domain.current.yaml\\n\\nEvidence refs:\\n\\n* evidence/requests/CR-SST-0020/intake-summary.md\\n* evidence/requests/CR-SST-0020/analysis-plan.md\\n* evidence/requests/CR-SST-0020/current-cluster-state.md\\n* evidence/requests/CR-SST-0020/ingress-ngrok-edge-analysis.md\\n* evidence/requests/CR-SST-0020/auth-public-exposure-analysis.md\\n* evidence/requests/CR-SST-0020/branch-image-policy-analysis.md\\n* evidence/requests/CR-SST-0020/validation-release-gates.md\\n* evidence/requests/CR-SST-0020/subagent-deployment-evidence.md\\n* evidence/requests/CR-SST-0020/infra-operational-edge-result.md\\n* evidence/requests/CR-SST-0020/stage-close-validation.md\\n\\nValidation refs:\\n\\n* ninguno\\n\\nCriterio de cierre esperado:\\n\\n* La decision o implementacion pendiente queda registrada en evidencia.\\n* Los cambios en repos funcionales, si hacen falta, entran por request aprobado.\\n* El feature_state se actualiza solo cuando la evidencia soporte una transicion de estado.\\n\\n\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10005\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted] por hacer\",\"id\":\"10005\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/2\",\"id\":2,\"key\":\"new\",\"colorName\":\"blue-gray\",\"name\":\"Por hacer\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"feature-state\",\"not-done\",\"validated-live\"]}}",
+      "summary": "[SST][feature-state] Cerrar gaps release-readiness de Cluster publication",
+      "hasSyncProcess": true,
+      "hasOriginProcesses": true,
+      "hasLegacyControlPlaneProcess": false
+    },
+    {
+      "issueKey": "SST-12",
+      "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10020\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10020\",\"key\":\"SST-12\",\"fields\":{\"summary\":\"[SST][feature-state] Promover SST Tag Prefix Engine de POC a boundary runtime\",\"issuetype\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issuetype/10008\",\"id\":\"10008\",\"description\":\"Un trabajo pequeño e independiente.\",\"iconUrl\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/2/universal_avatar/view/type/issuetype/avatar/10318?size=medium\",\"name\":\"Tarea\",\"subtask\":false,\"avatarId\":10318,\"entityId\":\"[cloudId-redacted]\",\"hierarchyLevel\":0},\"description\":\"Proceso de sincronizacion:\\n\\n* CR-SST-0039\\n\\nProcesos origen:\\n\\n* CR-SST-0016\\n\\nEstado actual: implemented-local.\\n\\nObjetivo:  \\nAvanzar esta funcionalidad desde el read-model del control-plane y cerrar los gaps abiertos mediante el lifecycle aprobado.\\n\\nGaps abiertos:\\n\\n* Expose parser preview or import runtime endpoint in a later request.\\n* Decide when TagDefinition moves from code registry to persisted DB governance.\\n* Adopt reference-chip rendering in BFF/frontend after runtime API is published.\\n\\nState id:\\n\\n* sst-tag-prefix-engine\\n\\nServicios afectados:\\n\\n* sst-bend\\n\\nRequest ids relacionados:\\n\\n* CR-SST-0016\\n\\nFuente control-plane:\\n\\n* state/features/sst-tag-prefix-engine.current.yaml\\n\\nEvidence refs:\\n\\n* evidence/requests/CR-SST-0016/backend-poc-summary.md\\n\\nValidation refs:\\n\\n* ninguno\\n\\nCriterio de cierre esperado:\\n\\n* La decision o implementacion pendiente queda registrada en evidencia.\\n* Los cambios en repos funcionales, si hacen falta, entran por request aprobado.\\n* El feature_state se actualiza solo cuando la evidencia soporte una transicion de estado.\\n\\n\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10005\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted] por hacer\",\"id\":\"10005\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/2\",\"id\":2,\"key\":\"new\",\"colorName\":\"blue-gray\",\"name\":\"Por hacer\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"feature-state\",\"implemented-local\",\"not-done\"]}}",
+      "summary": "[SST][feature-state] Promover SST Tag Prefix Engine de POC a boundary runtime",
+      "hasSyncProcess": true,
+      "hasOriginProcesses": true,
+      "hasLegacyControlPlaneProcess": false
+    },
+    {
+      "issueKey": "SST-4",
+      "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10012\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10012\",\"key\":\"SST-4\",\"fields\":{\"summary\":\"[SST][feature-state] Cerrar gaps runtime-partial de SST Tags Governance\",\"issuetype\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issuetype/10008\",\"id\":\"10008\",\"description\":\"Un trabajo pequeño e independiente.\",\"iconUrl\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/2/universal_avatar/view/type/issuetype/avatar/10318?size=medium\",\"name\":\"Tarea\",\"subtask\":false,\"avatarId\":10318,\"entityId\":\"[cloudId-redacted]\",\"hierarchyLevel\":0},\"description\":\"Proceso de sincronizacion:\\n\\n* CR-SST-0039\\n\\nProcesos origen:\\n\\n* CR-SST-0010\\n* CR-SST-0014\\n* CR-SST-0015\\n* CR-SST-0016\\n\\nEstado actual: runtime-partial.\\n\\nObjetivo:  \\nAvanzar esta funcionalidad desde el read-model del control-plane y cerrar los gaps abiertos mediante el lifecycle aprobado.\\n\\nGaps abiertos:\\n\\n* Promote article-tags from draft to an active governed SST capability.\\n* Adopt structured article tags in BFF and frontend create/update flows.\\n* Promote sst-tag-prefix-engine from backend POC to runtime preview/import endpoint.\\n* Keep real-time transcription as a separate future intake request.\\n\\nState id:\\n\\n* sst-tags-governance\\n\\nServicios afectados:\\n\\n* sst-bend\\n* 4uentes-auth\\n* sst-fend\\n* sst-extension\\n\\nRequest ids relacionados:\\n\\n* CR-SST-0010\\n* CR-SST-0014\\n* CR-SST-0015\\n* CR-SST-0016\\n\\nFuente control-plane:\\n\\n* state/features/sst-tags-governance.current.yaml\\n\\nEvidence refs:\\n\\n* evidence/requests/CR-SST-0002/implementation-state-report.md\\n* evidence/requests/CR-SST-0002/findings.yaml\\n* evidence/requests/CR-SST-0002/runtime-readiness-summary.md\\n* evidence/requests/CR-SST-0014/implementation-state-analysis.md\\n* evidence/requests/CR-SST-0014/course-tags-analysis.md\\n* evidence/requests/CR-SST-0014/next-request-boundary.md\\n* evidence/requests/CR-SST-0015/java-spring-course-structure-analysis.md\\n* evidence/requests/CR-SST-0016/backend-poc-summary.md\\n\\nValidation refs:\\n\\n* ninguno\\n\\nCriterio de cierre esperado:\\n\\n* La decision o implementacion pendiente queda registrada en evidencia.\\n* Los cambios en repos funcionales, si hacen falta, entran por request aprobado.\\n* El feature_state se actualiza solo cuando la evidencia soporte una transicion de estado.\\n\\n\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10005\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted] por hacer\",\"id\":\"10005\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/2\",\"id\":2,\"key\":\"new\",\"colorName\":\"blue-gray\",\"name\":\"Por hacer\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"feature-state\",\"not-done\",\"runtime-partial\"]}}",
+      "summary": "[SST][feature-state] Cerrar gaps runtime-partial de SST Tags Governance",
+      "hasSyncProcess": true,
+      "hasOriginProcesses": true,
+      "hasLegacyControlPlaneProcess": false
+    },
+    {
+      "issueKey": "SST-5",
+      "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10013\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10013\",\"key\":\"SST-5\",\"fields\":{\"summary\":\"[SST][feature-state] Formalizar ownership runtime-partial de SST Robots\",\"issuetype\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issuetype/10008\",\"id\":\"10008\",\"description\":\"Un trabajo pequeño e independiente.\",\"iconUrl\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/2/universal_avatar/view/type/issuetype/avatar/10318?size=medium\",\"name\":\"Tarea\",\"subtask\":false,\"avatarId\":10318,\"entityId\":\"[cloudId-redacted]\",\"hierarchyLevel\":0},\"description\":\"Proceso de sincronizacion:\\n\\n* CR-SST-0039\\n\\nProcesos origen:\\n\\n* CR-SST-0006\\n\\nEstado actual: runtime-partial.\\n\\nObjetivo:  \\nAvanzar esta funcionalidad desde el read-model del control-plane y cerrar los gaps abiertos mediante el lifecycle aprobado.\\n\\nGaps abiertos:\\n\\n* Future work needs a request boundary before functional repository changes.\\n* Capability ownership is not yet formalized.\\n\\nState id:\\n\\n* robots\\n\\nServicios afectados:\\n\\n* sst-fend\\n* sst-bend\\n* 4uentes-auth\\n* sst-extension\\n* sst-4uentes-infra\\n\\nRequest ids relacionados:\\n\\n* CR-SST-0006\\n\\nFuente control-plane:\\n\\n* state/features/robots.current.yaml\\n\\nEvidence refs:\\n\\n* evidence/requests/CR-SST-0006/implementation-state-report.md\\n* evidence/requests/CR-SST-0006/cross-repo-summary.md\\n* evidence/requests/CR-SST-0006/validation-results.md\\n\\nValidation refs:\\n\\n* ninguno\\n\\nCriterio de cierre esperado:\\n\\n* La decision o implementacion pendiente queda registrada en evidencia.\\n* Los cambios en repos funcionales, si hacen falta, entran por request aprobado.\\n* El feature_state se actualiza solo cuando la evidencia soporte una transicion de estado.\\n\\n\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10005\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted] por hacer\",\"id\":\"10005\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/2\",\"id\":2,\"key\":\"new\",\"colorName\":\"blue-gray\",\"name\":\"Por hacer\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"feature-state\",\"not-done\",\"runtime-partial\"]}}",
+      "summary": "[SST][feature-state] Formalizar ownership runtime-partial de SST Robots",
+      "hasSyncProcess": true,
+      "hasOriginProcesses": true,
+      "hasLegacyControlPlaneProcess": false
+    },
+    {
+      "issueKey": "SST-6",
+      "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10014\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10014\",\"key\":\"SST-6\",\"fields\":{\"summary\":\"[SST][feature-state] Completar ruta runtime de SST Learning Content Tags\",\"issuetype\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issuetype/10008\",\"id\":\"10008\",\"description\":\"Un trabajo pequeño e independiente.\",\"iconUrl\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/2/universal_avatar/view/type/issuetype/avatar/10318?size=medium\",\"name\":\"Tarea\",\"subtask\":false,\"avatarId\":10318,\"entityId\":\"[cloudId-redacted]\",\"hierarchyLevel\":0},\"description\":\"Proceso de sincronizacion:\\n\\n* CR-SST-0039\\n\\nProcesos origen:\\n\\n* CR-SST-0015\\n* CR-SST-0016\\n\\nEstado actual: implemented-local.\\n\\nObjetivo:  \\nAvanzar esta funcionalidad desde el read-model del control-plane y cerrar los gaps abiertos mediante el lifecycle aprobado.\\n\\nGaps abiertos:\\n\\n* Promote learning-content parser from POC module to runtime import/preview endpoint.\\n* Define frontend rendering for clase, nota, recordar, ejemplo, image, docs, and code blocks.\\n* Keep generated lab artifacts excluded from ingestion by default.\\n\\nState id:\\n\\n* learning-content-tags\\n\\nServicios afectados:\\n\\n* sst-bend\\n* sst-fend\\n\\nRequest ids relacionados:\\n\\n* CR-SST-0015\\n* CR-SST-0016\\n\\nFuente control-plane:\\n\\n* state/features/learning-content-tags.current.yaml\\n\\nEvidence refs:\\n\\n* evidence/requests/CR-SST-0015/java-spring-course-structure-analysis.md\\n* evidence/requests/CR-SST-0015/parser-boundary-recommendation.md\\n* evidence/requests/CR-SST-0016/backend-poc-summary.md\\n\\nValidation refs:\\n\\n* ninguno\\n\\nCriterio de cierre esperado:\\n\\n* La decision o implementacion pendiente queda registrada en evidencia.\\n* Los cambios en repos funcionales, si hacen falta, entran por request aprobado.\\n* El feature_state se actualiza solo cuando la evidencia soporte una transicion de estado.\\n\\n\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10005\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted] por hacer\",\"id\":\"10005\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/2\",\"id\":2,\"key\":\"new\",\"colorName\":\"blue-gray\",\"name\":\"Por hacer\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"feature-state\",\"implemented-local\",\"not-done\"]}}",
+      "summary": "[SST][feature-state] Completar ruta runtime de SST Learning Content Tags",
+      "hasSyncProcess": true,
+      "hasOriginProcesses": true,
+      "hasLegacyControlPlaneProcess": false
+    },
+    {
+      "issueKey": "SST-7",
+      "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10015\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10015\",\"key\":\"SST-7\",\"fields\":{\"summary\":\"[SST][feature-state] Seleccionar transporte runtime para handoff SST Chatbot\",\"issuetype\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issuetype/10008\",\"id\":\"10008\",\"description\":\"Un trabajo pequeño e independiente.\",\"iconUrl\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/2/universal_avatar/view/type/issuetype/avatar/10318?size=medium\",\"name\":\"Tarea\",\"subtask\":false,\"avatarId\":10318,\"entityId\":\"[cloudId-redacted]\",\"hierarchyLevel\":0},\"description\":\"Proceso de sincronizacion:\\n\\n* CR-SST-0039\\n\\nProcesos origen:\\n\\n* CR-SST-0007\\n* CR-SST-0016\\n* CR-SST-0021\\n* CR-SST-0022\\n\\nEstado actual: implemented-local.\\n\\nObjetivo:  \\nAvanzar esta funcionalidad desde el read-model del control-plane y cerrar los gaps abiertos mediante el lifecycle aprobado.\\n\\nGaps abiertos:\\n\\n* Transport for runtime orchestrator handoff is not selected; CR-SST-0022 implements a local/fake adapter only.\\n\\nState id:\\n\\n* sst-chatbot\\n\\nServicios afectados:\\n\\n* sst-chatbot\\n* sst-fend\\n* sst-bend\\n* 4uentes-auth\\n* sst-extension\\n* sst-4uentes-infra\\n\\nRequest ids relacionados:\\n\\n* CR-SST-0007\\n* CR-SST-0016\\n* CR-SST-0021\\n* CR-SST-0022\\n\\nFuente control-plane:\\n\\n* state/features/sst-chatbot.current.yaml\\n\\nEvidence refs:\\n\\n* inventory/evidence/git/sst-chatbot.md\\n* evidence/requests/CR-SST-0007/capabilities-trace.md\\n* evidence/requests/CR-SST-0007/orchestrator-boundary-summary.md\\n* evidence/requests/CR-SST-0007/adoption-gaps.md\\n* evidence/requests/CR-SST-0016/onboarding-summary.md\\n* evidence/requests/CR-SST-0021/baseline.md\\n* evidence/requests/CR-SST-0021/implementation-summary.md\\n* evidence/requests/CR-SST-0021/changed-files-summary.md\\n* evidence/requests/CR-SST-0022/baseline.md\\n* evidence/requests/CR-SST-0022/implementation-summary.md\\n* evidence/requests/CR-SST-0022/changed-files-summary.md\\n\\nValidation refs:\\n\\n* evidence/requests/CR-SST-0016/validation-results.md\\n* evidence/requests/CR-SST-0021/validation-results.md\\n* evidence/requests/CR-SST-0022/validation-results.md\\n\\nCriterio de cierre esperado:\\n\\n* La decision o implementacion pendiente queda registrada en evidencia.\\n* Los cambios en repos funcionales, si hacen falta, entran por request aprobado.\\n* El feature_state se actualiza solo cuando la evidencia soporte una transicion de estado.\\n\\n\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10005\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted] por hacer\",\"id\":\"10005\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/2\",\"id\":2,\"key\":\"new\",\"colorName\":\"blue-gray\",\"name\":\"Por hacer\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"feature-state\",\"implemented-local\",\"not-done\"]}}",
+      "summary": "[SST][feature-state] Seleccionar transporte runtime para handoff SST Chatbot",
+      "hasSyncProcess": true,
+      "hasOriginProcesses": true,
+      "hasLegacyControlPlaneProcess": false
+    },
+    {
+      "issueKey": "SST-8",
+      "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10016\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10016\",\"key\":\"SST-8\",\"fields\":{\"summary\":\"[SST][feature-state] Formalizar evidencia de SST Document Agent Workflows\",\"issuetype\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issuetype/10008\",\"id\":\"10008\",\"description\":\"Un trabajo pequeño e independiente.\",\"iconUrl\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/2/universal_avatar/view/type/issuetype/avatar/10318?size=medium\",\"name\":\"Tarea\",\"subtask\":false,\"avatarId\":10318,\"entityId\":\"[cloudId-redacted]\",\"hierarchyLevel\":0},\"description\":\"Proceso de sincronizacion:\\n\\n* CR-SST-0039\\n\\nProcesos origen:\\n\\n* CR-SST-0008\\n\\nEstado actual: implemented-local.\\n\\nObjetivo:  \\nAvanzar esta funcionalidad desde el read-model del control-plane y cerrar los gaps abiertos mediante el lifecycle aprobado.\\n\\nGaps abiertos:\\n\\n* CR-SST-0008 needs planned request and formal evidence.\\n\\nState id:\\n\\n* document-agent\\n\\nServicios afectados:\\n\\n* sst-fend\\n* 4uentes-auth\\n* sst-bend\\n\\nRequest ids relacionados:\\n\\n* CR-SST-0008\\n\\nFuente control-plane:\\n\\n* state/features/document-agent.current.yaml\\n\\nEvidence refs:\\n\\n* ninguno\\n\\nValidation refs:\\n\\n* ninguno\\n\\nCriterio de cierre esperado:\\n\\n* La decision o implementacion pendiente queda registrada en evidencia.\\n* Los cambios en repos funcionales, si hacen falta, entran por request aprobado.\\n* El feature_state se actualiza solo cuando la evidencia soporte una transicion de estado.\\n\\n\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10006\",\"description\":\"La persona asignada está trabajando actualmente en esta actividad.\",\"iconUrl\":\"[jira-site-redacted] curso\",\"id\":\"10006\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"feature-state\",\"implemented-local\",\"not-done\"]}}",
+      "summary": "[SST][feature-state] Formalizar evidencia de SST Document Agent Workflows",
+      "hasSyncProcess": true,
+      "hasOriginProcesses": true,
+      "hasLegacyControlPlaneProcess": false
+    },
+    {
+      "issueKey": "SST-9",
+      "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10017\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10017\",\"key\":\"SST-9\",\"fields\":{\"summary\":\"[SST][feature-state] Completar handoff y adopcion de ARDS/SDD Policy Unification\",\"issuetype\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issuetype/10008\",\"id\":\"10008\",\"description\":\"Un trabajo pequeño e independiente.\",\"iconUrl\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/2/universal_avatar/view/type/issuetype/avatar/10318?size=medium\",\"name\":\"Tarea\",\"subtask\":false,\"avatarId\":10318,\"entityId\":\"[cloudId-redacted]\",\"hierarchyLevel\":0},\"description\":\"Proceso de sincronizacion:\\n\\n* CR-SST-0039\\n\\nProcesos origen:\\n\\n* CR-SST-0024\\n* CR-SST-0025\\n\\nEstado actual: ards-documented.\\n\\nObjetivo:  \\nAvanzar esta funcionalidad desde el read-model del control-plane y cerrar los gaps abiertos mediante el lifecycle aprobado.\\n\\nGaps abiertos:\\n\\n* Move universal policy canon into 4uentes-core with source validation.\\n* Have 4uentes-core adopt policies as first-class ARDS/SDD components.\\n* Handoff human-doc-language from docs/idioma-markdown.md to 4uentes-core as a reusable policy while preserving its orchestrator origin.\\n* Resolve canonical identity for 4uentes-core versus 4uentes-ards-core.\\n* Define and adopt a child-repo policy_adoption manifest through future approved requests.\\n* Close observed gaps for sst-chatbot docs_ai_policy and orchestrator_link adoption.\\n* Close observed validation.check_command TODO for sst-4uentes-infra.\\n\\nState id:\\n\\n* ards-sdd-policy-unification\\n\\nServicios afectados:\\n\\n* 4uentes-auth\\n* sst-fend\\n* sst-bend\\n* sst-extension\\n* sst-chatbot\\n* sst-4uentes-infra\\n\\nRequest ids relacionados:\\n\\n* CR-SST-0024\\n* CR-SST-0025\\n\\nFuente control-plane:\\n\\n* state/features/ards-sdd-policy-unification.current.yaml\\n\\nEvidence refs:\\n\\n* evidence/requests/CR-SST-0024/policy-model.md\\n* evidence/requests/CR-SST-0024/subagent-deployment-evidence.md\\n* evidence/requests/CR-SST-0024/implementation-summary.md\\n* evidence/requests/CR-SST-0024/changed-files-summary.md\\n* evidence/requests/CR-SST-0024/validation-results.md\\n* evidence/requests/CR-SST-0025/policy-component-model.md\\n* evidence/requests/CR-SST-0025/subagent-deployment-evidence.md\\n* evidence/requests/CR-SST-0025/changed-files-summary.md\\n* evidence/requests/CR-SST-0025/validation-results.md\\n\\nValidation refs:\\n\\n* ninguno\\n\\nCriterio de cierre esperado:\\n\\n* La decision o implementacion pendiente queda registrada en evidencia.\\n* Los cambios en repos funcionales, si hacen falta, entran por request aprobado.\\n* El feature_state se actualiza solo cuando la evidencia soporte una transicion de estado.\\n\\n\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10005\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted] por hacer\",\"id\":\"10005\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/2\",\"id\":2,\"key\":\"new\",\"colorName\":\"blue-gray\",\"name\":\"Por hacer\"}},\"labels\":[\"ards-documented\",\"ards-sdd\",\"control-plane\",\"feature-state\",\"not-done\"]}}",
+      "summary": "[SST][feature-state] Completar handoff y adopcion de ARDS/SDD Policy Unification",
+      "hasSyncProcess": true,
+      "hasOriginProcesses": true,
+      "hasLegacyControlPlaneProcess": false
+    }
+  ],
+  "reconciled": [
+    {
+      "stateId": "sst-tags-governance",
+      "expectedSummary": "[SST][feature-state] Cerrar gaps runtime-partial de SST Tags Governance",
+      "issueKeys": [
+        "SST-12",
+        "SST-10",
+        "SST-4"
+      ],
+      "selectedIssueKey": "SST-4",
+      "matchType": "exact-summary",
+      "updateNeeded": false
+    },
+    {
+      "stateId": "robots",
+      "expectedSummary": "[SST][feature-state] Formalizar ownership runtime-partial de SST Robots",
+      "issueKeys": [
+        "SST-5"
+      ],
+      "selectedIssueKey": "SST-5",
+      "matchType": "exact-summary",
+      "updateNeeded": false
+    },
+    {
+      "stateId": "learning-content-tags",
+      "expectedSummary": "[SST][feature-state] Completar ruta runtime de SST Learning Content Tags",
+      "issueKeys": [
+        "SST-6"
+      ],
+      "selectedIssueKey": "SST-6",
+      "matchType": "exact-summary",
+      "updateNeeded": false
+    },
+    {
+      "stateId": "sst-tag-prefix-engine",
+      "expectedSummary": "[SST][feature-state] Promover SST Tag Prefix Engine de POC a boundary runtime",
+      "issueKeys": [
+        "SST-12",
+        "SST-4"
+      ],
+      "selectedIssueKey": "SST-12",
+      "matchType": "exact-summary",
+      "updateNeeded": false
+    },
+    {
+      "stateId": "sst-chatbot",
+      "expectedSummary": "[SST][feature-state] Seleccionar transporte runtime para handoff SST Chatbot",
+      "issueKeys": [
+        "SST-9",
+        "SST-7"
+      ],
+      "selectedIssueKey": "SST-7",
+      "matchType": "exact-summary",
+      "updateNeeded": false
+    },
+    {
+      "stateId": "ards-sdd-policy-unification",
+      "expectedSummary": "[SST][feature-state] Completar handoff y adopcion de ARDS/SDD Policy Unification",
+      "issueKeys": [
+        "SST-9"
+      ],
+      "selectedIssueKey": "SST-9",
+      "matchType": "exact-summary",
+      "updateNeeded": false
+    },
+    {
+      "stateId": "dictionary-tags",
+      "expectedSummary": "[SST][feature-state] Completar validacion live y cierre de gobernanza de SST Dictionary Tags",
+      "issueKeys": [
+        "SST-10"
+      ],
+      "selectedIssueKey": "SST-10",
+      "matchType": "exact-summary",
+      "updateNeeded": false
+    },
+    {
+      "stateId": "document-agent",
+      "expectedSummary": "[SST][feature-state] Formalizar evidencia de SST Document Agent Workflows",
+      "issueKeys": [
+        "SST-8"
+      ],
+      "selectedIssueKey": "SST-8",
+      "matchType": "exact-summary",
+      "updateNeeded": false
+    },
+    {
+      "stateId": "cluster-publication-ngrok-domain",
+      "expectedSummary": "[SST][feature-state] Cerrar gaps release-readiness de Cluster publication",
+      "issueKeys": [
+        "SST-11"
+      ],
+      "selectedIssueKey": "SST-11",
+      "matchType": "exact-summary",
+      "updateNeeded": false
+    }
+  ]
+}

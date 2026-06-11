@@ -1,0 +1,109 @@
+{
+  "requestId": "CR-SST-0050",
+  "registryRef": "state/jira-backlog-registry.yaml",
+  "externalWrite": false,
+  "payloads": [
+    {
+      "backlogId": "SST-BL-JIRA-001",
+      "projectKey": "SST",
+      "boardName": "SST-Team",
+      "issueType": "Tarea",
+      "summary": "[SST][backlog][SST-BL-JIRA-001] Generic Jira writer not limited to CR-SST-0039",
+      "priority": "Medium",
+      "labels": [
+        "control-plane",
+        "jira-mcp",
+        "backlog",
+        "deferred",
+        "no-cr-assigned"
+      ],
+      "description": "Backlog id:\n- SST-BL-JIRA-001\n\nAssigned CR-SST:\n- ninguno\n\nBacklog status:\n- deferred\n\nPriority:\n- medium\n\nE2E route:\n- control-plane-api-writer-jira\n\nActivation rule:\n- Assign the next available CR-SST only when generic Jira writes become prioritized.\n\nEvidence required:\n- planned_request\n- policy_check\n- approved_write_gate\n- post_write_reconciliation\n\nControl-plane source:\n- state/jira-backlog-registry.yaml\n\nClose criteria:\n- The backlog item is activated only by assigning a real CR-SST from the control-plane.\n- Jira visibility does not reserve or assign CR-SST numbers.",
+      "externalWrite": false
+    },
+    {
+      "backlogId": "SST-BL-JIRA-002",
+      "projectKey": "SST",
+      "boardName": "SST-Team",
+      "issueType": "Tarea",
+      "summary": "[SST][backlog][SST-BL-JIRA-002] Jira issue properties for structured control-plane metadata",
+      "priority": "Low-Medium",
+      "labels": [
+        "control-plane",
+        "jira-mcp",
+        "backlog",
+        "deferred",
+        "no-cr-assigned"
+      ],
+      "description": "Backlog id:\n- SST-BL-JIRA-002\n\nAssigned CR-SST:\n- ninguno\n\nBacklog status:\n- deferred\n\nPriority:\n- low-medium\n\nE2E route:\n- control-plane-api-jira\n\nActivation rule:\n- Assign the next available CR-SST when metadata properties are selected over description parsing.\n\nEvidence required:\n- planned_request\n- metadata_schema\n- approved_write_gate\n- post_write_reconciliation\n\nControl-plane source:\n- state/jira-backlog-registry.yaml\n\nClose criteria:\n- The backlog item is activated only by assigning a real CR-SST from the control-plane.\n- Jira visibility does not reserve or assign CR-SST numbers.",
+      "externalWrite": false
+    },
+    {
+      "backlogId": "SST-BL-JIRA-003",
+      "projectKey": "SST",
+      "boardName": "SST-Team",
+      "issueType": "Tarea",
+      "summary": "[SST][backlog][SST-BL-JIRA-003] Controlled Jira workflow transitions",
+      "priority": "Low-Medium",
+      "labels": [
+        "control-plane",
+        "jira-mcp",
+        "backlog",
+        "deferred",
+        "no-cr-assigned"
+      ],
+      "description": "Backlog id:\n- SST-BL-JIRA-003\n\nAssigned CR-SST:\n- ninguno\n\nBacklog status:\n- deferred\n\nPriority:\n- low-medium\n\nE2E route:\n- control-plane-mcp-writer-jira\n\nActivation rule:\n- Assign the next available CR-SST when Jira status transitions become operationally required.\n\nEvidence required:\n- planned_request\n- transition_metadata\n- approval_intake\n- post_transition_reconciliation\n\nControl-plane source:\n- state/jira-backlog-registry.yaml\n\nClose criteria:\n- The backlog item is activated only by assigning a real CR-SST from the control-plane.\n- Jira visibility does not reserve or assign CR-SST numbers.",
+      "externalWrite": false
+    },
+    {
+      "backlogId": "SST-BL-JIRA-004",
+      "projectKey": "SST",
+      "boardName": "SST-Team",
+      "issueType": "Tarea",
+      "summary": "[SST][backlog][SST-BL-JIRA-004] Jira webhook/gateway intake",
+      "priority": "Low",
+      "labels": [
+        "control-plane",
+        "jira-mcp",
+        "backlog",
+        "deferred",
+        "no-cr-assigned"
+      ],
+      "description": "Backlog id:\n- SST-BL-JIRA-004\n\nAssigned CR-SST:\n- ninguno\n\nBacklog status:\n- deferred\n\nPriority:\n- low\n\nE2E route:\n- jira-gateway-control-plane\n\nActivation rule:\n- Assign the next available CR-SST when polling is no longer sufficient.\n\nEvidence required:\n- planned_request\n- gateway_contract\n- security_review\n- event_replay_evidence\n\nControl-plane source:\n- state/jira-backlog-registry.yaml\n\nClose criteria:\n- The backlog item is activated only by assigning a real CR-SST from the control-plane.\n- Jira visibility does not reserve or assign CR-SST numbers.",
+      "externalWrite": false
+    },
+    {
+      "backlogId": "SST-BL-JIRA-005",
+      "projectKey": "SST",
+      "boardName": "SST-Team",
+      "issueType": "Tarea",
+      "summary": "[SST][backlog][SST-BL-JIRA-005] Operational Jira/MCP/API/SST E2E runbook",
+      "priority": "Medium",
+      "labels": [
+        "control-plane",
+        "jira-mcp",
+        "backlog",
+        "deferred",
+        "no-cr-assigned"
+      ],
+      "description": "Backlog id:\n- SST-BL-JIRA-005\n\nAssigned CR-SST:\n- ninguno\n\nBacklog status:\n- deferred\n\nPriority:\n- medium\n\nE2E route:\n- bidirectional-runbook\n\nActivation rule:\n- Assign the next available CR-SST when operational handoff or repeatability becomes priority.\n\nEvidence required:\n- planned_request\n- runbook_draft\n- operator_validation\n- control_plane_check\n\nControl-plane source:\n- state/jira-backlog-registry.yaml\n\nClose criteria:\n- The backlog item is activated only by assigning a real CR-SST from the control-plane.\n- Jira visibility does not reserve or assign CR-SST numbers.",
+      "externalWrite": false
+    },
+    {
+      "backlogId": "SST-BL-JIRA-006",
+      "projectKey": "SST",
+      "boardName": "SST-Team",
+      "issueType": "Tarea",
+      "summary": "[SST][backlog][SST-BL-JIRA-006] Synchronize deferred backlog to Jira when prioritized",
+      "priority": "Low",
+      "labels": [
+        "control-plane",
+        "jira-mcp",
+        "backlog",
+        "deferred",
+        "no-cr-assigned"
+      ],
+      "description": "Backlog id:\n- SST-BL-JIRA-006\n\nAssigned CR-SST:\n- ninguno\n\nBacklog status:\n- deferred\n\nPriority:\n- low\n\nE2E route:\n- control-plane-mcp-write-jira\n\nActivation rule:\n- Assign the next available CR-SST only when backlog visibility in Jira is explicitly prioritized.\n\nEvidence required:\n- planned_request\n- backlog_policy_check\n- approved_jira_create\n- post_create_reconciliation\n\nControl-plane source:\n- state/jira-backlog-registry.yaml\n\nClose criteria:\n- The backlog item is activated only by assigning a real CR-SST from the control-plane.\n- Jira visibility does not reserve or assign CR-SST numbers.",
+      "externalWrite": false
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0026"
+title: "Define SST user ARDS/SDD product model"
+status: "done"
+created_at: "2026-06-03"
+completed_at: "2026-06-04"
+requester: "4uentes"
+
+source_request: "requests/inbox/CR-SST-0026-user-ards-sdd-product-model.yaml"
+planned_request: "requests/planned/CR-SST-0026-user-ards-sdd-product-model.yaml"
+
+implemented_change: >
+  Documented the SST user ARDS/SDD product model in the orchestrator, including
+  user-owned ARDS scope, source records, knowledge entries, evidence references,
+  proposal and approval states, visibility, provenance, idempotency, and the
+  authority boundary between sst-chatbot proposals and backend-validated user
+  ARDS mutations.
+
+affected_repos:
+  - service_id: 4uentes-orchestor
+    local_binding: "current-workspace"
+
+product_scope_services:
+  - sst-fend
+  - sst-bend
+  - sst-chatbot
+  - 4uentes-auth
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "user ARDS/SDD product boundary"
+    - "user data authorization scope"
+    - "agent proposal authority boundary"
+    - "multi-service SST contract"
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The completed phase defines user ARDS/SDD product semantics and authority boundaries across SST services."
+
+subagent_deployment_plan:
+  required: true
+  roles:
+    - architecture-reviewer
+    - security-contract-reviewer
+    - cross-repo-impact-reviewer
+    - validation-reviewer
+  fallback: "Subagent tools require explicit user delegation in this runtime. No explicit delegation was requested, so the main agent performed the review roles sequentially."
+  evidence_ref: "evidence/requests/CR-SST-0026/subagent-deployment-evidence.md"
+
+validation:
+  required_checks:
+    - "npm run check"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0026/user-ards-product-model.md"
+    - "evidence/requests/CR-SST-0026/authority-boundary-summary.md"
+    - "evidence/requests/CR-SST-0026/impacted-services-summary.md"
+    - "evidence/requests/CR-SST-0026/subagent-deployment-evidence.md"
+    - "evidence/requests/CR-SST-0026/implementation-summary.md"
+    - "evidence/requests/CR-SST-0026/changed-files-summary.md"
+    - "evidence/requests/CR-SST-0026/validation-results.md"
+
+decision:
+  status: "approved-done"
+  approver: "4uentes"
+  decided_at: "2026-06-04"
+
+correction:
+  status: "superseded-terminology"
+  superseded_by: "requests/done/CR-SST-0030-sst-user-internal-memory-boundary.yaml"
+  reason: "CR-SST-0030 separates project ARDS/SDD from SST user internal memory. CR-SST-0026 remains closed as historical evidence, but its user ARDS terminology must not drive implementation."
+
+next_sequence:
+  next_request_id: "CR-SST-0027"
+  next_request_ref: "requests/planned/CR-SST-0027-paragraph-sequential-ards-derivation.yaml"
+  note: "Do not start CR-SST-0027 before CR-SST-0026 evidence and validation are accepted."

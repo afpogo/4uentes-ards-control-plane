@@ -1,0 +1,31 @@
+schema_version: "1.0"
+kind: "jira_sync_doctor_run_state"
+request_id: "CR-SST-0039"
+generated_at: "2026-06-07"
+mode: "read-only"
+source_of_truth: "control-plane"
+external_mirror: "jira"
+machine_definition_status: "draft"
+machine_definition_ref: "state/jira-backlog-sync-machine.yaml"
+last_observed_machine_run:
+  evidence_ref: "evidence/requests/CR-SST-0036/jira-sync-machine-read-only.md"
+  request_id: "CR-SST-0036"
+  mode: "read-only"
+  final_state: "ready-for-approval"
+  jira_write: "no"
+doctor_run:
+  state: "doctor-read-only-complete"
+  proposed_description_updates: 8
+  proposed_issue_creates: 1
+  blocked_items: 0
+guards:
+  external_write_allowed: false
+  reason: "Doctor runs do not create, edit, comment, transition, or close Jira issues."
+findings:
+  - "warning:WRITE_COMMANDS_EXPOSED"
+  - "info:MACHINE_NOT_ACTIVE"
+  - "info:REQUEST_EXISTS_IN_INBOX_AND_PLANNED"
+  - "info:REQUEST_EXISTS_IN_INBOX_AND_PLANNED"
+  - "info:REQUEST_EXISTS_IN_INBOX_AND_PLANNED"
+  - "info:REQUEST_EXISTS_IN_INBOX_AND_PLANNED"
+  - "info:REQUEST_EXISTS_IN_INBOX_AND_PLANNED"

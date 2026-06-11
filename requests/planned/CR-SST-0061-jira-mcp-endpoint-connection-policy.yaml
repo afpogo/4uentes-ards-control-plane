@@ -1,0 +1,164 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0061"
+title: "Jira MCP endpoint connection policy"
+status: planned
+source_request: "requests/inbox/CR-SST-0061-jira-mcp-endpoint-connection-policy.yaml"
+created_at: "2026-06-08"
+requester: "4uentes"
+
+initial_scope:
+  solution: "sst"
+  services: []
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: sst-fend
+      via: solution.core
+      service_kind: frontend-spa
+      ards_kind: frontend-web
+      status: active
+    - service_id: sst-bend
+      via: solution.core
+      service_kind: api
+      ards_kind: backend-api
+      status: active
+    - service_id: 4uentes-auth
+      via: solution.shared
+      service_kind: shared-auth-provider
+      ards_kind: shared-auth-provider
+      status: active
+    - service_id: sst-4uentes-infra
+      via: solution.infrastructure
+      service_kind: gitops-infrastructure
+      ards_kind: infra-gitops
+      status: active
+  affected_ards:
+    - frontend-web
+    - backend-api
+    - shared-auth-provider
+    - infra-gitops
+  capabilities: []
+  risks:
+    - id: MULTI_SERVICE_SCOPE
+      severity: high
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: sst-fend
+      severity: medium
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: sst-bend
+      severity: medium
+    - id: SHARED_AUTH_PROVIDER
+      service_id: 4uentes-auth
+      severity: high
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: 4uentes-auth
+      severity: medium
+    - id: INFRA_GITOPS_SCOPE
+      service_id: sst-4uentes-infra
+      severity: high
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: sst-4uentes-infra
+      severity: medium
+    - id: MISSING_CHECK_COMMAND
+      service_id: sst-4uentes-infra
+      severity: high
+
+required_context:
+  - catalog/services/sst-fend.yaml
+  - inventory/evidence/git/sst-fend.md
+  - catalog/services/sst-bend.yaml
+  - inventory/evidence/git/sst-bend.md
+  - catalog/services/4uentes-auth.yaml
+  - inventory/evidence/git/4uentes-auth.md
+  - catalog/services/sst-4uentes-infra.yaml
+  - inventory/evidence/git/sst-4uentes-infra.md
+  - solutions/sst.yaml
+  - inventory/phase-0.md
+  - inventory/phase-0-decision.md
+  - AGENTS.md
+
+required_checks:
+  - service_id: sst-fend
+    command: "npm run check"
+  - service_id: sst-bend
+    command: "npm run check"
+  - service_id: 4uentes-auth
+    command: "npm run check"
+  - service_id: sst-4uentes-infra
+    command: "TODO"
+    fallback: manual-review
+
+risk:
+  level: high
+  score: 12
+  drivers:
+    - id: MULTI_SERVICE_SCOPE
+      severity: high
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: sst-fend
+      severity: medium
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: sst-bend
+      severity: medium
+    - id: SHARED_AUTH_PROVIDER
+      service_id: 4uentes-auth
+      severity: high
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: 4uentes-auth
+      severity: medium
+    - id: INFRA_GITOPS_SCOPE
+      service_id: sst-4uentes-infra
+      severity: high
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: sst-4uentes-infra
+      severity: medium
+    - id: MISSING_CHECK_COMMAND
+      service_id: sst-4uentes-infra
+      severity: high
+
+task_weight:
+  classification: complex-high-risk-task
+  risk_level: high
+  drivers:
+    - MULTI_SERVICE_SCOPE
+    - DIRTY_WORKING_TREE_OBSERVED
+    - SHARED_AUTH_PROVIDER
+    - INFRA_GITOPS_SCOPE
+    - MISSING_CHECK_COMMAND
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "High-risk or security/contract-sensitive task."
+
+subagent_deployment_plan:
+  required: true
+  parallelizable: true
+  roles:
+    - architecture-reviewer
+    - security-contract-reviewer
+    - cross-repo-impact-reviewer
+    - validation-reviewer
+  fallback: "If subagents or exact model aliases are unavailable, record the limitation and run the same review steps sequentially with the highest available reasoning profile."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  allowed_window: manual
+  branch_strategy: one-branch-per-repo
+
+decision:
+  status: approved-for-control-plane-policy
+  approver: "4uentes"
+  approved_at: "2026-06-08"
+  note: "User requested the Jira/Confluence MCP endpoint pattern be promoted to living ARDS/SDD policy."
+
+planner_notes:
+  - "Planner impact analysis expanded to SST solution services because this policy governs Jira/Confluence MCP operations for SST."
+  - "Execution scope is control-plane policy/docs/scripts only."
+  - Functional repositories were not modified.
+  - Functional repository checks were not executed.

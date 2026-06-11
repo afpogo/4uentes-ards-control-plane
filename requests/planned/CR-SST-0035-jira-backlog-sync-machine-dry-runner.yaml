@@ -1,0 +1,123 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0035"
+title: "Implement Jira backlog sync state machine dry-runner"
+status: planned
+source_request: "requests/inbox/CR-SST-0035-jira-backlog-sync-machine-dry-runner.yaml"
+created_at: "2026-06-07"
+requester: "4uentes"
+
+initial_scope:
+  solution: "sst"
+  services: []
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services: []
+  affected_ards: []
+  capabilities:
+    - jira-mcp-ticketing
+    - control-plane-process-lifecycle
+  risks:
+    - id: STATE_MACHINE_DRIFT
+      severity: high
+    - id: EXTERNAL_JIRA_WRITE_BOUNDARY
+      severity: medium
+
+control_plane_scope:
+  repository: "4uentes-orchestor"
+  reason: "The state machine dry-runner is an orchestrator control-plane capability."
+
+required_context:
+  - "requests/planned/CR-SST-0034-control-plane-jira-backlog-sync-state-machine.yaml"
+  - "state/jira-backlog-sync-machine.yaml"
+  - "docs/requests/jira-backlog-sync-state-machine.md"
+  - "docs/requests/jira-feature-ticket-policy.md"
+  - "docs/ai/model-selection-policy.md"
+
+required_checks:
+  - service_id: 4uentes-orchestor
+    command: "npm run check"
+  - service_id: 4uentes-orchestor
+    command: "npm run jira:mcp:sync-machine -- --request-id CR-SST-0035 --output-dir evidence/requests/CR-SST-0035 --mode dry-run"
+
+risk:
+  level: high
+  score: 7
+  drivers:
+    - id: STATE_MACHINE_DRIFT
+      severity: high
+    - id: CONTROL_PLANE_PROCESS_LIFECYCLE
+      severity: high
+    - id: EXTERNAL_JIRA_WRITE_BOUNDARY
+      severity: medium
+
+task_weight:
+  classification: complex-high-risk-task
+  risk_level: high
+  drivers:
+    - STATE_MACHINE_DRIFT
+    - CONTROL_PLANE_PROCESS_LIFECYCLE
+    - ARDS_SDD_CONTRACT_ALIGNMENT
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The task turns a declarative control-plane state machine into an executable dry-run contract while preserving external write boundaries."
+
+subagent_deployment_plan:
+  required: true
+  parallelizable: true
+  roles:
+    - architecture-reviewer
+    - security-contract-reviewer
+    - validation-reviewer
+  fallback: "If subagent tools are unavailable, the main agent must perform architecture, write-boundary, and validation review sequentially."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  allowed_window: manual
+  branch_strategy: control-plane-only
+  write_boundary:
+    allowed:
+      - "read state/jira-backlog-sync-machine.yaml"
+      - "simulate read-only state machine transitions"
+      - "write non-secret evidence"
+    forbidden:
+      - "connect to Jira"
+      - "create Jira issues"
+      - "edit Jira issues"
+      - "comment on Jira issues"
+      - "transition Jira issues"
+      - "modify functional repositories"
+
+implementation_steps:
+  - id: add-sync-machine-dry-runner
+    description: "Add a local runner that reads the declarative machine and simulates the read-only event path from idle to ready-for-approval."
+  - id: add-npm-command
+    description: "Expose the runner as npm run jira:mcp:sync-machine."
+  - id: record-evidence
+    description: "Write event trace evidence under evidence/requests/CR-SST-0035."
+  - id: validate
+    description: "Run node --check, the dry-runner command, and npm run check."
+
+validation:
+  required_checks:
+    - "npm run check"
+    - "npm run jira:mcp:sync-machine -- --request-id CR-SST-0035 --output-dir evidence/requests/CR-SST-0035 --mode dry-run"
+  evidence_required:
+    - "jira_sync_machine_dry_run"
+    - "changed_files_summary"
+    - "validation_results"
+
+decision:
+  status: pending
+  approver: TODO
+
+planner_notes:
+  - "CR-SST-0035 is the next process after CR-SST-0034."
+  - "This request intentionally avoids XState dependency installation."
+  - "XState can be introduced later after the declarative runner proves the event contract."

@@ -1,0 +1,98 @@
+{
+  "requestId": "CR-SST-0058",
+  "issueKey": "SST-8",
+  "approved": true,
+  "action": "transitioned",
+  "before": {
+    "summary": "[SST][feature-state] Formalizar evidencia de SST Document Agent Workflows",
+    "status": "En curso",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "Fuentes Sandferand",
+    "updated": "2026-06-07T19:02:26.564-0300",
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10016\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10016\",\"key\":\"SST-8\",\"fields\":{\"summary\":\"[SST][feature-state] Formalizar evidencia de SST Document Agent Workflows\",\"assignee\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]\",\"accountId\": \"[accountId-redacted]\",\"emailAddress\":\"[email-redacted]\",\"avatarUrls\":{\"48x48\":\"[avatar-url-redacted]\",\"24x24\":\"[avatar-url-redacted]\",\"16x16\":\"[avatar-url-redacted]\",\"32x32\":\"[avatar-url-redacted]\"},\"displayName\":\"Fuentes Sandferand\",\"active\":true,\"timeZone\":\"America/Buenos_Aires\",\"accountType\":\"atlassian\"},\"resolution\":null,\"updated\":\"2026-06-07T19:02:26.564-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10006\",\"description\":\"La persona asignada está trabajando actualmente en esta actividad.\",\"iconUrl\":\"[jira-site-redacted] curso\",\"id\":\"10006\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}}}}"
+  },
+  "after": {
+    "summary": "[SST][feature-state] Formalizar evidencia de SST Document Agent Workflows",
+    "status": "Listo",
+    "statusCategory": "Listo",
+    "resolution": "Listo",
+    "assignee": "Fuentes Sandferand",
+    "updated": "2026-06-07T22:03:41.012-0300",
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10016\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10016\",\"key\":\"SST-8\",\"fields\":{\"summary\":\"[SST][feature-state] Formalizar evidencia de SST Document Agent Workflows\",\"assignee\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]\",\"accountId\": \"[accountId-redacted]\",\"emailAddress\":\"[email-redacted]\",\"avatarUrls\":{\"48x48\":\"[avatar-url-redacted]\",\"24x24\":\"[avatar-url-redacted]\",\"16x16\":\"[avatar-url-redacted]\",\"32x32\":\"[avatar-url-redacted]\"},\"displayName\":\"Fuentes Sandferand\",\"active\":true,\"timeZone\":\"America/Buenos_Aires\",\"accountType\":\"atlassian\"},\"resolution\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/resolution/10000\",\"id\":\"10000\",\"description\":\"Se ha terminado el trabajo relacionado con esta incidencia.\",\"name\":\"Listo\"},\"updated\":\"2026-06-07T22:03:41.012-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10008\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]"
+  },
+  "selectedTransition": {
+    "id": "41",
+    "name": "Listo",
+    "toStatus": "Finalizada",
+    "toStatusCategory": "Listo"
+  },
+  "transitions": [
+    {
+      "id": "11",
+      "name": "Por hacer",
+      "toStatus": "Tareas por hacer",
+      "toStatusCategory": "Por hacer"
+    },
+    {
+      "id": "21",
+      "name": "En curso",
+      "toStatus": "En curso",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "31",
+      "name": "In Review",
+      "toStatus": "En revisión",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "41",
+      "name": "Listo",
+      "toStatus": "Finalizada",
+      "toStatusCategory": "Listo"
+    }
+  ],
+  "transitionResult": {
+    "success": true
+  },
+  "commentResult": {
+    "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10016/comment/10000",
+    "id": "10000",
+    "author": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "body": "CR-SST closure execution: CR-SST-0058\n\nAction: transitioned  \nEvidence: evidence/requests/CR-SST-0058/jira-sst-8-transition-summary.md  \nBefore status: En curso  \nAfter status: Listo  \nTransition: Listo (41)\n\nValidated basis: CR-SST-0008, CR-SST-0052, CR-SST-0053 and CR-SST-0056 evidence in the ARDS/SDD control plane.",
+    "updateAuthor": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "created": "2026-06-07T22:03:43.913-0300",
+    "updated": "2026-06-07T22:03:43.913-0300",
+    "jsdPublic": true
+  },
+  "externalWrite": true
+}

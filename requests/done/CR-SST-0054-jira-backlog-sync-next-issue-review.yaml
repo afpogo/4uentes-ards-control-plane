@@ -1,0 +1,85 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0054"
+title: "Review Jira backlog sync and next issue selection"
+status: "done"
+source_request: "requests/inbox/CR-SST-0054-jira-backlog-sync-next-issue-review.yaml"
+planned_request: "requests/planned/CR-SST-0054-jira-backlog-sync-next-issue-review.yaml"
+created_at: "2026-06-07"
+completed_at: "2026-06-07"
+requester: "4uentes"
+
+summary: >
+  Reviewed the local Jira backlog registry after mirror ticket creation and
+  selected the next recommended issue by policy. All six deferred backlog items
+  have Jira issue keys, no items have assigned_cr_sst, and no registry findings
+  were detected.
+
+scope:
+  solution: "sst"
+  repository: "4uentes-orchestor"
+  functional_repositories_modified: false
+  jira_write_executed: false
+  jira_live_read_executed: false
+  local_state_transitions_executed: false
+
+depends_on:
+  - "requests/done/CR-SST-0050-jira-backlog-create-writer.yaml"
+  - "requests/done/CR-SST-0051-jira-backlog-mirror-ticket-policy.yaml"
+
+task_weight:
+  classification: "long-context-task"
+  risk_level: "medium"
+  drivers:
+    - PRIORITY_SELECTION_DRIFT
+    - PREMATURE_CR_ASSIGNMENT
+    - JIRA_SYNCHRONIZATION_REVIEW
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.4-fast-high"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The request reviewed multiple control-plane artifacts and selected a next operational issue without implementation."
+
+subagent_deployment_plan:
+  required: true
+  roles:
+    - ards-sdd-validator
+    - implementation-planner
+  fallback: "The main agent performed policy and selection review sequentially."
+  evidence_ref: "evidence/requests/CR-SST-0054/subagent-deployment-evidence.md"
+
+results:
+  backlog_items_reviewed: 6
+  jira_linked_items: 6
+  assigned_cr_sst_items: 0
+  findings: 0
+  next_recommended_backlog_id: "SST-BL-JIRA-001"
+  next_recommended_jira_issue: "SST-13"
+  next_recommended_title: "Generic Jira writer not limited to CR-SST-0039"
+  next_recommended_priority: "medium"
+  next_recommended_reason: "Highest priority group, stable backlog order, and foundational writer capability."
+
+evidence:
+  required:
+    - "evidence/requests/CR-SST-0054/backlog-registry-review.md"
+    - "evidence/requests/CR-SST-0054/backlog-registry-review.json"
+    - "evidence/requests/CR-SST-0054/next-issue-recommendation.md"
+    - "evidence/requests/CR-SST-0054/subagent-deployment-evidence.md"
+    - "evidence/requests/CR-SST-0054/changed-files-summary.md"
+    - "evidence/requests/CR-SST-0054/validation-results.md"
+
+validation:
+  required_checks:
+    - "npm.cmd run jira:mcp:backlog-review -- --request-id CR-SST-0054 --output-dir evidence/requests/CR-SST-0054"
+    - "npm.cmd run check"
+  status: "approved-done"
+
+decision:
+  status: "approved-done"
+  approver: "4uentes"
+  note: "Next recommended issue is SST-13 / SST-BL-JIRA-001. Promotion to a real CR-SST remains pending user approval."
+
+next_sequence:
+  next_request_id: "CR-SST-0055"
+  note: "Use for the next real prioritized process if the user approves taking SST-BL-JIRA-001."

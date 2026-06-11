@@ -1,0 +1,102 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0057"
+title: "Start SST-4 work for SST Tags Governance"
+status: "planned"
+source_request: "requests/inbox/CR-SST-0057-sst-4-work-start-transition.yaml"
+created_at: "2026-06-07"
+requester: "4uentes"
+
+initial_scope:
+  solution: "sst"
+  repository: "4uentes-orchestor"
+  feature_state: "sst-tags-governance"
+  jira_issue_key: "SST-4"
+  include_functional_repositories: false
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "sst-bend"
+      via: "state/features/sst-tags-governance.current.yaml"
+    - service_id: "4uentes-auth"
+      via: "state/features/sst-tags-governance.current.yaml"
+    - service_id: "sst-fend"
+      via: "state/features/sst-tags-governance.current.yaml"
+    - service_id: "sst-extension"
+      via: "state/features/sst-tags-governance.current.yaml"
+  affected_ards:
+    - control-plane
+    - backend-api
+    - frontend-web
+    - browser-extension
+    - shared-auth-provider
+  capabilities:
+    - "sst-tags-governance"
+    - "article-tags"
+  risks:
+    - id: HISTORICAL_CR_SCOPE_CONFUSION
+      severity: medium
+    - id: JIRA_TRANSITION_WITHOUT_LOCAL_EVIDENCE
+      severity: medium
+    - id: CONTROLLED_TRANSITION_WRITER_MISSING
+      severity: medium
+
+origin_requests:
+  role: "provenance-only"
+  requests:
+    - request_id: "CR-SST-0010"
+      role: "original SST Tags Governance review"
+    - request_id: "CR-SST-0014"
+      role: "implementation state and course tags analysis"
+    - request_id: "CR-SST-0015"
+      role: "Java/Spring course structure analysis"
+    - request_id: "CR-SST-0016"
+      role: "backend POC and tag prefix engine evidence"
+
+task_weight:
+  classification: "long-context-task"
+  risk_level: "medium"
+  drivers:
+    - HISTORICAL_CR_SCOPE_CONFUSION
+    - JIRA_TRANSITION_WITHOUT_LOCAL_EVIDENCE
+    - CONTROLLED_TRANSITION_WRITER_MISSING
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.4-fast-high"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The task reconciles Jira transition intent with historical request provenance and current feature-state authority."
+
+subagent_deployment_plan:
+  required: true
+  parallelizable: false
+  roles:
+    - ards-sdd-validator
+    - implementation-planner
+  fallback: "The main agent performs transition scope and provenance review sequentially."
+  evidence_required: true
+
+execution_boundaries:
+  allowed:
+    - "record transition intent"
+    - "observe Jira read-only"
+    - "write local control-plane evidence"
+    - "transition Jira only by explicit operator action or approved controlled writer"
+  forbidden:
+    - "mark feature_state done from Jira transition alone"
+    - "reopen historical CR-SST requests"
+    - "modify functional repositories without a follow-up implementation request"
+
+validation:
+  required_checks:
+    - "npm run check"
+  evidence_required:
+    - "transition_scope_review"
+    - "involved_cr_sst_matrix"
+    - "validation_results"
+
+decision:
+  status: "approved-for-transition-intake"
+  approver: "4uentes"
+  note: "CR-SST-0057 governs the current SST-4 transition. Historical CRs remain provenance."

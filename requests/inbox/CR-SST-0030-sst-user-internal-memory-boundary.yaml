@@ -1,0 +1,126 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0030"
+title: "Separate project ARDS/SDD from SST user internal memory"
+status: "inbox"
+created_at: "2026-06-05"
+requester: "4uentes"
+
+business_context: >
+  4uentes projects are governed by ARDS/SDD files that define project memory,
+  lifecycle, evidence, requests, decisions, and agent-collaboration history.
+  SST needs a different product concept: an internal memory per user that
+  records user actions, facts, intentions, events, and chatbot-assisted recall
+  inside the SST platform. These concepts must be separated before implementing
+  runtime features.
+
+requested_change: >
+  Clarify the boundary between project ARDS/SDD and SST user internal memory,
+  correct the terminology used in CR-SST-0026 and CR-SST-0027, define the
+  product-facing user memory concept, and block execution of the pending UI and
+  persistence request until it targets user internal memory instead of a user
+  ARDS/SDD.
+
+expected_outcome: >
+  A control-plane correction that preserves audit history while establishing
+  `sst_user_internal_memory` as the product model to implement next for user
+  events, facts, intentions, chatbot recall, and agent-assisted continuation.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - sst-fend
+    - sst-bend
+    - sst-chatbot
+    - 4uentes-auth
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services: []
+  affected_ards: []
+  capabilities:
+    - user-activity-ards-memory
+    - application-context-connector
+    - prompt-catalog-and-versioning
+  risks:
+    - id: PROJECT_ARDS_USER_MEMORY_CONFUSION
+      severity: high
+    - id: USER_EVENT_MEMORY_SCOPE
+      severity: high
+    - id: CHATBOT_RECALL_AUTHORITY
+      severity: high
+
+required_context:
+  - "requests/done/CR-SST-0026-user-ards-sdd-product-model.yaml"
+  - "requests/done/CR-SST-0027-paragraph-sequential-ards-derivation.yaml"
+  - "requests/planned/CR-SST-0028-user-ards-intelligence-ui-and-persistence.yaml"
+  - "evidence/requests/CR-SST-0026/user-ards-product-model.md"
+  - "evidence/requests/CR-SST-0027/paragraph-derivation-contract.md"
+  - "catalog/services/sst-fend.yaml"
+  - "catalog/services/sst-bend.yaml"
+  - "catalog/services/sst-chatbot.yaml"
+  - "catalog/services/4uentes-auth.yaml"
+  - "docs/ai/model-selection-policy.md"
+
+required_checks:
+  - service_id: 4uentes-orchestor
+    command: "npm run check"
+
+risk:
+  level: "high"
+  score: 8
+  drivers:
+    - PROJECT_ARDS_USER_MEMORY_CONFUSION
+    - USER_EVENT_MEMORY_SCOPE
+    - CHATBOT_RECALL_AUTHORITY
+    - MULTI_SERVICE_CONTRACT_SCOPE
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - PROJECT_ARDS_USER_MEMORY_CONFUSION
+    - USER_EVENT_MEMORY_SCOPE
+    - CHATBOT_RECALL_AUTHORITY
+    - MULTI_SERVICE_CONTRACT_SCOPE
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The request corrects foundational terminology and product memory boundaries across project governance, SST user memory, chatbot recall, and backend authority."
+
+subagent_deployment_plan:
+  required: true
+  roles:
+    - architecture-reviewer
+    - security-contract-reviewer
+    - cross-repo-impact-reviewer
+    - validation-reviewer
+  parallelizable: true
+  fallback: "Subagent tools require explicit user delegation; if not explicitly requested, the main agent must perform architecture, security, cross-repo, and validation reviews sequentially."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "orchestrator-only"
+
+validation:
+  required_checks:
+    - "npm run check"
+  evidence_required:
+    - "concept_boundary"
+    - "user_internal_memory_model"
+    - "correction_impact_summary"
+    - "changed_files_summary"
+    - "validation_results"
+
+decision:
+  status: "pending"
+  approver: "TODO"
+
+planner_notes:
+  - "Do not execute CR-SST-0028 until this terminology correction is accepted."
+  - "This request must preserve prior evidence instead of silently rewriting history."

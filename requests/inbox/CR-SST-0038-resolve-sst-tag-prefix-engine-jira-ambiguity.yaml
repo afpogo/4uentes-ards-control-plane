@@ -1,0 +1,117 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0038"
+title: "Resolve SST Tag Prefix Engine Jira reconciliation ambiguity"
+status: "inbox"
+created_at: "2026-06-07"
+requester: "4uentes"
+
+business_context: >
+  CR-SST-0037 stabilized the Jira sync doctor and produced a correction plan
+  preview with eight description updates and one blocked item. The blocked item
+  is the feature state `sst-tag-prefix-engine`, which only matched Jira issue
+  `SST-4` because that issue mentions the engine as a gap inside
+  `sst-tags-governance`.
+
+requested_change: >
+  Resolve the `sst-tag-prefix-engine` reconciliation ambiguity without writing
+  to Jira. The control-plane should classify whether this state needs an
+  existing issue update, a new issue creation candidate, or a manual block.
+
+expected_outcome: >
+  The doctor correction plan distinguishes missing exact Jira issues from true
+  ambiguous matches. `sst-tag-prefix-engine` is classified as a create candidate
+  when no exact summary match exists.
+
+initial_scope:
+  solution: "sst"
+  services: []
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services: []
+  affected_ards: []
+  capabilities:
+    - jira-mcp-ticketing
+    - jira-backlog-sync-state-machine
+    - sst-tag-prefix-engine
+  risks:
+    - id: DUPLICATE_JIRA_ISSUE
+      severity: high
+    - id: INCORRECT_EXISTING_ISSUE_UPDATE
+      severity: high
+    - id: CONTROL_PLANE_JIRA_DRIFT
+      severity: medium
+
+required_context:
+  - "evidence/requests/CR-SST-0036/jira-reconciliation-results.json"
+  - "evidence/requests/CR-SST-0037/correction-plan-preview.json"
+  - "state/features/sst-tag-prefix-engine.current.yaml"
+  - "scripts/jira-mcp/doctor.js"
+
+required_checks:
+  - service_id: 4uentes-orchestor
+    command: "npm run check"
+  - service_id: 4uentes-orchestor
+    command: "Get-ChildItem scripts\\jira-mcp -Recurse -Filter *.js | ForEach-Object { node --check $_.FullName }"
+  - service_id: 4uentes-orchestor
+    command: "npm run jira:mcp:doctor -- --request-id CR-SST-0038 --output-dir evidence/requests/CR-SST-0038 --mode read-only"
+
+risk:
+  level: "high"
+  score: 7
+  drivers:
+    - DUPLICATE_JIRA_ISSUE
+    - INCORRECT_EXISTING_ISSUE_UPDATE
+    - CONTROL_PLANE_JIRA_DRIFT
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - DUPLICATE_JIRA_ISSUE
+    - EXTERNAL_MCP_CONNECTIVITY
+    - CONTROL_PLANE_PROCESS_LIFECYCLE
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The task decides whether a Jira feature-state match is a true duplicate or a missing issue requiring a future create action."
+
+subagent_deployment_plan:
+  required: true
+  parallelizable: true
+  roles:
+    - architecture-reviewer
+    - security-contract-reviewer
+    - validation-reviewer
+  fallback: "If subagent tools are unavailable or not explicitly requested, the main agent must perform architecture, write-boundary, and validation review sequentially."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "control-plane-only"
+
+validation:
+  required_checks:
+    - "npm run check"
+    - "Get-ChildItem scripts\\jira-mcp -Recurse -Filter *.js | ForEach-Object { node --check $_.FullName }"
+    - "npm run jira:mcp:doctor -- --request-id CR-SST-0038 --output-dir evidence/requests/CR-SST-0038 --mode read-only"
+  evidence_required:
+    - "ambiguity_resolution"
+    - "doctor_summary"
+    - "correction_plan_preview"
+    - "changed_files_summary"
+    - "validation_results"
+
+decision:
+  status: "pending"
+  approver: "TODO"
+
+planner_notes:
+  - "No Jira writes are allowed in this request."
+  - "No functional repositories are modified."
+  - "The expected result is a classification decision, not ticket creation."

@@ -1,0 +1,60 @@
+{
+  "requestId": "CR-SST-0039",
+  "dryRun": true,
+  "results": [
+    {
+      "stateId": "sst-tags-governance",
+      "action": "would-update-description",
+      "issueKey": "SST-4",
+      "status": "DRY-RUN"
+    },
+    {
+      "stateId": "robots",
+      "action": "would-update-description",
+      "issueKey": "SST-5",
+      "status": "DRY-RUN"
+    },
+    {
+      "stateId": "learning-content-tags",
+      "action": "would-update-description",
+      "issueKey": "SST-6",
+      "status": "DRY-RUN"
+    },
+    {
+      "stateId": "sst-tag-prefix-engine",
+      "action": "would-create",
+      "issueKey": null,
+      "status": "DRY-RUN"
+    },
+    {
+      "stateId": "sst-chatbot",
+      "action": "would-update-description",
+      "issueKey": "SST-7",
+      "status": "DRY-RUN"
+    },
+    {
+      "stateId": "document-agent",
+      "action": "would-update-description",
+      "issueKey": "SST-8",
+      "status": "DRY-RUN"
+    },
+    {
+      "stateId": "ards-sdd-policy-unification",
+      "action": "would-update-description",
+      "issueKey": "SST-9",
+      "status": "DRY-RUN"
+    },
+    {
+      "stateId": "dictionary-tags",
+      "action": "would-update-description",
+      "issueKey": "SST-10",
+      "status": "DRY-RUN"
+    },
+    {
+      "stateId": "cluster-publication-ngrok-domain",
+      "action": "would-update-description",
+      "issueKey": "SST-11",
+      "status": "DRY-RUN"
+    }
+  ]
+}

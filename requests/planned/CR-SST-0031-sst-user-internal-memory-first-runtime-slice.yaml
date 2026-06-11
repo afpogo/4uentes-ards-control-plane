@@ -1,0 +1,150 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0031"
+title: "Define first SST user internal memory runtime slice"
+status: planned
+source_request: "requests/inbox/CR-SST-0031-sst-user-internal-memory-first-runtime-slice.yaml"
+created_at: "2026-06-05"
+requester: "4uentes"
+
+initial_scope:
+  solution: "sst"
+  services:
+    - sst-bend
+    - sst-chatbot
+    - 4uentes-auth
+    - sst-fend
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: sst-bend
+      via: initial_scope.services
+      service_kind: api
+      ards_kind: backend-api
+      status: active
+    - service_id: sst-chatbot
+      via: initial_scope.services
+      service_kind: agent-runtime
+      ards_kind: backend-api
+      status: active
+    - service_id: 4uentes-auth
+      via: initial_scope.services
+      service_kind: shared-auth-provider
+      ards_kind: shared-auth-provider
+      status: active
+    - service_id: sst-fend
+      via: initial_scope.services
+      service_kind: frontend-spa
+      ards_kind: frontend-web
+      status: active
+  affected_ards:
+    - backend-api
+    - shared-auth-provider
+    - frontend-web
+  capabilities: []
+  risks:
+    - id: MULTI_SERVICE_SCOPE
+      severity: high
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: sst-bend
+      severity: medium
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: sst-chatbot
+      severity: medium
+    - id: SHARED_AUTH_PROVIDER
+      service_id: 4uentes-auth
+      severity: high
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: 4uentes-auth
+      severity: medium
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: sst-fend
+      severity: medium
+
+required_context:
+  - catalog/services/sst-bend.yaml
+  - inventory/evidence/git/sst-bend.md
+  - catalog/services/sst-chatbot.yaml
+  - inventory/evidence/git/sst-chatbot.md
+  - catalog/services/4uentes-auth.yaml
+  - inventory/evidence/git/4uentes-auth.md
+  - catalog/services/sst-fend.yaml
+  - inventory/evidence/git/sst-fend.md
+  - solutions/sst.yaml
+  - inventory/phase-0.md
+  - inventory/phase-0-decision.md
+  - AGENTS.md
+
+required_checks:
+  - service_id: sst-bend
+    command: "npm run check"
+  - service_id: sst-chatbot
+    command: ".\\.venv\\Scripts\\python.exe scripts\\check.py"
+  - service_id: 4uentes-auth
+    command: "npm run check"
+  - service_id: sst-fend
+    command: "npm run check"
+
+risk:
+  level: high
+  score: 8
+  drivers:
+    - id: MULTI_SERVICE_SCOPE
+      severity: high
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: sst-bend
+      severity: medium
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: sst-chatbot
+      severity: medium
+    - id: SHARED_AUTH_PROVIDER
+      service_id: 4uentes-auth
+      severity: high
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: 4uentes-auth
+      severity: medium
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: sst-fend
+      severity: medium
+
+task_weight:
+  classification: complex-high-risk-task
+  risk_level: high
+  drivers:
+    - MULTI_SERVICE_SCOPE
+    - DIRTY_WORKING_TREE_OBSERVED
+    - SHARED_AUTH_PROVIDER
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "High-risk or security/contract-sensitive task."
+
+subagent_deployment_plan:
+  required: true
+  parallelizable: true
+  roles:
+    - architecture-reviewer
+    - security-contract-reviewer
+    - cross-repo-impact-reviewer
+    - validation-reviewer
+  fallback: "If subagents or exact model aliases are unavailable, record the limitation and run the same review steps sequentially with the highest available reasoning profile."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  allowed_window: manual
+  branch_strategy: orchestrator-only
+
+decision:
+  status: approved-for-orchestrator-design
+  approver: "4uentes"
+
+planner_notes:
+  - Functional repositories were not modified.
+  - Functional repository checks were not executed.
+  - This request follows CR-SST-0030 and keeps the terminology as SST user internal memory.
+  - User approval to continue from CR-SST-0030 was given on 2026-06-05.

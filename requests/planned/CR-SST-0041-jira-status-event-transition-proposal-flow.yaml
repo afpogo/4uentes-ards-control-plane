@@ -1,0 +1,133 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0041"
+title: "Define Jira status event and control-plane transition proposal flow"
+status: planned
+source_request: "requests/inbox/CR-SST-0041-jira-status-event-transition-proposal-flow.yaml"
+created_at: "2026-06-07"
+requester: "4uentes"
+
+initial_scope:
+  solution: "sst"
+  services: []
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services: []
+  affected_ards:
+    - "feature_state"
+    - "request_lifecycle"
+    - "jira_backlog_sync_state_machine"
+  capabilities:
+    - jira-backlog-sync-state-machine
+    - jira-mcp-ticketing
+    - control-plane-process-lifecycle
+  risks:
+    - id: JIRA_CONTROL_PLANE_AUTHORITY_DRIFT
+      severity: high
+    - id: EVIDENCELESS_LOCAL_TRANSITION
+      severity: high
+    - id: EVENT_REPLAY_OR_DUPLICATE_SIGNAL
+      severity: medium
+    - id: JIRA_STATUS_NAME_DRIFT
+      severity: medium
+
+control_plane_scope:
+  repository: "4uentes-orchestor"
+  reason: "This request defines a local event/proposal contract and does not write Jira or functional repositories."
+
+required_context:
+  - "requests/done/CR-SST-0040-jira-control-plane-status-sync-policy.yaml"
+  - "docs/requests/jira-feature-ticket-policy.md"
+  - "docs/requests/jira-write-connection-contract.md"
+  - "state/jira-backlog-sync-machine.yaml"
+  - "scripts/jira-mcp/observe-status.js"
+
+required_checks:
+  - service_id: 4uentes-orchestor
+    command: "npm run check"
+
+risk:
+  level: high
+  score: 8
+  drivers:
+    - id: JIRA_CONTROL_PLANE_AUTHORITY_DRIFT
+      severity: high
+    - id: EVIDENCELESS_LOCAL_TRANSITION
+      severity: high
+    - id: EVENT_REPLAY_OR_DUPLICATE_SIGNAL
+      severity: medium
+    - id: JIRA_STATUS_NAME_DRIFT
+      severity: medium
+
+task_weight:
+  classification: complex-high-risk-task
+  risk_level: high
+  drivers:
+    - JIRA_CONTROL_PLANE_AUTHORITY_DRIFT
+    - CONTROL_PLANE_PROCESS_LIFECYCLE
+    - EVENT_TO_STATE_TRANSITION_CONTRACT
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The task defines event and transition authority before any automated state mutation is allowed."
+
+subagent_deployment_plan:
+  required: true
+  parallelizable: true
+  roles:
+    - architecture-reviewer
+    - security-contract-reviewer
+    - validation-reviewer
+  fallback: "If subagent tools are unavailable, the main agent must perform architecture, write-boundary, and validation review sequentially."
+  evidence_required: true
+
+execution:
+  requires_human_approval: false
+  allowed_window: local
+  branch_strategy: control-plane-only
+  read_only_boundary:
+    allowed:
+      - "inspect local control-plane state and evidence"
+      - "define Jira status event contract"
+      - "define transition proposal lifecycle"
+      - "write non-secret documentation and evidence"
+    forbidden:
+      - "write Jira issue status"
+      - "modify feature_state status"
+      - "transition functional repositories"
+      - "store tokens, cookies, private URLs, cloudId, or OAuth material in Git"
+
+implementation_steps:
+  - id: define-event-intake-contract
+    description: "Define how jira-status-observation-results.json becomes local event input."
+  - id: define-transition-proposal-contract
+    description: "Define the proposal structure before any feature_state or request lifecycle transition."
+  - id: define-guards
+    description: "Define guards for duplicate signals, Jira status drift, and missing local evidence."
+  - id: define-future-runner-boundary
+    description: "Define what a future runner may evaluate and what it must not mutate."
+  - id: validate
+    description: "Run npm run check and record evidence."
+
+validation:
+  required_checks:
+    - "npm run check"
+  evidence_required:
+    - "transition_proposal_flow_analysis"
+    - "subagent_deployment_evidence"
+    - "changed_files_summary"
+    - "validation_results"
+
+decision:
+  status: pending
+  approver: TODO
+
+planner_notes:
+  - "CR-SST-0041 does not implement automatic transitions."
+  - "The first executable future step should be a dry-run proposal generator."
+  - "Jira status observations are operational signals, not canonical state."
+

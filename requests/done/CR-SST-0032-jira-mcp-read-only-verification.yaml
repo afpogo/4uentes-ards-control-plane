@@ -1,0 +1,79 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0032"
+title: "Implement Jira MCP read-only project verification"
+status: "done"
+created_at: "2026-06-05"
+completed_at: "2026-06-05"
+requester: "4uentes"
+
+source_request: "requests/inbox/CR-SST-0032-jira-mcp-read-only-verification.yaml"
+planned_request: "requests/planned/CR-SST-0032-jira-mcp-read-only-verification.yaml"
+depends_on:
+  - "requests/planned/CR-SST-0029-jira-mcp-ticketing-integration.yaml"
+
+implemented_change: >
+  Implemented read-only Jira MCP verification in 4uentes-orchestor. The
+  orchestrator can run a safe local preflight and a read-only Atlassian MCP
+  connection that discovers Jira/Confluence tools and verifies Jira project key
+  SST visibility without writing to Jira.
+
+affected_repos:
+  - service_id: 4uentes-orchestor
+    local_binding: "current-workspace"
+
+external_systems:
+  - id: "atlassian-mcp"
+    mode: "read-only"
+    result: "PARTIAL_PASS"
+    notes:
+      - "Jira project key SST is visible."
+      - "Confluence tools are available."
+      - "Confluence space key SST is not visible or does not exist for the authenticated user."
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "external MCP connectivity"
+    - "OAuth and permission boundary"
+    - "control-plane external connector"
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The completed phase introduced external MCP connectivity and permission verification."
+
+subagent_deployment_plan:
+  required: true
+  roles:
+    - security-contract-reviewer
+    - implementation-planner
+    - validation-reviewer
+  fallback: "Subagent tools require explicit user delegation in this runtime. No explicit delegation was requested, so the main agent performed the review roles sequentially."
+  evidence_ref: "evidence/requests/CR-SST-0032/implementation-summary.md"
+
+validation:
+  required_checks:
+    - "npm run check"
+    - "npm run jira:mcp:dry-run"
+    - "npm run jira:mcp:verify"
+    - "npm run jira:mcp:verify -- --connect"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0032/implementation-plan.md"
+    - "evidence/requests/CR-SST-0032/jira-mcp-preflight.md"
+    - "evidence/requests/CR-SST-0032/jira-mcp-project-verification.md"
+    - "evidence/requests/CR-SST-0032/implementation-summary.md"
+    - "evidence/requests/CR-SST-0032/changed-files-summary.md"
+    - "evidence/requests/CR-SST-0032/validation-results.md"
+
+decision:
+  status: "approved-done"
+  approver: "4uentes"
+  decided_at: "2026-06-05"
+
+next_sequence:
+  next_request_id: "CR-SST-0033"
+  next_request_ref: "requests/planned/CR-SST-0033-jira-create-feature-state-issues.yaml"
+  note: "CR-SST-0033 creates Jira issues for the nine non-done feature states after metadata and duplicate checks."

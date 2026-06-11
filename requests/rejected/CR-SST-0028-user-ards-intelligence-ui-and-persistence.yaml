@@ -1,0 +1,49 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0028"
+title: "Reject obsolete user ARDS intelligence UI and persistence workflow"
+status: "rejected"
+created_at: "2026-06-03"
+rejected_at: "2026-06-05"
+requester: "4uentes"
+
+source_request: "requests/inbox/CR-SST-0028-user-ards-intelligence-ui-and-persistence.yaml"
+planned_request: "requests/planned/CR-SST-0028-user-ards-intelligence-ui-and-persistence.yaml"
+superseded_by: "requests/done/CR-SST-0030-sst-user-internal-memory-boundary.yaml"
+
+rejection_reason: >
+  CR-SST-0028 targeted a user ARDS intelligence UI and persistence workflow.
+  CR-SST-0030 corrected the product concept: SST should implement internal user
+  memory, not a per-user project ARDS/SDD. Executing CR-SST-0028 as written
+  would preserve the wrong terminology and implementation target.
+
+affected_repos:
+  - service_id: 4uentes-orchestor
+    local_binding: "current-workspace"
+
+product_scope_services:
+  - sst-fend
+  - sst-bend
+  - sst-chatbot
+  - 4uentes-auth
+
+replacement_direction:
+  recommended_next_request: "TODO"
+  summary: >
+    Open a new request for the first SST user internal memory runtime slice:
+    capture user events, derive facts and intentions through chatbot proposals,
+    validate through backend authority, persist durable memory, and support
+    basic chatbot recall.
+
+validation:
+  required_checks:
+    - "npm run check"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0028/rejection-summary.md"
+    - "evidence/requests/CR-SST-0028/changed-files-summary.md"
+    - "evidence/requests/CR-SST-0028/validation-results.md"
+
+decision:
+  status: "rejected-obsolete"
+  approver: "4uentes"
+  decided_at: "2026-06-05"

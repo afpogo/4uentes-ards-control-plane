@@ -1,0 +1,113 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0050"
+title: "Create Jira tickets for deferred backlog items"
+status: "done"
+source_request: "requests/inbox/CR-SST-0050-jira-backlog-create-writer.yaml"
+planned_request: "requests/planned/CR-SST-0050-jira-backlog-create-writer.yaml"
+created_at: "2026-06-07"
+completed_at: "2026-06-07"
+requester: "4uentes"
+
+summary: >
+  Implemented a controlled Jira MCP writer for deferred backlog items. The
+  command consumes request-local dry-run payloads, requires --connect and
+  --approved, skips registry items that already have jira_issue_key, and records
+  detected issue keys after creation. No Jira write was executed during local
+  validation.
+
+scope:
+  solution: "sst"
+  repository: "4uentes-orchestor"
+  functional_repositories_modified: false
+  jira_write_executed_during_validation: false
+  jira_write_executed_by_operator_after_validation: true
+  local_state_transitions_executed: false
+
+depends_on:
+  - "requests/done/CR-SST-0047-jira-backlog-registry-and-cr-allocation-policy.yaml"
+  - "requests/done/CR-SST-0049-jira-backlog-ticket-format-dry-run.yaml"
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - EXTERNAL_JIRA_WRITE
+    - CONTROL_PLANE_REGISTRY_UPDATE
+    - BACKLOG_ID_CR_SST_SEPARATION
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The completed change implements an external write path guarded by explicit operator approval."
+
+subagent_deployment_plan:
+  required: true
+  roles:
+    - architecture-reviewer
+    - security-contract-reviewer
+    - validation-reviewer
+  fallback: "The main agent performed architecture, write-boundary, and validation review sequentially."
+  evidence_ref: "evidence/requests/CR-SST-0050/subagent-deployment-evidence.md"
+
+results:
+  command_added: "npm run jira:mcp:backlog-create"
+  command_file: "scripts/jira-mcp/backlog-create.js"
+  dry_run_command: "npm run jira:mcp:backlog-dry-run -- --request-id CR-SST-0050 --output-dir evidence/requests/CR-SST-0050"
+  write_command: "npm run jira:mcp:backlog-create -- --connect --approved --request-id CR-SST-0050 --output-dir evidence/requests/CR-SST-0050"
+  dry_run_payloads_generated: 6
+  jira_writes_executed_during_validation: 0
+  registry_ref: "state/jira-backlog-registry.yaml"
+  assigned_cr_sst_changed: false
+
+evidence:
+  required:
+    - "evidence/requests/CR-SST-0050/backlog-ticket-payload-dry-run.md"
+    - "evidence/requests/CR-SST-0050/backlog-ticket-payload-dry-run.json"
+    - "evidence/requests/CR-SST-0050/implementation-summary.md"
+    - "evidence/requests/CR-SST-0050/write-command-contract.md"
+    - "evidence/requests/CR-SST-0050/external-write-attempt-review.md"
+    - "evidence/requests/CR-SST-0050/operator-publication-summary.md"
+    - "evidence/requests/CR-SST-0050/subagent-deployment-evidence.md"
+    - "evidence/requests/CR-SST-0050/changed-files-summary.md"
+    - "evidence/requests/CR-SST-0050/validation-results.md"
+
+validation:
+  required_checks:
+    - "node --check scripts/jira-mcp/backlog-create.js"
+    - "npm.cmd run jira:mcp:backlog-dry-run -- --request-id CR-SST-0050 --output-dir evidence/requests/CR-SST-0050"
+    - "npm.cmd run check"
+  status: "approved-done"
+
+decision:
+  status: "approved-done"
+  approver: "4uentes"
+  note: "Writer implementation completed. Real Jira publication remains an explicit operator command."
+
+external_write_attempt:
+  attempted_at: "2026-06-07"
+  command: "npm.cmd run jira:mcp:backlog-create -- --connect --approved --request-id CR-SST-0050 --output-dir evidence/requests/CR-SST-0050"
+  result: "blocked-by-runtime-policy"
+  jira_tickets_created_by_agent: 0
+  registry_updates_by_agent: 0
+  evidence_ref: "evidence/requests/CR-SST-0050/external-write-attempt-review.md"
+
+operator_publication:
+  executed_at: "2026-06-07"
+  result: "success"
+  jira_tickets_created: 6
+  issue_keys:
+    - "SST-13"
+    - "SST-14"
+    - "SST-15"
+    - "SST-16"
+    - "SST-17"
+    - "SST-18"
+  registry_updated: true
+  assigned_cr_sst_changed: false
+  evidence_ref: "evidence/requests/CR-SST-0050/operator-publication-summary.md"
+
+next_sequence:
+  next_request_id: "CR-SST-0051"
+  note: "Use only for the next real prioritized process."

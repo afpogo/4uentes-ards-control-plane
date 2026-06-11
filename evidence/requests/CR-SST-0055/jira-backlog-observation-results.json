@@ -1,0 +1,88 @@
+{
+  "observations": [
+    {
+      "backlogId": "SST-BL-JIRA-001",
+      "issueKey": "SST-13",
+      "title": "Generic Jira writer not limited to CR-SST-0039",
+      "priority": "medium",
+      "backlogStatus": "deferred",
+      "assignedCrSst": null,
+      "jiraStatus": "Tareas por hacer",
+      "statusCategory": "Por hacer",
+      "assignee": "no-asignado",
+      "updated": "2026-06-07T19:39:12.719-0300",
+      "proposedEvent": "JIRA_WORK_PENDING",
+      "localTransitionAutomatic": false
+    },
+    {
+      "backlogId": "SST-BL-JIRA-002",
+      "issueKey": "SST-14",
+      "title": "Jira issue properties for structured control-plane metadata",
+      "priority": "low-medium",
+      "backlogStatus": "deferred",
+      "assignedCrSst": null,
+      "jiraStatus": "Tareas por hacer",
+      "statusCategory": "Por hacer",
+      "assignee": "no-asignado",
+      "updated": "2026-06-07T19:39:14.122-0300",
+      "proposedEvent": "JIRA_WORK_PENDING",
+      "localTransitionAutomatic": false
+    },
+    {
+      "backlogId": "SST-BL-JIRA-003",
+      "issueKey": "SST-15",
+      "title": "Controlled Jira workflow transitions",
+      "priority": "low-medium",
+      "backlogStatus": "deferred",
+      "assignedCrSst": null,
+      "jiraStatus": "Tareas por hacer",
+      "statusCategory": "Por hacer",
+      "assignee": "no-asignado",
+      "updated": "2026-06-07T19:39:15.921-0300",
+      "proposedEvent": "JIRA_WORK_PENDING",
+      "localTransitionAutomatic": false
+    },
+    {
+      "backlogId": "SST-BL-JIRA-004",
+      "issueKey": "SST-16",
+      "title": "Jira webhook/gateway intake",
+      "priority": "low",
+      "backlogStatus": "deferred",
+      "assignedCrSst": null,
+      "jiraStatus": "Tareas por hacer",
+      "statusCategory": "Por hacer",
+      "assignee": "no-asignado",
+      "updated": "2026-06-07T19:39:17.749-0300",
+      "proposedEvent": "JIRA_WORK_PENDING",
+      "localTransitionAutomatic": false
+    },
+    {
+      "backlogId": "SST-BL-JIRA-005",
+      "issueKey": "SST-17",
+      "title": "Operational Jira/MCP/API/SST E2E runbook",
+      "priority": "medium",
+      "backlogStatus": "deferred",
+      "assignedCrSst": null,
+      "jiraStatus": "Tareas por hacer",
+      "statusCategory": "Por hacer",
+      "assignee": "no-asignado",
+      "updated": "2026-06-07T19:39:19.656-0300",
+      "proposedEvent": "JIRA_WORK_PENDING",
+      "localTransitionAutomatic": false
+    },
+    {
+      "backlogId": "SST-BL-JIRA-006",
+      "issueKey": "SST-18",
+      "title": "Synchronize deferred backlog to Jira when prioritized",
+      "priority": "low",
+      "backlogStatus": "deferred",
+      "assignedCrSst": null,
+      "jiraStatus": "Tareas por hacer",
+      "statusCategory": "Por hacer",
+      "assignee": "no-asignado",
+      "updated": "2026-06-07T19:39:21.162-0300",
+      "proposedEvent": "JIRA_WORK_PENDING",
+      "localTransitionAutomatic": false
+    }
+  ]
+}

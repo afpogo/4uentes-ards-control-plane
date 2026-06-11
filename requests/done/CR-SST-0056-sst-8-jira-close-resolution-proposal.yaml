@@ -1,0 +1,70 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0056"
+title: "Propose Jira closure for SST-8 after Document Agent validated-live"
+status: "done"
+source_request: "requests/inbox/CR-SST-0056-sst-8-jira-close-resolution-proposal.yaml"
+planned_request: "requests/planned/CR-SST-0056-sst-8-jira-close-resolution-proposal.yaml"
+created_at: "2026-06-07"
+completed_at: "2026-06-07"
+requester: "4uentes"
+
+summary: >
+  Generated a read-only Jira close/resolution proposal for SST-8 based on the
+  Document Agent feature state reaching validated-live after CR-SST-0053.
+
+scope:
+  solution: "sst"
+  services:
+    - sst-fend
+    - 4uentes-auth
+    - sst-bend
+  repository: "4uentes-orchestor"
+  jira_write_executed: false
+  jira_transition_executed: false
+  local_state_transitions_executed: false
+
+task_weight:
+  classification: "short-defined-task"
+  risk_level: "high"
+  drivers:
+    - JIRA_STATUS_TRANSITION_PROPOSAL
+    - CONTROL_PLANE_EVIDENCE_REVIEW
+    - MULTI_SERVICE_SCOPE
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "Bounded evidence-backed Jira transition proposal with no external write."
+
+results:
+  jira_issue_key: "SST-8"
+  state_id: "document-agent"
+  feature_status: "validated-live"
+  open_gaps: 0
+  proposed_jira_action: "close-or-resolve"
+  preferred_terminal_status_order:
+    - "Done"
+    - "Resuelto"
+    - "Cerrado"
+  jira_writes: 0
+  automatic_local_transitions: 0
+
+evidence:
+  required:
+    - "evidence/requests/CR-SST-0056/sst-8-close-resolution-proposal.md"
+    - "evidence/requests/CR-SST-0056/sst-8-close-resolution-proposal.json"
+
+validation:
+  required_checks:
+    - "control-plane: npm.cmd run check"
+  status: "approved-pass"
+
+decision:
+  status: "approved-read-only-proposal"
+  approver: "4uentes"
+  note: "Proposal only. A separate explicit Jira write/transition action is required to close SST-8."
+
+remaining_gaps:
+  - "Execute Jira transition only after explicit approval and available-transition confirmation."

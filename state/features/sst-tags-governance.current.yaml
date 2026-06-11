@@ -3,7 +3,7 @@ kind: "feature_state"
 id: "sst-tags-governance"
 title: "SST Tags Governance"
 status: "runtime-partial"
-updated_at: "2026-05-26"
+updated_at: "2026-06-08"
 solution_id: "sst"
 affected_services:
   - sst-bend
@@ -15,6 +15,8 @@ request_ids:
   - CR-SST-0014
   - CR-SST-0015
   - CR-SST-0016
+  - CR-SST-0057
+  - CR-SST-0060
 capability_refs:
   - "sst-tags-governance"
   - "article-tags"
@@ -28,6 +30,9 @@ evidence_refs:
   - "evidence/requests/CR-SST-0014/next-request-boundary.md"
   - "evidence/requests/CR-SST-0015/java-spring-course-structure-analysis.md"
   - "evidence/requests/CR-SST-0016/backend-poc-summary.md"
+  - "evidence/requests/CR-SST-0057/jira-status-observation-summary.md"
+  - "evidence/requests/CR-SST-0060/sst-tags-governance-gap-review.md"
+  - "evidence/requests/CR-SST-0060/implementation-plan.md"
 open_gaps:
   - "Promote article-tags from draft to an active governed SST capability."
   - "Adopt structured article tags in BFF and frontend create/update flows."

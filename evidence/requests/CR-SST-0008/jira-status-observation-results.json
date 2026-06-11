@@ -1,0 +1,103 @@
+{
+  "observations": [
+    {
+      "stateId": "sst-tags-governance",
+      "issueKey": "SST-4",
+      "expectedSummary": "[SST][feature-state] Cerrar gaps runtime-partial de SST Tags Governance",
+      "jiraStatus": "Tareas por hacer",
+      "statusCategory": "Por hacer",
+      "assignee": "no-asignado",
+      "updated": "2026-06-07T01:44:58.245-0300",
+      "proposedEvent": "JIRA_WORK_PENDING",
+      "localTransitionAutomatic": false
+    },
+    {
+      "stateId": "robots",
+      "issueKey": "SST-5",
+      "expectedSummary": "[SST][feature-state] Formalizar ownership runtime-partial de SST Robots",
+      "jiraStatus": "Tareas por hacer",
+      "statusCategory": "Por hacer",
+      "assignee": "no-asignado",
+      "updated": "2026-06-07T01:45:00.645-0300",
+      "proposedEvent": "JIRA_WORK_PENDING",
+      "localTransitionAutomatic": false
+    },
+    {
+      "stateId": "learning-content-tags",
+      "issueKey": "SST-6",
+      "expectedSummary": "[SST][feature-state] Completar ruta runtime de SST Learning Content Tags",
+      "jiraStatus": "Tareas por hacer",
+      "statusCategory": "Por hacer",
+      "assignee": "no-asignado",
+      "updated": "2026-06-07T01:45:02.618-0300",
+      "proposedEvent": "JIRA_WORK_PENDING",
+      "localTransitionAutomatic": false
+    },
+    {
+      "stateId": "sst-tag-prefix-engine",
+      "issueKey": "SST-12",
+      "expectedSummary": "[SST][feature-state] Promover SST Tag Prefix Engine de POC a boundary runtime",
+      "jiraStatus": "Tareas por hacer",
+      "statusCategory": "Por hacer",
+      "assignee": "no-asignado",
+      "updated": "2026-06-07T02:05:13.666-0300",
+      "proposedEvent": "JIRA_WORK_PENDING",
+      "localTransitionAutomatic": false
+    },
+    {
+      "stateId": "sst-chatbot",
+      "issueKey": "SST-7",
+      "expectedSummary": "[SST][feature-state] Seleccionar transporte runtime para handoff SST Chatbot",
+      "jiraStatus": "Tareas por hacer",
+      "statusCategory": "Por hacer",
+      "assignee": "no-asignado",
+      "updated": "2026-06-07T01:45:04.349-0300",
+      "proposedEvent": "JIRA_WORK_PENDING",
+      "localTransitionAutomatic": false
+    },
+    {
+      "stateId": "document-agent",
+      "issueKey": "SST-8",
+      "expectedSummary": "[SST][feature-state] Formalizar evidencia de SST Document Agent Workflows",
+      "jiraStatus": "En curso",
+      "statusCategory": "En curso",
+      "assignee": "Fuentes Sandferand",
+      "updated": "2026-06-07T19:02:26.564-0300",
+      "proposedEvent": "JIRA_WORK_STARTED",
+      "localTransitionAutomatic": false
+    },
+    {
+      "stateId": "ards-sdd-policy-unification",
+      "issueKey": "SST-9",
+      "expectedSummary": "[SST][feature-state] Completar handoff y adopcion de ARDS/SDD Policy Unification",
+      "jiraStatus": "Tareas por hacer",
+      "statusCategory": "Por hacer",
+      "assignee": "no-asignado",
+      "updated": "2026-06-07T01:45:07.976-0300",
+      "proposedEvent": "JIRA_WORK_PENDING",
+      "localTransitionAutomatic": false
+    },
+    {
+      "stateId": "dictionary-tags",
+      "issueKey": "SST-10",
+      "expectedSummary": "[SST][feature-state] Completar validacion live y cierre de gobernanza de SST Dictionary Tags",
+      "jiraStatus": "Tareas por hacer",
+      "statusCategory": "Por hacer",
+      "assignee": "no-asignado",
+      "updated": "2026-06-07T01:45:09.769-0300",
+      "proposedEvent": "JIRA_WORK_PENDING",
+      "localTransitionAutomatic": false
+    },
+    {
+      "stateId": "cluster-publication-ngrok-domain",
+      "issueKey": "SST-11",
+      "expectedSummary": "[SST][feature-state] Cerrar gaps release-readiness de Cluster publication",
+      "jiraStatus": "Tareas por hacer",
+      "statusCategory": "Por hacer",
+      "assignee": "Fuentes Sandferand",
+      "updated": "2026-06-07T01:45:11.585-0300",
+      "proposedEvent": "JIRA_WORK_PENDING",
+      "localTransitionAutomatic": false
+    }
+  ]
+}

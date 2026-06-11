@@ -1,0 +1,119 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0027"
+title: "Define paragraph-sequential ARDS derivation workflow"
+status: "inbox"
+created_at: "2026-06-03"
+requester: "4uentes"
+
+business_context: >
+  SST needs an agentic derivation workflow that converts long source content
+  into structured ARDS/SDD proposals for the user. The key behavior is
+  sequential paragraph processing where each paragraph analysis receives the
+  accumulated context from previous paragraphs.
+
+requested_change: >
+  Define the paragraph-sequential derivation contract for sst-chatbot and
+  sst-bend, including paragraph/chunk boundaries, accumulated context,
+  paragraph-level knowledge derivations, final summaries, prompt versioning,
+  provenance, idempotency, and validation before proposals can enter the user
+  ARDS/SDD.
+
+expected_outcome: >
+  A control-plane request plan for an agent workflow that emits
+  proposed_ards_entries and final summaries without granting the agent direct
+  authority over the user's ARDS/SDD.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - sst-chatbot
+    - sst-bend
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services: []
+  affected_ards: []
+  capabilities:
+    - user-activity-ards-memory
+    - prompt-catalog-and-versioning
+    - retrieval-augmented-generation
+    - agent-lifecycle-and-orchestrator-boundary
+  risks:
+    - id: AGENT_SEQUENTIAL_CONTEXT_CONTRACT
+      severity: high
+    - id: USER_ARDS_PROPOSAL_AUTHORITY
+      severity: high
+    - id: PROMPT_VERSIONING_AND_PROVENANCE
+      severity: medium
+
+required_context:
+  - "catalog/services/sst-chatbot.yaml"
+  - "catalog/services/sst-bend.yaml"
+  - "specs/capabilities/inbound/4uentes-orchestor--sst-chatbot-agent-handoff.yaml"
+  - "requests/done/CR-SST-0021-ards-core-memory-runtime-phases.yaml"
+  - "requests/done/CR-SST-0022-local-fake-orchestrator-handoff-adapter.yaml"
+  - "docs/ai/model-selection-policy.md"
+
+required_checks:
+  - service_id: 4uentes-orchestor
+    command: "npm run check"
+
+risk:
+  level: "high"
+  score: 7
+  drivers:
+    - AGENT_SEQUENTIAL_CONTEXT_CONTRACT
+    - USER_ARDS_PROPOSAL_AUTHORITY
+    - PROMPT_VERSIONING_AND_PROVENANCE
+    - CROSS_SERVICE_AGENT_RESULT_CONTRACT
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - AGENT_SEQUENTIAL_CONTEXT_CONTRACT
+    - USER_ARDS_PROPOSAL_AUTHORITY
+    - PROMPT_VERSIONING_AND_PROVENANCE
+    - CROSS_SERVICE_AGENT_RESULT_CONTRACT
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The workflow defines agent-runtime behavior, structured user ARDS proposals, provenance, idempotency, and cross-service validation contracts."
+
+subagent_deployment_plan:
+  required: true
+  roles:
+    - architecture-reviewer
+    - security-contract-reviewer
+    - cross-repo-impact-reviewer
+    - validation-reviewer
+  parallelizable: true
+  fallback: "Subagent tools require explicit user delegation; if not explicitly requested, the main agent must perform architecture, security, cross-repo, and validation reviews sequentially."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "one-branch-per-repo"
+
+validation:
+  required_checks:
+    - "npm run check"
+  evidence_required:
+    - "paragraph_derivation_contract"
+    - "prompt_versioning_summary"
+    - "agent_authority_boundary"
+    - "changed_files_summary"
+    - "impacted_services_summary"
+
+decision:
+  status: "pending"
+  approver: "TODO"
+
+planner_notes:
+  - "The initial workflow should prefer one sequential agent pipeline over one sub-agent per paragraph because context continuity is the feature's core behavior."
+  - "Agent operational memory and user ARDS/SDD entries must remain distinct concepts."

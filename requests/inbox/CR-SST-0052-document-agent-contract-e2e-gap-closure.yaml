@@ -1,0 +1,79 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0052"
+title: "Close SST Document Agent contract and authenticated E2E gaps"
+status: "inbox"
+created_at: "2026-06-07"
+requester: "4uentes"
+
+summary: >
+  Close the remaining CR-SST-0048 gaps that prevent SST-8 from being closed:
+  runtime/control-plane contract vocabulary drift and missing authenticated
+  E2E proof for Document Agent job creation.
+
+business_context: >
+  CR-SST-0008 formalized the control-plane Document Agent workflow contract.
+  CR-SST-0048 confirmed a real runtime path exists across sst-fend,
+  4uentes-auth, and sst-bend, but left gaps around correlation id origin,
+  runtime vocabulary mapping, retry/audit metadata, and authenticated E2E.
+
+requested_change: >
+  Align the runtime payload with the control-plane contract without breaking the
+  existing eventType/promptTemplateId API, preserve correlation and idempotency
+  end to end, add or document retry/audit metadata, and run the strongest
+  available authenticated E2E validation.
+
+expected_outcome: >
+  The control-plane can decide whether SST-8 is ready to close for the
+  Document Agent workflow scope, or whether only the credential-dependent E2E
+  proof remains blocked.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - sst-fend
+    - sst-bend
+    - 4uentes-auth
+  include_optional_services: false
+
+required_context:
+  - "requests/done/CR-SST-0008-sst-document-agent-workflows.yaml"
+  - "requests/done/CR-SST-0048-document-agent-runtime-e2e-validation.yaml"
+  - "state/features/document-agent.current.yaml"
+  - "specs/capabilities/inbound/4uentes-orchestor--document-agent-workflows.yaml"
+  - "evidence/requests/CR-SST-0048/contract-gap-matrix.md"
+  - "evidence/requests/CR-SST-0048/e2e-validation-plan-or-results.md"
+
+target_gaps:
+  - "Generate or preserve correlationId from sst-fend through 4uentes-auth to sst-bend."
+  - "Represent operation_intent/capability_id/tenant_id/user_id semantics in runtime metadata or request body."
+  - "Represent requested_retry_policy and audit_metadata."
+  - "Run authenticated happy-path E2E if credentials are available."
+
+validation:
+  required_checks:
+    - "npm run check"
+  evidence_required:
+    - "runtime_contract_alignment_summary"
+    - "authenticated_e2e_results_or_blocker"
+    - "changed_files_summary"
+    - "validation_results"
+
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "one-branch-per-repo"
+  jira_write_allowed: false
+  functional_repo_changes_allowed_after_planning: true
+
+risk:
+  level: "high"
+  score: 7
+  drivers:
+    - "Multi-service runtime change touches frontend, auth/BF, and backend API."
+    - "Shared auth boundary must preserve account and identity semantics."
+    - "Existing dirty working trees must not be overwritten."
+
+decision:
+  status: "pending"
+  approver: "TODO"

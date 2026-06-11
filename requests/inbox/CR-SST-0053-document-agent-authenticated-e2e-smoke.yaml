@@ -1,0 +1,72 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0053"
+title: "Run SST Document Agent authenticated E2E smoke"
+status: "inbox"
+created_at: "2026-06-07"
+requester: "4uentes"
+
+summary: >
+  Obtain or reuse a safe local smoke JWT without exposing secrets, execute the
+  protected SST Document Agent job creation path, and record evidence needed to
+  close the remaining authenticated E2E blocker for CR-SST-0008 and CR-SST-0052.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - sst-fend
+    - 4uentes-auth
+    - sst-bend
+  include_optional_services: false
+
+dependencies:
+  - "requests/done/CR-SST-0008-sst-document-agent-workflows.yaml"
+  - "requests/done/CR-SST-0048-document-agent-runtime-e2e-validation.yaml"
+  - "requests/done/CR-SST-0052-document-agent-contract-e2e-gap-closure.yaml"
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - MULTI_SERVICE_SCOPE
+    - SHARED_AUTH_PROVIDER
+    - SECURITY_OR_CONTRACT_KEYWORD
+    - RUNTIME_DATA_MUTATION
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The request uses authentication material and validates protected multi-service runtime behavior."
+
+subagent_deployment_plan:
+  required: true
+  parallelizable: true
+  roles:
+    - security-contract-reviewer
+    - ards-evidence-reviewer
+  fallback: "If subagents are unavailable, record the limitation and perform the same checks sequentially."
+  evidence_required: true
+
+execution_intent:
+  jira_write_executed: false
+  functional_repository_modifications_expected: false
+  runtime_data_mutation_expected: true
+  secret_handling:
+    print_tokens: false
+    persist_tokens: false
+    evidence_must_redact_auth_headers: true
+
+required_checks:
+  - service_id: sst-bend
+    command: "authenticated Document Agent smoke with SMOKE_JWT or SMOKE_JWT_OWNER"
+  - service_id: 4uentes-auth
+    command: "BFF route smoke if local service is available"
+  - service_id: control-plane
+    command: "npm run check"
+
+acceptance_criteria:
+  - "A protected request is executed with a valid local smoke token, or a precise blocker is documented."
+  - "The created/reused Document Agent job response includes idempotencyKey, correlationId, and metadata.contract."
+  - "Generated output document metadata preserves contract projection when the job reaches ready."
+  - "No token or secret value is printed or persisted in evidence."

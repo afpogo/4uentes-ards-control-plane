@@ -1,0 +1,195 @@
+{
+  "schema_version": "1.0",
+  "kind": "jira_sync_health_report",
+  "request_id": "CR-SST-0008",
+  "source_input_dir": "evidence/requests/CR-SST-0008",
+  "source_observation_dir": "evidence/requests/CR-SST-0008",
+  "source_reconciliation_dir": "evidence/requests/CR-SST-0008",
+  "external_write": false,
+  "automatic_local_transition": false,
+  "summary": {
+    "feature_states_checked": 9,
+    "jira_issues_observed": 9,
+    "proposals_observed": 9,
+    "observations_observed": 9,
+    "orphan_jira_items": 0,
+    "by_status": {
+      "IN_SYNC": 7,
+      "STATUS_SIGNAL_PENDING": 2
+    }
+  },
+  "items": [
+    {
+      "state_id": "ards-sdd-policy-unification",
+      "feature_status": "ards-documented",
+      "source_file": "state/features/ards-sdd-policy-unification.current.yaml",
+      "expected_summary": "[SST][feature-state] Completar handoff y adopcion de ARDS/SDD Policy Unification",
+      "jira_issue_key": "SST-9",
+      "jira_status": "Tareas por hacer",
+      "jira_status_category": "Por hacer",
+      "jira_assignee": "no-asignado",
+      "proposal_action": "no-op",
+      "health_statuses": [
+        "IN_SYNC"
+      ],
+      "reasons": [
+        "The feature state has one reconciled Jira issue, matching summary, current description markers, matching labels, and no pending status signal."
+      ],
+      "external_write_required": false,
+      "local_transition_required": false
+    },
+    {
+      "state_id": "cluster-publication-ngrok-domain",
+      "feature_status": "validated-live",
+      "source_file": "state/features/cluster-publication-ngrok-domain.current.yaml",
+      "expected_summary": "[SST][feature-state] Cerrar gaps release-readiness de Cluster publication",
+      "jira_issue_key": "SST-11",
+      "jira_status": "Tareas por hacer",
+      "jira_status_category": "Por hacer",
+      "jira_assignee": "Fuentes Sandferand",
+      "proposal_action": "record-signal",
+      "health_statuses": [
+        "STATUS_SIGNAL_PENDING"
+      ],
+      "reasons": [
+        "Observed Jira signal proposes action record-signal."
+      ],
+      "external_write_required": false,
+      "local_transition_required": false
+    },
+    {
+      "state_id": "dictionary-tags",
+      "feature_status": "validated-local",
+      "source_file": "state/features/dictionary-tags.current.yaml",
+      "expected_summary": "[SST][feature-state] Completar validacion live y cierre de gobernanza de SST Dictionary Tags",
+      "jira_issue_key": "SST-10",
+      "jira_status": "Tareas por hacer",
+      "jira_status_category": "Por hacer",
+      "jira_assignee": "no-asignado",
+      "proposal_action": "no-op",
+      "health_statuses": [
+        "IN_SYNC"
+      ],
+      "reasons": [
+        "The feature state has one reconciled Jira issue, matching summary, current description markers, matching labels, and no pending status signal."
+      ],
+      "external_write_required": false,
+      "local_transition_required": false
+    },
+    {
+      "state_id": "document-agent",
+      "feature_status": "implemented-local",
+      "source_file": "state/features/document-agent.current.yaml",
+      "expected_summary": "[SST][feature-state] Formalizar evidencia de SST Document Agent Workflows",
+      "jira_issue_key": "SST-8",
+      "jira_status": "En curso",
+      "jira_status_category": "En curso",
+      "jira_assignee": "Fuentes Sandferand",
+      "proposal_action": "continue-request",
+      "health_statuses": [
+        "STATUS_SIGNAL_PENDING"
+      ],
+      "reasons": [
+        "Observed Jira signal proposes action continue-request."
+      ],
+      "external_write_required": false,
+      "local_transition_required": false
+    },
+    {
+      "state_id": "learning-content-tags",
+      "feature_status": "implemented-local",
+      "source_file": "state/features/learning-content-tags.current.yaml",
+      "expected_summary": "[SST][feature-state] Completar ruta runtime de SST Learning Content Tags",
+      "jira_issue_key": "SST-6",
+      "jira_status": "Tareas por hacer",
+      "jira_status_category": "Por hacer",
+      "jira_assignee": "no-asignado",
+      "proposal_action": "no-op",
+      "health_statuses": [
+        "IN_SYNC"
+      ],
+      "reasons": [
+        "The feature state has one reconciled Jira issue, matching summary, current description markers, matching labels, and no pending status signal."
+      ],
+      "external_write_required": false,
+      "local_transition_required": false
+    },
+    {
+      "state_id": "robots",
+      "feature_status": "runtime-partial",
+      "source_file": "state/features/robots.current.yaml",
+      "expected_summary": "[SST][feature-state] Formalizar ownership runtime-partial de SST Robots",
+      "jira_issue_key": "SST-5",
+      "jira_status": "Tareas por hacer",
+      "jira_status_category": "Por hacer",
+      "jira_assignee": "no-asignado",
+      "proposal_action": "no-op",
+      "health_statuses": [
+        "IN_SYNC"
+      ],
+      "reasons": [
+        "The feature state has one reconciled Jira issue, matching summary, current description markers, matching labels, and no pending status signal."
+      ],
+      "external_write_required": false,
+      "local_transition_required": false
+    },
+    {
+      "state_id": "sst-chatbot",
+      "feature_status": "implemented-local",
+      "source_file": "state/features/sst-chatbot.current.yaml",
+      "expected_summary": "[SST][feature-state] Seleccionar transporte runtime para handoff SST Chatbot",
+      "jira_issue_key": "SST-7",
+      "jira_status": "Tareas por hacer",
+      "jira_status_category": "Por hacer",
+      "jira_assignee": "no-asignado",
+      "proposal_action": "no-op",
+      "health_statuses": [
+        "IN_SYNC"
+      ],
+      "reasons": [
+        "The feature state has one reconciled Jira issue, matching summary, current description markers, matching labels, and no pending status signal."
+      ],
+      "external_write_required": false,
+      "local_transition_required": false
+    },
+    {
+      "state_id": "sst-tag-prefix-engine",
+      "feature_status": "implemented-local",
+      "source_file": "state/features/sst-tag-prefix-engine.current.yaml",
+      "expected_summary": "[SST][feature-state] Promover SST Tag Prefix Engine de POC a boundary runtime",
+      "jira_issue_key": "SST-12",
+      "jira_status": "Tareas por hacer",
+      "jira_status_category": "Por hacer",
+      "jira_assignee": "no-asignado",
+      "proposal_action": "no-op",
+      "health_statuses": [
+        "IN_SYNC"
+      ],
+      "reasons": [
+        "The feature state has one reconciled Jira issue, matching summary, current description markers, matching labels, and no pending status signal."
+      ],
+      "external_write_required": false,
+      "local_transition_required": false
+    },
+    {
+      "state_id": "sst-tags-governance",
+      "feature_status": "runtime-partial",
+      "source_file": "state/features/sst-tags-governance.current.yaml",
+      "expected_summary": "[SST][feature-state] Cerrar gaps runtime-partial de SST Tags Governance",
+      "jira_issue_key": "SST-4",
+      "jira_status": "Tareas por hacer",
+      "jira_status_category": "Por hacer",
+      "jira_assignee": "no-asignado",
+      "proposal_action": "no-op",
+      "health_statuses": [
+        "IN_SYNC"
+      ],
+      "reasons": [
+        "The feature state has one reconciled Jira issue, matching summary, current description markers, matching labels, and no pending status signal."
+      ],
+      "external_write_required": false,
+      "local_transition_required": false
+    }
+  ],
+  "orphan_jira_items": []
+}

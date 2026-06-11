@@ -1,0 +1,75 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0030"
+title: "Separate project ARDS/SDD from SST user internal memory"
+status: "done"
+created_at: "2026-06-05"
+completed_at: "2026-06-05"
+requester: "4uentes"
+
+source_request: "requests/inbox/CR-SST-0030-sst-user-internal-memory-boundary.yaml"
+planned_request: "requests/planned/CR-SST-0030-sst-user-internal-memory-boundary.yaml"
+
+implemented_change: >
+  Corrected the conceptual model by separating project ARDS/SDD from SST user
+  internal memory. Project ARDS/SDD remains the file-based lifecycle memory of a
+  repository or project. SST user internal memory is the product runtime memory
+  that records user events, facts, intentions, chatbot interactions, and
+  agent-assisted recall inside SST.
+
+affected_repos:
+  - service_id: 4uentes-orchestor
+    local_binding: "current-workspace"
+
+product_scope_services:
+  - sst-fend
+  - sst-bend
+  - sst-chatbot
+  - 4uentes-auth
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "project ARDS vs user memory boundary"
+    - "user event memory scope"
+    - "chatbot recall authority"
+    - "multi-service SST contract"
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The completed phase corrects foundational terminology and authority boundaries before runtime implementation."
+
+subagent_deployment_plan:
+  required: true
+  roles:
+    - architecture-reviewer
+    - security-contract-reviewer
+    - cross-repo-impact-reviewer
+    - validation-reviewer
+  fallback: "Subagent tools require explicit user delegation in this runtime. No explicit delegation was requested, so the main agent performed the review roles sequentially."
+  evidence_ref: "evidence/requests/CR-SST-0030/subagent-deployment-evidence.md"
+
+validation:
+  required_checks:
+    - "npm run check"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0030/concept-boundary.md"
+    - "evidence/requests/CR-SST-0030/user-internal-memory-model.md"
+    - "evidence/requests/CR-SST-0030/correction-impact-summary.md"
+    - "evidence/requests/CR-SST-0030/subagent-deployment-evidence.md"
+    - "evidence/requests/CR-SST-0030/implementation-summary.md"
+    - "evidence/requests/CR-SST-0030/changed-files-summary.md"
+    - "evidence/requests/CR-SST-0030/validation-results.md"
+
+decision:
+  status: "approved-done"
+  approver: "4uentes"
+  decided_at: "2026-06-05"
+
+next_sequence:
+  next_request_id: "CR-SST-0031"
+  next_request_ref: "requests/planned/CR-SST-0031-sst-user-internal-memory-first-runtime-slice.yaml"
+  note: "CR-SST-0031 defines the first implementable SST user internal memory slice before functional repository changes."

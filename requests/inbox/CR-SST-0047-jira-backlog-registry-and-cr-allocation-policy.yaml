@@ -1,0 +1,29 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0047"
+title: "Define Jira backlog registry and CR-SST allocation policy"
+status: inbox
+created_at: "2026-06-07"
+requester: "4uentes"
+
+summary: >
+  Define a local Jira backlog registry with stable backlog IDs and prevent
+  deferred work from reserving CR-SST process numbers before activation.
+
+scope:
+  solution: "sst"
+  repository: "4uentes-orchestor"
+  functional_repositories_modified: false
+  jira_write_allowed: false
+  local_state_transition_allowed: false
+
+requested_outcome:
+  - "Create stable SST-BL-JIRA backlog IDs."
+  - "Correct CR-SST-0046 so deferred work does not reserve CR-SST numbers."
+  - "Add local backlog review command."
+  - "Keep Jira ticket creation for backlog items deferred."
+
+references:
+  - "requests/done/CR-SST-0046-control-plane-jira-mcp-deferred-backlog.yaml"
+  - "docs/requests/jira-mcp-deferred-backlog-e2e-policy.md"
+

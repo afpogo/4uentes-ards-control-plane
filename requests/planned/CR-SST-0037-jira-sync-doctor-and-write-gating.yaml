@@ -1,0 +1,170 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0037"
+title: "Stabilize Jira sync doctor and external write gating"
+status: planned
+source_request: "requests/inbox/CR-SST-0037-jira-sync-doctor-and-write-gating.yaml"
+created_at: "2026-06-07"
+requester: "4uentes"
+
+initial_scope:
+  solution: "sst"
+  services: []
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services: []
+  affected_ards: []
+  capabilities:
+    - jira-mcp-ticketing
+    - control-plane-process-lifecycle
+    - jira-backlog-sync-state-machine
+  risks:
+    - id: EXTERNAL_WRITE_CONFUSION
+      severity: high
+    - id: JIRA_DESCRIPTION_DRIFT
+      severity: high
+    - id: EVIDENCE_OUTPUT_DRIFT
+      severity: high
+    - id: REQUEST_LIFECYCLE_AMBIGUITY
+      severity: medium
+
+control_plane_scope:
+  repository: "4uentes-orchestor"
+  reason: "This request stabilizes control-plane Jira synchronization scripts and does not modify functional repositories."
+
+required_context:
+  - "requests/planned/CR-SST-0034-control-plane-jira-backlog-sync-state-machine.yaml"
+  - "requests/planned/CR-SST-0035-jira-backlog-sync-machine-dry-runner.yaml"
+  - "requests/planned/CR-SST-0036-jira-backlog-sync-machine-read-only-actions.yaml"
+  - "docs/requests/jira-feature-ticket-policy.md"
+  - "state/jira-backlog-sync-machine.yaml"
+  - "scripts/jira-mcp/generate-dry-run.js"
+  - "scripts/jira-mcp/policy-check.js"
+  - "scripts/jira-mcp/read-metadata.js"
+  - "scripts/jira-mcp/search-duplicates.js"
+  - "scripts/jira-mcp/reconcile-existing-issues.js"
+  - "scripts/jira-mcp/update-existing-issues.js"
+  - "scripts/jira-mcp/create-issues.js"
+
+required_checks:
+  - service_id: 4uentes-orchestor
+    command: "npm run check"
+  - service_id: 4uentes-orchestor
+    command: "Get-ChildItem scripts\\jira-mcp -Recurse -Filter *.js | ForEach-Object { node --check $_.FullName }"
+  - service_id: 4uentes-orchestor
+    command: "npm run jira:mcp:doctor -- --request-id CR-SST-0037 --output-dir evidence/requests/CR-SST-0037 --mode read-only"
+
+risk:
+  level: high
+  score: 8
+  drivers:
+    - id: EXTERNAL_WRITE_CONFUSION
+      severity: high
+    - id: JIRA_DESCRIPTION_DRIFT
+      severity: high
+    - id: EVIDENCE_OUTPUT_DRIFT
+      severity: high
+    - id: CONTROL_PLANE_PROCESS_LIFECYCLE
+      severity: medium
+
+task_weight:
+  classification: complex-high-risk-task
+  risk_level: high
+  drivers:
+    - EXTERNAL_WRITE_CONFUSION
+    - EXTERNAL_MCP_CONNECTIVITY
+    - CONTROL_PLANE_PROCESS_LIFECYCLE
+    - EVIDENCE_OUTPUT_DRIFT
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The task stabilizes external Jira synchronization boundaries and controls future write actions."
+
+subagent_deployment_plan:
+  required: true
+  parallelizable: true
+  roles:
+    - architecture-reviewer
+    - security-contract-reviewer
+    - validation-reviewer
+  fallback: "If subagent tools are unavailable, the main agent must perform architecture, write-boundary, and validation review sequentially."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  allowed_window: manual
+  branch_strategy: control-plane-only
+  read_only_boundary:
+    allowed:
+      - "inspect package command surface"
+      - "inspect Jira MCP script syntax and command contracts"
+      - "read control-plane feature states"
+      - "read request lifecycle files"
+      - "run local policy-check"
+      - "run Jira metadata reads through MCP"
+      - "run Jira duplicate search through MCP"
+      - "run Jira reconciliation through MCP"
+      - "write non-secret doctor evidence"
+      - "write non-secret correction plan preview"
+    forbidden:
+      - "create Jira issues from doctor"
+      - "edit Jira issues from doctor"
+      - "comment on Jira issues from doctor"
+      - "transition Jira issues from doctor"
+      - "close Jira issues from doctor"
+      - "store tokens, cookies, private URLs, cloudId, or OAuth material in Git"
+      - "modify functional repositories"
+  write_boundary:
+    required_for_any_write:
+      - "planned request exists"
+      - "doctor evidence exists"
+      - "correction plan preview exists"
+      - "policy-check passes"
+      - "reconciliation has no unresolved ambiguity"
+      - "human approval names the write action type"
+      - "write command receives --approved and explicit --request-id/--output-dir"
+
+implementation_steps:
+  - id: define-doctor-contract
+    description: "Document that the doctor performs analysis, validation, verification, and correction planning only."
+  - id: add-doctor-command
+    description: "Add a jira:mcp:doctor command that wraps local checks and read-only Jira sync diagnostics."
+  - id: require-explicit-evidence-targets
+    description: "Fail Jira operational commands when --request-id or --output-dir is missing."
+  - id: classify-command-surface
+    description: "Separate read-only commands from external write commands in package scripts and documentation."
+  - id: persist-machine-run-state
+    description: "Write a structured machine run state artifact for read-only doctor runs."
+  - id: generate-correction-plan-preview
+    description: "Generate proposed Jira description corrections without applying them."
+  - id: protect-write-scripts
+    description: "Keep create/update scripts behind explicit --approved and make them consume doctor evidence."
+  - id: validate
+    description: "Run syntax checks, doctor read-only, and npm run check."
+
+validation:
+  required_checks:
+    - "npm run check"
+    - "Get-ChildItem scripts\\jira-mcp -Recurse -Filter *.js | ForEach-Object { node --check $_.FullName }"
+    - "npm run jira:mcp:doctor -- --request-id CR-SST-0037 --output-dir evidence/requests/CR-SST-0037 --mode read-only"
+  evidence_required:
+    - "doctor_summary"
+    - "machine_run_state"
+    - "correction_plan_preview"
+    - "changed_files_summary"
+    - "validation_results"
+
+decision:
+  status: pending
+  approver: TODO
+
+planner_notes:
+  - "The doctor is not an update command."
+  - "The doctor may identify corrections and write a preview artifact."
+  - "Jira correction or update requires a later explicit write action."
+  - "CR-SST-0037 should stabilize the command contract before updating existing Jira issues."
+  - "No functional repositories are modified."

@@ -1,0 +1,92 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0039"
+title: "Apply Jira sync correction plan for feature-state tickets"
+status: "done"
+source_request: "requests/planned/CR-SST-0039-apply-jira-sync-correction-plan.yaml"
+created_at: "2026-06-07"
+completed_at: "2026-06-07"
+requester: "4uentes"
+
+summary: >
+  Applied the Jira feature-state correction plan for project SST. Eight existing
+  Jira issue descriptions were updated and one missing issue was created for
+  sst-tag-prefix-engine. Post-write reconciliation confirms nine exact matches
+  and zero pending description updates.
+
+scope:
+  solution: "sst"
+  repository: "4uentes-orchestor"
+  functional_repositories_modified: false
+  jira_project_key: "SST"
+  jira_board_name: "SST-Team"
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - EXTERNAL_JIRA_WRITE
+    - EXTERNAL_MCP_CONNECTIVITY
+    - CONTROL_PLANE_PROCESS_LIFECYCLE
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The task performed external Jira writes while preserving control-plane authority and evidence."
+
+subagent_deployment_plan:
+  required: true
+  parallelizable: false
+  roles:
+    - security-contract-reviewer
+    - validation-reviewer
+  fallback: "The main agent performed write-boundary and validation review sequentially."
+  evidence_ref: "evidence/requests/CR-SST-0039/subagent-deployment-evidence.md"
+
+results:
+  jira_updates:
+    count: 8
+    issue_keys:
+      - "SST-4"
+      - "SST-5"
+      - "SST-6"
+      - "SST-7"
+      - "SST-8"
+      - "SST-9"
+      - "SST-10"
+      - "SST-11"
+  jira_creates:
+    count: 1
+    issue_keys:
+      - "SST-12"
+  post_write_reconciliation:
+    issues_inspected: 9
+    feature_states_reconciled: 9
+    exact_summary_matches: 9
+    update_candidates: 0
+
+evidence:
+  required:
+    - "evidence/requests/CR-SST-0039/jira-required-fields-summary.md"
+    - "evidence/requests/CR-SST-0039/duplicate-search-summary.md"
+    - "evidence/requests/CR-SST-0039/jira-reconciliation-summary.md"
+    - "evidence/requests/CR-SST-0039/doctor-summary.md"
+    - "evidence/requests/CR-SST-0039/correction-plan-preview.md"
+    - "evidence/requests/CR-SST-0039/jira-policy-check-summary.md"
+    - "evidence/requests/CR-SST-0039/jira-update-summary.md"
+    - "evidence/requests/CR-SST-0039/created-ticket-summary.md"
+    - "evidence/requests/CR-SST-0039/jira-writer-apply-summary.md"
+    - "evidence/requests/CR-SST-0039/validation-results.md"
+    - "evidence/requests/CR-SST-0039/implementation-summary.md"
+
+validation:
+  required_checks:
+    - "npm.cmd run check"
+    - "post-write duplicate search"
+    - "post-write reconciliation"
+  status: "approved-done"
+
+decision:
+  status: "approved-done"
+  approver: "4uentes"

@@ -1,0 +1,78 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0041"
+title: "Define Jira status event and control-plane transition proposal flow"
+status: "done"
+source_request: "requests/inbox/CR-SST-0041-jira-status-event-transition-proposal-flow.yaml"
+planned_request: "requests/planned/CR-SST-0041-jira-status-event-transition-proposal-flow.yaml"
+created_at: "2026-06-07"
+completed_at: "2026-06-07"
+requester: "4uentes"
+
+summary: >
+  Defined the event intake and transition proposal contract for Jira status
+  observations. Jira status remains an operational signal, while the
+  control-plane keeps authority over feature_state and request lifecycle
+  transitions.
+
+scope:
+  solution: "sst"
+  repository: "4uentes-orchestor"
+  functional_repositories_modified: false
+  jira_write_executed: false
+  local_state_transitions_executed: false
+
+depends_on:
+  - "requests/done/CR-SST-0040-jira-control-plane-status-sync-policy.yaml"
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - JIRA_CONTROL_PLANE_AUTHORITY_DRIFT
+    - CONTROL_PLANE_PROCESS_LIFECYCLE
+    - EVENT_TO_STATE_TRANSITION_CONTRACT
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The completed phase defines event and transition authority before any automated state mutation is allowed."
+
+subagent_deployment_plan:
+  required: true
+  roles:
+    - architecture-reviewer
+    - security-contract-reviewer
+    - validation-reviewer
+  fallback: "The main agent performed architecture, write-boundary, and validation review sequentially."
+  evidence_ref: "evidence/requests/CR-SST-0041/subagent-deployment-evidence.md"
+
+results:
+  jira_writes: 0
+  local_state_transitions: 0
+  contract_defined: true
+  next_runner_allowed_mode: "dry-run only"
+  recommended_next_request: "CR-SST-0042"
+
+evidence:
+  required:
+    - "docs/requests/jira-status-event-transition-contract.md"
+    - "evidence/requests/CR-SST-0041/transition-proposal-flow-analysis.md"
+    - "evidence/requests/CR-SST-0041/subagent-deployment-evidence.md"
+    - "evidence/requests/CR-SST-0041/changed-files-summary.md"
+    - "evidence/requests/CR-SST-0041/validation-results.md"
+
+validation:
+  required_checks:
+    - "npm.cmd run check"
+  status: "approved-done"
+
+decision:
+  status: "approved-done"
+  approver: "4uentes"
+  note: "Closed before any Jira status transition. The next safe step is a dry-run proposal generator."
+
+next_sequence:
+  next_request_id: "CR-SST-0042"
+  note: "Implement dry-run status transition proposals before moving Jira issues to En curso."

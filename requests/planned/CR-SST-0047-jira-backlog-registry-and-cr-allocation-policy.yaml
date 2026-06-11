@@ -1,0 +1,132 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0047"
+title: "Define Jira backlog registry and CR-SST allocation policy"
+status: planned
+source_request: "requests/inbox/CR-SST-0047-jira-backlog-registry-and-cr-allocation-policy.yaml"
+created_at: "2026-06-07"
+requester: "4uentes"
+
+initial_scope:
+  solution: "sst"
+  services: []
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services: []
+  affected_ards:
+    - "request_lifecycle"
+    - "jira_backlog_sync_state_machine"
+  capabilities:
+    - control-plane-process-lifecycle
+    - jira-mcp-ticketing
+  risks:
+    - id: CR_SST_SEQUENCE_DRIFT
+      severity: high
+    - id: BACKLOG_IDENTITY_CONFUSION
+      severity: high
+    - id: JIRA_BACKLOG_TRACEABILITY_GAP
+      severity: medium
+
+control_plane_scope:
+  repository: "4uentes-orchestor"
+  reason: "This request creates local backlog governance only."
+
+required_context:
+  - "requests/done/CR-SST-0046-control-plane-jira-mcp-deferred-backlog.yaml"
+  - "docs/requests/jira-mcp-deferred-backlog-e2e-policy.md"
+  - "docs/requests/jira-mcp-access-sync-health-contract.md"
+
+required_checks:
+  - service_id: 4uentes-orchestor
+    command: "node --check scripts/jira-mcp/backlog-review.js"
+  - service_id: 4uentes-orchestor
+    command: "npm run jira:mcp:backlog-review -- --request-id CR-SST-0047 --output-dir evidence/requests/CR-SST-0047"
+  - service_id: 4uentes-orchestor
+    command: "npm run check"
+
+risk:
+  level: high
+  score: 7
+  drivers:
+    - id: CR_SST_SEQUENCE_DRIFT
+      severity: high
+    - id: BACKLOG_IDENTITY_CONFUSION
+      severity: high
+    - id: JIRA_BACKLOG_TRACEABILITY_GAP
+      severity: medium
+
+task_weight:
+  classification: complex-high-risk-task
+  risk_level: high
+  drivers:
+    - CONTROL_PLANE_BACKLOG_GOVERNANCE
+    - CR_SST_ALLOCATION_POLICY
+    - JIRA_BACKLOG_TRACEABILITY
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The task corrects request identity governance and future Jira backlog traceability."
+
+subagent_deployment_plan:
+  required: true
+  parallelizable: true
+  roles:
+    - architecture-reviewer
+    - security-contract-reviewer
+    - validation-reviewer
+  fallback: "If subagent tools are unavailable, the main agent must perform architecture, write-boundary, and validation review sequentially."
+  evidence_required: true
+
+execution:
+  requires_human_approval: false
+  allowed_window: local
+  branch_strategy: control-plane-only
+  read_only_boundary:
+    allowed:
+      - "write local backlog registry"
+      - "write local policy and evidence"
+      - "add local review command"
+    forbidden:
+      - "connect to Jira"
+      - "create Jira issues"
+      - "write Jira issue status"
+      - "modify feature_state status"
+      - "modify functional repositories"
+      - "store tokens, cookies, private URLs, cloudId, or OAuth material in Git"
+
+implementation_steps:
+  - id: create-registry
+    description: "Create state/jira-backlog-registry.yaml with stable SST-BL-JIRA IDs."
+  - id: add-policy
+    description: "Document backlog_id versus CR-SST allocation policy."
+  - id: correct-cr-0046
+    description: "Remove CR-SST candidate reservations from CR-SST-0046 artifacts."
+  - id: add-review-command
+    description: "Add jira:mcp:backlog-review local command."
+  - id: validate
+    description: "Run syntax check, backlog review, and npm run check."
+
+validation:
+  required_checks:
+    - "node --check scripts/jira-mcp/backlog-review.js"
+    - "npm run jira:mcp:backlog-review -- --request-id CR-SST-0047 --output-dir evidence/requests/CR-SST-0047"
+    - "npm run check"
+  evidence_required:
+    - "backlog_registry_review"
+    - "implementation_summary"
+    - "changed_files_summary"
+    - "validation_results"
+
+decision:
+  status: pending
+  approver: TODO
+
+planner_notes:
+  - "CR-SST-0047 is the real active process."
+  - "Deferred backlog items use SST-BL-JIRA IDs and assigned_cr_sst null."
+  - "No Jira ticket creation is performed in this request."
+

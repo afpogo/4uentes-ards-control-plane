@@ -1,0 +1,190 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0048"
+title: "Validate SST Document Agent runtime and E2E handoff"
+status: planned
+source_request: "requests/inbox/CR-SST-0048-document-agent-runtime-e2e-validation.yaml"
+created_at: "2026-06-07"
+requester: "4uentes"
+
+initial_scope:
+  solution: "sst"
+  services:
+    - sst-fend
+    - sst-bend
+    - 4uentes-auth
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: sst-fend
+      via: initial_scope.services
+      service_kind: frontend-spa
+      ards_kind: frontend-web
+      status: active
+    - service_id: sst-bend
+      via: initial_scope.services
+      service_kind: api
+      ards_kind: backend-api
+      status: active
+    - service_id: 4uentes-auth
+      via: initial_scope.services
+      service_kind: shared-auth-provider
+      ards_kind: shared-auth-provider
+      status: active
+  affected_ards:
+    - frontend-web
+    - backend-api
+    - shared-auth-provider
+  capabilities: []
+  risks:
+    - id: MULTI_SERVICE_SCOPE
+      severity: high
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: sst-fend
+      severity: medium
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: sst-bend
+      severity: medium
+    - id: SHARED_AUTH_PROVIDER
+      service_id: 4uentes-auth
+      severity: high
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: 4uentes-auth
+      severity: medium
+
+required_context:
+  - requests/done/CR-SST-0008-sst-document-agent-workflows.yaml
+  - state/features/document-agent.current.yaml
+  - specs/capabilities/inbound/4uentes-orchestor--document-agent-workflows.yaml
+  - evidence/requests/CR-SST-0008/document-agent-workflow-contract-summary.md
+  - evidence/requests/CR-SST-0008/backend-first-persistence-flow.md
+  - evidence/requests/CR-SST-0008/jira-sync-decision.md
+  - catalog/services/sst-fend.yaml
+  - inventory/evidence/git/sst-fend.md
+  - catalog/services/sst-bend.yaml
+  - inventory/evidence/git/sst-bend.md
+  - catalog/services/4uentes-auth.yaml
+  - inventory/evidence/git/4uentes-auth.md
+  - solutions/sst.yaml
+  - inventory/phase-0.md
+  - inventory/phase-0-decision.md
+  - AGENTS.md
+
+required_checks:
+  - service_id: sst-fend
+    command: "npm run check"
+  - service_id: sst-bend
+    command: "npm run check"
+  - service_id: 4uentes-auth
+    command: "npm run check"
+
+risk:
+  level: high
+  score: 7
+  drivers:
+    - id: MULTI_SERVICE_SCOPE
+      severity: high
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: sst-fend
+      severity: medium
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: sst-bend
+      severity: medium
+    - id: SHARED_AUTH_PROVIDER
+      service_id: 4uentes-auth
+      severity: high
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: 4uentes-auth
+      severity: medium
+
+task_weight:
+  classification: complex-high-risk-task
+  risk_level: high
+  drivers:
+    - MULTI_SERVICE_SCOPE
+    - DIRTY_WORKING_TREE_OBSERVED
+    - SHARED_AUTH_PROVIDER
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "High-risk or security/contract-sensitive task."
+
+subagent_deployment_plan:
+  required: true
+  parallelizable: true
+  roles:
+    - architecture-reviewer
+    - security-contract-reviewer
+    - cross-repo-impact-reviewer
+    - validation-reviewer
+  fallback: "If subagents or exact model aliases are unavailable, record the limitation and run the same review steps sequentially with the highest available reasoning profile."
+  evidence_required: true
+
+runtime_questions:
+  - "Does sst-fend already produce a structured document-agent event or operation intent?"
+  - "Does 4uentes-auth expose or enforce tenant, account, and user scope validation needed by the handoff?"
+  - "Does sst-bend persist a durable job before document processing execution?"
+  - "Are idempotency_key and correlation_id preserved end to end?"
+  - "Is there an executable smoke or E2E path that can prove the contract?"
+
+contract_acceptance_criteria:
+  - "Frontend event or operation intent includes tenant_id, user_id, idempotency_key, and correlation_id."
+  - "Auth boundary validates user, tenant, and account scope before backend job execution."
+  - "Backend persists a durable job before document processing starts."
+  - "Retry policy, audit metadata, idempotency, and correlation data are retained."
+  - "Validation evidence names the exact commands, routes, fixtures, or gaps observed."
+
+execution_boundaries:
+  allowed:
+    - "inspect functional repositories through local bindings"
+    - "run read-only inventory commands"
+    - "run repo checks if working tree preservation is confirmed"
+    - "create local evidence and gap matrix"
+    - "make scoped repo changes only after approval remains valid for this planned request"
+  forbidden:
+    - "write Jira"
+    - "close SST-8"
+    - "touch unrelated feature areas"
+    - "overwrite child-repo dirty working tree changes"
+    - "store secrets, tokens, cookies, private Jira URLs, or cloudId in Git"
+
+implementation_steps:
+  - id: repo-runtime-inventory
+    description: "Inspect sst-fend, sst-bend, and 4uentes-auth for document-agent runtime surfaces."
+  - id: contract-gap-matrix
+    description: "Compare observed runtime code against CR-SST-0008 operation_intent, handoff_payload, and document_agent_event contracts."
+  - id: e2e-path-decision
+    description: "Decide whether an executable E2E smoke can run now or whether implementation gaps must be split."
+  - id: validation-or-plan
+    description: "Produce E2E validation evidence or a repo-scoped implementation plan."
+  - id: state-decision
+    description: "Recommend whether document-agent remains validated-local or can advance after evidence."
+
+execution:
+  requires_human_approval: true
+  allowed_window: manual
+  branch_strategy: one-branch-per-repo
+
+validation:
+  required_checks:
+    - "npm run check"
+  evidence_required:
+    - "repo_runtime_inventory"
+    - "contract_gap_matrix"
+    - "e2e_validation_plan_or_results"
+    - "changed_files_summary"
+    - "validation_results"
+
+decision:
+  status: pending
+  approver: TODO
+
+planner_notes:
+  - "Functional repositories were not modified while creating this planned request."
+  - "Functional repository checks were not executed while creating this planned request."
+  - "SST-8 remains the Jira operational mirror; closing it requires a separate approved Jira write request."
+  - "CR-SST-0048 activates the remaining runtime/E2E gap from CR-SST-0008."

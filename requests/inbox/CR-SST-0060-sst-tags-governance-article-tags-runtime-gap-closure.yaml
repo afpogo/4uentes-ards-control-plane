@@ -1,0 +1,57 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0060"
+title: "Close article-tags runtime gap for SST Tags Governance"
+status: inbox
+created_at: "2026-06-08"
+requester: "4uentes"
+
+summary: >
+  Advance sst-tags-governance by closing the first runtime gap: promote
+  article-tags from backend draft/runtime-partial evidence into a governed SST
+  capability adopted across backend, BFF/auth boundary, frontend article
+  create/update flows, and validation evidence.
+
+problem_statement: >
+  SST-4 / sst-tags-governance is in active work, but the feature_state remains
+  runtime-partial. Backend evidence shows article tag support exists partially,
+  while BFF/frontend adoption, active capability promotion, and coverage are
+  still missing. This request defines the next implementation slice without
+  reopening historical CR-SST requests.
+
+scope:
+  solution: "sst"
+  feature_state: "sst-tags-governance"
+  jira_issue_key: "SST-4"
+  primary_gap: "Promote article-tags from draft to an active governed SST capability."
+  affected_services:
+    - "sst-bend"
+    - "4uentes-auth"
+    - "sst-fend"
+  optional_services:
+    - "sst-extension"
+  functional_repositories_modified_by_this_intake: false
+
+origin_requests:
+  role: "provenance-only"
+  requests:
+    - "CR-SST-0010"
+    - "CR-SST-0014"
+    - "CR-SST-0015"
+    - "CR-SST-0016"
+    - "CR-SST-0057"
+
+desired_outcome:
+  - "article-tags capability is promoted from draft to active or equivalent governed state."
+  - "Backend article create/update/list/detail tag behavior has explicit validation."
+  - "BFF/auth boundary exposes or forwards structured article tags intentionally."
+  - "Frontend article create/update flows can operate structured tags, not only simple read tags."
+  - "sst-tags-governance remains runtime-partial until implementation evidence supports a transition."
+
+out_of_scope:
+  - "Learning-content/course parser implementation."
+  - "Real-time transcription intake."
+  - "Generic Jira transition writer implementation."
+  - "Closing all sst-tags-governance gaps in one request."
+
+next_lifecycle_step: "planned"

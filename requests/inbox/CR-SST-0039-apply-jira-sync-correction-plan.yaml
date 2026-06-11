@@ -1,0 +1,131 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0039"
+title: "Apply Jira sync correction plan for feature-state tickets"
+status: "inbox"
+created_at: "2026-06-07"
+requester: "4uentes"
+
+business_context: >
+  CR-SST-0038 resolved the last Jira reconciliation ambiguity. The correction
+  plan now has eight existing Jira issue description updates and one missing
+  issue creation candidate, with zero blocked items.
+
+requested_change: >
+  Execute the controlled Jira write phase for the clean correction plan:
+  update existing feature-state ticket descriptions and create the missing
+  `sst-tag-prefix-engine` issue. Refresh read-only Jira metadata, duplicate
+  search, and reconciliation evidence before any write.
+
+expected_outcome: >
+  Jira project `SST` mirrors the nine non-done feature states: eight existing
+  issues are updated to the current ticket policy and one missing issue is
+  created for `sst-tag-prefix-engine`.
+
+initial_scope:
+  solution: "sst"
+  services: []
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services: []
+  affected_ards: []
+  capabilities:
+    - jira-mcp-ticketing
+    - jira-backlog-sync-state-machine
+    - control-plane-process-lifecycle
+  risks:
+    - id: EXTERNAL_JIRA_WRITE
+      severity: high
+    - id: DUPLICATE_JIRA_ISSUE
+      severity: high
+    - id: INCORRECT_ISSUE_DESCRIPTION_UPDATE
+      severity: high
+
+required_context:
+  - "requests/planned/CR-SST-0038-resolve-sst-tag-prefix-engine-jira-ambiguity.yaml"
+  - "evidence/requests/CR-SST-0038/ambiguity-resolution.md"
+  - "docs/requests/jira-write-connection-contract.md"
+  - "evidence/requests/CR-SST-0039/jira-write-connection-definition.md"
+  - "environments/local/jira-writer.local.example.yaml"
+  - "scripts/jira-mcp/doctor.js"
+  - "scripts/jira-mcp/update-existing-issues.js"
+  - "scripts/jira-mcp/create-issues.js"
+
+required_checks:
+  - service_id: 4uentes-orchestor
+    command: "npm run check"
+  - service_id: 4uentes-orchestor
+    command: "npm run jira:mcp:metadata -- --connect --request-id CR-SST-0039 --output-dir evidence/requests/CR-SST-0039"
+  - service_id: 4uentes-orchestor
+    command: "npm run jira:mcp:duplicates -- --connect --request-id CR-SST-0039 --output-dir evidence/requests/CR-SST-0039"
+  - service_id: 4uentes-orchestor
+    command: "npm run jira:mcp:reconcile -- --connect --request-id CR-SST-0039 --output-dir evidence/requests/CR-SST-0039"
+  - service_id: 4uentes-orchestor
+    command: "npm run jira:mcp:doctor -- --request-id CR-SST-0039 --output-dir evidence/requests/CR-SST-0039 --mode read-only"
+  - service_id: 4uentes-orchestor
+    command: "npm run jira:mcp:policy-check -- --request-id CR-SST-0039 --output-dir evidence/requests/CR-SST-0039 --expected-count 9"
+
+risk:
+  level: "high"
+  score: 9
+  drivers:
+    - EXTERNAL_JIRA_WRITE
+    - DUPLICATE_JIRA_ISSUE
+    - INCORRECT_ISSUE_DESCRIPTION_UPDATE
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - EXTERNAL_JIRA_WRITE
+    - EXTERNAL_MCP_CONNECTIVITY
+    - CONTROL_PLANE_PROCESS_LIFECYCLE
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The task performs external Jira writes and must preserve control-plane authority and evidence."
+
+subagent_deployment_plan:
+  required: true
+  parallelizable: false
+  roles:
+    - security-contract-reviewer
+    - validation-reviewer
+  fallback: "If subagent tools are unavailable or not explicitly requested, the main agent must perform write-boundary and validation review sequentially."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "control-plane-only"
+
+validation:
+  required_checks:
+    - "npm run check"
+    - "read-only Jira metadata, duplicate search, and reconciliation refreshed under CR-SST-0039"
+    - "doctor has blocked=0 under CR-SST-0039"
+    - "policy-check PASS under CR-SST-0039"
+    - "write evidence recorded for update/create actions if approved"
+  evidence_required:
+    - "jira_write_connection_definition"
+    - "jira_required_fields_summary"
+    - "duplicate_search_summary"
+    - "jira_reconciliation_summary"
+    - "doctor_summary"
+    - "correction_plan_preview"
+    - "jira_update_summary"
+    - "created_ticket_summary"
+    - "validation_results"
+
+decision:
+  status: "pending"
+  approver: "TODO"
+
+planner_notes:
+  - "This is a write request, but writes must not run before fresh read-only evidence and explicit approval."
+  - "The expected write actions are editJiraIssue for eight issues and createJiraIssue for one issue."
+  - "After runtime write blocking, the request requires an authorized writer/gateway or manual operator connection before retrying Jira writes."

@@ -1,0 +1,83 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0040"
+title: "Define Jira and control-plane status synchronization policy"
+status: "done"
+source_request: "requests/planned/CR-SST-0040-jira-control-plane-status-sync-policy.yaml"
+created_at: "2026-06-07"
+completed_at: "2026-06-07"
+requester: "4uentes"
+
+summary: >
+  Defined the initial Jira/control-plane status synchronization policy and added
+  a read-only Jira status observer. Jira remains an operational mirror, while
+  the control-plane remains the authoritative state owner for ARDS/SDD feature
+  state and CR-SST lifecycle transitions.
+
+scope:
+  solution: "sst"
+  repository: "4uentes-orchestor"
+  functional_repositories_modified: false
+  jira_project_key: "SST"
+  jira_board_name: "SST-Team"
+  jira_write_executed: false
+  local_state_transitions_executed: false
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - JIRA_CONTROL_PLANE_AUTHORITY_DRIFT
+    - AUTOMATIC_STATUS_TRANSITION_RISK
+    - CONTROL_PLANE_PROCESS_LIFECYCLE
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The task defined authority and transition boundaries between Jira operational status and control-plane state."
+
+subagent_deployment_plan:
+  required: true
+  parallelizable: true
+  roles:
+    - architecture-reviewer
+    - security-contract-reviewer
+    - validation-reviewer
+  fallback: "The main agent performed architecture, write-boundary, and validation review sequentially."
+  evidence_ref: "evidence/requests/CR-SST-0040/subagent-deployment-evidence.md"
+
+results:
+  policy:
+    authority_rule: "Jira can initiate signals; control-plane decides transitions; writer synchronizes Jira."
+    jira_is_source_of_truth: false
+    control_plane_is_source_of_truth: true
+  jira_status_observation:
+    observations: 9
+    jira_writes: 0
+    automatic_local_transitions: 0
+    observed_statuses:
+      - "Tareas por hacer"
+    proposed_events:
+      - "JIRA_WORK_PENDING"
+
+evidence:
+  required:
+    - "evidence/requests/CR-SST-0040/status-sync-policy-analysis.md"
+    - "evidence/requests/CR-SST-0040/jira-status-observation-summary.md"
+    - "evidence/requests/CR-SST-0040/jira-status-observation-results.json"
+    - "evidence/requests/CR-SST-0040/implementation-summary.md"
+    - "evidence/requests/CR-SST-0040/changed-files-summary.md"
+    - "evidence/requests/CR-SST-0040/validation-results.md"
+
+validation:
+  required_checks:
+    - "npm.cmd run check"
+    - "npm.cmd run jira:mcp:status-observe -- --connect --request-id CR-SST-0040 --output-dir evidence/requests/CR-SST-0040"
+  status: "approved-done"
+
+decision:
+  status: "approved-done"
+  approver: "4uentes"
+  note: "Approved by user continuation request to advance to the next step."
+

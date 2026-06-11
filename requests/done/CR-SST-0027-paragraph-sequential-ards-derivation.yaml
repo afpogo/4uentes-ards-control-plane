@@ -1,0 +1,81 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0027"
+title: "Define paragraph-sequential ARDS derivation workflow"
+status: "done"
+created_at: "2026-06-03"
+completed_at: "2026-06-04"
+requester: "4uentes"
+
+source_request: "requests/inbox/CR-SST-0027-paragraph-sequential-ards-derivation.yaml"
+planned_request: "requests/planned/CR-SST-0027-paragraph-sequential-ards-derivation.yaml"
+depends_on:
+  - "requests/done/CR-SST-0026-user-ards-sdd-product-model.yaml"
+
+implemented_change: >
+  Documented the paragraph-sequential ARDS derivation workflow in the
+  orchestrator, including paragraph run identity, context chain, paragraph
+  derivations, prompt provenance, proposal output, idempotency, validation
+  boundary, and the rule that sst-chatbot emits proposals while sst-bend or the
+  authorized backend validates and mutates the user ARDS/SDD.
+
+affected_repos:
+  - service_id: 4uentes-orchestor
+    local_binding: "current-workspace"
+
+product_scope_services:
+  - sst-chatbot
+  - sst-bend
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "agent sequential context contract"
+    - "user ARDS proposal authority"
+    - "prompt versioning and provenance"
+    - "cross-service agent result contract"
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The completed phase defines agent-runtime derivation semantics and backend validation boundaries for user ARDS/SDD proposals."
+
+subagent_deployment_plan:
+  required: true
+  roles:
+    - architecture-reviewer
+    - security-contract-reviewer
+    - cross-repo-impact-reviewer
+    - validation-reviewer
+  fallback: "Subagent tools require explicit user delegation in this runtime. No explicit delegation was requested, so the main agent performed the review roles sequentially."
+  evidence_ref: "evidence/requests/CR-SST-0027/subagent-deployment-evidence.md"
+
+validation:
+  required_checks:
+    - "npm run check"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0027/paragraph-derivation-contract.md"
+    - "evidence/requests/CR-SST-0027/prompt-versioning-summary.md"
+    - "evidence/requests/CR-SST-0027/agent-authority-boundary.md"
+    - "evidence/requests/CR-SST-0027/impacted-services-summary.md"
+    - "evidence/requests/CR-SST-0027/subagent-deployment-evidence.md"
+    - "evidence/requests/CR-SST-0027/implementation-summary.md"
+    - "evidence/requests/CR-SST-0027/changed-files-summary.md"
+    - "evidence/requests/CR-SST-0027/validation-results.md"
+
+decision:
+  status: "approved-done"
+  approver: "4uentes"
+  decided_at: "2026-06-04"
+
+correction:
+  status: "superseded-as-first-slice"
+  superseded_by: "requests/done/CR-SST-0030-sst-user-internal-memory-boundary.yaml"
+  reason: "CR-SST-0030 establishes SST user internal memory as the implementation target. CR-SST-0027 remains closed as a later-source-derivation contract, not the first user memory slice."
+
+next_sequence:
+  next_request_id: "CR-SST-0028"
+  next_request_ref: "requests/planned/CR-SST-0028-user-ards-intelligence-ui-and-persistence.yaml"
+  note: "Do not start CR-SST-0028 before CR-SST-0027 evidence and validation are accepted."

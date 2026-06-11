@@ -1,0 +1,65 @@
+[
+  {
+    "stateId": "sst-tags-governance",
+    "summary": "[SST][feature-state] Cerrar gaps runtime-partial de SST Tags Governance",
+    "jql": "project = SST AND text ~ \"sst-tags-governance\"",
+    "issueKeys": [],
+    "duplicate": false
+  },
+  {
+    "stateId": "robots",
+    "summary": "[SST][feature-state] Formalizar ownership runtime-partial de SST Robots",
+    "jql": "project = SST AND text ~ \"robots\"",
+    "issueKeys": [],
+    "duplicate": false
+  },
+  {
+    "stateId": "learning-content-tags",
+    "summary": "[SST][feature-state] Completar ruta runtime de SST Learning Content Tags",
+    "jql": "project = SST AND text ~ \"learning-content-tags\"",
+    "issueKeys": [],
+    "duplicate": false
+  },
+  {
+    "stateId": "sst-tag-prefix-engine",
+    "summary": "[SST][feature-state] Promover SST Tag Prefix Engine de POC a boundary runtime",
+    "jql": "project = SST AND text ~ \"sst-tag-prefix-engine\"",
+    "issueKeys": [],
+    "duplicate": false
+  },
+  {
+    "stateId": "sst-chatbot",
+    "summary": "[SST][feature-state] Seleccionar transporte runtime para handoff SST Chatbot",
+    "jql": "project = SST AND text ~ \"sst-chatbot\"",
+    "issueKeys": [],
+    "duplicate": false
+  },
+  {
+    "stateId": "document-agent",
+    "summary": "[SST][feature-state] Formalizar evidencia de SST Document Agent Workflows",
+    "jql": "project = SST AND text ~ \"document-agent\"",
+    "issueKeys": [],
+    "duplicate": false
+  },
+  {
+    "stateId": "ards-sdd-policy-unification",
+    "summary": "[SST][feature-state] Completar handoff y adopcion de ARDS/SDD Policy Unification",
+    "jql": "project = SST AND text ~ \"ards-sdd-policy-unification\"",
+    "issueKeys": [],
+    "duplicate": false
+  },
+  {
+    "stateId": "dictionary-tags",
+    "summary": "[SST][feature-state] Completar validacion live y cierre de gobernanza de SST Dictionary Tags",
+    "jql": "project = SST AND text ~ \"dictionary-tags\"",
+    "issueKeys": [],
+    "duplicate": false
+  },
+  {
+    "stateId": "cluster-publication-ngrok-domain",
+    "summary": "[SST][feature-state] Cerrar gaps release-readiness de Cluster publication",
+    "jql": "project = SST AND text ~ \"cluster-publication-ngrok-domain\"",
+    "issueKeys": [],
+    "duplicate": false
+  }
+]

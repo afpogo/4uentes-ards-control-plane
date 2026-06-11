@@ -1,0 +1,122 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0033"
+title: "Create Jira issues for non-done feature states"
+status: "inbox"
+created_at: "2026-06-05"
+requester: "4uentes"
+
+business_context: >
+  CR-SST-0029 produced the dry-run for nine SST feature states that are not
+  done, and CR-SST-0032 verified read-only Atlassian MCP connectivity with Jira
+  project key SST visible. The team now needs to create Jira issues in the
+  SST-Team board so the pending work can be taken in order.
+
+requested_change: >
+  Implement and execute the Jira MCP issue creation flow for the nine non-done
+  feature states, including Jira metadata verification, duplicate search, issue
+  creation with explicit approval, and evidence of created issue keys.
+
+expected_outcome: >
+  Jira project SST contains one issue per non-done feature state, unless a
+  duplicate already exists and is recorded as skipped.
+
+initial_scope:
+  solution: "sst"
+  services: []
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services: []
+  affected_ards: []
+  capabilities:
+    - jira-mcp-ticketing
+    - feature-bugfix-state-read-model
+  risks:
+    - id: EXTERNAL_JIRA_WRITE
+      severity: high
+    - id: DUPLICATE_TICKET_RISK
+      severity: medium
+    - id: REQUIRED_FIELD_MISMATCH
+      severity: medium
+
+required_context:
+  - "requests/done/CR-SST-0032-jira-mcp-read-only-verification.yaml"
+  - "evidence/requests/CR-SST-0029/ticket-payload-dry-run.md"
+  - "evidence/requests/CR-SST-0032/jira-mcp-project-verification.md"
+  - "state/features/*.current.yaml"
+  - "scripts/jira-mcp/generate-dry-run.js"
+  - "scripts/jira-mcp/verify-project.js"
+
+required_checks:
+  - service_id: 4uentes-orchestor
+    command: "npm run check"
+  - service_id: 4uentes-orchestor
+    command: "npm run jira:mcp:dry-run"
+  - service_id: 4uentes-orchestor
+    command: "npm run jira:mcp:metadata -- --connect"
+  - service_id: 4uentes-orchestor
+    command: "npm run jira:mcp:duplicates -- --connect"
+  - service_id: 4uentes-orchestor
+    command: "npm run jira:mcp:create -- --connect --approved"
+
+risk:
+  level: "high"
+  score: 8
+  drivers:
+    - EXTERNAL_JIRA_WRITE
+    - DUPLICATE_TICKET_RISK
+    - REQUIRED_FIELD_MISMATCH
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - EXTERNAL_JIRA_WRITE
+    - OAUTH_AND_PERMISSION_BOUNDARY
+    - CONTROL_PLANE_EXTERNAL_CONNECTOR
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The task creates external Jira issues and must preserve approval, duplicate, and evidence boundaries."
+
+subagent_deployment_plan:
+  required: true
+  roles:
+    - security-contract-reviewer
+    - implementation-planner
+    - validation-reviewer
+  parallelizable: true
+  fallback: "If subagent tools are unavailable, the main agent must perform connector security, implementation planning, and validation review sequentially."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "control-plane-only"
+
+validation:
+  required_checks:
+    - "npm run check"
+    - "npm run jira:mcp:dry-run"
+    - "npm run jira:mcp:metadata -- --connect"
+    - "npm run jira:mcp:duplicates -- --connect"
+    - "npm run jira:mcp:create -- --connect --approved"
+  evidence_required:
+    - "jira_required_fields_summary"
+    - "duplicate_search_summary"
+    - "created_ticket_summary"
+    - "changed_files_summary"
+    - "validation_results"
+
+decision:
+  status: "pending"
+  approver: "TODO"
+
+planner_notes:
+  - "Jira writes are limited to createJiraIssue for approved non-duplicate payloads."
+  - "No Jira edits, comments, transitions, worklogs, or issue links are allowed in this request."
+  - "No secrets may be written to Git."

@@ -1,0 +1,174 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0060"
+title: "Close article-tags runtime gap for SST Tags Governance"
+status: planned
+source_request: "requests/inbox/CR-SST-0060-sst-tags-governance-article-tags-runtime-gap-closure.yaml"
+created_at: "2026-06-08"
+requester: "4uentes"
+
+initial_scope:
+  solution: "sst"
+  services:
+    - "sst-bend"
+    - "4uentes-auth"
+    - "sst-fend"
+  include_optional_services: false
+  optional_services:
+    - "sst-extension"
+
+control_plane_context:
+  feature_state: "sst-tags-governance"
+  feature_state_file: "state/features/sst-tags-governance.current.yaml"
+  jira_issue_key: "SST-4"
+  current_feature_status: "runtime-partial"
+  current_jira_status_observed: "En curso"
+  governing_request: "CR-SST-0060"
+  previous_transition_intake: "CR-SST-0057"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "sst-bend"
+      via: "article-tags backend runtime and capability contract"
+      service_kind: "api"
+      ards_kind: "backend-api"
+      status: "active"
+    - service_id: "4uentes-auth"
+      via: "BFF/auth boundary for article create/update/read flows"
+      service_kind: "shared-auth-provider"
+      ards_kind: "shared-auth-provider"
+      status: "active"
+    - service_id: "sst-fend"
+      via: "article create/update UI adoption for structured tags"
+      service_kind: "frontend-spa"
+      ards_kind: "frontend-web"
+      status: "active"
+    - service_id: "sst-extension"
+      via: "optional Quick Save article tag producer"
+      service_kind: "browser-extension"
+      ards_kind: "browser-extension"
+      status: "optional-active"
+      optional: true
+  capabilities:
+    - "sst-tags-governance"
+    - "article-tags"
+  risks:
+    - id: "MULTI_SERVICE_RUNTIME_SCOPE"
+      severity: high
+    - id: "API_CONTRACT_CHANGE"
+      severity: high
+    - id: "SHARED_AUTH_PROVIDER_BOUNDARY"
+      severity: high
+    - id: "FRONTEND_CREATE_UPDATE_WORKFLOW"
+      severity: medium
+    - id: "OPTIONAL_EXTENSION_PRODUCER_DRIFT"
+      severity: medium
+
+required_context:
+  - "state/features/sst-tags-governance.current.yaml"
+  - "state/capability-links.yaml"
+  - "evidence/requests/CR-SST-0014/implementation-state-analysis.md"
+  - "evidence/requests/CR-SST-0014/next-request-boundary.md"
+  - "evidence/requests/CR-SST-0016/backend-poc-summary.md"
+  - "evidence/requests/CR-SST-0057/jira-status-observation-summary.md"
+  - "catalog/services/sst-bend.yaml"
+  - "catalog/services/4uentes-auth.yaml"
+  - "catalog/services/sst-fend.yaml"
+  - "solutions/sst.yaml"
+  - "AGENTS.md"
+
+implementation_tracks:
+  - id: "backend-contract-and-tests"
+    service_id: "sst-bend"
+    objective: "Promote article-tags capability and validate article tag runtime behavior."
+    expected_work:
+      - "Inspect existing article-tags capability draft and current article endpoints."
+      - "Promote or update capability status according to local ARDS/SDD rules."
+      - "Add or confirm coverage for POST/PATCH articles with tags."
+      - "Add or confirm coverage for GET articles and GET article detail with includeTags=true."
+  - id: "bff-auth-boundary"
+    service_id: "4uentes-auth"
+    objective: "Ensure structured article tags cross the BFF/auth boundary intentionally."
+    expected_work:
+      - "Inspect article create/update pass-through or BFF transformation behavior."
+      - "Preserve structured tag payloads without lossy string-only conversion."
+      - "Validate auth-protected article tag operations."
+  - id: "frontend-article-tags-ui"
+    service_id: "sst-fend"
+    objective: "Adopt structured tags in article create/update workflows."
+    expected_work:
+      - "Inspect current article editor tag model."
+      - "Support selecting or entering structured tags for create/update."
+      - "Render returned article tags from includeTags=true consistently."
+  - id: "optional-extension-producer-review"
+    service_id: "sst-extension"
+    optional: true
+    objective: "Decide whether Quick Save is in this CR or remains deferred."
+    expected_work:
+      - "Read only unless explicitly included later."
+
+acceptance_criteria:
+  - "No functional repo is modified until this planned request is used as the governing request."
+  - "Each touched functional repo records local evidence or validation output."
+  - "article-tags is no longer only draft/backend-partial if implementation succeeds."
+  - "SST-4 remains the Jira issue for the feature-state work."
+  - "state/features/sst-tags-governance.current.yaml is updated only after implementation evidence exists."
+
+required_checks:
+  - service_id: "sst-bend"
+    command: "npm run check"
+  - service_id: "4uentes-auth"
+    command: "npm run check"
+  - service_id: "sst-fend"
+    command: "npm run check"
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check"
+
+risk:
+  level: high
+  score: 7
+  drivers:
+    - "MULTI_SERVICE_RUNTIME_SCOPE"
+    - "API_CONTRACT_CHANGE"
+    - "SHARED_AUTH_PROVIDER_BOUNDARY"
+    - "FRONTEND_CREATE_UPDATE_WORKFLOW"
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "multiple functional repositories"
+    - "API/BFF/frontend contract path"
+    - "shared auth provider boundary"
+    - "runtime data shape for article tags"
+    - "state transition depends on evidence"
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "This crosses backend API, shared auth/BFF, frontend workflows, and ARDS/SDD state."
+
+subagent_deployment_plan:
+  required: true
+  parallelizable: true
+  roles:
+    - "backend-contract-reviewer"
+    - "bff-auth-boundary-reviewer"
+    - "frontend-workflow-reviewer"
+    - "ards-sdd-validator"
+  fallback: "If subagents or exact model aliases are unavailable, perform the same review sequentially and record the limitation in evidence."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "one-branch-per-functional-repo"
+  jira_write_required: false
+
+decision:
+  status: "approved-for-implementation-planning"
+  approver: "4uentes"
+  approved_at: "2026-06-08"
+  note: "This request prepares the next implementation slice for SST-4 without modifying functional repositories yet."

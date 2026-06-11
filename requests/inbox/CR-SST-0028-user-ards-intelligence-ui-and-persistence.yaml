@@ -1,0 +1,125 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0028"
+title: "Define user ARDS intelligence UI and persistence workflow"
+status: "inbox"
+created_at: "2026-06-03"
+requester: "4uentes"
+
+business_context: >
+  After SST defines the user ARDS/SDD product model and paragraph derivation
+  workflow, the product needs a visible intelligence flow where users can submit
+  sources, track processing, inspect summaries and evidence, and consolidate
+  approved knowledge into their ARDS/SDD.
+
+requested_change: >
+  Define the backend-first UI and persistence workflow for SST user ARDS
+  intelligence, including source processing actions, durable jobs, status
+  tracking, validated persistence, user review, visible summaries, paragraph
+  evidence, and authority boundaries between frontend, backend, chatbot, and
+  auth/account scope.
+
+expected_outcome: >
+  A control-plane request plan for implementing the user-facing SST intelligence
+  experience without bypassing backend validation, authorization, idempotency, or
+  ARDS/SDD governance.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - sst-fend
+    - sst-bend
+    - sst-chatbot
+    - 4uentes-auth
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services: []
+  affected_ards: []
+  capabilities:
+    - document-agent-workflows
+    - application-context-connector
+    - user-activity-ards-memory
+    - prompt-catalog-and-versioning
+  risks:
+    - id: USER_VISIBLE_ARDS_MUTATION_FLOW
+      severity: high
+    - id: BACKEND_FIRST_PERSISTENCE_BOUNDARY
+      severity: high
+    - id: AUTHORIZATION_AND_ACCOUNT_SCOPE
+      severity: high
+
+required_context:
+  - "solutions/sst.yaml"
+  - "catalog/services/sst-fend.yaml"
+  - "catalog/services/sst-bend.yaml"
+  - "catalog/services/sst-chatbot.yaml"
+  - "catalog/services/4uentes-auth.yaml"
+  - "specs/capabilities/inbound/4uentes-orchestor--document-agent-workflows.yaml"
+  - "specs/capabilities/inbound/4uentes-orchestor--sst-chatbot-agent-handoff.yaml"
+  - "requests/inbox/CR-SST-0026-user-ards-sdd-product-model.yaml"
+  - "requests/inbox/CR-SST-0027-paragraph-sequential-ards-derivation.yaml"
+  - "docs/ai/model-selection-policy.md"
+
+required_checks:
+  - service_id: 4uentes-orchestor
+    command: "npm run check"
+
+risk:
+  level: "high"
+  score: 8
+  drivers:
+    - USER_VISIBLE_ARDS_MUTATION_FLOW
+    - BACKEND_FIRST_PERSISTENCE_BOUNDARY
+    - AUTHORIZATION_AND_ACCOUNT_SCOPE
+    - MULTI_SERVICE_UI_BACKEND_AGENT_SCOPE
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - USER_VISIBLE_ARDS_MUTATION_FLOW
+    - BACKEND_FIRST_PERSISTENCE_BOUNDARY
+    - AUTHORIZATION_AND_ACCOUNT_SCOPE
+    - MULTI_SERVICE_UI_BACKEND_AGENT_SCOPE
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The workflow crosses frontend UX, backend persistence, authorization, agent result validation, and user ARDS/SDD governance."
+
+subagent_deployment_plan:
+  required: true
+  roles:
+    - architecture-reviewer
+    - security-contract-reviewer
+    - cross-repo-impact-reviewer
+    - validation-reviewer
+  parallelizable: true
+  fallback: "Subagent tools require explicit user delegation; if not explicitly requested, the main agent must perform architecture, security, cross-repo, and validation reviews sequentially."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "one-branch-per-repo"
+
+validation:
+  required_checks:
+    - "npm run check"
+  evidence_required:
+    - "ui_backend_workflow_contract"
+    - "persistence_authority_boundary"
+    - "authorization_scope_summary"
+    - "changed_files_summary"
+    - "impacted_services_summary"
+
+decision:
+  status: "pending"
+  approver: "TODO"
+
+planner_notes:
+  - "The frontend should expose a user workflow, not become the authority that writes ARDS/SDD entries."
+  - "The backend must validate and persist agent proposals before the user ARDS/SDD is mutated."

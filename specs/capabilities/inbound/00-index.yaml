@@ -6,7 +6,7 @@ consumer:
 capabilities:
   - id: "capability.inbound.sst-document-agent-workflows"
     title: "Document Agent workflow handoff"
-    status: "draft"
+    status: "implemented"
     spec: "specs/capabilities/inbound/4uentes-orchestor--document-agent-workflows.yaml"
     upstream:
       repo: "sst-fend"

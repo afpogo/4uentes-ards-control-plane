@@ -1,0 +1,113 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0029"
+title: "Connect Jira MCP and plan feature-state ticket creation"
+status: "inbox"
+created_at: "2026-06-04"
+requester: "4uentes"
+
+business_context: >
+  The control-plane has a current feature-state read model and needs to create
+  Jira tickets for SST functionalities that are not done. The team wants to use
+  MCP where possible, while keeping responsibility, credentials, approvals, and
+  evidence inside the orchestrator workflow.
+
+requested_change: >
+  Define and execute the control-plane-owned Jira MCP integration plan,
+  including ownership, connection prerequisites, dry-run payload generation,
+  duplicate checks, human approval gates, and evidence rules for creating Jira
+  tickets from state/features/*.current.yaml.
+
+expected_outcome: >
+  A documented and auditable Jira MCP ticketing workflow where 4uentes-orchestor
+  owns the integration and child repositories remain outside the Jira connector
+  responsibility boundary.
+
+initial_scope:
+  solution: "sst"
+  services: []
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services: []
+  affected_ards: []
+  capabilities:
+    - feature-bugfix-state-read-model
+    - jira-mcp-ticketing
+  risks:
+    - id: EXTERNAL_WRITE_INTEGRATION
+      severity: high
+    - id: JIRA_PERMISSION_AND_AUTH_BOUNDARY
+      severity: high
+    - id: DUPLICATE_TICKET_RISK
+      severity: medium
+
+required_context:
+  - "docs/requests/jira-mcp-ticketing-playbook.md"
+  - "docs/requests/state-read-model.md"
+  - "docs/requests/execution-model.md"
+  - "docs/ai/model-selection-policy.md"
+  - "state/features/*.current.yaml"
+
+required_checks:
+  - service_id: 4uentes-orchestor
+    command: "npm run check"
+
+risk:
+  level: "high"
+  score: 7
+  drivers:
+    - EXTERNAL_WRITE_INTEGRATION
+    - JIRA_PERMISSION_AND_AUTH_BOUNDARY
+    - DUPLICATE_TICKET_RISK
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - EXTERNAL_WRITE_INTEGRATION
+    - JIRA_PERMISSION_AND_AUTH_BOUNDARY
+    - CONTROL_PLANE_EXTERNAL_CONNECTOR
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The task configures an external write-capable connector and requires permission, credential, approval, and evidence boundaries."
+
+subagent_deployment_plan:
+  required: true
+  roles:
+    - security-contract-reviewer
+    - implementation-planner
+    - validation-reviewer
+  parallelizable: true
+  fallback: "If subagent tools are unavailable, the main agent must perform connector security, implementation planning, and validation review sequentially."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "control-plane-only"
+
+validation:
+  required_checks:
+    - "npm run check"
+  evidence_required:
+    - "jira_mcp_connection_summary_no_secrets"
+    - "jira_project_and_issue_type_summary"
+    - "jira_required_fields_summary"
+    - "ticket_payload_dry_run"
+    - "duplicate_search_summary"
+    - "created_ticket_summary"
+
+decision:
+  status: "pending"
+  approver: "TODO"
+
+planner_notes:
+  - "4uentes-orchestor owns the Jira MCP integration workflow."
+  - "Atlassian/Jira admins own OAuth/API-token, domain, IP allowlist, and app authorization controls."
+  - "Functional repositories must not store Jira credentials or directly own MCP ticket creation."
+  - "Creating Jira tickets requires a reviewed dry-run and explicit human approval."

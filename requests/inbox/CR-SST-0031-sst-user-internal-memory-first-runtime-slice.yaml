@@ -1,0 +1,124 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0031"
+title: "Define first SST user internal memory runtime slice"
+status: "inbox"
+created_at: "2026-06-05"
+requester: "4uentes"
+
+business_context: >
+  CR-SST-0030 established that SST should implement internal user memory, not a
+  per-user project ARDS/SDD. The first implementable slice should prove the core
+  memory loop with simple platform and chatbot events before adding long-source
+  paragraph processing or a full UI.
+
+requested_change: >
+  Define the first runtime slice for SST user internal memory: capture scoped
+  user memory events, allow chatbot to propose facts and intentions, validate
+  proposals through backend authority, persist durable memory records, and
+  support basic chatbot recall over stored events, facts, and intentions.
+
+expected_outcome: >
+  A control-plane request plan and design evidence that can be handed to
+  functional repositories for implementation after approval, without confusing
+  SST user internal memory with project ARDS/SDD.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - sst-bend
+    - sst-chatbot
+    - 4uentes-auth
+    - sst-fend
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services: []
+  affected_ards: []
+  capabilities:
+    - user-activity-ards-memory
+    - application-context-connector
+    - prompt-catalog-and-versioning
+  risks:
+    - id: USER_MEMORY_PRIVATE_DATA_SCOPE
+      severity: high
+    - id: CHATBOT_MEMORY_PROPOSAL_AUTHORITY
+      severity: high
+    - id: BACKEND_VALIDATION_AND_IDEMPOTENCY
+      severity: high
+    - id: RECALL_PRIVACY_AND_EXPLAINABILITY
+      severity: high
+
+required_context:
+  - "requests/done/CR-SST-0030-sst-user-internal-memory-boundary.yaml"
+  - "evidence/requests/CR-SST-0030/concept-boundary.md"
+  - "evidence/requests/CR-SST-0030/user-internal-memory-model.md"
+  - "evidence/requests/CR-SST-0030/correction-impact-summary.md"
+  - "catalog/services/sst-bend.yaml"
+  - "catalog/services/sst-chatbot.yaml"
+  - "catalog/services/4uentes-auth.yaml"
+  - "catalog/services/sst-fend.yaml"
+  - "docs/ai/model-selection-policy.md"
+
+required_checks:
+  - service_id: 4uentes-orchestor
+    command: "npm run check"
+
+risk:
+  level: "high"
+  score: 8
+  drivers:
+    - USER_MEMORY_PRIVATE_DATA_SCOPE
+    - CHATBOT_MEMORY_PROPOSAL_AUTHORITY
+    - BACKEND_VALIDATION_AND_IDEMPOTENCY
+    - RECALL_PRIVACY_AND_EXPLAINABILITY
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - USER_MEMORY_PRIVATE_DATA_SCOPE
+    - CHATBOT_MEMORY_PROPOSAL_AUTHORITY
+    - BACKEND_VALIDATION_AND_IDEMPOTENCY
+    - RECALL_PRIVACY_AND_EXPLAINABILITY
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The request defines private user memory, chatbot proposal authority, backend validation, idempotency, and recall privacy boundaries."
+
+subagent_deployment_plan:
+  required: true
+  roles:
+    - architecture-reviewer
+    - security-contract-reviewer
+    - cross-repo-impact-reviewer
+    - validation-reviewer
+  parallelizable: true
+  fallback: "Subagent tools require explicit user delegation; if not explicitly requested, the main agent must perform architecture, security, cross-repo, and validation reviews sequentially."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "orchestrator-only"
+
+validation:
+  required_checks:
+    - "npm run check"
+  evidence_required:
+    - "runtime_slice_contract"
+    - "memory_event_proposal_flow"
+    - "authority_and_privacy_boundary"
+    - "changed_files_summary"
+    - "validation_results"
+
+decision:
+  status: "pending"
+  approver: "TODO"
+
+planner_notes:
+  - "This request must stay aligned with CR-SST-0030 terminology: SST user internal memory, not user ARDS/SDD."
+  - "Functional repositories must not be modified until this slice is approved for implementation."

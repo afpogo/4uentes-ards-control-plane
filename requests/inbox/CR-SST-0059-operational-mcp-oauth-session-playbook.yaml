@@ -1,0 +1,95 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0059"
+title: "Operational MCP OAuth session playbook"
+status: "inbox"
+created_at: "2026-06-08"
+requester: "4uentes"
+
+summary: >
+  Create the first integral operational playbook for Jira/MCP scripts and OAuth
+  session handling. The playbook must cover repeated execution scenarios,
+  read-only versus write gates, OAuth initiation, stale callback ports, blocked
+  authentication, and evidence expectations.
+
+business_context: >
+  CR-SST executions are not all the same. Operators need a repeatable way to
+  decide which script path applies, how OAuth sessions should be initiated, and
+  how to recover when MCP sessions cannot authenticate.
+
+requested_change: >
+  Add a control-plane playbook for MCP/OAuth session operations and link it
+  from request documentation. Activate backlog item SST-BL-JIRA-005 with this
+  CR-SST. Do not modify functional repositories and do not execute Jira writes.
+
+expected_outcome: >
+  Operators can start Jira/MCP work with a known scenario, run the correct
+  script sequence, handle OAuth session blockers, and record evidence without
+  leaking secrets or confusing dry-run, read-only, and approved-write modes.
+
+initial_scope:
+  solution: "sst"
+  repository: "4uentes-orchestor"
+  backlog_id: "SST-BL-JIRA-005"
+  include_functional_repositories: false
+
+required_context:
+  - "docs/requests/jira-mcp-ticketing-playbook.md"
+  - "docs/requests/jira-mcp-access-sync-health-contract.md"
+  - "docs/requests/jira-backlog-registry-policy.md"
+  - "state/jira-backlog-registry.yaml"
+  - "evidence/requests/CR-SST-0058/jira-mcp-oauth-port-blocker.md"
+  - "scripts/jira-mcp/"
+  - "package.json"
+
+validation:
+  required_checks:
+    - "npm run check"
+  evidence_required:
+    - "playbook_draft"
+    - "oauth_blocker_scenario"
+    - "changed_files_summary"
+    - "validation_results"
+
+execution:
+  requires_human_approval: false
+  jira_write_allowed: false
+  functional_repo_changes_allowed: false
+  external_write_allowed: false
+
+risk:
+  level: "high"
+  score: 7
+  drivers:
+    - "OAuth and Jira write operations require explicit separation."
+    - "Session recovery can disrupt unrelated local node processes if mishandled."
+    - "Playbook guidance affects future external write procedures."
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - OAUTH_SESSION_HANDLING
+    - EXTERNAL_JIRA_WRITE_GATING
+    - OPERATOR_RUNBOOK_AUTHORITY
+    - LOCAL_PROCESS_DISRUPTION_RISK
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The task defines operational handling for OAuth sessions and external Jira write gates."
+
+subagent_deployment_plan:
+  required: true
+  roles:
+    - security-contract-reviewer
+    - validation-reviewer
+    - operator-runbook-reviewer
+  fallback: "If subagents are unavailable, the main agent records the fallback and performs the review sequentially."
+  evidence_required: true
+
+decision:
+  status: "approved"
+  approver: "4uentes"
+  note: "User requested an integral playbook for MCP scripts and OAuth session scenarios."

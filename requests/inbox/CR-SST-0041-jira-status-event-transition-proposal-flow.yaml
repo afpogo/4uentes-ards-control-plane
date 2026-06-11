@@ -1,0 +1,32 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0041"
+title: "Define Jira status event and control-plane transition proposal flow"
+status: inbox
+created_at: "2026-06-07"
+requester: "4uentes"
+
+summary: >
+  Define how Jira status observations become auditable control-plane events and
+  transition proposals without automatically mutating feature_state, request
+  lifecycle, Jira issue status, or functional repositories.
+
+scope:
+  solution: "sst"
+  repository: "4uentes-orchestor"
+  functional_repositories_modified: false
+  jira_write_allowed: false
+  local_state_transition_allowed: false
+
+requested_outcome:
+  - "Define the event intake contract for Jira status observations."
+  - "Define the transition proposal lifecycle before any local state mutation."
+  - "Prepare the control-plane for a future runner that can evaluate events with guards."
+  - "Keep ARDS/SDD authority in the control-plane."
+
+references:
+  - "requests/done/CR-SST-0040-jira-control-plane-status-sync-policy.yaml"
+  - "evidence/requests/CR-SST-0040/status-sync-policy-analysis.md"
+  - "evidence/requests/CR-SST-0040/jira-status-observation-summary.md"
+  - "state/jira-backlog-sync-machine.yaml"
+

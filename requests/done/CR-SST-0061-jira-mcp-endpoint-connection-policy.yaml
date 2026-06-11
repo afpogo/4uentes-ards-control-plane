@@ -1,0 +1,80 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0061"
+title: "Jira MCP endpoint connection policy"
+status: "done"
+source_request: "requests/inbox/CR-SST-0061-jira-mcp-endpoint-connection-policy.yaml"
+planned_request: "requests/planned/CR-SST-0061-jira-mcp-endpoint-connection-policy.yaml"
+created_at: "2026-06-08"
+completed_at: "2026-06-08"
+requester: "4uentes"
+
+summary: >
+  Promoted the Jira/Confluence MCP endpoint pattern to a living ARDS/SDD
+  control-plane policy. The policy defines /v1/mcp as the operational endpoint
+  through JIRA_MCP_ARGS, treats authv2 as historical/auth-diagnostic surface,
+  and records that Jira/Confluence synchronization does not propagate to child
+  repositories.
+
+scope:
+  solution: "sst"
+  repository: "4uentes-orchestor"
+  functional_repositories_modified: false
+  jira_write_executed: false
+  confluence_write_executed: false
+  external_write_executed: false
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - OAUTH_SESSION_HANDLING
+    - MCP_ENDPOINT_DISCLOSURE_POLICY
+    - EXTERNAL_WRITE_GATING
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The request defines endpoint and authentication policy for external MCP operations."
+
+subagent_deployment_plan:
+  required: true
+  roles:
+    - security-contract-reviewer
+    - ards-sdd-validator
+    - validation-reviewer
+  fallback: "The main agent performed policy, security, and validation review sequentially."
+  evidence_ref: "evidence/requests/CR-SST-0061/subagent-deployment-evidence.md"
+
+results:
+  policy_ref: "docs/requests/jira-mcp-endpoint-connection-policy.md"
+  operational_endpoint: "https://mcp.atlassian.com/v1/mcp"
+  operational_pattern: "JIRA_MCP_ARGS='--yes mcp-remote@latest https://mcp.atlassian.com/v1/mcp'"
+  auth_diagnostic_endpoint: "https://mcp.atlassian.com/v1/mcp/authv2"
+  child_repo_propagation: false
+  sync_authority_repository: "4uentes-orchestor"
+  docs_index_updated: true
+  policy_check_updated: true
+
+evidence:
+  required:
+    - "evidence/requests/CR-SST-0061/implementation-summary.md"
+    - "evidence/requests/CR-SST-0061/jira-policy-check-summary.md"
+    - "evidence/requests/CR-SST-0061/subagent-deployment-evidence.md"
+    - "evidence/requests/CR-SST-0061/changed-files-summary.md"
+    - "evidence/requests/CR-SST-0061/validation-results.md"
+
+validation:
+  required_checks:
+    - "node --check scripts\\jira-mcp\\policy-check.js"
+    - "npm.cmd run jira:mcp:policy-check -- --request-id CR-SST-0061 --output-dir evidence\\requests\\CR-SST-0061"
+    - "npm.cmd run check"
+  status: "pass-with-inherited-warnings"
+
+decision:
+  status: "approved-done"
+  approver: "4uentes"
+  note: "Policy completed. Jira/Confluence MCP synchronization remains exclusive to the control-plane orchestrator."
+
+remaining_gaps: []

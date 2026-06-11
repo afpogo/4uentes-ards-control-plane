@@ -1,0 +1,85 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0049"
+title: "Define Jira backlog ticket format and dry-run payloads"
+status: "done"
+source_request: "requests/inbox/CR-SST-0049-jira-backlog-ticket-format-dry-run.yaml"
+planned_request: "requests/planned/CR-SST-0049-jira-backlog-ticket-format-dry-run.yaml"
+created_at: "2026-06-07"
+completed_at: "2026-06-07"
+requester: "4uentes"
+
+summary: >
+  Defined the Jira ticket format for local backlog registry items and generated
+  dry-run payloads. Backlog IDs are always present in the summary, while
+  assigned_cr_sst is represented in the description and labels when assigned.
+  No Jira tickets were created.
+
+scope:
+  solution: "sst"
+  repository: "4uentes-orchestor"
+  functional_repositories_modified: false
+  jira_write_executed: false
+  jira_tickets_created: false
+  local_state_transitions_executed: false
+
+depends_on:
+  - "requests/done/CR-SST-0047-jira-backlog-registry-and-cr-allocation-policy.yaml"
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - JIRA_BACKLOG_TICKET_FORMAT
+    - BACKLOG_IDENTITY_GOVERNANCE
+    - FUTURE_EXTERNAL_WRITE_BOUNDARY
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The completed phase defined Jira-visible identity for control-plane backlog items before future external writes."
+
+subagent_deployment_plan:
+  required: true
+  roles:
+    - architecture-reviewer
+    - security-contract-reviewer
+    - validation-reviewer
+  fallback: "The main agent performed architecture, write-boundary, and validation review sequentially."
+  evidence_ref: "evidence/requests/CR-SST-0049/subagent-deployment-evidence.md"
+
+results:
+  command_added: "npm run jira:mcp:backlog-dry-run"
+  command_file: "scripts/jira-mcp/generate-backlog-dry-run.js"
+  registry_ref: "state/jira-backlog-registry.yaml"
+  payloads_generated: 6
+  summaries_include_backlog_id: true
+  assigned_cr_sst_in_description: true
+  jira_tickets_created: 0
+  jira_writes: 0
+
+evidence:
+  required:
+    - "evidence/requests/CR-SST-0049/backlog-ticket-payload-dry-run.md"
+    - "evidence/requests/CR-SST-0049/backlog-ticket-payload-dry-run.json"
+    - "evidence/requests/CR-SST-0049/implementation-summary.md"
+    - "evidence/requests/CR-SST-0049/subagent-deployment-evidence.md"
+    - "evidence/requests/CR-SST-0049/changed-files-summary.md"
+    - "evidence/requests/CR-SST-0049/validation-results.md"
+
+validation:
+  required_checks:
+    - "node --check scripts/jira-mcp/generate-backlog-dry-run.js"
+    - "npm.cmd run jira:mcp:backlog-dry-run -- --request-id CR-SST-0049 --output-dir evidence/requests/CR-SST-0049"
+    - "npm.cmd run check"
+  status: "approved-done"
+
+decision:
+  status: "approved-done"
+  approver: "4uentes"
+  note: "Backlog Jira ticket format and dry-run payloads completed without Jira writes."
+
+next_sequence:
+  next_request_id: "CR-SST-0050"
+  note: "Use only for the next real prioritized process."

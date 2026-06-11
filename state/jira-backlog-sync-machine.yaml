@@ -1,0 +1,158 @@
+schema_version: "1.0"
+kind: "jira_backlog_sync_state_machine"
+status: "draft"
+updated_at: "2026-06-06"
+owner_repository: "4uentes-orchestor"
+authority:
+  source_of_truth: "control-plane"
+  external_mirror: "jira"
+  jira_project_key: "SST"
+  jira_board_name: "SST-Team"
+  default_issue_type: "Tarea"
+scope:
+  - feature_state
+  - request_lifecycle
+  - jira_backlog_sync
+process_fields:
+  sync_process:
+    label: "Proceso de sincronizacion"
+    source: "active request id passed to Jira sync commands"
+    example: "CR-SST-0034"
+  origin_processes:
+    label: "Procesos origen"
+    source: "feature_state.request_ids"
+    fallback: "ninguno"
+  stable_state_identity:
+    label: "State id"
+    source: "feature_state.id"
+states:
+  canonical:
+    - idle
+    - collecting-control-plane-state
+    - policy-checking
+    - reading-jira-metadata
+    - reconciling-jira
+    - ready-for-approval
+    - writing-jira
+    - blocked
+    - synced
+    - done
+  terminal:
+    - done
+events:
+  canonical:
+    - BACKLOG_SYNC_REQUESTED
+    - CONTROL_PLANE_STATE_COLLECTED
+    - POLICY_CHECK_PASSED
+    - POLICY_CHECK_FAILED
+    - JIRA_METADATA_CONFIRMED
+    - JIRA_METADATA_FAILED
+    - JIRA_DUPLICATES_SEARCHED
+    - JIRA_DUPLICATE_FOUND
+    - JIRA_UPDATE_PROPOSED
+    - JIRA_WRITE_APPROVED
+    - JIRA_WRITE_BLOCKED
+    - JIRA_ISSUE_CREATED
+    - JIRA_ISSUE_UPDATED
+    - JIRA_RECONCILED
+    - PROCESS_MARKED_DONE
+guards:
+  - id: policy_passed
+    description: "The generated Jira payload passes docs/requests/jira-feature-ticket-policy.md."
+  - id: no_duplicate_conflict
+    description: "Duplicate search has no unresolved conflict for the state_id or CR-SST process."
+  - id: write_approved
+    description: "A human approved the specific external Jira write action."
+  - id: no_secret_material
+    description: "Payload and evidence do not contain tokens, cookies, cloudId, private Jira URLs, or OAuth material."
+  - id: control_plane_authoritative
+    description: "The transition does not treat Jira state as canonical over local control-plane evidence."
+actions:
+  read_only:
+    - collect_feature_states
+    - collect_request_lifecycle
+    - generate_jira_payload_dry_run
+    - run_policy_check
+    - read_jira_metadata
+    - search_jira_duplicates
+    - write_non_secret_evidence
+  external_write:
+    - create_jira_issue
+    - update_jira_issue_description
+    - comment_jira_issue
+    - transition_jira_issue
+    - close_jira_issue
+transitions:
+  - from: idle
+    event: BACKLOG_SYNC_REQUESTED
+    to: collecting-control-plane-state
+    actions:
+      - collect_feature_states
+      - collect_request_lifecycle
+  - from: collecting-control-plane-state
+    event: CONTROL_PLANE_STATE_COLLECTED
+    to: policy-checking
+    actions:
+      - generate_jira_payload_dry_run
+      - run_policy_check
+  - from: policy-checking
+    event: POLICY_CHECK_PASSED
+    to: reading-jira-metadata
+    guards:
+      - policy_passed
+      - no_secret_material
+  - from: policy-checking
+    event: POLICY_CHECK_FAILED
+    to: blocked
+  - from: reading-jira-metadata
+    event: JIRA_METADATA_CONFIRMED
+    to: reconciling-jira
+    actions:
+      - search_jira_duplicates
+  - from: reading-jira-metadata
+    event: JIRA_METADATA_FAILED
+    to: blocked
+  - from: reconciling-jira
+    event: JIRA_DUPLICATES_SEARCHED
+    to: ready-for-approval
+    guards:
+      - no_duplicate_conflict
+  - from: reconciling-jira
+    event: JIRA_DUPLICATE_FOUND
+    to: ready-for-approval
+    actions:
+      - write_non_secret_evidence
+  - from: ready-for-approval
+    event: JIRA_WRITE_APPROVED
+    to: writing-jira
+    guards:
+      - write_approved
+      - no_secret_material
+      - control_plane_authoritative
+  - from: writing-jira
+    event: JIRA_ISSUE_CREATED
+    to: synced
+    actions:
+      - write_non_secret_evidence
+  - from: writing-jira
+    event: JIRA_ISSUE_UPDATED
+    to: synced
+    actions:
+      - write_non_secret_evidence
+  - from: writing-jira
+    event: JIRA_WRITE_BLOCKED
+    to: blocked
+    actions:
+      - write_non_secret_evidence
+  - from: synced
+    event: PROCESS_MARKED_DONE
+    to: done
+    guards:
+      - control_plane_authoritative
+rules:
+  - "Jira is an operational mirror; the control-plane remains authoritative."
+  - "The sync process identifies the CR-SST request executing reconciliation; origin processes identify the feature state request_ids."
+  - "CR-SST sync processes do not automatically become Jira issues."
+  - "External Jira writes require explicit approval per write action."
+  - "Done is a terminal control-plane history state only when evidence supports it."
+  - "XState may execute this model later, but this YAML is the current auditable contract."

@@ -1,0 +1,83 @@
+{
+  "requestId": "CR-SST-0037",
+  "sourceReconciliation": "evidence/requests/CR-SST-0036/jira-reconciliation-results.json",
+  "externalWrite": false,
+  "summary": {
+    "proposedUpdates": 8,
+    "noAction": 0,
+    "blocked": 1
+  },
+  "actions": [
+    {
+      "stateId": "sst-tags-governance",
+      "issueKey": "SST-4",
+      "action": "propose-description-update",
+      "reason": "The selected issue needs the current sync/origin process fields.",
+      "expectedSummary": "[SST][feature-state] Cerrar gaps runtime-partial de SST Tags Governance",
+      "proposedDescription": "Proceso de sincronizacion:\n- CR-SST-0037\n\nProcesos origen:\n- CR-SST-0010\n- CR-SST-0014\n- CR-SST-0015\n- CR-SST-0016\n\nEstado actual: runtime-partial.\n\nObjetivo:\nAvanzar esta funcionalidad desde el read-model del control-plane y cerrar los gaps abiertos mediante el lifecycle aprobado.\n\nGaps abiertos:\n- Promote article-tags from draft to an active governed SST capability.\n- Adopt structured article tags in BFF and frontend create/update flows.\n- Promote sst-tag-prefix-engine from backend POC to runtime preview/import endpoint.\n- Keep real-time transcription as a separate future intake request.\n\nState id:\n- sst-tags-governance\n\nServicios afectados:\n- sst-bend\n- 4uentes-auth\n- sst-fend\n- sst-extension\n\nRequest ids relacionados:\n- CR-SST-0010\n- CR-SST-0014\n- CR-SST-0015\n- CR-SST-0016\n\nFuente control-plane:\n- state/features/sst-tags-governance.current.yaml\n\nEvidence refs:\n- evidence/requests/CR-SST-0002/implementation-state-report.md\n- evidence/requests/CR-SST-0002/findings.yaml\n- evidence/requests/CR-SST-0002/runtime-readiness-summary.md\n- evidence/requests/CR-SST-0014/implementation-state-analysis.md\n- evidence/requests/CR-SST-0014/course-tags-analysis.md\n- evidence/requests/CR-SST-0014/next-request-boundary.md\n- evidence/requests/CR-SST-0015/java-spring-course-structure-analysis.md\n- evidence/requests/CR-SST-0016/backend-poc-summary.md\n\nValidation refs:\n- ninguno\n\nCriterio de cierre esperado:\n- La decision o implementacion pendiente queda registrada en evidencia.\n- Los cambios en repos funcionales, si hacen falta, entran por request aprobado.\n- El feature_state se actualiza solo cuando la evidencia soporte una transicion de estado."
+    },
+    {
+      "stateId": "robots",
+      "issueKey": "SST-5",
+      "action": "propose-description-update",
+      "reason": "The selected issue needs the current sync/origin process fields.",
+      "expectedSummary": "[SST][feature-state] Formalizar ownership runtime-partial de SST Robots",
+      "proposedDescription": "Proceso de sincronizacion:\n- CR-SST-0037\n\nProcesos origen:\n- CR-SST-0006\n\nEstado actual: runtime-partial.\n\nObjetivo:\nAvanzar esta funcionalidad desde el read-model del control-plane y cerrar los gaps abiertos mediante el lifecycle aprobado.\n\nGaps abiertos:\n- Future work needs a request boundary before functional repository changes.\n- Capability ownership is not yet formalized.\n\nState id:\n- robots\n\nServicios afectados:\n- sst-fend\n- sst-bend\n- 4uentes-auth\n- sst-extension\n- sst-4uentes-infra\n\nRequest ids relacionados:\n- CR-SST-0006\n\nFuente control-plane:\n- state/features/robots.current.yaml\n\nEvidence refs:\n- evidence/requests/CR-SST-0006/implementation-state-report.md\n- evidence/requests/CR-SST-0006/cross-repo-summary.md\n- evidence/requests/CR-SST-0006/validation-results.md\n\nValidation refs:\n- ninguno\n\nCriterio de cierre esperado:\n- La decision o implementacion pendiente queda registrada en evidencia.\n- Los cambios en repos funcionales, si hacen falta, entran por request aprobado.\n- El feature_state se actualiza solo cuando la evidencia soporte una transicion de estado."
+    },
+    {
+      "stateId": "learning-content-tags",
+      "issueKey": "SST-6",
+      "action": "propose-description-update",
+      "reason": "The selected issue needs the current sync/origin process fields.",
+      "expectedSummary": "[SST][feature-state] Completar ruta runtime de SST Learning Content Tags",
+      "proposedDescription": "Proceso de sincronizacion:\n- CR-SST-0037\n\nProcesos origen:\n- CR-SST-0015\n- CR-SST-0016\n\nEstado actual: implemented-local.\n\nObjetivo:\nAvanzar esta funcionalidad desde el read-model del control-plane y cerrar los gaps abiertos mediante el lifecycle aprobado.\n\nGaps abiertos:\n- Promote learning-content parser from POC module to runtime import/preview endpoint.\n- Define frontend rendering for clase, nota, recordar, ejemplo, image, docs, and code blocks.\n- Keep generated lab artifacts excluded from ingestion by default.\n\nState id:\n- learning-content-tags\n\nServicios afectados:\n- sst-bend\n- sst-fend\n\nRequest ids relacionados:\n- CR-SST-0015\n- CR-SST-0016\n\nFuente control-plane:\n- state/features/learning-content-tags.current.yaml\n\nEvidence refs:\n- evidence/requests/CR-SST-0015/java-spring-course-structure-analysis.md\n- evidence/requests/CR-SST-0015/parser-boundary-recommendation.md\n- evidence/requests/CR-SST-0016/backend-poc-summary.md\n\nValidation refs:\n- ninguno\n\nCriterio de cierre esperado:\n- La decision o implementacion pendiente queda registrada en evidencia.\n- Los cambios en repos funcionales, si hacen falta, entran por request aprobado.\n- El feature_state se actualiza solo cuando la evidencia soporte una transicion de estado."
+    },
+    {
+      "stateId": "sst-tag-prefix-engine",
+      "issueKey": null,
+      "action": "blocked-unresolved-reconciliation",
+      "reason": "Match type is ambiguous-or-no-exact-summary; no exact issue was selected.",
+      "expectedSummary": "[SST][feature-state] Promover SST Tag Prefix Engine de POC a boundary runtime"
+    },
+    {
+      "stateId": "sst-chatbot",
+      "issueKey": "SST-7",
+      "action": "propose-description-update",
+      "reason": "The selected issue needs the current sync/origin process fields.",
+      "expectedSummary": "[SST][feature-state] Seleccionar transporte runtime para handoff SST Chatbot",
+      "proposedDescription": "Proceso de sincronizacion:\n- CR-SST-0037\n\nProcesos origen:\n- CR-SST-0007\n- CR-SST-0016\n- CR-SST-0021\n- CR-SST-0022\n\nEstado actual: implemented-local.\n\nObjetivo:\nAvanzar esta funcionalidad desde el read-model del control-plane y cerrar los gaps abiertos mediante el lifecycle aprobado.\n\nGaps abiertos:\n- Transport for runtime orchestrator handoff is not selected; CR-SST-0022 implements a local/fake adapter only.\n\nState id:\n- sst-chatbot\n\nServicios afectados:\n- sst-chatbot\n- sst-fend\n- sst-bend\n- 4uentes-auth\n- sst-extension\n- sst-4uentes-infra\n\nRequest ids relacionados:\n- CR-SST-0007\n- CR-SST-0016\n- CR-SST-0021\n- CR-SST-0022\n\nFuente control-plane:\n- state/features/sst-chatbot.current.yaml\n\nEvidence refs:\n- inventory/evidence/git/sst-chatbot.md\n- evidence/requests/CR-SST-0007/capabilities-trace.md\n- evidence/requests/CR-SST-0007/orchestrator-boundary-summary.md\n- evidence/requests/CR-SST-0007/adoption-gaps.md\n- evidence/requests/CR-SST-0016/onboarding-summary.md\n- evidence/requests/CR-SST-0021/baseline.md\n- evidence/requests/CR-SST-0021/implementation-summary.md\n- evidence/requests/CR-SST-0021/changed-files-summary.md\n- evidence/requests/CR-SST-0022/baseline.md\n- evidence/requests/CR-SST-0022/implementation-summary.md\n- evidence/requests/CR-SST-0022/changed-files-summary.md\n\nValidation refs:\n- evidence/requests/CR-SST-0016/validation-results.md\n- evidence/requests/CR-SST-0021/validation-results.md\n- evidence/requests/CR-SST-0022/validation-results.md\n\nCriterio de cierre esperado:\n- La decision o implementacion pendiente queda registrada en evidencia.\n- Los cambios en repos funcionales, si hacen falta, entran por request aprobado.\n- El feature_state se actualiza solo cuando la evidencia soporte una transicion de estado."
+    },
+    {
+      "stateId": "document-agent",
+      "issueKey": "SST-8",
+      "action": "propose-description-update",
+      "reason": "The selected issue needs the current sync/origin process fields.",
+      "expectedSummary": "[SST][feature-state] Formalizar evidencia de SST Document Agent Workflows",
+      "proposedDescription": "Proceso de sincronizacion:\n- CR-SST-0037\n\nProcesos origen:\n- CR-SST-0008\n\nEstado actual: implemented-local.\n\nObjetivo:\nAvanzar esta funcionalidad desde el read-model del control-plane y cerrar los gaps abiertos mediante el lifecycle aprobado.\n\nGaps abiertos:\n- CR-SST-0008 needs planned request and formal evidence.\n\nState id:\n- document-agent\n\nServicios afectados:\n- sst-fend\n- 4uentes-auth\n- sst-bend\n\nRequest ids relacionados:\n- CR-SST-0008\n\nFuente control-plane:\n- state/features/document-agent.current.yaml\n\nEvidence refs:\n- ninguno\n\nValidation refs:\n- ninguno\n\nCriterio de cierre esperado:\n- La decision o implementacion pendiente queda registrada en evidencia.\n- Los cambios en repos funcionales, si hacen falta, entran por request aprobado.\n- El feature_state se actualiza solo cuando la evidencia soporte una transicion de estado."
+    },
+    {
+      "stateId": "ards-sdd-policy-unification",
+      "issueKey": "SST-9",
+      "action": "propose-description-update",
+      "reason": "The selected issue needs the current sync/origin process fields.",
+      "expectedSummary": "[SST][feature-state] Completar handoff y adopcion de ARDS/SDD Policy Unification",
+      "proposedDescription": "Proceso de sincronizacion:\n- CR-SST-0037\n\nProcesos origen:\n- CR-SST-0024\n- CR-SST-0025\n\nEstado actual: ards-documented.\n\nObjetivo:\nAvanzar esta funcionalidad desde el read-model del control-plane y cerrar los gaps abiertos mediante el lifecycle aprobado.\n\nGaps abiertos:\n- Move universal policy canon into 4uentes-core with source validation.\n- Have 4uentes-core adopt policies as first-class ARDS/SDD components.\n- Handoff human-doc-language from docs/idioma-markdown.md to 4uentes-core as a reusable policy while preserving its orchestrator origin.\n- Resolve canonical identity for 4uentes-core versus 4uentes-ards-core.\n- Define and adopt a child-repo policy_adoption manifest through future approved requests.\n- Close observed gaps for sst-chatbot docs_ai_policy and orchestrator_link adoption.\n- Close observed validation.check_command TODO for sst-4uentes-infra.\n\nState id:\n- ards-sdd-policy-unification\n\nServicios afectados:\n- 4uentes-auth\n- sst-fend\n- sst-bend\n- sst-extension\n- sst-chatbot\n- sst-4uentes-infra\n\nRequest ids relacionados:\n- CR-SST-0024\n- CR-SST-0025\n\nFuente control-plane:\n- state/features/ards-sdd-policy-unification.current.yaml\n\nEvidence refs:\n- evidence/requests/CR-SST-0024/policy-model.md\n- evidence/requests/CR-SST-0024/subagent-deployment-evidence.md\n- evidence/requests/CR-SST-0024/implementation-summary.md\n- evidence/requests/CR-SST-0024/changed-files-summary.md\n- evidence/requests/CR-SST-0024/validation-results.md\n- evidence/requests/CR-SST-0025/policy-component-model.md\n- evidence/requests/CR-SST-0025/subagent-deployment-evidence.md\n- evidence/requests/CR-SST-0025/changed-files-summary.md\n- evidence/requests/CR-SST-0025/validation-results.md\n\nValidation refs:\n- ninguno\n\nCriterio de cierre esperado:\n- La decision o implementacion pendiente queda registrada en evidencia.\n- Los cambios en repos funcionales, si hacen falta, entran por request aprobado.\n- El feature_state se actualiza solo cuando la evidencia soporte una transicion de estado."
+    },
+    {
+      "stateId": "dictionary-tags",
+      "issueKey": "SST-10",
+      "action": "propose-description-update",
+      "reason": "The selected issue needs the current sync/origin process fields.",
+      "expectedSummary": "[SST][feature-state] Completar validacion live y cierre de gobernanza de SST Dictionary Tags",
+      "proposedDescription": "Proceso de sincronizacion:\n- CR-SST-0037\n\nProcesos origen:\n- CR-SST-0002\n- CR-SST-0014\n\nEstado actual: validated-local.\n\nObjetivo:\nAvanzar esta funcionalidad desde el read-model del control-plane y cerrar los gaps abiertos mediante el lifecycle aprobado.\n\nGaps abiertos:\n- Live runtime endpoint validation was not executed.\n- TagDefinition governance is not closed as a public managed surface.\n- Dictionary close criteria must explicitly exclude or accept broader SST-level article/course/bitacora tag expansion.\n\nState id:\n- dictionary-tags\n\nServicios afectados:\n- sst-bend\n- 4uentes-auth\n- sst-fend\n- sst-extension\n- sst-4uentes-infra\n\nRequest ids relacionados:\n- CR-SST-0002\n- CR-SST-0014\n\nFuente control-plane:\n- state/features/dictionary-tags.current.yaml\n\nEvidence refs:\n- evidence/requests/CR-SST-0002/implementation-state-report.md\n- evidence/requests/CR-SST-0002/findings.yaml\n- evidence/requests/CR-SST-0002/validation-results.md\n- evidence/requests/CR-SST-0014/implementation-state-analysis.md\n\nValidation refs:\n- ninguno\n\nCriterio de cierre esperado:\n- La decision o implementacion pendiente queda registrada en evidencia.\n- Los cambios en repos funcionales, si hacen falta, entran por request aprobado.\n- El feature_state se actualiza solo cuando la evidencia soporte una transicion de estado."
+    },
+    {
+      "stateId": "cluster-publication-ngrok-domain",
+      "issueKey": "SST-11",
+      "action": "propose-description-update",
+      "reason": "The selected issue needs the current sync/origin process fields.",
+      "expectedSummary": "[SST][feature-state] Cerrar gaps release-readiness de Cluster publication",
+      "proposedDescription": "Proceso de sincronizacion:\n- CR-SST-0037\n\nProcesos origen:\n- CR-SST-0020\n\nEstado actual: validated-live.\n\nObjetivo:\nAvanzar esta funcionalidad desde el read-model del control-plane y cerrar los gaps abiertos mediante el lifecycle aprobado.\n\nGaps abiertos:\n- Install or reconcile ngrok as a Windows service if startup durability is required.\n- Run app login, refresh/logout and protected-route smokes in a later approved phase with credentials outside Git.\n- Run persistence create/read/delete smoke in a later approved phase.\n- Promote app images by immutable release tag or digest before release readiness.\n- Reconcile infra orchestrator_link.state_id with feature_state id cluster-publication-ngrok-domain.\n\nState id:\n- cluster-publication-ngrok-domain\n\nServicios afectados:\n- sst-fend\n- sst-bend\n- 4uentes-auth\n- sst-4uentes-infra\n\nRequest ids relacionados:\n- CR-SST-0020\n\nFuente control-plane:\n- state/features/cluster-publication-ngrok-domain.current.yaml\n\nEvidence refs:\n- evidence/requests/CR-SST-0020/intake-summary.md\n- evidence/requests/CR-SST-0020/analysis-plan.md\n- evidence/requests/CR-SST-0020/current-cluster-state.md\n- evidence/requests/CR-SST-0020/ingress-ngrok-edge-analysis.md\n- evidence/requests/CR-SST-0020/auth-public-exposure-analysis.md\n- evidence/requests/CR-SST-0020/branch-image-policy-analysis.md\n- evidence/requests/CR-SST-0020/validation-release-gates.md\n- evidence/requests/CR-SST-0020/subagent-deployment-evidence.md\n- evidence/requests/CR-SST-0020/infra-operational-edge-result.md\n- evidence/requests/CR-SST-0020/stage-close-validation.md\n\nValidation refs:\n- ninguno\n\nCriterio de cierre esperado:\n- La decision o implementacion pendiente queda registrada en evidencia.\n- Los cambios en repos funcionales, si hacen falta, entran por request aprobado.\n- El feature_state se actualiza solo cuando la evidencia soporte una transicion de estado."
+    }
+  ]
+}

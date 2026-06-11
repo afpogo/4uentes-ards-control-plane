@@ -1,0 +1,84 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0058"
+title: "Execute Jira close transition for SST-8"
+status: "done"
+source_request: "requests/inbox/CR-SST-0058-sst-8-jira-close-transition-execution.yaml"
+planned_request: "requests/planned/CR-SST-0058-sst-8-jira-close-transition-execution.yaml"
+created_at: "2026-06-07"
+completed_at: "2026-06-08"
+requester: "4uentes"
+
+summary: >
+  Executed the approved Jira close transition for SST-8 using the operational
+  Atlassian MCP endpoint observed in CR-SST-0057. SST-8 moved from En curso to
+  Listo and a closure comment was added with control-plane evidence refs.
+
+scope:
+  solution: "sst"
+  repository: "4uentes-orchestor"
+  jira_issue_key: "SST-8"
+  functional_repositories_modified: false
+  jira_write_executed: true
+  jira_transition_executed: true
+  jira_comment_added: true
+  local_state_transitions_executed: false
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - EXTERNAL_JIRA_WRITE
+    - OAUTH_SESSION_HANDLING
+    - JIRA_WORKFLOW_TRANSITION
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The request executed an approved external Jira workflow transition through OAuth-backed MCP."
+
+subagent_deployment_plan:
+  required: true
+  roles:
+    - security-contract-reviewer
+    - validation-reviewer
+  fallback: "The main agent performed write-boundary and validation review sequentially."
+  evidence_ref: "evidence/requests/CR-SST-0058/validation-results.md"
+
+results:
+  endpoint_default_result: "blocked-by-authv2-oauth-404-before-tools"
+  endpoint_operational: "https://mcp.atlassian.com/v1/mcp"
+  issue_key: "SST-8"
+  before_status: "En curso"
+  selected_transition_id: "41"
+  selected_transition_name: "Listo"
+  after_status: "Listo"
+  after_resolution: "Listo"
+  transition_result: "success"
+  comment_added: true
+  comment_id: "10000"
+  jira_writes: 2
+
+evidence:
+  required:
+    - "evidence/requests/CR-SST-0058/jira-mcp-oauth-port-blocker.md"
+    - "evidence/requests/CR-SST-0058/jira-tool-schema-summary.md"
+    - "evidence/requests/CR-SST-0058/jira-sst-8-transition-summary.md"
+    - "evidence/requests/CR-SST-0058/jira-sst-8-transition-result.json"
+    - "evidence/requests/CR-SST-0058/endpoint-override-execution-note.md"
+    - "evidence/requests/CR-SST-0058/validation-results.md"
+
+validation:
+  required_checks:
+    - "node --check scripts\\jira-mcp\\lib\\atlassian-mcp.js"
+    - "node --check scripts\\jira-mcp\\transition-sst-8-close.js"
+    - "npm.cmd run check"
+  status: "pass-with-inherited-warnings"
+
+decision:
+  status: "approved-done"
+  approver: "4uentes"
+  note: "User approved the external Jira write. The issue was closed through the operational MCP endpoint."
+
+remaining_gaps: []

@@ -1,0 +1,63 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0051"
+title: "Define Jira backlog mirror ticket policy"
+status: "inbox"
+created_at: "2026-06-07"
+requester: "4uentes"
+
+summary: >
+  Define the operational name and policy for Jira tickets that mirror
+  control-plane deferred backlog items.
+
+business_context: >
+  CR-SST-0050 published the deferred Jira backlog items to Jira and updated the
+  local registry with issue keys. The control-plane now needs a durable policy
+  name and rule so future accepted-but-deferred work is mirrored to Jira before
+  execution order is lost.
+
+requested_change: >
+  Name this ticket type, document when it must be created, how it relates to
+  backlog ids and CR-SST ids, and how synchronization must be maintained.
+
+expected_outcome: >
+  Agents and operators consistently create and maintain Jira mirror tickets for
+  deferred backlog items without assigning CR-SST ids prematurely.
+
+initial_scope:
+  solution: "sst"
+  repository: "4uentes-orchestor"
+  include_functional_repositories: false
+
+required_context:
+  - "requests/done/CR-SST-0047-jira-backlog-registry-and-cr-allocation-policy.yaml"
+  - "requests/done/CR-SST-0049-jira-backlog-ticket-format-dry-run.yaml"
+  - "requests/done/CR-SST-0050-jira-backlog-create-writer.yaml"
+  - "state/jira-backlog-registry.yaml"
+  - "docs/requests/jira-backlog-registry-policy.md"
+
+validation:
+  required_checks:
+    - "npm run check"
+  evidence_required:
+    - "policy_summary"
+    - "changed_files_summary"
+    - "validation_results"
+
+execution:
+  requires_human_approval: false
+  jira_write_allowed: false
+  functional_repo_changes_allowed: false
+  external_write_allowed: false
+
+risk:
+  level: "medium"
+  score: 5
+  drivers:
+    - "Policy affects future request intake and Jira synchronization."
+    - "Backlog mirror tickets must not be confused with active CR-SST execution."
+
+decision:
+  status: "approved"
+  approver: "4uentes"
+  note: "Approved as policy and evidence update only."

@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0",
+  "kind": "jira_start_transition_proposal",
+  "request_id": "CR-SST-0057",
+  "created_at": "2026-06-07",
+  "jira_issue_key": "SST-4",
+  "state_id": "sst-tags-governance",
+  "current_feature_status": "runtime-partial",
+  "observed_jira_status": "Tareas por hacer",
+  "external_jira_write": false,
+  "automatic_local_transition": false,
+  "proposed_action": "transition-jira-issue-to-active-work",
+  "preferred_active_status_order": [
+    "En curso",
+    "In Progress"
+  ],
+  "governing_request": "CR-SST-0057",
+  "origin_requests": [
+    "CR-SST-0010",
+    "CR-SST-0014",
+    "CR-SST-0015",
+    "CR-SST-0016"
+  ],
+  "origin_requests_role": "provenance-only",
+  "supporting_evidence": [
+    "state/features/sst-tags-governance.current.yaml",
+    "evidence/requests/CR-SST-0055/unified-jira-radar.md",
+    "evidence/requests/CR-SST-0057/transition-scope-review.md",
+    "evidence/requests/CR-SST-0057/involved-cr-sst-matrix.md"
+  ],
+  "decision": {
+    "status": "pending-human-or-operator-transition",
+    "approver": "TODO",
+    "note": "Read-only proposal. No Jira transition was executed by this artifact."
+  }
+}

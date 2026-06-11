@@ -1,0 +1,126 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0027"
+title: "Define paragraph-sequential ARDS derivation workflow"
+status: planned
+source_request: "requests/inbox/CR-SST-0027-paragraph-sequential-ards-derivation.yaml"
+created_at: "2026-06-03"
+requester: "4uentes"
+
+initial_scope:
+  solution: "sst"
+  services:
+    - sst-chatbot
+    - sst-bend
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: sst-chatbot
+      via: initial_scope.services
+      service_kind: agent-runtime
+      ards_kind: backend-api
+      status: active
+    - service_id: sst-bend
+      via: initial_scope.services
+      service_kind: api
+      ards_kind: backend-api
+      status: active
+  affected_ards:
+    - backend-api
+  capabilities: []
+  risks:
+    - id: TWO_SERVICE_SCOPE
+      severity: medium
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: sst-chatbot
+      severity: medium
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: sst-bend
+      severity: medium
+    - id: AGENT_SEQUENTIAL_CONTEXT_CONTRACT
+      severity: high
+    - id: USER_ARDS_PROPOSAL_AUTHORITY
+      severity: high
+    - id: PROMPT_VERSIONING_AND_PROVENANCE
+      severity: medium
+
+required_context:
+  - catalog/services/sst-chatbot.yaml
+  - inventory/evidence/git/sst-chatbot.md
+  - catalog/services/sst-bend.yaml
+  - inventory/evidence/git/sst-bend.md
+  - solutions/sst.yaml
+  - inventory/phase-0.md
+  - inventory/phase-0-decision.md
+  - AGENTS.md
+
+required_checks:
+  - service_id: sst-chatbot
+    command: ".\\.venv\\Scripts\\python.exe scripts\\check.py"
+  - service_id: sst-bend
+    command: "npm run check"
+
+risk:
+  level: high
+  score: 7
+  drivers:
+    - id: TWO_SERVICE_SCOPE
+      severity: medium
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: sst-chatbot
+      severity: medium
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: sst-bend
+      severity: medium
+    - id: AGENT_SEQUENTIAL_CONTEXT_CONTRACT
+      severity: high
+    - id: USER_ARDS_PROPOSAL_AUTHORITY
+      severity: high
+    - id: PROMPT_VERSIONING_AND_PROVENANCE
+      severity: medium
+
+task_weight:
+  classification: complex-high-risk-task
+  risk_level: high
+  drivers:
+    - TWO_SERVICE_SCOPE
+    - DIRTY_WORKING_TREE_OBSERVED
+    - AGENT_SEQUENTIAL_CONTEXT_CONTRACT
+    - USER_ARDS_PROPOSAL_AUTHORITY
+    - PROMPT_VERSIONING_AND_PROVENANCE
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "Complex high-risk agent-runtime work defining sequential context, user ARDS proposals, prompt provenance, idempotency, and backend validation contracts."
+
+subagent_deployment_plan:
+  required: true
+  parallelizable: true
+  roles:
+    - architecture-reviewer
+    - security-contract-reviewer
+    - cross-repo-impact-reviewer
+    - validation-reviewer
+  fallback: "Subagent tools require explicit user delegation; if not explicitly requested, the main agent must perform architecture, security, cross-repo, and validation reviews sequentially."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  allowed_window: manual
+  branch_strategy: orchestrator-only
+
+decision:
+  status: approved-for-orchestrator-design
+  approver: "4uentes"
+
+planner_notes:
+  - Functional repositories were not modified.
+  - Functional repository checks were not executed.
+  - Planner heuristic originally classified this as medium risk because only two services are affected; this planned response corrects it to complex-high-risk-task because the request defines agent-runtime behavior, user ARDS proposal authority, and cross-service validation contracts.
+  - This is the second request in the user ARDS intelligence sequence and depends on CR-SST-0026 being planned first.
+  - CR-SST-0026 was completed on 2026-06-04 before this request lifecycle was advanced.
+  - User approval to transition to this request was given on 2026-06-04.

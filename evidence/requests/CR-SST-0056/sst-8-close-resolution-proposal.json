@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0",
+  "kind": "jira_close_resolution_proposal",
+  "request_id": "CR-SST-0056",
+  "created_at": "2026-06-07",
+  "jira_issue_key": "SST-8",
+  "state_id": "document-agent",
+  "current_feature_status": "validated-live",
+  "open_gaps": [],
+  "external_jira_write": false,
+  "automatic_local_transition": false,
+  "proposed_action": "transition-jira-issue-to-terminal-closed-or-resolved",
+  "preferred_terminal_status_order": [
+    "Done",
+    "Resuelto",
+    "Cerrado"
+  ],
+  "resolution_if_required": [
+    "Done",
+    "Completado"
+  ],
+  "supporting_requests": [
+    "CR-SST-0008",
+    "CR-SST-0048",
+    "CR-SST-0052",
+    "CR-SST-0053"
+  ],
+  "supporting_evidence": [
+    "evidence/requests/CR-SST-0008/gap-closure-readiness-after-CR-SST-0052.md",
+    "evidence/requests/CR-SST-0052/runtime-contract-alignment-summary.md",
+    "evidence/requests/CR-SST-0053/authenticated-e2e-results.md",
+    "evidence/requests/CR-SST-0053/runtime-artifacts.md",
+    "evidence/requests/CR-SST-0053/validation-results.md",
+    "state/features/document-agent.current.yaml"
+  ],
+  "decision": {
+    "status": "pending-human-approval",
+    "approver": "TODO",
+    "note": "Read-only proposal. No Jira transition was executed."
+  }
+}

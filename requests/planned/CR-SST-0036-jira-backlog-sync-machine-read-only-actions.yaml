@@ -1,0 +1,129 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0036"
+title: "Connect Jira backlog sync machine to read-only actions"
+status: planned
+source_request: "requests/inbox/CR-SST-0036-jira-backlog-sync-machine-read-only-actions.yaml"
+created_at: "2026-06-07"
+requester: "4uentes"
+
+initial_scope:
+  solution: "sst"
+  services: []
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services: []
+  affected_ards: []
+  capabilities:
+    - jira-mcp-ticketing
+    - control-plane-process-lifecycle
+  risks:
+    - id: EXTERNAL_MCP_CONNECTIVITY
+      severity: high
+    - id: READ_ONLY_WRITE_BOUNDARY
+      severity: high
+    - id: STATE_MACHINE_DRIFT
+      severity: medium
+
+control_plane_scope:
+  repository: "4uentes-orchestor"
+  reason: "The runner is an orchestrator control-plane capability and does not modify functional repositories."
+
+required_context:
+  - "requests/planned/CR-SST-0035-jira-backlog-sync-machine-dry-runner.yaml"
+  - "state/jira-backlog-sync-machine.yaml"
+  - "scripts/jira-mcp/sync-machine-runner.js"
+  - "scripts/jira-mcp/policy-check.js"
+  - "scripts/jira-mcp/read-metadata.js"
+  - "scripts/jira-mcp/search-duplicates.js"
+  - "scripts/jira-mcp/reconcile-existing-issues.js"
+
+required_checks:
+  - service_id: 4uentes-orchestor
+    command: "npm run check"
+  - service_id: 4uentes-orchestor
+    command: "npm run jira:mcp:sync-machine -- --connect --request-id CR-SST-0036 --output-dir evidence/requests/CR-SST-0036 --mode read-only"
+
+risk:
+  level: high
+  score: 8
+  drivers:
+    - id: EXTERNAL_MCP_CONNECTIVITY
+      severity: high
+    - id: READ_ONLY_WRITE_BOUNDARY
+      severity: high
+    - id: STATE_MACHINE_DRIFT
+      severity: medium
+
+task_weight:
+  classification: complex-high-risk-task
+  risk_level: high
+  drivers:
+    - EXTERNAL_MCP_CONNECTIVITY
+    - READ_ONLY_WRITE_BOUNDARY
+    - CONTROL_PLANE_PROCESS_LIFECYCLE
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The task connects the state machine runner to external read-only MCP calls while preserving write boundaries."
+
+subagent_deployment_plan:
+  required: true
+  parallelizable: true
+  roles:
+    - architecture-reviewer
+    - security-contract-reviewer
+    - validation-reviewer
+  fallback: "If subagent tools are unavailable, the main agent must perform architecture, write-boundary, and validation review sequentially."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  allowed_window: manual
+  branch_strategy: control-plane-only
+  read_only_boundary:
+    allowed:
+      - "run policy-check"
+      - "read Jira metadata through MCP"
+      - "search Jira duplicates through MCP"
+      - "read Jira issue details through MCP"
+      - "write non-secret evidence"
+    forbidden:
+      - "create Jira issues"
+      - "edit Jira issues"
+      - "comment on Jira issues"
+      - "transition Jira issues"
+      - "store tokens, cookies, private URLs, cloudId, or OAuth material in Git"
+      - "modify functional repositories"
+
+implementation_steps:
+  - id: add-read-only-mode
+    description: "Extend sync-machine runner with mode read-only and require --connect."
+  - id: reuse-existing-actions
+    description: "Invoke existing read-only Jira scripts from the runner instead of duplicating MCP logic."
+  - id: write-action-trace
+    description: "Write a combined machine and action trace evidence artifact."
+  - id: validate
+    description: "Run node --check, sync-machine read-only, and npm run check."
+
+validation:
+  required_checks:
+    - "npm run check"
+    - "npm run jira:mcp:sync-machine -- --connect --request-id CR-SST-0036 --output-dir evidence/requests/CR-SST-0036 --mode read-only"
+  evidence_required:
+    - "jira_sync_machine_read_only"
+    - "changed_files_summary"
+    - "validation_results"
+
+decision:
+  status: pending
+  approver: TODO
+
+planner_notes:
+  - "No Jira writes are allowed in this request."
+  - "No functional repositories are modified."
+  - "This request still avoids XState runtime adoption."

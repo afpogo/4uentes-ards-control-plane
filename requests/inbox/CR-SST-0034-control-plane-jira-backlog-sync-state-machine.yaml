@@ -1,0 +1,133 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0034"
+title: "Control-plane Jira backlog sync state machine"
+status: "inbox"
+created_at: "2026-06-06"
+requester: "4uentes"
+
+business_context: >
+  The control-plane must organize past, current, and future processes and keep
+  the Jira SST backlog synchronized with governed process state. Existing
+  CR-SST requests and non-done feature states need a controlled sync model so
+  Jira acts as an operational backlog while the control-plane remains the
+  canonical source of truth.
+
+requested_change: >
+  Extend the Jira ticket policy and prepare the orchestrator for a state-machine
+  driven backlog synchronization model. Jira tickets must include the governing
+  sync CR-SST process and origin CR-SST processes in their description, and
+  future Jira operations must be triggered through explicit events and guarded
+  transitions instead of ad hoc script execution.
+
+expected_outcome: >
+  The orchestrator has a planned control-plane request, policy updates, and an
+  initial state-machine model for Jira backlog synchronization. Existing Jira
+  tickets can be reconciled and proposed for update with CR-SST process
+  metadata, subject to external-write approval.
+
+initial_scope:
+  solution: "sst"
+  services: []
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services: []
+  affected_ards: []
+  capabilities:
+    - jira-mcp-ticketing
+    - feature-bugfix-state-read-model
+    - control-plane-process-lifecycle
+  risks:
+    - id: EXTERNAL_JIRA_WRITE
+      severity: high
+    - id: STATE_MACHINE_DRIFT
+      severity: high
+    - id: BACKLOG_SYNC_DUPLICATION
+      severity: medium
+    - id: PROCESS_HISTORY_MISMATCH
+      severity: medium
+
+required_context:
+  - "docs/requests/jira-feature-ticket-policy.md"
+  - "docs/requests/execution-model.md"
+  - "state/state-machine.yaml"
+  - "requests/planned/CR-SST-0033-jira-create-feature-state-issues.yaml"
+  - "evidence/requests/CR-SST-0033/jira-policy-check-summary.md"
+  - "state/features/*.current.yaml"
+  - "scripts/jira-mcp/*.js"
+
+required_checks:
+  - service_id: 4uentes-orchestor
+    command: "npm run check"
+  - service_id: 4uentes-orchestor
+    command: "npm run jira:mcp:policy-check -- --request-id CR-SST-0034 --output-dir evidence/requests/CR-SST-0034 --expected-count 9"
+  - service_id: 4uentes-orchestor
+    command: "npm run jira:mcp:duplicates -- --connect --request-id CR-SST-0034 --output-dir evidence/requests/CR-SST-0034"
+  - service_id: 4uentes-orchestor
+    command: "npm run jira:mcp:reconcile -- --connect --request-id CR-SST-0034 --output-dir evidence/requests/CR-SST-0034"
+  - service_id: 4uentes-orchestor
+    command: "npm run jira:mcp:update-existing -- --connect --approved --request-id CR-SST-0034 --output-dir evidence/requests/CR-SST-0034"
+
+risk:
+  level: "high"
+  score: 8
+  drivers:
+    - EXTERNAL_JIRA_WRITE
+    - STATE_MACHINE_DRIFT
+    - CONTROL_PLANE_PROCESS_LIFECYCLE
+    - BACKLOG_SYNC_DUPLICATION
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - EXTERNAL_JIRA_WRITE
+    - STATE_MACHINE_DRIFT
+    - CONTROL_PLANE_EXTERNAL_CONNECTOR
+    - PROCESS_HISTORY_AND_BACKLOG_SYNC
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "This request introduces a governed state-machine model for Jira synchronization and external write boundaries."
+
+subagent_deployment_plan:
+  required: true
+  parallelizable: true
+  roles:
+    - architecture-reviewer
+    - security-contract-reviewer
+    - validation-reviewer
+  fallback: "If subagent tools are unavailable, the main agent must perform architecture, security/write-boundary, and validation review sequentially."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "control-plane-only"
+
+validation:
+  required_checks:
+    - "npm run check"
+    - "npm run jira:mcp:policy-check -- --request-id CR-SST-0034 --output-dir evidence/requests/CR-SST-0034 --expected-count 9"
+    - "npm run jira:mcp:duplicates -- --connect --request-id CR-SST-0034 --output-dir evidence/requests/CR-SST-0034"
+    - "npm run jira:mcp:reconcile -- --connect --request-id CR-SST-0034 --output-dir evidence/requests/CR-SST-0034"
+    - "npm run jira:mcp:update-existing -- --connect --approved --request-id CR-SST-0034 --output-dir evidence/requests/CR-SST-0034"
+  evidence_required:
+    - "jira_backlog_sync_state_machine"
+    - "jira_policy_update_summary"
+    - "jira_reconciliation_summary"
+    - "changed_files_summary"
+    - "validation_results"
+
+decision:
+  status: "pending"
+  approver: "TODO"
+
+planner_notes:
+  - "Jira remains an operational backlog mirror; the control-plane remains authoritative."
+  - "Existing Jira tickets may be updated only through approved write events."
+  - "No functional repositories are modified by this request."

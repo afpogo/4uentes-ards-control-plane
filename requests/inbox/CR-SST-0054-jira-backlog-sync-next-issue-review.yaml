@@ -1,0 +1,63 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0054"
+title: "Review Jira backlog sync and next issue selection"
+status: "inbox"
+created_at: "2026-06-07"
+requester: "4uentes"
+
+summary: >
+  Review the synchronized Jira backlog mirror tickets and determine the next
+  backlog issue to promote for execution.
+
+business_context: >
+  The control-plane now maintains Jira Backlog Mirror Tickets for deferred work.
+  Before selecting the next implementation, the registry and Jira mirror keys
+  must be reviewed so the next issue is chosen by policy rather than by an
+  estimated CR-SST number.
+
+requested_change: >
+  Execute the local backlog review, confirm Jira mirror ticket coverage from the
+  registry, and recommend the next issue to take.
+
+expected_outcome: >
+  The control-plane has auditable evidence for the next backlog issue selection
+  and can promote it in a follow-up CR-SST only after the user approves.
+
+initial_scope:
+  solution: "sst"
+  repository: "4uentes-orchestor"
+  include_functional_repositories: false
+
+required_context:
+  - "state/jira-backlog-registry.yaml"
+  - "docs/requests/jira-backlog-registry-policy.md"
+  - "evidence/requests/CR-SST-0050/backlog-create-summary.md"
+  - "requests/done/CR-SST-0051-jira-backlog-mirror-ticket-policy.yaml"
+
+validation:
+  required_checks:
+    - "npm run jira:mcp:backlog-review -- --request-id CR-SST-0054 --output-dir evidence/requests/CR-SST-0054"
+    - "npm run check"
+  evidence_required:
+    - "backlog_registry_review"
+    - "next_issue_recommendation"
+    - "validation_results"
+
+execution:
+  requires_human_approval: false
+  jira_write_allowed: false
+  functional_repo_changes_allowed: false
+  external_write_allowed: false
+
+risk:
+  level: "medium"
+  score: 4
+  drivers:
+    - "Selection order affects future CR-SST prioritization."
+    - "Review must not assign CR-SST prematurely."
+
+decision:
+  status: "approved"
+  approver: "4uentes"
+  note: "Approved as read-only local review."

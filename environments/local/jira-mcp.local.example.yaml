@@ -1,0 +1,27 @@
+schema_version: "1.0"
+kind: "jira_mcp_local_config_example"
+description: >
+  Copy this file to jira-mcp.local.yaml for host-specific Jira MCP settings.
+  The local file is ignored by Git. Do not store OAuth tokens, API tokens,
+  cookies, private site URLs, or secrets in either file.
+
+server:
+  url: "https://mcp.atlassian.com/v1/mcp/authv2"
+  operational_override_pattern: "JIRA_MCP_ARGS='--yes mcp-remote@latest https://mcp.atlassian.com/v1/mcp'"
+  policy_ref: "docs/requests/jira-mcp-endpoint-connection-policy.md"
+
+jira:
+  board_name: "SST-Team"
+  project_key: "SST"
+  issue_type: "Tarea"
+
+confluence:
+  space_key: "SST"
+
+auth:
+  method: "oauth"
+  token_storage: "external"
+
+evidence:
+  request_id: "CR-SST-0029"
+  output_dir: "evidence/requests/CR-SST-0029"

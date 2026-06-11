@@ -2,7 +2,7 @@ schema_version: "1.0"
 kind: "inbound_capability"
 id: "capability.inbound.sst-document-agent-workflows"
 title: "Document Agent workflow handoff (backend-first, persisted jobs)"
-status: "draft"
+status: "implemented"
 consumer:
   repo: "4uentes-orchestor"
   ards_kind: "control-plane"
@@ -20,10 +20,12 @@ producer_refs:
   docs:
     - "docs/cross-repo/orchestrator-boundary.md"
 local_adoption:
-  implementation_status: "todo"
+  implementation_status: "documented-control-plane"
   code_anchors:
-    - path: "requests/inbox/CR-SST-0008-sst-document-agent-workflows.yaml"
-      note: "control-plane request draft for persisted document-agent workflows"
+    - path: "requests/planned/CR-SST-0008-sst-document-agent-workflows.yaml"
+      note: "planned control-plane request for persisted document-agent workflows"
+    - path: "evidence/requests/CR-SST-0008/document-agent-workflow-contract-summary.md"
+      note: "formal evidence for operation_intent, handoff_payload, and document_agent_event schemas"
 expected_behaviors:
   - "Only structured operation_intent payloads are accepted."
   - "All handoff payloads are idempotent."
@@ -36,8 +38,12 @@ validation:
     - "npm run check"
 architecture_exceptions:
   direct_backend_api_to_frontend: false
-open_questions:
-  - "Which service owns the first durable job state machine: sst-bend or 4uentes-auth?"
+ownership:
+  durable_job_state_machine: "sst-bend"
+  identity_and_tenant_scope_validation: "4uentes-auth"
+  producer_ui: "sst-fend"
+
+open_questions: []
 
 schema:
   operation_intent:

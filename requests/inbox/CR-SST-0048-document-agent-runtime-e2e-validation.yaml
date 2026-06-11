@@ -1,0 +1,88 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0048"
+title: "Validate SST Document Agent runtime and E2E handoff"
+status: "inbox"
+created_at: "2026-06-07"
+requester: "4uentes"
+
+summary: >
+  Advance the document-agent work after CR-SST-0008 by validating whether the
+  documented backend-first handoff contract exists and works across sst-fend,
+  sst-bend, and 4uentes-auth.
+
+business_context: >
+  CR-SST-0008 closed the control-plane contract and evidence gap for SST
+  Document Agent Workflows. The remaining gap is runtime confidence: the
+  functional repositories still need inspection and, if approved, E2E validation
+  or implementation work for the frontend event, auth scope validation, and
+  backend durable job persistence.
+
+requested_change: >
+  Review the functional repository implementations for document-agent workflow
+  support, map them against the CR-SST-0008 contract, and produce runtime/E2E
+  evidence or a repo-scoped implementation plan. If implementation changes are
+  needed, they must remain within the approved planned request scope and preserve
+  existing child-repo worktree changes.
+
+expected_outcome: >
+  The control-plane can decide whether document-agent remains validated-local,
+  can move toward validated-live, or needs follow-up implementation requests.
+  SST-8 remains the Jira operational mirror for this work unless a separate
+  approved Jira write request closes or splits it.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - sst-fend
+    - sst-bend
+    - 4uentes-auth
+  include_optional_services: false
+
+required_context:
+  - "requests/done/CR-SST-0008-sst-document-agent-workflows.yaml"
+  - "state/features/document-agent.current.yaml"
+  - "specs/capabilities/inbound/4uentes-orchestor--document-agent-workflows.yaml"
+  - "evidence/requests/CR-SST-0008/document-agent-workflow-contract-summary.md"
+  - "evidence/requests/CR-SST-0008/backend-first-persistence-flow.md"
+  - "evidence/requests/CR-SST-0008/jira-sync-decision.md"
+  - "catalog/services/sst-fend.yaml"
+  - "catalog/services/sst-bend.yaml"
+  - "catalog/services/4uentes-auth.yaml"
+  - "solutions/sst.yaml"
+
+runtime_questions:
+  - "Does sst-fend already produce a structured document-agent event or operation intent?"
+  - "Does 4uentes-auth expose or enforce tenant, account, and user scope validation needed by the handoff?"
+  - "Does sst-bend persist a durable job before document processing execution?"
+  - "Are idempotency_key and correlation_id preserved end to end?"
+  - "Is there an executable smoke or E2E path that can prove the contract?"
+
+validation:
+  required_checks:
+    - "npm run check"
+  evidence_required:
+    - "repo_runtime_inventory"
+    - "contract_gap_matrix"
+    - "e2e_validation_plan_or_results"
+    - "changed_files_summary"
+    - "validation_results"
+
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "one-branch-per-repo"
+  jira_write_allowed: false
+  functional_repo_changes_allowed_after_planning: true
+
+risk:
+  level: "high"
+  score: 7
+  drivers:
+    - "Multi-service runtime validation touches frontend, backend, and shared auth."
+    - "Existing child repo working trees may contain unrelated user changes."
+    - "Auth scope, tenant isolation, idempotency, and durable job persistence are contract-sensitive."
+
+decision:
+  status: "pending"
+  approver: "TODO"

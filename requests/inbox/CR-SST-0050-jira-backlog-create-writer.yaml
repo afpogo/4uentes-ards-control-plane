@@ -1,0 +1,74 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0050"
+title: "Create Jira tickets for deferred backlog items"
+status: "inbox"
+created_at: "2026-06-07"
+requester: "4uentes"
+
+summary: >
+  Add a controlled Jira MCP writer for deferred backlog items. The writer must
+  consume the request-local backlog dry-run payload, require explicit connection
+  and approval flags, create Jira issues, and update only jira_issue_key in the
+  control-plane backlog registry after successful creation.
+
+business_context: >
+  CR-SST-0047 created stable backlog ids, and CR-SST-0049 defined Jira payloads
+  for those backlog items. The next step is to make the publication path
+  executable without conflating backlog ids with CR-SST execution ids.
+
+requested_change: >
+  Implement npm run jira:mcp:backlog-create as a controlled external-write
+  command. The command must not assign CR-SST ids, must not modify functional
+  repositories, and must write local evidence for created or skipped backlog
+  items.
+
+expected_outcome: >
+  Operators can publish backlog visibility tickets to Jira for SST-BL-JIRA-001
+  through SST-BL-JIRA-006 after running the request-local dry-run and passing
+  --connect --approved.
+
+initial_scope:
+  solution: "sst"
+  repository: "4uentes-orchestor"
+  include_functional_repositories: false
+
+required_context:
+  - "requests/done/CR-SST-0047-jira-backlog-registry-and-cr-allocation-policy.yaml"
+  - "requests/done/CR-SST-0049-jira-backlog-ticket-format-dry-run.yaml"
+  - "state/jira-backlog-registry.yaml"
+  - "docs/requests/jira-backlog-registry-policy.md"
+  - "scripts/jira-mcp/generate-backlog-dry-run.js"
+  - "scripts/jira-mcp/lib/atlassian-mcp.js"
+
+validation:
+  required_checks:
+    - "node --check scripts/jira-mcp/backlog-create.js"
+    - "npm run jira:mcp:backlog-dry-run -- --request-id CR-SST-0050 --output-dir evidence/requests/CR-SST-0050"
+    - "npm run check"
+  evidence_required:
+    - "implementation_summary"
+    - "backlog_ticket_payload_dry_run"
+    - "write_command_contract"
+    - "changed_files_summary"
+    - "validation_results"
+
+execution:
+  requires_human_approval: true
+  jira_write_allowed: true
+  jira_write_command: "npm run jira:mcp:backlog-create -- --connect --approved --request-id CR-SST-0050 --output-dir evidence/requests/CR-SST-0050"
+  functional_repo_changes_allowed: false
+  external_write_allowed: true
+
+risk:
+  level: "high"
+  score: 8
+  drivers:
+    - "External Jira writes create durable third-party artifacts."
+    - "Registry updates must only record Jira issue keys after successful creation."
+    - "Backlog ids must remain separate from CR-SST execution ids."
+
+decision:
+  status: "approved"
+  approver: "4uentes"
+  note: "Approved to implement the writer. Actual Jira publication still requires an explicit operator command with --connect --approved."

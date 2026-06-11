@@ -1,0 +1,110 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0040"
+title: "Define Jira and control-plane status synchronization policy"
+status: "inbox"
+created_at: "2026-06-07"
+requester: "4uentes"
+
+business_context: >
+  CR-SST-0039 synchronized the open feature-state backlog into Jira. The next
+  operational question is how Jira issue status changes and control-plane
+  lifecycle changes should remain aligned without making Jira the source of
+  truth.
+
+requested_change: >
+  Define the status synchronization policy between Jira and the control-plane.
+  The policy must clarify who updates Jira, who updates control-plane state,
+  what changes are automatic, what changes require evidence, and how Jira
+  status observations become control-plane events.
+
+expected_outcome: >
+  A documented policy and implementation plan for bidirectional status
+  synchronization signals. Jira remains an operational mirror, while the
+  control-plane remains authoritative for feature_state and CR-SST lifecycle
+  transitions.
+
+initial_scope:
+  solution: "sst"
+  services: []
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services: []
+  affected_ards: []
+  capabilities:
+    - jira-backlog-sync-state-machine
+    - jira-mcp-ticketing
+    - control-plane-process-lifecycle
+  risks:
+    - id: JIRA_CONTROL_PLANE_AUTHORITY_DRIFT
+      severity: high
+    - id: AUTOMATIC_STATUS_TRANSITION_RISK
+      severity: high
+    - id: EVIDENCELESS_DONE_TRANSITION
+      severity: high
+
+required_context:
+  - "requests/done/CR-SST-0039-apply-jira-sync-correction-plan.yaml"
+  - "docs/requests/jira-feature-ticket-policy.md"
+  - "docs/requests/jira-write-connection-contract.md"
+  - "state/jira-backlog-sync-machine.yaml"
+
+required_checks:
+  - service_id: 4uentes-orchestor
+    command: "npm run check"
+
+risk:
+  level: "high"
+  score: 8
+  drivers:
+    - JIRA_CONTROL_PLANE_AUTHORITY_DRIFT
+    - AUTOMATIC_STATUS_TRANSITION_RISK
+    - EVIDENCELESS_DONE_TRANSITION
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - JIRA_CONTROL_PLANE_AUTHORITY_DRIFT
+    - CONTROL_PLANE_PROCESS_LIFECYCLE
+    - EXTERNAL_JIRA_WRITE
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The task defines authority and transition rules between Jira operational status and control-plane state."
+
+subagent_deployment_plan:
+  required: true
+  parallelizable: true
+  roles:
+    - architecture-reviewer
+    - security-contract-reviewer
+    - validation-reviewer
+  fallback: "If subagent tools are unavailable or not explicitly requested, the main agent must perform architecture, write-boundary, and validation review sequentially."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "control-plane-only"
+
+validation:
+  required_checks:
+    - "npm run check"
+  evidence_required:
+    - "status_sync_policy_analysis"
+    - "changed_files_summary"
+    - "validation_results"
+
+decision:
+  status: "pending"
+  approver: "TODO"
+
+planner_notes:
+  - "No Jira writes are allowed in this request."
+  - "No functional repositories are modified."
+  - "This request defines policy and implementation direction only."

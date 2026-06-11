@@ -1,0 +1,94 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0061"
+title: "Jira MCP endpoint connection policy"
+status: "inbox"
+created_at: "2026-06-08"
+requester: "4uentes"
+
+summary: >
+  Promote the observed Jira/Confluence MCP endpoint pattern into a living
+  ARDS/SDD policy. The policy must define how MCP endpoints are disclosed,
+  selected, overridden, and evidenced for Jira/Confluence operations.
+
+business_context: >
+  CR-SST-0057 and CR-SST-0058 proved that the operational MCP connection in
+  this environment uses mcp-remote against https://mcp.atlassian.com/v1/mcp via
+  JIRA_MCP_ARGS, while the historical authv2 endpoint can fail during OAuth
+  dynamic client registration. Operators need a canonical policy, not only a
+  playbook note.
+
+requested_change: >
+  Add a policy document under docs/requests and link it from existing Jira MCP
+  contracts/playbooks. The policy must define the endpoint disclosure pattern,
+  required environment variable usage, cleanup, evidence, and write gates.
+
+expected_outcome: >
+  Future Jira/Confluence MCP executions use a consistent ARDS/SDD connection
+  policy and avoid ad hoc endpoint handling or accidental disclosure of
+  non-canonical endpoints.
+
+initial_scope:
+  solution: "sst"
+  repository: "4uentes-orchestor"
+  include_functional_repositories: false
+
+required_context:
+  - "requests/done/CR-SST-0057-sst-4-work-start-transition.yaml"
+  - "requests/done/CR-SST-0058-sst-8-jira-close-transition-execution.yaml"
+  - "requests/done/CR-SST-0059-operational-mcp-oauth-session-playbook.yaml"
+  - "docs/requests/jira-mcp-oauth-session-playbook.md"
+  - "docs/requests/jira-mcp-access-sync-health-contract.md"
+  - "docs/requests/jira-write-connection-contract.md"
+  - "scripts/jira-mcp/policy-check.js"
+
+validation:
+  required_checks:
+    - "node --check scripts/jira-mcp/policy-check.js"
+    - "npm run check"
+  evidence_required:
+    - "policy_document"
+    - "contract_links"
+    - "validation_results"
+
+execution:
+  requires_human_approval: false
+  jira_write_allowed: false
+  external_write_allowed: false
+  functional_repo_changes_allowed: false
+
+risk:
+  level: "high"
+  score: 7
+  drivers:
+    - "Defines authentication and MCP endpoint policy."
+    - "Affects future Jira/Confluence read/write operations."
+    - "Controls endpoint disclosure and evidence boundaries."
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - OAUTH_SESSION_HANDLING
+    - MCP_ENDPOINT_DISCLOSURE_POLICY
+    - EXTERNAL_WRITE_GATING
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The request defines endpoint and authentication policy for external MCP operations."
+
+subagent_deployment_plan:
+  required: true
+  roles:
+    - security-contract-reviewer
+    - ards-sdd-validator
+    - validation-reviewer
+  fallback: "If subagents are unavailable, the main agent performs policy, security, and validation review sequentially."
+  evidence_required: true
+
+decision:
+  status: "approved"
+  approver: "4uentes"
+  note: "User requested this MCP endpoint pattern be documented as a living ARDS/SDD policy."

@@ -1,0 +1,78 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0031"
+title: "Define first SST user internal memory runtime slice"
+status: "done"
+created_at: "2026-06-05"
+completed_at: "2026-06-05"
+requester: "4uentes"
+
+source_request: "requests/inbox/CR-SST-0031-sst-user-internal-memory-first-runtime-slice.yaml"
+planned_request: "requests/planned/CR-SST-0031-sst-user-internal-memory-first-runtime-slice.yaml"
+depends_on:
+  - "requests/done/CR-SST-0030-sst-user-internal-memory-boundary.yaml"
+
+implemented_change: >
+  Defined the first implementable SST user internal memory runtime slice in the
+  orchestrator: scoped user memory events, chatbot-produced memory proposals,
+  backend validation and idempotency, durable memory records, and basic chatbot
+  recall over stored events, facts, and intentions.
+
+affected_repos:
+  - service_id: 4uentes-orchestor
+    local_binding: "current-workspace"
+
+product_scope_services:
+  - sst-bend
+  - sst-chatbot
+  - 4uentes-auth
+  - sst-fend
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "private user memory scope"
+    - "chatbot memory proposal authority"
+    - "backend validation and idempotency"
+    - "recall privacy and explainability"
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The completed phase defines private user memory runtime semantics and cross-service authority boundaries."
+
+subagent_deployment_plan:
+  required: true
+  roles:
+    - architecture-reviewer
+    - security-contract-reviewer
+    - cross-repo-impact-reviewer
+    - validation-reviewer
+  fallback: "Subagent tools require explicit user delegation in this runtime. No explicit delegation was requested, so the main agent performed the review roles sequentially."
+  evidence_ref: "evidence/requests/CR-SST-0031/subagent-deployment-evidence.md"
+
+validation:
+  required_checks:
+    - "npm run check"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0031/runtime-slice-contract.md"
+    - "evidence/requests/CR-SST-0031/implementation-context.md"
+    - "evidence/requests/CR-SST-0031/decision-log.md"
+    - "evidence/requests/CR-SST-0031/memory-event-proposal-flow.md"
+    - "evidence/requests/CR-SST-0031/authority-and-privacy-boundary.md"
+    - "evidence/requests/CR-SST-0031/impacted-services-summary.md"
+    - "evidence/requests/CR-SST-0031/subagent-deployment-evidence.md"
+    - "evidence/requests/CR-SST-0031/implementation-summary.md"
+    - "evidence/requests/CR-SST-0031/changed-files-summary.md"
+    - "evidence/requests/CR-SST-0031/validation-results.md"
+
+decision:
+  status: "approved-done"
+  approver: "4uentes"
+  decided_at: "2026-06-05"
+
+next_sequence:
+  next_request_id: "TODO"
+  note: "Open the implementation request that applies this slice first in sst-bend and sst-chatbot after approval."

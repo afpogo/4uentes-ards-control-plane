@@ -1,0 +1,130 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0040"
+title: "Define Jira and control-plane status synchronization policy"
+status: planned
+source_request: "requests/inbox/CR-SST-0040-jira-control-plane-status-sync-policy.yaml"
+created_at: "2026-06-07"
+requester: "4uentes"
+
+initial_scope:
+  solution: "sst"
+  services: []
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services: []
+  affected_ards: []
+  capabilities:
+    - jira-backlog-sync-state-machine
+    - jira-mcp-ticketing
+    - control-plane-process-lifecycle
+  risks:
+    - id: JIRA_CONTROL_PLANE_AUTHORITY_DRIFT
+      severity: high
+    - id: AUTOMATIC_STATUS_TRANSITION_RISK
+      severity: high
+    - id: EVIDENCELESS_DONE_TRANSITION
+      severity: high
+
+control_plane_scope:
+  repository: "4uentes-orchestor"
+  reason: "This request defines control-plane policy and does not modify functional repositories or Jira."
+
+required_context:
+  - "requests/done/CR-SST-0039-apply-jira-sync-correction-plan.yaml"
+  - "docs/requests/jira-feature-ticket-policy.md"
+  - "docs/requests/jira-write-connection-contract.md"
+  - "state/jira-backlog-sync-machine.yaml"
+
+required_checks:
+  - service_id: 4uentes-orchestor
+    command: "npm run check"
+  - service_id: 4uentes-orchestor
+    command: "npm run jira:mcp:status-observe -- --connect --request-id CR-SST-0040 --output-dir evidence/requests/CR-SST-0040"
+
+risk:
+  level: high
+  score: 8
+  drivers:
+    - id: JIRA_CONTROL_PLANE_AUTHORITY_DRIFT
+      severity: high
+    - id: AUTOMATIC_STATUS_TRANSITION_RISK
+      severity: high
+    - id: EVIDENCELESS_DONE_TRANSITION
+      severity: high
+
+task_weight:
+  classification: complex-high-risk-task
+  risk_level: high
+  drivers:
+    - JIRA_CONTROL_PLANE_AUTHORITY_DRIFT
+    - CONTROL_PLANE_PROCESS_LIFECYCLE
+    - EXTERNAL_JIRA_WRITE
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The task defines authority and transition rules between Jira operational status and control-plane state."
+
+subagent_deployment_plan:
+  required: true
+  parallelizable: true
+  roles:
+    - architecture-reviewer
+    - security-contract-reviewer
+    - validation-reviewer
+  fallback: "If subagent tools are unavailable or not explicitly requested, the main agent must perform architecture, write-boundary, and validation review sequentially."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  allowed_window: manual
+  branch_strategy: control-plane-only
+  read_only_boundary:
+    allowed:
+      - "inspect control-plane state model"
+      - "inspect Jira sync evidence"
+      - "define status sync policy"
+      - "write non-secret evidence"
+    forbidden:
+      - "write Jira issue status"
+      - "modify feature_state status"
+      - "transition CR-SST requests to done"
+      - "modify functional repositories"
+      - "store tokens, cookies, private URLs, cloudId, or OAuth material in Git"
+
+implementation_steps:
+  - id: define-authority-rules
+    description: "Define Jira as operational signal and control-plane as authoritative state."
+  - id: define-status-mapping
+    description: "Define allowed mappings between Jira status and control-plane events."
+  - id: define-reconciliation-flow
+    description: "Define how Jira status observations become evidence and proposed control-plane transitions."
+  - id: add-status-observation
+    description: "Add a read-only Jira status observation command that records status signals without local transitions."
+  - id: define-forward-sync-flow
+    description: "Define how control-plane lifecycle changes update Jira through the writer/gateway."
+  - id: validate
+    description: "Run npm run check and record evidence."
+
+validation:
+  required_checks:
+    - "npm run check"
+    - "npm run jira:mcp:status-observe -- --connect --request-id CR-SST-0040 --output-dir evidence/requests/CR-SST-0040"
+  evidence_required:
+    - "status_sync_policy_analysis"
+    - "jira_status_observation"
+    - "changed_files_summary"
+    - "validation_results"
+
+decision:
+  status: pending
+  approver: TODO
+
+planner_notes:
+  - "Jira may emit operational signals, but must not directly mutate feature_state status."
+  - "Control-plane may update Jira status through the writer/gateway after request/evidence gates."
+  - "Done remains a terminal control-plane state only when local evidence supports it."

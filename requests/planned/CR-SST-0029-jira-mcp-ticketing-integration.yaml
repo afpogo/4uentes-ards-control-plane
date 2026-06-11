@@ -1,0 +1,148 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0029"
+title: "Connect Jira MCP and plan feature-state ticket creation"
+status: planned
+source_request: "requests/inbox/CR-SST-0029-jira-mcp-ticketing-integration.yaml"
+created_at: "2026-06-04"
+requester: "4uentes"
+
+initial_scope:
+  solution: "sst"
+  services: []
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services: []
+  affected_ards: []
+  capabilities:
+    - feature-bugfix-state-read-model
+    - jira-mcp-ticketing
+  risks:
+    - id: EXTERNAL_WRITE_INTEGRATION
+      severity: high
+    - id: JIRA_PERMISSION_AND_AUTH_BOUNDARY
+      severity: high
+    - id: DUPLICATE_TICKET_RISK
+      severity: medium
+
+control_plane_scope:
+  repository: "4uentes-orchestor"
+  reason: "The Jira MCP connector is an external control-plane operation, not a product service responsibility."
+
+ownership:
+  responsible_repo: "4uentes-orchestor"
+  responsible_scope:
+    - "document Jira MCP ticketing workflow"
+    - "coordinate MCP connection setup"
+    - "generate and review ticket dry-run payloads"
+    - "create Jira tickets after human approval"
+    - "store non-secret evidence under evidence/requests/CR-SST-0029/"
+  external_responsible_party: "Atlassian/Jira admin"
+  external_responsible_scope:
+    - "authorize OAuth 2.1 or API-token access"
+    - "approve allowed domains and IP allowlist requirements"
+    - "confirm Jira project permissions"
+    - "review organization audit and security controls"
+  non_responsible_repos:
+    - sst-fend
+    - sst-bend
+    - sst-extension
+    - sst-chatbot
+    - 4uentes-auth
+    - sst-4uentes-infra
+
+required_context:
+  - "docs/requests/jira-mcp-ticketing-playbook.md"
+  - "docs/requests/state-read-model.md"
+  - "docs/requests/execution-model.md"
+  - "docs/ai/model-selection-policy.md"
+  - "state/features/*.current.yaml"
+  - "requests/inbox/CR-SST-0029-jira-mcp-ticketing-integration.yaml"
+
+required_checks:
+  - service_id: 4uentes-orchestor
+    command: "npm run check"
+
+risk:
+  level: high
+  score: 7
+  drivers:
+    - id: EXTERNAL_WRITE_INTEGRATION
+      severity: high
+    - id: JIRA_PERMISSION_AND_AUTH_BOUNDARY
+      severity: high
+    - id: DUPLICATE_TICKET_RISK
+      severity: medium
+
+task_weight:
+  classification: complex-high-risk-task
+  risk_level: high
+  drivers:
+    - EXTERNAL_WRITE_INTEGRATION
+    - JIRA_PERMISSION_AND_AUTH_BOUNDARY
+    - CONTROL_PLANE_EXTERNAL_CONNECTOR
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The task configures an external write-capable connector and requires permission, credential, approval, and evidence boundaries."
+
+subagent_deployment_plan:
+  required: true
+  parallelizable: true
+  roles:
+    - security-contract-reviewer
+    - implementation-planner
+    - validation-reviewer
+  fallback: "If subagent tools are unavailable, the main agent must perform connector security, implementation planning, and validation review sequentially."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  allowed_window: manual
+  branch_strategy: control-plane-only
+  steps:
+    - id: confirm-jira-target
+      description: "Confirm Jira site, project key, board, issue type, and required labels."
+      writes_jira: false
+    - id: configure-mcp-client
+      description: "Connect the operator MCP client to Atlassian Rovo MCP Server using OAuth 2.1 or approved API-token auth."
+      writes_jira: false
+    - id: verify-read-access
+      description: "Read current user, accessible resources, visible projects, issue types, and required field metadata."
+      writes_jira: false
+    - id: generate-dry-run
+      description: "Generate one ticket payload per non-done feature state."
+      writes_jira: false
+    - id: search-duplicates
+      description: "Search Jira for existing issues by state_id, summary, and labels."
+      writes_jira: false
+    - id: approve-write
+      description: "Get explicit human approval for ticket creation."
+      writes_jira: false
+    - id: create-issues
+      description: "Create Jira issues through MCP and record created keys."
+      writes_jira: true
+
+validation:
+  required_checks:
+    - "npm run check"
+  evidence_required:
+    - "jira_mcp_connection_summary_no_secrets"
+    - "jira_project_and_issue_type_summary"
+    - "jira_required_fields_summary"
+    - "ticket_payload_dry_run"
+    - "duplicate_search_summary"
+    - "created_ticket_summary"
+
+decision:
+  status: pending
+  approver: TODO
+
+planner_notes:
+  - "Functional repositories are not modified by this request."
+  - "Credentials, tokens, site-private URLs, and OAuth secrets must not be committed."
+  - "The first execution phase is read-only until the user approves Jira writes."

@@ -1,0 +1,62 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0058"
+title: "Execute Jira close transition for SST-8"
+status: "inbox"
+created_at: "2026-06-07"
+requester: "4uentes"
+
+summary: >
+  Execute the approved Jira close/resolution action for SST-8 after the
+  read-only CR-SST-0056 proposal and validated-live Document Agent evidence.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - sst-fend
+    - 4uentes-auth
+    - sst-bend
+  include_optional_services: false
+
+dependencies:
+  - "requests/done/CR-SST-0053-document-agent-authenticated-e2e-smoke.yaml"
+  - "requests/done/CR-SST-0056-sst-8-jira-close-resolution-proposal.yaml"
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - JIRA_EXTERNAL_WRITE
+    - JIRA_STATUS_TRANSITION
+    - CONTROL_PLANE_EVIDENCE_REVIEW
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "External Jira write/transition requires careful confirmation, evidence, and rollback-aware reporting."
+
+execution_intent:
+  jira_write_expected: true
+  jira_issue_key: "SST-8"
+  allowed_jira_operations:
+    - "read issue"
+    - "read available transitions"
+    - "add closure evidence comment if supported"
+    - "transition issue to terminal closed/resolved status"
+  forbidden_jira_operations:
+    - "modify any issue other than SST-8"
+    - "write tokens, secrets, cookies, or local credentials"
+    - "bulk transition"
+  local_state_transition_expected: false
+
+approval:
+  required: true
+  status: "pending-explicit-write-approval"
+
+acceptance_criteria:
+  - "Available Jira transitions for SST-8 are observed before any transition."
+  - "Only SST-8 is modified."
+  - "The selected transition is terminal/closed/resolved."
+  - "Evidence records Jira status before and after the transition."
+  - "Control-plane validation passes."
