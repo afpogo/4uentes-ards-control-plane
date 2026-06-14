@@ -1,0 +1,98 @@
+schema_version: "1.0"
+kind: "outbound_capability"
+id: "capability.outbound.core-agent-policy-governance-handoff"
+title: "Core agent policy governance handoff"
+status: "implemented"
+producer:
+  repo: "4uentes-orchestor"
+  ards_kind: "control-plane"
+downstream:
+  repo: "4uentes-ards-core"
+  repo_role: "ards-standard-source"
+  adoption_status: "adopted-in-core"
+usage:
+  mode: "core-governance-adopted"
+  summary: >
+    Provide the control-plane policy governance architecture as the adopted
+    handoff package now materialized as core-owned ARDS/SDD policy resources.
+runtime_boundary:
+  modifies_core_repo: false
+  modifies_child_repos: false
+  creates_product_runtime_contracts: false
+  requires_future_core_request: false
+source_refs:
+  registry:
+    - "specs/integration/policies.yaml"
+  human_docs:
+    - "docs/policies/README.md"
+    - "docs/policies/agent-model-selection-policy.md"
+    - "docs/policies/agent-resource-degradation-policy.md"
+    - "docs/policies/agent-task-atomization-policy.md"
+    - "docs/policies/agent-delegation-policy.md"
+    - "docs/policies/agent-context-management-policy.md"
+    - "docs/policies/agent-architecture-boundary-policy.md"
+  policy_model:
+    - "specs/policies/ards-sdd-policy-component-model.yaml"
+    - "specs/policies/00-index.yaml"
+  discovery:
+    - "AGENTS.md"
+policy_payload:
+  registry_kind: "ards_sdd_agent_policy_registry"
+  provider_agnostic: true
+  model_names_are_aliases: true
+  policy_ids:
+    - "agent-model-selection-policy"
+    - "agent-resource-degradation-policy"
+    - "agent-task-atomization-policy"
+    - "agent-delegation-policy"
+    - "agent-context-management-policy"
+    - "agent-architecture-boundary-policy"
+expected_core_adoption:
+  - "Core owns the reusable policy registry shape and templates."
+  - "Core defines canonical inheritance rules for policy adoption by orchestrators and child repos."
+  - "Core preserves provider-agnostic model aliasing instead of coupling the standard to a provider."
+  - "Core keeps operational agent policies separate from functional product contracts."
+  - "Core exposes read-only policy resources through the MCP."
+non_goals:
+  - "Do not modify 4uentes-ards-core from this control-plane workflow."
+  - "Do not propagate to child repos before an approved request and plan."
+  - "Do not convert these policies into product runtime APIs."
+  - "Do not redefine ARDS/SDD kinds, profiles, schemas, or ownership locally."
+adoption_sequence:
+  - step: "orchestrator-package"
+    status: "done"
+    evidence:
+      - "docs/policies/"
+      - "specs/integration/policies.yaml"
+  - step: "core-review-request"
+    status: "done"
+    evidence:
+      - "specs/capabilities/outbound/4uentes-orchestor--core-agent-policy-governance-handoff.yaml"
+  - step: "core-contract-adoption"
+    status: "done"
+    evidence:
+      - "C:/Users/andre/Desktop/4uentes/apps/4uentes-core/specs/policies/ards-sdd-policy-component-model.yaml"
+      - "C:/Users/andre/Desktop/4uentes/apps/4uentes-core/specs/integration/policies.yaml"
+      - "C:/Users/andre/Desktop/4uentes/apps/4uentes-core/docs/policies/README.md"
+  - step: "child-repo-scoped-adoption"
+    status: "done"
+    evidence:
+      - "requests/done/CR-SST-0077-sst-policy-adoption-sync-rollout.yaml"
+      - "evidence/requests/CR-SST-0077/4uentes-auth-child-sync-diff.yaml"
+      - "evidence/requests/CR-SST-0077/sst-fend-child-sync-diff.yaml"
+      - "evidence/requests/CR-SST-0077/sst-bend-child-sync-diff.yaml"
+      - "evidence/requests/CR-SST-0077/sst-extension-child-sync-diff.yaml"
+      - "evidence/requests/CR-SST-0077/sst-chatbot-child-sync-diff.yaml"
+      - "evidence/requests/CR-SST-0077/sst-4uentes-infra-child-sync-diff.yaml"
+validation:
+  check_refs:
+    - "npm run check"
+  manual_review:
+    - "Confirm all source_refs exist."
+    - "Confirm core and child repos were not modified."
+risks:
+  - "Core adoption could duplicate orchestrator-local policy definitions if ownership is not reconciled."
+  - "Child repo propagation before core adoption could create drift."
+  - "Model aliases could be mistaken for hard dependencies if the provider-agnostic rule is removed."
+open_questions:
+  - "What validator should core expose for policy adoption manifests?"

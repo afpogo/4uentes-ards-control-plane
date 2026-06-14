@@ -1,0 +1,74 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0066"
+title: "Reconcile Jira status for SST-10 after dictionary validated-live closure"
+status: done
+source_request: "requests/planned/CR-SST-0066-sst-10-jira-status-reconciliation.yaml"
+completed_at: "2026-06-12"
+requester: "4uentes"
+
+scope:
+  solution: "sst"
+  jira_issue_key: "SST-10"
+  feature_state: "dictionary-tags"
+  source_evidence_request: "CR-SST-0064"
+  affected_services:
+    - "4uentes-orchestor"
+  functional_repositories_modified: false
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  policy_ref: "docs/ai/model-selection-policy.md"
+
+execution_result:
+  jira_mcp_endpoint_override: "https://mcp.atlassian.com/v1/mcp"
+  jira_read_executed_before_write: true
+  jira_write_executed: true
+  jira_description_updated: true
+  jira_comment_added: true
+  jira_transition_executed: true
+  jira_labels_updated: true
+  jira_status_before: "En curso"
+  jira_status_after: "Listo"
+  jira_resolution_after: "Listo"
+  jira_labels_after:
+    - "ards-sdd"
+    - "control-plane"
+    - "done"
+    - "feature-state"
+    - "validated-live"
+  terminal_transition:
+    id: "41"
+    name: "Listo"
+    to_status: "Finalizada"
+
+control_plane_basis:
+  feature_state_file: "state/features/dictionary-tags.current.yaml"
+  feature_state_status: "validated-live"
+  closure_request: "requests/done/CR-SST-0064-dictionary-tags-validated-live-closure.yaml"
+
+evidence_refs:
+  - "evidence/requests/CR-SST-0066/jira-tool-schema-summary.md"
+  - "evidence/requests/CR-SST-0066/jira-issue-transition-summary.md"
+  - "evidence/requests/CR-SST-0066/jira-issue-transition-result.json"
+  - "evidence/requests/CR-SST-0066/post-write/jira-issue-transition-summary.md"
+  - "evidence/requests/CR-SST-0066/post-write/jira-issue-transition-result.json"
+  - "evidence/requests/CR-SST-0066/label-update/jira-issue-transition-summary.md"
+  - "evidence/requests/CR-SST-0066/label-update/jira-issue-transition-result.json"
+  - "evidence/requests/CR-SST-0066/post-label-update/jira-issue-transition-summary.md"
+  - "evidence/requests/CR-SST-0066/post-label-update/jira-issue-transition-result.json"
+  - "evidence/requests/CR-SST-0064/runtime-validation-results.md"
+
+security_notes:
+  - "No tokens, cookies, cloudId, accountId, email addresses, or private Jira URLs were intentionally persisted."
+  - "Persisted Jira MCP outputs were sanitized before evidence write."
+
+accepted_gaps:
+  - "TagDefinition public CRUD/governance remains a future request."
+  - "sst-extension account-context remains a non-blocking optional producer/consumer follow-up."
+  - "Encryption-at-rest, offline model, translations, and aliases remain future requests outside validated-live dictionary closure."
+
+decision:
+  status: "closed"
+  note: "SST-10 was reconciled from Jira En curso to Listo and labels were aligned to done/validated-live using CR-SST-0064 evidence."

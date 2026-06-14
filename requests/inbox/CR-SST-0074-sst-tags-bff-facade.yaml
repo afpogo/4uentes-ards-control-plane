@@ -1,0 +1,31 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0074"
+title: "SST Tags - BFF tags facade"
+status: inbox
+created_at: "2026-06-13"
+requester: "4uentes"
+
+summary: >
+  Exponer en `4uentes-auth` pasarela autenticada para endpoints de tags
+  gobernados sin reescribir reglas de dominio.
+
+requested_change: >
+  Agregar rutas GET/POST/PUT de tags con validación mínima de payload y
+  propagación de contexto de cuenta/JWT hacia backend.
+
+scope:
+  solution: "sst"
+  services:
+    - "4uentes-auth"
+  include_optional_services: false
+
+requested_outcome:
+  - "Pass-through autenticado para definitions, values y bindings."
+  - "Sin degradación a `string[]` en tránsito."
+  - "Sin creación implícita de `TagDefinition`."
+
+out_of_scope:
+  - "Migración frontend de Artículos."
+
+next_lifecycle_step: planned

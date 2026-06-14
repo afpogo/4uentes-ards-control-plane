@@ -1,0 +1,120 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0076"
+title: "SST Tags - Dictionary adoption and global closure"
+status: planned
+source_request: "requests/inbox/CR-SST-0076-dictionary-adoption-and-governed-closure.yaml"
+created_at: "2026-06-13"
+requester: "4uentes"
+
+initial_scope:
+  solution: "sst"
+  services:
+    - "sst-bend"
+    - "4uentes-auth"
+    - "sst-fend"
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "sst-bend"
+      via: "dictionary endpoint and occurrence binding adoption"
+      service_kind: "api"
+      ards_kind: "backend-api"
+      status: "active"
+    - service_id: "4uentes-auth"
+      via: "dictionary tag pass-through"
+      service_kind: "shared-auth-provider"
+      ards_kind: "shared-auth-provider"
+      status: "active"
+    - service_id: "sst-fend"
+      via: "dictionary managed UI component parity with article selector"
+      service_kind: "frontend-spa"
+      ards_kind: "frontend-web"
+      status: "active"
+  affected_ards:
+    - "backend-api"
+    - "shared-auth-provider"
+    - "frontend-web"
+  capabilities:
+    - "dictionary-tags"
+    - "sst-tags-governance"
+  risks:
+    - id: CLOSURE_ORDER_RISK
+      severity: medium
+    - id: SCOPE_EXPANSION_RISK
+      severity: medium
+
+required_context:
+  - "AGENTS.md"
+  - "docs/requests/sst-tags-governance-contract.md"
+  - "state/features/sst-tags-governance.current.yaml"
+  - "state/features/dictionary-tags.current.yaml"
+  - "catalog/services/sst-bend.yaml"
+  - "catalog/services/4uentes-auth.yaml"
+  - "catalog/services/sst-fend.yaml"
+
+required_checks:
+  - service_id: "sst-bend"
+    command: "npm run check"
+  - service_id: "4uentes-auth"
+    command: "npm run check"
+  - service_id: "sst-fend"
+    command: "npm run check"
+  - service_id: "4uentes-orchestor"
+    command: "npm run check"
+
+risk:
+  level: high
+  score: 9
+  drivers:
+    - id: CLOSURE_ORDER_RISK
+      severity: medium
+    - id: NON_BLOCKING_SCOPE_EXPANSION
+      severity: medium
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: high
+  drivers:
+    - "cross-service closure"
+    - "dictionary validation continuity"
+    - "jira close alignment"
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "Closure request spans backend, auth boundary y frontend with active Jira alignment."
+
+subagent_deployment_plan:
+  required: true
+  parallelizable: true
+  roles:
+    - "cross-repo-impact-reviewer"
+    - "dependency-planner"
+    - "validation-reviewer"
+    - "architecture-reviewer"
+  fallback: "Execute cross-repo closure checks sequentially if reviewers are unavailable."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  allowed_window: manual
+  branch_strategy: one-branch-per-repo
+
+validation:
+  required_checks:
+    - "sst-bend: npm run check"
+    - "4uentes-auth: npm run check"
+    - "sst-fend: npm run check"
+    - "4uentes-orchestor: npm run check"
+  evidence_required:
+    - "dictionary migration notes"
+    - "jira SST-4 close evidence"
+    - "validated-live linkage evidence"
+
+decision:
+  status: pending
+  approver: TODO

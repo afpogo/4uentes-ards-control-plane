@@ -1,0 +1,31 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0075"
+title: "SST Tags - Governed article selector in frontend"
+status: inbox
+created_at: "2026-06-13"
+requester: "4uentes"
+
+summary: >
+  Reemplazar input de tags por selector/autocomplete gobernado para Artículos
+  con creación explícita y soporte de borrado total (`tags: []`).
+
+requested_change: >
+  Implementar buscador tipo autocomplete con debounce, uso del servicio BFF
+  gobernado y render de `TagValue` estructurados.
+
+scope:
+  solution: "sst"
+  services:
+    - "sst-fend"
+  include_optional_services: false
+
+requested_outcome:
+  - "UI de Artículos consulta tags existentes antes de creación."
+  - "Crear tags por acción explícita."
+  - "Enviar payload estructurado de tags gobernados en create/update."
+
+out_of_scope:
+  - "Migración de Learning Content o Bitacora."
+
+next_lifecycle_step: planned

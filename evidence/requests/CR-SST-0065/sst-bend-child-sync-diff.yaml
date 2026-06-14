@@ -1,0 +1,50 @@
+schema_version: "0.1"
+kind: "ards_child_sync_diff"
+repo: "sst-bend"
+project_type: "backend-api"
+requested_contract_version: "latest"
+resolved_contract_version: "ards-core-contract-v0.1"
+binding_ref: "specs/ards/contract-binding.yaml"
+child_commit: "d06da72"
+evidence_manifest_hash: "3c71819c88af53903b4cec41641dd1efd38b9c1d941ee2abc55868d7336618b4"
+sync_status: "synced"
+checked_at: "2026-06-12"
+source:
+  core_contract: "ards.get_sync_contract"
+  child_repo_ref: "C:\\Users\\andre\\Desktop\\4uentes\\apps\\4uentes-sstbend\\sst-bend"
+evidence_manifest:
+  required_paths:
+    present:
+      - "AGENTS.md"
+      - "docs/00-overview.md"
+      - "docs/ai/policy.md"
+      - "specs/00-index.yaml"
+      - "specs/ards/contract-binding.yaml"
+      - "specs/api/00-index.yaml"
+      - "specs/features/00-index.yaml"
+      - "specs/capabilities/00-index.yaml"
+      - "specs/capabilities/outbound/00-index.yaml"
+      - "specs/states/00-index.yaml"
+      - "docs/api/README.md"
+      - "docs/capabilities/00-overview.md"
+      - "docs/tasks/README.md"
+      - "docs/org/README.md"
+    missing: []
+  ards_sdd_hashes:
+    - path: "specs/00-index.yaml"
+      sha256: "682dcaf1728e21fe7119840b3a2ed8bc7d4071ceace3a633c8aa0efd1e5e516e"
+    - path: "specs/ards/contract-binding.yaml"
+      sha256: "578d29ceb33cbd9d49fb85ab2a00124d8ac0ea275756d74fb4d390e925e39888"
+  yaml_status:
+    - path: "specs/00-index.yaml"
+      status: "valid"
+    - path: "specs/ards/contract-binding.yaml"
+      status: "valid"
+  local_todos_or_exceptions: []
+summary:
+  missing_in_child: 0
+  extra_or_stale_in_child: 0
+  candidate_for_core: 0
+  conflicts: 0
+items: []
+recommended_actions: []

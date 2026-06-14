@@ -1,0 +1,99 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0077"
+title: "SST policy adoption sync rollout across core, orchestrator, and child repos"
+status: done
+source_request: "requests/inbox/CR-SST-0077-sst-policy-adoption-sync-rollout.yaml"
+planned_request: "requests/planned/CR-SST-0077-sst-policy-adoption-sync-rollout.yaml"
+completed_at: "2026-06-13"
+requester: "4uentes"
+
+summary: >
+  The control-plane closed the historical core handoff for agent operating
+  policies, synchronized the six SST child repos with the minimum local policy
+  adoption artifacts, and regenerated deterministic child sync evidence showing
+  no missing required policy paths.
+
+scope:
+  solution: "sst"
+  services_modified:
+    - "4uentes-auth"
+    - "sst-fend"
+    - "sst-bend"
+    - "sst-extension"
+    - "sst-chatbot"
+    - "sst-4uentes-infra"
+  functional_repositories_modified: true
+  core_repository_modified: false
+
+sync_result:
+  core_contract_tool: "ards.get_sync_contract"
+  requested_contract_version: "latest"
+  resolved_contract_version: "ards-core-contract-v0.1"
+  core_ref: "4uentes-ards-core@2ad4e0f"
+  services:
+    - service_id: "4uentes-auth"
+      sync_status: "synced"
+      core_revision_decision: "no-core-change-needed"
+      evidence_ref: "evidence/requests/CR-SST-0077/4uentes-auth-child-sync-diff.yaml"
+    - service_id: "sst-fend"
+      sync_status: "synced"
+      core_revision_decision: "no-core-change-needed"
+      evidence_ref: "evidence/requests/CR-SST-0077/sst-fend-child-sync-diff.yaml"
+    - service_id: "sst-bend"
+      sync_status: "synced"
+      core_revision_decision: "no-core-change-needed"
+      evidence_ref: "evidence/requests/CR-SST-0077/sst-bend-child-sync-diff.yaml"
+    - service_id: "sst-extension"
+      sync_status: "synced"
+      core_revision_decision: "no-core-change-needed"
+      evidence_ref: "evidence/requests/CR-SST-0077/sst-extension-child-sync-diff.yaml"
+    - service_id: "sst-chatbot"
+      sync_status: "synced"
+      core_revision_decision: "no-core-change-needed"
+      evidence_ref: "evidence/requests/CR-SST-0077/sst-chatbot-child-sync-diff.yaml"
+    - service_id: "sst-4uentes-infra"
+      sync_status: "synced"
+      core_revision_decision: "no-core-change-needed"
+      evidence_ref: "evidence/requests/CR-SST-0077/sst-4uentes-infra-child-sync-diff.yaml"
+
+validation:
+  status: "partial"
+  passed:
+    - "4uentes-ards-core: npm.cmd run mcp:build"
+    - "4uentes-auth: npm.cmd run check"
+    - "sst-4uentes-infra: npm.cmd run check"
+    - "4uentes-orchestor: npm.cmd run check"
+  failed:
+    - "4uentes-ards-core: npm.cmd run mcp:smoke"
+    - "4uentes-ards-core: npm.cmd run check"
+    - "sst-fend: npm.cmd run check"
+    - "sst-bend: npm.cmd run check"
+    - "sst-extension: pnpm.cmd run check"
+    - "sst-chatbot: .\\.venv\\Scripts\\python.exe scripts\\check.py"
+  notes:
+    - "The policy sync evidence is complete and all six child sync diffs report missing_in_child: 0."
+    - "Several repo-level checks remain failing outside the narrow sync artifact scope and were not normalized by this request."
+
+evidence_refs:
+  - "evidence/requests/CR-SST-0077/execution-notes.md"
+  - "evidence/requests/CR-SST-0077/policy-links-state-update-summary.md"
+  - "evidence/requests/CR-SST-0077/4uentes-auth-child-sync-diff.yaml"
+  - "evidence/requests/CR-SST-0077/sst-fend-child-sync-diff.yaml"
+  - "evidence/requests/CR-SST-0077/sst-bend-child-sync-diff.yaml"
+  - "evidence/requests/CR-SST-0077/sst-extension-child-sync-diff.yaml"
+  - "evidence/requests/CR-SST-0077/sst-chatbot-child-sync-diff.yaml"
+  - "evidence/requests/CR-SST-0077/sst-4uentes-infra-child-sync-diff.yaml"
+  - "evidence/requests/CR-SST-0077/validation-results.md"
+  - "evidence/requests/CR-SST-0077/changed-files-summary.md"
+
+accepted_gaps:
+  - "The canonical naming gap between 4uentes-core and 4uentes-ards-core remains open."
+  - "The human-doc-language policy still needs a separate core handoff decision."
+  - "Broader policy rollout beyond the SST solution remains future work."
+  - "Some repo-level validation commands still fail and remain outside the sync-only scope of CR-SST-0077."
+
+decision:
+  status: "closed"
+  approver: "4uentes"
+  note: "CR-SST-0077 closes the SST policy adoption sync rollout with all six child repos reporting synced for the required policy artifacts."

@@ -1,0 +1,56 @@
+schema_version: "0.1"
+kind: "ards_child_sync_diff"
+repo: "sst-extension"
+project_type: "frontend-extension"
+requested_contract_version: "latest"
+resolved_contract_version: "ards-core-contract-v0.1"
+binding_ref: "specs/ards/contract-binding.yaml"
+child_commit: "daf23d8"
+evidence_manifest_hash: "97c584a5b648b66ac0e147c4f0a1ad353be7332f9afbca97f011f09cb4d40097"
+sync_status: "synced"
+core_revision_decision: "no-core-change-needed"
+checked_at: "2026-06-13"
+source:
+  core_contract: "ards.get_sync_contract"
+  child_repo_ref: "C:\\Users\\andre\\Desktop\\4uentes\\apps\\4uentes-sst\\sst-extension"
+evidence_manifest:
+  required_paths:
+    present:
+      - "AGENTS.md"
+      - "docs/00-overview.md"
+      - "docs/ai/policy.md"
+      - "specs/00-index.yaml"
+      - "specs/ards/contract-binding.yaml"
+      - "specs/policies/00-index.yaml"
+      - "specs/integration/policies.yaml"
+      - "docs/policies/README.md"
+    missing: []
+  ards_sdd_hashes:
+    - path: "specs/00-index.yaml"
+      sha256: "0fef7a2ed8ec4c341e4d4c4beaf5284d441f5d0f560e533660d100f8cfa40877"
+    - path: "specs/ards/contract-binding.yaml"
+      sha256: "1f8c1f02996d8b6c9c8c9d454dab997a6421dd54578a80ba6ae649681218b497"
+    - path: "specs/policies/00-index.yaml"
+      sha256: "6798b01d28dbc990eec6a99a87d934cf6fe2d8c149412ab5f263b289f6bac6f4"
+    - path: "specs/integration/policies.yaml"
+      sha256: "153a065358ad7eb6fa609e807ac847aec54edfcd4da8d4035ad81b9985d5b3c3"
+    - path: "docs/policies/README.md"
+      sha256: "f7e0dad0985077532f3905c190f284c9cba64879f67829831ddfaee740224fc7"
+  yaml_status:
+    - path: "specs/00-index.yaml"
+      status: "valid"
+    - path: "specs/ards/contract-binding.yaml"
+      status: "valid"
+    - path: "specs/policies/00-index.yaml"
+      status: "valid"
+    - path: "specs/integration/policies.yaml"
+      status: "valid"
+  local_todos_or_exceptions: []
+summary:
+  missing_in_child: 0
+  extra_or_stale_in_child: 0
+  candidate_for_core: 0
+  conflicts: 0
+items: []
+recommended_actions: []
+

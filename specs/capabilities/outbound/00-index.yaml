@@ -1,0 +1,26 @@
+schema_version: "1.0"
+kind: "outbound_capabilities_index"
+producer:
+  repo: "4uentes-orchestor"
+  ards_kind: "control-plane"
+capabilities:
+  - id: "capability.outbound.core-agent-policy-governance-handoff"
+    title: "Core agent policy governance handoff"
+    status: "implemented"
+    spec: "specs/capabilities/outbound/4uentes-orchestor--core-agent-policy-governance-handoff.yaml"
+    downstream:
+      repo: "4uentes-ards-core"
+      repo_role: "ards-standard-source"
+      adoption_status: "adopted-in-core"
+states:
+  allowed:
+    - "draft"
+    - "implemented"
+    - "blocked"
+    - "deprecated"
+rules:
+  - "Outbound specs define governance handoff contracts produced by the control-plane."
+  - "Outbound specs do not redefine the downstream standard source."
+  - "When the core adopts the handoff canonically, the control-plane keeps the contract as evidence and integration guidance."
+open_questions:
+  - "Which core validation command will enforce policy registry shape?"

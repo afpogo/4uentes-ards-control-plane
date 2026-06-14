@@ -1,0 +1,96 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0062"
+title: "Review live Jira tickets from control-plane MCP"
+status: "planned"
+source_request: "requests/inbox/CR-SST-0062-control-plane-jira-live-review.yaml"
+created_at: "2026-06-11"
+requester: "4uentes"
+
+initial_scope:
+  solution: "sst"
+  services:
+    - "control-plane"
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "control-plane"
+      via: "owner-repository"
+      service_kind: "ards-sdd-control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+  affected_ards:
+    - "control-plane"
+    - "jira-mcp-read-only-observation"
+  capabilities:
+    - "jira-mcp-read-only-observation"
+  risks:
+    - id: "OAUTH_SESSION"
+      severity: "high"
+    - id: "EXTERNAL_MCP_READ"
+      severity: "medium"
+    - id: "JIRA_STATUS_NOT_CANONICAL_STATE"
+      severity: "medium"
+
+required_context:
+  - "docs/requests/jira-mcp-oauth-session-playbook.md"
+  - "docs/requests/jira-mcp-endpoint-connection-policy.md"
+  - "evidence/requests/CR-SST-0055/unified-jira-radar.md"
+  - "state/jira-backlog-registry.yaml"
+  - "AGENTS.md"
+
+required_checks:
+  - "npm.cmd run check"
+  - "npm.cmd run jira:mcp:verify -- --connect --request-id CR-SST-0062 --output-dir evidence/requests/CR-SST-0062"
+  - "npm.cmd run jira:mcp:reconcile -- --connect --request-id CR-SST-0062 --output-dir evidence/requests/CR-SST-0062"
+  - "npm.cmd run jira:mcp:status-observe -- --connect --request-id CR-SST-0062 --output-dir evidence/requests/CR-SST-0062"
+  - "npm.cmd run jira:mcp:backlog-observe -- --connect --request-id CR-SST-0062 --output-dir evidence/requests/CR-SST-0062"
+
+risk:
+  level: "high"
+  score: 8
+  drivers:
+    - id: "OAUTH_SESSION"
+      severity: "high"
+    - id: "EXTERNAL_MCP_READ"
+      severity: "medium"
+    - id: "JIRA_STATUS_NOT_CANONICAL_STATE"
+      severity: "medium"
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "OAUTH_SESSION"
+    - "EXTERNAL_MCP_READ"
+    - "JIRA_STATUS_NOT_CANONICAL_STATE"
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "OAuth/MCP and external Jira access are security-sensitive even in read-only mode."
+
+subagent_deployment_plan:
+  required: true
+  roles:
+    - "security-contract-reviewer"
+    - "ards-sdd-validator"
+  parallelizable: true
+  fallback: "Subagent tool policy requires explicit user request for delegation; the main agent executes sequentially and records this fallback."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "control-plane-only"
+  jira_read_only: true
+  jira_write_authorized: false
+
+decision:
+  status: "approved-for-read-only-jira-review"
+  approver: "4uentes"
+  approved_at: "2026-06-11"
+  note: "User requested live Jira MCP review through the control-plane. Jira writes are not approved."

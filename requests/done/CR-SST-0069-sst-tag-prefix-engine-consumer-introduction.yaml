@@ -1,0 +1,206 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-SST-0069"
+title: "Introduce SST Tag Prefix Engine preview to consumers"
+status: done
+source_request: "requests/inbox/CR-SST-0069-sst-tag-prefix-engine-consumer-introduction.yaml"
+created_at: "2026-06-12"
+requester: "4uentes"
+
+initial_scope:
+  solution: "sst"
+  services:
+    - "sst-bend"
+    - "4uentes-auth"
+    - "sst-fend"
+  include_optional_services: false
+  optional_services:
+    - "sst-extension"
+
+control_plane_context:
+  feature_state: "sst-tag-prefix-engine"
+  feature_state_file: "state/features/sst-tag-prefix-engine.current.yaml"
+  current_feature_status: "validated-live"
+  jira_issue_key: "SST-12"
+  governing_request: "CR-SST-0069"
+  predecessor_request: "CR-SST-0067"
+  backend_contract_ref: "specs/api/sst-tag-prefix-engine.yaml"
+  backend_capability_ref: "specs/capabilities/outbound/sst-tag-prefix-engine.yaml"
+  global_tags_contract_ref: "docs/requests/sst-tags-governance-contract.md"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "sst-bend"
+      via: "authenticated runtime validation of preview endpoint"
+      service_kind: "api"
+      ards_kind: "backend-api"
+      status: "active"
+    - service_id: "4uentes-auth"
+      via: "BFF pass-through for /api/tags/prefix-engine/preview or equivalent"
+      service_kind: "shared-auth-provider"
+      ards_kind: "shared-auth-provider"
+      status: "active"
+    - service_id: "sst-fend"
+      via: "read-only preview UI and rendering for materialized output"
+      service_kind: "frontend-spa"
+      ards_kind: "frontend-web"
+      status: "active"
+  deferred_services:
+    - service_id: "sst-extension"
+      via: "future producer only if extension submits sourceText later"
+      service_kind: "browser-extension"
+      ards_kind: "frontend-extension"
+      status: "optional-active"
+      deferred: true
+  risks:
+    - id: "AUTHENTICATED_RUNTIME_REQUIRED"
+      severity: high
+    - id: "BFF_CONTRACT_PRESERVATION"
+      severity: high
+    - id: "FRONTEND_REFERENCE_RENDERING"
+      severity: medium
+    - id: "PREMATURE_PERSISTENCE"
+      severity: high
+    - id: "LEARNING_CONTENT_SCOPE_CREEP"
+      severity: high
+
+required_context:
+  - "state/features/sst-tag-prefix-engine.current.yaml"
+  - "requests/done/CR-SST-0067-sst-tag-prefix-engine-runtime-boundary.yaml"
+  - "evidence/requests/CR-SST-0067/validation-results.md"
+  - "evidence/requests/CR-SST-0067/sst-bend-runtime-boundary-implementation.md"
+  - "docs/requests/sst-tags-governance-contract.md"
+  - "catalog/services/sst-bend.yaml"
+  - "catalog/services/4uentes-auth.yaml"
+  - "catalog/services/sst-fend.yaml"
+  - "environments/local/bindings.local.yaml"
+
+implementation_gates:
+  - id: "gate-0-backend-authenticated-live-smoke"
+    service_id: "sst-bend"
+    required: true
+    objective: "Prove the preview endpoint works with real JWT/account context."
+    expected_work:
+      - "Run scripts/smoke-test.js with SMOKE_JWT or run a focused POST /tags/prefix-engine/preview authenticated smoke."
+      - "Capture status 200 and response contract fields."
+      - "Do not advance Jira or state to validated-live if this gate fails."
+  - id: "gate-1-bff-pass-through"
+    service_id: "4uentes-auth"
+    required_after: "gate-0-backend-authenticated-live-smoke"
+    objective: "Expose the preview endpoint through BFF without losing structure."
+    expected_work:
+      - "Add or confirm BFF route for prefix-engine preview."
+      - "Forward JWT/account context."
+      - "Preserve materialized.*, issues, definitions, persistenceMode, persisted, and contractVersion."
+      - "Do not transform ImportedReference into TagValue."
+  - id: "gate-2-frontend-preview-rendering"
+    service_id: "sst-fend"
+    required_after: "gate-1-bff-pass-through"
+    objective: "Introduce read-only preview rendering for parser output."
+    expected_work:
+      - "Provide sourceText/scope input only for preview."
+      - "Render ContentBlock, TagValue, AssetRef, ExternalReference, and ImportedReference distinctly."
+      - "Render ImportedReference as external/reference-chip semantics."
+      - "Show issues as warnings without treating warnings as persisted state."
+  - id: "gate-3-control-plane-and-jira-reconciliation"
+    service_id: "4uentes-orchestor"
+    required_after: "gate-2-frontend-preview-rendering"
+    objective: "Update state/Jira only after evidence exists."
+    expected_work:
+      - "Record per-repo evidence and validation outputs."
+      - "Decide whether sst-tag-prefix-engine remains runtime-partial or advances to validated-live."
+      - "Update Jira SST-12 labels/status only if evidence supports it."
+
+acceptance_criteria:
+  - "CR-SST-0069 exists as governing request before modifying 4uentes-auth or sst-fend."
+  - "Backend authenticated smoke passes before consumer implementation."
+  - "BFF preserves the backend response shape without lossy conversion."
+  - "Frontend preview is read-only and does not persist parser output."
+  - "ImportedReference is rendered/transported as external reference semantics, not local TagValue."
+  - "Learning Content implementation remains out of scope and tracked under SST-6."
+  - "Bitacora remains reserved/future."
+  - "No state or Jira closure occurs without evidence."
+
+required_checks:
+  - service_id: "sst-bend"
+    command: "SMOKE_JWT=<token> npm run check"
+  - service_id: "sst-bend"
+    command: "npm run test:tag-engine"
+  - service_id: "4uentes-auth"
+    command: "npm run check"
+  - service_id: "sst-fend"
+    command: "npm run check"
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check"
+
+risk:
+  level: high
+  score: 8
+  drivers:
+    - "AUTHENTICATED_RUNTIME_REQUIRED"
+    - "BFF_CONTRACT_PRESERVATION"
+    - "FRONTEND_REFERENCE_RENDERING"
+    - "PREMATURE_PERSISTENCE"
+    - "LEARNING_CONTENT_SCOPE_CREEP"
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "cross-repo backend/BFF/frontend contract"
+    - "authenticated runtime evidence required"
+    - "response shape must remain structured"
+    - "future Learning Content depends on this boundary"
+    - "Jira/control-plane transition depends on evidence"
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The phase crosses API, auth/BFF, frontend rendering, and control-plane/Jira reconciliation."
+
+subagent_deployment_plan:
+  required: true
+  parallelizable: true
+  roles:
+    - "backend-runtime-validator"
+    - "bff-contract-reviewer"
+    - "frontend-rendering-reviewer"
+    - "ards-sdd-validator"
+  executed: []
+  fallback: "Subagents were not explicitly requested in this turn; record the required plan and execute sequentially unless the user authorizes delegation."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "one-branch-per-functional-repo"
+  jira_write_required: true
+  runtime_scope: "local-current-environment"
+
+decision:
+  status: "done"
+  approver: "4uentes"
+  approved_at: "2026-06-13"
+  completed_at: "2026-06-13"
+  note: "Backend authenticated smoke, BFF pass-through, frontend implementation, Chrome DevTools visual QA, Jira dependency review, and approved Jira closure are complete."
+
+execution_progress:
+  updated_at: "2026-06-13"
+  gates:
+    - id: "gate-0-backend-authenticated-live-smoke"
+      status: passed
+      evidence_ref: "evidence/requests/CR-SST-0069/gate-0-backend-authenticated-live-smoke.md"
+    - id: "gate-1-bff-pass-through"
+      status: passed
+      evidence_ref: "evidence/requests/CR-SST-0069/gate-1-bff-pass-through.md"
+    - id: "gate-2-frontend-preview-rendering"
+      status: passed
+      evidence_ref: "evidence/requests/CR-SST-0069/gate-2-frontend-preview-rendering.md"
+    - id: "gate-3-control-plane-and-jira-reconciliation"
+      status: passed
+      evidence_ref: "evidence/requests/CR-SST-0069/gate-3-control-plane-reconciliation.md"
+      jira_dependency_review_ref: "evidence/requests/CR-SST-0069/jira-active-dependency-review-summary.md"
+      jira_write_result_ref: "evidence/requests/CR-SST-0069/jira-sst-12-transition-summary.md"
+      jira_write_decision: "Approved write executed: SST-12 was commented with CR-SST-0069 evidence and transitioned to Finalizada/Listo."

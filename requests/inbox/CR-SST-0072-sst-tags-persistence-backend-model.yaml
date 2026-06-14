@@ -1,0 +1,32 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0072"
+title: "SST Tags - Backend global persistence migration"
+status: inbox
+created_at: "2026-06-13"
+requester: "4uentes"
+
+summary: >
+  Implementar migraciones y modelos globales en `sst-bend` con seed y backfill
+  desde tags actuales de articulos y diccionario.
+
+requested_change: >
+  Crear schema DB para tags globales con compatibilidad temporal con
+  `dictionary_tag_values` / `dictionary_tag_occurrences`, validar unicidad y
+  permitir creación explícita de `TagValue`.
+
+scope:
+  solution: "sst"
+  services:
+    - "sst-bend"
+  include_optional_services: false
+
+requested_outcome:
+  - "Migraciones para `tag_definitions`, `tag_values`, `tag_occurrences`."
+  - "Seed inicial de definiciones y `TagValue` migrado desde datos existentes."
+  - "Compatibilidad de lectura/escritura con tablas legacy durante transición."
+
+out_of_scope:
+  - "Cambios en BFF y frontend."
+
+next_lifecycle_step: planned

@@ -12,6 +12,7 @@ canonica de idioma y migracion esta en:
 ## Secciones
 
 - [ai/model-selection-policy.md](ai/model-selection-policy.md)
+- [policies/](policies/)
 - [apps/README.md](apps/README.md)
 - [platform/README.md](platform/README.md)
 - [requests/README.md](requests/README.md)

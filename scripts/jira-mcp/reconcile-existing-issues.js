@@ -98,7 +98,7 @@ function writeEvidence(config, issues, reconciled) {
   lines.push('');
   lines.push('## Estado');
   lines.push('');
-  lines.push('- Fecha: 2026-06-06');
+  lines.push(`- Fecha: ${today()}`);
   lines.push(`- Request: ${config.evidence.requestId}`);
   lines.push(`- Project key: \`${config.jira.projectKey}\``);
   lines.push(`- Issues inspeccionados: ${issues.length}`);
@@ -140,6 +140,10 @@ function firstJsonLikeValue(text, key) {
 
 function rel(file) {
   return path.relative(ROOT, file).replace(/\\/g, '/');
+}
+
+function today() {
+  return new Date().toISOString().slice(0, 10);
 }
 
 main().catch((error) => {

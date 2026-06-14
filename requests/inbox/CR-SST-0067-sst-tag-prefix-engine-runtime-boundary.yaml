@@ -1,0 +1,41 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-SST-0067"
+title: "Promote SST Tag Prefix Engine from POC to runtime boundary"
+status: inbox
+created_at: "2026-06-12"
+requester: "4uentes"
+
+summary: >
+  Open the next SST tags governance phase for SST-12. Promote the existing
+  backend POC of sst-tag-prefix-engine into a controlled runtime preview/import
+  boundary without starting Learning Content implementation yet.
+
+scope:
+  solution: "sst"
+  jira_issue_key: "SST-12"
+  feature_state: "sst-tag-prefix-engine"
+  source_evidence_request: "CR-SST-0016"
+  governing_order_request: "CR-SST-0063"
+  affected_services:
+    - "sst-bend"
+  optional_future_services:
+    - "4uentes-auth"
+    - "sst-fend"
+  functional_repositories_modified_by_this_intake: false
+
+desired_outcome:
+  - "Define the runtime boundary for the prefix engine before modifying child repositories."
+  - "Expose or plan a backend preview/import endpoint over the existing POC."
+  - "Define response contract for ContentBlock, TagValue, TagOccurrence, AssetRef, ExternalReference, and ImportedReference."
+  - "Record whether this phase persists output or remains preview-only."
+  - "Keep Learning Content, Bitacora, and reference-chip frontend rendering as follow-up phases unless explicitly pulled in later."
+
+out_of_scope:
+  - "Implementing SST-6 / learning-content-tags."
+  - "Implementing Bitacora tags."
+  - "Adding frontend rendering before the backend runtime boundary exists."
+  - "Changing 4uentes-core."
+  - "Writing Jira status transitions before runtime evidence exists."
+
+next_lifecycle_step: "planned"

@@ -1,0 +1,41 @@
+schema_version: "0.1"
+kind: "ards_child_sync_diff"
+repo: "sst-4uentes-infra"
+project_type: "infra-gitops"
+requested_contract_version: "latest"
+resolved_contract_version: "ards-core-contract-v0.1"
+binding_ref: "specs/ards/contract-binding.yaml"
+child_commit: "2acf47c"
+evidence_manifest_hash: "251156d2d6c03c77e89a117945cfe5d9d1d73677d31b670d0bb0ac46c7b978d8"
+sync_status: "synced"
+core_revision_decision: "no-core-change-needed"
+checked_at: "2026-06-13"
+source:
+  core_contract: "ards.get_sync_contract"
+  child_repo_ref: "C:\\Users\\andre\\Desktop\\4uentes\\apps\\4uentes-infra\\sst-4uentes-infra"
+evidence_manifest:
+  required_paths:
+    present:
+      - "AGENTS.md"
+      - "docs/00-overview.md"
+      - "specs/00-index.yaml"
+      - "specs/ards/contract-binding.yaml"
+    missing: []
+  ards_sdd_hashes:
+    - path: "specs/00-index.yaml"
+      sha256: "39341230dca5197bda677e4d551e3b153127f6ed6ba3394c764e9471d43871a2"
+    - path: "specs/ards/contract-binding.yaml"
+      sha256: "4d78ba1698a22a11b792e985ed13a4bdeae67cc649338e6fb5bf9caa497bff51"
+  yaml_status:
+    - path: "specs/00-index.yaml"
+      status: "valid"
+    - path: "specs/ards/contract-binding.yaml"
+      status: "valid"
+  local_todos_or_exceptions: []
+summary:
+  missing_in_child: 0
+  extra_or_stale_in_child: 0
+  candidate_for_core: 0
+  conflicts: 0
+items: []
+recommended_actions: []

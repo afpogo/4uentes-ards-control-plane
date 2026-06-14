@@ -1,0 +1,101 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0063"
+title: "Define SST tags governance execution order"
+status: "planned"
+source_request: "requests/inbox/CR-SST-0063-sst-tags-governance-execution-order.yaml"
+created_at: "2026-06-11"
+requester: "4uentes"
+
+initial_scope:
+  solution: "sst"
+  services:
+    - "control-plane"
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "control-plane"
+      via: "owner-repository"
+      service_kind: "ards-sdd-control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+  affected_ards:
+    - "sst-tags-governance"
+    - "dictionary-tags"
+    - "article-tags"
+    - "sst-tag-prefix-engine"
+    - "learning-content-tags"
+  capabilities:
+    - "sst-tags-governance"
+    - "dictionary-domain-management-v1"
+    - "article-tags"
+    - "sst-tag-prefix-engine"
+    - "learning-content-tags"
+  risks:
+    - id: "MULTI_TICKET_DEPENDENCY_ORDER"
+      severity: "high"
+    - id: "CROSS_REPO_FUTURE_IMPLEMENTATION"
+      severity: "high"
+    - id: "JIRA_STATUS_NOT_CANONICAL_STATE"
+      severity: "medium"
+
+required_context:
+  - "evidence/requests/CR-SST-0062/unified-jira-radar-live.md"
+  - "state/features/sst-tags-governance.current.yaml"
+  - "state/features/dictionary-tags.current.yaml"
+  - "state/features/sst-tag-prefix-engine.current.yaml"
+  - "state/features/learning-content-tags.current.yaml"
+  - "evidence/requests/CR-SST-0014/implementation-state-analysis.md"
+  - "evidence/requests/CR-SST-0016/backend-poc-summary.md"
+  - "requests/planned/CR-SST-0060-sst-tags-governance-article-tags-runtime-gap-closure.yaml"
+
+required_checks:
+  - "npm.cmd run check"
+
+risk:
+  level: "high"
+  score: 8
+  drivers:
+    - id: "MULTI_TICKET_DEPENDENCY_ORDER"
+      severity: "high"
+    - id: "CROSS_REPO_FUTURE_IMPLEMENTATION"
+      severity: "high"
+    - id: "JIRA_STATUS_NOT_CANONICAL_STATE"
+      severity: "medium"
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "multiple active Jira tickets"
+    - "global data model and governance dependency"
+    - "future cross-repo implementation gates"
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The order affects core tag governance and future cross-repo implementation."
+
+subagent_deployment_plan:
+  required: true
+  roles:
+    - "ards-sdd-validator"
+    - "dependency-planner"
+  parallelizable: true
+  fallback: "Subagent tool policy requires explicit user request for delegation; the main agent executes sequentially and records the fallback."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "control-plane-only"
+  jira_write_authorized: false
+
+decision:
+  status: "approved-for-control-plane-planning"
+  approver: "4uentes"
+  approved_at: "2026-06-11"
+  note: "User requested dependency-safe execution ordering for SST tags governance."

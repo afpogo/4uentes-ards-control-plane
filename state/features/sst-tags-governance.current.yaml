@@ -2,8 +2,8 @@ schema_version: "1.0"
 kind: "feature_state"
 id: "sst-tags-governance"
 title: "SST Tags Governance"
-status: "runtime-partial"
-updated_at: "2026-06-08"
+status: "validated-local"
+updated_at: "2026-06-13"
 solution_id: "sst"
 affected_services:
   - sst-bend
@@ -17,6 +17,13 @@ request_ids:
   - CR-SST-0016
   - CR-SST-0057
   - CR-SST-0060
+  - CR-SST-0063
+  - CR-SST-0071
+  - CR-SST-0072
+  - CR-SST-0073
+  - CR-SST-0074
+  - CR-SST-0075
+  - CR-SST-0076
 capability_refs:
   - "sst-tags-governance"
   - "article-tags"
@@ -33,8 +40,20 @@ evidence_refs:
   - "evidence/requests/CR-SST-0057/jira-status-observation-summary.md"
   - "evidence/requests/CR-SST-0060/sst-tags-governance-gap-review.md"
   - "evidence/requests/CR-SST-0060/implementation-plan.md"
+  - "evidence/requests/CR-SST-0060/phase-1-operational-session.md"
+  - "evidence/requests/CR-SST-0060/sst-bend-article-tags-capability-update.md"
+  - "evidence/requests/CR-SST-0060/4uentes-auth-article-tags-bff-boundary.md"
+  - "evidence/requests/CR-SST-0060/sst-fend-article-tags-adoption.md"
+  - "evidence/requests/CR-SST-0060/phase-1-runtime-qa-manual.md"
+  - "evidence/requests/CR-SST-0063/sst-tags-governance-execution-order.md"
+  - "evidence/requests/CR-SST-0071/global-tag-model-decision-log.md"
+  - "evidence/requests/CR-SST-0071/execution-notes.md"
+  - "evidence/requests/CR-SST-0072/execution-notes.md"
+  - "evidence/requests/CR-SST-0072/sst-bend-global-persistence-implementation.md"
+  - "evidence/requests/CR-SST-0072/validation-results.md"
+  - "docs/requests/sst-tags-governance-contract.md"
 open_gaps:
-  - "Promote article-tags from draft to an active governed SST capability."
-  - "Adopt structured article tags in BFF and frontend create/update flows."
-  - "Promote sst-tag-prefix-engine from backend POC to runtime preview/import endpoint."
-  - "Keep real-time transcription as a separate future intake request."
+  - "CR-SST-0071 ya formalizo el modelo global de tags, la unicidad de `TagValue` por `accountId + definitionKey + slug`, la separacion entre `scope` y `resourceType`, y el mapeo legacy hacia `tag_definitions`, `tag_values` y `tag_occurrences`."
+  - "CR-SST-0073 y CR-SST-0074 deben exponer busqueda, create explicito, attach or detach y fachada auth/BFF para tags gobernados con `resourceType` y `resourceId`."
+  - "CR-SST-0075 migra Articulos a selector o autocomplete gobernado y exige creacion explicita de nuevos valores."
+  - "CR-SST-0076 completa adopcion en Diccionario y cierra SST-4 dejando `learning-content` y `bitacora` como scopes reservados."

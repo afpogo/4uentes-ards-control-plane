@@ -1,0 +1,130 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-SST-0072"
+title: "SST Tags - Backend global persistence migration"
+status: planned
+source_request: "requests/inbox/CR-SST-0072-sst-tags-persistence-backend-model.yaml"
+created_at: "2026-06-13"
+requester: "4uentes"
+
+initial_scope:
+  solution: "sst"
+  services:
+    - "sst-bend"
+  include_optional_services: false
+
+control_plane_context:
+  feature_state: "sst-tags-governance"
+  feature_state_file: "state/features/sst-tags-governance.current.yaml"
+  governing_request: "CR-SST-0072"
+  contract_ref: "docs/requests/sst-tags-governance-contract.md"
+  execution_order_ref: "evidence/requests/CR-SST-0063/sst-tags-governance-execution-order.md"
+  upstream_contract_request: "CR-SST-0071"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "sst-bend"
+      via: "DB persistence, seed/backfill, and temporary dual-write runtime"
+      service_kind: "api"
+      ards_kind: "backend-api"
+      status: "active"
+  deferred_services:
+    - service_id: "4uentes-auth"
+      via: "future authenticated governance facade in CR-SST-0074"
+      deferred: true
+    - service_id: "sst-fend"
+      via: "future governed selector adoption in CR-SST-0075"
+      deferred: true
+    - service_id: "sst-extension"
+      via: "no direct change in this CR"
+      deferred: true
+  risks:
+    - id: "DB_SCHEMA_BACKFILL"
+      severity: high
+    - id: "LEGACY_RUNTIME_COMPATIBILITY"
+      severity: high
+    - id: "TRANSITIONAL_DUAL_WRITE"
+      severity: high
+
+required_context:
+  - "docs/requests/sst-tags-governance-contract.md"
+  - "state/features/sst-tags-governance.current.yaml"
+  - "requests/inbox/CR-SST-0072-sst-tags-persistence-backend-model.yaml"
+  - "catalog/services/sst-bend.yaml"
+  - "inventory/evidence/git/sst-bend.md"
+
+implementation_tracks:
+  - id: "db-global-tag-model"
+    service_id: "sst-bend"
+    objective: "Create `tag_definitions`, `tag_values`, and `tag_occurrences` with indexes and transitional ownership rules."
+    expected_work:
+      - "Add Sequelize models and migration."
+      - "Seed definitions from current registry/lifecycle."
+      - "Backfill values and occurrences from legacy dictionary tables."
+  - id: "runtime-dual-write"
+    service_id: "sst-bend"
+    objective: "Mirror current dictionary/article tag writes into the global tables without changing public reads yet."
+    expected_work:
+      - "Keep dictionary and article reads on legacy tables."
+      - "Mirror `findOrCreateTagValue` into `tag_values`."
+      - "Mirror dictionary and article occurrence writes into `tag_occurrences`."
+  - id: "control-plane-evidence"
+    service_id: "4uentes-orchestor"
+    objective: "Record implementation evidence and validation outcomes after child-repo work."
+
+acceptance_criteria:
+  - "`sst-bend` creates the new global tag tables through a migration."
+  - "Initial seed includes registry-driven definitions and tolerated legacy-derived fallbacks."
+  - "Legacy dictionary tables remain readable by current runtime flows."
+  - "Dictionary entry tag sync keeps writing legacy tables and mirrors to global tables."
+  - "Article tag sync keeps writing legacy occurrences and mirrors to global occurrences."
+  - "`sst-bend` validation runs are captured with concrete outcomes or exact blockers."
+
+required_checks:
+  - service_id: "sst-bend"
+    command: "npm.cmd run test:tag-engine"
+  - service_id: "sst-bend"
+    command: "npm.cmd run test:diccionario:stage3"
+  - service_id: "sst-bend"
+    command: "npm.cmd run check"
+  - service_id: "4uentes-orchestor"
+    command: "npm run check"
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "DB migration and backfill"
+    - "shared runtime semantics for dictionary and articles"
+    - "temporary dual-write during compatibility window"
+
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The CR changes persistence semantics in a governed child repo while preserving a live legacy runtime."
+
+subagent_deployment_plan:
+  required: true
+  parallelizable: true
+  roles:
+    - "architecture-reviewer"
+    - "cross-repo-impact-reviewer"
+    - "validation-reviewer"
+  executed: []
+  fallback: "Implementation executed sequentially in the main agent after local repo/context inspection."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "local child-repo working tree with preserved unrelated changes"
+  jira_write_required: false
+  runtime_scope: "local-current-environment"
+
+decision:
+  status: "approved-for-local-implementation"
+  approver: "4uentes"
+  approved_at: "2026-06-13"
+  note: "This request governs the persistence cut only. Public API/BFF/frontend adoption remains in CR-SST-0073..0076."

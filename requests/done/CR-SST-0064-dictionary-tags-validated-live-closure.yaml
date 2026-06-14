@@ -1,0 +1,53 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0064"
+title: "Close SST Dictionary Tags as validated-live"
+status: "done"
+created_at: "2026-06-12"
+completed_at: "2026-06-12"
+requester: "4uentes"
+
+source_request: "requests/inbox/CR-SST-0064-dictionary-tags-validated-live-closure.yaml"
+planned_request: "requests/planned/CR-SST-0064-dictionary-tags-validated-live-closure.yaml"
+
+business_context: >
+  SST Dictionary Tags had strong validated-local evidence but still lacked
+  controlled local-live runtime validation and explicit closure decisions for
+  TagDefinition governance and cross-scope expansion.
+
+implemented_change: >
+  Created the SST-10 governing request lifecycle, executed local-live backend,
+  BFF, and frontend dictionary validation, recorded the TagDefinition and
+  optional-extension closure decisions, and advanced dictionary-tags to
+  validated-live.
+
+affected_repos:
+  - service_id: "4uentes-orchestor"
+    local_binding: "current-workspace"
+  - service_id: "sst-bend"
+    local_binding_evidence: "environments/local/bindings.local.yaml"
+  - service_id: "4uentes-auth"
+    local_binding_evidence: "environments/local/bindings.local.yaml"
+  - service_id: "sst-fend"
+    local_binding_evidence: "environments/local/bindings.local.yaml"
+
+validation:
+  required_checks:
+    - "sst-bend: npm.cmd run test:diccionario"
+    - "sst-bend: npm.cmd run test:diccionario:stage2"
+    - "sst-bend: npm.cmd run test:diccionario:stage3"
+    - "sst-bend: npm.cmd run qa:diccionario:stage3"
+    - "sst-bend: npm.cmd run check"
+    - "4uentes-auth: npm.cmd run check"
+    - "sst-fend: npm.cmd run check"
+    - "4uentes-orchestor: npm.cmd run check"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0064/phase-2-analysis-and-plan.md"
+    - "evidence/requests/CR-SST-0064/runtime-validation-results.md"
+    - "evidence/requests/CR-SST-0064/qa-manual-dictionary-management-created-entry.png"
+
+decision:
+  status: "approved-done"
+  approver: "4uentes"
+  decided_at: "2026-06-12"
+  note: "Target state is validated-live; TagDefinition public CRUD and sst-extension account-context remain future work."

@@ -1,0 +1,33 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0071"
+title: "SST Tags Governance - DB model and global scope governance plan"
+status: inbox
+created_at: "2026-06-13"
+requester: "4uentes"
+
+summary: >
+  Formalizar el modelo persistido global de tags para SST con compatibilidad de
+  transición desde las tablas legacy.
+
+requested_change: >
+  Definir contrato y mapeo objetivo para `tag_definitions`, `tag_values` y
+  `tag_occurrences` con `resourceType`/`resourceId` y scopes iniciales
+  (`articulo`, `diccionario`), reservando `learning-content` y `bitacora`.
+
+scope:
+  solution: "sst"
+  services: []
+  include_optional_services: false
+  feature_state: "sst-tags-governance"
+
+requested_outcome:
+  - "Contrato `TagDefinition`, `TagValue` y `TagOccurrence` definido en control-plane."
+  - "Plan de migración desde tags legacy a nuevo modelo, sin cambiar identidades de servicios/capacidades."
+  - "Documento de contrato alineado con endpoints y reglas de creación explícita."
+
+out_of_scope:
+  - "Cambios funcionales directos en `sst-bend`, `4uentes-auth`, `sst-fend`."
+  - "Cierre de scopes futuros."
+
+next_lifecycle_step: planned

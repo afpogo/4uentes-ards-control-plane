@@ -1,0 +1,87 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0063"
+title: "Define SST tags governance execution order"
+status: "done"
+source_request: "requests/inbox/CR-SST-0063-sst-tags-governance-execution-order.yaml"
+planned_request: "requests/planned/CR-SST-0063-sst-tags-governance-execution-order.yaml"
+created_at: "2026-06-11"
+completed_at: "2026-06-11"
+requester: "4uentes"
+
+summary: >
+  Defined a dependency-safe execution order for SST tags governance. The order
+  closes historical CR provenance first, then global tag semantics, dictionary
+  closure, article tags, prefix engine runtime, learning content, and future
+  scopes such as bitacoras.
+
+scope:
+  solution: "sst"
+  repository: "4uentes-orchestor"
+  functional_repositories_modified: false
+  jira_read_executed: false
+  jira_write_executed: false
+  local_state_transitions_executed: false
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "MULTI_TICKET_DEPENDENCY_ORDER"
+    - "CROSS_REPO_FUTURE_IMPLEMENTATION"
+    - "CORE_PLATFORM_CAPABILITY"
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The order affects core tag governance and future cross-repo implementation."
+
+subagent_deployment_plan:
+  required: true
+  roles:
+    - "ards-sdd-validator"
+    - "dependency-planner"
+  fallback: "Subagent tool policy requires explicit user request for delegation; the main agent executed sequentially."
+  evidence_ref: "evidence/requests/CR-SST-0063/historical-cr-closure.md"
+
+results:
+  recommended_order:
+    - jira_issue: "SST-4"
+      state_id: "sst-tags-governance"
+      action: "Close global semantics and article-tags execution under CR-SST-0060."
+    - jira_issue: "SST-10"
+      state_id: "dictionary-tags"
+      action: "Close dictionary domain after global semantics."
+    - jira_issue: "SST-12"
+      state_id: "sst-tag-prefix-engine"
+      action: "Promote prefix engine POC to runtime after global semantics."
+    - jira_issue: "SST-6"
+      state_id: "learning-content-tags"
+      action: "Implement learning content only after global semantics and prefix runtime."
+  historical_crs_closed:
+    - "CR-SST-0002"
+    - "CR-SST-0010"
+  historical_crs_already_done:
+    - "CR-SST-0014"
+    - "CR-SST-0015"
+    - "CR-SST-0016"
+    - "CR-SST-0057"
+  active_implementation_request: "CR-SST-0060"
+
+evidence:
+  required:
+    - "evidence/requests/CR-SST-0063/sst-tags-governance-execution-order.md"
+    - "evidence/requests/CR-SST-0063/historical-cr-closure.md"
+    - "evidence/requests/CR-SST-0063/changed-files-summary.md"
+    - "evidence/requests/CR-SST-0063/validation-results.md"
+
+validation:
+  required_checks:
+    - "npm.cmd run check"
+  status: "pass-with-existing-warnings"
+
+decision:
+  status: "approved-done"
+  approver: "4uentes"
+  note: "Use this order before selecting the next implementation ticket for SST tags governance."

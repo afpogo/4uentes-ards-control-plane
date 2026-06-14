@@ -1,0 +1,95 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0074"
+title: "SST Tags - BFF governance facade"
+status: planned
+source_request: "requests/inbox/CR-SST-0074-sst-tags-bff-facade.yaml"
+created_at: "2026-06-13"
+requester: "4uentes"
+
+initial_scope:
+  solution: "sst"
+  services:
+    - "4uentes-auth"
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "4uentes-auth"
+      via: "pass-through and validation for governed tags endpoints"
+      service_kind: "shared-auth-provider"
+      ards_kind: "shared-auth-provider"
+      status: "active"
+  affected_ards:
+    - "shared-auth-provider"
+  capabilities:
+    - "sst-tags-governance"
+    - "article-tags"
+  risks:
+    - id: SHARED_AUTH_PROVIDER
+      service_id: "4uentes-auth"
+      severity: high
+
+required_context:
+  - "AGENTS.md"
+  - "docs/requests/sst-tags-governance-contract.md"
+  - "state/features/sst-tags-governance.current.yaml"
+  - "catalog/services/4uentes-auth.yaml"
+
+required_checks:
+  - service_id: "4uentes-auth"
+    command: "npm run check"
+  - service_id: "4uentes-orchestor"
+    command: "npm run check"
+
+risk:
+  level: high
+  score: 11
+  drivers:
+    - id: SHARED_AUTH_PROVIDER
+      service_id: "4uentes-auth"
+      severity: high
+    - id: API_BFF_SEMANTIC_RISK
+      severity: high
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: high
+  drivers:
+    - "shared-auth-provider boundary"
+    - "contract pass-through"
+    - "query/body validation"
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "Boundary change in auth provider with shared account context."
+
+subagent_deployment_plan:
+  required: true
+  parallelizable: true
+  roles:
+    - "security-contract-reviewer"
+    - "backend-contract-reviewer"
+    - "validation-reviewer"
+  fallback: "If reviewers are unavailable, perform auth boundary review sequentially and record limitation."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  allowed_window: manual
+  branch_strategy: one-branch-per-repo
+
+validation:
+  required_checks:
+    - "4uentes-auth: npm run check"
+    - "4uentes-orchestor: npm run check"
+  evidence_required:
+    - "auth pass-through smoke notes"
+    - "payload shape checks"
+
+decision:
+  status: pending
+  approver: TODO

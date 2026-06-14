@@ -1,0 +1,16 @@
+schema_version: "1.0"
+kind: "capabilities_index"
+repo: "4uentes-ards-control-plane"
+model:
+  producer_path: "specs/capabilities/outbound/00-index.yaml"
+  consumer_path: "specs/capabilities/inbound/00-index.yaml"
+outbound:
+  index: "specs/capabilities/outbound/00-index.yaml"
+inbound:
+  index: "specs/capabilities/inbound/00-index.yaml"
+rules:
+  - "A capability references operational contracts; it does not redefine the ARDS core standard."
+  - "Producer repos publish outbound capabilities."
+  - "Consumer repos register inbound capabilities locally."
+open_questions:
+  - "TODO: decide whether control-plane-specific capability validation needs a dedicated check."

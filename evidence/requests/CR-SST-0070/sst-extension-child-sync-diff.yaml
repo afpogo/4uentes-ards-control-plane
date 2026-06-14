@@ -1,0 +1,41 @@
+schema_version: "0.1"
+kind: "ards_child_sync_diff"
+repo: "sst-extension"
+project_type: "frontend-extension"
+requested_contract_version: "latest"
+resolved_contract_version: "ards-core-contract-v0.1"
+binding_ref: "specs/ards/contract-binding.yaml"
+child_commit: "0b71e6b"
+evidence_manifest_hash: "f15a193f549623e75ad05c8aebd11927857b75a40e4ca6bd80eaa9614045d188"
+sync_status: "synced"
+core_revision_decision: "no-core-change-needed"
+checked_at: "2026-06-13"
+source:
+  core_contract: "ards.get_sync_contract"
+  child_repo_ref: "C:\\Users\\andre\\Desktop\\4uentes\\apps\\4uentes-sst\\sst-extension"
+evidence_manifest:
+  required_paths:
+    present:
+      - "AGENTS.md"
+      - "docs/00-overview.md"
+      - "specs/00-index.yaml"
+      - "specs/ards/contract-binding.yaml"
+    missing: []
+  ards_sdd_hashes:
+    - path: "specs/00-index.yaml"
+      sha256: "df647f86697d243d575139417fc410d0c383ec5eee92ce1cb3cbb848a57faf2c"
+    - path: "specs/ards/contract-binding.yaml"
+      sha256: "4d98961eead576d5658b6a8b8fca3f43d034b7504d01fd36f7a6003feaca83ed"
+  yaml_status:
+    - path: "specs/00-index.yaml"
+      status: "valid"
+    - path: "specs/ards/contract-binding.yaml"
+      status: "valid"
+  local_todos_or_exceptions: []
+summary:
+  missing_in_child: 0
+  extra_or_stale_in_child: 0
+  candidate_for_core: 0
+  conflicts: 0
+items: []
+recommended_actions: []

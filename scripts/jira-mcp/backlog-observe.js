@@ -140,7 +140,7 @@ function writeEvidence(config, observations) {
 
 function eventForStatus(status, statusCategory) {
   const normalized = `${status} ${statusCategory}`.toLowerCase();
-  if (/done|cerrado|closed|resolved|complete/.test(normalized)) return 'JIRA_WORK_CLOSED_OBSERVED';
+  if (/done|listo|finalizada|finalizado|cerrado|cerrada|closed|resolved|complete/.test(normalized)) return 'JIRA_WORK_CLOSED_OBSERVED';
   if (/block|bloque/.test(normalized)) return 'JIRA_WORK_BLOCKED';
   if (/progress|curso|doing/.test(normalized)) return 'JIRA_WORK_STARTED';
   return 'JIRA_WORK_PENDING';

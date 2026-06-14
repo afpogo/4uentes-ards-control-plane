@@ -25,6 +25,8 @@ control_plane_context:
   current_jira_status_observed: "En curso"
   governing_request: "CR-SST-0060"
   previous_transition_intake: "CR-SST-0057"
+  execution_order_ref: "evidence/requests/CR-SST-0063/sst-tags-governance-execution-order.md"
+  active_phase_ref: "evidence/requests/CR-SST-0060/phase-1-operational-session.md"
 
 impact_analysis:
   required: true
@@ -68,6 +70,7 @@ impact_analysis:
 required_context:
   - "state/features/sst-tags-governance.current.yaml"
   - "state/capability-links.yaml"
+  - "docs/requests/sst-tags-governance-contract.md"
   - "evidence/requests/CR-SST-0014/implementation-state-analysis.md"
   - "evidence/requests/CR-SST-0014/next-request-boundary.md"
   - "evidence/requests/CR-SST-0016/backend-poc-summary.md"
@@ -79,6 +82,15 @@ required_context:
   - "AGENTS.md"
 
 implementation_tracks:
+  - id: "global-tags-governance-contract"
+    service_id: "control-plane"
+    objective: "Close the global tag semantics before broad functional repository changes."
+    expected_work:
+      - "Define TagDefinition, TagValue, TagOccurrence, TagScope, and TagProducer semantics."
+      - "Mark diccionario and articulos as active base scopes."
+      - "Reserve learning-content, bitacora, and future resource scopes without making them phase-1 blockers."
+      - "Define ownership and migration rule for TagDefinition governance."
+      - "Publish docs/requests/sst-tags-governance-contract.md as the phase-1 operating contract."
   - id: "backend-contract-and-tests"
     service_id: "sst-bend"
     objective: "Promote article-tags capability and validate article tag runtime behavior."
@@ -109,11 +121,14 @@ implementation_tracks:
       - "Read only unless explicitly included later."
 
 acceptance_criteria:
+  - "Global tag semantics are documented before backend/BFF/frontend implementation proceeds."
+  - "docs/requests/sst-tags-governance-contract.md is treated as the phase-1 source contract for child repo implementation."
   - "No functional repo is modified until this planned request is used as the governing request."
   - "Each touched functional repo records local evidence or validation output."
   - "article-tags is no longer only draft/backend-partial if implementation succeeds."
   - "SST-4 remains the Jira issue for the feature-state work."
   - "state/features/sst-tags-governance.current.yaml is updated only after implementation evidence exists."
+  - "Later phases for dictionary, prefix engine, learning-content, and bitacora remain ordered by their entry gates."
 
 required_checks:
   - service_id: "sst-bend"
@@ -168,7 +183,7 @@ execution:
   jira_write_required: false
 
 decision:
-  status: "approved-for-implementation-planning"
+  status: "approved-for-phase-1-operational-session"
   approver: "4uentes"
-  approved_at: "2026-06-08"
-  note: "This request prepares the next implementation slice for SST-4 without modifying functional repositories yet."
+  approved_at: "2026-06-11"
+  note: "Phase 1 is selected for SST-4. Start with global tags governance semantics, then article-tags runtime implementation. Later phases are consecutive and gate-based."

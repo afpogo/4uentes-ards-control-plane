@@ -10,8 +10,12 @@ specs:
   - id: "ards-sdd-policy-component-model"
     path: "specs/policies/ards-sdd-policy-component-model.yaml"
     status: "active"
+  - id: "agent-operating-policy-registry"
+    path: "specs/integration/policies.yaml"
+    status: "active"
 policy_read_model:
   root: "specs/policies/"
+  integration_registry: "specs/integration/policies.yaml"
   state_links: "state/policy-links.yaml"
   related_state: "state/features/ards-sdd-policy-unification.current.yaml"
 validation:

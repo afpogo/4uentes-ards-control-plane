@@ -1,0 +1,89 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0066"
+title: "Reconcile Jira status for SST-10 after dictionary validated-live closure"
+status: planned
+source_request: "requests/inbox/CR-SST-0066-sst-10-jira-status-reconciliation.yaml"
+created_at: "2026-06-12"
+requester: "4uentes"
+
+initial_scope:
+  solution: "sst"
+  services:
+    - "4uentes-orchestor"
+  include_optional_services: false
+
+control_plane_context:
+  feature_state: "dictionary-tags"
+  feature_state_file: "state/features/dictionary-tags.current.yaml"
+  jira_issue_key: "SST-10"
+  governing_request: "CR-SST-0066"
+  evidence_source:
+    - "requests/done/CR-SST-0064-dictionary-tags-validated-live-closure.yaml"
+    - "evidence/requests/CR-SST-0064/runtime-validation-results.md"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "4uentes-orchestor"
+      via: "control-plane Jira MCP write-gated reconciliation"
+      service_kind: "ards-sdd-control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+  risks:
+    - id: "EXTERNAL_JIRA_WRITE"
+      severity: high
+    - id: "OAUTH_MCP_SESSION"
+      severity: high
+    - id: "JIRA_NOT_CANONICAL_STATE"
+      severity: medium
+
+required_context:
+  - "docs/requests/jira-mcp-oauth-session-playbook.md"
+  - "docs/requests/jira-mcp-endpoint-connection-policy.md"
+  - "state/features/dictionary-tags.current.yaml"
+  - "requests/done/CR-SST-0064-dictionary-tags-validated-live-closure.yaml"
+  - "evidence/requests/CR-SST-0064/runtime-validation-results.md"
+
+acceptance_criteria:
+  - "Read-only Jira issue observation is executed before write."
+  - "Write command uses --connect --approved and the /v1/mcp endpoint override."
+  - "SST-10 receives a sanitized closure comment."
+  - "SST-10 description is updated to validated-live evidence."
+  - "SST-10 transitions to terminal status if a terminal transition exists."
+  - "Post-write evidence is stored under evidence/requests/CR-SST-0066."
+  - "npm.cmd run check passes after local evidence updates."
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "external Jira write"
+    - "OAuth-backed MCP session"
+    - "workflow transition"
+    - "control-plane remains canonical"
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "External Jira writes and workflow transitions are high-risk operational actions."
+
+subagent_deployment_plan:
+  required: false
+  roles: []
+  fallback: "Single issue workflow write is faster and safer in the main authenticated session."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  approved_by_prompt: true
+  allowed_window: "manual"
+  jira_write_required: true
+  jira_issue_key: "SST-10"
+
+decision:
+  status: "approved-for-jira-write-gated-reconciliation"
+  approver: "4uentes"
+  approved_at: "2026-06-12"
+  note: "User explicitly requested reviewing SST-10 through Jira MCP and updating ticket states according to evidence."

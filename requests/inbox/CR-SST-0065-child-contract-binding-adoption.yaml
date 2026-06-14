@@ -1,0 +1,39 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0065"
+title: "Adopt ARDS child contract binding in SST child repos"
+status: "inbox"
+created_at: "2026-06-12"
+requester: "4uentes"
+
+business_context: >
+  The ARDS core now exposes a versioned child sync contract through
+  ards.get_sync_contract. The orchestrator must bind observed SST child repos
+  to that contract using local specs/ards/contract-binding.yaml files and
+  deterministic sync evidence.
+
+requested_change: >
+  Adopt the child contract binding for sst-fend and sst-bend, produce
+  orchestrator sync-diff evidence, and close missing local ARDS/SDD artifacts
+  required by the frontend-web and backend-api contracts where feasible.
+
+expected_outcome: >
+  sst-fend and sst-bend declare the resolved core contract locally and the
+  orchestrator records auditable sync evidence. Final synced status remains
+  blocked until the core contract has a stable git tag, commit, or release ref.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - "sst-fend"
+    - "sst-bend"
+  include_optional_services: false
+
+resolved_blockers:
+  - id: "CORE_REF_STABILIZED"
+    resolved_at: "2026-06-12"
+    description: >
+      4uentes-ards-core was observed clean at commit 2ad4e0f. Child bindings
+      use 4uentes-ards-core@2ad4e0f as the auditable core_ref.
+
+next_lifecycle_step: "planned"

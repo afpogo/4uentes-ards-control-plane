@@ -2,8 +2,8 @@ schema_version: "1.0"
 kind: "feature_state"
 id: "dictionary-tags"
 title: "SST Dictionary Tags"
-status: "validated-local"
-updated_at: "2026-05-25"
+status: "validated-live"
+updated_at: "2026-06-12"
 solution_id: "sst"
 affected_services:
   - sst-bend
@@ -14,6 +14,8 @@ affected_services:
 request_ids:
   - CR-SST-0002
   - CR-SST-0014
+  - CR-SST-0064
+  - CR-SST-0076
 capability_refs:
   - "dictionary-legacy-read"
   - "dictionary-domain-read-v1"
@@ -24,7 +26,9 @@ evidence_refs:
   - "evidence/requests/CR-SST-0002/findings.yaml"
   - "evidence/requests/CR-SST-0002/validation-results.md"
   - "evidence/requests/CR-SST-0014/implementation-state-analysis.md"
+  - "evidence/requests/CR-SST-0064/phase-2-analysis-and-plan.md"
+  - "evidence/requests/CR-SST-0064/runtime-validation-results.md"
 open_gaps:
-  - "Live runtime endpoint validation was not executed."
-  - "TagDefinition governance is not closed as a public managed surface."
-  - "Dictionary close criteria must explicitly exclude or accept broader SST-level article/course/bitacora tag expansion."
+  - "Adoptar diccionario al modelo `tag_values`/`tag_occurrences` global en CR-SST-0076 sin perder semántica de tags existente."
+  - "sst-extension account-context remains a non-blocking optional producer/consumer follow-up."
+  - "Encryption-at-rest, offline model, translations, and aliases remain future requests outside validated-live dictionary closure."

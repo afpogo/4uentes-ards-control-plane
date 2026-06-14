@@ -1,0 +1,125 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0065"
+title: "Adopt ARDS child contract binding in SST child repos"
+status: "planned"
+source_request: "requests/inbox/CR-SST-0065-child-contract-binding-adoption.yaml"
+created_at: "2026-06-12"
+requester: "4uentes"
+
+initial_scope:
+  solution: "sst"
+  services:
+    - "sst-fend"
+    - "sst-bend"
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "sst-fend"
+      via: "frontend-web child sync contract adoption"
+      service_kind: "frontend-spa"
+      ards_kind: "frontend-web"
+      status: "active"
+      branch_observed: "fix/refactor-ui"
+    - service_id: "sst-bend"
+      via: "backend-api child sync contract adoption"
+      service_kind: "api"
+      ards_kind: "backend-api"
+      status: "active"
+      branch_observed: "develop"
+  affected_ards:
+    - "frontend-web"
+    - "backend-api"
+  capabilities: []
+  risks:
+    - id: "CORE_REF_STABILIZED"
+      severity: "resolved"
+    - id: "CROSS_REPO_CONTRACT_DRIFT"
+      severity: "high"
+    - id: "SST_FEND_DIRTY_WORKTREE_OBSERVED"
+      severity: "medium"
+    - id: "SST_BEND_PROTECTED_SMOKE_PARTIAL_WITHOUT_JWT"
+      severity: "medium"
+
+required_context:
+  - "catalog/services/sst-fend.yaml"
+  - "catalog/services/sst-bend.yaml"
+  - "environments/local/bindings.local.yaml"
+  - "evidence/requests/CR-SST-0065/sst-fend-child-sync-diff.yaml"
+  - "evidence/requests/CR-SST-0065/sst-bend-child-sync-diff.yaml"
+  - "docs/ai/model-selection-policy.md"
+
+required_checks:
+  - service_id: "4uentes-ards-core"
+    command: "npm.cmd run mcp:build"
+  - service_id: "4uentes-ards-core"
+    command: "npm.cmd run mcp:smoke"
+  - service_id: "4uentes-ards-core"
+    command: "npm.cmd run check"
+  - service_id: "sst-fend"
+    command: "npm.cmd run check"
+  - service_id: "sst-bend"
+    command: "npm.cmd run check"
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check"
+
+risk:
+  level: "high"
+  score: 9
+  drivers:
+    - "CROSS_REPO_CONTRACT_DRIFT"
+    - "SST_FEND_DIRTY_WORKTREE_OBSERVED"
+    - "SST_BEND_PROTECTED_SMOKE_PARTIAL_WITHOUT_JWT"
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "cross-repo contract adoption"
+    - "versioned core contract dependency"
+    - "child repository mutations"
+    - "deterministic audit evidence required"
+    - "risk of drift between core, orchestrator, and child repos"
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The work changes contract evidence across the orchestrator and child repos."
+
+subagent_deployment_plan:
+  required: true
+  roles:
+    - "ards-sdd-validator"
+    - "cross-repo-impact-reviewer"
+  parallelizable: true
+  fallback: "Runtime subagents require explicit user authorization; main agent executed sequentially and records this fallback."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "current-approved-branch-per-repo"
+  approved_by: "4uentes"
+  approved_at: "2026-06-12"
+
+validation:
+  required_checks:
+    - "npm.cmd run mcp:build"
+    - "npm.cmd run mcp:smoke"
+    - "npm.cmd run check"
+    - "sst-fend: npm.cmd run check"
+    - "sst-bend: npm.cmd run check"
+  evidence_required:
+    - "child sync diff report"
+    - "evidence manifest hash"
+    - "validation output summary"
+    - "changed files summary"
+
+decision:
+  status: "validated-local"
+  approver: "4uentes"
+  blocker: "none"
+  note: "Child contract bindings use core_ref 4uentes-ards-core@2ad4e0f and sync reports are synced."

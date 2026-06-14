@@ -1,0 +1,108 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0062"
+title: "Review live Jira tickets from control-plane MCP"
+status: "inbox"
+created_at: "2026-06-11"
+requester: "4uentes"
+
+business_context: >
+  The operator requested the orchestrator run as the ARDS/SDD control-plane,
+  connect to Atlassian Jira MCP, and review the tickets currently in progress
+  or related to the existing Jira/control-plane radar.
+
+requested_change: >
+  Execute a read-only Jira MCP review using the documented OAuth/MCP endpoint
+  pattern based on JIRA_MCP_ARGS and the operational /v1/mcp endpoint.
+
+expected_outcome: >
+  The control-plane has fresh read-only evidence for Jira project visibility,
+  feature-state ticket status, backlog mirror ticket status, and the related
+  next-work recommendation. No Jira writes or child repository changes are
+  authorized.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - "control-plane"
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services:
+    - "control-plane"
+  affected_ards:
+    - "control-plane-jira-mcp"
+  capabilities:
+    - "jira-mcp-read-only-observation"
+  risks:
+    - "OAuth session may require manual browser authorization."
+    - "External Jira reads must not leak tokens, cookies, cloudId, or private site URLs."
+    - "Jira status is an operational signal, not canonical ARDS/SDD state."
+
+required_context:
+  - "docs/requests/jira-mcp-oauth-session-playbook.md"
+  - "docs/requests/jira-mcp-endpoint-connection-policy.md"
+  - "evidence/requests/CR-SST-0055/unified-jira-radar.md"
+  - "state/jira-backlog-registry.yaml"
+
+required_checks:
+  - "npm.cmd run check"
+  - "npm.cmd run jira:mcp:verify -- --connect --request-id CR-SST-0062 --output-dir evidence/requests/CR-SST-0062"
+  - "npm.cmd run jira:mcp:reconcile -- --connect --request-id CR-SST-0062 --output-dir evidence/requests/CR-SST-0062"
+  - "npm.cmd run jira:mcp:status-observe -- --connect --request-id CR-SST-0062 --output-dir evidence/requests/CR-SST-0062"
+  - "npm.cmd run jira:mcp:backlog-observe -- --connect --request-id CR-SST-0062 --output-dir evidence/requests/CR-SST-0062"
+
+risk:
+  level: "high"
+  score: 8
+  drivers:
+    - "OAUTH_SESSION"
+    - "EXTERNAL_MCP_READ"
+    - "JIRA_CONTROL_PLANE_STATUS_SIGNAL"
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "Touches OAuth session and external Atlassian MCP access."
+    - "Reviews Jira status signals that must not automatically mutate ARDS/SDD state."
+    - "Requires sanitized evidence."
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "OAuth/MCP and external Jira access are security-sensitive even in read-only mode."
+
+subagent_deployment_plan:
+  required: true
+  roles:
+    - "security-contract-reviewer"
+    - "ards-sdd-validator"
+  parallelizable: true
+  fallback: "Subagent tool policy requires explicit user request for delegation; the main agent executes sequentially and records this fallback."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "control-plane-only"
+  jira_read_only: true
+  jira_write_authorized: false
+
+validation:
+  required_checks:
+    - "npm.cmd run check"
+  evidence_required:
+    - "jira_mcp_project_verification"
+    - "jira_reconciliation_summary"
+    - "jira_status_observation"
+    - "jira_backlog_observation"
+    - "changed_files_summary"
+
+decision:
+  status: "approved-for-read-only-jira-review"
+  approver: "4uentes"
+  approved_at: "2026-06-11"
+  note: "User requested live Jira MCP review through the control-plane. Jira writes are not approved."

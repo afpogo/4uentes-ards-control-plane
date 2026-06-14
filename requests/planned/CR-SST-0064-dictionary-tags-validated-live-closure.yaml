@@ -1,0 +1,204 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0064"
+title: "Close SST Dictionary Tags as validated-live"
+status: planned
+source_request: "requests/inbox/CR-SST-0064-dictionary-tags-validated-live-closure.yaml"
+created_at: "2026-06-12"
+requester: "4uentes"
+
+initial_scope:
+  solution: "sst"
+  services:
+    - "sst-bend"
+    - "4uentes-auth"
+    - "sst-fend"
+  include_optional_services: false
+  optional_services:
+    - "sst-extension"
+    - "sst-4uentes-infra"
+
+control_plane_context:
+  feature_state: "dictionary-tags"
+  feature_state_file: "state/features/dictionary-tags.current.yaml"
+  jira_issue_key: "SST-10"
+  current_feature_status: "validated-local"
+  governing_request: "CR-SST-0064"
+  provenance_requests:
+    - "CR-SST-0002"
+    - "CR-SST-0014"
+    - "CR-SST-0063"
+  execution_order_ref: "evidence/requests/CR-SST-0063/sst-tags-governance-execution-order.md"
+  global_tags_contract_ref: "docs/requests/sst-tags-governance-contract.md"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "sst-bend"
+      via: "dictionary domain runtime and tag-value/tag-occurrence endpoints"
+      service_kind: "api"
+      ards_kind: "backend-api"
+      status: "active"
+    - service_id: "4uentes-auth"
+      via: "BFF/auth boundary for /api/diccionario/*"
+      service_kind: "shared-auth-provider"
+      ards_kind: "shared-auth-provider"
+      status: "active"
+    - service_id: "sst-fend"
+      via: "frontend /dictionary runtime workflow"
+      service_kind: "frontend-spa"
+      ards_kind: "frontend-web"
+      status: "active"
+    - service_id: "sst-extension"
+      via: "optional dictionary popup/quick-save consumer"
+      service_kind: "browser-extension"
+      ards_kind: "frontend-extension"
+      status: "optional-active"
+      optional: true
+    - service_id: "sst-4uentes-infra"
+      via: "environment support only"
+      service_kind: "gitops-infrastructure"
+      ards_kind: "infra-gitops"
+      status: "active"
+      optional: true
+  capabilities:
+    - "dictionary-legacy-read"
+    - "dictionary-domain-read-v1"
+    - "dictionary-domain-management-v1"
+  risks:
+    - id: "LIVE_RUNTIME_MUTATES_LOCAL_DB"
+      severity: high
+    - id: "JWT_AND_ACCOUNT_CONTEXT_REQUIRED"
+      severity: high
+    - id: "TAGDEFINITION_GOVERNANCE_NOT_PUBLIC_CRUD"
+      severity: medium
+    - id: "OPTIONAL_EXTENSION_ACCOUNT_CONTEXT_GAP"
+      severity: medium
+
+required_context:
+  - "state/features/dictionary-tags.current.yaml"
+  - "state/features/sst-tags-governance.current.yaml"
+  - "state/capability-links.yaml"
+  - "docs/requests/sst-tags-governance-contract.md"
+  - "evidence/requests/CR-SST-0002/implementation-state-report.md"
+  - "evidence/requests/CR-SST-0002/runtime-readiness-summary.md"
+  - "evidence/requests/CR-SST-0002/validation-results.md"
+  - "evidence/requests/CR-SST-0014/implementation-state-analysis.md"
+  - "evidence/requests/CR-SST-0063/sst-tags-governance-execution-order.md"
+  - "catalog/services/sst-bend.yaml"
+  - "catalog/services/4uentes-auth.yaml"
+  - "catalog/services/sst-fend.yaml"
+  - "environments/local/bindings.local.yaml"
+
+implementation_tracks:
+  - id: "control-plane-lifecycle-and-decisions"
+    service_id: "4uentes-orchestor"
+    objective: "Create the SST-10 governing lifecycle and record closure decisions."
+    expected_work:
+      - "Record CR-SST-0064 as the governing request for SST-10."
+      - "Document that TagDefinition CRUD is outside this validated-live closure."
+      - "Document that dictionary closure is independent from article-tags, learning-content, bitacora, and prefix-engine runtime."
+      - "Record sst-extension account-context as a non-blocking follow-up."
+  - id: "backend-dictionary-live-smoke"
+    service_id: "sst-bend"
+    objective: "Validate dictionary domain runtime locally."
+    expected_work:
+      - "Run existing dictionary unit/stage scripts."
+      - "Run live QA smoke where JWT/account context is available."
+      - "Capture sanitized pass/fail evidence without tokens."
+  - id: "bff-dictionary-boundary-smoke"
+    service_id: "4uentes-auth"
+    objective: "Validate BFF /api/diccionario/* boundary."
+    expected_work:
+      - "Validate authenticated read/management routes through BFF."
+      - "Confirm status and payload preservation for tag-values/tag-occurrences."
+      - "Capture sanitized network evidence without bearer tokens or cookies."
+  - id: "frontend-dictionary-manual-qa"
+    service_id: "sst-fend"
+    objective: "Validate /dictionary against local BFF."
+    expected_work:
+      - "Authenticate a QA user if needed."
+      - "Open /dictionary and validate list/create/update/reveal/tag filtering."
+      - "Capture screenshots and console/network observations."
+
+acceptance_criteria:
+  - "CR-SST-0064 exists as the governing SST-10 request before functional repo changes."
+  - "Backend dictionary checks and live smoke are executed or blocked with exact reason."
+  - "BFF /api/diccionario/* smoke is executed or blocked with exact reason."
+  - "Frontend /dictionary QA is executed or blocked with exact reason."
+  - "TagDefinition CRUD/governance decision is recorded as outside this closure."
+  - "sst-extension account-context is recorded as non-blocking follow-up."
+  - "dictionary-tags advances to validated-live only if runtime evidence passes."
+  - "No Jira status is used as canonical state without local evidence."
+
+required_checks:
+  - service_id: "sst-bend"
+    command: "npm run test:diccionario"
+  - service_id: "sst-bend"
+    command: "npm run test:diccionario:stage2"
+  - service_id: "sst-bend"
+    command: "npm run test:diccionario:stage3"
+  - service_id: "sst-bend"
+    command: "npm run qa:diccionario:stage3"
+    requires:
+      - "SMOKE_JWT or DICCIONARIO_JWT"
+      - "local SST API"
+      - "local DB"
+  - service_id: "4uentes-auth"
+    command: "npm run check"
+  - service_id: "sst-fend"
+    command: "npm run check"
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check"
+
+risk:
+  level: high
+  score: 7
+  drivers:
+    - "LIVE_RUNTIME_MUTATES_LOCAL_DB"
+    - "JWT_AND_ACCOUNT_CONTEXT_REQUIRED"
+    - "SHARED_AUTH_PROVIDER_BOUNDARY"
+    - "TAGDEFINITION_GOVERNANCE_DECISION"
+
+task_weight:
+  classification: "long-context-task"
+  risk_level: "high"
+  drivers:
+    - "multiple services validated"
+    - "runtime QA with local DB mutation"
+    - "JWT and account-context dependency"
+    - "state transition depends on evidence"
+    - "cross-repo drift risk"
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.4-fast-high"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The work is planning and validation across several repos with controlled runtime evidence."
+
+subagent_deployment_plan:
+  required: true
+  parallelizable: true
+  roles:
+    - "repo-context-explorer"
+    - "ards-sdd-validator"
+    - "cross-repo-impact-reviewer"
+  executed:
+    - "runtime/capabilities explorer"
+    - "ARDS/SDD provenance explorer"
+    - "cross-repo impact explorer"
+  fallback: "If subagents cannot access runtime sessions, the main agent performs browser and credential-bound QA."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "one-branch-per-functional-repo-if-code-changes-become-necessary"
+  jira_write_required: false
+  runtime_scope: "local-current-environment"
+
+decision:
+  status: "approved-for-local-runtime-validation"
+  approver: "4uentes"
+  approved_at: "2026-06-12"
+  note: "User selected validated-live, local current runtime, and non-blocking sst-extension."

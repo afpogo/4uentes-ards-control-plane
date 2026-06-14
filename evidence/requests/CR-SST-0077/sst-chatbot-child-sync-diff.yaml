@@ -1,0 +1,56 @@
+schema_version: "0.1"
+kind: "ards_child_sync_diff"
+repo: "sst-chatbot"
+project_type: "backend-api"
+requested_contract_version: "latest"
+resolved_contract_version: "ards-core-contract-v0.1"
+binding_ref: "specs/ards/contract-binding.yaml"
+child_commit: "daf23d8"
+evidence_manifest_hash: "7019f98dd7e0eea8683d540b690270f14b171d43c3fc57b49fc5f39ca37c52ed"
+sync_status: "needs-child-update"
+core_revision_decision: "no-core-change-needed"
+checked_at: "2026-06-13"
+source:
+  core_contract: "ards.get_sync_contract"
+  child_repo_ref: "C:\\Users\\andre\\Desktop\\4uentes\\apps\\4uentes-sst\\chatboot-integration\\sst_chatbot"
+evidence_manifest:
+  required_paths:
+    present:
+      - "AGENTS.md"
+      - "docs/00-overview.md"
+      - "specs/00-index.yaml"
+      - "specs/ards/contract-binding.yaml"
+      - "specs/policies/00-index.yaml"
+      - "specs/integration/policies.yaml"
+      - "docs/policies/README.md"
+    missing:
+      - "docs/ai/policy.md"
+  ards_sdd_hashes:
+    - path: "specs/00-index.yaml"
+      sha256: "dbac0107a61cc3e01d1574afbc43349d6bcb8536415d82cee92a7dbc2b091f94"
+    - path: "specs/ards/contract-binding.yaml"
+      sha256: "d6189d13e31ea07ad311a0936c49c5dbdc3fec88476b3245a6029d9dd208d391"
+    - path: "specs/policies/00-index.yaml"
+      sha256: "d64f6be387cb31298f2ff8440e8f607b480eab0bef664dae9d75f1803a4ac019"
+    - path: "specs/integration/policies.yaml"
+      sha256: "f111c138f5ba09975ac5bdb81b719692e02d5dbf2eaff088262ccb476e55754d"
+    - path: "docs/policies/README.md"
+      sha256: "f7e0dad0985077532f3905c190f284c9cba64879f67829831ddfaee740224fc7"
+  yaml_status:
+    - path: "specs/00-index.yaml"
+      status: "valid"
+    - path: "specs/ards/contract-binding.yaml"
+      status: "valid"
+    - path: "specs/policies/00-index.yaml"
+      status: "valid"
+    - path: "specs/integration/policies.yaml"
+      status: "valid"
+  local_todos_or_exceptions: []
+summary:
+  missing_in_child: 1
+  extra_or_stale_in_child: 0
+  candidate_for_core: 0
+  conflicts: 0
+items: []
+recommended_actions: []
+

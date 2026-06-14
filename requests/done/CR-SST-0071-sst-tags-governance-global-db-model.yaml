@@ -1,0 +1,74 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0071"
+title: "SST Tags Governance - DB model and global scope governance plan"
+status: "done"
+source_request: "requests/inbox/CR-SST-0071-sst-tags-governance-global-db-model.yaml"
+planned_request: "requests/planned/CR-SST-0071-sst-tags-governance-global-db-model.yaml"
+created_at: "2026-06-13"
+completed_at: "2026-06-13"
+requester: "4uentes"
+
+summary: >
+  Formalized the global SST tags model in the control-plane. The contract now
+  freezes the persisted target model, the `TagValue` uniqueness rule, the
+  separation between `scope` and `resourceType`, and the legacy mapping needed
+  for follow-up runtime CRs.
+
+scope:
+  solution: "sst"
+  repository: "4uentes-orchestor"
+  functional_repositories_modified: false
+  jira_read_executed: false
+  jira_write_executed: false
+  local_state_transitions_executed: false
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "CONTROL_PLANE_SCOPE"
+    - "CONTRACT_FIRST_MODEL_FREEZE"
+    - "CROSS_REPO_FUTURE_IMPLEMENTATION"
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "This CR fixes high-impact model semantics that downstream runtime CRs must reuse."
+
+subagent_deployment_plan:
+  required: false
+  roles: []
+  fallback: "Single-agent planning and closure was sufficient because this CR only updates control-plane artifacts."
+  evidence_ref: "evidence/requests/CR-SST-0071/global-tag-model-decision-log.md"
+
+results:
+  contract_outputs:
+    - "Persisted target model frozen as `tag_definitions`, `tag_values`, `tag_occurrences`."
+    - "`TagValue` uniqueness fixed as `accountId + definitionKey + slug`."
+    - "`scope` and `resourceType` documented as separate concepts."
+    - "Legacy dictionary tables mapped into the global model for transition planning."
+  downstream_enablement:
+    - "CR-SST-0072 owns persistence, seed, and backfill."
+    - "CR-SST-0073 owns search and resource binding API."
+    - "CR-SST-0074 owns the authenticated BFF facade."
+    - "CR-SST-0075 owns the governed article selector."
+    - "CR-SST-0076 owns dictionary adoption and SST-4 closure alignment."
+
+evidence:
+  required:
+    - "evidence/requests/CR-SST-0071/global-tag-model-decision-log.md"
+    - "evidence/requests/CR-SST-0071/execution-notes.md"
+    - "evidence/requests/CR-SST-0071/changed-files-summary.md"
+    - "evidence/requests/CR-SST-0071/validation-results.md"
+
+validation:
+  required_checks:
+    - "npm run check"
+  status: "pass-with-existing-warnings"
+
+decision:
+  status: "approved-done"
+  approver: "4uentes"
+  note: "CR-SST-0071 closes as control-plane contract work only. Runtime implementation remains in CR-SST-0072 through CR-SST-0076."

@@ -1,0 +1,203 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0077"
+title: "SST policy adoption sync rollout across core, orchestrator, and child repos"
+status: "inbox"
+created_at: "2026-06-13"
+requester: "4uentes"
+
+business_context: >
+  The core now exposes policy adoption as part of the formal ARDS/SDD sync
+  contract, including canonical policy artifacts and the shared-auth-provider
+  project type. The remaining work is no longer a core design gap; it is a
+  cross-repo rollout and audit-evidence task owned by the control-plane.
+
+requested_change: >
+  Open a dedicated SST rollout request that updates orchestrator policy state,
+  links, and historical handoff evidence, then synchronizes all six SST child
+  repos with the required policy manifests and regenerates auditable
+  ards_child_sync_diff evidence for each repo.
+
+expected_outcome: >
+  Policy adoption becomes part of formal child sync for the SST solution. The
+  orchestrator records the core adoption as closed historical handoff, all six
+  child repos expose the minimum required policy artifacts, and new child sync
+  evidence shows no missing required policy paths.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - "4uentes-auth"
+    - "sst-fend"
+    - "sst-bend"
+    - "sst-extension"
+    - "sst-chatbot"
+    - "sst-4uentes-infra"
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "4uentes-ards-core"
+      via: "core sync contract already updated; used as canonical source for rollout validation"
+      service_kind: "ards-standard-source"
+      ards_kind: "shared-standard"
+      status: "active"
+    - service_id: "4uentes-orchestor"
+      via: "policy state, request lifecycle, outbound handoff evidence, and child sync evidence regeneration"
+      service_kind: "control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+    - service_id: "4uentes-auth"
+      via: "shared-auth-provider policy adoption manifest and docs sync"
+      service_kind: "shared-auth-provider"
+      ards_kind: "shared-auth-provider"
+      status: "active"
+    - service_id: "sst-fend"
+      via: "frontend-web policy adoption manifest and docs sync"
+      service_kind: "frontend-spa"
+      ards_kind: "frontend-web"
+      status: "active"
+    - service_id: "sst-bend"
+      via: "backend-api policy adoption manifest and docs sync"
+      service_kind: "api"
+      ards_kind: "backend-api"
+      status: "active"
+    - service_id: "sst-extension"
+      via: "frontend-extension policy adoption manifest and docs sync"
+      service_kind: "browser-extension"
+      ards_kind: "frontend-extension"
+      status: "active"
+    - service_id: "sst-chatbot"
+      via: "backend-api policy adoption manifest and docs sync"
+      service_kind: "api"
+      ards_kind: "backend-api"
+      status: "active"
+    - service_id: "sst-4uentes-infra"
+      via: "infra-devops policy adoption manifest and docs sync"
+      service_kind: "infrastructure"
+      ards_kind: "infra-gitops"
+      status: "active"
+  affected_ards:
+    - "control-plane"
+    - "shared-auth-provider"
+    - "frontend-web"
+    - "backend-api"
+    - "frontend-extension"
+    - "infra-gitops"
+  capabilities:
+    - "capability.outbound.core-agent-policy-governance-handoff"
+  risks:
+    - id: "CROSS_REPO_POLICY_DRIFT"
+      severity: "high"
+    - id: "CHILD_REPO_PATH_MISMATCH"
+      severity: "high"
+    - id: "EVIDENCE_STALENESS_AFTER_CORE_ADOPTION"
+      severity: "high"
+    - id: "DIRTY_WORKTREE_REOBSERVED"
+      severity: "medium"
+
+required_context:
+  - "AGENTS.md"
+  - "state/policy-links.yaml"
+  - "state/features/ards-sdd-policy-unification.current.yaml"
+  - "specs/capabilities/outbound/4uentes-orchestor--core-agent-policy-governance-handoff.yaml"
+  - "catalog/services/4uentes-auth.yaml"
+  - "catalog/services/sst-fend.yaml"
+  - "catalog/services/sst-bend.yaml"
+  - "catalog/services/sst-extension.yaml"
+  - "catalog/services/sst-chatbot.yaml"
+  - "catalog/services/sst-4uentes-infra.yaml"
+  - "environments/local/bindings.local.yaml"
+  - "evidence/requests/CR-SST-0065/sst-fend-child-sync-diff.yaml"
+  - "evidence/requests/CR-SST-0065/sst-bend-child-sync-diff.yaml"
+  - "evidence/requests/CR-SST-0070/4uentes-auth-child-sync-diff.yaml"
+  - "evidence/requests/CR-SST-0070/sst-extension-child-sync-diff.yaml"
+  - "evidence/requests/CR-SST-0070/sst-chatbot-child-sync-diff.yaml"
+  - "evidence/requests/CR-SST-0070/sst-4uentes-infra-child-sync-diff.yaml"
+  - "docs/ai/model-selection-policy.md"
+
+required_checks:
+  - service_id: "4uentes-ards-core"
+    command: "npm.cmd run mcp:build"
+  - service_id: "4uentes-ards-core"
+    command: "npm.cmd run mcp:smoke"
+  - service_id: "4uentes-ards-core"
+    command: "npm.cmd run check"
+  - service_id: "4uentes-auth"
+    command: "npm.cmd run check"
+  - service_id: "sst-fend"
+    command: "npm.cmd run check"
+  - service_id: "sst-bend"
+    command: "npm.cmd run check"
+  - service_id: "sst-extension"
+    command: "pnpm.cmd run check"
+  - service_id: "sst-chatbot"
+    command: ".\\.venv\\Scripts\\python.exe scripts\\check.py"
+  - service_id: "sst-4uentes-infra"
+    command: "npm.cmd run check"
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check"
+
+risk:
+  level: "high"
+  score: 10
+  drivers:
+    - "cross-repo policy adoption rollout"
+    - "versioned core contract dependency"
+    - "orchestrator evidence regeneration"
+    - "child repository mutations"
+    - "deterministic sync audit closure"
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "cross-repo policy adoption rollout"
+    - "policy registry inheritance"
+    - "historical handoff closure"
+    - "child sync evidence regeneration"
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The request changes cross-repo governance evidence, child contracts, and control-plane state across seven repositories."
+
+subagent_deployment_plan:
+  required: true
+  roles:
+    - "cross-repo-impact-reviewer"
+    - "ards-sdd-validator"
+    - "evidence-auditor"
+  parallelizable: true
+  fallback: "If review roles are unavailable, execute sequentially and preserve per-repo evidence and validation outputs."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "current-approved-branch-per-repo"
+
+validation:
+  required_checks:
+    - "4uentes-ards-core: npm.cmd run mcp:build"
+    - "4uentes-ards-core: npm.cmd run mcp:smoke"
+    - "4uentes-ards-core: npm.cmd run check"
+    - "4uentes-auth: npm.cmd run check"
+    - "sst-fend: npm.cmd run check"
+    - "sst-bend: npm.cmd run check"
+    - "sst-extension: pnpm.cmd run check"
+    - "sst-chatbot: .\\.venv\\Scripts\\python.exe scripts\\check.py"
+    - "sst-4uentes-infra: npm.cmd run check"
+    - "4uentes-orchestor: npm.cmd run check"
+  evidence_required:
+    - "execution_notes"
+    - "changed_files_summary"
+    - "validation_results"
+    - "six_child_sync_diff_reports"
+    - "policy_links_state_update_summary"
+
+decision:
+  status: "pending"
+  approver: "TODO"

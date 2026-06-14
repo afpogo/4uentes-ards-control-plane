@@ -19,6 +19,7 @@
     "jira:mcp:backlog-dry-run": "node scripts/jira-mcp/generate-backlog-dry-run.js",
     "jira:mcp:backlog-create": "node scripts/jira-mcp/backlog-create.js",
     "jira:mcp:backlog-observe": "node scripts/jira-mcp/backlog-observe.js",
+    "jira:mcp:active-dependency-review": "node scripts/jira-mcp/active-dependency-review.js",
     "jira:mcp:update-existing": "node scripts/jira-mcp/update-existing-issues.js",
     "jira:mcp:sync-machine": "node scripts/jira-mcp/sync-machine-runner.js",
     "jira:mcp:doctor": "node scripts/jira-mcp/doctor.js",

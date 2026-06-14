@@ -1,0 +1,56 @@
+schema_version: "0.1"
+kind: "ards_child_sync_diff"
+repo: "sst-4uentes-infra"
+project_type: "infra-gitops"
+requested_contract_version: "latest"
+resolved_contract_version: "ards-core-contract-v0.1"
+binding_ref: "specs/ards/contract-binding.yaml"
+child_commit: "daf23d8"
+evidence_manifest_hash: "29b97e6f5b2be064a9e8b1a0989fd91133f43b1e277f4b71d5b3f5cf38a6db0b"
+sync_status: "synced"
+core_revision_decision: "no-core-change-needed"
+checked_at: "2026-06-13"
+source:
+  core_contract: "ards.get_sync_contract"
+  child_repo_ref: "C:\\Users\\andre\\Desktop\\4uentes\\apps\\4uentes-infra\\sst-4uentes-infra"
+evidence_manifest:
+  required_paths:
+    present:
+      - "AGENTS.md"
+      - "docs/00-overview.md"
+      - "docs/ai/policy.md"
+      - "specs/00-index.yaml"
+      - "specs/ards/contract-binding.yaml"
+      - "specs/policies/00-index.yaml"
+      - "specs/integration/policies.yaml"
+      - "docs/policies/README.md"
+    missing: []
+  ards_sdd_hashes:
+    - path: "specs/00-index.yaml"
+      sha256: "c0af98b9b42309ec730e5a0fb4187f341157389107da0c55579c304b9ffd36af"
+    - path: "specs/ards/contract-binding.yaml"
+      sha256: "ae825a22bfa785c6f8d3f99885b168025211f21e8d99a461b452029409791b01"
+    - path: "specs/policies/00-index.yaml"
+      sha256: "95d5cbc55391d7365010aecae6ce29a2154836320984f583d4f3369d9b39d69e"
+    - path: "specs/integration/policies.yaml"
+      sha256: "b149b6145c6bafccdc502f1923f46e614082f325f7f52fa38add8c85af22eb83"
+    - path: "docs/policies/README.md"
+      sha256: "f7e0dad0985077532f3905c190f284c9cba64879f67829831ddfaee740224fc7"
+  yaml_status:
+    - path: "specs/00-index.yaml"
+      status: "valid"
+    - path: "specs/ards/contract-binding.yaml"
+      status: "valid"
+    - path: "specs/policies/00-index.yaml"
+      status: "valid"
+    - path: "specs/integration/policies.yaml"
+      status: "valid"
+  local_todos_or_exceptions: []
+summary:
+  missing_in_child: 0
+  extra_or_stale_in_child: 0
+  candidate_for_core: 0
+  conflicts: 0
+items: []
+recommended_actions: []
+

@@ -1,0 +1,13 @@
+schema_version: "0.1"
+kind: "ards_child_contract_binding"
+repo_id: "4uentes-ards-control-plane"
+project_type: "control-plane"
+core_contract:
+  tool: "ards.get_sync_contract"
+  requested_contract_version: "latest"
+  resolved_contract_version: "ards-core-contract-v0.1"
+  core_ref: "4uentes-ards-core@2ad4e0f"
+orchestrator:
+  id: "4uentes-ards-control-plane"
+  last_validated_at: "2026-06-13"
+  last_report_ref: "specs/capabilities/outbound/4uentes-orchestor--core-agent-policy-governance-handoff.yaml"

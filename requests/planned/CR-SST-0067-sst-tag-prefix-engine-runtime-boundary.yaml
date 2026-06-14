@@ -1,0 +1,177 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-SST-0067"
+title: "Promote SST Tag Prefix Engine from POC to runtime boundary"
+status: planned
+source_request: "requests/inbox/CR-SST-0067-sst-tag-prefix-engine-runtime-boundary.yaml"
+created_at: "2026-06-12"
+requester: "4uentes"
+
+initial_scope:
+  solution: "sst"
+  services:
+    - "sst-bend"
+  include_optional_services: false
+  optional_services:
+    - "4uentes-auth"
+    - "sst-fend"
+
+control_plane_context:
+  feature_state: "sst-tag-prefix-engine"
+  feature_state_file: "state/features/sst-tag-prefix-engine.current.yaml"
+  jira_issue_key: "SST-12"
+  current_feature_status: "implemented-local"
+  current_jira_status_observed: "En curso"
+  current_jira_labels_observed:
+    - "ards-sdd"
+    - "control-plane"
+    - "feature-state"
+    - "implemented-local"
+    - "not-done"
+  governing_request: "CR-SST-0067"
+  provenance_requests:
+    - "CR-SST-0016"
+    - "CR-SST-0063"
+    - "CR-SST-0066"
+  execution_order_ref: "evidence/requests/CR-SST-0063/sst-tags-governance-execution-order.md"
+  global_tags_contract_ref: "docs/requests/sst-tags-governance-contract.md"
+  jira_observation_ref: "evidence/requests/CR-SST-0067/jira-issue-SST-12-observation.md"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "sst-bend"
+      via: "prefix engine runtime preview/import endpoint and backend contract"
+      service_kind: "api"
+      ards_kind: "backend-api"
+      status: "active"
+  deferred_services:
+    - service_id: "4uentes-auth"
+      via: "future BFF boundary once runtime API is published"
+      service_kind: "shared-auth-provider"
+      ards_kind: "shared-auth-provider"
+      status: "active"
+      deferred: true
+    - service_id: "sst-fend"
+      via: "future preview/reference-chip UI once BFF boundary is available"
+      service_kind: "frontend-spa"
+      ards_kind: "frontend-web"
+      status: "active"
+      deferred: true
+  capabilities:
+    - "sst-tag-prefix-engine"
+    - "sst-tags-governance"
+  risks:
+    - id: "RUNTIME_API_CONTRACT"
+      severity: high
+    - id: "PARSER_OUTPUT_PERSISTENCE_DECISION"
+      severity: high
+    - id: "SCOPE_SEMANTICS_DRIFT"
+      severity: high
+    - id: "LEARNING_CONTENT_PREMATURE_EXPANSION"
+      severity: medium
+
+required_context:
+  - "state/features/sst-tag-prefix-engine.current.yaml"
+  - "state/features/sst-tags-governance.current.yaml"
+  - "docs/requests/sst-tags-governance-contract.md"
+  - "evidence/requests/CR-SST-0016/backend-poc-summary.md"
+  - "evidence/requests/CR-SST-0015/parser-boundary-recommendation.md"
+  - "evidence/requests/CR-SST-0063/sst-tags-governance-execution-order.md"
+  - "evidence/requests/CR-SST-0067/jira-issue-SST-12-observation.md"
+  - "catalog/services/sst-bend.yaml"
+  - "environments/local/bindings.local.yaml"
+
+implementation_tracks:
+  - id: "control-plane-runtime-contract"
+    service_id: "4uentes-orchestor"
+    objective: "Define the SST-12 runtime contract and non-goals before child repo changes."
+    expected_work:
+      - "Record CR-SST-0067 as the governing request for SST-12."
+      - "Define preview/import request and response boundaries."
+      - "Keep Learning Content and Bitacora as consumers/future scopes, not implementation targets."
+      - "Record persistence decision: preview-only first unless implementation evidence justifies storage."
+  - id: "backend-prefix-runtime"
+    service_id: "sst-bend"
+    objective: "Promote the existing prefix engine POC to a runtime boundary."
+    expected_work:
+      - "Locate current tag-prefix entities, registry, engine, and tests."
+      - "Expose a runtime preview/import endpoint or equivalent application service boundary."
+      - "Return structured ContentBlock, TagValue, TagOccurrence, AssetRef, ExternalReference, and ImportedReference results."
+      - "Validate initial scopes: diccionario, articulos, learning-content, bitacora as governed/reserved scopes."
+      - "Add focused backend tests and smoke evidence."
+  - id: "deferred-bff-frontend-consumers"
+    service_id: "4uentes-auth/sst-fend"
+    optional: true
+    objective: "Keep consumers deferred until backend runtime contract is stable."
+    expected_work:
+      - "Document follow-up needs for BFF pass-through and frontend reference-chip rendering."
+      - "Do not implement UI in this CR unless backend runtime evidence is complete and scope is expanded."
+
+acceptance_criteria:
+  - "CR-SST-0067 exists as the governing request before functional repo changes."
+  - "SST-12 Jira issue is observed read-only before implementation."
+  - "Backend runtime contract is documented and maps to the global tags governance contract."
+  - "Implementation does not create a parallel tag model for Learning Content or Bitacora."
+  - "Persistence is explicit: preview-only or persisted import, with evidence."
+  - "sst-bend checks/tests pass or blockers are recorded with exact cause."
+  - "state/features/sst-tag-prefix-engine.current.yaml advances only after runtime evidence exists."
+  - "Jira status/labels are updated only after control-plane evidence supports the transition."
+
+required_checks:
+  - service_id: "sst-bend"
+    command: "npm run check"
+  - service_id: "sst-bend"
+    command: "node scripts/test-tag-engine.js"
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check"
+
+risk:
+  level: high
+  score: 8
+  drivers:
+    - "RUNTIME_API_CONTRACT"
+    - "PARSER_OUTPUT_PERSISTENCE_DECISION"
+    - "TAG_SCOPE_SEMANTICS"
+    - "FUTURE_CROSS_REPO_CONSUMERS"
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "backend runtime API contract"
+    - "parser/import data model"
+    - "shared global tag governance semantics"
+    - "future BFF/frontend consumers depend on this boundary"
+    - "Jira/control-plane reconciliation after evidence"
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "SST-12 defines a reusable runtime boundary for tag parsing and future cross-repo consumers."
+
+subagent_deployment_plan:
+  required: true
+  parallelizable: true
+  roles:
+    - "backend-contract-reviewer"
+    - "ards-sdd-validator"
+    - "validation-reviewer"
+  executed:
+    - "local-control-plane-context-explorer"
+  fallback: "Use the main agent for Jira MCP and implementation-critical actions that require the authenticated session."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "one-branch-in-sst-bend-if-code-changes-are-needed"
+  jira_write_required: false
+  runtime_scope: "local-current-environment"
+
+decision:
+  status: "approved-for-sst-12-analysis-and-implementation-planning"
+  approver: "4uentes"
+  approved_at: "2026-06-12"
+  note: "User asked to move to SST-12 after SST-10 reconciliation. Implementation remains gated by this CR and local evidence."

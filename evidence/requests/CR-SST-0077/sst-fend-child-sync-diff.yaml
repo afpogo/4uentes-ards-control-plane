@@ -1,0 +1,56 @@
+schema_version: "0.1"
+kind: "ards_child_sync_diff"
+repo: "sst-fend"
+project_type: "frontend-web"
+requested_contract_version: "latest"
+resolved_contract_version: "ards-core-contract-v0.1"
+binding_ref: "specs/ards/contract-binding.yaml"
+child_commit: "daf23d8"
+evidence_manifest_hash: "b7d8b4270395044ce766fa9216e455048c8fc8ac21be39af774e38511bca8f8c"
+sync_status: "synced"
+core_revision_decision: "no-core-change-needed"
+checked_at: "2026-06-13"
+source:
+  core_contract: "ards.get_sync_contract"
+  child_repo_ref: "C:\\Users\\andre\\Desktop\\4uentes\\apps\\sst-fend"
+evidence_manifest:
+  required_paths:
+    present:
+      - "AGENTS.md"
+      - "docs/00-overview.md"
+      - "docs/ai/policy.md"
+      - "specs/00-index.yaml"
+      - "specs/ards/contract-binding.yaml"
+      - "specs/policies/00-index.yaml"
+      - "specs/integration/policies.yaml"
+      - "docs/policies/README.md"
+    missing: []
+  ards_sdd_hashes:
+    - path: "specs/00-index.yaml"
+      sha256: "30847b9f8fa72455cef91f88d622463a78adc1f0235bcb7e5dc99f42e6806c44"
+    - path: "specs/ards/contract-binding.yaml"
+      sha256: "7b548a5827185d3aee278d46385a86cd58d9741520bc8aca5abeedf012fd926c"
+    - path: "specs/policies/00-index.yaml"
+      sha256: "95d5cbc55391d7365010aecae6ce29a2154836320984f583d4f3369d9b39d69e"
+    - path: "specs/integration/policies.yaml"
+      sha256: "5e2434291729e9b20186af9174c55006f7a57c79fb422b049e9fc3457d4d5b86"
+    - path: "docs/policies/README.md"
+      sha256: "f7e0dad0985077532f3905c190f284c9cba64879f67829831ddfaee740224fc7"
+  yaml_status:
+    - path: "specs/00-index.yaml"
+      status: "valid"
+    - path: "specs/ards/contract-binding.yaml"
+      status: "valid"
+    - path: "specs/policies/00-index.yaml"
+      status: "valid"
+    - path: "specs/integration/policies.yaml"
+      status: "valid"
+  local_todos_or_exceptions: []
+summary:
+  missing_in_child: 0
+  extra_or_stale_in_child: 0
+  candidate_for_core: 0
+  conflicts: 0
+items: []
+recommended_actions: []
+

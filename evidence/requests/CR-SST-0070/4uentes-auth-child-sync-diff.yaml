@@ -1,0 +1,41 @@
+schema_version: "0.1"
+kind: "ards_child_sync_diff"
+repo: "4uentes-auth"
+project_type: "shared-auth-provider"
+requested_contract_version: "latest"
+resolved_contract_version: "ards-core-contract-v0.1"
+binding_ref: "specs/ards/contract-binding.yaml"
+child_commit: "dfe576f"
+evidence_manifest_hash: "05aea184849cc74ebf9bd34d91550f70f9597d6ad762295b30531d0f4c19d5d6"
+sync_status: "synced"
+core_revision_decision: "no-core-change-needed"
+checked_at: "2026-06-13"
+source:
+  core_contract: "ards.get_sync_contract"
+  child_repo_ref: "C:\\Users\\andre\\Desktop\\4uentes\\apps\\node-auth"
+evidence_manifest:
+  required_paths:
+    present:
+      - "AGENTS.md"
+      - "docs/00-overview.md"
+      - "specs/00-index.yaml"
+      - "specs/ards/contract-binding.yaml"
+    missing: []
+  ards_sdd_hashes:
+    - path: "specs/00-index.yaml"
+      sha256: "8a67b767d332c8c9e699350ae50f4f1b9c922f2c7b2042ddf62d63f94cb3764c"
+    - path: "specs/ards/contract-binding.yaml"
+      sha256: "699f851bb708307820f739f6a57a7a70eb765c0fb6fa4519a8d1204664904485"
+  yaml_status:
+    - path: "specs/00-index.yaml"
+      status: "valid"
+    - path: "specs/ards/contract-binding.yaml"
+      status: "valid"
+  local_todos_or_exceptions: []
+summary:
+  missing_in_child: 0
+  extra_or_stale_in_child: 0
+  candidate_for_core: 0
+  conflicts: 0
+items: []
+recommended_actions: []

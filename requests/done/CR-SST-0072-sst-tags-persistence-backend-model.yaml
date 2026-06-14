@@ -1,0 +1,85 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-SST-0072"
+title: "SST Tags - Backend global persistence migration"
+status: "done"
+source_request: "requests/inbox/CR-SST-0072-sst-tags-persistence-backend-model.yaml"
+planned_request: "requests/planned/CR-SST-0072-sst-tags-persistence-backend-model.yaml"
+created_at: "2026-06-13"
+completed_at: "2026-06-13"
+requester: "4uentes"
+
+summary: >
+  Implemented the first persisted global tags cut in `sst-bend` with
+  `tag_definitions`, `tag_values`, and `tag_occurrences`, plus bootstrap seed,
+  legacy backfill, and temporary dual-write from current dictionary/article tag
+  writers while keeping public reads on the legacy runtime.
+
+scope:
+  solution: "sst"
+  repository: "4uentes-orchestor"
+  functional_repositories_modified: true
+  modified_repositories:
+    - "sst-bend"
+  jira_read_executed: true
+  jira_write_executed: true
+  local_state_transitions_executed: false
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "DB migration and backfill"
+    - "compatibility-preserving dual-write"
+    - "cross-repo governed child-repo change"
+
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "This CR modifies persistence and runtime coexistence rules in a child repo with future downstream consumers."
+
+subagent_deployment_plan:
+  required: true
+  roles:
+    - "architecture-reviewer"
+    - "cross-repo-impact-reviewer"
+    - "validation-reviewer"
+  fallback: "The local runtime did not expose subagent deployment, so implementation and review were executed sequentially in the main agent."
+  evidence_ref: "evidence/requests/CR-SST-0072/execution-notes.md"
+
+results:
+  persistence_outputs:
+    - "Added `tag_definitions`, `tag_values`, and `tag_occurrences` Sequelize models and migration in `sst-bend`."
+    - "Seeded global tag definitions from the current registry/lifecycle and tolerated legacy-observed definition keys."
+    - "Backfilled global values and occurrences from `dictionary_tag_values` and `dictionary_tag_occurrences` without deleting legacy data."
+  runtime_outputs:
+    - "`findOrCreateTagValue` now mirrors writes into global `tag_values`."
+    - "`syncEntryTags` keeps legacy dictionary writes and mirrors global dictionary occurrences."
+    - "`syncArticleTags` keeps legacy article occurrence writes and mirrors global article occurrences."
+  compatibility:
+    - "No public HTTP DTO shape was changed in this CR."
+    - "Dictionary and article reads remain on legacy tables until follow-up CRs."
+
+evidence:
+  required:
+    - "evidence/requests/CR-SST-0072/execution-notes.md"
+    - "evidence/requests/CR-SST-0072/sst-bend-global-persistence-implementation.md"
+    - "evidence/requests/CR-SST-0072/changed-files-summary.md"
+    - "evidence/requests/CR-SST-0072/validation-results.md"
+    - "evidence/requests/CR-SST-0072/jira-issue-SST-20-observation.md"
+    - "evidence/requests/CR-SST-0072/jira-transition-blocker.md"
+    - "evidence/requests/CR-SST-0072/jira-sst-20-transition-summary.md"
+
+validation:
+  required_checks:
+    - "sst-bend: npm.cmd run test:tag-engine"
+    - "sst-bend: npm.cmd run test:diccionario:stage3"
+    - "sst-bend: npm.cmd run check"
+    - "4uentes-orchestor: npm run check"
+  status: "pass-with-existing-warnings"
+
+decision:
+  status: "approved-done"
+  approver: "4uentes"
+  note: "Persistence and dual-write are ready. Public governance API/BFF/frontend adoption remains open in CR-SST-0073..0076."

@@ -1,0 +1,325 @@
+{
+  "requestId": "CR-SST-0072",
+  "issueKey": "SST-20",
+  "mode": "approved-write",
+  "before": {
+    "summary": "[SST-4][CR-SST-0072] Backend global tags persistence and migration",
+    "status": "Tareas por hacer",
+    "statusCategory": "Por hacer",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-06-13T11:34:46.916-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0072",
+      "sst-tags-governance",
+      "subtask"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10028\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10028\",\"key\":\"SST-20\",\"fields\":{\"summary\":\"[SST-4][CR-SST-0072] Backend global tags persistence and migration\",\"description\":\"Subtask under `SST-4` for the next governed execution slice.\\n\\n* CR: `CR-SST-0072`\\n* Scope: `sst-bend` persistence model, migrations, compatibility, and backfill.\\n* Source request: `requests/planned/CR-SST-0072-sst-tags-persistence-backend-model.yaml`\\n* Goal: implement global tag persistence with migration from current article and dictionary tags while preserving compatibility.\\n* Risk: high due to persisted data and backfill safety.\\n\\n\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-06-13T11:34:46.916-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10005\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"Tareas por hacer\",\"id\":\"10005\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/2\",\"id\":2,\"key\":\"new\",\"colorName\":\"blue-gray\",\"name\":\"Por hacer\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-sst-0072\",\"sst-tags-governance\",\"subtask\"]}}"
+  },
+  "after": {
+    "summary": "[SST-4][CR-SST-0072] Backend global tags persistence and migration",
+    "status": "Finalizada",
+    "statusCategory": "Listo",
+    "resolution": "Listo",
+    "assignee": "no-asignado",
+    "updated": "2026-06-13T17:14:54.245-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0072",
+      "done",
+      "sst-tags-governance",
+      "subtask",
+      "validated-local"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10028\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10028\",\"key\":\"SST-20\",\"fields\":{\"summary\":\"[SST-4][CR-SST-0072] Backend global tags persistence and migration\",\"description\":\"Proceso de sincronizacion:\\n\\n* CR-SST-0072\\n\\nEstado actual: persisted global tags migration implemented locally.\\n\\nResultado:\\n\\n* `sst-bend` agrega `tag_definitions`, `tag_values` y `tag_occurrences` como modelo persistido objetivo.\\n* El seed inicial toma definiciones del registry actual, del lifecycle de diccionario y de keys legacy observadas.\\n* El backfill copia `dictionary_tag_values` y `dictionary_tag_occurrences` sin borrar compatibilidad legacy.\\n* El runtime mantiene lecturas publicas sobre `dictionary_*` y activa dual-write temporal hacia el store global.\\n\\nCriterio de cierre cumplido:\\n\\n* Persistencia global creada en backend.\\n* Backfill inicial definido en migracion.\\n* Dual-write temporal implementado para diccionario y articulos.\\n* La compatibilidad de lectura legacy se mantiene para no romper runtime existente.\\n\\nEvidencia principal:\\n\\n* requests/done/CR-SST-0072-sst-tags-persistence-backend-model.yaml\\n* evidence/requests/CR-SST-0072/sst-bend-global-persistence-implementation.md\\n* evidence/requests/CR-SST-0072/validation-results.md\\n* state/features/sst-tags-governance.current.yaml\\n\\nValidaciones ejecutadas:\\n\\n* node --check sobre migracion, modelos y repositorio: PASS.\\n* sst-bend: npm.cmd run test:tag-engine -> PASS 7/7.\\n* sst-bend: npm.cmd run test:diccionario:stage3 -> PASS 11/11.\\n* sst-bend: npm.cmd run check -> PASS con warnings existentes por falta de `SMOKE_JWT`.\\n* 4uentes-orchestor: npm.cmd run check -> PASS.\\n\\nLimites explicitados:\\n\\n* No se ejecuto una migracion real contra Postgres en este turno.\\n* La adopcion de lecturas/API/BFF/frontend sigue en CR-SST-0073 a CR-SST-0076.\\n\\nFuente canonica:\\n\\n* El control-plane ARDS/SDD conserva la fuente canonica. Jira es superficie operativa de visibilidad.\\n\\n\",\"assignee\":null,\"resolution\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/resolution/10000\",\"id\":\"10000\",\"description\":\"Se ha terminado el trabajo relacionado con esta incidencia.\",\"name\":\"Listo\"},\"updated\":\"2026-06-13T17:14:54.245-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10008\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"Finalizada\",\"id\":\"10008\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/3\",\"id\":3,\"key\":\"done\",\"colorName\":\"green\",\"name\":\"Listo\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-sst-0072\",\"done\",\"sst-tags-governance\",\"subtask\",\"validated-local\"]}}"
+  },
+  "selectedTransition": {
+    "id": "41",
+    "name": "Listo",
+    "toStatus": "Finalizada",
+    "toStatusCategory": "Listo"
+  },
+  "transitions": [
+    {
+      "id": "11",
+      "name": "Por hacer",
+      "toStatus": "Tareas por hacer",
+      "toStatusCategory": "Por hacer"
+    },
+    {
+      "id": "21",
+      "name": "En curso",
+      "toStatus": "En curso",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "31",
+      "name": "In Review",
+      "toStatus": "En revisión",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "41",
+      "name": "Listo",
+      "toStatus": "Finalizada",
+      "toStatusCategory": "Listo"
+    }
+  ],
+  "labels": [
+    "ards-sdd",
+    "control-plane",
+    "cr-sst-0072",
+    "done",
+    "sst-tags-governance",
+    "subtask",
+    "validated-local"
+  ],
+  "editResult": {
+    "expand": "renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations",
+    "id": "10028",
+    "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10028",
+    "key": "SST-20",
+    "fields": {
+      "statuscategorychangedate": "2026-06-13T11:34:47.329-0300",
+      "issuetype": {
+        "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issuetype/10006",
+        "id": "10006",
+        "description": "Subtasks track small pieces of work that are part of a larger task.",
+        "iconUrl": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/2/universal_avatar/view/type/issuetype/avatar/10316?size=medium",
+        "name": "Subtask",
+        "subtask": true,
+        "avatarId": 10316,
+        "entityId": "[cloudId-redacted]",
+        "hierarchyLevel": -1
+      },
+      "parent": {
+        "id": "10012",
+        "key": "SST-4",
+        "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10012",
+        "fields": {
+          "summary": "[SST][feature-state] Cerrar gaps runtime-partial de SST Tags Governance",
+          "status": {
+            "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10006",
+            "description": "La persona asignada está trabajando actualmente en esta actividad.",
+            "iconUrl": "[jira-site-redacted]",
+            "name": "En curso",
+            "id": "10006",
+            "statusCategory": {
+              "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4",
+              "id": 4,
+              "key": "indeterminate",
+              "colorName": "yellow",
+              "name": "En curso"
+            }
+          },
+          "priority": {
+            "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/priority/3",
+            "iconUrl": "[jira-site-redacted]",
+            "name": "Medium",
+            "id": "3"
+          },
+          "issuetype": {
+            "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issuetype/10008",
+            "id": "10008",
+            "description": "Un trabajo pequeño e independiente.",
+            "iconUrl": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/2/universal_avatar/view/type/issuetype/avatar/10318?size=medium",
+            "name": "Tarea",
+            "subtask": false,
+            "avatarId": 10318,
+            "entityId": "[cloudId-redacted]",
+            "hierarchyLevel": 0
+          }
+        }
+      },
+      "components": [],
+      "timespent": null,
+      "timeoriginalestimate": null,
+      "project": {
+        "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/project/10001",
+        "id": "10001",
+        "key": "SST",
+        "name": "SST-Team",
+        "projectTypeKey": "software",
+        "simplified": true,
+        "avatarUrls": {
+          "48x48": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/universal_avatar/view/type/project/avatar/10416",
+          "24x24": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/universal_avatar/view/type/project/avatar/10416?size=small",
+          "16x16": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/universal_avatar/view/type/project/avatar/10416?size=xsmall",
+          "32x32": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/universal_avatar/view/type/project/avatar/10416?size=medium"
+        }
+      },
+      "description": "Proceso de sincronizacion:\n\n* CR-SST-0072\n\nEstado actual: persisted global tags migration implemented locally.\n\nResultado:\n\n* `sst-bend` agrega `tag_definitions`, `tag_values` y `tag_occurrences` como modelo persistido objetivo.\n* El seed inicial toma definiciones del registry actual, del lifecycle de diccionario y de keys legacy observadas.\n* El backfill copia `dictionary_tag_values` y `dictionary_tag_occurrences` sin borrar compatibilidad legacy.\n* El runtime mantiene lecturas publicas sobre `dictionary_*` y activa dual-write temporal hacia el store global.\n\nCriterio de cierre cumplido:\n\n* Persistencia global creada en backend.\n* Backfill inicial definido en migracion.\n* Dual-write temporal implementado para diccionario y articulos.\n* La compatibilidad de lectura legacy se mantiene para no romper runtime existente.\n\nEvidencia principal:\n\n* requests/done/CR-SST-0072-sst-tags-persistence-backend-model.yaml\n* evidence/requests/CR-SST-0072/sst-bend-global-persistence-implementation.md\n* evidence/requests/CR-SST-0072/validation-results.md\n* state/features/sst-tags-governance.current.yaml\n\nValidaciones ejecutadas:\n\n* node --check sobre migracion, modelos y repositorio: PASS.\n* sst-bend: npm.cmd run test:tag-engine -> PASS 7/7.\n* sst-bend: npm.cmd run test:diccionario:stage3 -> PASS 11/11.\n* sst-bend: npm.cmd run check -> PASS con warnings existentes por falta de `SMOKE_JWT`.\n* 4uentes-orchestor: npm.cmd run check -> PASS.\n\nLimites explicitados:\n\n* No se ejecuto una migracion real contra Postgres en este turno.\n* La adopcion de lecturas/API/BFF/frontend sigue en CR-SST-0073 a CR-SST-0076.\n\nFuente canonica:\n\n* El control-plane ARDS/SDD conserva la fuente canonica. Jira es superficie operativa de visibilidad.\n\n",
+      "fixVersions": [],
+      "aggregatetimespent": null,
+      "statusCategory": {
+        "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/2",
+        "id": 2,
+        "key": "new",
+        "colorName": "blue-gray",
+        "name": "Por hacer"
+      },
+      "resolution": null,
+      "customfield_10015": null,
+      "timetracking": {},
+      "security": null,
+      "attachment": [],
+      "aggregatetimeestimate": null,
+      "resolutiondate": null,
+      "workratio": -1,
+      "summary": "[SST-4][CR-SST-0072] Backend global tags persistence and migration",
+      "issuerestriction": {
+        "issuerestrictions": {},
+        "shouldDisplay": true
+      },
+      "watches": {
+        "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/SST-20/watchers",
+        "watchCount": 1,
+        "isWatching": true
+      },
+      "lastViewed": "2026-06-13T11:43:22.152-0300",
+      "creator": {
+        "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+        "accountId": "[accountId-redacted]",
+        "emailAddress": "[email-redacted]",
+        "avatarUrls": {
+          "48x48": "[avatar-url-redacted]",
+          "24x24": "[avatar-url-redacted]",
+          "16x16": "[avatar-url-redacted]",
+          "32x32": "[avatar-url-redacted]"
+        },
+        "displayName": "Fuentes Sandferand",
+        "active": true,
+        "timeZone": "America/Buenos_Aires",
+        "accountType": "atlassian"
+      },
+      "subtasks": [],
+      "created": "2026-06-13T11:34:46.755-0300",
+      "customfield_10021": null,
+      "reporter": {
+        "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+        "accountId": "[accountId-redacted]",
+        "emailAddress": "[email-redacted]",
+        "avatarUrls": {
+          "48x48": "[avatar-url-redacted]",
+          "24x24": "[avatar-url-redacted]",
+          "16x16": "[avatar-url-redacted]",
+          "32x32": "[avatar-url-redacted]"
+        },
+        "displayName": "Fuentes Sandferand",
+        "active": true,
+        "timeZone": "America/Buenos_Aires",
+        "accountType": "atlassian"
+      },
+      "aggregateprogress": {
+        "progress": 0,
+        "total": 0
+      },
+      "priority": {
+        "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/priority/3",
+        "iconUrl": "[jira-site-redacted]",
+        "name": "Medium",
+        "id": "3"
+      },
+      "customfield_10001": null,
+      "labels": [
+        "ards-sdd",
+        "control-plane",
+        "cr-sst-0072",
+        "done",
+        "sst-tags-governance",
+        "subtask",
+        "validated-local"
+      ],
+      "environment": null,
+      "customfield_10019": "0|i00067:",
+      "timeestimate": null,
+      "aggregatetimeoriginalestimate": null,
+      "versions": [],
+      "duedate": null,
+      "progress": {
+        "progress": 0,
+        "total": 0
+      },
+      "issuelinks": [],
+      "votes": {
+        "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/SST-20/votes",
+        "votes": 0,
+        "hasVoted": false
+      },
+      "comment": {
+        "comments": [],
+        "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10028/comment",
+        "maxResults": 0,
+        "total": 0,
+        "startAt": 0
+      },
+      "assignee": null,
+      "worklog": {
+        "startAt": 0,
+        "maxResults": 20,
+        "total": 0,
+        "worklogs": []
+      },
+      "updated": "2026-06-13T17:14:50.616-0300",
+      "status": {
+        "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10005",
+        "description": "",
+        "iconUrl": "[jira-site-redacted]",
+        "name": "Tareas por hacer",
+        "id": "10005",
+        "statusCategory": {
+          "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/2",
+          "id": 2,
+          "key": "new",
+          "colorName": "blue-gray",
+          "name": "Por hacer"
+        }
+      }
+    }
+  },
+  "transitionResult": {
+    "success": true
+  },
+  "commentResult": {
+    "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10028/comment/10004",
+    "id": "10004",
+    "author": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "body": "CR-SST closure execution: CR-SST-0072\n\n`SST-20` queda reconciliado contra la evidencia de `CR-SST-0072`.\n\nResumen:\n\n* Persistencia global implementada en `sst-bend`.\n* Seed/backfill inicial definido para `tag_definitions`, `tag_values` y `tag_occurrences`.\n* Dual-write temporal activo sin romper readers legacy de diccionario y articulos.\n* Validacion local ejecutada y documentada en control-plane.\n\nValidaciones clave:\n\n* node --check migration/models/repository: PASS.\n* sst-bend test:tag-engine: PASS 7/7.\n* sst-bend test:diccionario:stage3: PASS 11/11.\n* sst-bend check: PASS con warnings existentes por falta de `SMOKE_JWT`.\n* 4uentes-orchestor check: PASS.\n\nEvidencia:\n\n* requests/done/CR-SST-0072-sst-tags-persistence-backend-model.yaml\n* evidence/requests/CR-SST-0072/sst-bend-global-persistence-implementation.md\n* evidence/requests/CR-SST-0072/validation-results.md\n* evidence/requests/CR-SST-0072/execution-notes.md\n\nBefore status: Tareas por hacer  \nTransition: Listo (41)\n\nGaps restantes quedan fuera de `SST-20` y siguen gobernados por CR-SST-0073 a CR-SST-0076.",
+    "updateAuthor": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "created": "2026-06-13T17:14:54.245-0300",
+    "updated": "2026-06-13T17:14:54.245-0300",
+    "jsdPublic": true
+  },
+  "externalWrite": true
+}

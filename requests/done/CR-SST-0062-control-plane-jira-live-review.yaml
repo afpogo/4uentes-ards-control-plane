@@ -1,0 +1,89 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0062"
+title: "Review live Jira tickets from control-plane MCP"
+status: "done"
+source_request: "requests/inbox/CR-SST-0062-control-plane-jira-live-review.yaml"
+planned_request: "requests/planned/CR-SST-0062-control-plane-jira-live-review.yaml"
+created_at: "2026-06-11"
+completed_at: "2026-06-11"
+requester: "4uentes"
+
+summary: >
+  Executed a read-only Atlassian Jira MCP review from the control-plane using
+  the documented JIRA_MCP_ARGS /v1/mcp endpoint pattern. The review observed
+  9 feature-state tickets and 6 backlog mirror tickets, with no Jira writes,
+  no automatic local transitions, and no child repository modifications.
+
+scope:
+  solution: "sst"
+  repository: "4uentes-orchestor"
+  functional_repositories_modified: false
+  jira_read_executed: true
+  jira_write_executed: false
+  local_state_transitions_executed: false
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "OAUTH_SESSION"
+    - "EXTERNAL_MCP_READ"
+    - "JIRA_STATUS_NOT_CANONICAL_STATE"
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "OAuth/MCP and external Jira access are security-sensitive even in read-only mode."
+
+subagent_deployment_plan:
+  required: true
+  roles:
+    - "security-contract-reviewer"
+    - "ards-sdd-validator"
+  fallback: "Subagent tool policy requires explicit user request for delegation; the main agent executed sequentially."
+  evidence_ref: "evidence/requests/CR-SST-0062/subagent-deployment-evidence.md"
+
+results:
+  jira_project_visible: true
+  confluence_space_visible: false
+  feature_state_tickets_observed: 9
+  backlog_mirror_tickets_observed: 6
+  total_jira_tickets_in_radar: 15
+  jira_writes: 0
+  in_progress_feature_state_issues:
+    - "SST-4"
+    - "SST-6"
+    - "SST-10"
+    - "SST-12"
+  closed_feature_state_issues:
+    - "SST-8"
+  recommendation: "Select one active feature-state issue explicitly before opening backlog tooling; Jira status alone does not mutate ARDS/SDD state."
+
+evidence:
+  required:
+    - "evidence/requests/CR-SST-0062/jira-mcp-project-verification.md"
+    - "evidence/requests/CR-SST-0062/duplicate-search-summary.md"
+    - "evidence/requests/CR-SST-0062/jira-reconciliation-summary.md"
+    - "evidence/requests/CR-SST-0062/jira-status-observation-summary.md"
+    - "evidence/requests/CR-SST-0062/jira-backlog-observation-summary.md"
+    - "evidence/requests/CR-SST-0062/unified-jira-radar-live.md"
+    - "evidence/requests/CR-SST-0062/subagent-deployment-evidence.md"
+    - "evidence/requests/CR-SST-0062/changed-files-summary.md"
+    - "evidence/requests/CR-SST-0062/validation-results.md"
+
+validation:
+  required_checks:
+    - "node --check scripts/jira-mcp/verify-project.js"
+    - "node --check scripts/jira-mcp/search-duplicates.js"
+    - "node --check scripts/jira-mcp/reconcile-existing-issues.js"
+    - "node --check scripts/jira-mcp/observe-status.js"
+    - "node --check scripts/jira-mcp/backlog-observe.js"
+    - "npm.cmd run check"
+  status: "pass-with-existing-warnings"
+
+decision:
+  status: "approved-done"
+  approver: "4uentes"
+  note: "Read-only live Jira review completed. No Jira writes or child repository changes were executed."

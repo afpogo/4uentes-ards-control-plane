@@ -1,0 +1,91 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0070"
+title: "Sincronizar bindings ARDS/SDD en repos hijos SST restantes"
+status: done
+source_request: "requests/inbox/CR-SST-0070-sync-remaining-sst-child-contract-bindings.yaml"
+planned_request: "requests/planned/CR-SST-0070-sync-remaining-sst-child-contract-bindings.yaml"
+completed_at: "2026-06-13"
+requester: "4uentes"
+
+summary: >
+  Se sincronizaron los cuatro repos hijos SST restantes con el contrato core
+  ARDS/SDD resuelto. Cada repo recibio `specs/ards/contract-binding.yaml`,
+  el orquestador registro evidencia `ards_child_sync_diff`, y el gate de
+  CR-SST-0068 quedo actualizado con `no-core-change-needed` para toda la
+  solucion SST.
+
+scope:
+  solution: "sst"
+  services_modified:
+    - "4uentes-auth"
+    - "sst-extension"
+    - "sst-chatbot"
+    - "sst-4uentes-infra"
+  functional_repositories_modified: true
+  core_repository_modified: false
+
+sync_result:
+  core_contract_tool: "ards.get_sync_contract"
+  requested_contract_version: "latest"
+  resolved_contract_version: "ards-core-contract-v0.1"
+  core_ref: "4uentes-ards-core@2ad4e0f"
+  services:
+    - service_id: "4uentes-auth"
+      sync_status: "synced"
+      core_revision_decision: "no-core-change-needed"
+      evidence_ref: "evidence/requests/CR-SST-0070/4uentes-auth-child-sync-diff.yaml"
+    - service_id: "sst-extension"
+      sync_status: "synced"
+      core_revision_decision: "no-core-change-needed"
+      evidence_ref: "evidence/requests/CR-SST-0070/sst-extension-child-sync-diff.yaml"
+    - service_id: "sst-chatbot"
+      sync_status: "synced"
+      core_revision_decision: "no-core-change-needed"
+      evidence_ref: "evidence/requests/CR-SST-0070/sst-chatbot-child-sync-diff.yaml"
+    - service_id: "sst-4uentes-infra"
+      sync_status: "synced"
+      core_revision_decision: "no-core-change-needed"
+      evidence_ref: "evidence/requests/CR-SST-0070/sst-4uentes-infra-child-sync-diff.yaml"
+
+validation:
+  status: "passed"
+  passed:
+    - "4uentes-auth: npm.cmd run check"
+    - "sst-extension: pnpm.cmd run check"
+    - "sst-chatbot: .\\.venv\\Scripts\\python.exe scripts\\check.py"
+    - "sst-4uentes-infra: npm.cmd run check"
+    - "4uentes-orchestor: npm.cmd run check"
+  notes:
+    - "Los primeros intentos de 4uentes-auth, sst-extension e infra tuvieron errores de permisos del sandbox; los reintentos elevados pasaron."
+    - "sst-chatbot reporto una advertencia de cache pytest sin impacto en el resultado."
+    - "El check del orquestador mantiene advertencias preexistentes de observacion remota y state files antiguos sin refs."
+
+evidence_refs:
+  - "evidence/requests/CR-SST-0070/intake-and-execution-notes.md"
+  - "evidence/requests/CR-SST-0070/4uentes-auth-child-sync-diff.yaml"
+  - "evidence/requests/CR-SST-0070/sst-extension-child-sync-diff.yaml"
+  - "evidence/requests/CR-SST-0070/sst-chatbot-child-sync-diff.yaml"
+  - "evidence/requests/CR-SST-0070/sst-4uentes-infra-child-sync-diff.yaml"
+  - "evidence/requests/CR-SST-0070/validation-results.md"
+  - "evidence/requests/CR-SST-0070/changed-files-summary.md"
+  - "evidence/requests/CR-SST-0068/core-revision-decision-gate.md"
+
+child_repo_artifacts:
+  4uentes-auth:
+    - "specs/ards/contract-binding.yaml"
+  sst-extension:
+    - "specs/ards/contract-binding.yaml"
+  sst-chatbot:
+    - "specs/ards/contract-binding.yaml"
+  sst-4uentes-infra:
+    - "specs/ards/contract-binding.yaml"
+
+accepted_gaps:
+  - "Los repos hijos tenian working trees dirty con cambios preexistentes; no fueron revertidos ni normalizados por este request."
+  - "La publicacion/commit de los cambios en repos hijos queda fuera de este cierre local."
+
+decision:
+  status: "closed"
+  approver: "4uentes"
+  note: "CR-SST-0070 queda cerrado con los repos hijos restantes sincronizados y sin necesidad de revision core."

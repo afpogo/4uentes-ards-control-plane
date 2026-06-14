@@ -65,7 +65,7 @@ function extractIssueKeys(value, projectKey) {
 
 function sanitize(value) {
   return String(value)
-    .replace(/https:\/\/[^/\s]+\.atlassian\.net[^\s)]*/g, '[jira-site-redacted]')
+    .replace(/https:\/\/[^/\s"']+\.atlassian\.net[^\s)"']*/g, '[jira-site-redacted]')
     .replace(/[A-Za-z0-9.-]+\.atlassian\.net/g, '[jira-site-redacted]')
     .replace(/https:\/\/secure\.gravatar\.com\/avatar\/[^"\s]+/g, '[avatar-url-redacted]')
     .replace(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi, '[email-redacted]')

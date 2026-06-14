@@ -16,6 +16,7 @@ dos o mas repos o servicios juntos.
 ## Docs Canonicos Actuales
 
 - [solutions-model.md](solutions-model.md)
+- [sst-analisis-arquitectonico-ards-sdd-2026-06-13.md](sst-analisis-arquitectonico-ards-sdd-2026-06-13.md)
 - [sst-cluster-dependency-map.md](sst-cluster-dependency-map.md)
 - [deployment-request-playbook.md](deployment-request-playbook.md)
 - [orchestrator-boundary.md](orchestrator-boundary.md)

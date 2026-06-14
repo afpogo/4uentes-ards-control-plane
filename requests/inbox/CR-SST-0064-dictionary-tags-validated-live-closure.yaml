@@ -1,0 +1,60 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0064"
+title: "Close SST Dictionary Tags as validated-live"
+status: inbox
+created_at: "2026-06-12"
+requester: "4uentes"
+
+summary: >
+  Advance SST-10 / dictionary-tags from validated-local to validated-live by
+  executing controlled local runtime validation for the dictionary domain,
+  recording the TagDefinition governance decision, and separating dictionary
+  closure from articles, learning-content, bitacora, prefix-engine, and optional
+  extension work.
+
+problem_statement: >
+  dictionary-tags already has strong local implementation evidence across
+  backend, BFF, frontend, and optional extension. The remaining blocking gap is
+  live/runtime validation plus explicit closure criteria for TagDefinition and
+  broader SST tag expansion.
+
+scope:
+  solution: "sst"
+  feature_state: "dictionary-tags"
+  jira_issue_key: "SST-10"
+  target_state: "validated-live"
+  runtime_scope: "local-current-environment"
+  primary_gap: "Live runtime endpoint validation for SST Dictionary Tags."
+  affected_services:
+    - "sst-bend"
+    - "4uentes-auth"
+    - "sst-fend"
+  optional_services:
+    - "sst-extension"
+    - "sst-4uentes-infra"
+  functional_repositories_modified_by_this_intake: false
+
+origin_requests:
+  role: "provenance-only"
+  requests:
+    - "CR-SST-0002"
+    - "CR-SST-0014"
+    - "CR-SST-0063"
+
+desired_outcome:
+  - "dictionary-tags has local-live backend, BFF, and frontend evidence."
+  - "TagDefinition CRUD/governance is explicitly accepted as outside this closure."
+  - "Dictionary close criteria explicitly exclude article-tags, learning-content, bitacora, and prefix-engine runtime."
+  - "sst-extension account-context remains a non-blocking follow-up."
+  - "state/features/dictionary-tags.current.yaml advances only after evidence supports validated-live."
+
+out_of_scope:
+  - "Implementing TagDefinition public CRUD."
+  - "Changing article-tags behavior."
+  - "Promoting prefix-engine runtime."
+  - "Implementing learning-content or bitacora scopes."
+  - "Making sst-extension account-context a blocking closure gate."
+  - "Kubernetes/ngrok/infra publication validation."
+
+next_lifecycle_step: "planned"

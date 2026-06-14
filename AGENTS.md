@@ -47,27 +47,34 @@ This repository consumes the standard. It does not redefine it.
   record a retroactive request/evidence entry and make the ordering deviation
   explicit.
 
-## Model and Subagent Selection Annex
+## Agent Operating Policies
 
-This repo has an operational annex for model and subagent selection:
+Before planning or executing a task, agents must review and apply the living
+ARDS/SDD operating policies.
 
-- `docs/ai/model-selection-policy.md`
+Registry principal:
 
-Before planning or executing a task, agents must classify it as:
+- `specs/integration/policies.yaml`
 
-- `short-defined-task`
-- `long-context-task`
-- `complex-high-risk-task`
+Human-readable policies:
 
-Then apply the policy defined in the ARDS/SDD annex. For planned work, the
-classification must become an auditable `task_weight`, `model_selection`, and
-`subagent_deployment_plan` entry. If subagents are required by policy but cannot
-be spawned by the runtime, record the fallback instead of silently skipping the
-step.
+- `docs/policies/`
 
-This rule complements the existing ARDS/SDD; it does not replace working
-agreements, specs, docs, playbooks, requests, handoffs, or current repository
-decisions.
+Initial policies:
+
+- `agent-model-selection-policy`
+- `agent-resource-degradation-policy`
+- `agent-task-atomization-policy`
+- `agent-delegation-policy`
+- `agent-context-management-policy`
+- `agent-architecture-boundary-policy`
+
+These policies define how to select model aliases, degrade strategy when
+resources are limited, atomize tasks, delegate work, manage context, and respect
+architecture boundaries.
+
+They complement working agreements, specs, docs and playbooks. They do not
+replace functional contracts or cross-repo ownership.
 
 ## Validation
 

@@ -1,0 +1,216 @@
+schema_version: "1.0"
+kind: "ards_sdd_agent_policy_registry"
+status: "active"
+updated_at: "2026-06-13"
+purpose: >
+  Machine-readable registry for living ARDS/SDD agent operating policies. These
+  policies govern agent execution, resource use, delegation, context handling,
+  atomization, and architecture boundaries without replacing functional
+  contracts, capabilities, requests, handoffs, or repo ownership.
+
+standard_source:
+  repo: "4uentes-ards-core"
+  adoption_status: "adopted-in-core"
+  note: >
+    The control-plane consumes the core-owned ARDS/SDD policy registry and
+    records local adoption plus scoped rollout evidence for SST child repos.
+
+provider_model:
+  provider_agnostic: true
+  model_names_are_aliases: true
+  alias_resolution: "environment-configured"
+  fallback_rule: >
+    If an exact model alias is unavailable, use the nearest available profile
+    with equivalent speed, context, or reasoning characteristics and record the
+    fallback when the work is planned.
+  aliases:
+    fast_verifiable_task: "gpt-5.3-spark"
+    long_context_task: "gpt-5.4-fast-high"
+    high_reasoning_task: "gpt-5.5"
+
+adoption_defaults:
+  owner: "4uentes-ards-control-plane"
+  source_repo: "4uentes-ards-control-plane"
+  scope:
+    - "agent-operations"
+    - "ards-sdd-governance"
+  enforcement_expected:
+    mode: "operational-review"
+    failure_behavior: "record-gap-or-blocker"
+  adopted_by:
+    - repo: "4uentes-ards-control-plane"
+      status: "adopted"
+      discovery:
+        agents_entrypoint: "AGENTS.md"
+        registry: "specs/integration/policies.yaml"
+        human_docs: "docs/policies/"
+  future_adoption:
+    - repo: "4uentes-ards-core"
+      status: "adopted-in-core"
+      intent: "Canonical ARDS/SDD startup contract now lives in core."
+    - domain: "orchestrator-child-repos"
+      status: "sst-rollout-complete"
+      intent: "The SST child repos were synchronized in CR-SST-0077; broader rollout remains request-driven."
+
+policies:
+  - id: "agent-model-selection-policy"
+    name: "Agent Model Selection Policy"
+    type: "agent-operating-policy"
+    status: "active"
+    scope:
+      - "model-selection"
+      - "subagent-planning"
+      - "task-classification"
+    owner: "4uentes-ards-control-plane"
+    human_doc: "docs/policies/agent-model-selection-policy.md"
+    related_docs:
+      - "docs/ai/model-selection-policy.md"
+    enforcement:
+      expected: "Classify tasks before planning or execution; record task_weight, model_selection, and subagent_deployment_plan for planned work."
+      mode: "operational-review"
+      failure_behavior: "record-gap-or-fallback"
+    aliases:
+      short_defined_task: "gpt-5.3-spark"
+      long_context_task: "gpt-5.4-fast-high"
+      complex_high_risk_task: "gpt-5.5"
+    evidence:
+      - "AGENTS.md"
+      - "specs/integration/policies.yaml"
+      - "docs/policies/agent-model-selection-policy.md"
+    gaps:
+      - "Broader child-repo rollout outside the SST solution remains request-driven."
+    relates_to:
+      - "agent-resource-degradation-policy"
+      - "agent-task-atomization-policy"
+      - "agent-delegation-policy"
+      - "agent-architecture-boundary-policy"
+
+  - id: "agent-resource-degradation-policy"
+    name: "Agent Resource Degradation Policy"
+    type: "agent-operating-policy"
+    status: "active"
+    scope:
+      - "resource-degradation"
+      - "low-token-strategy"
+      - "capacity-fallback"
+    owner: "4uentes-ards-control-plane"
+    human_doc: "docs/policies/agent-resource-degradation-policy.md"
+    enforcement:
+      expected: "Reduce scope, atomize tasks, avoid unnecessary global analysis, and declare blockers for critical unsafe work under resource limits."
+      mode: "operational-review"
+      failure_behavior: "record-blocker-if-critical"
+    evidence:
+      - "docs/policies/agent-resource-degradation-policy.md"
+    gaps:
+      - "No automated validator currently enforces resource-degradation decisions."
+    relates_to:
+      - "agent-context-management-policy"
+      - "agent-task-atomization-policy"
+      - "agent-model-selection-policy"
+      - "agent-architecture-boundary-policy"
+
+  - id: "agent-task-atomization-policy"
+    name: "Agent Task Atomization Policy"
+    type: "agent-operating-policy"
+    status: "active"
+    scope:
+      - "task-breakdown"
+      - "delegation-readiness"
+      - "validation-units"
+    owner: "4uentes-ards-control-plane"
+    human_doc: "docs/policies/agent-task-atomization-policy.md"
+    enforcement:
+      expected: "Large tasks should be split into subtasks with objective, inputs, output, files, risk, suggested profile, and validation or DoD."
+      mode: "operational-review"
+      failure_behavior: "record-gap-or-reduce-scope"
+    evidence:
+      - "docs/policies/agent-task-atomization-policy.md"
+    gaps:
+      - "Subtask schema can be promoted to a reusable ARDS/SDD template later."
+    relates_to:
+      - "agent-delegation-policy"
+      - "agent-resource-degradation-policy"
+      - "agent-model-selection-policy"
+
+  - id: "agent-delegation-policy"
+    name: "Agent Delegation Policy"
+    type: "agent-operating-policy"
+    status: "active"
+    scope:
+      - "subagent-delegation"
+      - "fast-model-guardrails"
+      - "output-verification"
+    owner: "4uentes-ards-control-plane"
+    human_doc: "docs/policies/agent-delegation-policy.md"
+    enforcement:
+      expected: "Delegate only bounded, defined-context, low or controlled-risk work with verifiable output; do not delegate sensitive architecture or security decisions to fast models."
+      mode: "operational-review"
+      failure_behavior: "keep-in-main-agent-or-escalate-profile"
+    evidence:
+      - "docs/policies/agent-delegation-policy.md"
+    gaps:
+      - "Runtime-specific subagent availability remains environment-dependent."
+    relates_to:
+      - "agent-task-atomization-policy"
+      - "agent-model-selection-policy"
+      - "agent-context-management-policy"
+      - "agent-architecture-boundary-policy"
+
+  - id: "agent-context-management-policy"
+    name: "Agent Context Management Policy"
+    type: "agent-operating-policy"
+    status: "active"
+    scope:
+      - "context-management"
+      - "repo-discovery"
+      - "evidence-preservation"
+    owner: "4uentes-ards-control-plane"
+    human_doc: "docs/policies/agent-context-management-policy.md"
+    enforcement:
+      expected: "Use AGENTS.md and indexes first, read relevant specs/docs, avoid unnecessary full-repo reads, summarize findings, and preserve evidence."
+      mode: "operational-review"
+      failure_behavior: "record-gap-and-narrow-context"
+    evidence:
+      - "AGENTS.md"
+      - "docs/policies/agent-context-management-policy.md"
+    gaps:
+      - "No automated context-budget tracking is defined in this repo."
+    relates_to:
+      - "agent-resource-degradation-policy"
+      - "agent-model-selection-policy"
+      - "agent-delegation-policy"
+
+  - id: "agent-architecture-boundary-policy"
+    name: "Agent Architecture Boundary Policy"
+    type: "agent-operating-policy"
+    status: "active"
+    scope:
+      - "architecture-boundary"
+      - "ownership-boundary"
+      - "sensitive-contracts"
+    owner: "4uentes-ards-control-plane"
+    human_doc: "docs/policies/agent-architecture-boundary-policy.md"
+    enforcement:
+      expected: "Agents must not redefine top-level structure, ownership, cross-repo contracts, ARDS/SDD baseline, architecture, security, RBAC, sensitive data, or runtime control plane without approved authority."
+      mode: "mandatory-operational-boundary"
+      failure_behavior: "block-or-create-approved-follow-up"
+    evidence:
+      - "AGENTS.md"
+      - "docs/policies/agent-architecture-boundary-policy.md"
+    gaps:
+      - "Child repo adoption requires future approved requests."
+    relates_to:
+      - "agent-delegation-policy"
+      - "agent-model-selection-policy"
+      - "agent-resource-degradation-policy"
+
+gaps:
+  - id: "core-adoption-complete"
+    description: "The core now owns the canonical policy registry and policy documentation."
+    status: "closed"
+  - id: "child-repo-propagation-future"
+    description: "The SST child rollout is complete; future non-SST rollout still requires approved requests/plans."
+    status: "open"
+  - id: "automated-policy-validation-pending"
+    description: "Current enforcement is operational-review; no dedicated validator checks this registry yet."
+    status: "open"

@@ -1,0 +1,33 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0066"
+title: "Reconcile Jira status for SST-10 after dictionary validated-live closure"
+status: inbox
+created_at: "2026-06-12"
+requester: "4uentes"
+
+summary: >
+  Review SST-10 in Jira through Atlassian MCP and update the issue with the
+  CR-SST-0064 validated-live evidence.
+
+scope:
+  solution: "sst"
+  jira_issue_key: "SST-10"
+  feature_state: "dictionary-tags"
+  source_evidence_request: "CR-SST-0064"
+  affected_services:
+    - "4uentes-orchestor"
+  functional_repositories_modified_by_this_intake: false
+
+desired_outcome:
+  - "SST-10 Jira issue reflects dictionary-tags validated-live evidence."
+  - "Jira receives a closure comment referencing CR-SST-0064 evidence."
+  - "SST-10 transitions to a terminal workflow status when a terminal transition is available."
+  - "No tokens, cloudId, cookies, or private Jira URLs are persisted."
+
+out_of_scope:
+  - "Changing child repositories."
+  - "Treating Jira as canonical over control-plane state."
+  - "Updating unrelated Jira tickets."
+
+next_lifecycle_step: "planned"

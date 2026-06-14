@@ -1,0 +1,46 @@
+{
+  "issueKey": "SST-20",
+  "issue": {
+    "summary": "[SST-4][CR-SST-0072] Backend global tags persistence and migration",
+    "status": "Tareas por hacer",
+    "statusCategory": "Por hacer",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-06-13T11:34:46.916-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0072",
+      "sst-tags-governance",
+      "subtask"
+    ],
+    "description": "Subtask under `SST-4` for the next governed execution slice.\n\n* CR: `CR-SST-0072`\n* Scope: `sst-bend` persistence model, migrations, compatibility, and backfill.\n* Source request: `requests/planned/CR-SST-0072-sst-tags-persistence-backend-model.yaml`\n* Goal: implement global tag persistence with migration from current article and dictionary tags while preserving compatibility.\n* Risk: high due to persisted data and backfill safety.\n\n",
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10028\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10028\",\"key\":\"SST-20\",\"fields\":{\"summary\":\"[SST-4][CR-SST-0072] Backend global tags persistence and migration\",\"description\":\"Subtask under `SST-4` for the next governed execution slice.\\n\\n* CR: `CR-SST-0072`\\n* Scope: `sst-bend` persistence model, migrations, compatibility, and backfill.\\n* Source request: `requests/planned/CR-SST-0072-sst-tags-persistence-backend-model.yaml`\\n* Goal: implement global tag persistence with migration from current article and dictionary tags while preserving compatibility.\\n* Risk: high due to persisted data and backfill safety.\\n\\n\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-06-13T11:34:46.916-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10005\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"Tareas por hacer\",\"id\":\"10005\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/2\",\"id\":2,\"key\":\"new\",\"colorName\":\"blue-gray\",\"name\":\"Por hacer\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-sst-0072\",\"sst-tags-governance\",\"subtask\"]}}"
+  },
+  "transitions": [
+    {
+      "id": "11",
+      "name": "Por hacer",
+      "toStatus": "Tareas por hacer",
+      "toStatusCategory": "Por hacer"
+    },
+    {
+      "id": "21",
+      "name": "En curso",
+      "toStatus": "En curso",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "31",
+      "name": "In Review",
+      "toStatus": "En revisión",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "41",
+      "name": "Listo",
+      "toStatus": "Finalizada",
+      "toStatusCategory": "Listo"
+    }
+  ]
+}

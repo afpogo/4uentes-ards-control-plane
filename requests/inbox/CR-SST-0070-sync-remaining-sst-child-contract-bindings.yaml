@@ -1,0 +1,57 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0070"
+title: "Sincronizar bindings ARDS/SDD en repos hijos SST restantes"
+status: "inbox"
+created_at: "2026-06-13"
+requester: "4uentes"
+
+business_context: >
+  CR-SST-0065 dejo sincronizados `sst-fend` y `sst-bend` contra el contrato
+  core ARDS/SDD. CR-SST-0068 agrego el gate para decidir si una observacion
+  de repo hijo requiere revision de `4uentes-ards-core`. Para completar la
+  visibilidad de la solucion SST, faltan sync diffs y contract bindings para
+  los repos hijos restantes.
+
+requested_change: >
+  Revisar y sincronizar los repos hijos SST restantes mediante
+  `specs/ards/contract-binding.yaml`, producir evidencia
+  `ards_child_sync_diff` en el orquestador y clasificar si cada repo requiere
+  revision core, request local de hijo o queda sincronizado.
+
+expected_outcome: >
+  `4uentes-auth`, `sst-extension`, `sst-chatbot` y `sst-4uentes-infra`
+  declaran el contrato core resuelto localmente, y el orquestador registra
+  evidencia auditable de sync para cada repo sin modificar `4uentes-ards-core`.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - "4uentes-auth"
+    - "sst-extension"
+    - "sst-chatbot"
+    - "sst-4uentes-infra"
+  include_optional_services: true
+
+governing_context:
+  parent_observability_request: "CR-SST-0068"
+  prior_child_sync_request: "CR-SST-0065"
+  core_revision_gate: "evidence/requests/CR-SST-0068/core-revision-decision-gate.md"
+  core_ref_baseline: "4uentes-ards-core@2ad4e0f"
+  resolved_contract_version: "ards-core-contract-v0.1"
+
+out_of_scope:
+  - "Modificar `4uentes-ards-core`."
+  - "Cambios funcionales de runtime en repos hijos."
+  - "Remediacion automatica fuera de los archivos ARDS/SDD requeridos para sincronizacion."
+  - "Cambiar identidades canonicas o promover aliases legacy."
+
+authorization_boundary:
+  child_repository_writes_allowed: true
+  allowed_child_write_paths:
+    - "specs/ards/contract-binding.yaml"
+    - "specs/00-index.yaml solo si debe registrar el binding nuevo"
+  core_repository_writes_allowed: false
+  orchestrator_evidence_required: true
+
+next_lifecycle_step: "planned"

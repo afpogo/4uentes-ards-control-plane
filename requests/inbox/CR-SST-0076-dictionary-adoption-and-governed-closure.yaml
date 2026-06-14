@@ -1,0 +1,33 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0076"
+title: "SST Tags - Dictionary adoption and governance closure"
+status: inbox
+created_at: "2026-06-13"
+requester: "4uentes"
+
+summary: >
+  Aplicar el contrato global de tags a Diccionario y cerrar SST-4 con
+  `sst-tags-governance` en estado de cierre previsto.
+
+requested_change: >
+  Adaptar diccionario al selector/servicio global de tags y validar que
+  `dictionary-tags` mantiene estado `validated-live` junto al nuevo modelo.
+
+scope:
+  solution: "sst"
+  services:
+    - "sst-bend"
+    - "4uentes-auth"
+    - "sst-fend"
+  include_optional_services: false
+
+requested_outcome:
+  - "Diccionario usa binding hacia `TagValue` y `TagOccurrence` globales."
+  - "Reconciliación de `SST-4` con evidencia de cierre."
+  - "Scopes de learning-content y bitacora quedan explícitamente futuros."
+
+out_of_scope:
+  - "Implementar Learning Content o Bitacora en esta fase."
+
+next_lifecycle_step: planned

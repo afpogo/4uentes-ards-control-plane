@@ -1,0 +1,40 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-SST-0069"
+title: "Introduce SST Tag Prefix Engine preview to consumers"
+status: inbox
+created_at: "2026-06-12"
+requester: "4uentes"
+
+summary: >
+  Plan the next phase after CR-SST-0067: validate the SST Tag Prefix Engine
+  preview endpoint with authenticated runtime evidence and introduce it through
+  BFF/frontend consumers without turning preview-only output into persisted
+  Learning Content or Bitacora workflows.
+
+scope:
+  solution: "sst"
+  jira_issue_key: "SST-12"
+  feature_state: "sst-tag-prefix-engine"
+  source_evidence_request: "CR-SST-0067"
+  affected_services:
+    - "sst-bend"
+    - "4uentes-auth"
+    - "sst-fend"
+  functional_repositories_modified_by_this_intake: false
+
+desired_outcome:
+  - "Execute authenticated live smoke for POST /4uentes/v1/tags/prefix-engine/preview."
+  - "Expose a BFF pass-through only after backend runtime validation passes."
+  - "Introduce a frontend preview/read-only rendering surface for materialized output and reference chips."
+  - "Preserve ImportedReference as external references, not local TagValue creation."
+  - "Keep persisted import, Learning Content, and Bitacora workflows out of this phase."
+
+out_of_scope:
+  - "Persisting preview output."
+  - "Implementing SST-6 / learning-content-tags."
+  - "Implementing Bitacora workflow."
+  - "Creating public TagDefinition CRUD."
+  - "Closing SST-12 in Jira before authenticated evidence exists."
+
+next_lifecycle_step: "planned"

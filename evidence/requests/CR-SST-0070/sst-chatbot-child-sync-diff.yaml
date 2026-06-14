@@ -1,0 +1,41 @@
+schema_version: "0.1"
+kind: "ards_child_sync_diff"
+repo: "sst-chatbot"
+project_type: "backend-api"
+requested_contract_version: "latest"
+resolved_contract_version: "ards-core-contract-v0.1"
+binding_ref: "specs/ards/contract-binding.yaml"
+child_commit: "90a6272"
+evidence_manifest_hash: "f1b053400db0def25848a209ad86e5a4ed567a4bd9fa8ff5429b00c63cb9735b"
+sync_status: "synced"
+core_revision_decision: "no-core-change-needed"
+checked_at: "2026-06-13"
+source:
+  core_contract: "ards.get_sync_contract"
+  child_repo_ref: "C:\\Users\\andre\\Desktop\\4uentes\\apps\\4uentes-sst\\chatboot-integration\\sst_chatbot"
+evidence_manifest:
+  required_paths:
+    present:
+      - "AGENTS.md"
+      - "docs/00-overview.md"
+      - "specs/00-index.yaml"
+      - "specs/ards/contract-binding.yaml"
+    missing: []
+  ards_sdd_hashes:
+    - path: "specs/00-index.yaml"
+      sha256: "784e786870d78ff1fab0b1a2ad7c6a22308c0bbbc9eb211057e72f0bab929d0b"
+    - path: "specs/ards/contract-binding.yaml"
+      sha256: "c94f24c406e180d85677a2c4ca5933cc24ff6d1eece728d88aea5a6223818537"
+  yaml_status:
+    - path: "specs/00-index.yaml"
+      status: "valid"
+    - path: "specs/ards/contract-binding.yaml"
+      status: "valid"
+  local_todos_or_exceptions: []
+summary:
+  missing_in_child: 0
+  extra_or_stale_in_child: 0
+  candidate_for_core: 0
+  conflicts: 0
+items: []
+recommended_actions: []

@@ -2,25 +2,27 @@ const fs = require('fs');
 const path = require('path');
 const { loadConfig } = require('./lib/config');
 const { McpStdioClient } = require('./lib/mcp-stdio-client');
+const { applyEvidenceArgs, parseArgs, requireEvidenceArgs } = require('./lib/cli-args');
 
 const ROOT = process.cwd();
-const REQUEST_ID = 'CR-SST-0032';
-const OUTPUT_DIR = path.join(ROOT, 'evidence', 'requests', REQUEST_ID);
 const CONNECT_FLAG = '--connect';
 
 async function main() {
   const config = loadConfig();
+  const args = parseArgs(process.argv.slice(2), { valueOptions: ['request-id', 'output-dir'] });
+  if (args['request-id'] || args['output-dir']) requireEvidenceArgs(args);
+  const effectiveConfig = applyEvidenceArgs(config, args);
   const shouldConnect = process.argv.includes(CONNECT_FLAG);
   const verification = {
-    requestId: REQUEST_ID,
-    date: '2026-06-05',
+    requestId: effectiveConfig.evidence.requestId,
+    date: today(),
     mode: shouldConnect ? 'connect' : 'preflight',
-    configSource: config.source,
-    serverUrl: config.server.url,
-    boardName: config.jira.boardName,
-    projectKey: config.jira.projectKey,
-    issueType: config.jira.issueType,
-    confluenceSpaceKey: config.confluence.spaceKey,
+    configSource: effectiveConfig.source,
+    serverUrl: effectiveConfig.server.url,
+    boardName: effectiveConfig.jira.boardName,
+    projectKey: effectiveConfig.jira.projectKey,
+    issueType: effectiveConfig.jira.issueType,
+    confluenceSpaceKey: effectiveConfig.confluence.spaceKey,
     writeOperations: false,
     status: 'BLOCKED',
     tools: [],
@@ -35,12 +37,12 @@ async function main() {
     verification.status = 'PREFLIGHT_ONLY';
     verification.notes.push('No se uso --connect, por lo tanto no se contacto Atlassian MCP.');
     verification.notes.push('Este modo valida config local y escribe evidencia sin ejecutar red ni OAuth.');
-    writeEvidence(verification);
-    printSummary(verification);
+    writeEvidence(effectiveConfig, verification);
+    printSummary(effectiveConfig, verification);
     return;
   }
 
-  const client = buildClient(config);
+  const client = buildClient(effectiveConfig);
   try {
     await client.connect();
     const tools = await client.listTools();
@@ -82,9 +84,9 @@ async function main() {
       for (const resource of verification.resources) {
         const result = await client.callTool(projectTool.name, { cloudId: resource.cloudId });
         const data = parseToolData(result);
-        if (containsKey(data, config.jira.projectKey)) {
+        if (containsKey(data, effectiveConfig.jira.projectKey)) {
           verification.projectVisible = true;
-          verification.notes.push(`Project key ${config.jira.projectKey} visible en recurso ${resource.safeName}.`);
+          verification.notes.push(`Project key ${effectiveConfig.jira.projectKey} visible en recurso ${resource.safeName}.`);
           break;
         }
       }
@@ -96,9 +98,9 @@ async function main() {
       for (const resource of verification.resources) {
         const result = await client.callTool(confluenceSpacesTool.name, { cloudId: resource.cloudId });
         const data = parseToolData(result);
-        if (containsKey(data, config.confluence.spaceKey)) {
+        if (containsKey(data, effectiveConfig.confluence.spaceKey)) {
           verification.confluenceSpaceVisible = true;
-          verification.notes.push(`Space key ${config.confluence.spaceKey} visible en recurso ${resource.safeName}.`);
+          verification.notes.push(`Space key ${effectiveConfig.confluence.spaceKey} visible en recurso ${resource.safeName}.`);
           break;
         }
       }
@@ -111,8 +113,8 @@ async function main() {
     if (client.stderr) verification.errors.push(`stderr: ${sanitize(client.stderr)}`);
   } finally {
     client.close();
-    writeEvidence(verification);
-    printSummary(verification);
+    writeEvidence(effectiveConfig, verification);
+    printSummary(effectiveConfig, verification);
   }
 
   if (verification.status === 'FAIL') process.exitCode = 1;
@@ -157,13 +159,14 @@ function splitArgs(value) {
   return value.match(/(?:[^\s"]+|"[^"]*")+/g).map((item) => item.replace(/^"|"$/g, ''));
 }
 
-function writeEvidence(verification) {
-  fs.mkdirSync(OUTPUT_DIR, { recursive: true });
+function writeEvidence(config, verification) {
+  const outputDir = path.join(ROOT, config.evidence.outputDir);
+  fs.mkdirSync(outputDir, { recursive: true });
   const fileName = verification.mode === 'preflight'
     ? 'jira-mcp-preflight.md'
     : 'jira-mcp-project-verification.md';
   fs.writeFileSync(
-    path.join(OUTPUT_DIR, fileName),
+    path.join(outputDir, fileName),
     renderEvidence(verification),
     'utf8',
   );
@@ -258,7 +261,7 @@ function statusFromVisibility(projectVisible, confluenceSpaceVisible) {
   return 'FAIL';
 }
 
-function printSummary(verification) {
+function printSummary(config, verification) {
   console.log(`OK: Jira board: ${verification.boardName}`);
   console.log(`OK: Jira project key expected: ${verification.projectKey}`);
   console.log(`OK: Confluence space key expected: ${verification.confluenceSpaceKey}`);
@@ -267,7 +270,7 @@ function printSummary(verification) {
   const fileName = verification.mode === 'preflight'
     ? 'jira-mcp-preflight.md'
     : 'jira-mcp-project-verification.md';
-  console.log(`OK: Evidence written: evidence/requests/${REQUEST_ID}/${fileName}`);
+  console.log(`OK: Evidence written: ${config.evidence.outputDir.replace(/\\/g, '/')}/${fileName}`);
 }
 
 function parseToolData(result) {
@@ -292,6 +295,10 @@ function tryParseJson(text) {
   } catch (_) {
     return null;
   }
+}
+
+function today() {
+  return new Date().toISOString().slice(0, 10);
 }
 
 function normalizeResources(data) {

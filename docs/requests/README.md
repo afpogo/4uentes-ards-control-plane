@@ -35,5 +35,6 @@ orchestrator.
 - [jira-feature-ticket-policy.md](jira-feature-ticket-policy.md)
 - [jira-backlog-registry-policy.md](jira-backlog-registry-policy.md)
 - [jira-backlog-sync-state-machine.md](jira-backlog-sync-state-machine.md)
+- [sst-tags-governance-contract.md](sst-tags-governance-contract.md)
 - [deployment-request-playbook.md](../cross-repo/deployment-request-playbook.md)
 - [documentation-information-architecture.md](../documentation-information-architecture.md)

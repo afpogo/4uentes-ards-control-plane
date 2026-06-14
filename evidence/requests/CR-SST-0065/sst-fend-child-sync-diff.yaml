@@ -1,0 +1,58 @@
+schema_version: "0.1"
+kind: "ards_child_sync_diff"
+repo: "sst-fend"
+project_type: "frontend-web"
+requested_contract_version: "latest"
+resolved_contract_version: "ards-core-contract-v0.1"
+binding_ref: "specs/ards/contract-binding.yaml"
+child_commit: "b58bfe4"
+evidence_manifest_hash: "bebbf4c7b6c332e20715e00f1db9a51a893a0786e5d8a45d76ccce77b4d239f1"
+sync_status: "synced"
+checked_at: "2026-06-12"
+source:
+  core_contract: "ards.get_sync_contract"
+  child_repo_ref: "C:\\Users\\andre\\Desktop\\4uentes\\apps\\sst-fend"
+evidence_manifest:
+  required_paths:
+    present:
+      - "AGENTS.md"
+      - "docs/00-overview.md"
+      - "docs/ai/policy.md"
+      - "specs/00-index.yaml"
+      - "specs/ards/contract-binding.yaml"
+      - "specs/capabilities/00-index.yaml"
+      - "specs/capabilities/inbound/00-index.yaml"
+      - "specs/features/00-index.yaml"
+      - "specs/states/00-index.yaml"
+      - "docs/capabilities/00-overview.md"
+      - "docs/architecture/README.md"
+      - "docs/tasks/README.md"
+    missing: []
+  ards_sdd_hashes:
+    - path: "specs/00-index.yaml"
+      sha256: "86ba63cb8ebdc356d531ed502fdc45a07f20e70d25de655e033684b9c2b3f572"
+    - path: "specs/ards/contract-binding.yaml"
+      sha256: "4b31e2d0a9006ac0ed23cb79dedcc1a0f17e6cccc8c9b7908e027be32c44c2a7"
+    - path: "specs/features/00-index.yaml"
+      sha256: "183654c1f380c3d19dc26b7eddd107a493b07b285511845b6f32293bed6850a9"
+    - path: "specs/states/00-index.yaml"
+      sha256: "ee70dc78091328db42bb28500a77c0ee07ba581b99da78053e77ef6bb1ada63d"
+    - path: "docs/architecture/README.md"
+      sha256: "cfcf079b4891a7358c3f7891f001ba8dd493259c0403ac7606e53a6a65ba653c"
+  yaml_status:
+    - path: "specs/00-index.yaml"
+      status: "valid"
+    - path: "specs/ards/contract-binding.yaml"
+      status: "valid"
+    - path: "specs/features/00-index.yaml"
+      status: "valid"
+    - path: "specs/states/00-index.yaml"
+      status: "valid"
+  local_todos_or_exceptions: []
+summary:
+  missing_in_child: 0
+  extra_or_stale_in_child: 0
+  candidate_for_core: 0
+  conflicts: 0
+items: []
+recommended_actions: []

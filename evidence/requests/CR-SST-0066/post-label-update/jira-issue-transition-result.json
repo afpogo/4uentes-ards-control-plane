@@ -1,0 +1,83 @@
+{
+  "requestId": "CR-SST-0066",
+  "issueKey": "SST-10",
+  "approved": false,
+  "action": "dry-run",
+  "before": {
+    "summary": "[SST][feature-state] Completar validacion live y cierre de gobernanza de SST Dictionary Tags",
+    "status": "Listo",
+    "statusCategory": "Listo",
+    "resolution": "Listo",
+    "assignee": "Fuentes Sandferand",
+    "updated": "2026-06-12T01:48:30.219-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "done",
+      "feature-state",
+      "validated-live"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10018\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10018\",\"key\":\"SST-10\",\"fields\":{\"summary\":\"[SST][feature-state] Completar validacion live y cierre de gobernanza de SST Dictionary Tags\",\"description\":\"Estado actual: validated-live.\\n\\nResultado:\\n\\n* SST Dictionary Tags quedo validado en runtime local bajo CR-SST-0064.\\n* Backend, BFF y frontend pasaron validacion local-live.\\n* dictionary-tags avanzo de validated-local a validated-live en el control-plane.\\n\\nEvidencia principal:\\n\\n* requests/done/CR-SST-0064-dictionary-tags-validated-live-closure.yaml\\n* evidence/requests/CR-SST-0064/runtime-validation-results.md\\n* evidence/requests/CR-SST-0064/qa-manual-dictionary-management-created-entry.png\\n* state/features/dictionary-tags.current.yaml\\n\\nValidaciones ejecutadas:\\n\\n* sst-bend: npm.cmd run test:diccionario -> PASS 10/10\\n* sst-bend: npm.cmd run test:diccionario:stage2 -> PASS 9/9\\n* sst-bend: npm.cmd run test:diccionario:stage3 -> PASS 11/11\\n* sst-bend: npm.cmd run qa:diccionario:stage3 -> PASS\\n* sst-bend: npm.cmd run check -> PASS\\n* 4uentes-auth: npm.cmd run check -> PASS\\n* BFF /api/diccionario/\\\\* smoke -> PASS\\n* sst-fend: npm.cmd run check -> PASS, 24 suites / 142 tests\\n* Chrome DevTools /dictionary manual QA -> PASS\\n* 4uentes-orchestor: npm.cmd run check -> PASS, 0 fails\\n\\nGaps aceptados fuera de este cierre:\\n\\n* TagDefinition public CRUD/governance queda para request futuro.\\n* sst-extension account-context queda como follow-up no bloqueante.\\n* Encryption-at-rest, offline model, translations y aliases quedan fuera de este validated-live closure.\\n\\nFuente canonica:\\n\\n* El control-plane ARDS/SDD conserva la fuente canonica. Jira es superficie operativa de visibilidad.\\n\\n\",\"assignee\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]\",\"accountId\": \"[accountId-redacted]\",\"emailAddress\":\"[email-redacted]\",\"avatarUrls\":{\"48x48\":\"[avatar-url-redacted]\",\"24x24\":\"[avatar-url-redacted]\",\"16x16\":\"[avatar-url-redacted]\",\"32x32\":\"[avatar-url-redacted]\"},\"displayName\":\"Fuentes Sandferand\",\"active\":true,\"timeZone\":\"America/Buenos_Aires\",\"accountType\":\"atlassian\"},\"resolution\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/resolution/10000\",\"id\":\"10000\",\"description\":\"Se ha terminado el trabajo relacionado con esta incidencia.\",\"name\":\"Listo\"},\"updated\":\"2026-06-12T01:48:30.219-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10008\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"Finalizada\",\"id\":\"10008\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/3\",\"id\":3,\"key\":\"done\",\"colorName\":\"green\",\"name\":\"Listo\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"done\",\"feature-state\",\"validated-live\"]}}"
+  },
+  "after": {
+    "summary": "[SST][feature-state] Completar validacion live y cierre de gobernanza de SST Dictionary Tags",
+    "status": "Listo",
+    "statusCategory": "Listo",
+    "resolution": "Listo",
+    "assignee": "Fuentes Sandferand",
+    "updated": "2026-06-12T01:48:30.219-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "done",
+      "feature-state",
+      "validated-live"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10018\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10018\",\"key\":\"SST-10\",\"fields\":{\"summary\":\"[SST][feature-state] Completar validacion live y cierre de gobernanza de SST Dictionary Tags\",\"description\":\"Estado actual: validated-live.\\n\\nResultado:\\n\\n* SST Dictionary Tags quedo validado en runtime local bajo CR-SST-0064.\\n* Backend, BFF y frontend pasaron validacion local-live.\\n* dictionary-tags avanzo de validated-local a validated-live en el control-plane.\\n\\nEvidencia principal:\\n\\n* requests/done/CR-SST-0064-dictionary-tags-validated-live-closure.yaml\\n* evidence/requests/CR-SST-0064/runtime-validation-results.md\\n* evidence/requests/CR-SST-0064/qa-manual-dictionary-management-created-entry.png\\n* state/features/dictionary-tags.current.yaml\\n\\nValidaciones ejecutadas:\\n\\n* sst-bend: npm.cmd run test:diccionario -> PASS 10/10\\n* sst-bend: npm.cmd run test:diccionario:stage2 -> PASS 9/9\\n* sst-bend: npm.cmd run test:diccionario:stage3 -> PASS 11/11\\n* sst-bend: npm.cmd run qa:diccionario:stage3 -> PASS\\n* sst-bend: npm.cmd run check -> PASS\\n* 4uentes-auth: npm.cmd run check -> PASS\\n* BFF /api/diccionario/\\\\* smoke -> PASS\\n* sst-fend: npm.cmd run check -> PASS, 24 suites / 142 tests\\n* Chrome DevTools /dictionary manual QA -> PASS\\n* 4uentes-orchestor: npm.cmd run check -> PASS, 0 fails\\n\\nGaps aceptados fuera de este cierre:\\n\\n* TagDefinition public CRUD/governance queda para request futuro.\\n* sst-extension account-context queda como follow-up no bloqueante.\\n* Encryption-at-rest, offline model, translations y aliases quedan fuera de este validated-live closure.\\n\\nFuente canonica:\\n\\n* El control-plane ARDS/SDD conserva la fuente canonica. Jira es superficie operativa de visibilidad.\\n\\n\",\"assignee\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]\",\"accountId\": \"[accountId-redacted]\",\"emailAddress\":\"[email-redacted]\",\"avatarUrls\":{\"48x48\":\"[avatar-url-redacted]\",\"24x24\":\"[avatar-url-redacted]\",\"16x16\":\"[avatar-url-redacted]\",\"32x32\":\"[avatar-url-redacted]\"},\"displayName\":\"Fuentes Sandferand\",\"active\":true,\"timeZone\":\"America/Buenos_Aires\",\"accountType\":\"atlassian\"},\"resolution\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/resolution/10000\",\"id\":\"10000\",\"description\":\"Se ha terminado el trabajo relacionado con esta incidencia.\",\"name\":\"Listo\"},\"updated\":\"2026-06-12T01:48:30.219-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10008\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"Finalizada\",\"id\":\"10008\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/3\",\"id\":3,\"key\":\"done\",\"colorName\":\"green\",\"name\":\"Listo\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"done\",\"feature-state\",\"validated-live\"]}}"
+  },
+  "selectedTransition": {
+    "id": "41",
+    "name": "Listo",
+    "toStatus": "Finalizada",
+    "toStatusCategory": "Listo"
+  },
+  "transitions": [
+    {
+      "id": "11",
+      "name": "Por hacer",
+      "toStatus": "Tareas por hacer",
+      "toStatusCategory": "Por hacer"
+    },
+    {
+      "id": "21",
+      "name": "En curso",
+      "toStatus": "En curso",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "31",
+      "name": "In Review",
+      "toStatus": "En revisión",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "41",
+      "name": "Listo",
+      "toStatus": "Finalizada",
+      "toStatusCategory": "Listo"
+    }
+  ],
+  "plannedLabels": [
+    "ards-sdd",
+    "control-plane",
+    "done",
+    "feature-state",
+    "validated-live"
+  ],
+  "plannedDescription": "Estado actual: validated-live.\n\nResultado:\n- SST Dictionary Tags quedo validado en runtime local bajo CR-SST-0064.\n- Backend, BFF y frontend pasaron validacion local-live.\n- dictionary-tags avanzo de validated-local a validated-live en el control-plane.\n\nEvidencia principal:\n- requests/done/CR-SST-0064-dictionary-tags-validated-live-closure.yaml\n- evidence/requests/CR-SST-0064/runtime-validation-results.md\n- evidence/requests/CR-SST-0064/qa-manual-dictionary-management-created-entry.png\n- state/features/dictionary-tags.current.yaml\n\nValidaciones ejecutadas:\n- sst-bend: npm.cmd run test:diccionario -> PASS 10/10\n- sst-bend: npm.cmd run test:diccionario:stage2 -> PASS 9/9\n- sst-bend: npm.cmd run test:diccionario:stage3 -> PASS 11/11\n- sst-bend: npm.cmd run qa:diccionario:stage3 -> PASS\n- sst-bend: npm.cmd run check -> PASS\n- 4uentes-auth: npm.cmd run check -> PASS\n- BFF /api/diccionario/* smoke -> PASS\n- sst-fend: npm.cmd run check -> PASS, 24 suites / 142 tests\n- Chrome DevTools /dictionary manual QA -> PASS\n- 4uentes-orchestor: npm.cmd run check -> PASS, 0 fails\n\nGaps aceptados fuera de este cierre:\n- TagDefinition public CRUD/governance queda para request futuro.\n- sst-extension account-context queda como follow-up no bloqueante.\n- Encryption-at-rest, offline model, translations y aliases quedan fuera de este validated-live closure.\n\nFuente canonica:\n- El control-plane ARDS/SDD conserva la fuente canonica. Jira es superficie operativa de visibilidad.",
+  "plannedComment": "CR-SST closure execution: CR-SST-0066\n\nSST-10 / dictionary-tags fue reconciliado contra evidencia local del control-plane.\n\nEstado soportado por evidencia: validated-live.\nRequest de cierre: CR-SST-0064.\nEvidencia: evidence/requests/CR-SST-0064/runtime-validation-results.md.\n\nValidaciones clave:\n- sst-bend dictionary tests stage 1/2/3: PASS.\n- sst-bend live QA stage3: PASS.\n- 4uentes-auth BFF /api/diccionario/* smoke: PASS.\n- sst-fend /dictionary QA manual y checks: PASS.\n- control-plane npm.cmd run check: PASS, 0 fails.\n\nBefore status: Listo\nTransition: not required, issue already terminal.\n\nGaps aceptados fuera del cierre: TagDefinition public CRUD, sst-extension account-context, encryption/offline/translations/aliases.",
+  "editResult": null,
+  "transitionResult": null,
+  "commentResult": null,
+  "externalWrite": false
+}

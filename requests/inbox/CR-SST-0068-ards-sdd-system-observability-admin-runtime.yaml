@@ -1,0 +1,106 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-SST-0068"
+title: "Design ARDS/SDD system observability admin runtime"
+status: inbox
+created_at: "2026-06-12"
+requester: "4uentes"
+
+summary: >
+  Define the first operational runtime slice for observing ARDS/SDD synchronization
+  health across the SST solution. The first phase is read-only and produces an
+  integrated read model plus a local static admin dashboard refreshed on demand.
+
+initial_scope:
+  solution: "sst"
+  services: []
+  include_optional_services: true
+
+scope:
+  solution: "sst"
+  include_optional_services: true
+  covered_services:
+    - "sst-fend"
+    - "sst-bend"
+    - "4uentes-auth"
+    - "sst-extension"
+    - "sst-chatbot"
+    - "sst-4uentes-infra"
+  runtime_mode: "read-only-observability"
+  refresh_semantics: "on-demand-command"
+
+desired_outcome:
+  - "Provide operational visibility of ARDS/SDD synchronization across the whole SST solution."
+  - "Generate repository, solution, and global sync state without modifying child repositories."
+  - "Reuse the ards_child_sync_diff report shape for per-repository drift reporting."
+  - "Generate YAML/JSON read models and a local static HTML dashboard as the first admin view."
+  - "Treat optional and infrastructure services with differentiated severity so they do not block core state unless an explicit conflict exists."
+
+read_model_requirements:
+  repository_state:
+    - "sync_status"
+    - "core_ref"
+    - "resolved_contract_version"
+    - "child_commit"
+    - "dirty_state"
+    - "manifest_hash"
+    - "required_paths"
+    - "todos_or_exceptions"
+    - "latest_sync_report"
+    - "local_validation"
+  solution_state:
+    source_solution_file: "solutions/sst.yaml"
+    service_groups:
+      - "core"
+      - "shared"
+      - "optional"
+      - "infrastructure"
+    severity_rule: "optional and infrastructure services do not block core state unless they report an explicit contract conflict"
+  global_state:
+    - "overall_sync_status"
+    - "open_drift_summary"
+    - "last_refresh"
+    - "recommended_actions"
+
+sync_report_requirements:
+  format: "ards_child_sync_diff"
+  comparison_inputs:
+    - "core contract"
+    - "local binding"
+    - "actual child repository files"
+  primary_criteria:
+    - "contract drift"
+    - "required path presence"
+    - "manifest or binding mismatch"
+    - "declared TODOs/exceptions"
+  non_primary_criteria:
+    - "live raw counts"
+
+admin_view_requirements:
+  artifacts:
+    - "read model YAML"
+    - "read model JSON"
+    - "static local HTML dashboard"
+  refresh: "manual command only; no watcher or polling in this phase"
+  table_columns:
+    - "repository"
+    - "state"
+    - "open drift"
+    - "latest check"
+    - "recommended action"
+
+out_of_scope:
+  - "Automatic writes to child repositories."
+  - "Runtime product changes in SST services."
+  - "Changes to 4uentes-ards-core."
+  - "Functional changes inside sst-fend, sst-bend, sst-extension, 4uentes-auth, sst-chatbot, or infrastructure repositories."
+  - "Watchers, polling, or production deployment of the admin runtime."
+  - "Treating legacy aliases as canonical service identities."
+
+authorization_boundary:
+  child_repository_writes_allowed: false
+  core_repository_writes_allowed: false
+  orchestrator_changes_allowed: true
+  note: "Any future child repository change must pass through a separate approved request and evidence trail."
+
+next_lifecycle_step: "planned"

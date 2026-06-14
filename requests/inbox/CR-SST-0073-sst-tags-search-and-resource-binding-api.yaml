@@ -1,0 +1,31 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0073"
+title: "SST Tags - Search and resource binding API"
+status: inbox
+created_at: "2026-06-13"
+requester: "4uentes"
+
+summary: >
+  Exponer endpoints gobernados para búsqueda/autocomplete y binding de tags a
+  recursos con `resourceType`/`resourceId`.
+
+requested_change: >
+  Implementar en `sst-bend` los endpoints GET y PUT de tags governance y
+  mantener compatibilidad del shape de respuesta de tags estructurados.
+
+scope:
+  solution: "sst"
+  services:
+    - "sst-bend"
+  include_optional_services: false
+
+requested_outcome:
+  - "GET `/4uentes/v1/tags/definitions` y GET `/4uentes/v1/tags/values`."
+  - "POST `/4uentes/v1/tags/values` con deduplicación explícita y creación controlada."
+  - "PUT `/4uentes/v1/tags/resources/:resourceType/:resourceId` con clear semantics y `tags: []`."
+
+out_of_scope:
+  - "Cambios UI y BFF por request separado."
+
+next_lifecycle_step: planned
