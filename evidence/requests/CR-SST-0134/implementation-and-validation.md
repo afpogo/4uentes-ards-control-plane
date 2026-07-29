@@ -122,3 +122,32 @@ Preflight Jira posterior:
 El lifecycle permanece deliberadamente abierto: `CR-SST-0134=running`,
 `article-semantic-kind=validated-local` e `INIT-SST-0005=active`. No se declara
 `released`.
+
+## Publicación de ramas - 2026-07-28
+
+Después de repetir los gates finales se publicaron por SSH las ramas de trabajo,
+sin hacer merge ni declarar release:
+
+- control-plane: `agent/governed-sst-release-train` en `396147b`;
+- `sst-fend`: `fix/SST-26/CR-SST-0086/dictionary-secrets-panel` en `832b39e`;
+- `sst-bend`: `feat/SST-26/CR-SST-0086/dictionary-secrets-release-readiness`
+  en `b47ca01`;
+- `4uentes-auth`: `fix/SST-26/CR-SST-0086/development-image-publish` en
+  `5d72279`.
+
+Los dos logs temporales `tmp-bf-dev.err` y `tmp-bf-dev.log` de `4uentes-auth`
+quedaron exclusivamente en el working tree local y no fueron incluidos en el
+commit.
+
+La apertura de PRs queda bloqueada por condiciones externas verificadas:
+
+- `gh` tiene una credencial inválida y requiere autenticación humana nueva;
+- la app GitHub disponible no tiene acceso a `sst-fend`, `sst-bend` ni
+  `4uentes-auth`;
+- `4uentes-ards-control-plane` no posee una rama `develop`, por lo que crear un
+  PR hacia esa base requeriría una decisión explícita sobre la estrategia de
+  branching.
+
+El comentario Jira `10298` replica esta publicación parcial sin transferir
+autoridad al tracker. Ninguna rama publicada elimina el blocker de 18 artículos
+sin payload ni habilita `done`, `Listo` o `released`.

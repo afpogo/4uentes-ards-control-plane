@@ -70,5 +70,6 @@ jira_sync:
   implementation_start_comment_id: "10263"
   implementation_progress_comment_id: "10264"
   closure_blocker_comment_id: "10297"
+  publication_progress_comment_id: "10298"
   closure_blocker: "Final read-only inventory on 2026-07-28 observed 108 total articles, 90 with payload, 18 without payload and 0 kind/payload_kind mismatches."
   former_blockers: ["SST-59", "SST-61", "SST-62", "SST-63"]
