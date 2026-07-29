@@ -1,0 +1,19 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0145"
+title: "Correct semantic payload-kind filtering"
+status: received
+created_at: "2026-07-18"
+requester: "4uentes"
+summary: >
+  Correct the catalog Type filter so Text and Web business kinds query the
+  canonical payload.kind rather than the legacy filter.type field.
+source:
+  kind: "authenticated-e2e-defect"
+  evidence_ref: "evidence/requests/CR-SST-0144/authenticated-e2e-results.md"
+control_plane_context:
+  initiative_id: "INIT-SST-0005"
+  predecessor_request: "CR-SST-0144"
+  jira_epic_key: "SST-57"
+  jira_role: "mirror"
+  jira_source_of_truth: false

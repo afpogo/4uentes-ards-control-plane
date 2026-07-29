@@ -1,0 +1,63 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-CP-0009"
+title: "Define reusable policy control, probe, and gate model"
+status: "planned"
+created_at: "2026-07-10"
+requester: "4uentes"
+summary: >
+  Define the reusable control/probe/gate model used by the policy enforcement
+  audit pack so future policies can be added without duplicating scripts.
+control_plane_context:
+  initiative_id: "INIT-CP-0003"
+  parent_initiative_id: "INIT-CP-0001"
+  target_jira_epic_key: "ARDS-1"
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "4uentes-orchestor"
+      via: "runtime enforcement model and templates"
+      service_kind: "control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+  affected_ards:
+    - "policy-enforcement"
+    - "audit-controls"
+    - "audit-probes"
+    - "audit-gates"
+required_context:
+  - "specs/policies/ards-sdd-policy-component-model.yaml"
+  - "specs/integration/policies.yaml"
+  - "evidence/requests/CR-CP-0003/policy-enforcement-gap-analysis.md"
+risk:
+  level: "medium"
+  score: 6
+  drivers:
+    - "model must be generic enough for future policies"
+    - "hardcoded policy validators would create drift and duplication"
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "single-control-plane-branch"
+  child_repo_mutation_allowed: false
+  core_repo_mutation_allowed: false
+  implementation_boundary: >
+    Define model, templates, and local validation expectations. Do not implement
+    every policy validator in this CR.
+jira:
+  role: "mirror"
+  source_of_truth: false
+  project_key: "ARDS"
+  epic_key: "ARDS-13"
+  related_epic_key: "ARDS-1"
+  issue_key: "ARDS-8"
+validation:
+  required_checks:
+    - "4uentes-orchestor: npm.cmd run check"
+  evidence_required:
+    - "control_probe_gate_model"
+    - "template_summary"
+    - "validation_results"
+decision:
+  status: "pending"
+  approver: "TODO"

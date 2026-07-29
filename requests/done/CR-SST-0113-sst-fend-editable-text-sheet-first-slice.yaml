@@ -1,0 +1,83 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0113"
+title: "Implement first editable text sheet in sst-fend"
+status: done
+source_request: "requests/inbox/CR-SST-0113-sst-fend-editable-text-sheet-first-slice.yaml"
+planned_request: "requests/planned/CR-SST-0113-sst-fend-editable-text-sheet-first-slice.yaml"
+completed_at: "2026-07-04"
+requester: "4uentes"
+
+summary: >
+  Closed the first runtime implementation slice for the annotable text-entry
+  direction. The Article creation Text tab now has a visible editable sheet as
+  the primary writing surface, local draft metrics, and a separate
+  LearningWorkspace preview panel.
+
+scope:
+  solution: "sst"
+  services_modified:
+    - "sst-fend"
+    - "4uentes-orchestor"
+  functional_repositories_modified: true
+  runtime_code_modified: true
+
+implementation:
+  initiative_id: "INIT-SST-0001"
+  active_feature_state: "learning-content-tags"
+  jira_epic_key: "SST-27"
+  jira_issue_key: "SST-6"
+  jira_subtask_key: "SST-43"
+  jira_status_observed: "Listo"
+  jira_source_of_truth: false
+  completed_slice: >
+    The Text tab now presents an editorial sheet surface for article body
+    authoring while keeping governed article tags separate from future
+    LearningContentTag annotations.
+  not_closed:
+    - "Contextual tagging by text selection remains in CR-SST-0114."
+    - "BFF/API annotated selection contract remains in CR-SST-0115."
+    - "Persistence and render/template output remain in CR-SST-0116 and CR-SST-0117."
+    - "End-to-end validation remains in CR-SST-0118."
+
+owner_documentation:
+  status: "satisfied"
+  owner_repo: "sst-fend"
+  owner_refs:
+    - "docs/38-learning-workspace-frontend.md"
+    - "specs/38-learning-workspace-frontend.yml"
+    - "docs/tasks/2026-07-04-cr-sst-0113-editable-text-sheet.md"
+
+validation:
+  status: "validated-local"
+  passed:
+    - "sst-fend npm.cmd test -- ArticleCreateFlow.test.tsx --runInBand"
+    - "sst-fend npm.cmd run check"
+    - "4uentes-orchestor npm.cmd run check"
+  notes:
+    - "sst-fend check passed with existing warnings only."
+    - "Control-plane owner documentation enforcement passed for CR-SST-0113."
+    - "Jira SST-43 was synchronized to Listo through the MCP fallback script."
+
+evidence_refs:
+  - "evidence/requests/CR-SST-0113/intent-summary.md"
+  - "evidence/requests/CR-SST-0113/jira-sync-summary.md"
+  - "evidence/requests/CR-SST-0113/execution-start.md"
+  - "evidence/requests/CR-SST-0113/subagent-delegation.md"
+  - "evidence/requests/CR-SST-0113/pre-implementation-analysis.md"
+  - "evidence/requests/CR-SST-0113/subagent-plan-review.md"
+  - "evidence/requests/CR-SST-0113/subagent-child-readiness.md"
+  - "evidence/requests/CR-SST-0113/file-plan.md"
+  - "evidence/requests/CR-SST-0113/implementation-summary.md"
+  - "evidence/requests/CR-SST-0113/validation-results.md"
+  - "evidence/requests/CR-SST-0113/owner-documentation-summary.md"
+  - "evidence/requests/CR-SST-0113/jira-sync-blocker.md"
+  - "evidence/requests/CR-SST-0113/jira-sst-43-close-transition-summary.md"
+
+decision:
+  status: "closed-local"
+  approver: "4uentes"
+  note: >
+    CR-SST-0113 closes locally as the first editable sheet runtime
+    implementation for SST-43. Jira remains a mirror and SST-43 was
+    synchronized to Listo through the MCP fallback script.

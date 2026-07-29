@@ -1,0 +1,33 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0115"
+title: "Define annotated selection BFF/API contract"
+status: inbox
+created_at: "2026-07-04"
+requester: "4uentes"
+
+summary: >
+  Define the DTO and endpoint contract for annotated text selections flowing
+  from sst-fend through node-auth to sst-bend, including source references,
+  selectors, tags, relevance, preview state, and acceptance state.
+
+source:
+  initiative_id: "INIT-SST-0001"
+  parent_request_id: "CR-SST-0114"
+  jira_epic_key: "SST-27"
+  active_jira_issue_key: "SST-6"
+  jira_subtask_key: "SST-45"
+  reason: >
+    Runtime implementation needs an explicit cross-repo contract before
+    extending BFF/API payloads or persistence.
+
+scope:
+  solution: "sst"
+  services:
+    - "sst-fend"
+    - "node-auth"
+    - "sst-bend"
+    - "4uentes-orchestor"
+  excludes:
+    - "Runtime persistence"
+    - "Breaking endpoint changes without migration path"

@@ -1,0 +1,137 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0081"
+title: "Prepare request-driven child policy adoption beyond the closed SST rollout"
+status: planned
+source_request: "requests/inbox/CR-SST-0081-prepare-request-driven-child-policy-adoption-beyond-sst.yaml"
+created_at: "2026-06-20"
+requester: "4uentes"
+
+business_context: >
+  CR-SST-0077 closed the historical SST child sync for policy adoption, but the
+  control-plane still needs a reusable request-driven path for future child repo
+  policy propagation, now including the core-owned `http-qa-harness-policy`.
+
+requested_change: >
+  Prepare the control-plane lifecycle, state links, and governance rules so
+  future child repo rollouts can be opened per repo or per solution without
+  redefining core policy canon. The reusable gate is that each child rollout
+  must publish either a `policy_adoption_manifest` or a
+  `policy_exception_manifest`.
+
+expected_outcome: >
+  The orchestrator explicitly records local adoption of
+  `http-qa-harness-policy`, documents the reusable child rollout mechanism, and
+  leaves future non-SST repo mutations blocked on their own approved requests.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - "4uentes-orchestor"
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "4uentes-orchestor"
+      via: "local policy registry, policy links, feature-state tracking, and request-driven child rollout governance"
+      service_kind: "control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+  affected_ards:
+    - "control-plane"
+  capabilities:
+    - "capability.outbound.core-agent-policy-governance-handoff"
+  risks:
+    - id: "CHILD_ROLLOUT_WITHOUT_LIFECYCLE"
+      severity: "high"
+    - id: "CORE_CANON_DRIFT"
+      severity: "high"
+    - id: "MANIFEST_GOVERNANCE_AMBIGUITY"
+      severity: "medium"
+
+required_context:
+  - "AGENTS.md"
+  - "specs/integration/policies.yaml"
+  - "docs/policies/README.md"
+  - "specs/policies/ards-sdd-policy-component-model.yaml"
+  - "state/policy-links.yaml"
+  - "state/features/ards-sdd-policy-unification.current.yaml"
+  - "templates/policy-adoption-manifest.template.yaml"
+  - "templates/policy-exception-manifest.template.yaml"
+  - "requests/done/CR-SST-0077-sst-policy-adoption-sync-rollout.yaml"
+  - "evidence/requests/CR-SST-0077/policy-links-state-update-summary.md"
+
+required_checks:
+  - service_id: "4uentes-orchestor"
+    command: "npm run check"
+
+risk:
+  level: "high"
+  score: 8
+  drivers:
+    - "cross-repo governance drift if rollout bypasses lifecycle"
+    - "core canon versus local adoption boundary"
+    - "reusable manifest contract for future child repos"
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "cross-repo governance preparation"
+    - "request lifecycle design"
+    - "policy canon consumption without local redefinition"
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The work changes control-plane governance state that constrains future cross-repo rollouts."
+
+subagent_deployment_plan:
+  required: false
+  parallelizable: false
+  roles: []
+  fallback: "Perform sequentially in the main agent and validate with local repo checks."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "current-approved-branch"
+  local_implementation_started: true
+  local_implementation_started_at: "2026-06-20"
+  planned_implementation_units:
+    - id: "local-http-qa-adoption"
+      objective: "Record local orchestrator adoption of the core-owned http QA harness policy."
+      target_repo: "4uentes-orchestor"
+      expected_files:
+        - "AGENTS.md"
+        - "specs/integration/policies.yaml"
+        - "state/policy-links.yaml"
+        - "state/features/ards-sdd-policy-unification.current.yaml"
+    - id: "child-rollout-governance"
+      objective: "Document the reusable request-driven path for future child repo policy rollout."
+      target_repo: "4uentes-orchestor"
+      expected_files:
+        - "docs/policies/README.md"
+        - "templates/policy-adoption-manifest.template.yaml"
+        - "templates/policy-exception-manifest.template.yaml"
+        - "requests/planned/CR-SST-0081-prepare-request-driven-child-policy-adoption-beyond-sst.yaml"
+      validation:
+        - "Future rollout stays blocked on an approved child repo request lifecycle."
+        - "Docs name both policy_adoption_manifest and policy_exception_manifest."
+
+validation:
+  required_checks:
+    - "4uentes-orchestor: npm run check"
+  evidence_required:
+    - "intake_summary"
+    - "request_lifecycle"
+    - "local_registry_update"
+
+decision:
+  status: "validated-local"
+  approver: "4uentes"
+  blocker: "none"
+  note: "This request prepares future child rollout governance only; it does not authorize child repo mutations."

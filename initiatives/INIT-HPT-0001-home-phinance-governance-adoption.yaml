@@ -1,0 +1,82 @@
+schema_version: "1.0"
+kind: "initiative"
+id: "INIT-HPT-0001"
+title: "Home Phinance Ticket Governance Adoption"
+status: "active"
+updated_at: "2026-07-12"
+owner_repository: "4uentes-orchestor"
+objective: >
+  Onboard the finanzas-personales monorepo into the 4uentes ARDS/SDD
+  control-plane, adopt the current core governance contract in its frontend and
+  backend service roots, and make the frontend-backend boundary explicit before
+  product runtime implementation.
+initial_hypothesis: >
+  The repository already contains separate frontend-web and backend-api ARDS
+  surfaces, but lacks stable control-plane identities, policy manifests,
+  control-plane linkage, executable validation, and an explicit architecture
+  exception for direct backend API consumption.
+source_evidence_refs:
+  - "evidence/initiatives/INIT-HPT-0001/intake-analysis.md"
+  - "evidence/initiatives/INIT-HPT-0001/jira-preflight.md"
+  - "evidence/initiatives/INIT-HPT-0001/jira-write-batch.md"
+  - "evidence/initiatives/INIT-HPT-0001/jira-epic-and-task-sync-summary.md"
+model_refs:
+  - "specs/initiatives/initiative-model.yaml"
+  - "docs/requests/initiative-model.md"
+parent_initiative_refs: []
+related_initiative_refs: []
+known_change_requests:
+  - "CR-HPT-0001"
+  - "CR-HPT-0002"
+  - "CR-HPT-0003"
+candidate_change_requests:
+  - id: "CR-HPT-0001"
+    title: "Finanzas personales control-plane onboarding"
+    status: "planned"
+    execution_order: "first"
+  - id: "CR-HPT-0002"
+    title: "Finanzas personales child governance adoption"
+    status: "planned"
+    execution_order: "after-CR-HPT-0001"
+  - id: "CR-HPT-0003"
+    title: "Finanzas personales frontend-backend boundary reconciliation"
+    status: "planned"
+    execution_order: "after-CR-HPT-0002"
+discovered_change_requests: []
+tracking:
+  jira:
+    role: "mirror"
+    source_of_truth: false
+    project_key: "HPT"
+    project_name_observed: "home-phinance-ticket"
+    issue_type: "Epic"
+    issue_key: "HPT-1"
+    current_status_observed: "Por hacer"
+    write_status: "executed-enumerated-batch"
+    read_status: "verified"
+    associated_issue_keys:
+      - "HPT-2"
+      - "HPT-3"
+      - "HPT-4"
+boundaries:
+  mutates_child_repositories: true
+  promotes_runtime: false
+  changes_core_canon: false
+  belongs_to_sst: false
+policy_application:
+  owner_documentation_enforcement: >
+    Every child-repo mutation CR must update the owner ARDS/SDD surfaces in the
+    affected frontend or backend service root, or record an approved exception.
+  jira_boundary: >
+    Jira is an operational mirror. The Initiative, CR lifecycle, decisions and
+    evidence remain authoritative in 4uentes-orchestor.
+  architecture_boundary: >
+    Onboarding does not approve auth, RBAC, financial advice, sensitive-data,
+    BFF, OCR, AI-provider or production deployment decisions.
+  atomization: >
+    Catalog onboarding, child governance adoption and integration-boundary
+    reconciliation remain separate CRs with independent validation.
+open_gaps:
+  - "Resolve technical owner and release responsibility in the child repo."
+  - "Define executable frontend and backend validation routes."
+  - "Decide or document the direct frontend-web to backend-api exception."

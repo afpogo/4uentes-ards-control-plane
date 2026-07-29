@@ -1,0 +1,210 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-CP-0007"
+title: "Define work-tracker control-plane authority policy and Jira profile"
+status: "planned"
+source_request: "requests/inbox/CR-CP-0007-jira-control-plane-authority-policy.yaml"
+created_at: "2026-07-10"
+updated_at: "2026-07-11"
+requester: "4uentes"
+
+summary: >
+  Define and locally adopt a provider-generic work-tracker authority policy for
+  control planes, with Jira as the first provider profile. This request defines
+  normative authority and write boundaries only; it does not implement runtime
+  enforcement or promote the policy to core.
+
+control_plane_context:
+  initiative_id: "INIT-CP-0002"
+  parent_initiative_id: "INIT-CP-0001"
+  related_runtime_initiative_id: "INIT-CP-0003"
+  target_jira_epic_key: "ARDS-1"
+  related_jira_epic_key: "SST-36"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "4uentes-orchestor"
+      via: "origin policy, local adoption, registry, state link, and evidence"
+      service_kind: "control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+  affected_ards:
+    - "policy-governance"
+    - "work-tracker-authority"
+    - "external-write-gating"
+    - "request-lifecycle"
+    - "evidence-sanitization"
+  capabilities:
+    - "jira-mcp-ticketing"
+    - "jira-backlog-sync-state-machine"
+    - "control-plane-process-lifecycle"
+  risks:
+    - {id: "WORK_TRACKER_AUTHORITY_DRIFT", severity: "high"}
+    - {id: "EXTERNAL_WRITE_WITHOUT_BATCH_AUTHORIZATION", severity: "high"}
+    - {id: "SECRET_OR_PRIVATE_CONTEXT_DISCLOSURE", severity: "high"}
+    - {id: "RUNTIME_SCOPE_LEAK", severity: "high"}
+
+risk:
+  level: "high"
+  score: 8
+  drivers:
+    - "The tracker must remain a mirror and cannot become ARDS/SDD authority"
+    - "External writes require an explicit, bounded, consumable authorization"
+    - "The policy is conditional and must not become a global child-repo requirement"
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "policy-governance"
+    - "external-write-gating"
+    - "authority-boundary"
+    - "evidence-sanitization"
+
+model_selection:
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5-high"
+  reason: "The request defines authority and security boundaries for external writes."
+
+subagent_deployment_plan:
+  required: false
+  deployed: false
+  reason: "The authority and security decision remains with the main agent; sequential review keeps the small policy change auditable."
+
+execution:
+  requires_human_approval: true
+  allowed_window: "approved-CR-CP-0007-batch"
+  child_repo_mutation_allowed: false
+  core_repo_mutation_allowed: false
+  runtime_implementation_allowed: false
+  implementation_boundary: >
+    Define and adopt work-tracker-control-plane-authority-policy only in
+    4uentes-orchestor. Do not modify 4uentes-ards-core or functional repos and
+    do not add runners, probes, gates, scripts, validators, or automation.
+
+authority_matrix:
+  control_plane_authoritative:
+    - "requests and ARDS/SDD lifecycle states"
+    - "Definition of Done"
+    - "execution and validation evidence"
+  tracker_authoritative:
+    - "issue key"
+    - "assignee"
+    - "comments"
+    - "observed tracker status"
+  inbound_rule: "Tracker changes are read-only intake signals and never automatic local mutations."
+
+provider_profiles:
+  jira:
+    work_capability: "Jira Work read/write"
+    structured_search: "JQL"
+    semantic_search: "Rovo optional"
+    rovo_403_behavior: "degrade semantic search without blocking Jira Work or JQL"
+    routing_rule: "derive project, parent, and issue type from the approved request; never hardcode SST or ARDS globally"
+    hierarchy_contract: "jira-cr-mirror-hierarchy-policy"
+    hierarchy_required: true
+    hierarchy:
+      initiative_to_epic: "exactly one primary Epic for each active initiative that uses Jira"
+      selected_cr_to_issue: "exactly one primary Task or Subtask"
+      task_rule: "use for an independent, cross-repo, or container CR under the initiative Epic"
+      subtask_rule: "use for a bounded executable CR under a Task in the same initiative Epic"
+      preflight_fields:
+        - "initiative_id"
+        - "primary_epic_key"
+        - "request_id"
+        - "primary_issue_key or enumerated creation candidate"
+        - "project"
+        - "issue_type"
+        - "parent"
+      failure_behavior: "block write and reconcile missing, ambiguous, duplicate, or inconsistent hierarchy"
+
+write_batch_authorization:
+  request_id: "CR-CP-0007"
+  provider: "jira"
+  project: "ARDS"
+  issues:
+    - "ARDS-14"
+  candidate_creations: []
+  allowed_operations:
+    - "JQL uniqueness confirmation for CR-CP-0007 and ARDS-14"
+    - "update ARDS-14 description"
+    - "update ARDS-14 summary"
+    - "preserve jira-policy and add work-tracker-policy while retaining CR, initiative, and control-plane labels"
+    - "transition ARDS-14 with transition 21"
+    - "read ARDS-14 after mutation and store sanitized evidence"
+  forbidden_operations:
+    - "comments"
+    - "new issue creation"
+    - "closure"
+    - "any transition other than 21"
+    - "deletion"
+    - "wildcard or unbounded bulk writes"
+  expected_parent: "ARDS-1"
+  expected_issue_type: "Task"
+  expected_status_before: "Por hacer"
+  expected_status_after: "En curso"
+  execution_window: "this approved implementation session"
+  consumption_rule: "Consumed or expired when this enumerated batch completes; no operation not listed is authorized."
+
+jira:
+  role: "operational-mirror"
+  source_of_truth: false
+  project_key: "ARDS"
+  epic_key: "ARDS-1"
+  issue_key: "ARDS-14"
+  desired_summary: "[ARDS][CR-CP-0007] Define work-tracker authority policy and Jira profile"
+  desired_status: "En curso"
+  transition_id: "21"
+  required_labels:
+    - "cr-cp-0007"
+    - "init-cp-0002"
+    - "control-plane"
+    - "jira-policy"
+    - "work-tracker-policy"
+
+implementation_steps:
+  - id: "define-policy"
+    description: "Create the generic policy, authority matrix, Jira profile, batch contract, failure behavior, and security boundaries."
+  - id: "adopt-locally"
+    description: "Register the origin-repo-policy, update the human index, and link it to ards-sdd-policy-unification."
+  - id: "record-core-handoff"
+    description: "Record promotion as a separate pending handoff; do not mutate 4uentes-ards-core in this request."
+  - id: "review-runtime-separation"
+    description: "Confirm CR-CP-0007 introduces no executable enforcement and references ARDS-13 only as a future consumer."
+  - id: "bind-jira-hierarchy-contract"
+    description: "Make jira-cr-mirror-hierarchy-policy a required complementary contract for the Jira profile and define Initiative/Epic plus CR/Task/Subtask cardinality."
+  - id: "execute-approved-jira-batch"
+    description: "Execute only the enumerated ARDS-14 update and transition batch."
+  - id: "validate"
+    description: "Run npm.cmd run check and the documented normative and static cases."
+
+handoff:
+  target: "4uentes-ards-core"
+  status: "pending-separate-request"
+  mutation_in_this_cr: false
+  required_future_action: "Create an independent core promotion CR after local adoption evidence is reviewed."
+
+validation:
+  required_checks:
+    - "npm.cmd run check"
+    - "registry, human document, index, and state link metadata consistency review"
+    - "normative failure-behavior case review"
+    - "static search proving no runners, probes, gates, scripts, or validators were introduced by CR-CP-0007"
+    - "Jira uniqueness, ARDS-1 parent, and En curso status verification"
+  evidence_required:
+    - "policy_definition_and_adoption"
+    - "security_review"
+    - "runtime_separation_review"
+    - "registry_and_state_link_review"
+    - "validation_results"
+    - "jira_batch_result"
+
+decision:
+  status: "approved-for-implementation"
+  approver: "4uentes"
+  note: "Approval is limited to local policy implementation and the enumerated ARDS-14 Jira batch."

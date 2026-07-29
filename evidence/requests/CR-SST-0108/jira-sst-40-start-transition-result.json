@@ -1,0 +1,114 @@
+{
+  "issueKey": "SST-40",
+  "before": {
+    "summary": "[SST][INIT-SST-0003][CR-SST-0108] Harden node-auth extension session payload ingestion",
+    "status": "Tareas por hacer",
+    "statusCategory": "Por hacer",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-07-04T01:50:54.157-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0108",
+      "init-sst-0003",
+      "node-auth",
+      "session-ingestion",
+      "sst-extension"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10078\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10078\",\"key\":\"SST-40\",\"fields\":{\"summary\":\"[SST][INIT-SST-0003][CR-SST-0108] Harden node-auth extension session payload ingestion\",\"description\":\"CR: CR-SST-0108  \\nInitiative: INIT-SST-0003  \\nEpic: SST-29  \\nDiscovered from: SST-30 manual QA\\n\\nPurpose:\\n\\nHarden the node-auth browser extension session ingestion boundary after SST-30 manual QA showed that multi-tab PDF session submits exceeded the default Express JSON parser limit and surfaced as a generic 500.\\n\\nImplementation scope:\\n\\n* \\\\[x\\\\] Keep the global BF body parser limit unchanged for unrelated routes.\\n* \\\\[x\\\\] Add a route-scoped JSON parser for `/api/extension/sessions`.\\n* \\\\[x\\\\] Make the session body limit configurable with `EXTENSION_SESSION_BODY_LIMIT`.\\n* \\\\[x\\\\] Return sanitized `413 Request body too large` for oversized bodies.\\n* \\\\[x\\\\] Update node-auth owner ARDS/SDD docs/specs.\\n* \\\\[x\\\\] Rebuild and redeploy the local kind workload for manual QA.\\n\\nValidation:\\n\\n* \\\\[x\\\\] `node-auth npm.cmd run build`: PASS.\\n* \\\\[x\\\\] `node-auth npm.cmd run check`: PASS.\\n* \\\\[x\\\\] Synthetic 200 KB session submit without bearer reaches auth and returns 401.\\n* \\\\[x\\\\] Synthetic 6 MB session submit returns 413.\\n* \\\\[x\\\\] `4uentes-orchestor npm.cmd run check`: PASS.\\n* \\\\[ \\\\] User manual retry from existing sst-extension queued session.\\n\\nScalability boundary:\\n\\n* This CR is an immediate BF ingestion hardening fix.\\n* Future work should evaluate multipart, chunked, or object-storage-backed artifact upload for larger sessions.\\n* Do not store private page content, real PDF bodies, cookies, JWTs, or plaintext secrets in Jira or evidence.\\n\\nControl-plane evidence:\\n\\n* `requests/planned/CR-SST-0108-node-auth-extension-session-body-limit.yaml`\\n* `evidence/requests/CR-SST-0108/payload-limit-analysis.md`\\n* `evidence/requests/CR-SST-0108/changed-files-summary.md`\\n* `evidence/requests/CR-SST-0108/validation-results.md`\\n\\nBoundary:\\n\\n* Jira is an operational mirror; ARDS/SDD remains the source of truth.\\n\\n\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-07-04T01:50:54.157-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10005\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"Tareas por hacer\",\"id\":\"10005\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/2\",\"id\":2,\"key\":\"new\",\"colorName\":\"blue-gray\",\"name\":\"Por hacer\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-sst-0108\",\"init-sst-0003\",\"node-auth\",\"session-ingestion\",\"sst-extension\"]}}"
+  },
+  "after": {
+    "summary": "[SST][INIT-SST-0003][CR-SST-0108] Harden node-auth extension session payload ingestion",
+    "status": "En curso",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-07-04T01:51:53.944-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0108",
+      "init-sst-0003",
+      "node-auth",
+      "session-ingestion",
+      "sst-extension"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10078\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10078\",\"key\":\"SST-40\",\"fields\":{\"summary\":\"[SST][INIT-SST-0003][CR-SST-0108] Harden node-auth extension session payload ingestion\",\"description\":\"CR: CR-SST-0108  \\nInitiative: INIT-SST-0003  \\nEpic: SST-29  \\nDiscovered from: SST-30 manual QA\\n\\nPurpose:\\n\\nHarden the node-auth browser extension session ingestion boundary after SST-30 manual QA showed that multi-tab PDF session submits exceeded the default Express JSON parser limit and surfaced as a generic 500.\\n\\nImplementation scope:\\n\\n* \\\\[x\\\\] Keep the global BF body parser limit unchanged for unrelated routes.\\n* \\\\[x\\\\] Add a route-scoped JSON parser for `/api/extension/sessions`.\\n* \\\\[x\\\\] Make the session body limit configurable with `EXTENSION_SESSION_BODY_LIMIT`.\\n* \\\\[x\\\\] Return sanitized `413 Request body too large` for oversized bodies.\\n* \\\\[x\\\\] Update node-auth owner ARDS/SDD docs/specs.\\n* \\\\[x\\\\] Rebuild and redeploy the local kind workload for manual QA.\\n\\nValidation:\\n\\n* \\\\[x\\\\] `node-auth npm.cmd run build`: PASS.\\n* \\\\[x\\\\] `node-auth npm.cmd run check`: PASS.\\n* \\\\[x\\\\] Synthetic 200 KB session submit without bearer reaches auth and returns 401.\\n* \\\\[x\\\\] Synthetic 6 MB session submit returns 413.\\n* \\\\[x\\\\] `4uentes-orchestor npm.cmd run check`: PASS.\\n* \\\\[ \\\\] User manual retry from existing sst-extension queued session.\\n\\nScalability boundary:\\n\\n* This CR is an immediate BF ingestion hardening fix.\\n* Future work should evaluate multipart, chunked, or object-storage-backed artifact upload for larger sessions.\\n* Do not store private page content, real PDF bodies, cookies, JWTs, or plaintext secrets in Jira or evidence.\\n\\nControl-plane evidence:\\n\\n* `requests/planned/CR-SST-0108-node-auth-extension-session-body-limit.yaml`\\n* `evidence/requests/CR-SST-0108/payload-limit-analysis.md`\\n* `evidence/requests/CR-SST-0108/changed-files-summary.md`\\n* `evidence/requests/CR-SST-0108/validation-results.md`\\n\\nBoundary:\\n\\n* Jira is an operational mirror; ARDS/SDD remains the source of truth.\\n\\n\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-07-04T01:51:53.944-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10006\",\"description\":\"La persona asignada está trabajando actualmente en esta actividad.\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En curso\",\"id\":\"10006\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-sst-0108\",\"init-sst-0003\",\"node-auth\",\"session-ingestion\",\"sst-extension\"]}}"
+  },
+  "transitions": [
+    {
+      "id": "11",
+      "name": "Por hacer",
+      "toStatus": "Tareas por hacer",
+      "toStatusCategory": "Por hacer"
+    },
+    {
+      "id": "21",
+      "name": "En curso",
+      "toStatus": "En curso",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "31",
+      "name": "In Review",
+      "toStatus": "En revisión",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "41",
+      "name": "Listo",
+      "toStatus": "Finalizada",
+      "toStatusCategory": "Listo"
+    }
+  ],
+  "selectedTransition": {
+    "id": "21",
+    "name": "En curso",
+    "toStatus": "En curso",
+    "toStatusCategory": "En curso"
+  },
+  "transitionResult": {
+    "success": true
+  },
+  "commentResult": {
+    "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10078/comment/10069",
+    "id": "10069",
+    "author": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "body": "CR-SST-0108 implementation checkpoint.\n\nThis ticket was opened as the node-auth follow-up discovered during SST-30 manual QA.\n\nCompleted locally:\n\n* Confirmed `POST /api/extension/sessions` was failing in node-auth before the handler with `PayloadTooLargeError`.\n* Kept the global BF body parser limit unchanged for unrelated routes.\n* Added route-scoped JSON parsing for `/api/extension/sessions`.\n* Added `EXTENSION_SESSION_BODY_LIMIT`, default `5mb`.\n* Normalized oversized body parser errors to sanitized `413 Request body too large`.\n* Updated node-auth owner ARDS/SDD docs/specs for routing, integration, capability and error handling.\n* Built and loaded the current node-auth image into the local kind cluster.\n* Restarted `deployment/node-auth` and confirmed rollout success.\n\nValidation:\n\n* node-auth `npm.cmd run build`: PASS.\n* node-auth `npm.cmd run check`: PASS.\n* synthetic \\~200 KB session body without bearer now reaches auth and returns `401`.\n* synthetic \\~6 MB session body returns `413`.\n* control-plane `npm.cmd run check`: PASS, including owner-documentation gate for CR-SST-0108.\n\nPending before closure:\n\n* User manual retry from the existing sst-extension queued session against `localhost:8088`.\n* If the retry still fails after node-auth accepts the body, inspect downstream SST logs for contract/storage errors.\n\nBoundary:\n\n* Jira is an operational mirror; ARDS/SDD remains the source of truth.\n* No private page content, real PDF bodies, cookies, JWTs or plaintext secrets were included in evidence.\n\n",
+    "updateAuthor": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "created": "2026-07-04T01:51:53.944-0300",
+    "updated": "2026-07-04T01:51:53.944-0300",
+    "jsdPublic": true
+  },
+  "commentBody": "CR-SST-0108 implementation checkpoint.\n\nThis ticket was opened as the node-auth follow-up discovered during SST-30 manual QA.\n\nCompleted locally:\n\n- Confirmed `POST /api/extension/sessions` was failing in node-auth before the handler with `PayloadTooLargeError`.\n- Kept the global BF body parser limit unchanged for unrelated routes.\n- Added route-scoped JSON parsing for `/api/extension/sessions`.\n- Added `EXTENSION_SESSION_BODY_LIMIT`, default `5mb`.\n- Normalized oversized body parser errors to sanitized `413 Request body too large`.\n- Updated node-auth owner ARDS/SDD docs/specs for routing, integration, capability and error handling.\n- Built and loaded the current node-auth image into the local kind cluster.\n- Restarted `deployment/node-auth` and confirmed rollout success.\n\nValidation:\n\n- node-auth `npm.cmd run build`: PASS.\n- node-auth `npm.cmd run check`: PASS.\n- synthetic ~200 KB session body without bearer now reaches auth and returns `401`.\n- synthetic ~6 MB session body returns `413`.\n- control-plane `npm.cmd run check`: PASS, including owner-documentation gate for CR-SST-0108.\n\nPending before closure:\n\n- User manual retry from the existing sst-extension queued session against `localhost:8088`.\n- If the retry still fails after node-auth accepts the body, inspect downstream SST logs for contract/storage errors.\n\nBoundary:\n\n- Jira is an operational mirror; ARDS/SDD remains the source of truth.\n- No private page content, real PDF bodies, cookies, JWTs or plaintext secrets were included in evidence.\n",
+  "externalWrite": true
+}

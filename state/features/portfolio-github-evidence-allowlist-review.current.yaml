@@ -1,0 +1,23 @@
+schema_version: "1.0"
+kind: "feature_state"
+id: "portfolio-github-evidence-allowlist-review"
+title: "Portfolio GitHub Evidence Allowlist Review"
+status: "ards-documented"
+updated_at: "2026-07-04"
+solution_id: "4uentes"
+affected_services:
+  - 4uentes-portfolio
+request_ids:
+  - CR-4UENTES-0016
+capability_refs:
+  - "portfolio-github-evidence-allowlist-review"
+spec_refs:
+  - "requests/planned/CR-4UENTES-0016-portfolio-github-evidence-allowlist-review.yaml"
+  - "initiatives/INIT-PORTFOLIO-0001-portfolio-publication-readiness.yaml"
+evidence_refs:
+  - "evidence/requests/CR-4UENTES-0016/github-evidence-review.md"
+  - "evidence/requests/CR-4UENTES-0016/changed-files-summary.md"
+  - "evidence/requests/CR-4UENTES-0016/validation-results.md"
+open_gaps:
+  - "Translate or remediate legacy human-facing Markdown covered by the human-doc-language exception."
+  - "Review CV PDF freshness before broad publication."

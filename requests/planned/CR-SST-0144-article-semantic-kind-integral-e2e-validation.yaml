@@ -1,0 +1,114 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0144"
+title: "Validate article semantic kind integral end-to-end"
+status: done
+source_request: "requests/inbox/CR-SST-0144-article-semantic-kind-integral-e2e-validation.yaml"
+created_at: "2026-07-18"
+requester: "4uentes"
+summary: >
+  Validate explicit Text and Web article semantic kinds across the authenticated
+  browser, BFF and SST persistence/query contracts. This is a validation-only
+  release gate and must not infer or mutate ambiguous historical rows.
+control_plane_context:
+  initiative_id: "INIT-SST-0005"
+  predecessor_requests: ["CR-SST-0129", "CR-SST-0130", "CR-SST-0131", "CR-SST-0132", "CR-SST-0133", "CR-SST-0141", "CR-SST-0142"]
+  blocking_request: "CR-SST-0134"
+  jira_epic_key: "SST-57"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+impact_analysis:
+  required: true
+  affected_services:
+    - {service_id: "sst-fend", via: "Authenticated native article creation and kind-aware browser consumption", service_kind: "frontend-web", ards_kind: "frontend-web", status: "active"}
+    - {service_id: "node-auth", via: "Authenticated article BFF query contract", service_kind: "backend-bff", ards_kind: "backend-service", status: "active"}
+    - {service_id: "sst-bend", via: "Canonical payload.kind persistence and filtered query contract", service_kind: "backend-api", ards_kind: "backend-service", status: "active"}
+    - {service_id: "4uentes-orchestor", via: "Lifecycle, evidence and initiative gate", service_kind: "control-plane", ards_kind: "control-plane", status: "active"}
+  affected_ards: ["article-semantic-kind", "article-persisted-filters", "article-frontend"]
+  risks:
+    - {id: "SEMANTIC_KIND_CONFLATION", severity: high}
+    - {id: "AUTHENTICATED_FLOW_CONTRACT_DRIFT", severity: high}
+    - {id: "UNSAFE_HISTORICAL_INFERENCE", severity: critical}
+execution:
+  requires_human_approval: false
+  child_repo_mutation_allowed: false
+  runtime_test_data_creation_allowed: true
+  implementation_boundary: >
+    Automated checks and authenticated QA of native Text and Web paths only.
+    Runtime test records may be created after browser confirmation; no product
+    code, owner documentation, schema, capability or legacy-row mutation is in scope.
+owner_documentation:
+  required: false
+  status: not-required-validation-only
+  owner_repos: []
+  evidence_refs:
+    - "evidence/requests/CR-SST-0144/validation-plan.md"
+    - "evidence/requests/CR-SST-0144/jira-mirror-start.md"
+    - "evidence/requests/CR-SST-0144/authenticated-e2e-results.md"
+    - "evidence/requests/CR-SST-0144/jira-blocker-sync.md"
+required_checks:
+  - {service_id: "sst-bend", command: "npm.cmd run test:article-kind-contract"}
+  - {service_id: "sst-bend", command: "npm.cmd run check"}
+  - {service_id: "node-auth", command: "npm.cmd run check"}
+  - {service_id: "sst-fend", command: "npm.cmd test -- ArticleCreateFlow.test.tsx --runInBand"}
+  - {service_id: "sst-fend", command: "npm.cmd run check"}
+  - {service_id: "4uentes-orchestor", command: "npm.cmd run check"}
+validation:
+  required_checks:
+    - "Authenticated browser creates a native Text article with payload.kind=text."
+    - "Authenticated browser creates a native Web article with payload.kind=web."
+    - "Each article is returned and shown only in its corresponding kind-filtered view."
+    - "No browser console error, unexpected HTTP request or layout regression is attributable to the flow."
+    - "No historical record is classified by URL, filter.type, transport or node heuristics."
+  evidence_required:
+    - "automated-contract-results"
+    - "authenticated-browser-e2e-results"
+    - "desktop-and-mobile-screenshots"
+    - "epic-closure-gate-assessment"
+decision:
+  status: closed-local
+  approver: "4uentes"
+  decided_at: "2026-07-18"
+  note: "Native creation/detail and kind-correct Text/Web catalog filtering pass after CR-SST-0145. CR-SST-0134 remains a separate human-reviewed historical-data gate."
+jira_sync:
+  status: closed-synced
+  desired_issue_type: "Task"
+  parent_issue_key: "SST-57"
+  issue_key: "SST-84"
+  status_observed: "Listo"
+  closure_comment_id: "10228"
+  initial_comment_id: "10223"
+  blocker_comment_id: "10225"
+  blocker_write_authorization:
+    authorized_by: "4uentes"
+    authorized_at: "2026-07-18"
+    provider: "jira"
+    project_key: "SST"
+    issue_keys: ["SST-84"]
+    permitted_operations: ["add-blocker-comment", "transition-to-in-review"]
+    expected_parent_issue_key: "SST-57"
+    expected_issue_type: "Task"
+    expected_status: "En revisión"
+    execution_window: "current E2E defect recording turn"
+  closure_write_authorization:
+    authorized_by: "4uentes"
+    authorized_at: "2026-07-19"
+    provider: "jira"
+    project_key: "SST"
+    issue_keys: ["SST-84"]
+    permitted_operations: ["add-closure-comment", "transition-to-done"]
+    expected_parent_issue_key: "SST-57"
+    expected_issue_type: "Task"
+    expected_status: "Listo"
+    execution_window: "current integral E2E closure turn"
+  write_authorization:
+    authorized_by: "4uentes"
+    authorized_at: "2026-07-18"
+    provider: "jira"
+    project_key: "SST"
+    issue_candidates: ["new Task under SST-57 for CR-SST-0144"]
+    permitted_operations: ["duplicate-preflight", "create-task", "add-initial-comment", "transition-to-in-progress"]
+    expected_parent_issue_key: "SST-57"
+    expected_issue_type: "Task"
+    expected_status: "En curso"
+    execution_window: "current integral validation turn"

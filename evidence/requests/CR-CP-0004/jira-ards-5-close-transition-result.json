@@ -1,0 +1,108 @@
+{
+  "issueKey": "ARDS-5",
+  "before": {
+    "summary": "[CP][CR-CP-0004] Promote Initiative model to core",
+    "status": "En curso",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-07-10T20:23:14.649-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-cp-0004",
+      "init-cp-0002"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10113\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10113\",\"key\":\"ARDS-5\",\"fields\":{\"summary\":\"[CP][CR-CP-0004] Promote Initiative model to core\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-07-10T20:23:14.649-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10043\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En curso\",\"id\":\"10043\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-cp-0004\",\"init-cp-0002\"]}}"
+  },
+  "after": {
+    "summary": "[CP][CR-CP-0004] Promote Initiative model to core",
+    "status": "Listo",
+    "statusCategory": "Listo",
+    "resolution": "Listo",
+    "assignee": "no-asignado",
+    "updated": "2026-07-10T20:26:08.117-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-cp-0004",
+      "init-cp-0002"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10113\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10113\",\"key\":\"ARDS-5\",\"fields\":{\"summary\":\"[CP][CR-CP-0004] Promote Initiative model to core\",\"assignee\":null,\"resolution\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/resolution/10000\",\"id\":\"10000\",\"description\":\"Se ha terminado el trabajo relacionado con esta incidencia.\",\"name\":\"Listo\"},\"updated\":\"2026-07-10T20:26:08.117-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10045\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"Listo\",\"id\":\"10045\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/3\",\"id\":3,\"key\":\"done\",\"colorName\":\"green\",\"name\":\"Listo\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-cp-0004\",\"init-cp-0002\"]}}"
+  },
+  "transitions": [
+    {
+      "id": "11",
+      "name": "Por hacer",
+      "toStatus": "Por hacer",
+      "toStatusCategory": "Por hacer"
+    },
+    {
+      "id": "21",
+      "name": "En curso",
+      "toStatus": "En curso",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "31",
+      "name": "En revisión",
+      "toStatus": "En revisión",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "41",
+      "name": "Listo",
+      "toStatus": "Listo",
+      "toStatusCategory": "Listo"
+    }
+  ],
+  "selectedTransition": {
+    "id": "41",
+    "name": "Listo",
+    "toStatus": "Listo",
+    "toStatusCategory": "Listo"
+  },
+  "transitionResult": {
+    "success": true
+  },
+  "commentResult": {
+    "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10113/comment/10167",
+    "id": "10167",
+    "author": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/48",
+        "24x24": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/24",
+        "16x16": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/16",
+        "32x32": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/32"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "body": "# ARDS-5 / CR-CP-0004 - Cierre\n\nSe cierra `CR-CP-0004`.\n\nResultado:\n\n* `initiative-model` fue promovido en `4uentes-ards-core` como living resource reusable.\n* El control-plane resincronizo su binding a `4uentes-ards-core@f07ca6a`.\n* El control-plane registro adopcion local en `specs/initiatives/initiative-adoption.yaml`.\n* Las instancias `INIT-*`, links a CRs, evidencia y mirrors Jira permanecen bajo ownership local del control-plane.\n* Jira se mantiene como mirror operativo con `source_of_truth: false`.\n* No se mutaron repos hijos.\n\nValidacion:\n\n* Core: `npm.cmd run check` con 0 errores / 0 warnings y `npm.cmd run build` exitoso.\n* Control-plane: `npm.cmd run check:initiatives` con 13 OK, 0 WARN, 0 FAIL.\n* Control-plane: `npm.cmd run check` con 0 WARN, 0 FAIL.\n\nSiguiente trabajo:\n\n* `CR-CP-0005 / ARDS-6`: revisar adopcion local de recursos vivos del core en el orchestrator.\n\n",
+    "updateAuthor": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/48",
+        "24x24": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/24",
+        "16x16": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/16",
+        "32x32": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/32"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "created": "2026-07-10T20:26:08.117-0300",
+    "updated": "2026-07-10T20:26:08.117-0300",
+    "jsdPublic": true
+  },
+  "commentBody": "# ARDS-5 / CR-CP-0004 - Cierre\n\nSe cierra `CR-CP-0004`.\n\nResultado:\n\n- `initiative-model` fue promovido en `4uentes-ards-core` como living resource reusable.\n- El control-plane resincronizo su binding a `4uentes-ards-core@f07ca6a`.\n- El control-plane registro adopcion local en `specs/initiatives/initiative-adoption.yaml`.\n- Las instancias `INIT-*`, links a CRs, evidencia y mirrors Jira permanecen bajo ownership local del control-plane.\n- Jira se mantiene como mirror operativo con `source_of_truth: false`.\n- No se mutaron repos hijos.\n\nValidacion:\n\n- Core: `npm.cmd run check` con 0 errores / 0 warnings y `npm.cmd run build` exitoso.\n- Control-plane: `npm.cmd run check:initiatives` con 13 OK, 0 WARN, 0 FAIL.\n- Control-plane: `npm.cmd run check` con 0 WARN, 0 FAIL.\n\nSiguiente trabajo:\n\n- `CR-CP-0005 / ARDS-6`: revisar adopcion local de recursos vivos del core en el orchestrator.\n",
+  "externalWrite": true
+}

@@ -9,6 +9,10 @@ specs:
   - id: "capability-state-linkage"
     path: "specs/states/capability-state-linkage.yaml"
     status: "active"
+adoptions:
+  - id: "4uentes-orchestor-feature-bugfix-state-model"
+    path: "specs/states/state-read-model-adoption.yaml"
+    status: "adopted"
 state_read_model:
   root: "state/"
   index: "state/00-index.yaml"

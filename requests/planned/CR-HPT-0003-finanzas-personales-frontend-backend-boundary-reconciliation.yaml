@@ -1,0 +1,153 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-HPT-0003"
+title: "Finanzas personales frontend-backend boundary reconciliation"
+status: "planned"
+source_request: "requests/inbox/CR-HPT-0003-finanzas-personales-frontend-backend-boundary-reconciliation.yaml"
+created_at: "2026-07-12"
+requester: "4uentes"
+
+summary: >
+  Define the producer/consumer contract between frontend-web and backend-api,
+  document or resolve the direct-consumption exception, and keep proposed
+  Python/OCR/AI runtimes internal until independent service evidence exists.
+
+initial_scope:
+  solution: "finanzas-personales"
+  services:
+    - "finanzas-personales-frontend"
+    - "finanzas-personales-backend"
+  include_optional_services: false
+
+control_plane_context:
+  initiative_id: "INIT-HPT-0001"
+  parent_request_id: "CR-HPT-0002"
+  feature_id: "finanzas-personales-frontend-backend-boundary"
+  child_repo: "finanzas-personales"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "finanzas-personales-backend"
+      via: "producer outbound capability and API ownership"
+      ards_kind: "backend-api"
+    - service_id: "finanzas-personales-frontend"
+      via: "consumer inbound capability and architecture exception"
+      ards_kind: "frontend-web"
+  affected_ards:
+    - "capability-outbound"
+    - "capability-inbound"
+    - "architecture-exception"
+    - "owner-documentation"
+    - "validation"
+  capabilities:
+    - "finanzas-personales-backend-api"
+  risks:
+    - id: "DIRECT_BACKEND_API_EXCEPTION_UNGOVERNED"
+      severity: "high"
+    - id: "AUTHORIZATION_BOUNDARY_UNDEFINED"
+      severity: "high"
+    - id: "SENSITIVE_FINANCIAL_DATA_CONTRACT_INCOMPLETE"
+      severity: "high"
+
+required_context:
+  - "4uentes-ards-core: standard/ARDS_KIND_MODEL_v1.md"
+  - "4uentes-ards-core: standard/ARDS_FRONTEND_WEB_CORE_PROFILE_v1.md"
+  - "4uentes-ards-core: standard/ARDS_BACKEND_API_CORE_PROFILE_v1.md"
+  - "finanzas-personales: frontend/specs/capabilities/inbound/00-index.yaml"
+  - "finanzas-personales: backend/specs/capabilities/outbound/00-index.yaml"
+  - "finanzas-personales: backend/specs/api/00-index.yaml"
+
+risk:
+  level: "high"
+  score: 8
+  drivers:
+    - "architecture and cross-service contract"
+    - "auth and authorization boundary"
+    - "sensitive financial and receipt data"
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "architecture exception decision"
+    - "security and data ownership"
+    - "producer-consumer compatibility"
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5"
+  reason: "Architecture, auth and sensitive-data contract require high reasoning."
+
+subagent_deployment_plan:
+  required: false
+  parallelizable: false
+  roles: []
+  fallback: "Do not delegate architecture, auth or sensitive-data decisions."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  allowed_window: "future-approved-window"
+  branch_strategy: "child-repo-contract-docs-only"
+  child_repo_mutation_allowed: true
+  child_repo_mutation_target:
+    service_ids:
+      - "finanzas-personales-frontend"
+      - "finanzas-personales-backend"
+  owner_documentation_required: true
+  implementation_boundary: >
+    Update only owner architecture, API and capability contracts. Do not build a
+    BFF, choose auth implementation, expose Python publicly or implement runtime.
+
+owner_documentation:
+  required: true
+  status: planned
+  owner_repo: "finanzas-personales"
+  planned_owner_docs:
+    - "docs/architecture/README.md"
+    - "docs/api/README.md"
+    - "specs/capabilities/inbound/00-index.yaml"
+    - "specs/capabilities/outbound/00-index.yaml"
+    - "specs/api/00-index.yaml"
+  owner_refs:
+    - repo: "finanzas-personales/frontend"
+      paths:
+        - "docs/architecture/README.md"
+        - "specs/capabilities/inbound/00-index.yaml"
+    - repo: "finanzas-personales/backend"
+      paths:
+        - "docs/api/README.md"
+        - "specs/capabilities/outbound/00-index.yaml"
+        - "specs/api/00-index.yaml"
+
+jira:
+  role: "mirror"
+  source_of_truth: false
+  project_key: "HPT"
+  epic_key: "HPT-1"
+  issue_key: "HPT-4"
+  issue_type: "Tarea"
+  current_status_observed: "Por hacer"
+  execution_authorized: false
+
+validation:
+  required_checks:
+    - "finanzas-personales frontend: owner ARDS/SDD validation route"
+    - "finanzas-personales backend: owner ARDS/SDD and HTTP contract validation route"
+    - "4uentes-orchestor: npm.cmd run check"
+  evidence_required:
+    - "architecture_decision_or_exception"
+    - "producer_consumer_contract_review"
+    - "owner_documentation_summary"
+    - "validation_results"
+
+decision:
+  status: "planned-awaiting-architecture-owner-approval"
+  approver: "TODO"
+  blocker: "technical owner must approve the architecture exception or BFF decision"

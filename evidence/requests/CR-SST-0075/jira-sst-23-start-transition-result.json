@@ -1,0 +1,37 @@
+{
+  "requestId": "CR-SST-0075",
+  "issueKey": "SST-23",
+  "mode": "approved-write",
+  "before": {
+    "status": "Tareas por hacer",
+    "statusCategory": "Por hacer",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0075",
+      "sst-tags-governance",
+      "subtask"
+    ]
+  },
+  "selectedTransition": {
+    "id": "21",
+    "name": "En curso",
+    "toStatus": "En curso",
+    "toStatusCategory": "En curso"
+  },
+  "after": {
+    "status": "En curso",
+    "statusCategory": "En curso",
+    "labels": [
+      "active-work",
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0075",
+      "sst-tags-governance",
+      "subtask"
+    ]
+  },
+  "descriptionUpdated": true,
+  "commentAdded": true,
+  "externalWrite": true
+}

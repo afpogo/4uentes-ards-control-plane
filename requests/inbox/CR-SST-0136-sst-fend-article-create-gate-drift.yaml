@@ -1,0 +1,17 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0136"
+title: "Repair sst-fend article create validation gate drift"
+status: inbox
+created_at: "2026-07-11"
+requester: "4uentes"
+business_context: >
+  CR-SST-0127 behavior passes its focused regressions and authenticated QA, but
+  sst-fend cannot close because preexisting CSS module declarations and a stale
+  ArticleCreateFlow expectation fail the complete repository gate.
+requested_change: >
+  Regenerate only the four stale CSS module declarations and reconcile the
+  obsolete textSheet.selectionHint test expectation with current owner docs.
+expected_outcome: >
+  The full sst-fend check can validate CR-SST-0127 without mixing gate repair
+  into the semantic-kind patch.

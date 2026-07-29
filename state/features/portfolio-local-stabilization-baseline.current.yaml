@@ -1,0 +1,25 @@
+schema_version: "1.0"
+kind: "feature_state"
+id: "portfolio-local-stabilization-baseline"
+title: "Portfolio Local Stabilization Baseline"
+status: "validated-local"
+updated_at: "2026-07-03"
+solution_id: "4uentes"
+affected_services:
+  - 4uentes-portfolio
+request_ids:
+  - CR-4UENTES-0003
+capability_refs:
+  - "portfolio-local-stabilization-baseline"
+spec_refs:
+  - "docs/apps/4uentes-portfolio.md"
+  - "catalog/services/4uentes-portfolio.yaml"
+  - "solutions/4uentes.yaml"
+evidence_refs:
+  - "evidence/requests/CR-4UENTES-0003/stabilization-baseline.md"
+  - "evidence/requests/CR-4UENTES-0003/changed-files-summary.md"
+  - "evidence/requests/CR-4UENTES-0003/validation-results.md"
+open_gaps:
+  - "Confirm deploy target and public URL."
+  - "Decide whether mobile usability is required before public promotion."
+  - "Define screenshot, Lighthouse, or browser smoke evidence if publication risk increases."

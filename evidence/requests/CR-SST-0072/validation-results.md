@@ -1,4 +1,4 @@
-# CR-SST-0072 Validation Results
+# CR-SST-0072 Resultados De Validacion
 
 ## Estado
 

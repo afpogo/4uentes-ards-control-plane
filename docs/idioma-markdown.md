@@ -5,6 +5,11 @@
 Este documento define la politica canonica de idioma para la documentacion en
 Markdown de este repo y deja un patron reusable para otros repos 4uentes.
 
+La policy machine-readable correspondiente vive en
+`specs/integration/policies.yaml` bajo el id `human-doc-language`, y su
+resumen operativo esta publicado en
+`docs/policies/human-doc-language-policy.md`.
+
 La regla base es: la documentacion humana se escribe en espanol, mientras que la
 capa normativa, agent-facing y los identificadores tecnicos estables conservan
 su forma operativa en ingles.

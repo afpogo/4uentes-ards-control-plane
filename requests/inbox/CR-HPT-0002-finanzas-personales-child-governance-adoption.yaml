@@ -1,0 +1,26 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-HPT-0002"
+title: "Finanzas personales child governance adoption"
+status: "inbox"
+created_at: "2026-07-12"
+requester: "4uentes"
+business_context: >
+  Both service roots reference ARDS core profiles but do not instantiate the
+  current common policy runtime, policy manifests or control-plane link.
+requested_change: >
+  Reconcile frontend and backend bindings with core, adopt or except applicable
+  policies, add control-plane linkage and define owner validation routes.
+expected_outcome: >
+  The child monorepo can participate in request-driven governance while keeping
+  its local owner docs authoritative.
+initial_scope:
+  solution: "finanzas-personales"
+  services:
+    - "finanzas-personales-frontend"
+    - "finanzas-personales-backend"
+  include_optional_services: false
+decision:
+  status: "accepted-for-planning"
+  approver: "4uentes"
+

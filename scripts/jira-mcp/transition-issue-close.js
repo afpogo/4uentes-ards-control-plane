@@ -21,7 +21,7 @@ const TOOL_NAMES = [
 async function main() {
   requireConnectFlag();
   const args = parseArgs(process.argv.slice(2), {
-    valueOptions: ['request-id', 'output-dir', 'issue-key', 'preferred-transition'],
+    valueOptions: ['request-id', 'output-dir', 'issue-key', 'preferred-transition', 'description-file', 'comment-file', 'evidence-prefix'],
   });
   requireEvidenceArgs(args);
   const issueKey = stringArg(args, 'issue-key', null);
@@ -43,8 +43,8 @@ async function main() {
     const selectedTransition = selectTransition(transitions, stringArg(args, 'preferred-transition', null));
     const alreadyTerminal = isTerminalStatus(before.status, before.statusCategory);
 
-    const plannedDescription = renderSst10Description();
-    const plannedComment = renderSst10ClosureComment(effectiveConfig, before, selectedTransition, alreadyTerminal);
+    const plannedDescription = readOptionalFile(args, 'description-file') || renderSst10Description();
+    const plannedComment = readOptionalFile(args, 'comment-file') || renderSst10ClosureComment(effectiveConfig, before, selectedTransition, alreadyTerminal);
     const plannedLabels = reconcileClosureLabels(before.labels);
 
     if (approved && !labelsOnly && !alreadyTerminal && !selectedTransition) {
@@ -99,7 +99,8 @@ async function main() {
       externalWrite: approved,
     };
 
-    const output = writeExecutionEvidence(effectiveConfig, summary);
+    const evidencePrefix = stringArg(args, 'evidence-prefix', 'jira-issue-transition');
+    const output = writeExecutionEvidence(effectiveConfig, summary, evidencePrefix);
     console.log(`OK: Issue: ${issueKey}`);
     console.log(`OK: Mode: ${approved ? 'approved-write' : 'dry-run'}`);
     console.log(`OK: Action: ${action}`);
@@ -293,9 +294,9 @@ function writeToolSchemaEvidence(config, selectedTools) {
   fs.writeFileSync(output, `${lines.join('\n')}\n`, 'utf8');
 }
 
-function writeExecutionEvidence(config, summary) {
-  const jsonOutput = outputPath(config, 'jira-issue-transition-result.json');
-  const output = outputPath(config, 'jira-issue-transition-summary.md');
+function writeExecutionEvidence(config, summary, evidencePrefix) {
+  const jsonOutput = outputPath(config, `${evidencePrefix}-result.json`);
+  const output = outputPath(config, `${evidencePrefix}-summary.md`);
   fs.mkdirSync(path.dirname(output), { recursive: true });
   fs.writeFileSync(jsonOutput, JSON.stringify(sanitizeJson(summary), null, 2), 'utf8');
 
@@ -378,6 +379,16 @@ function normalize(value) {
 
 function stringArg(args, key, fallback) {
   return args[key] ? String(args[key]) : fallback;
+}
+
+function readOptionalFile(args, key) {
+  const file = stringArg(args, key, null);
+  if (!file) return null;
+  const resolved = path.resolve(ROOT, file);
+  if (!fs.existsSync(resolved)) throw new Error(`No existe ${key}: ${file}`);
+  const text = fs.readFileSync(resolved, 'utf8');
+  if (!text.trim()) throw new Error(`${key} esta vacio: ${file}`);
+  return text;
 }
 
 function sanitizeJson(value) {

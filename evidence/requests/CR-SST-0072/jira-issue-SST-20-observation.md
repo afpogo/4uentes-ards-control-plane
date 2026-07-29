@@ -1,4 +1,4 @@
-# Jira Issue Observation: SST-20
+# Observacion De Issue Jira: SST-20
 
 ## Estado
 
@@ -13,14 +13,14 @@
 - Status category: Por hacer
 - Resolution: no-detectado
 - Assignee: no-asignado
-- Updated: 2026-06-13T11:34:46.916-0300
+- Actualizado: 2026-06-13T11:34:46.916-0300
 - Labels: ards-sdd, control-plane, cr-sst-0072, sst-tags-governance, subtask
 
 ## Transiciones Disponibles
 
 - Por hacer (11) -> Tareas por hacer
 - En curso (21) -> En curso
-- In Review (31) -> En revisión
+- In Review (31) -> En revision
 - Listo (41) -> Finalizada
 
 ## Descripcion Sanitizada
@@ -33,8 +33,6 @@ Subtask under `SST-4` for the next governed execution slice.
 * Source request: `requests/planned/CR-SST-0072-sst-tags-persistence-backend-model.yaml`
 * Goal: implement global tag persistence with migration from current article and dictionary tags while preserving compatibility.
 * Risk: high due to persisted data and backfill safety.
-
-
 ```
 
 ## Evidencia

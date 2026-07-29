@@ -1,0 +1,124 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-4UENTES-0026"
+title: "Portfolio mobile publication QA readiness"
+status: "planned"
+source_request: "requests/inbox/CR-4UENTES-0026-portfolio-mobile-publication-qa-readiness.yaml"
+created_at: "2026-07-04"
+requester: "4uentes"
+
+summary: >
+  Define the mobile publication QA and Jira Epic linkage for Portfolio before
+  mutating the child repository.
+
+initial_scope:
+  solution: "4uentes"
+  services:
+    - "4uentes-portfolio"
+  include_optional_services: false
+
+control_plane_context:
+  initiative_id: "INIT-FUENTES-0001"
+  product_initiative_id: "INIT-PORTFOLIO-0001"
+  parent_request_id: "CR-4UENTES-0021"
+  feature_id: "portfolio-mobile-publication-qa-readiness"
+  child_repo: "4uentes-portfolio"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "4uentes-portfolio"
+      via: "mobile publication readiness and future mobile layout fix"
+      service_kind: "frontend-spa"
+      ards_kind: "frontend-web"
+      status: "active"
+  affected_ards:
+    - "mobile-publication-readiness"
+    - "manual-qa"
+    - "jira-epic-linkage"
+    - "frontend-web"
+  capabilities:
+    - "portfolio-mobile-publication-qa-readiness"
+
+required_context:
+  - "evidence/requests/CR-4UENTES-0007/manual-qa-results.md"
+  - "evidence/initiatives/INIT-FUENTES-0001/initiative-scope.md"
+  - "evidence/requests/CR-4UENTES-0021/jira-project-boundary-analysis.md"
+  - "4uentes-portfolio: docs/architecture/README.md"
+  - "4uentes-portfolio: docs/portfolio-intent.md"
+  - "4uentes-portfolio: src/components/PortFolioLayout/index.tsx"
+  - "4uentes-portfolio: src/components/PortFolioLayout/styles.module.scss"
+
+risk:
+  level: "high"
+  score: 7
+  drivers:
+    - "current mobile route experience is a desktop-only placeholder"
+    - "mobile usability is a publication requirement in owner docs"
+    - "recruiters and hiring managers may inspect the portfolio from mobile devices"
+    - "mobile implementation can affect navigation, scroll ownership, and route visibility"
+
+execution:
+  requires_human_approval: false
+  allowed_window: "manual"
+  branch_strategy: "control-plane-mobile-readiness-cut"
+  child_repo_mutation_allowed: false
+  owner_documentation_required: false
+  implementation_boundary: >
+    Analyze current mobile state, define QA scope, and plan Jira Epic linkage.
+    Do not mutate child repo layout or styling in this CR. Open a follow-up
+    child-repo mutation CR for the actual mobile fix.
+
+jira:
+  role: "mirror"
+  source_of_truth: false
+  company_name: "4uentes"
+  project_name: "4uentes-portfolio"
+  project_key: "PORT"
+  epic:
+    summary: "[4UENTES][Portfolio] Portfolio Publication Readiness"
+    issue_type: "Epic"
+    issue_key: "PORT-1"
+    status: "created"
+  task:
+    summary: "[4UENTES][Portfolio][CR-4UENTES-0026] Mobile publication QA readiness"
+    issue_type: "Tarea"
+    issue_key: "PORT-2"
+    parent_epic_key: "PORT-1"
+    priority: "High"
+    labels:
+      - "ards-sdd"
+      - "control-plane"
+      - "4uentes"
+      - "portfolio"
+      - "mobile"
+      - "publication-readiness"
+      - "non-sst"
+    status: "Listo"
+  related_issue_keys:
+    mobile_implementation: "PORT-3"
+    i18n_company_cards: "PORT-4"
+    i18n_initiatives: "PORT-5"
+    bilingual_qa: "PORT-6"
+    bilingual_cv_source: "PORT-7"
+  transition_refs:
+    start_transition_ref: "evidence/requests/CR-4UENTES-0026/jira-port-2-start-transition-summary.md"
+  blocker: "none for initial Jira mirror creation"
+
+validation:
+  required_checks:
+    - "4uentes-orchestor: npm.cmd run check"
+  evidence_required:
+    - "mobile_publication_readiness_analysis"
+    - "jira_epic_linkage_plan"
+    - "jira_mcp_connection_review"
+    - "jira_project_and_ticket_create_blocker"
+    - "jira_port_project_sync_summary"
+    - "jira_port_2_start_transition_summary"
+    - "changed_files_summary"
+    - "validation_results"
+
+decision:
+  status: "approved-for-local-execution"
+  approver: "4uentes"
+  blocker: "none for Jira mirror; implementation continues in CR-4UENTES-0027"

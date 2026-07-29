@@ -1,0 +1,53 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-CP-0016"
+title: "Extend Codex model selection with GPT-5.6 resource-aware routing"
+status: "done"
+source_request: "requests/inbox/CR-CP-0016-codex-model-selection-resource-extension.yaml"
+planned_request: "requests/planned/CR-CP-0016-codex-model-selection-resource-extension.yaml"
+closed_at: "2026-07-11"
+requester: "4uentes"
+
+summary: >
+  Extended the existing Codex model selection policy with GPT-5.6 Sol routing
+  for normal/high resources, the previous model matrix for low resources, and
+  safe blocking under very-low resources.
+
+execution:
+  requires_human_approval: true
+  approver: "4uentes"
+  core_repo_mutation_allowed: true
+  child_repo_mutation_allowed: false
+  runtime_resource_detection: "deferred-to-INIT-CP-0003-ARDS-13"
+
+active_scope:
+  policy_id: "agent-model-selection-policy"
+  provider: "codex"
+  revision: "2026-07-11-codex-gpt-5.6-resource-extension"
+
+jira:
+  role: "mirror"
+  source_of_truth: false
+  project_key: "ARDS"
+  epic_key: "ARDS-1"
+  issue_key: "ARDS-15"
+  issue_type: "Tarea"
+  current_status_observed: "Listo"
+  resolution_observed: "Listo"
+  transition_id: "41"
+  transition_ref: "evidence/requests/CR-CP-0016/jira-ards-15-close-transition-summary.md"
+
+validation:
+  required_checks:
+    - "4uentes-ards-core: npm.cmd run check"
+    - "4uentes-orchestor: npm.cmd run check"
+  evidence_refs:
+    - "evidence/requests/CR-CP-0016/model-selection-matrix.md"
+    - "evidence/requests/CR-CP-0016/validation-results.md"
+    - "evidence/requests/CR-CP-0016/changed-files-summary.md"
+    - "evidence/requests/CR-CP-0016/jira-ards-15-close-transition-summary.md"
+
+decision:
+  status: "closed"
+  approver: "4uentes"
+  blocker: "none"

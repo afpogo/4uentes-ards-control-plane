@@ -1,0 +1,116 @@
+{
+  "issueKey": "SST-44",
+  "before": {
+    "summary": "[SST][CR-SST-0114] Implement contextual tagging over text selection",
+    "status": "Tareas por hacer",
+    "statusCategory": "Por hacer",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-07-04T15:22:41.187-0300",
+    "labels": [
+      "ards-sdd",
+      "contextual-tagging",
+      "control-plane",
+      "cr-sst-0114",
+      "init-sst-0001",
+      "learning-content-tags",
+      "sst-fend",
+      "subtask"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10082\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10082\",\"key\":\"SST-44\",\"fields\":{\"summary\":\"[SST][CR-SST-0114] Implement contextual tagging over text selection\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-07-04T15:22:41.187-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10005\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"Tareas por hacer\",\"id\":\"10005\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/2\",\"id\":2,\"key\":\"new\",\"colorName\":\"blue-gray\",\"name\":\"Por hacer\"}},\"labels\":[\"ards-sdd\",\"contextual-tagging\",\"control-plane\",\"cr-sst-0114\",\"init-sst-0001\",\"learning-content-tags\",\"sst-fend\",\"subtask\"]}}"
+  },
+  "after": {
+    "summary": "[SST][CR-SST-0114] Implement contextual tagging over text selection",
+    "status": "Listo",
+    "statusCategory": "Listo",
+    "resolution": "Listo",
+    "assignee": "no-asignado",
+    "updated": "2026-07-04T19:54:52.853-0300",
+    "labels": [
+      "ards-sdd",
+      "contextual-tagging",
+      "control-plane",
+      "cr-sst-0114",
+      "init-sst-0001",
+      "learning-content-tags",
+      "sst-fend",
+      "subtask"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10082\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10082\",\"key\":\"SST-44\",\"fields\":{\"summary\":\"[SST][CR-SST-0114] Implement contextual tagging over text selection\",\"assignee\":null,\"resolution\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/resolution/10000\",\"id\":\"10000\",\"description\":\"Se ha terminado el trabajo relacionado con esta incidencia.\",\"name\":\"Listo\"},\"updated\":\"2026-07-04T19:54:52.853-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10008\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"Finalizada\",\"id\":\"10008\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/3\",\"id\":3,\"key\":\"done\",\"colorName\":\"green\",\"name\":\"Listo\"}},\"labels\":[\"ards-sdd\",\"contextual-tagging\",\"control-plane\",\"cr-sst-0114\",\"init-sst-0001\",\"learning-content-tags\",\"sst-fend\",\"subtask\"]}}"
+  },
+  "transitions": [
+    {
+      "id": "11",
+      "name": "Por hacer",
+      "toStatus": "Tareas por hacer",
+      "toStatusCategory": "Por hacer"
+    },
+    {
+      "id": "21",
+      "name": "En curso",
+      "toStatus": "En curso",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "31",
+      "name": "In Review",
+      "toStatus": "En revisión",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "41",
+      "name": "Listo",
+      "toStatus": "Finalizada",
+      "toStatusCategory": "Listo"
+    }
+  ],
+  "selectedTransition": {
+    "id": "41",
+    "name": "Listo",
+    "toStatus": "Finalizada",
+    "toStatusCategory": "Listo"
+  },
+  "transitionResult": {
+    "success": true
+  },
+  "commentResult": {
+    "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10082/comment/10086",
+    "id": "10086",
+    "author": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "body": "CR-SST-0114 closure checkpoint.\n\nSST-44 can move to `Listo`.\n\nCompleted:\n\n* Implemented contextual tagging over text selection in `sst-fend`.\n* The Article creation Text tab can capture selected text.\n* Local content tag and relevance controls are separate from article-level tags.\n* Local annotation preview is non-destructive.\n* Owner ARDS/SDD documentation was updated in `sst-fend`.\n\nValidation:\n\n* `sst-fend npm.cmd test -- ArticleCreateFlow.test.tsx --runInBand`: PASS.\n* `sst-fend npm.cmd run check`: PASS.\n* `4uentes-orchestor npm.cmd run check`: PASS.\n* Owner documentation enforcement: PASS.\n\nEvidence:\n\n* `evidence/requests/CR-SST-0114/implementation-summary.md`\n* `evidence/requests/CR-SST-0114/owner-documentation-summary.md`\n* `evidence/requests/CR-SST-0114/validation-results.md`\n\nBoundary:\n\n* This is the first contextual tagging runtime cut.\n* Backend persistence remains covered by later CR-SST-0116.\n* Jira remains an operational mirror; ARDS/SDD remains source of truth.\n\n",
+    "updateAuthor": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "created": "2026-07-04T19:54:52.853-0300",
+    "updated": "2026-07-04T19:54:52.853-0300",
+    "jsdPublic": true
+  },
+  "commentBody": "CR-SST-0114 closure checkpoint.\n\nSST-44 can move to `Listo`.\n\nCompleted:\n\n- Implemented contextual tagging over text selection in `sst-fend`.\n- The Article creation Text tab can capture selected text.\n- Local content tag and relevance controls are separate from article-level tags.\n- Local annotation preview is non-destructive.\n- Owner ARDS/SDD documentation was updated in `sst-fend`.\n\nValidation:\n\n- `sst-fend npm.cmd test -- ArticleCreateFlow.test.tsx --runInBand`: PASS.\n- `sst-fend npm.cmd run check`: PASS.\n- `4uentes-orchestor npm.cmd run check`: PASS.\n- Owner documentation enforcement: PASS.\n\nEvidence:\n\n- `evidence/requests/CR-SST-0114/implementation-summary.md`\n- `evidence/requests/CR-SST-0114/owner-documentation-summary.md`\n- `evidence/requests/CR-SST-0114/validation-results.md`\n\nBoundary:\n\n- This is the first contextual tagging runtime cut.\n- Backend persistence remains covered by later CR-SST-0116.\n- Jira remains an operational mirror; ARDS/SDD remains source of truth.\n",
+  "externalWrite": true
+}

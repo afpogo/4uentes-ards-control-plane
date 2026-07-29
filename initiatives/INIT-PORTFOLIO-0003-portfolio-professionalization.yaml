@@ -1,0 +1,144 @@
+schema_version: "1.0"
+kind: "initiative"
+id: "INIT-PORTFOLIO-0003"
+title: "Portfolio Professionalization"
+status: "active"
+updated_at: "2026-07-10"
+owner_repository: "4uentes-orchestor"
+objective: >
+  Professionalize the Portfolio user experience and evidence presentation so it
+  better supports career exposure, recruiter review, and future CV
+  revalidation, while preserving the current technical dashboard identity.
+initial_hypothesis: >
+  The child repository emitted an outbound intake capability because the next
+  value cut is broader than a single mobile or I18N task. The control-plane
+  should reconcile that signal as its own Initiative/Epic, then decompose work
+  into small CRs for Home, project evidence, experience readability,
+  skills/certificates, and coordination with mobile publication readiness.
+source_evidence_refs:
+  - "evidence/requests/CR-4UENTES-0033/intake-reconciliation.md"
+  - "evidence/requests/CR-4UENTES-0033/jira-mcp-connection-review.md"
+  - "evidence/requests/CR-4UENTES-0033/jira-epic-and-task-sync-summary.md"
+  - "evidence/requests/CR-4UENTES-0033/changed-files-summary.md"
+  - "evidence/requests/CR-4UENTES-0033/validation-results.md"
+  - "evidence/requests/CR-4UENTES-0034/implementation-plan.md"
+  - "evidence/requests/CR-4UENTES-0034/changed-files-summary.md"
+  - "evidence/requests/CR-4UENTES-0034/child-validation-results.md"
+  - "evidence/requests/CR-4UENTES-0034/visual-qa-results.md"
+  - "evidence/requests/CR-4UENTES-0034/control-plane-validation-results.md"
+  - "evidence/requests/CR-4UENTES-0034/jira-port-11-close-transition-summary.md"
+  - "evidence/requests/CR-4UENTES-0034/post-close-chrome-devtools-qa.md"
+  - "evidence/requests/CR-4UENTES-0035/implementation-plan.md"
+  - "evidence/requests/CR-4UENTES-0035/jira-task-sync-summary.md"
+  - "evidence/requests/CR-4UENTES-0035/jira-port-18-start-transition-summary.md"
+  - "evidence/requests/CR-4UENTES-0035/jira-port-18-start-comment-summary.md"
+  - "evidence/requests/CR-4UENTES-0036/implementation-plan.md"
+  - "evidence/requests/CR-4UENTES-0036/current-experience-ui-analysis.md"
+  - "evidence/requests/CR-4UENTES-0036/changed-files-summary.md"
+  - "evidence/requests/CR-4UENTES-0036/child-validation-results.md"
+  - "evidence/requests/CR-4UENTES-0036/visual-qa-results.md"
+  - "evidence/requests/CR-4UENTES-0036/control-plane-validation-results.md"
+  - "evidence/requests/CR-4UENTES-0036/jira-port-19-close-transition-summary.md"
+  - "evidence/requests/CR-4UENTES-0036/jira-port-9-epic-start-reconciliation-summary.md"
+  - "evidence/requests/CR-4UENTES-0036/jira-task-sync-summary.md"
+  - "evidence/requests/CR-4UENTES-0036/jira-port-19-start-transition-summary.md"
+  - "evidence/requests/CR-4UENTES-0036/github-publication-readiness.md"
+  - "evidence/requests/CR-4UENTES-0039/implementation-plan.md"
+  - "state/features/portfolio-professionalization-intake.current.yaml"
+  - "state/features/portfolio-home-hero-positioning.current.yaml"
+  - "state/features/portfolio-projects-evidence-system.current.yaml"
+  - "state/features/portfolio-experience-readable-impact.current.yaml"
+  - "state/features/portfolio-publication-base-reconciliation.current.yaml"
+  - "docs/requests/initiative-model.md"
+  - "docs/policies/owner-documentation-authority-policy.md"
+model_refs:
+  - "specs/initiatives/initiative-model.yaml"
+  - "docs/requests/initiative-model.md"
+parent_initiative_refs:
+  - "INIT-FUENTES-0001"
+  - "INIT-PORTFOLIO-0001"
+related_initiative_refs:
+  - "INIT-PORTFOLIO-0002"
+known_change_requests:
+  - "CR-4UENTES-0033"
+  - "CR-4UENTES-0034"
+  - "CR-4UENTES-0035"
+  - "CR-4UENTES-0036"
+  - "CR-4UENTES-0039"
+candidate_change_requests:
+  - id: "CR-4UENTES-0034"
+    title: "Portfolio home hero positioning and CTA clarity"
+    status: "planned"
+    jira_priority: "High"
+    urgency: "urgent"
+    execution_order: "after-intake-reconciliation"
+  - id: "CR-4UENTES-0035"
+    title: "Portfolio projects evidence system"
+    status: "planned"
+    jira_priority: "High"
+    urgency: "urgent"
+    execution_order: "after-home-positioning"
+  - id: "CR-4UENTES-0036"
+    title: "Portfolio experience readable impact"
+    status: "done"
+    jira_priority: "High"
+    urgency: "urgent"
+    execution_order: "after-projects-evidence"
+  - id: "CR-4UENTES-0037"
+    title: "Portfolio skills and certificates curation"
+    status: "candidate"
+    jira_priority: "High"
+    urgency: "urgent"
+    execution_order: "after-experience-impact"
+  - id: "CR-4UENTES-0038"
+    title: "Portfolio professionalization and mobile readiness coordination"
+    status: "candidate"
+    jira_priority: "High"
+    urgency: "urgent"
+    execution_order: "after-content-hierarchy"
+  - id: "CR-4UENTES-0039"
+    title: "Portfolio publication base reconciliation"
+    status: "planned"
+    jira_priority: "High"
+    urgency: "urgent"
+    execution_order: "before-next-publication-pr"
+discovered_change_requests: []
+tracking:
+  jira:
+    role: "mirror"
+    source_of_truth: false
+    project_key: "PORT"
+    issue_type: "Epic"
+    issue_key: "PORT-9"
+    current_status_observed: "En curso"
+    write_status: "executed"
+    read_status: "verified"
+    associated_issue_keys:
+      - "PORT-10"
+      - "PORT-11"
+      - "PORT-18"
+      - "PORT-19"
+      - "PORT-20"
+    active_issue_key: "PORT-20"
+    active_issue_status: "En curso"
+    epic_transition_ref: "evidence/requests/CR-4UENTES-0036/jira-port-9-epic-start-reconciliation-summary.md"
+    previous_issue_key: "PORT-19"
+boundaries:
+  mutates_child_repositories: true
+  promotes_runtime: false
+  changes_core_canon: false
+  belongs_to_sst: false
+policy_application:
+  owner_documentation_enforcement: >
+    Every future child-repo mutation CR under this Initiative must update
+    4uentes-portfolio owner docs/specs or record an explicit owner documentation
+    exception before closure.
+  jira_boundary: >
+    Jira Epic and child issues are mirrors. Local Initiative, CR lifecycle,
+    owner docs, and evidence remain the source of truth.
+  atomization: >
+    Professionalization must be split into small CRs by visible surface and
+    evidence contract. Mobile remediation remains coordinated with
+    INIT-PORTFOLIO-0002 and must not be duplicated here.
+open_gaps:
+  - "Implement future child-repo mutation CRs with owner docs/specs updates and visual QA evidence."

@@ -1,4 +1,4 @@
-# SST-20 Jira Close Transition Execution
+# SST-20 Ejecucion De Cierre De Transicion Jira
 
 ## Estado
 

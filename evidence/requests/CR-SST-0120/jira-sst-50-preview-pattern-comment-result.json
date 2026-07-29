@@ -1,0 +1,81 @@
+{
+  "issueKey": "SST-50",
+  "before": {
+    "summary": "[SST][INIT-SST-0003][CR-SST-0120] Define preview image contract for session-derived articles",
+    "status": "Tareas por hacer",
+    "statusCategory": "Por hacer",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-07-04T19:47:06.706-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0120",
+      "init-sst-0003",
+      "node-auth",
+      "preview-image",
+      "sst-extension",
+      "sst-fend"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10095\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10095\",\"key\":\"SST-50\",\"fields\":{\"summary\":\"[SST][INIT-SST-0003][CR-SST-0120] Define preview image contract for session-derived articles\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-07-04T19:47:06.706-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10005\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"Tareas por hacer\",\"id\":\"10005\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/2\",\"id\":2,\"key\":\"new\",\"colorName\":\"blue-gray\",\"name\":\"Por hacer\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-sst-0120\",\"init-sst-0003\",\"node-auth\",\"preview-image\",\"sst-extension\",\"sst-fend\"]}}"
+  },
+  "after": {
+    "summary": "[SST][INIT-SST-0003][CR-SST-0120] Define preview image contract for session-derived articles",
+    "status": "Tareas por hacer",
+    "statusCategory": "Por hacer",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-07-04T20:15:44.763-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0120",
+      "init-sst-0003",
+      "node-auth",
+      "preview-image",
+      "sst-extension",
+      "sst-fend"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10095\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10095\",\"key\":\"SST-50\",\"fields\":{\"summary\":\"[SST][INIT-SST-0003][CR-SST-0120] Define preview image contract for session-derived articles\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-07-04T20:15:44.763-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10005\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"Tareas por hacer\",\"id\":\"10005\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/2\",\"id\":2,\"key\":\"new\",\"colorName\":\"blue-gray\",\"name\":\"Por hacer\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-sst-0120\",\"init-sst-0003\",\"node-auth\",\"preview-image\",\"sst-extension\",\"sst-fend\"]}}"
+  },
+  "commentResult": {
+    "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10095/comment/10090",
+    "id": "10090",
+    "author": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "body": "CR-SST-0120 / SST-50 - intencion de diseno asentada\n\nNueva intencion:\n\nDefinir un patron reusable para conservar o generar `preview image` en articulos SST creados desde URL, foto/imagen provista, captura de `sst-extension` o PDF/text article derivado de una web.\n\nPatron propuesto:\n\n* `ArticlePreviewResolver`\n* Entrada: URL fuente, imagen provista, thumbnail de productor, capture mode y politica de privacidad.\n* Salida: `status`, `source`, `image_ref`/`image_url`, `reason` y `provenance`.\n\nOrden recomendado:\n\n1. Usar imagen provista si existe y es valida.\n2. Usar thumbnail visual producido por `sst-extension` si existe.\n3. Resolver metadata publica desde URL cuando la politica lo permita: `og:image`, `twitter:image`, favicon.\n4. Para URLs privadas, permitir thumbnail local solo con politica explicita.\n5. Si no hay imagen segura, generar placeholder gobernado y persistir `preview_unavailable_reason`.\n\nAplicacion prevista:\n\n* Primero en `sst-extension` como productor opcional de preview cuando ya captura una web.\n* Luego en SST frontend como consumidor consistente del contrato, evitando previews vacios ambiguos.\n\nBoundary:\n\n* Jira es mirror operativo; ARDS/SDD permanece como fuente de verdad.\n* No se incluye contenido privado, raw PDFs, screenshots privadas, cookies, JWTs ni secretos.\n* La evidencia de diseno queda en `evidence/requests/CR-SST-0120/preview-image-design-pattern.md`.\n\n",
+    "updateAuthor": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "created": "2026-07-04T20:15:44.763-0300",
+    "updated": "2026-07-04T20:15:44.763-0300",
+    "jsdPublic": true
+  },
+  "commentBody": "CR-SST-0120 / SST-50 - intencion de diseno asentada\n\nNueva intencion:\n\nDefinir un patron reusable para conservar o generar `preview image` en articulos SST creados desde URL, foto/imagen provista, captura de `sst-extension` o PDF/text article derivado de una web.\n\nPatron propuesto:\n\n- `ArticlePreviewResolver`\n- Entrada: URL fuente, imagen provista, thumbnail de productor, capture mode y politica de privacidad.\n- Salida: `status`, `source`, `image_ref`/`image_url`, `reason` y `provenance`.\n\nOrden recomendado:\n\n1. Usar imagen provista si existe y es valida.\n2. Usar thumbnail visual producido por `sst-extension` si existe.\n3. Resolver metadata publica desde URL cuando la politica lo permita: `og:image`, `twitter:image`, favicon.\n4. Para URLs privadas, permitir thumbnail local solo con politica explicita.\n5. Si no hay imagen segura, generar placeholder gobernado y persistir `preview_unavailable_reason`.\n\nAplicacion prevista:\n\n- Primero en `sst-extension` como productor opcional de preview cuando ya captura una web.\n- Luego en SST frontend como consumidor consistente del contrato, evitando previews vacios ambiguos.\n\nBoundary:\n\n- Jira es mirror operativo; ARDS/SDD permanece como fuente de verdad.\n- No se incluye contenido privado, raw PDFs, screenshots privadas, cookies, JWTs ni secretos.\n- La evidencia de diseno queda en `evidence/requests/CR-SST-0120/preview-image-design-pattern.md`.\n",
+  "externalWrite": true
+}

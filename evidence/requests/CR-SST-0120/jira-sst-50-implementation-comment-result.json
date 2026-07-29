@@ -1,0 +1,81 @@
+{
+  "issueKey": "SST-50",
+  "before": {
+    "summary": "[SST][INIT-SST-0003][CR-SST-0120] Define preview image contract for session-derived articles",
+    "status": "En curso",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "Fuentes Sandferand",
+    "updated": "2026-07-05T15:32:15.577-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0120",
+      "init-sst-0003",
+      "node-auth",
+      "preview-image",
+      "sst-extension",
+      "sst-fend"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10095\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10095\",\"key\":\"SST-50\",\"fields\":{\"summary\":\"[SST][INIT-SST-0003][CR-SST-0120] Define preview image contract for session-derived articles\",\"assignee\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]\",\"accountId\": \"[accountId-redacted]\",\"emailAddress\":\"[email-redacted]\",\"avatarUrls\":{\"48x48\":\"[avatar-url-redacted]\",\"24x24\":\"[avatar-url-redacted]\",\"16x16\":\"[avatar-url-redacted]\",\"32x32\":\"[avatar-url-redacted]\"},\"displayName\":\"Fuentes Sandferand\",\"active\":true,\"timeZone\":\"America/Buenos_Aires\",\"accountType\":\"atlassian\"},\"resolution\":null,\"updated\":\"2026-07-05T15:32:15.577-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10006\",\"description\":\"La persona asignada está trabajando actualmente en esta actividad.\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En curso\",\"id\":\"10006\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-sst-0120\",\"init-sst-0003\",\"node-auth\",\"preview-image\",\"sst-extension\",\"sst-fend\"]}}"
+  },
+  "after": {
+    "summary": "[SST][INIT-SST-0003][CR-SST-0120] Define preview image contract for session-derived articles",
+    "status": "En curso",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "Fuentes Sandferand",
+    "updated": "2026-07-05T21:11:08.851-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0120",
+      "init-sst-0003",
+      "node-auth",
+      "preview-image",
+      "sst-extension",
+      "sst-fend"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10095\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10095\",\"key\":\"SST-50\",\"fields\":{\"summary\":\"[SST][INIT-SST-0003][CR-SST-0120] Define preview image contract for session-derived articles\",\"assignee\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]\",\"accountId\": \"[accountId-redacted]\",\"emailAddress\":\"[email-redacted]\",\"avatarUrls\":{\"48x48\":\"[avatar-url-redacted]\",\"24x24\":\"[avatar-url-redacted]\",\"16x16\":\"[avatar-url-redacted]\",\"32x32\":\"[avatar-url-redacted]\"},\"displayName\":\"Fuentes Sandferand\",\"active\":true,\"timeZone\":\"America/Buenos_Aires\",\"accountType\":\"atlassian\"},\"resolution\":null,\"updated\":\"2026-07-05T21:11:08.851-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10006\",\"description\":\"La persona asignada está trabajando actualmente en esta actividad.\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En curso\",\"id\":\"10006\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-sst-0120\",\"init-sst-0003\",\"node-auth\",\"preview-image\",\"sst-extension\",\"sst-fend\"]}}"
+  },
+  "commentResult": {
+    "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10095/comment/10109",
+    "id": "10109",
+    "author": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "body": "# CR-SST-0120 implementation checkpoint\n\nARDS/SDD source of truth was updated for the SST-50 frontend consumer slice.\n\nImplemented in `sst-fend`:\n\n* Governed `ArticlePreviewResult` consumer contract for Articles.\n* Reusable preview presentation resolver with `available`, `pending`,\n  `unavailable`, and `rejected` states.\n* Deterministic placeholder plus functional unavailable reasons for text-only  \n  and PDF-text articles.\n* Compatibility guard for the legacy preview blob endpoint.\n* Owner docs updated in `specs/33-articles-frontend.yml`,\n  `docs/33-articles-frontend.md`, and task evidence.\n\nValidation:\n\n* Targeted Jest: PASS.\n* Targeted ESLint: PASS.\n* Production build: PASS with existing bundle-size warnings.\n* Control-plane `npm run check`: PASS, including owner documentation gate for\n  `CR-SST-0120`.\n\nKnown blocker outside this slice:\n\n* Full `sst-fend npm run check` remains blocked by unrelated LearningWorkspace  \n  CRLF Prettier errors, not by SST-50 files.\n\nBoundary:\n\n* No changes were made to `sst-extension`, `node-auth`, `sst-bend`, API  \n  contracts, persistence, or private preview storage.\n* Producer thumbnail generation and BFF ingestion remain future  \n  owner-governed slices if needed.\n\n",
+    "updateAuthor": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "created": "2026-07-05T21:11:08.851-0300",
+    "updated": "2026-07-05T21:11:08.851-0300",
+    "jsdPublic": true
+  },
+  "commentBody": "# CR-SST-0120 implementation checkpoint\n\nARDS/SDD source of truth was updated for the SST-50 frontend consumer slice.\n\nImplemented in `sst-fend`:\n\n- Governed `ArticlePreviewResult` consumer contract for Articles.\n- Reusable preview presentation resolver with `available`, `pending`,\n  `unavailable`, and `rejected` states.\n- Deterministic placeholder plus functional unavailable reasons for text-only\n  and PDF-text articles.\n- Compatibility guard for the legacy preview blob endpoint.\n- Owner docs updated in `specs/33-articles-frontend.yml`,\n  `docs/33-articles-frontend.md`, and task evidence.\n\nValidation:\n\n- Targeted Jest: PASS.\n- Targeted ESLint: PASS.\n- Production build: PASS with existing bundle-size warnings.\n- Control-plane `npm run check`: PASS, including owner documentation gate for\n  `CR-SST-0120`.\n\nKnown blocker outside this slice:\n\n- Full `sst-fend npm run check` remains blocked by unrelated LearningWorkspace\n  CRLF Prettier errors, not by SST-50 files.\n\nBoundary:\n\n- No changes were made to `sst-extension`, `node-auth`, `sst-bend`, API\n  contracts, persistence, or private preview storage.\n- Producer thumbnail generation and BFF ingestion remain future\n  owner-governed slices if needed.\n",
+  "externalWrite": true
+}

@@ -1,0 +1,172 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0095"
+title: "Decompose SST Extension construction backlog into governed CRs"
+status: planned
+source_request: "requests/inbox/CR-SST-0095-sst-extension-construction-backlog-decomposition.yaml"
+created_at: "2026-06-30"
+requester: "4uentes"
+
+summary: >
+  Analyze sst-extension current structure and formalize the INIT-SST-0003
+  execution backlog into named CR/Jira task candidates with subtasks, validation
+  criteria, and boundaries.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - "4uentes-orchestor"
+  include_optional_services: false
+
+control_plane_context:
+  initiative_id: "INIT-SST-0003"
+  initiative_file: "initiatives/INIT-SST-0003-sst-extension-construction.yaml"
+  jira_epic_key: "SST-29"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  preceding_requests:
+    - "CR-SST-0093"
+    - "CR-SST-0094"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "4uentes-orchestor"
+      via: "request lifecycle, evidence, initiative backlog"
+      service_kind: "control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+    - service_id: "sst-extension"
+      via: "read-only discovery and future implementation target"
+      service_kind: "browser-extension"
+      ards_kind: "frontend-extension"
+      status: "optional-active"
+  affected_ards:
+    - control-plane
+    - request-lifecycle
+    - initiative
+    - evidence
+    - frontend-extension
+    - browser-extension-session-capture
+  capabilities:
+    - "browser-extension-session-capture"
+    - "dictionary-secret-management-v1"
+    - "learning-content-tags"
+  risks:
+    - id: PRIVATE_PAGE_CAPTURE_LEAK
+      severity: high
+    - id: OVERSIZED_EXTENSION_CR
+      severity: high
+    - id: SUBAGENT_SECURITY_DELEGATION
+      severity: high
+    - id: CHILD_REPO_SCOPE_CREEP
+      severity: medium
+    - id: JIRA_BACKLOG_NOISE
+      severity: medium
+
+required_context:
+  - "AGENTS.md"
+  - "specs/integration/policies.yaml"
+  - "docs/policies/agent-delegation-policy.md"
+  - "docs/policies/agent-task-atomization-policy.md"
+  - "docs/policies/agent-model-selection-policy.md"
+  - "docs/policies/human-doc-language-policy.md"
+  - "docs/policies/owner-documentation-authority-policy.md"
+  - "docs/policies/agent-architecture-boundary-policy.md"
+  - "initiatives/INIT-SST-0003-sst-extension-construction.yaml"
+  - "evidence/requests/CR-SST-0093/session-pdf-capture-gap-analysis.md"
+  - "sst-extension/AGENTS.md"
+  - "sst-extension/specs/00-index.yaml"
+  - "sst-extension/specs/features/sessions.yaml"
+  - "sst-extension/specs/features/text-article-pdf.yaml"
+  - "sst-extension/specs/integration/node-auth-extension-session-ingestion.yaml"
+  - "sst-extension/docs/architecture/source-layout.md"
+
+required_checks:
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check"
+
+risk:
+  level: high
+  score: 7
+  drivers:
+    - PRIVATE_PAGE_CAPTURE_LEAK
+    - OVERSIZED_EXTENSION_CR
+    - SUBAGENT_SECURITY_DELEGATION
+    - CHILD_REPO_SCOPE_CREEP
+    - JIRA_BACKLOG_NOISE
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "Backlog touches browser session capture and private authenticated pages."
+    - "Subagent policy must prevent delegation of security/architecture decisions."
+    - "The output names future child repo mutations and Jira tickets."
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-high-reasoning-profile"
+  reason: >
+    This work decomposes sensitive extension architecture and privacy-facing
+    capture behavior into executable requests.
+
+subagent_deployment_plan:
+  required: true
+  parallelizable: true
+  roles:
+    - id: "extension-structure-discovery"
+      objective: "Read sst-extension specs/source layout and summarize current module boundaries."
+      risk: medium
+      suggested_profile: "long_context_task"
+      validation: "Main agent verifies against specs and file paths before recording."
+    - id: "session-capture-bug-clustering"
+      objective: "Cluster observed session capture bugs into small implementation units."
+      risk: medium
+      suggested_profile: "long_context_task"
+      validation: "Main agent checks each cluster has DoD and does not redefine auth/security."
+    - id: "jira-subtask-drafting"
+      objective: "Draft Jira task/subtask names from approved CR boundaries."
+      risk: low
+      suggested_profile: "fast_verifiable_task"
+      validation: "Main agent validates wording, language policy, and ticket scope."
+  fallback: "Subagent runtime was not invoked in this pass; the main agent executed discovery sequentially and recorded delegable units for future use."
+  evidence_required: true
+
+execution:
+  requires_human_approval: false
+  allowed_window: manual
+  branch_strategy: "control-plane-only"
+  implementation_boundary: >
+    This request may modify only control-plane request, initiative, and evidence
+    files. It must not modify sst-extension or create Jira task issues until
+    the backlog is approved.
+  child_repo_mutation_allowed: false
+  jira_write_executed: false
+  jira_write_target:
+    desired_artifact: "Future Jira tasks under SST-29 after backlog approval"
+    desired_initial_status: "not requested in this analysis pass"
+
+validation:
+  required_checks:
+    - "Control-plane validation passes."
+    - "Backlog entries include objective, inputs, outputs, risk, suggested profile, subtasks, and DoD."
+    - "Human-facing Markdown is written in Spanish."
+    - "No child repositories are modified."
+    - "No Jira task writes are executed in this pass."
+  evidence_required:
+    - "current_structure_analysis"
+    - "policy_application"
+    - "jira_cr_backlog_candidates"
+    - "changed_files_summary"
+    - "validation_results"
+
+decision:
+  status: pending
+  approver: TODO
+
+planner_notes:
+  - "First implementation candidate should be the tab-by-tab visual PDF capture fix."
+  - "CR-SST-0096 is already assigned to owner-documentation-authority-policy and CR-SST-0097 is assigned to sst-bend owner-doc remediation; extension implementation candidates start at CR-SST-0098."
+  - "Do not combine DictionarySecret backend capture or LearningWorkspace integration into the first bugfix CR."

@@ -1,0 +1,111 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0145"
+title: "Correct semantic payload-kind filtering"
+status: done
+source_request: "requests/inbox/CR-SST-0145-semantic-payload-kind-filter-correction.yaml"
+created_at: "2026-07-18"
+requester: "4uentes"
+summary: >
+  Restore kind-correct catalog filtering by introducing or propagating an
+  explicit semantic payload-kind query path while retaining the independently
+  scoped legacy filter.type query behavior.
+control_plane_context:
+  initiative_id: "INIT-SST-0005"
+  parent_request_id: "CR-SST-0144"
+  jira_epic_key: "SST-57"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+impact_analysis:
+  required: true
+  affected_services:
+    - {service_id: "sst-fend", via: "Catalog Type selector query mapping and kind-correct list presentation", service_kind: "frontend-web", ards_kind: "frontend-web", status: "active"}
+    - {service_id: "node-auth", via: "Article BFF query passthrough", service_kind: "backend-bff", ards_kind: "backend-service", status: "active"}
+    - {service_id: "sst-bend", via: "Canonical payload.kind query/persistence boundary", service_kind: "backend-api", ards_kind: "backend-service", status: "active"}
+    - {service_id: "4uentes-orchestor", via: "Lifecycle, cross-repo evidence and closure gate", service_kind: "control-plane", ards_kind: "control-plane", status: "active"}
+  affected_ards: ["article-semantic-kind", "article-persisted-filters", "article-frontend"]
+  risks:
+    - {id: "LEGACY_FILTER_TYPE_CONFLATION", severity: high}
+    - {id: "SEMANTIC_KIND_QUERY_DRIFT", severity: high}
+execution:
+  requires_human_approval: false
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets: ["sst-fend", "node-auth", "sst-bend"]
+  implementation_started_at: "2026-07-19"
+  implementation_boundary: >
+    Add and propagate a payloadKind list-query parameter from frontend through
+    BF to SST API, with repository filtering against the persisted payload
+    association. Preserve filter.type as a distinct legacy concern; do not
+    bulk-reclassify historical rows or infer payload.kind from filter.type,
+    URL, transport or node metadata.
+owner_documentation:
+  required: true
+  status: satisfied
+  owner_repos: ["sst-fend", "node-auth", "sst-bend"]
+  planned_owner_docs:
+    - "specs/33-articles-frontend.yml"
+    - "specs/integrations-api.yaml"
+    - "specs/capabilities/outbound/article-persisted-filters.yaml"
+  updated_owner_docs:
+    - "specs/33-articles-frontend.yml"
+    - "docs/33-articles-frontend.md"
+    - "specs/capabilities/inbound/node-auth--article-persisted-filters.yaml"
+    - "specs/integrations-api.yaml"
+    - "specs/routing.yaml"
+    - "specs/capabilities/outbound/article-persisted-filters.yaml"
+    - "specs/api/routing.yaml"
+    - "docs/api/03-routing.md"
+  control_plane_evidence_refs:
+    - "evidence/requests/CR-SST-0145/implementation-validation.md"
+required_checks:
+  - {service_id: "sst-bend", command: "npm.cmd run test:article-kind-contract"}
+  - {service_id: "sst-bend", command: "npm.cmd run check"}
+  - {service_id: "node-auth", command: "npm.cmd run check"}
+  - {service_id: "sst-fend", command: "npm.cmd run check"}
+  - {service_id: "4uentes-orchestor", command: "npm.cmd run check"}
+decision:
+  status: closed-local
+  approver: "4uentes"
+  decided_at: "2026-07-18"
+  note: "Semantic filtering is implemented and authenticated desktop/mobile QA passed; no historical data was mutated and no release is implied."
+jira_sync:
+  status: closed-synced
+  desired_issue_type: "Task"
+  parent_issue_key: "SST-57"
+  issue_key: "SST-85"
+  status_observed: "Listo"
+  closure_comment_id: "10227"
+  initial_comment_id: "10224"
+  write_authorization:
+    authorized_by: "4uentes"
+    authorized_at: "2026-07-18"
+    provider: "jira"
+    project_key: "SST"
+    issue_candidates: ["new Task under SST-57 for CR-SST-0145"]
+    permitted_operations: ["duplicate-preflight", "create-task", "add-initial-comment"]
+    expected_parent_issue_key: "SST-57"
+    expected_issue_type: "Task"
+    expected_status: "Por hacer"
+    execution_window: "current E2E defect recording turn"
+  implementation_write_authorization:
+    authorized_by: "4uentes"
+    authorized_at: "2026-07-19"
+    provider: "jira"
+    project_key: "SST"
+    issue_keys: ["SST-85"]
+    permitted_operations: ["add-implementation-comment", "transition-to-in-progress"]
+    expected_parent_issue_key: "SST-57"
+    expected_issue_type: "Task"
+    expected_status: "En curso"
+    execution_window: "current bugfix implementation turn"
+  closure_write_authorization:
+    authorized_by: "4uentes"
+    authorized_at: "2026-07-19"
+    provider: "jira"
+    project_key: "SST"
+    issue_keys: ["SST-85"]
+    permitted_operations: ["add-closure-comment", "transition-to-done"]
+    expected_parent_issue_key: "SST-57"
+    expected_issue_type: "Task"
+    expected_status: "Listo"
+    execution_window: "current validated bugfix closure turn"

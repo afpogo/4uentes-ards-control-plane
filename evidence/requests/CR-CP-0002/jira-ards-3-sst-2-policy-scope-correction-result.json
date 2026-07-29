@@ -1,0 +1,73 @@
+{
+  "issueKey": "ARDS-3",
+  "before": {
+    "summary": "[CP][CR-CP-0002] Define child-to-control-plane reconciliation link policy and template",
+    "status": "Listo",
+    "statusCategory": "Listo",
+    "resolution": "Listo",
+    "assignee": "Fuentes Sandferand",
+    "updated": "2026-07-07T21:13:03.010-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-cp-0002",
+      "init-cp-0002"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10111\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10111\",\"key\":\"ARDS-3\",\"fields\":{\"summary\":\"[CP][CR-CP-0002] Define child-to-control-plane reconciliation link policy and template\",\"assignee\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]\",\"accountId\": \"[accountId-redacted]\",\"emailAddress\":\"[email-redacted]\",\"avatarUrls\":{\"48x48\":\"[avatar-url-redacted]\",\"24x24\":\"[avatar-url-redacted]\",\"16x16\":\"[avatar-url-redacted]\",\"32x32\":\"[avatar-url-redacted]\"},\"displayName\":\"Fuentes Sandferand\",\"active\":true,\"timeZone\":\"America/Buenos_Aires\",\"accountType\":\"atlassian\"},\"resolution\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/resolution/10000\",\"id\":\"10000\",\"description\":\"Se ha terminado el trabajo relacionado con esta incidencia.\",\"name\":\"Listo\"},\"updated\":\"2026-07-07T21:13:03.010-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10045\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"Listo\",\"id\":\"10045\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/3\",\"id\":3,\"key\":\"done\",\"colorName\":\"green\",\"name\":\"Listo\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-cp-0002\",\"init-cp-0002\"]}}"
+  },
+  "after": {
+    "summary": "[CP][CR-CP-0002] Define child-to-control-plane reconciliation link policy and template",
+    "status": "Listo",
+    "statusCategory": "Listo",
+    "resolution": "Listo",
+    "assignee": "Fuentes Sandferand",
+    "updated": "2026-07-07T21:32:28.528-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-cp-0002",
+      "init-cp-0002"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10111\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10111\",\"key\":\"ARDS-3\",\"fields\":{\"summary\":\"[CP][CR-CP-0002] Define child-to-control-plane reconciliation link policy and template\",\"assignee\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]\",\"accountId\": \"[accountId-redacted]\",\"emailAddress\":\"[email-redacted]\",\"avatarUrls\":{\"48x48\":\"[avatar-url-redacted]\",\"24x24\":\"[avatar-url-redacted]\",\"16x16\":\"[avatar-url-redacted]\",\"32x32\":\"[avatar-url-redacted]\"},\"displayName\":\"Fuentes Sandferand\",\"active\":true,\"timeZone\":\"America/Buenos_Aires\",\"accountType\":\"atlassian\"},\"resolution\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/resolution/10000\",\"id\":\"10000\",\"description\":\"Se ha terminado el trabajo relacionado con esta incidencia.\",\"name\":\"Listo\"},\"updated\":\"2026-07-07T21:32:28.528-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10045\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"Listo\",\"id\":\"10045\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/3\",\"id\":3,\"key\":\"done\",\"colorName\":\"green\",\"name\":\"Listo\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-cp-0002\",\"init-cp-0002\"]}}"
+  },
+  "commentResult": {
+    "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10111/comment/10131",
+    "id": "10131",
+    "author": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "body": "# ARDS-3 correccion de alcance SST-2\n\nSe corrigio una omision en la evidencia de policies vivas: el cierre anterior  \nreflejaba claramente `INIT-SST-0003 / SST-29`, pero no dejaba explicita la  \naplicacion equivalente para `INIT-SST-0002 / SST-25-SST-26`.\n\nCorreccion aplicada:\n\n* Se agrego `evidence/initiatives/INIT-SST-0002/policy-application.md`.\n* Se referencio desde `initiatives/INIT-SST-0002-dictionary-management.yaml`.\n* Se registro evidencia de correccion en\n  `evidence/requests/CR-CP-0002/sst-2-policy-scope-correction.md`.\n\nSST-2 queda incluido con:\n\n* policies agenticas comunes;\n* `owner-documentation-authority-policy`;\n* `http-qa-harness-policy` cuando aplica por superficies HTTP;\n* reglas Dictionary de secret-safe, evidencia redactada, exclusion de material  \n  de custodia extrema, compatibilidad de tags y owner documentation.\n\nNo se mutaron repos hijos. `npm.cmd run check` del control-plane paso con\n`0 WARN / 0 FAIL`.",
+    "updateAuthor": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "created": "2026-07-07T21:32:28.528-0300",
+    "updated": "2026-07-07T21:32:28.528-0300",
+    "jsdPublic": true
+  },
+  "commentBody": "# ARDS-3 correccion de alcance SST-2\n\nSe corrigio una omision en la evidencia de policies vivas: el cierre anterior\nreflejaba claramente `INIT-SST-0003 / SST-29`, pero no dejaba explicita la\naplicacion equivalente para `INIT-SST-0002 / SST-25-SST-26`.\n\nCorreccion aplicada:\n\n- Se agrego `evidence/initiatives/INIT-SST-0002/policy-application.md`.\n- Se referencio desde `initiatives/INIT-SST-0002-dictionary-management.yaml`.\n- Se registro evidencia de correccion en\n  `evidence/requests/CR-CP-0002/sst-2-policy-scope-correction.md`.\n\nSST-2 queda incluido con:\n\n- policies agenticas comunes;\n- `owner-documentation-authority-policy`;\n- `http-qa-harness-policy` cuando aplica por superficies HTTP;\n- reglas Dictionary de secret-safe, evidencia redactada, exclusion de material\n  de custodia extrema, compatibilidad de tags y owner documentation.\n\nNo se mutaron repos hijos. `npm.cmd run check` del control-plane paso con\n`0 WARN / 0 FAIL`.\n",
+  "externalWrite": true
+}

@@ -1,0 +1,81 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-CP-0016"
+title: "Extend Codex model selection with GPT-5.6 resource-aware routing"
+status: "planned"
+source_request: "requests/inbox/CR-CP-0016-codex-model-selection-resource-extension.yaml"
+created_at: "2026-07-11"
+requester: "4uentes"
+
+control_plane_context:
+  initiative_id: "INIT-CP-0002"
+  jira_epic_key: "ARDS-1"
+  related_runtime_initiative_id: "INIT-CP-0003"
+  related_runtime_epic_key: "ARDS-13"
+  runtime_dependency: "Resource signal automation remains deferred to ARDS-13."
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "4uentes-orchestor"
+      via: "local policy adoption and planner implementation"
+      service_kind: "control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+  affected_ards:
+    - "agent-operating-policies"
+    - "request-planning"
+    - "resource-degradation"
+
+required_context:
+  - "4uentes-ards-core: docs/policies/agent-model-selection-policy.md"
+  - "specs/integration/policies.yaml"
+  - "docs/ai/model-selection-policy.md"
+  - "scripts/plan-change.js"
+
+risk:
+  level: "medium"
+  score: 6
+  drivers:
+    - "core-owned policy requires canonical promotion before child rollout"
+    - "very-low resources must not downgrade sensitive work unsafely"
+
+task_weight:
+  classification: "long-context-task"
+  risk_level: "medium"
+  drivers:
+    - "cross-repo policy canon and local planner must remain aligned"
+
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "manual"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "high"
+  fallback_profile: "gpt-5.4-fast-high"
+  reason: "Normal resources and long-context policy work use Sol with high reasoning."
+
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "core-canon-then-control-plane-adoption"
+  child_repo_mutation_allowed: false
+  core_repo_mutation_allowed: true
+  implementation_boundary: >
+    Promote the same policy id in core, then adopt it in the control plane.
+    Child repository rollout requires separate approved requests and manifests.
+
+validation:
+  required_checks:
+    - "4uentes-ards-core: npm.cmd run check"
+    - "4uentes-orchestor: npm.cmd run check"
+  evidence_required:
+    - "source_validation"
+    - "model_selection_matrix"
+    - "planner_scenarios"
+    - "validation_results"
+
+decision:
+  status: "approved"
+  approver: "4uentes"

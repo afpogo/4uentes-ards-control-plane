@@ -1,4 +1,4 @@
-# CR-SST-0077 Changed Files Summary
+# CR-SST-0077 Resumen De Archivos Modificados
 
 ## Orchestrator
 

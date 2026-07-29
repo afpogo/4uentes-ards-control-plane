@@ -1,0 +1,104 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-4UENTES-0003"
+title: "Portfolio local stabilization baseline"
+status: "planned"
+source_request: "requests/inbox/CR-4UENTES-0003-portfolio-local-stabilization-baseline.yaml"
+created_at: "2026-07-03"
+requester: "4uentes"
+
+summary: >
+  Add a minimal stabilization baseline to 4uentes-portfolio so future public
+  positioning, mobile work, evidence enrichment, or UI changes have a stable
+  local check command and owner QA checklist.
+
+initial_scope:
+  solution: "4uentes"
+  services:
+    - "4uentes-portfolio"
+  include_optional_services: false
+
+control_plane_context:
+  parent_scope_request: "CR-4UENTES-0001"
+  owner_docs_request: "CR-4UENTES-0002"
+  feature_id: "portfolio-local-stabilization-baseline"
+  child_repo: "4uentes-portfolio"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "4uentes-portfolio"
+      via: "package validation scripts and owner QA documentation"
+      service_kind: "frontend-spa"
+      ards_kind: "frontend-web"
+      status: "active"
+  affected_ards:
+    - "local-validation"
+    - "child-repo-owner-docs"
+    - "qa-baseline"
+  capabilities:
+    - "portfolio-local-stabilization-baseline"
+  risks:
+    - id: "DIRTY_WORKTREE_SCOPE_CREEP"
+      severity: "high"
+    - id: "NO_STANDARD_CHECK_COMMAND"
+      severity: "medium"
+    - id: "PUBLIC_UI_QA_GAP"
+      severity: "medium"
+
+required_context:
+  - "4uentes-portfolio: AGENTS.md"
+  - "4uentes-portfolio: package.json"
+  - "4uentes-portfolio: docs/00-overview.md"
+  - "4uentes-portfolio: docs/qa/visual-checklist.md"
+  - "requests/planned/CR-4UENTES-0002-portfolio-owner-docs-scope-reconciliation.yaml"
+
+required_checks:
+  - service_id: "4uentes-portfolio"
+    command: "npm.cmd run check"
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check"
+
+risk:
+  level: "medium"
+  score: 5
+  drivers:
+    - "child repo mutation"
+    - "existing broad migration changes must not be refactored here"
+    - "stabilization affects future public release gates"
+
+execution:
+  requires_human_approval: false
+  allowed_window: "manual"
+  branch_strategy: "one-branch-per-repo"
+  child_repo_mutation_allowed: true
+  implementation_boundary: >
+    Add validation scripts and stabilization documentation only. Do not refactor
+    UI, Sass architecture, routing, assets, dependencies, or Vite chunking in
+    this CR.
+
+owner_documentation:
+  required: true
+  status: satisfied
+  owner_repo: "4uentes-portfolio"
+  updated_owner_docs:
+    - "docs/00-overview.md"
+    - "docs/qa/stabilization-checklist.md"
+    - "specs/00-index.yaml"
+  control_plane_evidence_refs:
+    - "evidence/requests/CR-4UENTES-0003/stabilization-baseline.md"
+    - "evidence/requests/CR-4UENTES-0003/validation-results.md"
+
+validation:
+  required_checks:
+    - "4uentes-portfolio: npm.cmd run check"
+    - "4uentes-orchestor: npm.cmd run check"
+  evidence_required:
+    - "stabilization_baseline"
+    - "changed_files_summary"
+    - "validation_results"
+
+decision:
+  status: "validated-local"
+  approver: "4uentes"
+  blocker: "none"

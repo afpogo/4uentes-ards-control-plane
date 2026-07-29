@@ -1,0 +1,42 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0136"
+title: "Repair sst-fend article create validation gate drift"
+status: done
+source_request: "requests/inbox/CR-SST-0136-sst-fend-article-create-gate-drift.yaml"
+planned_request: "requests/planned/CR-SST-0136-sst-fend-article-create-gate-drift.yaml"
+completed_at: "2026-07-11"
+requester: "4uentes"
+summary: "Regenerated four stale CSS declarations and reconciled one stale ArticleCreateFlow expectation without runtime changes."
+scope:
+  solution: "sst"
+  services_modified: ["sst-fend", "4uentes-orchestor"]
+  functional_repositories_modified: true
+  runtime_code_modified: false
+implementation:
+  initiative_id: "INIT-SST-0001"
+  parent_request_id: "CR-SST-0127"
+  jira_epic_key: "SST-27"
+  jira_issue_key: "SST-66"
+  jira_status_observed: "Listo"
+  jira_source_of_truth: false
+owner_documentation:
+  status: "satisfied"
+  owner_refs:
+    - repo: "sst-fend"
+      paths:
+        - "specs/33-articles-frontend.yml"
+        - "docs/33-articles-frontend.md"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0136/owner-documentation-summary.md"
+validation:
+  status: "validated-local"
+  passed:
+    - "ArticleCreateFlow 13/13"
+    - "sst-fend npm.cmd run check: 29 suites and 176 tests"
+    - "sst-fend container restored and HTTP 200"
+evidence_refs:
+  - "evidence/requests/CR-SST-0136/implementation-summary.md"
+  - "evidence/requests/CR-SST-0136/validation-results.md"
+  - "evidence/requests/CR-SST-0136/owner-documentation-summary.md"
+decision: {status: "closed-local", approver: "4uentes"}

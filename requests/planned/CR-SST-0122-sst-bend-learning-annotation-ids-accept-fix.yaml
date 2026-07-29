@@ -1,0 +1,133 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0122"
+title: "Fix sst-bend LearningWorkspace accept by annotationIds"
+status: done
+source_request: "requests/inbox/CR-SST-0122-sst-bend-learning-annotation-ids-accept-fix.yaml"
+created_at: "2026-07-05"
+requester: "4uentes"
+
+summary: >
+  Fix the runtime defect found by CR-SST-0118 where accepting a
+  LearningWorkspace preview with annotationIds fails because serverAnnotationId
+  hashes are also compared against the UUID id column.
+
+control_plane_context:
+  initiative_id: "INIT-SST-0001"
+  active_feature_state: "learning-content-tags"
+  parent_request_id: "CR-SST-0118"
+  jira_epic_key: "SST-27"
+  active_jira_issue_key: "SST-6"
+  jira_subtask_key: "SST-51"
+  current_jira_status_observed: "Listo"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "sst-bend"
+      via: "LearningWorkspace accept endpoint persistence query"
+      service_kind: "api"
+      ards_kind: "backend-service"
+      status: "active"
+    - service_id: "node-auth"
+      via: "BFF pass-through validation only"
+      service_kind: "bff"
+      ards_kind: "backend-service"
+      status: "active"
+    - service_id: "4uentes-orchestor"
+      via: "request lifecycle, Jira mirror and owner enforcement"
+      service_kind: "control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+  affected_ards:
+    - backend-service
+    - learning-content-tags
+    - child-repo-owner-documentation
+    - evidence
+  risks:
+    - id: ANNOTATION_ID_ACCEPT_FAILS
+      severity: high
+    - id: UUID_HASH_QUERY_DRIFT
+      severity: high
+
+execution:
+  requires_human_approval: false
+  allowed_window: manual
+  branch_strategy: "one-branch-per-repo"
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets:
+    - service_id: "sst-bend"
+      local_path_ref: "environments/local/bindings.local.yaml#sst-bend"
+  implementation_boundary: >
+    This CR may modify only sst-bend LearningWorkspace accept/reject annotation
+    id filtering, focused tests, and owner ARDS/SDD docs. It must not change the
+    frontend UX, node-auth contract, auth/RBAC, migrations, or accepted-context
+    semantics beyond making documented annotationIds work.
+  owner_documentation:
+    required: true
+    status: satisfied
+    owner_refs:
+      - repo: "sst-bend"
+        paths:
+          - "docs/api/26-learning-workspaces.md"
+          - "specs/api/learning-workspaces.yaml"
+          - "docs/capabilities/outbound/learning-workspace-context.md"
+          - "specs/capabilities/outbound/learning-workspace-context.yaml"
+    evidence_refs:
+      - "evidence/requests/CR-SST-0122/implementation-start.md"
+      - "evidence/requests/CR-SST-0122/owner-documentation-summary.md"
+
+required_checks:
+  - service_id: "sst-bend"
+    command: "npm.cmd run test:learning-workspace"
+  - service_id: "sst-bend"
+    command: "npm.cmd run check"
+  - service_id: "node-auth"
+    command: "npm.cmd run check"
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check"
+
+validation:
+  required_checks:
+    - "Accepting a persisted preview with serverAnnotationId values succeeds."
+    - "Accepting by UUID id values still succeeds when applicable."
+    - "Invalid annotationIds do not trigger Postgres UUID cast failures."
+    - "Accepted context includes the selected accepted annotations and blocks."
+    - "BF pass-through validates the fixed runtime behavior."
+  evidence_required:
+    - "implementation_start"
+    - "changed_files_summary"
+    - "owner_documentation_summary"
+    - "validation_results"
+    - "jira_sync_summary"
+
+decision:
+  status: closed-local
+  approver: "4uentes"
+  note: >
+    Opened as the implementation follow-up recommended by CR-SST-0118. The
+    sst-bend defect is fixed, locally validated and mirrored in Jira as
+    SST-51/Listo. SST-48 remains En curso until the e2e validation is rerun.
+
+evidence:
+  implementation:
+    - "evidence/requests/CR-SST-0122/implementation-start.md"
+    - "evidence/requests/CR-SST-0122/implementation-summary.md"
+    - "evidence/requests/CR-SST-0122/changed-files-summary.md"
+  owner_documentation:
+    - "evidence/requests/CR-SST-0122/owner-documentation-summary.md"
+  validation:
+    - "evidence/requests/CR-SST-0122/validation-results.md"
+  jira:
+    - "evidence/requests/CR-SST-0122/jira-cr-sst-0122-create-close-summary.md"
+
+validation_update:
+  observed_at: "2026-07-05"
+  status: passed-local
+  evidence_ref: "evidence/requests/CR-SST-0122/validation-results.md"
+  summary: >
+    Targeted LearningWorkspace tests, BF/API smoke for accept by
+    serverAnnotationId, sst-bend check, node-auth check and Jira mirror sync
+    passed. Control-plane check remains required after local closure updates.

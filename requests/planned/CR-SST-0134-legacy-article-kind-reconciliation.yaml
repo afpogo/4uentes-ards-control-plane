@@ -1,0 +1,74 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0134"
+title: "Reconcile legacy article semantic kinds with evidence"
+status: running
+source_request: "requests/inbox/CR-SST-0134-legacy-article-kind-reconciliation.yaml"
+created_at: "2026-07-11"
+requester: "4uentes"
+summary: "Provide a human-authorized, one-article-at-a-time repair path for legacy rows whose semantic kind remains unclassified."
+control_plane_context: {initiative_id: "INIT-SST-0005", parent_request_id: "CR-SST-0128", predecessor_requests: ["CR-SST-0129", "CR-SST-0131", "CR-SST-0132", "CR-SST-0133"], jira_epic_key: "SST-57", jira_parent_issue_key: "SST-58", jira_role: "mirror", jira_source_of_truth: false}
+impact_analysis:
+  required: true
+  affected_services:
+    - {service_id: "sst-fend", via: "manual classification UI over the existing partial article update", service_kind: "frontend-web", ards_kind: "frontend-web", status: "active"}
+    - {service_id: "sst-bend", via: "owner documentation for the existing canonical payload upsert", service_kind: "backend-api", ards_kind: "backend-api", status: "active"}
+    - {service_id: "4uentes-orchestor", via: "decision and before/after evidence", service_kind: "control-plane", ards_kind: "control-plane", status: "active"}
+  affected_ards: ["article-semantic-kind", "data-reconciliation"]
+  risks: [{id: "UNSAFE_HISTORICAL_INFERENCE", severity: critical}, {id: "IRREVERSIBLE_DATA_CHANGE", severity: high}]
+execution:
+  requires_human_approval: false
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets: ["sst-fend", "sst-bend"]
+  implementation_boundary: >
+    Add a defensive manual classification surface in sst-fend and owner
+    documentation in sst-fend and sst-bend. Reuse PUT /articulos/:id with a
+    payload-only partial update. Do not add automatic classification, mass
+    migration, a new endpoint, a new Jira hierarchy, node-auth runtime changes,
+    sst-bend runtime changes, or classification based on filterType.
+owner_documentation:
+  required: true
+  status: satisfied
+  owner_repos: ["sst-fend", "sst-bend"]
+  planned_owner_docs:
+    - "specs/33-articles-frontend.yml"
+    - "docs/33-articles-frontend.md"
+    - "specs/api/routing.yaml"
+    - "docs/api/article-kind-reconciliation.md"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0134/implementation-and-validation.md"
+required_checks:
+  - {service_id: "sst-fend", command: "npm.cmd run check"}
+  - {service_id: "4uentes-auth", command: "npm.cmd run check && npm.cmd run build"}
+  - {service_id: "sst-bend", command: "npm.cmd run test:article-kind-contract"}
+  - {service_id: "sst-bend", command: "npm.cmd run check"}
+  - {service_id: "4uentes-orchestor", command: "npm.cmd run check"}
+decision:
+  status: approved-for-manual-implementation
+  approver: "4uentes"
+  decided_at: "2026-07-24"
+  note: >
+    The user remains the authority for each article. Web and Text are the only
+    repair choices; URL is preserved as data and never used to infer kind.
+agent_execution:
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "high"
+  fallback_profile: "gpt-5.4-fast-high"
+  task_weight: "long-context-task"
+  subagent_deployment_plan: "none; repository policy and current runtime disable proactive delegation"
+  reason: "Cross-repo lifecycle, overlapping dirty worktrees, frontend behavior, owner documentation and authenticated QA require one integrated context."
+jira_sync:
+  status: implementation-in-progress-with-data-blocker
+  desired_issue_type: "Subtask"
+  parent_issue_key: "SST-58"
+  issue_key: "SST-64"
+  desired_status: "En curso"
+  status_observed: "En curso"
+  implementation_start_comment_id: "10263"
+  implementation_progress_comment_id: "10264"
+  closure_blocker_comment_id: "10297"
+  closure_blocker: "Final read-only inventory on 2026-07-28 observed 108 total articles, 90 with payload, 18 without payload and 0 kind/payload_kind mismatches."
+  former_blockers: ["SST-59", "SST-61", "SST-62", "SST-63"]

@@ -1,0 +1,113 @@
+schema_version: "1.0"
+kind: "initiative"
+id: "INIT-CP-0002"
+title: "Core Living Resource Standardization"
+status: "active"
+updated_at: "2026-07-19"
+owner_repository: "4uentes-orchestor"
+objective: >
+  Promote stable living ARDS/SDD control-plane resources into reusable
+  4uentes-ards-core canon while preserving local orchestrator identity,
+  request lifecycle ownership, and child repo adoption boundaries.
+initial_hypothesis: >
+  The control-plane has validated local governance resources that can become
+  common core policies, schemas, and templates if promotion is split into
+  focused CRs: common policy canon, child/control-plane reconciliation link,
+  state read-model, initiative model, orchestrator local adoption review, and
+  future child repo rollout planning.
+source_evidence_refs:
+  - "evidence/initiatives/INIT-CP-0002/core-living-resources-scope.md"
+  - "evidence/initiatives/INIT-CP-0002/jira-epic-sync-summary.md"
+  - "evidence/initiatives/INIT-CP-0002/jira-temporary-port-mirror-closure-2026-07-10.md"
+  - "evidence/requests/CR-CP-0003/jira-ards-4-close-reconciliation-summary.md"
+  - "docs/policies/owner-documentation-authority-policy.md"
+  - "docs/policies/human-doc-language-policy.md"
+  - "specs/states/feature-bugfix-state-model.yaml"
+  - "specs/states/capability-state-linkage.yaml"
+  - "specs/initiatives/initiative-model.yaml"
+  - "templates/policy-adoption-manifest.template.yaml"
+  - "templates/policy-exception-manifest.template.yaml"
+  - "evidence/requests/CR-CP-0007/closure-summary.md"
+  - "evidence/requests/CR-CP-0005/closure-summary.md"
+  - "evidence/requests/CR-CP-0017/v1-conformance-intake.md"
+model_refs:
+  - "specs/initiatives/initiative-model.yaml"
+  - "docs/requests/initiative-model.md"
+parent_initiative_refs:
+  - "INIT-CP-0001"
+known_change_requests:
+  - "CR-CP-0001"
+  - "CR-CP-0002"
+  - "CR-CP-0003"
+  - "CR-CP-0004"
+  - "CR-CP-0005"
+  - "CR-CP-0007"
+  - "CR-CP-0017"
+candidate_change_requests:
+  - id: "CR-CP-0006"
+    title: "Request-driven child adoption rollout for core living resources"
+    status: "candidate"
+    execution_order: "after-core-and-orchestrator-adoption"
+discovered_change_requests: []
+tracking:
+  jira:
+    role: "mirror"
+    source_of_truth: false
+    project_key: "ARDS"
+    mirror_project_key: "ARDS"
+    issue_type: "Epic"
+    issue_key: "ARDS-1"
+    related_epic_key: "SST-36"
+    replaced_misplaced_epic_key: "PORT-12"
+    replaced_misplaced_epic_status: "Listo"
+    temporary_mirror_reconciliation_status: "closed-as-replaced"
+    temporary_mirror_reconciliation_ref: "evidence/initiatives/INIT-CP-0002/jira-temporary-port-mirror-closure-2026-07-10.md"
+    related_initiative_id: "INIT-CP-0001"
+    desired_artifact: "New Jira Epic linked to SST-36 for core living resource standardization"
+    current_status_observed: "Por hacer"
+    write_status: "executed"
+    read_status: "verified"
+    sync_result_ref: "evidence/initiatives/INIT-CP-0002/jira-epic-sync-summary.md"
+    associated_issue_keys:
+      - "ARDS-2"
+      - "ARDS-3"
+      - "ARDS-4"
+      - "ARDS-5"
+      - "ARDS-6"
+      - "ARDS-14"
+      - "ARDS-16"
+    completed_requests:
+      - request_id: "CR-CP-0007"
+        issue_key: "ARDS-14"
+        issue_status_observed: "Listo"
+      - request_id: "CR-CP-0005"
+        issue_key: "ARDS-6"
+        issue_status_observed: "Listo"
+        issue_resolution_observed: "Listo"
+        local_closure_status: "validated-local"
+        closure_ref: "evidence/requests/CR-CP-0005/closure-summary.md"
+        jira_closure_ref: "evidence/requests/CR-CP-0005/jira-ards-6-close-transition-2026-07-12.md"
+    replaced_misplaced_issue_keys:
+      - "PORT-13"
+      - "PORT-14"
+      - "PORT-15"
+      - "PORT-16"
+      - "PORT-17"
+    replaced_misplaced_issue_status: "Listo"
+boundaries:
+  mutates_child_repositories: false
+  promotes_runtime: false
+  changes_core_canon: true
+policy_application:
+  model_selection: >
+    Work is classified as complex-high-risk-task because it changes shared
+    ARDS/SDD canon and cross-repo adoption rules.
+  atomization: >
+    Each core resource family is promoted through a separate CR with its own
+    source refs, expected core artifacts, validation, and adoption review.
+  architecture_boundary: >
+    This Initiative plans core promotion but does not modify
+    4uentes-ards-core or child repos until a specific approved CR allows it.
+open_gaps:
+  - "Resolve canonical naming between 4uentes-core and 4uentes-ards-core before freezing core refs."
+  - "Promote work-tracker-control-plane-authority-policy to 4uentes-ards-core through a separate approved request."

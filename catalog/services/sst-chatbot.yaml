@@ -29,12 +29,12 @@ ards:
   agents_md: true
   specs_index: true
   docs_overview: true
-  docs_ai_policy: false
+  docs_ai_policy: true
 validation:
   check_command: ".\\.venv\\Scripts\\python.exe scripts\\check.py"
 orchestrator_link_contract:
   required: true
-  status: pending-child-adoption
+  status: adopted
   rule_ref: "docs/cross-repo/child-repo-orchestrator-link-rule.md"
   template_ref: "templates/child-orchestrator-link-rule.md"
   metadata_key: "orchestrator_link"
@@ -56,4 +56,4 @@ capabilities_observed:
 notes:
   - Repo owns provider-agnostic agent contracts, private prompts, retrieval, ARDS workspace generation, and orchestrator handoff payloads.
   - Modeled as backend-api ARDS because it publishes runtime/cross-repo capabilities consumed by SST and the orchestrator.
-  - Child orchestrator_link metadata has not been adopted in the child repo yet.
+  - Child ARDS/SDD policy and orchestrator_link documentation were reconciled under CR-SST-0082; runtime handoff transport remains undecided.

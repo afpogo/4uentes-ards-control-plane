@@ -1,4 +1,4 @@
-# SST Bend Global Persistence Implementation
+# Implementacion De Persistencia Global En SST Bend
 
 ## Alcance implementado
 

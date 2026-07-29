@@ -1,0 +1,23 @@
+schema_version: "1.0"
+kind: "feature_state"
+id: "portfolio-contact-exposure-policy"
+title: "Portfolio Contact Exposure Policy"
+status: "ards-documented"
+updated_at: "2026-07-04"
+solution_id: "4uentes"
+affected_services:
+  - 4uentes-portfolio
+request_ids:
+  - CR-4UENTES-0015
+capability_refs:
+  - "portfolio-contact-exposure-policy"
+spec_refs:
+  - "requests/planned/CR-4UENTES-0015-portfolio-contact-exposure-policy.yaml"
+  - "initiatives/INIT-PORTFOLIO-0001-portfolio-publication-readiness.yaml"
+evidence_refs:
+  - "evidence/requests/CR-4UENTES-0015/contact-exposure-policy.md"
+  - "evidence/requests/CR-4UENTES-0015/changed-files-summary.md"
+  - "evidence/requests/CR-4UENTES-0015/validation-results.md"
+open_gaps:
+  - "Run GitHub evidence review only after an explicit repo allowlist is approved."
+  - "Translate or remediate legacy human-facing Markdown covered by the human-doc-language exception."

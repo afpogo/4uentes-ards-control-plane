@@ -1,0 +1,112 @@
+{
+  "issueKey": "SST-33",
+  "before": {
+    "summary": "[SST][INIT-SST-0003][CR-SST-0101] Define sst-extension CredentialedWebSource producer contract",
+    "status": "En curso",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-07-13T00:06:47.995-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0101",
+      "credentialed-web-source",
+      "init-sst-0003",
+      "sst-extension"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10071\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10071\",\"key\":\"SST-33\",\"fields\":{\"summary\":\"[SST][INIT-SST-0003][CR-SST-0101] Define sst-extension CredentialedWebSource producer contract\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-07-13T00:06:47.995-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10006\",\"description\":\"La persona asignada está trabajando actualmente en esta actividad.\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En curso\",\"id\":\"10006\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-sst-0101\",\"credentialed-web-source\",\"init-sst-0003\",\"sst-extension\"]}}"
+  },
+  "after": {
+    "summary": "[SST][INIT-SST-0003][CR-SST-0101] Define sst-extension CredentialedWebSource producer contract",
+    "status": "En revisión",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-07-13T00:07:14.595-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0101",
+      "credentialed-web-source",
+      "init-sst-0003",
+      "sst-extension"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10071\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10071\",\"key\":\"SST-33\",\"fields\":{\"summary\":\"[SST][INIT-SST-0003][CR-SST-0101] Define sst-extension CredentialedWebSource producer contract\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-07-13T00:07:14.595-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10007\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En revisión\",\"id\":\"10007\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-sst-0101\",\"credentialed-web-source\",\"init-sst-0003\",\"sst-extension\"]}}"
+  },
+  "transitions": [
+    {
+      "id": "11",
+      "name": "Por hacer",
+      "toStatus": "Tareas por hacer",
+      "toStatusCategory": "Por hacer"
+    },
+    {
+      "id": "21",
+      "name": "En curso",
+      "toStatus": "En curso",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "31",
+      "name": "In Review",
+      "toStatus": "En revisión",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "41",
+      "name": "Listo",
+      "toStatus": "Finalizada",
+      "toStatusCategory": "Listo"
+    }
+  ],
+  "selectedTransition": {
+    "id": "31",
+    "name": "In Review",
+    "toStatus": "En revisión",
+    "toStatusCategory": "En curso"
+  },
+  "transitionResult": {
+    "success": true
+  },
+  "commentResult": {
+    "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10071/comment/10215",
+    "id": "10215",
+    "author": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/48",
+        "24x24": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/24",
+        "16x16": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/16",
+        "32x32": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/32"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "body": "Revision de `CR-SST-0101 / SST-33` completada.\n\nOwner documentation verificada en `sst-extension`:\n\n* `specs/features/credentialed-web-source.yaml`;\n* `docs/features/credentialed-web-source.md`;\n* indices ARDS/SDD y boundary de ingesta de sesiones alineados.\n\nChecks revisados:\n\n* baseline ARDS/SDD: PASS;\n* 26 suites y 106 tests: PASS;\n* build WXT Chrome MV3: PASS;\n* control plane con owner-documentation enforcement: PASS.\n\nLa revision confirmo que no se agregaron wire fields ni runtime. LearningWorkspace,  \nbackend `SecretRef`, `rawHtml` y QA privada final permanecen fuera de SST-33.\n\nEvidencia:\n\n* `evidence/requests/CR-SST-0101/implementation-and-validation-2026-07-12.md`\n\n",
+    "updateAuthor": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/48",
+        "24x24": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/24",
+        "16x16": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/16",
+        "32x32": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/32"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "created": "2026-07-13T00:07:14.595-0300",
+    "updated": "2026-07-13T00:07:14.595-0300",
+    "jsdPublic": true
+  },
+  "commentBody": "Revision de `CR-SST-0101 / SST-33` completada.\n\nOwner documentation verificada en `sst-extension`:\n\n- `specs/features/credentialed-web-source.yaml`;\n- `docs/features/credentialed-web-source.md`;\n- indices ARDS/SDD y boundary de ingesta de sesiones alineados.\n\nChecks revisados:\n\n- baseline ARDS/SDD: PASS;\n- 26 suites y 106 tests: PASS;\n- build WXT Chrome MV3: PASS;\n- control plane con owner-documentation enforcement: PASS.\n\nLa revision confirmo que no se agregaron wire fields ni runtime. LearningWorkspace,\nbackend `SecretRef`, `rawHtml` y QA privada final permanecen fuera de SST-33.\n\nEvidencia:\n\n- `evidence/requests/CR-SST-0101/implementation-and-validation-2026-07-12.md`\n\n",
+  "externalWrite": true
+}

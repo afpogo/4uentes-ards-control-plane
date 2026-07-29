@@ -1,0 +1,108 @@
+{
+  "issueKey": "ARDS-5",
+  "before": {
+    "summary": "[CP][CR-CP-0004] Promote Initiative model to core",
+    "status": "Por hacer",
+    "statusCategory": "Por hacer",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-07-07T16:58:50.282-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-cp-0004",
+      "init-cp-0002"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10113\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10113\",\"key\":\"ARDS-5\",\"fields\":{\"summary\":\"[CP][CR-CP-0004] Promote Initiative model to core\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-07-07T16:58:50.282-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10042\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"Por hacer\",\"id\":\"10042\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/2\",\"id\":2,\"key\":\"new\",\"colorName\":\"blue-gray\",\"name\":\"Por hacer\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-cp-0004\",\"init-cp-0002\"]}}"
+  },
+  "after": {
+    "summary": "[CP][CR-CP-0004] Promote Initiative model to core",
+    "status": "En curso",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-07-10T18:42:20.165-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-cp-0004",
+      "init-cp-0002"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10113\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10113\",\"key\":\"ARDS-5\",\"fields\":{\"summary\":\"[CP][CR-CP-0004] Promote Initiative model to core\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-07-10T18:42:20.165-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10043\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En curso\",\"id\":\"10043\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-cp-0004\",\"init-cp-0002\"]}}"
+  },
+  "transitions": [
+    {
+      "id": "11",
+      "name": "Por hacer",
+      "toStatus": "Por hacer",
+      "toStatusCategory": "Por hacer"
+    },
+    {
+      "id": "21",
+      "name": "En curso",
+      "toStatus": "En curso",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "31",
+      "name": "En revisión",
+      "toStatus": "En revisión",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "41",
+      "name": "Listo",
+      "toStatus": "Listo",
+      "toStatusCategory": "Listo"
+    }
+  ],
+  "selectedTransition": {
+    "id": "21",
+    "name": "En curso",
+    "toStatus": "En curso",
+    "toStatusCategory": "En curso"
+  },
+  "transitionResult": {
+    "success": true
+  },
+  "commentResult": {
+    "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10113/comment/10164",
+    "id": "10164",
+    "author": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/48",
+        "24x24": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/24",
+        "16x16": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/16",
+        "32x32": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/32"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "body": "# ARDS-5 / CR-CP-0004\n\nInicio `CR-CP-0004` para promover el modelo `Initiative` al core ARDS/SDD.\n\nContexto:\n\n* ARDS-4 promovio `feature-bugfix-state-model` como living resource del core.\n* ARDS-5 continua con `initiative-model` como living resource reusable.\n* No se crea una policy nueva.\n* `4uentes-orchestor` queda como origin repo del modelo observado.\n* `4uentes-ards-core` debe quedar como canonical owner del canon reusable.\n* Jira se mantiene como mirror operativo, no source of truth.\n\nBoundary clave:\n\n* `Initiative ~= Jira Epic`.\n* `CR ~= Jira Task / Story / Subtask`.\n* Una Epic paraguas no reemplaza la Epic propia de una Initiative.\n* No se mutan repos hijos.\n\nEvidencia local:\n\n* `evidence/requests/CR-CP-0004/ards-5-context-summary.md`\n* `evidence/requests/CR-CP-0004/jira-mirror-boundary-decision.md`\n\n",
+    "updateAuthor": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/48",
+        "24x24": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/24",
+        "16x16": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/16",
+        "32x32": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/32"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "created": "2026-07-10T18:42:20.165-0300",
+    "updated": "2026-07-10T18:42:20.165-0300",
+    "jsdPublic": true
+  },
+  "commentBody": "# ARDS-5 / CR-CP-0004\n\nInicio `CR-CP-0004` para promover el modelo `Initiative` al core ARDS/SDD.\n\nContexto:\n\n- ARDS-4 promovio `feature-bugfix-state-model` como living resource del core.\n- ARDS-5 continua con `initiative-model` como living resource reusable.\n- No se crea una policy nueva.\n- `4uentes-orchestor` queda como origin repo del modelo observado.\n- `4uentes-ards-core` debe quedar como canonical owner del canon reusable.\n- Jira se mantiene como mirror operativo, no source of truth.\n\nBoundary clave:\n\n- `Initiative ~= Jira Epic`.\n- `CR ~= Jira Task / Story / Subtask`.\n- Una Epic paraguas no reemplaza la Epic propia de una Initiative.\n- No se mutan repos hijos.\n\nEvidencia local:\n\n- `evidence/requests/CR-CP-0004/ards-5-context-summary.md`\n- `evidence/requests/CR-CP-0004/jira-mirror-boundary-decision.md`\n",
+  "externalWrite": true
+}

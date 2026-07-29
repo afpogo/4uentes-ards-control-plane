@@ -1,0 +1,61 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0111"
+title: "Define ArticleTag and LearningContentTag intent contract"
+status: done
+source_request: "requests/inbox/CR-SST-0111-learning-content-tagging-intent-contract.yaml"
+planned_request: "requests/planned/CR-SST-0111-learning-content-tagging-intent-contract.yaml"
+completed_at: "2026-07-04"
+requester: "4uentes"
+
+summary: >
+  Closed the control-plane intent contract that separates article-level tags
+  from accepted learning-content tags. This CR does not mutate runtime. It
+  records the product model, UX boundary, selector/relevance expectations, API
+  considerations, and the implementation gate for the next child-repo CR.
+
+scope:
+  solution: "sst"
+  services_modified:
+    - "4uentes-orchestor"
+  functional_repositories_modified: false
+  runtime_code_modified: false
+
+implementation:
+  initiative_id: "INIT-SST-0001"
+  active_feature_state: "learning-content-tags"
+  jira_epic_key: "SST-27"
+  jira_issue_key: "SST-6"
+  jira_subtask_key: "SST-41"
+  jira_status_observed: "Listo"
+  jira_source_of_truth: false
+  completed_slice: >
+    ArticleTag is documented as article-wide classification, while
+    LearningContentTag is documented as fragment-level accepted learning
+    context with source anchors, selectors, relevance, and acceptance state.
+  not_closed:
+    - "The final text sheet UX remains to be implemented in a child-repo CR."
+    - "Granular parser/import expansion in sst-bend remains a follow-up."
+    - "Differentiated query/read surfaces still require runtime implementation."
+
+validation:
+  status: "validated-local"
+  passed:
+    - "4uentes-orchestor npm.cmd run check"
+  notes:
+    - "Owner documentation enforcement passed as part of the control-plane check."
+    - "No owner docs in child repos were required because this CR did not mutate child repos."
+
+evidence_refs:
+  - "evidence/requests/CR-SST-0111/tagging-intent-contract.md"
+  - "evidence/requests/CR-SST-0111/implementation-boundary.md"
+  - "evidence/requests/CR-SST-0111/jira-sync-summary.md"
+  - "evidence/requests/CR-SST-0111/jira-sst-41-close-transition-summary.md"
+  - "evidence/requests/CR-SST-0111/validation-results.md"
+
+decision:
+  status: "closed-local"
+  approver: "4uentes"
+  note: >
+    CR-SST-0111 closes locally as the intent/contract slice. Jira remains a
+    mirror and SST-41 was synchronized to Listo through the MCP fallback script.

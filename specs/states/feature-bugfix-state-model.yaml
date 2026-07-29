@@ -3,7 +3,13 @@ kind: "state_model_spec"
 id: "feature-bugfix-state-model"
 title: "Feature and bugfix state read-model"
 status: "active"
-updated_at: "2026-05-24"
+updated_at: "2026-07-12"
+standardization:
+  source_of_truth: "4uentes-ards-core"
+  core_promotion_status: "adopted-in-core"
+  core_promotion_request: "CR-CP-0003"
+  core_ref: "4uentes-ards-core@f07ca6a"
+  local_adoption_manifest: "specs/states/state-read-model-adoption.yaml"
 scope:
   kinds:
     - feature_state

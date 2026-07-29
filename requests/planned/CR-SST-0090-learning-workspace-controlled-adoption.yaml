@@ -1,0 +1,301 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0090"
+title: "Adopt SST LearningWorkspace as governed runtime learning container"
+status: planned
+source_request: "requests/inbox/CR-SST-0090-learning-workspace-controlled-adoption.yaml"
+created_at: "2026-06-28"
+requester: "4uentes"
+
+summary: >
+  Adopt SST LearningWorkspace as the governed runtime container for learning
+  content and recall context under SST user internal memory. The design keeps
+  project ARDS/SDD separate from product user memory, requires sst-bend as the
+  persistence and authorization authority, and only allows chatbot context reads
+  through a scoped backend contract.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - "sst-bend"
+    - "sst-chatbot"
+    - "sst-fend"
+  include_optional_services: false
+
+control_plane_context:
+  initiative_id: "INIT-SST-0001"
+  initiative_file: "initiatives/INIT-SST-0001-tags-governance-continuity.yaml"
+  governing_request: "CR-SST-0090"
+  parent_jira_issue_key: "SST-4"
+  active_jira_issue_key: "SST-6"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  active_feature_state: "learning-content-tags"
+  active_feature_state_file: "state/features/learning-content-tags.current.yaml"
+  required_preceding_requests:
+    - id: "CR-SST-0030"
+      role: "Terminology and boundary: no user ARDS/SDD."
+    - id: "CR-SST-0031"
+      role: "User internal memory events, facts, intentions, and recall."
+    - id: "CR-SST-0088"
+      role: "LearningSource, KnowledgeDocument, and ContentBlock model."
+    - id: "CR-SST-0089"
+      role: "Preview/import runtime boundary and preview-only persistence gate."
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "sst-bend"
+      via: "future runtime model and internal APIs"
+      service_kind: "api"
+      ards_kind: "backend-api"
+      status: "active"
+    - service_id: "sst-chatbot"
+      via: "future scoped context consumer"
+      service_kind: "agent"
+      ards_kind: "agent-service"
+      status: "active"
+    - service_id: "sst-fend"
+      via: "future workspace/import review UI"
+      service_kind: "frontend"
+      ards_kind: "frontend"
+      status: "active"
+    - service_id: "4uentes-orchestor"
+      via: "control-plane planning and evidence"
+      service_kind: "control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+  affected_ards:
+    - control-plane
+    - request-lifecycle
+    - evidence
+    - sst-user-internal-memory
+    - learning-content-preview-import
+    - chatbot-context-read-contract
+    - jira-mirror
+  capabilities:
+    - "learning-content-tags"
+    - "user-activity-ards-memory"
+    - "application-context-connector"
+    - "prompt-catalog-and-versioning"
+  risks:
+    - id: USER_ARDS_SDD_TERMINOLOGY_REGRESSION
+      severity: high
+    - id: CHATBOT_DIRECT_PERSISTENCE_BYPASS
+      severity: high
+    - id: CROSS_SCOPE_CONTEXT_LEAK
+      severity: high
+    - id: PREVIEW_ONLY_GATE_BYPASS
+      severity: high
+    - id: AUTOMATIC_TAG_DEFINITION_CREATION
+      severity: high
+    - id: CHILD_REPO_MUTATION_WITHOUT_REQUEST
+      severity: high
+
+required_context:
+  - "AGENTS.md"
+  - "specs/integration/policies.yaml"
+  - "docs/policies/"
+  - "initiatives/INIT-SST-0001-tags-governance-continuity.yaml"
+  - "state/features/learning-content-tags.current.yaml"
+  - "catalog/services/sst-bend.yaml"
+  - "catalog/services/sst-chatbot.yaml"
+  - "catalog/services/sst-fend.yaml"
+  - "requests/inbox/CR-SST-0030-sst-user-internal-memory-boundary.yaml"
+  - "requests/inbox/CR-SST-0031-sst-user-internal-memory-first-runtime-slice.yaml"
+  - "requests/planned/CR-SST-0088-learning-source-model-boundary.yaml"
+  - "requests/planned/CR-SST-0089-learning-content-preview-import-boundary.yaml"
+  - "evidence/requests/CR-SST-0088/learning-source-model.md"
+  - "evidence/requests/CR-SST-0089/runtime-contract.md"
+
+required_checks:
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check"
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check:initiatives"
+  - service_id: "sst-bend"
+    command: "Future implementation only; no child repository command in this control-plane step."
+  - service_id: "sst-chatbot"
+    command: "Future implementation only; no child repository command in this control-plane step."
+  - service_id: "sst-fend"
+    command: "Future implementation only; no child repository command in this control-plane step."
+
+risk:
+  level: high
+  score: 8
+  drivers:
+    - USER_ARDS_SDD_TERMINOLOGY_REGRESSION
+    - CHATBOT_DIRECT_PERSISTENCE_BYPASS
+    - CROSS_SCOPE_CONTEXT_LEAK
+    - PREVIEW_ONLY_GATE_BYPASS
+    - AUTOMATIC_TAG_DEFINITION_CREATION
+    - CHILD_REPO_MUTATION_WITHOUT_REQUEST
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "Defines a governed user/account-scoped learning runtime model."
+    - "Touches future persistence, authorization, chatbot recall, import consolidation, and UI approval boundaries."
+    - "Must preserve the CR-SST-0030 rule that SST user memory is not project ARDS/SDD."
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-high-reasoning-profile"
+  reason: >
+    The request affects private user learning context, backend authorization,
+    chatbot recall authority, persistence gates, and cross-service runtime
+    boundaries.
+
+subagent_deployment_plan:
+  required: false
+  parallelizable: true
+  roles:
+    - id: "memory-boundary-review"
+      objective: "Verify LearningWorkspace remains under SST user internal memory and does not recreate user ARDS/SDD."
+      risk: high
+      suggested_profile: "high_reasoning_task"
+      validation: "Evidence explicitly contrasts project ARDS/SDD, SST user internal memory, and LearningWorkspace."
+    - id: "backend-context-contract-review"
+      objective: "Verify chatbot reads go only through sst-bend with tenant/account/user scope filters."
+      risk: high
+      suggested_profile: "high_reasoning_task"
+      validation: "Evidence lists allowed and forbidden context payload content."
+  fallback: "Main agent performs reviews sequentially when subagents are unavailable."
+  evidence_required: true
+
+execution:
+  requires_human_approval: false
+  allowed_window: manual
+  branch_strategy: "one-branch-per-repo"
+  implementation_boundary: >
+    This request creates the control-plane request and evidence only. It does
+    not modify sst-bend, sst-chatbot, sst-fend, 4uentes-auth, infrastructure
+    repositories, or 4uentes-ards-core. It does not create runtime tables,
+    endpoints, UI, durable imports, TagDefinition records, or Jira changes.
+  child_repo_mutation_allowed: false
+  future_child_repo_mutation_condition: >
+    Child repositories may be modified only by later approved request lifecycle
+    steps with named files, tests, rollback strategy, scope filters, idempotency
+    rules, and evidence that preview-only content cannot enter durable recall
+    before approval.
+  jira_read_executed: false
+  jira_write_executed: false
+  jira_write_target:
+    desired_artifact: "No write in this request"
+    desired_initial_status: "not requested"
+  jira_read_blocked_reason: "Existing CR-SST-0087 evidence records Atlassian MCP 403 app-not-installed; Jira remains mirror-only."
+
+learning_workspace_contract:
+  scope:
+    required_keys:
+      - "tenant_id"
+      - "account_id"
+      - "user_id"
+    status_values:
+      - "active"
+      - "paused"
+      - "archived"
+    creation_policy: "Create empty workspace during account provisioning when a reliable hook exists; otherwise create lazily on first use."
+  model_position: "SST user internal memory runtime container; ARDS/SDD-inspired but not canonical project ARDS/SDD."
+  contains:
+    - "LearningSource references"
+    - "accepted KnowledgeDocument references"
+    - "accepted ContentBlock references"
+    - "AssetRef references for images, scripts, installers, and auxiliary resources"
+    - "LabRef references for labs or projects such as springBoot-2"
+    - "LearningSpec references for course/content contracts"
+    - "import warnings and provenance"
+    - "linked user_memory_event records"
+    - "linked user_memory_fact records"
+    - "linked user_memory_intention records"
+  source_types:
+    course_source:
+      inherits_from: "CR-SST-0088 CourseSource"
+      required_controls:
+        - "documentSelectors"
+        - "assetSelectors"
+        - "exclusionPolicy"
+        - "prefixAliasPolicy"
+    web_article_source:
+      inherits_from: "CR-SST-0088 WebArticleSource"
+      required_controls:
+        - "bounded URL, HTML, or text payload"
+        - "no recursive crawler"
+  chatbot_context_contract:
+    endpoint_authority: "sst-bend"
+    read_model: "LearningWorkspaceContext"
+    includes:
+      - "workspace summary"
+      - "accepted documents"
+      - "relevant accepted content blocks"
+      - "approved tag suggestions or governed tags"
+      - "important warnings"
+      - "progress"
+      - "active intentions"
+      - "explainable provenance"
+    excludes:
+      - "unapproved previews"
+      - "secrets"
+      - "generated files"
+      - "out-of-scope content"
+      - "cross-user content"
+      - "cross-account content"
+      - "cross-tenant content"
+  memory_events:
+    new_or_extended:
+      - "learning.workspace_created"
+      - "learning.source_previewed"
+      - "learning.source_accepted"
+      - "learning.document_reviewed"
+      - "learning.tag_suggested"
+      - "learning.intention_created"
+
+future_phases:
+  - phase: 1
+    owner_repo: "4uentes-orchestor"
+    status: "this-request"
+    work: "Open CR-SST-0090, define model boundaries, chatbot read contract, and non-mutation rules."
+  - phase: 2
+    owner_repo: "sst-bend"
+    status: "future-request-required"
+    work: "Add runtime model, internal APIs, accepted-preview consolidation, scoped chatbot context endpoint, idempotency, and audit evidence."
+  - phase: 3
+    owner_repo: "sst-chatbot"
+    status: "future-request-required"
+    work: "Consume LearningWorkspaceContext from sst-bend and produce explanations, classifications, summaries, and proposals without direct durable persistence."
+  - phase: 4
+    owner_repo: "sst-fend"
+    status: "future-request-required"
+    work: "Show workspace, sources, warnings, documents, progress, and import/suggestion approval flows."
+
+validation:
+  required_checks:
+    - "Control-plane validation passes."
+    - "Initiative validation passes."
+    - "CR-SST-0090 references CR-SST-0030, CR-SST-0031, CR-SST-0088, and CR-SST-0089."
+    - "Evidence distinguishes project ARDS/SDD, SST user internal memory, and LearningWorkspace."
+    - "Chatbot context reads are allowed only through sst-bend scope filters."
+    - "No child repositories are modified in this planning step."
+    - "Preview-only content remains excluded from durable recall until approval."
+    - "TagDefinition is never created automatically."
+    - "Jira is not published or closed automatically."
+  evidence_required:
+    - "workspace_boundary"
+    - "chatbot_read_contract"
+    - "cr_sst_0089_adjustment"
+    - "changed_files_summary"
+    - "validation_results"
+
+decision:
+  status: pending
+  approver: TODO
+
+planner_notes:
+  - "Do not call LearningWorkspace a user ARDS/SDD."
+  - "Do not clone catalog, requests, state, or evidence per user."
+  - "LearningSpec inside a course is a learning-content contract, not a repository canonical spec."
+  - "sst-bend remains the authority for persistence, authorization, scope filtering, and import consolidation."
+  - "sst-chatbot may propose memory facts or intentions, but must not write durable memory directly."
+  - "CourseSource and WebArticleSource still enter through preview first; accepted consolidation creates durable workspace entries later."

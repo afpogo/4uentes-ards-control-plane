@@ -1,0 +1,35 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0107"
+title: "Implement sst-fend LearningWorkspace sheet adoption"
+status: inbox
+created_at: "2026-07-03"
+requester: "4uentes"
+
+business_context: >
+  SST-6 remains active after SST-28 closure because learning-content-tags still
+  lacks a real frontend authoring and review surface. Users need a dynamic
+  Learning Sheet where they can write or import text, reason about its
+  structure, preview tags, and assign relevance to meaningful parts of the
+  content before accepting it into LearningWorkspace.
+
+requested_change: >
+  Implement the first sst-fend LearningWorkspace frontend adoption around a
+  real sheet/editor experience. The sheet must support writing or pasting text,
+  previewing LearningWorkspace output, reviewing warnings, accepting or
+  rejecting previews, and modeling relevance/tag intent across granularities
+  such as line, paragraph, line range, paragraph range, whole document, header,
+  footer and semantic blocks.
+
+expected_outcome: >
+  sst-fend becomes the consumer owner for a first LearningWorkspace sheet UI.
+  The implementation should feel useful and logical for learning-content-tags
+  while preserving preview-only semantics until explicit acceptance. Backend
+  parser/import completion remains a separate immediate follow-up request.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - "sst-fend"
+    - "4uentes-orchestor"
+  include_optional_services: false

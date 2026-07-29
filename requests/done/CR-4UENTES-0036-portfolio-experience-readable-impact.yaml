@@ -1,0 +1,91 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-4UENTES-0036"
+title: "Portfolio experience readable impact"
+status: "done"
+source_request: "requests/inbox/CR-4UENTES-0036-portfolio-experience-readable-impact.yaml"
+planned_request: "archived-by-done-lifecycle"
+created_at: "2026-07-10"
+started_at: "2026-07-10"
+closed_at: "2026-07-10"
+requester: "4uentes"
+
+summary: >
+  Improved the Portfolio experience section so professional reviewers can scan
+  responsibilities, evidence, scope, and impact more quickly without relying on
+  the CV as the primary source.
+
+initial_scope:
+  solution: "4uentes"
+  services:
+    - "4uentes-portfolio"
+  include_optional_services: false
+
+control_plane_context:
+  initiative_id: "INIT-PORTFOLIO-0003"
+  parent_request_id: "CR-4UENTES-0035"
+  feature_id: "portfolio-experience-readable-impact"
+  child_repo: "4uentes-portfolio"
+  work_origin: "orchestrator-request"
+
+execution:
+  child_repo_mutation_allowed: true
+  child_repo_mutation_target:
+    service_id: "4uentes-portfolio"
+  owner_documentation_required: true
+  implementation_boundary: >
+    Updated only the experience section narrative, hierarchy, evidence framing,
+    responsive detail layout, and directly related docs/specs. Did not activate
+    CV download, replace the sanitized CV asset, add backend/BFF/auth/analytics,
+    introduce runtime GitHub fetching, or rewrite unrelated portfolio sections.
+
+owner_documentation:
+  required: true
+  status: satisfied
+  owner_repo: "4uentes-portfolio"
+  updated_owner_docs:
+    - "docs/portfolio-intent.md"
+    - "docs/qa/visual-checklist.md"
+    - "specs/features/00-index.yaml"
+  owner_refs:
+    - repo: "4uentes-portfolio"
+      paths:
+        - "docs/portfolio-intent.md"
+        - "docs/qa/visual-checklist.md"
+        - "specs/features/00-index.yaml"
+  evidence_refs:
+    - "evidence/requests/CR-4UENTES-0036/changed-files-summary.md"
+    - "evidence/requests/CR-4UENTES-0036/child-validation-results.md"
+    - "evidence/requests/CR-4UENTES-0036/visual-qa-results.md"
+    - "evidence/requests/CR-4UENTES-0036/control-plane-validation-results.md"
+
+jira:
+  role: "mirror"
+  source_of_truth: false
+  project_key: "PORT"
+  epic_key: "PORT-9"
+  issue_key: "PORT-19"
+  issue_type: "Tarea"
+  current_status_observed: "Listo"
+  transition_refs:
+    creation_ref: "evidence/requests/CR-4UENTES-0036/jira-task-sync-summary.md"
+    start_transition_ref: "evidence/requests/CR-4UENTES-0036/jira-port-19-start-transition-summary.md"
+    close_transition_ref: "evidence/requests/CR-4UENTES-0036/jira-port-19-close-transition-summary.md"
+
+validation:
+  required_checks:
+    - "4uentes-portfolio: npm.cmd run build"
+    - "4uentes-orchestor: npm.cmd run check"
+  evidence_refs:
+    - "evidence/requests/CR-4UENTES-0036/implementation-plan.md"
+    - "evidence/requests/CR-4UENTES-0036/current-experience-ui-analysis.md"
+    - "evidence/requests/CR-4UENTES-0036/changed-files-summary.md"
+    - "evidence/requests/CR-4UENTES-0036/child-validation-results.md"
+    - "evidence/requests/CR-4UENTES-0036/visual-qa-results.md"
+    - "evidence/requests/CR-4UENTES-0036/control-plane-validation-results.md"
+    - "evidence/requests/CR-4UENTES-0036/jira-port-19-close-transition-summary.md"
+
+decision:
+  status: "closed"
+  approver: "4uentes"
+  blocker: "none"

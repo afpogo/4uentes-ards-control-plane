@@ -1,0 +1,124 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-4UENTES-0027"
+title: "Portfolio mobile linear layout implementation"
+status: "planned"
+source_request: "requests/inbox/CR-4UENTES-0027-portfolio-mobile-linear-layout-implementation.yaml"
+created_at: "2026-07-04"
+requester: "4uentes"
+
+summary: >
+  Implement a first mobile portfolio layout in 4uentes-portfolio, replacing the
+  current desktop-only mobile blocker with a simple navigable mobile shell.
+
+initial_scope:
+  solution: "4uentes"
+  services:
+    - "4uentes-portfolio"
+  include_optional_services: false
+
+control_plane_context:
+  initiative_id: "INIT-FUENTES-0001"
+  product_initiative_id: "INIT-PORTFOLIO-0001"
+  parent_request_id: "CR-4UENTES-0026"
+  feature_id: "portfolio-mobile-linear-layout"
+  child_repo: "4uentes-portfolio"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "4uentes-portfolio"
+      via: "mobile shell layout and owner documentation"
+      service_kind: "frontend-spa"
+      ards_kind: "frontend-web"
+      status: "active"
+  affected_ards:
+    - "frontend-web"
+    - "publication-readiness"
+    - "mobile-qa"
+    - "owner-documentation"
+  capabilities:
+    - "portfolio-mobile-linear-layout"
+
+required_context:
+  - "requests/planned/CR-4UENTES-0026-portfolio-mobile-publication-qa-readiness.yaml"
+  - "evidence/requests/CR-4UENTES-0026/mobile-publication-readiness-analysis.md"
+  - "evidence/requests/CR-4UENTES-0026/jira-port-project-sync-summary.md"
+  - "evidence/requests/CR-4UENTES-0026/jira-port-2-start-transition-summary.md"
+  - "4uentes-portfolio: src/components/PortFolioLayout/index.tsx"
+  - "4uentes-portfolio: src/components/PortFolioLayout/styles.module.scss"
+  - "4uentes-portfolio: docs/architecture/README.md"
+  - "4uentes-portfolio: docs/qa/visual-checklist.md"
+  - "4uentes-portfolio: specs/features/00-index.yaml"
+
+risk:
+  level: "medium"
+  score: 6
+  drivers:
+    - "layout shell affects all nested portfolio routes"
+    - "mobile usability is a publication-readiness gate"
+    - "routing, scroll ownership, and contact/CV policy must remain stable"
+
+execution:
+  requires_human_approval: false
+  allowed_window: "manual"
+  branch_strategy: "child-repo-mobile-layout-cut"
+  child_repo_mutation_allowed: true
+  child_repo_mutation_target:
+    service_id: "4uentes-portfolio"
+  owner_documentation_required: true
+  implementation_boundary: >
+    Replace the mobile desktop-only message with a linear mobile shell using the
+    existing routes and content. Do not redesign route internals, change
+    evidence taxonomy, alter contact exposure policy, reactivate CV download,
+    or implement I18N cuts in this CR.
+
+owner_documentation:
+  required: true
+  status: satisfied
+  owner_repo: "4uentes-portfolio"
+  planned_owner_docs:
+    - "docs/architecture/README.md"
+    - "docs/qa/visual-checklist.md"
+    - "specs/features/00-index.yaml"
+  updated_owner_docs:
+    - "docs/architecture/README.md"
+    - "docs/qa/visual-checklist.md"
+    - "specs/features/00-index.yaml"
+  owner_refs:
+    - repo: "4uentes-portfolio"
+      paths:
+        - "docs/architecture/README.md"
+        - "docs/qa/visual-checklist.md"
+        - "specs/features/00-index.yaml"
+  evidence_refs:
+    - "evidence/requests/CR-4UENTES-0027/mobile-layout-implementation-summary.md"
+    - "evidence/requests/CR-4UENTES-0027/changed-files-summary.md"
+    - "evidence/requests/CR-4UENTES-0027/validation-results.md"
+
+jira:
+  role: "mirror"
+  source_of_truth: false
+  project_key: "PORT"
+  epic_key: "PORT-1"
+  issue_key: "PORT-3"
+  current_status_observed: "Listo"
+  transition_refs:
+    start_transition_ref: "evidence/requests/CR-4UENTES-0027/jira-port-3-start-transition-summary.md"
+    review_transition_ref: "evidence/requests/CR-4UENTES-0027/jira-transition-to-next-summary.md"
+    close_transition_ref: "evidence/requests/CR-4UENTES-0027/jira-port-3-close-transition-summary.md"
+
+validation:
+  required_checks:
+    - "4uentes-portfolio: npm.cmd run check"
+    - "4uentes-orchestor: npm.cmd run check"
+  evidence_required:
+    - "jira_port_3_start_transition_summary"
+    - "mobile_layout_implementation_summary"
+    - "changed_files_summary"
+    - "validation_results"
+
+decision:
+  status: "approved-for-local-execution"
+  approver: "4uentes"
+  blocker: "none"

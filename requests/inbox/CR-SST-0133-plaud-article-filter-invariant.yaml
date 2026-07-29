@@ -1,0 +1,10 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0133"
+title: "Enforce Plaud article and filter persistence invariant"
+status: inbox
+created_at: "2026-07-11"
+requester: "4uentes"
+business_context: "The Plaud writer can persist an article and payload without the filter record expected by article queries."
+requested_change: "Make Plaud article, payload and filter persistence atomic or explicitly recoverable in sst-bend."
+expected_outcome: "Every Plaud article satisfies the documented persistence invariant and remains queryable."

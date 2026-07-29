@@ -1,0 +1,98 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-CP-0003"
+title: "Promote feature and bugfix state read-model to core"
+status: "done"
+source_request: "requests/inbox/CR-CP-0003-core-state-read-model.yaml"
+planned_request: "requests/planned/CR-CP-0003-core-state-read-model.yaml"
+started_at: "2026-07-07"
+closed_at: "2026-07-10"
+closure_reconciled_at: "2026-07-10"
+requester: "4uentes"
+
+summary: >
+  Promoted the feature_state and bugfix_state read-model shape, canonical
+  statuses, validation expectations, and adoption template into reusable
+  4uentes-ards-core canon as a core-profile-scoped living resource.
+
+control_plane_context:
+  initiative_id: "INIT-CP-0002"
+  parent_initiative_id: "INIT-CP-0001"
+  related_jira_epic_key: "SST-36"
+  target_jira_epic_key: "ARDS-1"
+  jira_issue_key: "ARDS-4"
+  jira_status_observed: "Listo"
+  jira_resolution_observed: "Listo"
+  jira_closure_comment_observed_at: "2026-07-10"
+  local_reconciliation_ref: "evidence/requests/CR-CP-0003/jira-ards-4-close-reconciliation-summary.md"
+
+execution:
+  requires_human_approval: true
+  human_approval_ref: "user message 2026-07-07: empecemos ARDS-4"
+  allowed_window: "manual"
+  branch_strategy: "separate-core-promotion-branch"
+  child_repo_mutation_allowed: false
+  core_repo_mutation_allowed: true
+  implementation_boundary: >
+    Promoted schema/template/status rules only. Local state/features and
+    state/bugfixes records remain owned by the control-plane. No child
+    repository mutation was performed.
+
+resource_classification:
+  resource_id: "feature-bugfix-state-model"
+  resource_kind: "living-resource"
+  resource_class: "core-profile-scoped-living-resource"
+  policy_created: false
+  origin_repo: "4uentes-orchestor"
+  canonical_owner: "4uentes-ards-core"
+  adoption_mode: "profile-required-or-request-driven"
+  required_for_profiles:
+    - "control-plane"
+  optional_for_profiles:
+    - "backend-api"
+    - "backend-bff"
+    - "frontend-web"
+    - "frontend-extension"
+    - "infra"
+    - "shared-auth-provider"
+
+jira:
+  role: "mirror"
+  source_of_truth: false
+  project_key: "ARDS"
+  mirror_project_key: "ARDS"
+  epic_key: "ARDS-1"
+  related_epic_key: "SST-36"
+  issue_key: "ARDS-4"
+  current_status_observed: "Listo"
+  resolution_observed: "Listo"
+  write_status: "observed-reconciled"
+  sync_refs:
+    start_ref: "evidence/requests/CR-CP-0003/jira-ards-4-start-transition-summary.md"
+    close_reconciliation_ref: "evidence/requests/CR-CP-0003/jira-ards-4-close-reconciliation-summary.md"
+
+validation:
+  required_checks:
+    - "4uentes-orchestor: npm.cmd run check:state"
+    - "4uentes-orchestor: npm.cmd run check"
+    - "4uentes-ards-core: npm.cmd run check"
+  evidence_refs:
+    - "evidence/requests/CR-CP-0003/state-model-core-mapping.md"
+    - "evidence/requests/CR-CP-0003/living-resource-validation-explanation.md"
+    - "evidence/requests/CR-CP-0003/policy-enforcement-gap-analysis.md"
+    - "evidence/requests/CR-CP-0003/audit-runtime-policy-enforcement-review.md"
+    - "evidence/requests/CR-CP-0003/validator-boundary-decision.md"
+    - "evidence/requests/CR-CP-0003/validation-stability-assessment.md"
+    - "evidence/requests/CR-CP-0003/validation-results.md"
+    - "evidence/requests/CR-CP-0003/jira-ards-4-start-comment.md"
+    - "evidence/requests/CR-CP-0003/jira-ards-4-start-transition-summary.md"
+    - "evidence/requests/CR-CP-0003/jira-ards-4-close-reconciliation-summary.md"
+
+decision:
+  status: "closed"
+  approver: "4uentes"
+  closure_reason: >
+    Jira ARDS-4 was observed as Listo with closure comment and local validation
+    evidence already existed. Local lifecycle location was reconciled from
+    running to done on 2026-07-10.
+

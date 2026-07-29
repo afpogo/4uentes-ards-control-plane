@@ -1,0 +1,121 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-4UENTES-0033"
+title: "Portfolio professionalization intake reconciliation"
+status: "planned"
+source_request: "requests/inbox/CR-4UENTES-0033-portfolio-professionalization-intake-reconciliation.yaml"
+created_at: "2026-07-07"
+requester: "4uentes-portfolio"
+
+summary: >
+  Reconcile the child-originated portfolio professionalization intake into the
+  4uentes-orchestor lifecycle, creating the local Initiative/state linkage and
+  Jira mirror without mutating the child repository in this cut.
+
+initial_scope:
+  solution: "4uentes"
+  services:
+    - "4uentes-portfolio"
+  include_optional_services: false
+
+control_plane_context:
+  initiative_id: "INIT-PORTFOLIO-0003"
+  parent_initiative_ids:
+    - "INIT-FUENTES-0001"
+    - "INIT-PORTFOLIO-0001"
+  source_child_capability: "portfolio-professionalization-intake"
+  feature_id: "portfolio-professionalization-intake"
+  child_repo: "4uentes-portfolio"
+  work_origin: "child-repo"
+  correlation_id: "portfolio-professionalization-2026-07-05"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "4uentes-portfolio"
+      via: "child-originated professionalization intake reconciliation"
+      service_kind: "frontend-spa"
+      ards_kind: "frontend-web"
+      status: "active"
+  affected_ards:
+    - "frontend-web"
+    - "capability-outbound"
+    - "initiative"
+    - "jira-mirror"
+    - "owner-documentation"
+  capabilities:
+    - "portfolio-professionalization-intake"
+
+required_context:
+  - "inventory/evidence/git/4uentes-portfolio.md"
+  - "docs/requests/jira-write-connection-contract.md"
+  - "docs/requests/mcp-auth-bootstrap-playbook.md"
+  - "docs/requests/initiative-model.md"
+  - "docs/policies/owner-documentation-authority-policy.md"
+  - "state/capability-links.yaml"
+  - "4uentes-portfolio: specs/capabilities/outbound/portfolio-professionalization-intake.yaml"
+  - "4uentes-portfolio: docs/integration/orchestrator-intake/portfolio-professionalization.md"
+
+risk:
+  level: "low"
+  score: 3
+  drivers:
+    - "Jira mirror must not become source of truth"
+    - "child-originated intake must be reconciled without assigning CR ids from the child repo"
+    - "professionalization scope can become too broad if not atomized into future CRs"
+
+execution:
+  requires_human_approval: false
+  allowed_window: "manual"
+  branch_strategy: "control-plane-intake-reconciliation"
+  child_repo_mutation_allowed: false
+  owner_documentation_required: false
+  implementation_boundary: >
+    Reconcile only the intake signal, Initiative, capability/state link, and
+    Jira mirror. Do not change portfolio runtime, visible copy, UX, owner docs,
+    CV behavior, GitHub evidence behavior, deployment target, or mobile
+    remediation implementation in this CR.
+
+owner_documentation:
+  required: false
+  status: not-applicable
+  owner_repo: "4uentes-portfolio"
+  reason: >
+    The child repository already produced the outbound capability and intake
+    documentation. This CR records the control-plane reconciliation only and
+    does not mutate the child repo.
+  child_owner_refs:
+    - repo: "4uentes-portfolio"
+      paths:
+        - "specs/capabilities/outbound/portfolio-professionalization-intake.yaml"
+        - "docs/integration/orchestrator-intake/portfolio-professionalization.md"
+
+jira:
+  role: "mirror"
+  source_of_truth: false
+  project_key: "PORT"
+  epic_key: "PORT-9"
+  issue_key: "PORT-10"
+  issue_type: "Tarea"
+  parent_issue_type: "Epic"
+  current_status_observed: "Listo"
+  connection_policy_ref: "docs/requests/jira-write-connection-contract.md"
+  fallback_policy_ref: "docs/requests/mcp-auth-bootstrap-playbook.md"
+  transition_refs:
+    creation_ref: "evidence/requests/CR-4UENTES-0033/jira-epic-and-task-sync-summary.md"
+    close_transition_ref: "evidence/requests/CR-4UENTES-0033/jira-port-10-close-transition-summary.md"
+
+validation:
+  required_checks:
+    - "4uentes-orchestor: npm.cmd run check"
+  evidence_required:
+    - "intake_reconciliation"
+    - "jira_mcp_connection_review"
+    - "jira_epic_and_task_sync_summary"
+    - "changed_files_summary"
+    - "validation_results"
+
+decision:
+  status: "approved-for-local-execution"
+  approver: "4uentes"
+  blocker: "none"

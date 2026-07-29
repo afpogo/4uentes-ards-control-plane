@@ -1,0 +1,50 @@
+{
+  "issueKey": "SST-53",
+  "issue": {
+    "summary": "[SST][CR-SST-0124] Native SST article runtime URL",
+    "status": "En curso",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "Fuentes Sandferand",
+    "updated": "2026-07-07T18:10:39.962-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0124",
+      "frontend",
+      "init-sst-0001",
+      "learning-content-tags",
+      "runtime-url",
+      "sst-fend",
+      "subtask"
+    ],
+    "description": "CR: CR-SST-0124  \nInitiative: INIT-SST-0001  \nParent: SST-6  \nRelated: SST-52 / CR-SST-0123\n\nPurpose:\n\nImplement the MVP for native SST text articles to expose a browser-openable runtime URL derived from the article id and current SST origin, without storing a fake external source URL.\n\nDefinition of Done:\n\n- [ ] Text article creation remains valid with no external URL.\n- [ ] Created native text article exposes an app/runtime open action.\n- [ ] Runtime URL opens the article in localhost/browser context.\n- [ ] Runtime URL is not persisted as article url or payload.data.sourceUrl.\n- [ ] Existing web/source article URL behavior remains unchanged.\n- [ ] Owner ARDS/SDD docs/specs and control-plane evidence are updated.\n\nControl-plane evidence:\n\n* `requests/planned/CR-SST-0124-sst-fend-native-article-runtime-url.yaml`\n* `evidence/requests/CR-SST-0124/policy-and-owner-enforcement-start.md`\n* `evidence/requests/CR-SST-0124/implementation-analysis-start.md`\n\nBoundary:\n\n* Jira is an operational mirror; ARDS/SDD remains the source of truth.\n* Internal runtime URLs must not be treated as scrapeable external source URLs.\n* Do not store secrets, JWTs, cookies or private content in Jira or evidence.\n\n",
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10101\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10101\",\"key\":\"SST-53\",\"fields\":{\"summary\":\"[SST][CR-SST-0124] Native SST article runtime URL\",\"description\":\"CR: CR-SST-0124  \\nInitiative: INIT-SST-0001  \\nParent: SST-6  \\nRelated: SST-52 / CR-SST-0123\\n\\nPurpose:\\n\\nImplement the MVP for native SST text articles to expose a browser-openable runtime URL derived from the article id and current SST origin, without storing a fake external source URL.\\n\\nDefinition of Done:\\n\\n- [ ] Text article creation remains valid with no external URL.\\n- [ ] Created native text article exposes an app/runtime open action.\\n- [ ] Runtime URL opens the article in localhost/browser context.\\n- [ ] Runtime URL is not persisted as article url or payload.data.sourceUrl.\\n- [ ] Existing web/source article URL behavior remains unchanged.\\n- [ ] Owner ARDS/SDD docs/specs and control-plane evidence are updated.\\n\\nControl-plane evidence:\\n\\n* `requests/planned/CR-SST-0124-sst-fend-native-article-runtime-url.yaml`\\n* `evidence/requests/CR-SST-0124/policy-and-owner-enforcement-start.md`\\n* `evidence/requests/CR-SST-0124/implementation-analysis-start.md`\\n\\nBoundary:\\n\\n* Jira is an operational mirror; ARDS/SDD remains the source of truth.\\n* Internal runtime URLs must not be treated as scrapeable external source URLs.\\n* Do not store secrets, JWTs, cookies or private content in Jira or evidence.\\n\\n\",\"assignee\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]\",\"accountId\": \"[accountId-redacted]\",\"emailAddress\":\"[email-redacted]\",\"avatarUrls\":{\"48x48\":\"[avatar-url-redacted]\",\"24x24\":\"[avatar-url-redacted]\",\"16x16\":\"[avatar-url-redacted]\",\"32x32\":\"[avatar-url-redacted]\"},\"displayName\":\"Fuentes Sandferand\",\"active\":true,\"timeZone\":\"America/Buenos_Aires\",\"accountType\":\"atlassian\"},\"resolution\":null,\"updated\":\"2026-07-07T18:10:39.962-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10006\",\"description\":\"La persona asignada está trabajando actualmente en esta actividad.\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En curso\",\"id\":\"10006\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-sst-0124\",\"frontend\",\"init-sst-0001\",\"learning-content-tags\",\"runtime-url\",\"sst-fend\",\"subtask\"]}}"
+  },
+  "transitions": [
+    {
+      "id": "11",
+      "name": "Por hacer",
+      "toStatus": "Tareas por hacer",
+      "toStatusCategory": "Por hacer"
+    },
+    {
+      "id": "21",
+      "name": "En curso",
+      "toStatus": "En curso",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "31",
+      "name": "In Review",
+      "toStatus": "En revisión",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "41",
+      "name": "Listo",
+      "toStatus": "Finalizada",
+      "toStatusCategory": "Listo"
+    }
+  ]
+}

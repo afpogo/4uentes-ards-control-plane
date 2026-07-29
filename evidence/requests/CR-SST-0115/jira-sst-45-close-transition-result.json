@@ -1,0 +1,118 @@
+{
+  "issueKey": "SST-45",
+  "before": {
+    "summary": "[SST][CR-SST-0115] Define annotated selection BFF/API contract",
+    "status": "Tareas por hacer",
+    "statusCategory": "Por hacer",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-07-04T15:22:48.164-0300",
+    "labels": [
+      "ards-sdd",
+      "bff-api-contract",
+      "control-plane",
+      "cr-sst-0115",
+      "init-sst-0001",
+      "learning-content-tags",
+      "node-auth",
+      "sst-bend",
+      "subtask"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10083\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10083\",\"key\":\"SST-45\",\"fields\":{\"summary\":\"[SST][CR-SST-0115] Define annotated selection BFF/API contract\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-07-04T15:22:48.164-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10005\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"Tareas por hacer\",\"id\":\"10005\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/2\",\"id\":2,\"key\":\"new\",\"colorName\":\"blue-gray\",\"name\":\"Por hacer\"}},\"labels\":[\"ards-sdd\",\"bff-api-contract\",\"control-plane\",\"cr-sst-0115\",\"init-sst-0001\",\"learning-content-tags\",\"node-auth\",\"sst-bend\",\"subtask\"]}}"
+  },
+  "after": {
+    "summary": "[SST][CR-SST-0115] Define annotated selection BFF/API contract",
+    "status": "Listo",
+    "statusCategory": "Listo",
+    "resolution": "Listo",
+    "assignee": "no-asignado",
+    "updated": "2026-07-04T19:55:15.306-0300",
+    "labels": [
+      "ards-sdd",
+      "bff-api-contract",
+      "control-plane",
+      "cr-sst-0115",
+      "init-sst-0001",
+      "learning-content-tags",
+      "node-auth",
+      "sst-bend",
+      "subtask"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10083\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10083\",\"key\":\"SST-45\",\"fields\":{\"summary\":\"[SST][CR-SST-0115] Define annotated selection BFF/API contract\",\"assignee\":null,\"resolution\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/resolution/10000\",\"id\":\"10000\",\"description\":\"Se ha terminado el trabajo relacionado con esta incidencia.\",\"name\":\"Listo\"},\"updated\":\"2026-07-04T19:55:15.306-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10008\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"Finalizada\",\"id\":\"10008\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/3\",\"id\":3,\"key\":\"done\",\"colorName\":\"green\",\"name\":\"Listo\"}},\"labels\":[\"ards-sdd\",\"bff-api-contract\",\"control-plane\",\"cr-sst-0115\",\"init-sst-0001\",\"learning-content-tags\",\"node-auth\",\"sst-bend\",\"subtask\"]}}"
+  },
+  "transitions": [
+    {
+      "id": "11",
+      "name": "Por hacer",
+      "toStatus": "Tareas por hacer",
+      "toStatusCategory": "Por hacer"
+    },
+    {
+      "id": "21",
+      "name": "En curso",
+      "toStatus": "En curso",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "31",
+      "name": "In Review",
+      "toStatus": "En revisión",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "41",
+      "name": "Listo",
+      "toStatus": "Finalizada",
+      "toStatusCategory": "Listo"
+    }
+  ],
+  "selectedTransition": {
+    "id": "41",
+    "name": "Listo",
+    "toStatus": "Finalizada",
+    "toStatusCategory": "Listo"
+  },
+  "transitionResult": {
+    "success": true
+  },
+  "commentResult": {
+    "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10083/comment/10087",
+    "id": "10087",
+    "author": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "body": "CR-SST-0115 closure checkpoint.\n\nSST-45 can move to `Listo`.\n\nCompleted:\n\n* Defined annotated selection BFF/API contract.\n* Defined payload fields for `sourceRef`, `sourceText`, `selector`,\n  `selectionRange`, `contentTags`, `relevance`, `acceptanceState` and\n  `originArticleId`.\n* Preserved `node-auth` as the required BFF boundary.\n* Preserved `sst-bend` as owner of persistence/query semantics.\n* Kept `ArticleTag` separate from `LearningContentTag`.\n\nValidation:\n\n* `4uentes-orchestor npm.cmd run check`: PASS.\n* Owner documentation enforcement: PASS.\n\nEvidence:\n\n* `evidence/requests/CR-SST-0115/annotated-selection-bff-api-contract.md`\n* `evidence/requests/CR-SST-0115/implementation-boundary.md`\n* `evidence/requests/CR-SST-0115/validation-results.md`\n\nBoundary:\n\n* This CR is contract-only.\n* Runtime persistence is handled by CR-SST-0116.\n* Jira remains an operational mirror; ARDS/SDD remains source of truth.\n\n",
+    "updateAuthor": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "created": "2026-07-04T19:55:15.306-0300",
+    "updated": "2026-07-04T19:55:15.306-0300",
+    "jsdPublic": true
+  },
+  "commentBody": "CR-SST-0115 closure checkpoint.\n\nSST-45 can move to `Listo`.\n\nCompleted:\n\n- Defined annotated selection BFF/API contract.\n- Defined payload fields for `sourceRef`, `sourceText`, `selector`,\n  `selectionRange`, `contentTags`, `relevance`, `acceptanceState` and\n  `originArticleId`.\n- Preserved `node-auth` as the required BFF boundary.\n- Preserved `sst-bend` as owner of persistence/query semantics.\n- Kept `ArticleTag` separate from `LearningContentTag`.\n\nValidation:\n\n- `4uentes-orchestor npm.cmd run check`: PASS.\n- Owner documentation enforcement: PASS.\n\nEvidence:\n\n- `evidence/requests/CR-SST-0115/annotated-selection-bff-api-contract.md`\n- `evidence/requests/CR-SST-0115/implementation-boundary.md`\n- `evidence/requests/CR-SST-0115/validation-results.md`\n\nBoundary:\n\n- This CR is contract-only.\n- Runtime persistence is handled by CR-SST-0116.\n- Jira remains an operational mirror; ARDS/SDD remains source of truth.\n",
+  "externalWrite": true
+}

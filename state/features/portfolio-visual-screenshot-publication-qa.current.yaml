@@ -1,0 +1,24 @@
+schema_version: "1.0"
+kind: "feature_state"
+id: "portfolio-visual-screenshot-publication-qa"
+title: "Portfolio Visual Screenshot Publication QA"
+status: "validated-local"
+updated_at: "2026-07-04"
+solution_id: "4uentes"
+affected_services:
+  - 4uentes-portfolio
+request_ids:
+  - CR-4UENTES-0007
+capability_refs:
+  - "portfolio-visual-screenshot-publication-qa"
+spec_refs:
+  - "requests/planned/CR-4UENTES-0007-portfolio-visual-screenshot-and-publication-qa.yaml"
+  - "initiatives/INIT-PORTFOLIO-0001-portfolio-publication-readiness.yaml"
+evidence_refs:
+  - "evidence/requests/CR-4UENTES-0007/manual-qa-results.md"
+  - "evidence/requests/CR-4UENTES-0007/changed-files-summary.md"
+  - "evidence/requests/CR-4UENTES-0007/validation-results.md"
+open_gaps:
+  - "Review exact company office addresses shown on experience screens before broad publication."
+  - "Track React Router v7 future flag warning if console cleanliness becomes a publication gate."
+  - "Run mobile viewport manual QA as a separate publication-readiness cut."

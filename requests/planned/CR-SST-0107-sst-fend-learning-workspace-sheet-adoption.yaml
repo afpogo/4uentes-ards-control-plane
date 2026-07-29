@@ -1,0 +1,276 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0107"
+title: "Implement sst-fend LearningWorkspace sheet adoption"
+status: planned
+source_request: "requests/inbox/CR-SST-0107-sst-fend-learning-workspace-sheet-adoption.yaml"
+created_at: "2026-07-03"
+requester: "4uentes"
+
+summary: >
+  Implement the first sst-fend consumer adoption of LearningWorkspace as a real
+  Learning Sheet experience for SST-6. The frontend will let the user write or
+  import text into a sheet, preview LearningWorkspace output, inspect warnings,
+  assign relevance/tag intent by document granularity, and explicitly accept or
+  reject preview results. Backend parser/import completion is intentionally
+  excluded and reserved as the immediate follow-up after this CR.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - "sst-fend"
+    - "4uentes-orchestor"
+  include_optional_services: false
+
+control_plane_context:
+  initiative_id: "INIT-SST-0001"
+  initiative_file: "initiatives/INIT-SST-0001-tags-governance-continuity.yaml"
+  governing_request: "CR-SST-0107"
+  active_jira_issue_key: "SST-6"
+  closed_preceding_execution_issue_key: "SST-28"
+  jira_epic_key: "SST-27"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  active_feature_state: "learning-content-tags"
+  active_feature_state_file: "state/features/learning-content-tags.current.yaml"
+  preceding_requests:
+    - "CR-SST-0088"
+    - "CR-SST-0089"
+    - "CR-SST-0090"
+    - "CR-SST-0091"
+    - "CR-SST-0092"
+    - "CR-SST-0097"
+  immediate_follow_up:
+    suggested_request_id: "CR-SST-0108"
+    title: "Complete sst-bend LearningWorkspace parser/import expansion"
+    reason: >
+      Backend CourseSource selector expansion, generated-lab exclusion
+      enforcement and richer parser/import behavior should not be hidden inside
+      the first frontend adoption slice.
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "sst-fend"
+      via: "LearningWorkspace consumer UI, services, types, owner docs/specs and tests"
+      service_kind: "frontend-spa"
+      ards_kind: "frontend-web"
+      status: "active"
+    - service_id: "4uentes-orchestor"
+      via: "request lifecycle, evidence, initiative tracking and Jira mirror"
+      service_kind: "control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+  affected_ards:
+    - frontend-web
+    - control-plane
+    - request-lifecycle
+    - evidence
+    - child-repo-owner-documentation
+    - learning-content-tags
+    - learning-workspace-context
+  capabilities:
+    - "learning-content-tags"
+    - "learning-workspace-context"
+  risks:
+    - id: PREVIEW_ONLY_GATE_BYPASS
+      severity: high
+    - id: FRONTEND_PERSISTS_UNACCEPTED_CONTENT
+      severity: high
+    - id: OWNER_DOCS_STALE_AFTER_FRONTEND_ADOPTION
+      severity: high
+    - id: UI_IMPLIES_BACKEND_PARSER_COMPLETION
+      severity: high
+    - id: TAG_RELEVANCE_GRANULARITY_DRIFT
+      severity: medium
+    - id: EXISTING_CHILD_WORKTREE_DIRTY
+      severity: medium
+
+required_context:
+  - "AGENTS.md"
+  - "docs/policies/owner-documentation-authority-policy.md"
+  - "docs/policies/agent-delegation-policy.md"
+  - "initiatives/INIT-SST-0001-tags-governance-continuity.yaml"
+  - "state/features/learning-content-tags.current.yaml"
+  - "evidence/initiatives/INIT-SST-0001/sst-6-next-steps-analysis-2026-07-03.md"
+  - "requests/done/CR-SST-0092-sst-bend-learning-workspace-first-runtime-slice.yaml"
+  - "requests/done/CR-SST-0097-sst-bend-learning-workspace-owner-docs-remediation.yaml"
+  - "sst-fend/AGENTS.md"
+  - "sst-fend/docs/00-overview.md"
+  - "sst-fend/specs/00-index.yaml"
+  - "sst-fend/docs/capabilities/inbound/node-auth--tag-prefix-engine-preview.md"
+  - "sst-fend/src/services/tagPrefixEngineService.ts"
+  - "sst-fend/src/services/types/tagPrefixEngine.ts"
+
+required_checks:
+  - service_id: "sst-fend"
+    command: "npm.cmd run check"
+  - service_id: "sst-fend"
+    command: "npm.cmd run test -- --runInBand"
+  - service_id: "sst-fend"
+    command: "npm.cmd run build"
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check"
+
+risk:
+  level: high
+  score: 8
+  drivers:
+    - PREVIEW_ONLY_GATE_BYPASS
+    - FRONTEND_PERSISTS_UNACCEPTED_CONTENT
+    - OWNER_DOCS_STALE_AFTER_FRONTEND_ADOPTION
+    - UI_IMPLIES_BACKEND_PARSER_COMPLETION
+    - TAG_RELEVANCE_GRANULARITY_DRIFT
+    - EXISTING_CHILD_WORKTREE_DIRTY
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "Mutates sst-fend product UI and owner docs."
+    - "Introduces a new frontend consumer of LearningWorkspace."
+    - "Must preserve preview-only behavior until explicit acceptance."
+    - "Must not imply backend parser/import completion."
+    - "Defines user-facing tag relevance and sheet authoring semantics."
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-high-reasoning-profile"
+  reason: >
+    The task crosses frontend UX, private learning content handling,
+    cross-repo capability adoption, owner documentation and preview-only
+    persistence boundaries.
+
+subagent_deployment_plan:
+  required: true
+  parallelizable: true
+  roles:
+    - id: "sst-fend-ui-discovery"
+      objective: "Map existing Article/Dictionary editor patterns and identify exact files for Learning Sheet UI integration."
+      risk: medium
+      write_scope: "read-only discovery first; later sst-fend implementation files only"
+      validation: "Main agent verifies file plan against existing frontend conventions."
+    - id: "learning-sheet-ux-contract"
+      objective: "Define minimal sheet interaction model, granularity taxonomy and preview/accept/reject states."
+      risk: high
+      write_scope: "control-plane evidence and later sst-fend owner docs/specs"
+      validation: "Contract preserves preview-only semantics and does not invent backend parser features."
+    - id: "owner-doc-enforcement"
+      objective: "Ensure sst-fend inbound capability docs/specs and control-plane owner gate remain aligned."
+      risk: medium
+      write_scope: "sst-fend docs/specs plus control-plane evidence"
+      validation: "npm.cmd run check in control-plane includes owner documentation validator."
+  fallback: >
+    If subagents cannot be deployed, the main agent must perform the same
+    discovery, UX contract and owner-doc reviews sequentially and record the
+    fallback in evidence.
+  evidence_required: true
+
+execution:
+  requires_human_approval: false
+  allowed_window: manual
+  branch_strategy: "one-branch-per-repo"
+  implementation_boundary: >
+    This CR may modify sst-fend and control-plane evidence/docs needed to
+    implement the frontend Learning Sheet adoption. It must not modify sst-bend,
+    sst-chatbot, sst-extension, 4uentes-auth, infrastructure repositories or
+    4uentes-ards-core. It must not create backend parser/import behavior, must
+    not persist preview content without explicit accept, and must not close
+    SST-6 automatically.
+  child_repo_mutation_allowed: true
+  child_repo_mutation_target:
+    service_id: "sst-fend"
+    local_path_ref: "environments/local/bindings.local.yaml#sst-fend"
+  excluded_child_repo_mutation:
+    - service_id: "sst-bend"
+      reason: "Parser/import completion is the immediate follow-up request, not this frontend adoption CR."
+  owner_documentation:
+    required: true
+    status: planned
+    owner_refs:
+      - repo: "sst-fend"
+        paths:
+          - "specs/capabilities/inbound/node-auth--learning-workspace-context.yaml"
+          - "docs/capabilities/inbound/node-auth--learning-workspace-context.md"
+          - "specs/38-learning-workspace-frontend.yml"
+          - "docs/38-learning-workspace-frontend.md"
+          - "docs/tasks/2026-07-03-cr-sst-0107-learning-workspace-sheet-adoption.md"
+    evidence_refs:
+      - "evidence/requests/CR-SST-0107/frontend-intent-and-boundary.md"
+      - "evidence/requests/CR-SST-0107/implementation-discovery.md"
+      - "evidence/requests/CR-SST-0107/sst-fend-file-plan.md"
+      - "evidence/requests/CR-SST-0107/validation-results.md"
+  jira_read_executed: false
+  jira_write_executed: false
+  jira_write_target:
+    desired_artifact: "Update SST-6 mirror only after frontend implementation evidence exists"
+    desired_initial_status: "En curso"
+
+frontend_intent:
+  product_surface_name: "Learning Sheet"
+  primary_jobs:
+    - "write learning text directly"
+    - "paste or import text into a draft sheet"
+    - "preview LearningWorkspace materialization"
+    - "review warnings and parser issues"
+    - "assign relevance/tag intent by content granularity"
+    - "accept or reject a preview explicitly"
+    - "view accepted LearningWorkspace context"
+  relevance_granularities:
+    - "line"
+    - "line_range"
+    - "paragraph"
+    - "paragraph_range"
+    - "line_plus_paragraph"
+    - "document"
+    - "document_header"
+    - "document_footer"
+    - "semantic_block"
+    - "selection"
+  learning_block_types:
+    - "clase"
+    - "nota"
+    - "recordar"
+    - "ejemplo"
+    - "definicion"
+    - "image"
+    - "docs"
+    - "code"
+  preview_only_rules:
+    - "Draft sheet edits are local UI state until preview."
+    - "Preview output is not durable accepted context."
+    - "Accept is the only action that promotes preview into LearningWorkspace accepted context."
+    - "Reject records user intent without accepted context."
+    - "Frontend must show warnings rather than silently hiding parser uncertainty."
+  backend_assumptions:
+    - "Use existing LearningWorkspace preview/accept/reject/context endpoints from sst-bend."
+    - "Do not require selector expansion or generated-lab exclusion enforcement in this frontend slice."
+    - "Represent advanced relevance intent in frontend state and request payload metadata where the existing backend safely accepts it."
+
+validation:
+  required_checks:
+    - "sst-fend owner docs/specs for LearningWorkspace adoption exist."
+    - "Learning Sheet lets a user write or paste text into a draft."
+    - "Preview uses sst-bend LearningWorkspace preview endpoint and remains preview-only."
+    - "Accept/reject controls are explicit and distinguish draft, preview and accepted states."
+    - "UI renders warnings and parser issues."
+    - "UI represents relevance granularity for line, paragraph, document, header, footer, semantic block and selection."
+    - "No sst-bend parser/import behavior is modified."
+    - "Control-plane npm.cmd run check passes."
+  evidence_required:
+    - "frontend_intent_and_boundary"
+    - "sst_fend_file_plan"
+    - "owner_documentation_enforcement"
+    - "changed_files_summary"
+    - "validation_results"
+
+decision:
+  status: pending
+  approver: TODO
+
+planner_notes:
+  - "This CR opens frontend adoption only; backend parser/import completion should be taken immediately after as a separate request."
+  - "The UI should feel like a real authored learning sheet, not a raw textarea wrapper."
+  - "Dynamic and enjoyable editing is in scope, but must stay logical and verifiable."
+  - "Avoid closing SST-6 until frontend adoption and backend parser/import follow-up both have evidence."

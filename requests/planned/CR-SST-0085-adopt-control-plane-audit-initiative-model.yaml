@@ -1,0 +1,107 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0085"
+title: "Adopt control-plane audit findings through local Initiative model"
+status: planned
+source_request: "requests/inbox/CR-SST-0085-adopt-control-plane-audit-initiative-model.yaml"
+created_at: "2026-06-27"
+requester: "4uentes"
+
+initial_scope:
+  solution: "sst"
+  services: []
+  include_optional_services: false
+
+control_plane_context:
+  initiative_id: "INIT-CP-0001"
+  initiative_file: "initiatives/INIT-CP-0001-control-plane-lifecycle-enforcement.yaml"
+  audit_report_ref: ".ards/audits/control-plane/latest.md"
+  governing_request: "CR-SST-0085"
+  jira_project_key: "SST"
+  jira_issue_type: "Epic"
+  jira_write_executed: false
+  jira_readiness_ref: "evidence/requests/CR-SST-0085/jira-readiness.md"
+
+impact_analysis:
+  required: true
+  affected_services: []
+  affected_ards:
+    - control-plane
+    - request-lifecycle
+    - evidence
+    - validation
+  capabilities: []
+  risks:
+    - id: LOCAL_MODEL_BEFORE_CORE_PROMOTION
+      severity: medium
+    - id: JIRA_MIRROR_NOT_AVAILABLE
+      severity: medium
+    - id: LIFECYCLE_ENFORCEMENT_NOT_CHANGED
+      severity: low
+
+required_context:
+  - ".ards/audits/control-plane/latest.md"
+  - "docs/requests/execution-model.md"
+  - "state/state-machine.yaml"
+  - "docs/requests/jira-backlog-registry-policy.md"
+  - "state/jira-backlog-sync-machine.yaml"
+  - "AGENTS.md"
+
+required_checks:
+  - service_id: 4uentes-orchestor
+    command: "npm.cmd run check"
+  - service_id: 4uentes-orchestor
+    command: "npm.cmd run check:initiatives"
+
+risk:
+  level: medium
+  score: 4
+  drivers:
+    - id: LOCAL_MODEL_BEFORE_CORE_PROMOTION
+      severity: medium
+    - id: JIRA_MIRROR_NOT_AVAILABLE
+      severity: medium
+    - id: LIFECYCLE_ENFORCEMENT_NOT_CHANGED
+      severity: low
+
+task_weight:
+  classification: long-context-task
+  risk_level: medium
+  drivers:
+    - LOCAL_MODEL_BEFORE_CORE_PROMOTION
+    - JIRA_MIRROR_NOT_AVAILABLE
+    - LIFECYCLE_ENFORCEMENT_NOT_CHANGED
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.4-fast-high"
+  fallback_profile: "highest-available-long-context-profile"
+  reason: "The request introduces a local governance concept and validator but does not mutate child repositories, Core canon, Jira, or runtime."
+
+subagent_deployment_plan:
+  required: false
+  parallelizable: false
+  roles: []
+  fallback: "Main agent execution is sufficient because the change is local and validation is deterministic."
+  evidence_required: true
+
+execution:
+  requires_human_approval: false
+  allowed_window: manual
+  branch_strategy: control-plane-only
+  implementation_boundary: "Local control-plane adoption only; no child repo changes, no Core promotion, no Jira writes, and no runtime implementation."
+  jira_read_executed: true
+  jira_write_executed: false
+  jira_write_target:
+    desired_artifact: "Epic mirror for INIT-CP-0001"
+    desired_initial_status: "not requested"
+  jira_write_blocked_reason: "Atlassian MCP search returned 403 because the app is not installed on the target instance during planning."
+
+decision:
+  status: pending
+  approver: TODO
+
+planner_notes:
+  - "Initiative is adopted locally as an experimental control-plane model."
+  - "CR-SST-0085 intentionally leaves request_lifecycle.documented_only unchanged."
+  - "Later CRs may promote the model to Core, create a Jira Epic mirror, and enforce lifecycle transitions."

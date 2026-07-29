@@ -1,0 +1,9 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0137"
+title: "Add canonical article preview resolution in sst-bend"
+status: "inbox"
+created_at: "2026-07-11"
+requester: "4uentes"
+summary: "Own ArticlePreviewResolution v1, strategy resolution, DB-first persistence, and authenticated preview bytes in sst-bend."
+scope: {solution: "sst", owner_service: "sst-bend"}

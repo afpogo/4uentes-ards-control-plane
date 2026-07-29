@@ -1,0 +1,91 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-SST-0075"
+title: "SST Tags - Governed article selector UI"
+status: "done"
+source_request: "requests/inbox/CR-SST-0075-fend-governed-article-tag-selector.yaml"
+planned_request: "requests/planned/CR-SST-0075-fend-governed-article-tag-selector.yaml"
+created_at: "2026-06-13"
+completed_at: "2026-06-23"
+requester: "4uentes"
+
+summary: >
+  Implemented the governed article tag selector in `sst-fend`, replacing the
+  freeform article tag input with governed search, explicit `TagValue`
+  creation, structured article payloads, duplicate-safe selection, and
+  `tags: []` empty-state clearing.
+
+scope:
+  solution: "sst"
+  repository: "4uentes-orchestor"
+  functional_repositories_modified: true
+  modified_repositories:
+    - "sst-fend"
+  jira_read_executed: true
+  jira_write_executed: true
+  local_state_transitions_executed: false
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "frontend data-model migration"
+    - "governed autocomplete UX"
+    - "payload compatibility with backend and BFF contracts"
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The work changed a user-facing frontend workflow backed by governed SST/BFF tag contracts."
+
+subagent_deployment_plan:
+  required: true
+  roles:
+    - "frontend-workflow-reviewer"
+    - "validation-reviewer"
+    - "ards-sdd-validator"
+  fallback: "The local runtime did not expose subagent deployment, so implementation and review were executed sequentially in the main agent."
+  evidence_ref: "evidence/requests/CR-SST-0075/execution-start-notes.md"
+
+results:
+  runtime_outputs:
+    - "Added governed tag lookup and explicit tag value creation from the article form."
+    - "Article create/update payloads now send structured `tags`."
+    - "Article update preserves `tags: []` for total detach."
+    - "The selector UI was adjusted to match SST card/modal styling."
+  compatibility:
+    - "The frontend preserves upstream governed tag fields without redefining backend ownership or definitions."
+    - "The `POST /api/tags/values` body no longer sends `scope`, matching the BFF/SST passthrough contract."
+    - "Existing article readers and DTO shape remain unchanged outside the governed selector adoption."
+  qa_outputs:
+    - "Runtime smoke with real login JWT passed for tag create, article create with tag, includeTags detail, `tags: []` update, and cleanup."
+    - "Manual QA passed for article tag creation and selector UI."
+    - "`sst-fend: npm.cmd run build` passed after fixing `exactOptionalPropertyTypes` issues."
+
+evidence:
+  required:
+    - "evidence/requests/CR-SST-0075/execution-start-notes.md"
+    - "evidence/requests/CR-SST-0075/frontend-governed-selector-implementation-notes.md"
+    - "evidence/requests/CR-SST-0075/runtime-smoke-real-jwt-2026-06-21.md"
+    - "evidence/requests/CR-SST-0075/frontend-build-fix-exact-optional-types-2026-06-23.md"
+    - "evidence/requests/CR-SST-0075/frontend-manual-qa-fix-tag-create-ui-2026-06-23.md"
+    - "evidence/requests/CR-SST-0075/manual-qa-pass-article-governed-tags-2026-06-23.md"
+    - "evidence/requests/CR-SST-0075/jira-sst-23-start-transition-summary.md"
+    - "evidence/requests/CR-SST-0075/jira-sst-23-close-transition-summary.md"
+
+validation:
+  required_checks:
+    - "sst-fend: npm run check"
+    - "4uentes-orchestor: npm run check"
+  status: "pass-with-baseline-gap"
+  notes:
+    - "`sst-fend: npm.cmd run build` passed."
+    - "`sst-fend: npm.cmd run css:types` passed."
+    - "`4uentes-orchestor: npm.cmd run check` passed with 0 fails."
+    - "`sst-fend: npm run check` remains affected by pre-existing repo-wide lint/prettier baseline outside this CR."
+
+decision:
+  status: "approved-done"
+  approver: "4uentes"
+  note: "CR-SST-0075 closes the frontend governed selector slice. Dictionary/global governed closure remains in CR-SST-0076."

@@ -1,0 +1,112 @@
+{
+  "issueKey": "SST-33",
+  "before": {
+    "summary": "[SST][INIT-SST-0003][CR-SST-0101] Define sst-extension CredentialedWebSource producer contract",
+    "status": "En revisión",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-07-13T00:07:14.595-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0101",
+      "credentialed-web-source",
+      "init-sst-0003",
+      "sst-extension"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10071\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10071\",\"key\":\"SST-33\",\"fields\":{\"summary\":\"[SST][INIT-SST-0003][CR-SST-0101] Define sst-extension CredentialedWebSource producer contract\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-07-13T00:07:14.595-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10007\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En revisión\",\"id\":\"10007\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-sst-0101\",\"credentialed-web-source\",\"init-sst-0003\",\"sst-extension\"]}}"
+  },
+  "after": {
+    "summary": "[SST][INIT-SST-0003][CR-SST-0101] Define sst-extension CredentialedWebSource producer contract",
+    "status": "Listo",
+    "statusCategory": "Listo",
+    "resolution": "Listo",
+    "assignee": "no-asignado",
+    "updated": "2026-07-13T00:07:44.343-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0101",
+      "credentialed-web-source",
+      "init-sst-0003",
+      "sst-extension"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10071\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10071\",\"key\":\"SST-33\",\"fields\":{\"summary\":\"[SST][INIT-SST-0003][CR-SST-0101] Define sst-extension CredentialedWebSource producer contract\",\"assignee\":null,\"resolution\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/resolution/10000\",\"id\":\"10000\",\"description\":\"Se ha terminado el trabajo relacionado con esta incidencia.\",\"name\":\"Listo\"},\"updated\":\"2026-07-13T00:07:44.343-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10008\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"Finalizada\",\"id\":\"10008\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/3\",\"id\":3,\"key\":\"done\",\"colorName\":\"green\",\"name\":\"Listo\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-sst-0101\",\"credentialed-web-source\",\"init-sst-0003\",\"sst-extension\"]}}"
+  },
+  "transitions": [
+    {
+      "id": "11",
+      "name": "Por hacer",
+      "toStatus": "Tareas por hacer",
+      "toStatusCategory": "Por hacer"
+    },
+    {
+      "id": "21",
+      "name": "En curso",
+      "toStatus": "En curso",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "31",
+      "name": "In Review",
+      "toStatus": "En revisión",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "41",
+      "name": "Listo",
+      "toStatus": "Finalizada",
+      "toStatusCategory": "Listo"
+    }
+  ],
+  "selectedTransition": {
+    "id": "41",
+    "name": "Listo",
+    "toStatus": "Finalizada",
+    "toStatusCategory": "Listo"
+  },
+  "transitionResult": {
+    "success": true
+  },
+  "commentResult": {
+    "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10071/comment/10216",
+    "id": "10216",
+    "author": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/48",
+        "24x24": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/24",
+        "16x16": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/16",
+        "32x32": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/32"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "body": "Cierre de `CR-SST-0101 / SST-33`.\n\nEl lifecycle ARDS/SDD esta `closed-local` y el gate de owner documentation esta  \nsatisfecho. `CredentialedWebSource v1` queda adoptado como contrato owner de\n`sst-extension` sobre el runtime de sesiones y previews ya existente.\n\nDisposicion:\n\n* implementacion documental owner completa;\n* validaciones owner y control plane completas;\n* sin cambios runtime ni nuevos contratos de transporte;\n* sin contenido privado ni secretos en Jira o evidencia;\n* trabajo futuro conserva sus CRs separados.\n\nJira se sincroniza a `Listo/Finalizada` como mirror; no representa una  \npublicacion o release de runtime.",
+    "updateAuthor": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/48",
+        "24x24": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/24",
+        "16x16": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/16",
+        "32x32": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/32"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "created": "2026-07-13T00:07:44.343-0300",
+    "updated": "2026-07-13T00:07:44.343-0300",
+    "jsdPublic": true
+  },
+  "commentBody": "Cierre de `CR-SST-0101 / SST-33`.\n\nEl lifecycle ARDS/SDD esta `closed-local` y el gate de owner documentation esta\nsatisfecho. `CredentialedWebSource v1` queda adoptado como contrato owner de\n`sst-extension` sobre el runtime de sesiones y previews ya existente.\n\nDisposicion:\n\n- implementacion documental owner completa;\n- validaciones owner y control plane completas;\n- sin cambios runtime ni nuevos contratos de transporte;\n- sin contenido privado ni secretos en Jira o evidencia;\n- trabajo futuro conserva sus CRs separados.\n\nJira se sincroniza a `Listo/Finalizada` como mirror; no representa una\npublicacion o release de runtime.\n\n",
+  "externalWrite": true
+}

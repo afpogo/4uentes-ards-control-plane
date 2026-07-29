@@ -1,0 +1,78 @@
+{
+  "initiativeId": "INIT-SST-0003",
+  "epicKey": "SST-29",
+  "results": [
+    {
+      "cr": "CR-SST-0098",
+      "summary": "[SST][INIT-SST-0003][CR-SST-0098] Fix sst-extension session tab-by-tab visual PDF capture",
+      "issue": {
+        "key": "SST-30",
+        "summary": "[SST][INIT-SST-0003][CR-SST-0098] Fix sst-extension session tab-by-tab visual PDF capture",
+        "parentKey": "SST-29",
+        "source": "created",
+        "raw": "{\"id\":\"10068\",\"key\":\"SST-30\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10068\"}"
+      },
+      "existing": false
+    },
+    {
+      "cr": "CR-SST-0099",
+      "summary": "[SST][INIT-SST-0003][CR-SST-0099] Add session snapshot outcomes and warnings",
+      "issue": {
+        "key": "SST-31",
+        "summary": "[SST][INIT-SST-0003][CR-SST-0099] Add session snapshot outcomes and warnings",
+        "parentKey": "SST-29",
+        "source": "created",
+        "raw": "{\"id\":\"10069\",\"key\":\"SST-31\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10069\"}"
+      },
+      "existing": false
+    },
+    {
+      "cr": "CR-SST-0100",
+      "summary": "[SST][INIT-SST-0003][CR-SST-0100] Show session capture progress and per-tab degradations",
+      "issue": {
+        "key": "SST-32",
+        "summary": "[SST][INIT-SST-0003][CR-SST-0100] Show session capture progress and per-tab degradations",
+        "parentKey": "SST-29",
+        "source": "created",
+        "raw": "{\"id\":\"10070\",\"key\":\"SST-32\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10070\"}"
+      },
+      "existing": false
+    },
+    {
+      "cr": "CR-SST-0101",
+      "summary": "[SST][INIT-SST-0003][CR-SST-0101] Define sst-extension CredentialedWebSource producer contract",
+      "issue": {
+        "key": "SST-33",
+        "summary": "[SST][INIT-SST-0003][CR-SST-0101] Define sst-extension CredentialedWebSource producer contract",
+        "parentKey": "SST-29",
+        "source": "created",
+        "raw": "{\"id\":\"10071\",\"key\":\"SST-33\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10071\"}"
+      },
+      "existing": false
+    },
+    {
+      "cr": "CR-SST-0102",
+      "summary": "[SST][INIT-SST-0003][CR-SST-0102] Prepare LearningWorkspace preview handoff for extension session artifacts",
+      "issue": {
+        "key": "SST-34",
+        "summary": "[SST][INIT-SST-0003][CR-SST-0102] Prepare LearningWorkspace preview handoff for extension session artifacts",
+        "parentKey": "SST-29",
+        "source": "created",
+        "raw": "{\"id\":\"10072\",\"key\":\"SST-34\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10072\"}"
+      },
+      "existing": false
+    },
+    {
+      "cr": "CR-SST-0103",
+      "summary": "[SST][INIT-SST-0003][CR-SST-0103] Add QA harness for private authenticated page capture",
+      "issue": {
+        "key": "SST-35",
+        "summary": "[SST][INIT-SST-0003][CR-SST-0103] Add QA harness for private authenticated page capture",
+        "parentKey": "SST-29",
+        "source": "created",
+        "raw": "{\"id\":\"10073\",\"key\":\"SST-35\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10073\"}"
+      },
+      "existing": false
+    }
+  ]
+}

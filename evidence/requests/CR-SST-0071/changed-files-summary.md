@@ -1,4 +1,4 @@
-# Changed Files Summary
+# Resumen De Archivos Modificados
 
 ## Estado
 

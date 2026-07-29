@@ -3,7 +3,7 @@ kind: "feature_state"
 id: "dictionary-tags"
 title: "SST Dictionary Tags"
 status: "validated-live"
-updated_at: "2026-06-12"
+updated_at: "2026-06-24"
 solution_id: "sst"
 affected_services:
   - sst-bend
@@ -28,7 +28,12 @@ evidence_refs:
   - "evidence/requests/CR-SST-0014/implementation-state-analysis.md"
   - "evidence/requests/CR-SST-0064/phase-2-analysis-and-plan.md"
   - "evidence/requests/CR-SST-0064/runtime-validation-results.md"
+  - "evidence/requests/CR-SST-0076/execution-start-and-subagent-analysis.md"
+  - "evidence/requests/CR-SST-0076/implementation-plan.md"
+  - "evidence/requests/CR-SST-0076/frontend-dictionary-governed-tags-implementation.md"
+  - "evidence/requests/CR-SST-0076/validation-results.md"
+  - "evidence/requests/CR-SST-0076/frontend-dictionary-tag-shape-bugfix.md"
 open_gaps:
-  - "Adoptar diccionario al modelo `tag_values`/`tag_occurrences` global en CR-SST-0076 sin perder semántica de tags existente."
+  - "CR-SST-0076 esta en implementacion para adoptar Diccionario al modelo `tag_values`/`tag_occurrences` global sin perder semantica de tags existente ni romper readers legacy validados."
   - "sst-extension account-context remains a non-blocking optional producer/consumer follow-up."
   - "Encryption-at-rest, offline model, translations, and aliases remain future requests outside validated-live dictionary closure."

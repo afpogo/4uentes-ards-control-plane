@@ -1,0 +1,26 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-HPT-0003"
+title: "Finanzas personales frontend-backend boundary reconciliation"
+status: "inbox"
+created_at: "2026-07-12"
+requester: "4uentes"
+business_context: >
+  The frontend currently declares direct consumption of a backend-api while the
+  canonical frontend-web handoff expects a backend-bff or an explicit exception.
+requested_change: >
+  Document the producer/consumer contract, decide or time-box the architecture
+  exception, and define validation and ownership before runtime implementation.
+expected_outcome: >
+  The MVP integration boundary is explicit without prematurely creating a BFF
+  or cataloging proposed Python/OCR components as independent services.
+initial_scope:
+  solution: "finanzas-personales"
+  services:
+    - "finanzas-personales-frontend"
+    - "finanzas-personales-backend"
+  include_optional_services: false
+decision:
+  status: "accepted-for-planning"
+  approver: "4uentes"
+

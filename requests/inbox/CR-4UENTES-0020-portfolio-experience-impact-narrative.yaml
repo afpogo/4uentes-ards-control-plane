@@ -1,0 +1,28 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-4UENTES-0020"
+title: "Portfolio experience impact narrative"
+status: "intake"
+created_at: "2026-07-04"
+requester: "4uentes"
+
+summary: >
+  Improve the visible experience narrative in 4uentes-portfolio so it can
+  support CV revalidation and communicate professional value with stronger
+  evidence.
+
+scope:
+  solution: "4uentes"
+  services:
+    - "4uentes-portfolio"
+  include_optional_services: false
+
+intent:
+  - "Shift experience copy from job-history listing to value and evidence narrative."
+  - "Keep enterprise details high-level and publication-safe."
+  - "Remove granular office addresses from visible experience cards."
+
+validation:
+  required_checks:
+    - "4uentes-portfolio: npm.cmd run check"
+    - "4uentes-orchestor: npm.cmd run check"

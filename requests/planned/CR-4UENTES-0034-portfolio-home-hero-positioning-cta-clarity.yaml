@@ -1,0 +1,136 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-4UENTES-0034"
+title: "Portfolio home hero positioning and CTA clarity"
+status: "planned"
+source_request: "requests/inbox/CR-4UENTES-0034-portfolio-home-hero-positioning-cta-clarity.yaml"
+created_at: "2026-07-07"
+requester: "4uentes"
+
+summary: >
+  Improve the Portfolio first screen so recruiters and professional reviewers
+  understand identity, value proposition, and primary actions quickly while the
+  current technical dashboard identity remains recognizable.
+
+initial_scope:
+  solution: "4uentes"
+  services:
+    - "4uentes-portfolio"
+  include_optional_services: false
+
+control_plane_context:
+  initiative_id: "INIT-PORTFOLIO-0003"
+  parent_request_id: "CR-4UENTES-0033"
+  feature_id: "portfolio-home-hero-positioning"
+  child_repo: "4uentes-portfolio"
+  work_origin: "orchestrator-request"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "4uentes-portfolio"
+      via: "home hero positioning, first-screen CTA hierarchy, and owner documentation"
+      service_kind: "frontend-spa"
+      ards_kind: "frontend-web"
+      status: "active"
+  affected_ards:
+    - "frontend-web"
+    - "professional-narrative"
+    - "publication-readiness"
+    - "owner-documentation"
+    - "visual-qa"
+  capabilities:
+    - "portfolio-home-hero-positioning"
+
+required_context:
+  - "requests/planned/CR-4UENTES-0033-portfolio-professionalization-intake-reconciliation.yaml"
+  - "initiatives/INIT-PORTFOLIO-0003-portfolio-professionalization.yaml"
+  - "state/features/portfolio-professionalization-intake.current.yaml"
+  - "4uentes-portfolio: specs/capabilities/outbound/portfolio-professionalization-intake.yaml"
+  - "4uentes-portfolio: docs/integration/orchestrator-intake/portfolio-professionalization.md"
+  - "4uentes-portfolio: src/pages/Dashboard"
+  - "4uentes-portfolio: docs/portfolio-intent.md"
+  - "4uentes-portfolio: docs/architecture/README.md"
+  - "4uentes-portfolio: docs/qa/visual-checklist.md"
+  - "4uentes-portfolio: specs/features/00-index.yaml"
+
+risk:
+  level: "medium"
+  score: 5
+  drivers:
+    - "first-screen copy shapes recruiter interpretation"
+    - "CTA behavior touches contact and CV publication policy"
+    - "visual changes must remain responsive and not duplicate mobile remediation work"
+
+execution:
+  requires_human_approval: false
+  allowed_window: "manual"
+  branch_strategy: "child-repo-home-hero-positioning-cut"
+  child_repo_mutation_allowed: true
+  child_repo_mutation_target:
+    service_id: "4uentes-portfolio"
+  owner_documentation_required: true
+  implementation_boundary: >
+    Update only the home/first-screen positioning, CTA hierarchy, and directly
+    related styles/docs. Do not activate CV download, rewrite experience or
+    project sections, add backend/BFF/auth/analytics, introduce runtime GitHub
+    fetching, or perform broad mobile section remediation in this CR.
+
+owner_documentation:
+  required: true
+  status: satisfied
+  owner_repo: "4uentes-portfolio"
+  planned_owner_docs:
+    - "docs/portfolio-intent.md"
+    - "docs/architecture/README.md"
+    - "docs/qa/visual-checklist.md"
+    - "specs/features/00-index.yaml"
+  updated_owner_docs:
+    - "docs/portfolio-intent.md"
+    - "docs/architecture/README.md"
+    - "docs/qa/visual-checklist.md"
+    - "specs/features/00-index.yaml"
+  owner_refs:
+    - repo: "4uentes-portfolio"
+      paths:
+        - "docs/portfolio-intent.md"
+        - "docs/architecture/README.md"
+        - "docs/qa/visual-checklist.md"
+        - "specs/features/00-index.yaml"
+  evidence_refs:
+    - "evidence/requests/CR-4UENTES-0034/changed-files-summary.md"
+    - "evidence/requests/CR-4UENTES-0034/child-validation-results.md"
+    - "evidence/requests/CR-4UENTES-0034/visual-qa-results.md"
+
+jira:
+  role: "mirror"
+  source_of_truth: false
+  project_key: "PORT"
+  epic_key: "PORT-9"
+  issue_key: "PORT-11"
+  issue_type: "Tarea"
+  current_status_observed: "Listo"
+  connection_policy_ref: "docs/requests/jira-write-connection-contract.md"
+  fallback_policy_ref: "docs/requests/mcp-auth-bootstrap-playbook.md"
+  transition_refs:
+    creation_ref: "evidence/requests/CR-4UENTES-0034/jira-task-sync-summary.md"
+    start_transition_ref: "evidence/requests/CR-4UENTES-0034/jira-port-11-start-transition-summary.md"
+    close_transition_ref: "evidence/requests/CR-4UENTES-0034/jira-port-11-close-transition-summary.md"
+
+validation:
+  required_checks:
+    - "4uentes-portfolio: npm.cmd run build"
+    - "4uentes-orchestor: npm.cmd run check"
+  evidence_required:
+    - "implementation_plan"
+    - "changed_files_summary"
+    - "child_validation_results"
+    - "control_plane_validation_results"
+    - "visual_qa_results"
+  latest_child_results_ref: "evidence/requests/CR-4UENTES-0034/child-validation-results.md"
+  visual_qa_status: "passed-chrome-devtools-mcp"
+
+decision:
+  status: "approved-for-local-execution"
+  approver: "4uentes"
+  blocker: "none"

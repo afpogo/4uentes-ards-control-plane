@@ -1,0 +1,86 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0117"
+title: "Render Markdown/template view from annotated text"
+status: done
+source_request: "requests/inbox/CR-SST-0117-render-annotated-text-markdown-template-view.yaml"
+planned_request: "requests/planned/CR-SST-0117-render-annotated-text-markdown-template-view.yaml"
+completed_at: "2026-07-04"
+requester: "4uentes"
+
+summary: >
+  Closed the first frontend runtime cut for rendering accepted annotated
+  LearningWorkspace context as a Markdown-like/template view. The implementation
+  stays in `sst-fend` and consumes the accepted context already exposed by the
+  BFF/backend contract.
+
+scope:
+  solution: "sst"
+  services_modified:
+    - "sst-fend"
+    - "4uentes-orchestor"
+  functional_repositories_modified: true
+  runtime_code_modified: true
+
+implementation:
+  initiative_id: "INIT-SST-0001"
+  active_feature_state: "learning-content-tags"
+  jira_epic_key: "SST-27"
+  jira_issue_key: "SST-6"
+  jira_subtask_key: "SST-47"
+  jira_status_observed: "Listo"
+  jira_source_of_truth: false
+  completed_slice: >
+    The Article creation Text tab now sends local content annotations to
+    LearningWorkspace preview, accepts/rejects previewed annotations by
+    annotationIds when available, and renders accepted context as a human
+    readable Markdown-like/template view.
+  backend_decision: >
+    `sst-bend` was reviewed as discovery-only and was not mutated because the
+    accepted context contract from CR-SST-0116 already exposes contentBlocks and
+    annotations sufficient for frontend rendering.
+  not_closed:
+    - "End-to-end Chrome/HTTP validation remains in CR-SST-0118."
+    - "A richer text editor/highlight surface remains a later UX refinement."
+    - "Backend-rendered Markdown remains out of scope unless a future contract explicitly requires it."
+
+owner_documentation:
+  status: "satisfied"
+  owner_refs:
+    - repo: "sst-fend"
+      paths:
+        - "docs/38-learning-workspace-frontend.md"
+        - "specs/38-learning-workspace-frontend.yml"
+        - "docs/tasks/2026-07-04-cr-sst-0117-render-annotated-text-template.md"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0117/owner-documentation-summary.md"
+
+validation:
+  status: "validated-local"
+  passed:
+    - "sst-fend npm.cmd test -- LearningWorkspace.test.tsx ArticleCreateFlow.test.tsx --runInBand"
+    - "sst-fend npm.cmd run check"
+    - "4uentes-orchestor npm.cmd run check"
+  notes:
+    - "sst-fend check passed with existing warnings only."
+    - "Control-plane owner documentation enforcement passed for CR-SST-0117."
+    - "Jira SST-47 was synchronized to Listo through the MCP fallback script."
+
+evidence_refs:
+  - "evidence/requests/CR-SST-0117/intent-summary.md"
+  - "evidence/requests/CR-SST-0117/jira-sync-summary.md"
+  - "evidence/requests/CR-SST-0117/jira-sst-47-start-transition-summary.md"
+  - "evidence/requests/CR-SST-0117/subagent-delegation.md"
+  - "evidence/requests/CR-SST-0117/pre-implementation-analysis.md"
+  - "evidence/requests/CR-SST-0117/implementation-summary.md"
+  - "evidence/requests/CR-SST-0117/owner-documentation-summary.md"
+  - "evidence/requests/CR-SST-0117/validation-results.md"
+  - "evidence/requests/CR-SST-0117/jira-sst-47-close-transition-summary.md"
+
+decision:
+  status: "closed-local"
+  approver: "4uentes"
+  note: >
+    CR-SST-0117 closes locally as the first annotated context render/template
+    cut for SST-47. Jira mirror was synchronized to Listo through the MCP
+    fallback script.

@@ -1,0 +1,86 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-CP-0002"
+title: "Define child-to-control-plane reconciliation link policy and template"
+status: "done"
+source_request: "requests/inbox/CR-CP-0002-core-child-control-plane-reconciliation-link.yaml"
+planned_request: "requests/planned/CR-CP-0002-core-child-control-plane-reconciliation-link.yaml"
+started_at: "2026-07-07"
+closed_at: "2026-07-10"
+closure_reconciled_at: "2026-07-10"
+requester: "4uentes"
+
+summary: >
+  Start promotion of the local orchestrator_link pattern as a profile-scoped
+  core policy/template for child repository reconciliation with an adopting
+  control-plane.
+
+control_plane_context:
+  initiative_id: "INIT-CP-0002"
+  parent_initiative_id: "INIT-CP-0001"
+  jira_issue_key: "ARDS-3"
+  jira_epic_key: "ARDS-1"
+  jira_status_observed: "Listo"
+  jira_assignee_observed: "Fuentes Sandferand"
+  jira_start_comment_ref: "evidence/requests/CR-CP-0002/jira-start-summary.md"
+  jira_start_comment_id: "10127"
+  jira_progress_comment_id: "10128"
+  jira_close_transition_ref: "evidence/requests/CR-CP-0002/jira-ards-3-close-transition-summary.md"
+  local_reconciliation_ref: "evidence/initiatives/INIT-CP-0002/jira-temporary-port-mirror-closure-2026-07-10.md"
+
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "separate-core-promotion-branch"
+  child_repo_mutation_allowed: false
+  core_repo_mutation_allowed: true
+  implementation_boundary: >
+    Define a reusable core policy and template such as control_plane_link for
+    the control-plane profile. Keep orchestrator_link as the local
+    alias/adoption used by 4uentes-orchestor until a separate request-driven
+    rollout migrates, aliases, adopts, or excepts child repos.
+
+active_scope:
+  source_refs:
+    - "specs/states/capability-state-linkage.yaml"
+    - "docs/requests/capability-state-linkage.md"
+    - "docs/cross-repo/child-repo-orchestrator-link-rule.md"
+    - "templates/child-orchestrator-link-rule.md"
+    - "state/capability-links.yaml"
+  capabilities:
+    - "child-repo-orchestrator-link-rule"
+    - "capability-state-linkage"
+
+validation:
+  required_checks:
+    - "4uentes-orchestor: npm.cmd run check"
+    - "4uentes-ards-core: npm.cmd run check"
+  evidence_required:
+    - "jira_start_summary"
+    - "core_reconciliation_link_policy_summary"
+    - "template_alias_decision"
+    - "validation_results"
+  evidence_refs:
+    - "evidence/requests/CR-CP-0002/jira-start-summary.md"
+    - "evidence/requests/CR-CP-0002/apply-core-control-plane-link.ps1"
+    - "evidence/requests/CR-CP-0002/core-reconciliation-link-policy-summary.md"
+    - "evidence/requests/CR-CP-0002/template-alias-decision.md"
+    - "evidence/requests/CR-CP-0002/human-doc-language-remediation.md"
+    - "evidence/requests/CR-CP-0002/validation-results.md"
+    - "evidence/requests/CR-CP-0002/jira-ards-3-policy-classification-comment.md"
+    - "evidence/requests/CR-CP-0002/jira-sync-blocker.md"
+    - "evidence/requests/CR-CP-0002/jira-ards-3-close-transition-summary.md"
+    - "evidence/requests/CR-CP-0002/jira-ards-3-close-transition-result.json"
+    - "evidence/requests/CR-CP-0002/sst-2-policy-scope-correction.md"
+    - "evidence/requests/CR-CP-0002/jira-ards-3-sst-2-policy-scope-correction-comment.md"
+    - "evidence/requests/CR-CP-0002/jira-ards-3-sst-2-policy-scope-correction-summary.md"
+    - "evidence/requests/CR-CP-0002/jira-ards-3-sst-2-policy-scope-correction-result.json"
+    - "evidence/initiatives/INIT-CP-0002/jira-temporary-port-mirror-closure-2026-07-10.md"
+
+decision:
+  status: "closed"
+  approver: "4uentes"
+  closure_reason: >
+    Jira mirror ARDS-3 was already observed as Listo and the request decision
+    was already done. Local lifecycle location was reconciled from running to
+    done on 2026-07-10.

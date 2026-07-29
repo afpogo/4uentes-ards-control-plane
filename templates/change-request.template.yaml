@@ -43,7 +43,11 @@ task_weight:
 
 model_selection:
   policy_ref: "docs/ai/model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
   primary_profile: "TODO"
+  reasoning_effort: "TODO"
   fallback_profile: "TODO"
   reason: "TODO"
 

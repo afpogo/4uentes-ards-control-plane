@@ -1,0 +1,42 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0144"
+title: "Validate article semantic kind integral end-to-end"
+status: done
+source_request: "requests/inbox/CR-SST-0144-article-semantic-kind-integral-e2e-validation.yaml"
+planned_request: "requests/planned/CR-SST-0144-article-semantic-kind-integral-e2e-validation.yaml"
+completed_at: "2026-07-19"
+requester: "4uentes"
+summary: "Native Text and Web creation/detail plus kind-correct catalog filtering are validated end to end."
+scope:
+  solution: "sst"
+  services_modified: ["4uentes-orchestor"]
+  functional_repositories_modified: false
+  runtime_code_modified: false
+implementation:
+  initiative_id: "INIT-SST-0005"
+  jira_epic_key: "SST-57"
+  jira_issue_key: "SST-84"
+  jira_status_observed: "Listo"
+  jira_source_of_truth: false
+  completed_slice: "Authenticated integral Text/Web semantic-kind validation after CR-SST-0145."
+owner_documentation:
+  status: "not-required-validation-only"
+  owner_repos: []
+  evidence_refs:
+    - "evidence/requests/CR-SST-0144/authenticated-e2e-results.md"
+    - "evidence/requests/CR-SST-0145/implementation-validation.md"
+validation:
+  status: "validated-local"
+  passed:
+    - "Native Text and Web create/detail evidence"
+    - "Kind-correct Text and Web list filtering"
+    - "Desktop 1440x900 and mobile 390x844 browser QA"
+    - "No attributable console error or new endpoint"
+evidence_refs:
+  - "evidence/requests/CR-SST-0144/authenticated-e2e-results.md"
+  - "evidence/requests/CR-SST-0145/implementation-validation.md"
+decision:
+  status: "closed-local"
+  approver: "4uentes"
+  note: "CR-SST-0134 remains the independent historical-data reconciliation gate."

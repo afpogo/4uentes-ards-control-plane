@@ -1,0 +1,18 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0143"
+title: "Stop authenticated Home empty-catalog request loop"
+status: received
+created_at: "2026-07-13"
+requester: "4uentes"
+summary: "Authenticated Home repeatedly dispatches the article list request when a valid empty catalog is returned."
+source:
+  kind: "authenticated-manual-qa"
+  evidence_ref: "evidence/requests/CR-SST-0143/discovery.md"
+control_plane_context:
+  initiative_id: "INIT-SST-0005"
+  predecessor_requests: ["CR-SST-0129", "CR-SST-0142"]
+  jira_epic_key: "SST-57"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+

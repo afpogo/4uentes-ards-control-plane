@@ -27,11 +27,15 @@ orchestrator.
 ## Docs Canonicos Actuales
 
 - [execution-model.md](execution-model.md)
+- [initiative-model.md](initiative-model.md)
 - [state-read-model.md](state-read-model.md)
 - [capability-state-linkage.md](capability-state-linkage.md)
 - [jira-mcp-endpoint-connection-policy.md](jira-mcp-endpoint-connection-policy.md)
 - [jira-mcp-ticketing-playbook.md](jira-mcp-ticketing-playbook.md)
 - [jira-mcp-oauth-session-playbook.md](jira-mcp-oauth-session-playbook.md)
+- [cr-jira-subtask-reconciliation-playbook.md](cr-jira-subtask-reconciliation-playbook.md)
+- [mcp-auth-bootstrap-playbook.md](mcp-auth-bootstrap-playbook.md)
+- [jira-cr-activos-y-atribucion.md](jira-cr-activos-y-atribucion.md)
 - [jira-feature-ticket-policy.md](jira-feature-ticket-policy.md)
 - [jira-backlog-registry-policy.md](jira-backlog-registry-policy.md)
 - [jira-backlog-sync-state-machine.md](jira-backlog-sync-state-machine.md)

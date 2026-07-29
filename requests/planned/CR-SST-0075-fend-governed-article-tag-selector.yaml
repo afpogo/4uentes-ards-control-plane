@@ -2,7 +2,7 @@ schema_version: "1.0"
 phase: 2
 id: "CR-SST-0075"
 title: "SST Tags - Governed article selector UI"
-status: planned
+status: done
 source_request: "requests/inbox/CR-SST-0075-fend-governed-article-tag-selector.yaml"
 created_at: "2026-06-13"
 requester: "4uentes"
@@ -12,6 +12,19 @@ initial_scope:
   services:
     - "sst-fend"
   include_optional_services: false
+
+control_plane_context:
+  feature_state: "sst-tags-governance"
+  feature_state_file: "state/features/sst-tags-governance.current.yaml"
+  jira_issue_key: "SST-23"
+  current_jira_status_observed: "Finalizada"
+  parent_jira_issue_key: "SST-4"
+  governing_request: "CR-SST-0075"
+  upstream_backend_request: "CR-SST-0073"
+  upstream_bff_request: "CR-SST-0074"
+  contract_ref: "docs/requests/sst-tags-governance-contract.md"
+  jira_observation_ref: "evidence/requests/CR-SST-0075/jira-issue-SST-23-observation.md"
+  jira_parent_observation_ref: "evidence/requests/CR-SST-0075/jira-parent-SST-4-observation.md"
 
 impact_analysis:
   required: true
@@ -79,6 +92,25 @@ execution:
   requires_human_approval: true
   allowed_window: manual
   branch_strategy: one-branch-per-repo
+  jira_read_executed: true
+  jira_write_executed: true
+  jira_start_transition_ref: "evidence/requests/CR-SST-0075/jira-sst-23-start-transition-summary.md"
+  jira_close_transition_ref: "evidence/requests/CR-SST-0075/jira-sst-23-close-transition-summary.md"
+  local_implementation_started: true
+  local_implementation_started_at: "2026-06-21"
+  completed_at: "2026-06-23"
+  implementation_evidence_refs:
+    - "evidence/requests/CR-SST-0075/execution-start-notes.md"
+    - "evidence/requests/CR-SST-0075/jira-sst-23-start-transition-summary.md"
+    - "evidence/requests/CR-SST-0075/jira-issue-SST-23-observation.md"
+    - "evidence/requests/CR-SST-0075/frontend-governed-selector-implementation-notes.md"
+    - "evidence/requests/CR-SST-0075/validation-2026-06-21.md"
+    - "evidence/requests/CR-SST-0075/runtime-smoke-real-jwt-2026-06-21.md"
+    - "evidence/requests/CR-SST-0075/jira-mcp-access-diagnosis-2026-06-22.md"
+    - "evidence/requests/CR-SST-0075/frontend-build-fix-exact-optional-types-2026-06-23.md"
+    - "evidence/requests/CR-SST-0075/frontend-manual-qa-fix-tag-create-ui-2026-06-23.md"
+    - "evidence/requests/CR-SST-0075/manual-qa-pass-article-governed-tags-2026-06-23.md"
+    - "evidence/requests/CR-SST-0075/jira-sst-23-close-transition-summary.md"
 
 validation:
   required_checks:
@@ -89,5 +121,7 @@ validation:
     - "structured payload smoke notes"
 
 decision:
-  status: pending
-  approver: TODO
+  status: approved-done
+  approver: "4uentes"
+  approved_at: "2026-06-21"
+  note: "SST-23 was closed through Jira MCP after `sst-fend` build passed, runtime smoke with real JWT passed, and manual QA confirmed governed tag creation and the updated selector UI."

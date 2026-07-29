@@ -1,0 +1,46 @@
+{
+  "issueKey": "ARDS-1",
+  "issue": {
+    "summary": "[CP][INIT-CP-0002] Core Living Resource Standardization",
+    "status": "Por hacer",
+    "statusCategory": "Por hacer",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-07-07T16:59:06.711-0300",
+    "labels": [
+      "ai-develop-driven",
+      "ards-sdd",
+      "control-plane",
+      "core",
+      "init-cp-0002"
+    ],
+    "description": "INIT-CP-0002 / Core Living Resource Standardization\n\nPurpose:  \nPromote stable living ARDS/SDD control-plane resources into reusable 4uentes-ards-core canon while preserving local orchestrator identity, request lifecycle ownership, and child repo adoption boundaries.\n\nThis belongs to the 4uentes-ARDS-SDD project because it governs evolution of ARDS/SDD, the Control Plane, Core, and supervised AI-driven software development governance across the stack.\n\nScope:\n\n* Common governance policies: owner documentation authority/enforcement and human documentation language.\n* Child-to-control-plane reconciliation link policy/template.\n* Feature and bugfix state read-model.\n* Initiative model.\n* Orchestrator adoption review after core promotion.\n\nRelation:\n\n* Parent/local predecessor: INIT-CP-0001\n* Related Jira Epic: SST-36\n* Replaces misplaced temporary mirror: PORT-12\n\nBoundary:\n\n* Jira is a mirror, not ARDS/SDD source of truth.\n* This Epic does not authorize direct modification of 4uentes-ards-core or child repos by itself.\n* Each CR keeps its own approval, implementation boundary, validation, and evidence.\n\nControl-plane source:\n\n* initiatives/INIT-CP-0002-core-living-resource-standardization.yaml\n* evidence/initiatives/INIT-CP-0002/core-living-resources-scope.md\n\n",
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10109\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10109\",\"key\":\"ARDS-1\",\"fields\":{\"summary\":\"[CP][INIT-CP-0002] Core Living Resource Standardization\",\"description\":\"INIT-CP-0002 / Core Living Resource Standardization\\n\\nPurpose:  \\nPromote stable living ARDS/SDD control-plane resources into reusable 4uentes-ards-core canon while preserving local orchestrator identity, request lifecycle ownership, and child repo adoption boundaries.\\n\\nThis belongs to the 4uentes-ARDS-SDD project because it governs evolution of ARDS/SDD, the Control Plane, Core, and supervised AI-driven software development governance across the stack.\\n\\nScope:\\n\\n* Common governance policies: owner documentation authority/enforcement and human documentation language.\\n* Child-to-control-plane reconciliation link policy/template.\\n* Feature and bugfix state read-model.\\n* Initiative model.\\n* Orchestrator adoption review after core promotion.\\n\\nRelation:\\n\\n* Parent/local predecessor: INIT-CP-0001\\n* Related Jira Epic: SST-36\\n* Replaces misplaced temporary mirror: PORT-12\\n\\nBoundary:\\n\\n* Jira is a mirror, not ARDS/SDD source of truth.\\n* This Epic does not authorize direct modification of 4uentes-ards-core or child repos by itself.\\n* Each CR keeps its own approval, implementation boundary, validation, and evidence.\\n\\nControl-plane source:\\n\\n* initiatives/INIT-CP-0002-core-living-resource-standardization.yaml\\n* evidence/initiatives/INIT-CP-0002/core-living-resources-scope.md\\n\\n\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-07-07T16:59:06.711-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10042\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"Por hacer\",\"id\":\"10042\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/2\",\"id\":2,\"key\":\"new\",\"colorName\":\"blue-gray\",\"name\":\"Por hacer\"}},\"labels\":[\"ai-develop-driven\",\"ards-sdd\",\"control-plane\",\"core\",\"init-cp-0002\"]}}"
+  },
+  "transitions": [
+    {
+      "id": "11",
+      "name": "Por hacer",
+      "toStatus": "Por hacer",
+      "toStatusCategory": "Por hacer"
+    },
+    {
+      "id": "21",
+      "name": "En curso",
+      "toStatus": "En curso",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "31",
+      "name": "En revisión",
+      "toStatus": "En revisión",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "41",
+      "name": "Listo",
+      "toStatus": "Listo",
+      "toStatusCategory": "Listo"
+    }
+  ]
+}

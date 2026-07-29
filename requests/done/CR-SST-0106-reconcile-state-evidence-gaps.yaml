@@ -1,0 +1,61 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0106"
+title: "Reconcile State evidence gaps"
+status: done
+source_request: "requests/inbox/CR-SST-0106-reconcile-state-evidence-gaps.yaml"
+planned_request: "requests/planned/CR-SST-0106-reconcile-state-evidence-gaps.yaml"
+completed_at: "2026-07-02"
+requester: "4uentes"
+
+summary: >
+  Reconciled two historical bugfix_state records that lacked request and
+  evidence references. The records now reference CR-SST-0106 and central
+  evidence while preserving that the original bugfix implementations predated
+  this governance lifecycle.
+
+scope:
+  solution: "control-plane"
+  services_modified:
+    - "4uentes-orchestor"
+  functional_repositories_modified: false
+  runtime_code_modified: false
+
+implementation:
+  reconciled_states:
+    - "state/bugfixes/login-504-proxy-timeout.current.yaml"
+    - "state/bugfixes/sst-bend-emfile-watchers.current.yaml"
+  governance_boundary: >
+    CR-SST-0106 is retrospective read-model reconciliation only. It does not
+    claim to be the original implementation request for either bugfix.
+
+jira_mirror:
+  epic_key: "SST-36"
+  issue_key: "SST-39"
+  sync_ref: "evidence/initiatives/INIT-CP-0001/jira-mirror-sync-2026-07-03.md"
+  close_ref: "evidence/requests/CR-SST-0106/jira-sst-39-close-transition-summary.md"
+  status_observed: "Finalizada"
+  resolution_observed: "Listo"
+  source_of_truth: false
+
+validation:
+  status: "validated-local"
+  passed:
+    - "npm.cmd run check:state"
+    - "npm.cmd run check:initiatives"
+  state_validator_result: "23 OK, 0 WARN, 0 FAIL"
+
+evidence_refs:
+  - "evidence/requests/CR-SST-0106/implementation-summary.md"
+  - "evidence/requests/CR-SST-0106/bugfix-state-reconciliation.md"
+  - "evidence/requests/CR-SST-0106/changed-files-summary.md"
+  - "evidence/requests/CR-SST-0106/validation-results.md"
+  - "evidence/requests/CR-SST-0106/jira-sst-39-close-transition-summary.md"
+
+decision:
+  status: "closed-local"
+  approver: "4uentes"
+  note: >
+    CR-SST-0106 closes locally as validated-local. Jira mirror SST-39 was
+    later closed as Finalizada/Listo on 2026-07-03 after State evidence
+    reconciliation validation.

@@ -1,0 +1,114 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0121"
+title: "Harden sst-extension session capture reliability, privacy, and limits"
+status: planned
+source_request: "requests/inbox/CR-SST-0121-sst-extension-session-capture-hardening.yaml"
+created_at: "2026-07-05"
+requester: "4uentes"
+
+summary: >
+  Follow-up hardening request for sst-extension session capture reliability,
+  privacy, storage limits, partial failure behavior, and textual PDF robustness.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - "sst-extension"
+    - "4uentes-orchestor"
+  include_optional_services: false
+
+control_plane_context:
+  initiative_id: "INIT-SST-0003"
+  jira_epic_key: "SST-29"
+  jira_issue_key: "TBD"
+  discovered_from: "CR-SST-0119 / SST-49 code review risk assessment"
+  policy_ref: "docs/policies/owner-documentation-authority-policy.md"
+  risk_assessment_ref: "evidence/requests/CR-SST-0119/code-review-risk-assessment.md"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "sst-extension"
+      via: "session capture lifecycle, local artifact retention, storage limits, and failure handling"
+      service_kind: "browser-extension"
+      ards_kind: "frontend-extension"
+      status: "optional-active"
+    - service_id: "4uentes-orchestor"
+      via: "request lifecycle and evidence"
+      service_kind: "control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+  affected_ards:
+    - frontend-extension
+    - browser-extension-session-capture
+    - child-repo-owner-documentation
+  risks:
+    - id: MV3_BACKGROUND_SUSPENSION
+      severity: high
+    - id: LOCAL_PRIVATE_ARTIFACT_RETENTION
+      severity: high
+    - id: STORAGE_OR_PAYLOAD_OVERSIZE
+      severity: high
+    - id: PARTIAL_CAPTURE_LOSS
+      severity: medium
+
+required_checks:
+  - service_id: "sst-extension"
+    command: "pnpm check"
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check"
+
+execution:
+  child_repo_mutation_allowed: true
+  child_repo_mutation_target:
+    service_id: "sst-extension"
+  owner_documentation_required: true
+  jira_write_executed: false
+  jira_write_ref: "TBD"
+  source_review_ref: "evidence/requests/CR-SST-0119/code-review-risk-assessment.md"
+
+owner_documentation:
+  required: true
+  status: planned
+  owner_repo: "sst-extension"
+  planned_owner_docs:
+    - "specs/features/sessions.yaml"
+    - "docs/00-overview.md"
+    - "docs/qa/session-capture-validation.md"
+
+validation:
+  required_checks:
+    - "Long-running session capture cannot remain stuck in capturing due to MV3 worker suspension."
+    - "Synced items do not retain private PDF artifacts longer than the selected retention policy allows."
+    - "Per-tab and per-session storage/payload limits have typed outcomes."
+    - "Partial tab failures do not silently discard all already captured tabs."
+    - "Textual PDF layout handles long URLs or long tokens."
+
+task_weight:
+  classification: "complex-high-risk-task"
+  drivers:
+    - "Private page-derived artifacts and local storage retention."
+    - "Manifest V3 background lifecycle."
+    - "Potential BFF payload and extension storage limits."
+    - "Runtime reliability under large tab sessions."
+
+model_selection:
+  primary_profile: "gpt-5.5"
+  note: "Future implementation should use high-reasoning profile; subagents recommended for runtime/storage/privacy slices."
+
+subagent_deployment_plan:
+  required: true
+  roles:
+    - "runtime-lifecycle-reviewer"
+    - "storage-privacy-reviewer"
+    - "payload-limit-reviewer"
+    - "validation-reviewer"
+  executed: false
+  fallback: "If subagents are unavailable, execute sequentially and record fallback evidence."
+
+decision:
+  status: approved-plan
+  approver: "4uentes"
+  note: "Advanced for consent, retention, lifecycle and bounded-payload prerequisites. No Jira key is inferred; duplicate/read-only preflight precedes any mirror write."
+  note: "Reserved after SST-49 QA/manual review. Not part of SST-49 closure and separate from SST-50 preview image contract."

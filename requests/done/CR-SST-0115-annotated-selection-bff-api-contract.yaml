@@ -1,0 +1,63 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0115"
+title: "Define annotated selection BFF/API contract"
+status: done
+source_request: "requests/inbox/CR-SST-0115-annotated-selection-bff-api-contract.yaml"
+planned_request: "requests/planned/CR-SST-0115-annotated-selection-bff-api-contract.yaml"
+completed_at: "2026-07-04"
+requester: "4uentes"
+
+summary: >
+  Closed the control-plane contract for annotated text selections across
+  `sst-fend`, `node-auth` BFF, and `sst-bend`. The contract defines payload
+  shape, selectors, relevance values, preview/accept/reject states, error
+  semantics, and architecture rules without mutating child repo runtime.
+
+scope:
+  solution: "sst"
+  services_modified:
+    - "4uentes-orchestor"
+  functional_repositories_modified: false
+  runtime_code_modified: false
+
+implementation:
+  initiative_id: "INIT-SST-0001"
+  active_feature_state: "learning-content-tags"
+  jira_epic_key: "SST-27"
+  jira_issue_key: "SST-6"
+  jira_subtask_key: "SST-45"
+  jira_status_observed: "Listo"
+  jira_source_of_truth: false
+  completed_slice: >
+    The BFF/API contract now specifies how annotated selections move from local
+    frontend preview into backend preview and explicit accept/reject states.
+  not_closed:
+    - "Runtime persistence remains in CR-SST-0116."
+    - "Rendered Markdown/template view remains in CR-SST-0117."
+    - "End-to-end validation remains in CR-SST-0118."
+    - "Jira SST-45 transitioned to Listo."
+
+validation:
+  status: "validated-local"
+  passed:
+    - "4uentes-orchestor npm.cmd run check"
+  notes:
+    - "No child repo owner docs were required because this CR did not mutate child repos."
+    - "The contract keeps node-auth as BFF boundary and sst-bend as persistence/query owner."
+    - "Jira SST-45 was transitioned to Listo through the MCP fallback script."
+
+evidence_refs:
+  - "evidence/requests/CR-SST-0115/intent-summary.md"
+  - "evidence/requests/CR-SST-0115/jira-sync-summary.md"
+  - "evidence/requests/CR-SST-0115/annotated-selection-bff-api-contract.md"
+  - "evidence/requests/CR-SST-0115/implementation-boundary.md"
+  - "evidence/requests/CR-SST-0115/validation-results.md"
+  - "evidence/requests/CR-SST-0115/jira-sst-45-close-transition-summary.md"
+
+decision:
+  status: "closed-local"
+  approver: "4uentes"
+  note: >
+    CR-SST-0115 closes locally as the contract slice for SST-45. Jira mirror
+    was synchronized to Listo through the MCP fallback script.

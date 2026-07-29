@@ -1,0 +1,181 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0126"
+title: "Reconcile sst-fend SST sheet workspace UI"
+status: planned
+source_request: "requests/inbox/CR-SST-0126-sst-sheet-workspace-ui-reconciliation.yaml"
+created_at: "2026-07-10"
+requester: "4uentes"
+
+summary: >
+  Reconcile the already implemented sst-fend sst-sheet-workspace-ui visual
+  primitive with control-plane state, owner documentation, evidence and Jira.
+  Closure is gated by authenticated desktop and mobile visual QA.
+
+control_plane_context:
+  initiative_id: "INIT-SST-0001"
+  initiative_file: "initiatives/INIT-SST-0001-tags-governance-continuity.yaml"
+  active_feature_state: "sst-sheet-workspace-ui"
+  active_feature_state_file: "state/features/sst-sheet-workspace-ui.current.yaml"
+  parent_jira_issue_key: "SST-6"
+  jira_epic_key: "SST-27"
+  preceding_request_ids:
+    - "CR-SST-0123"
+    - "CR-SST-0124"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  ordering_deviation:
+    observed: true
+    type: "retroactive-child-repo-reconciliation"
+    reason: >
+      The sst-fend implementation and initial owner documentation predate this
+      request. The deviation is recorded explicitly instead of rewriting the
+      lifecycle history.
+
+agent_execution:
+  task_weight: "complex-high-risk-task"
+  model_selection: "gpt-5.5"
+  model_selection_note: >
+    Cross-repo owner reconciliation, a dirty child worktree and concurrent
+    execution require the high-reasoning profile alias.
+  subagent_deployment_plan: "none"
+  subagent_note: >
+    Execute sequentially in the primary agent because ownership and dirty-tree
+    boundaries are not suitable for delegated mutation.
+  atomized_steps:
+    - "Reserve and validate the retroactive request lifecycle."
+    - "Register feature state, capability link and initiative relationship."
+    - "Update only sst-fend owner metadata after lifecycle creation."
+    - "Run targeted tests and full repository checks."
+    - "Run authenticated desktop/mobile QA and close only on passing evidence."
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "sst-fend"
+      via: "owner documentation and visual QA for the local SstSheetWorkspace primitive"
+      service_kind: "frontend-spa"
+      ards_kind: "frontend-web"
+      status: "active"
+    - service_id: "4uentes-orchestor"
+      via: "request lifecycle, state, capability link, initiative, evidence and Jira mirror"
+      service_kind: "control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+  affected_ards:
+    - "sst-sheet-workspace-ui"
+    - "text-article-learning-workspace-visual-separation-ui"
+    - "child-repo-owner-documentation"
+    - "feature-state"
+    - "evidence"
+  risks:
+    - id: "DIRTY_CHILD_WORKTREE_SCOPE_MIX"
+      severity: high
+      note: "Do not modify, publish or attribute unrelated sst-fend changes."
+    - id: "RETROACTIVE_ORDERING_AMBIGUITY"
+      severity: high
+      note: "Preserve the explicit ordering deviation in request and evidence."
+    - id: "VISUAL_QA_FALSE_CLOSURE"
+      severity: high
+      note: "Automated validation does not replace authenticated desktop/mobile QA."
+    - id: "LEARNING_CONTEXT_CONTRACT_DRIFT"
+      severity: high
+      note: "learning-workspace-context remains separate and linked to CR-SST-0123."
+
+execution:
+  requires_human_approval: false
+  allowed_window: manual
+  branch_strategy: "preserve-existing-dirty-worktree"
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets:
+    - service_id: "sst-fend"
+      local_path_ref: "environments/local/bindings.local.yaml#sst-fend"
+  implementation_boundary: >
+    Child mutation is limited to owner ARDS/SDD metadata and documentation-only
+    consistency fixes for the existing capability. No functional code, CSS,
+    component refactor, endpoint, DTO, persistence or LearningWorkspace logic
+    change is authorized.
+  owner_documentation:
+    required: true
+    status: satisfied
+    owner_refs:
+      - repo: "sst-fend"
+        paths:
+          - "specs/33-articles-frontend.yml"
+          - "docs/33-articles-frontend.md"
+          - "specs/38-learning-workspace-frontend.yml"
+          - "docs/38-learning-workspace-frontend.md"
+          - "docs/tasks/2026-07-10-sst-sheet-workspace-ui.md"
+          - "docs/tasks/2026-07-07-sst-text-article-learning-workspace-visual-separation.md"
+    evidence_refs:
+      - "evidence/requests/CR-SST-0126/reconciliation-start.md"
+      - "evidence/requests/CR-SST-0126/owner-documentation-summary.md"
+      - "evidence/requests/CR-SST-0126/validation-results.md"
+
+visual_contract:
+  primitive: "SstSheetWorkspace"
+  variants:
+    - "page"
+    - "modal"
+    - "embedded"
+  slots:
+    - "intro"
+    - "signals"
+    - "main"
+    - "rail"
+    - "footer"
+  forbidden_responsibilities:
+    - "CRUD"
+    - "persistence"
+    - "LearningWorkspace domain logic"
+  unchanged_inbound_capability: "node-auth--learning-workspace-context"
+
+required_checks:
+  - service_id: "sst-fend"
+    command: "npm.cmd test -- LearningWorkspace.test.tsx ArticleCreateFlow.test.tsx --runInBand"
+  - service_id: "sst-fend"
+    command: "npm.cmd run check"
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check"
+
+validation:
+  required_checks:
+    - "Authenticated desktop QA at 1440x900 covers edit/detail, text create, embedded Workspace SST and /learning."
+    - "Authenticated mobile QA at 390x844 confirms no overflow, overlap or clipped text and places rail below content."
+    - "Articles and Learning retain their own actions and state."
+    - "No new HTTP requests or attributable console errors appear."
+    - "Owner documentation identifies state, request and Jira correlation."
+    - "Control-plane npm.cmd run check passes."
+  evidence_required:
+    - "reconciliation_start"
+    - "changed_files_summary"
+    - "owner_documentation_summary"
+    - "automated_validation_results"
+    - "authenticated_visual_qa"
+    - "jira_sync_or_blocker"
+
+decision:
+  status: approved-for-local-closure
+  approver: "4uentes"
+  decided_at: "2026-07-11"
+  blocker_ref: "evidence/requests/CR-SST-0126/authenticated-visual-qa-2026-07-10.md"
+  follow_up_request_id: "CR-SST-0127"
+  note: >
+    Authenticated desktop/mobile layout QA passed. CR-SST-0127 fixed and
+    validated the created-kind result, and CR-SST-0136 restored the complete
+    frontend gate. The feature is ready-for-release but not released.
+
+jira_sync:
+  status: created-and-started
+  parent_issue_key: "SST-6"
+  epic_key: "SST-27"
+  desired_issue_type: "Sub-task"
+  desired_initial_status: "En curso"
+  issue_key: "SST-54"
+  status_observed: "Listo"
+  start_comment_id: "10168"
+  validation_blocker_comment_id: "10169"
+  authenticated_qa_comment_id: "10172"
+  blocking_bugfix_request_id: "CR-SST-0127"
+  blocking_bugfix_issue_key: "SST-56"
+  evidence_ref: "evidence/requests/CR-SST-0126/jira-sync-summary.md"

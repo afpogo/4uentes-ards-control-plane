@@ -1,0 +1,210 @@
+{
+  "requestId": "CR-SST-0075",
+  "issueKey": "SST-23",
+  "approved": true,
+  "action": "updated-and-transitioned",
+  "before": {
+    "summary": "[SST-4][CR-SST-0075] Governed article tag selector UI",
+    "status": "En curso",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-06-21T22:24:26.483-0300",
+    "labels": [
+      "active-work",
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0075",
+      "sst-tags-governance",
+      "subtask"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10031\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10031\",\"key\":\"SST-23\",\"fields\":{\"summary\":\"[SST-4][CR-SST-0075] Governed article tag selector UI\",\"description\":\"Subtask under `SST-4` for the next governed execution slice.\\n\\n* CR: `CR-SST-0075`\\n* Scope: `sst-fend` governed selector or autocomplete for article tags.\\n* Source request: `requests/planned/CR-SST-0075-fend-governed-article-tag-selector.yaml`\\n* Goal: replace comma-separated tag input with governed search, explicit create action, dedup, and empty-state detach support.\\n* Dependency: backend and BFF tags endpoints from `CR-SST-0073` and `CR-SST-0074`.\\n* Risk: high due to frontend contract migration, autocomplete UX, and payload compatibility.\\n\\nExecution guardrails:\\n\\n* Keep this CR inside `sst-fend` only.\\n* Do not modify `sst-bend`, `4uentes-auth`, or `sst-extension` in this CR.\\n* Preserve the governed payload contract exposed by `SST-21` and `SST-22`.\\n* Keep explicit create semantics for `TagValue`; do not degrade the flow back to freeform comma-separated strings.\\n\\nCanonical control-plane refs:\\n\\n* docs/requests/sst-tags-governance-contract.md\\n* state/features/sst-tags-governance.current.yaml\\n* requests/planned/CR-SST-0075-fend-governed-article-tag-selector.yaml\\n\\n\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-06-21T22:24:26.483-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10006\",\"description\":\"La persona asignada está trabajando actualmente en esta actividad.\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En curso\",\"id\":\"10006\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"active-work\",\"ards-sdd\",\"control-plane\",\"cr-sst-0075\",\"sst-tags-governance\",\"subtask\"]}}"
+  },
+  "after": {
+    "summary": "[SST-4][CR-SST-0075] Governed article tag selector UI",
+    "status": "Listo",
+    "statusCategory": "Listo",
+    "resolution": "Listo",
+    "assignee": "no-asignado",
+    "updated": "2026-06-23T21:07:08.546-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0075",
+      "done",
+      "sst-tags-governance",
+      "subtask",
+      "validated-local"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10031\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10031\",\"key\":\"SST-23\",\"fields\":{\"summary\":\"[SST-4][CR-SST-0075] Governed article tag selector UI\",\"description\":\"Estado actual: implemented-local / validated-local.\\n\\nResultado:\\n\\n* CR-SST-0075 implemento el selector gobernado de tags en `sst-fend` para articulos.\\n* El formulario reemplaza texto libre por busqueda/seleccion gobernada y creacion explicita de `TagValue`.\\n* Los payloads de create/update de articulos envian `tags` estructurados.\\n* El update con `tags: []` conserva la semantica de limpieza total.\\n* La UI del selector fue ajustada a una superficie tipo carta/modal SST.\\n\\nValidaciones ejecutadas:\\n\\n* `sst-fend: npm.cmd run build` -> PASS.\\n* `sst-fend: npm.cmd run css:types` -> PASS.\\n* Smoke runtime con JWT real -> PASS: create tag, create articulo con tag, detail includeTags, update `tags: []`, delete articulo.\\n* QA manual de creacion de tag en articulo -> PASS.\\n* `4uentes-orchestor: npm.cmd run check` -> PASS, 0 fails.\\n\\nEvidencia principal:\\n\\n* `requests/planned/CR-SST-0075-fend-governed-article-tag-selector.yaml`.\\n* `evidence/requests/CR-SST-0075/runtime-smoke-real-jwt-2026-06-21.md`.\\n* `evidence/requests/CR-SST-0075/frontend-build-fix-exact-optional-types-2026-06-23.md`.\\n* `evidence/requests/CR-SST-0075/frontend-manual-qa-fix-tag-create-ui-2026-06-23.md`.\\n* `evidence/requests/CR-SST-0075/manual-qa-pass-article-governed-tags-2026-06-23.md`.\\n\\nBoundary:\\n\\n* El cambio queda acotado a `sst-fend`.\\n* `sst-bend` y `4uentes-auth` permanecen como dependencias upstream ya cubiertas por CR-SST-0073 y CR-SST-0074.\\n* La adopcion/cierre global de diccionario queda para CR-SST-0076.\\n\\nFuente canonica:\\n\\n* El control-plane ARDS/SDD conserva la fuente canonica. Jira es superficie operativa de visibilidad.\\n\\n\",\"assignee\":null,\"resolution\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/resolution/10000\",\"id\":\"10000\",\"description\":\"Se ha terminado el trabajo relacionado con esta incidencia.\",\"name\":\"Listo\"},\"updated\":\"2026-06-23T21:07:08.546-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10008\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"Finalizada\",\"id\":\"10008\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/3\",\"id\":3,\"key\":\"done\",\"colorName\":\"green\",\"name\":\"Listo\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-sst-0075\",\"done\",\"sst-tags-governance\",\"subtask\",\"validated-local\"]}}"
+  },
+  "transitions": [
+    {
+      "id": "11",
+      "name": "Por hacer",
+      "toStatus": "Tareas por hacer",
+      "toStatusCategory": "Por hacer"
+    },
+    {
+      "id": "21",
+      "name": "En curso",
+      "toStatus": "En curso",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "31",
+      "name": "In Review",
+      "toStatus": "En revisión",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "41",
+      "name": "Listo",
+      "toStatus": "Finalizada",
+      "toStatusCategory": "Listo"
+    }
+  ],
+  "selectedTransition": {
+    "id": "41",
+    "name": "Listo",
+    "toStatus": "Finalizada",
+    "toStatusCategory": "Listo"
+  },
+  "plannedLabels": [
+    "ards-sdd",
+    "control-plane",
+    "cr-sst-0075",
+    "done",
+    "sst-tags-governance",
+    "subtask",
+    "validated-local"
+  ],
+  "plannedDescription": "Estado actual: implemented-local / validated-local.\n\nResultado:\n- CR-SST-0075 implemento el selector gobernado de tags en `sst-fend` para articulos.\n- El formulario reemplaza texto libre por busqueda/seleccion gobernada y creacion explicita de `TagValue`.\n- Los payloads de create/update de articulos envian `tags` estructurados.\n- El update con `tags: []` conserva la semantica de limpieza total.\n- La UI del selector fue ajustada a una superficie tipo carta/modal SST.\n\nValidaciones ejecutadas:\n- `sst-fend: npm.cmd run build` -> PASS.\n- `sst-fend: npm.cmd run css:types` -> PASS.\n- Smoke runtime con JWT real -> PASS: create tag, create articulo con tag, detail includeTags, update `tags: []`, delete articulo.\n- QA manual de creacion de tag en articulo -> PASS.\n- `4uentes-orchestor: npm.cmd run check` -> PASS, 0 fails.\n\nEvidencia principal:\n- `requests/planned/CR-SST-0075-fend-governed-article-tag-selector.yaml`.\n- `evidence/requests/CR-SST-0075/runtime-smoke-real-jwt-2026-06-21.md`.\n- `evidence/requests/CR-SST-0075/frontend-build-fix-exact-optional-types-2026-06-23.md`.\n- `evidence/requests/CR-SST-0075/frontend-manual-qa-fix-tag-create-ui-2026-06-23.md`.\n- `evidence/requests/CR-SST-0075/manual-qa-pass-article-governed-tags-2026-06-23.md`.\n\nBoundary:\n- El cambio queda acotado a `sst-fend`.\n- `sst-bend` y `4uentes-auth` permanecen como dependencias upstream ya cubiertas por CR-SST-0073 y CR-SST-0074.\n- La adopcion/cierre global de diccionario queda para CR-SST-0076.\n\nFuente canonica:\n- El control-plane ARDS/SDD conserva la fuente canonica. Jira es superficie operativa de visibilidad.",
+  "plannedComment": "CR-SST-0075 closure execution.\n\nSe cierra el slice frontend del selector gobernado de tags para articulos.\n\nResumen:\n- Implementado selector gobernado en `sst-fend`.\n- Alta explicita de `TagValue` corregida contra contrato SST/BFF.\n- Payload estructurado `tags` validado en create/update.\n- Limpieza total validada con `tags: []`.\n- UI ajustada a superficie tipo carta/modal SST.\n\nValidaciones:\n- `sst-fend: npm.cmd run build` PASS.\n- Smoke runtime con JWT real PASS.\n- QA manual de creacion de tags en articulo PASS.\n- `4uentes-orchestor: npm.cmd run check` PASS.\n\nBefore status: En curso.\nTransition: Listo (41).\n\nSiguiente CR: CR-SST-0076, Dictionary adoption and global closure.",
+  "editResult": {
+    "expand": "renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations",
+    "id": "10031",
+    "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10031",
+    "key": "SST-23",
+    "fields": {
+      "summary": "[SST-4][CR-SST-0075] Governed article tag selector UI",
+      "issuetype": {
+        "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issuetype/10006",
+        "id": "10006",
+        "description": "Subtasks track small pieces of work that are part of a larger task.",
+        "iconUrl": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/2/universal_avatar/view/type/issuetype/avatar/10316?size=medium",
+        "name": "Subtask",
+        "subtask": true,
+        "avatarId": 10316,
+        "entityId": "[cloudId-redacted]",
+        "hierarchyLevel": -1
+      },
+      "components": [],
+      "created": "2026-06-13T11:34:51.835-0300",
+      "description": "Estado actual: implemented-local / validated-local.\n\nResultado:\n\n* CR-SST-0075 implemento el selector gobernado de tags en `sst-fend` para articulos.\n* El formulario reemplaza texto libre por busqueda/seleccion gobernada y creacion explicita de `TagValue`.\n* Los payloads de create/update de articulos envian `tags` estructurados.\n* El update con `tags: []` conserva la semantica de limpieza total.\n* La UI del selector fue ajustada a una superficie tipo carta/modal SST.\n\nValidaciones ejecutadas:\n\n* `sst-fend: npm.cmd run build` -> PASS.\n* `sst-fend: npm.cmd run css:types` -> PASS.\n* Smoke runtime con JWT real -> PASS: create tag, create articulo con tag, detail includeTags, update `tags: []`, delete articulo.\n* QA manual de creacion de tag en articulo -> PASS.\n* `4uentes-orchestor: npm.cmd run check` -> PASS, 0 fails.\n\nEvidencia principal:\n\n* `requests/planned/CR-SST-0075-fend-governed-article-tag-selector.yaml`.\n* `evidence/requests/CR-SST-0075/runtime-smoke-real-jwt-2026-06-21.md`.\n* `evidence/requests/CR-SST-0075/frontend-build-fix-exact-optional-types-2026-06-23.md`.\n* `evidence/requests/CR-SST-0075/frontend-manual-qa-fix-tag-create-ui-2026-06-23.md`.\n* `evidence/requests/CR-SST-0075/manual-qa-pass-article-governed-tags-2026-06-23.md`.\n\nBoundary:\n\n* El cambio queda acotado a `sst-fend`.\n* `sst-bend` y `4uentes-auth` permanecen como dependencias upstream ya cubiertas por CR-SST-0073 y CR-SST-0074.\n* La adopcion/cierre global de diccionario queda para CR-SST-0076.\n\nFuente canonica:\n\n* El control-plane ARDS/SDD conserva la fuente canonica. Jira es superficie operativa de visibilidad.\n\n",
+      "project": {
+        "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/project/10001",
+        "id": "10001",
+        "key": "SST",
+        "name": "SST-Team",
+        "projectTypeKey": "software",
+        "simplified": true,
+        "avatarUrls": {
+          "48x48": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/universal_avatar/view/type/project/avatar/10416",
+          "24x24": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/universal_avatar/view/type/project/avatar/10416?size=small",
+          "16x16": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/universal_avatar/view/type/project/avatar/10416?size=xsmall",
+          "32x32": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/universal_avatar/view/type/project/avatar/10416?size=medium"
+        }
+      },
+      "reporter": {
+        "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+        "accountId": "[accountId-redacted]",
+        "emailAddress": "[email-redacted]",
+        "avatarUrls": {
+          "48x48": "[avatar-url-redacted]",
+          "24x24": "[avatar-url-redacted]",
+          "16x16": "[avatar-url-redacted]",
+          "32x32": "[avatar-url-redacted]"
+        },
+        "displayName": "Fuentes Sandferand",
+        "active": true,
+        "timeZone": "America/Buenos_Aires",
+        "accountType": "atlassian"
+      },
+      "priority": {
+        "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/priority/3",
+        "iconUrl": "[jira-site-redacted]",
+        "name": "Medium",
+        "id": "3"
+      },
+      "resolution": null,
+      "labels": [
+        "ards-sdd",
+        "control-plane",
+        "cr-sst-0075",
+        "done",
+        "sst-tags-governance",
+        "subtask",
+        "validated-local"
+      ],
+      "assignee": null,
+      "updated": "2026-06-23T21:07:05.765-0300",
+      "status": {
+        "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10006",
+        "description": "La persona asignada está trabajando actualmente en esta actividad.",
+        "iconUrl": "[jira-site-redacted]",
+        "name": "En curso",
+        "id": "10006",
+        "statusCategory": {
+          "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4",
+          "id": 4,
+          "key": "indeterminate",
+          "colorName": "yellow",
+          "name": "En curso"
+        }
+      }
+    }
+  },
+  "transitionResult": {
+    "success": true
+  },
+  "commentResult": {
+    "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10031/comment/10043",
+    "id": "10043",
+    "author": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "body": "CR-SST-0075 closure execution.\n\nSe cierra el slice frontend del selector gobernado de tags para articulos.\n\nResumen:\n\n* Implementado selector gobernado en `sst-fend`.\n* Alta explicita de `TagValue` corregida contra contrato SST/BFF.\n* Payload estructurado `tags` validado en create/update.\n* Limpieza total validada con `tags: []`.\n* UI ajustada a superficie tipo carta/modal SST.\n\nValidaciones:\n\n* `sst-fend: npm.cmd run build` PASS.\n* Smoke runtime con JWT real PASS.\n* QA manual de creacion de tags en articulo PASS.\n* `4uentes-orchestor: npm.cmd run check` PASS.\n\nBefore status: En curso.  \nTransition: Listo (41).\n\nSiguiente CR: CR-SST-0076, Dictionary adoption and global closure.",
+    "updateAuthor": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "created": "2026-06-23T21:07:08.546-0300",
+    "updated": "2026-06-23T21:07:08.546-0300",
+    "jsdPublic": true
+  },
+  "externalWrite": true
+}

@@ -1,0 +1,27 @@
+schema_version: "1.0"
+kind: "feature_state"
+id: "sst-sheet-workspace-ui"
+title: "SST Sheet Workspace UI"
+status: "ready-for-release"
+updated_at: "2026-07-11"
+solution_id: "sst"
+affected_services:
+  - sst-fend
+request_ids:
+  - CR-SST-0126
+  - CR-SST-0127
+capability_refs:
+  - "sst-sheet-workspace-ui"
+  - "text-article-learning-workspace-visual-separation-ui"
+spec_refs:
+  - "requests/planned/CR-SST-0126-sst-sheet-workspace-ui-reconciliation.yaml"
+  - "initiatives/INIT-SST-0001-tags-governance-continuity.yaml"
+evidence_refs:
+  - "evidence/requests/CR-SST-0126/reconciliation-start.md"
+  - "evidence/requests/CR-SST-0126/jira-sync-summary.md"
+  - "evidence/requests/CR-SST-0126/owner-documentation-summary.md"
+  - "evidence/requests/CR-SST-0126/validation-results.md"
+  - "evidence/requests/CR-SST-0126/authenticated-visual-qa-blocker.md"
+  - "evidence/requests/CR-SST-0127/authenticated-qa-2026-07-11.md"
+open_gaps:
+  - "Do not mark released without publication evidence."

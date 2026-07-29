@@ -1,0 +1,22 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0078"
+title: "Add assisted ngrok OAuth recovery UX for sst-extension development login flow"
+status: inbox
+created_at: "2026-06-15"
+requester: "4uentes"
+
+summary: >
+  Improve the `sst-extension` development login flow so the extension can guide
+  the operator through ngrok GitHub OAuth, open the configured public origin,
+  and retry the pending login once the browser profile is authorized.
+
+scope:
+  solution: "sst"
+  services:
+    - "sst-extension"
+
+notes:
+  - "Keep the change local to the browser extension runtime."
+  - "Do not touch `sst-4uentes-infra` for this UX improvement."
+  - "Store any pending recovery only in browser.session storage and clear it after success."

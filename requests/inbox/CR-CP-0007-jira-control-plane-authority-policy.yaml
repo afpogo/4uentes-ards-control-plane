@@ -1,0 +1,26 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-CP-0007"
+title: "Promote Jira control-plane authority policy"
+status: "inbox"
+created_at: "2026-07-10"
+requester: "4uentes"
+
+business_context: >
+  The control-plane already has Jira/MCP playbooks, write contracts, backlog
+  policies, status-signal contracts, and evidence proving that Jira is an
+  operational mirror. That knowledge is distributed under request docs and must
+  be consolidated into a first-class ARDS/SDD policy for control-plane and core
+  governance.
+
+requested_change: >
+  Create a governed CR under INIT-CP-0002 / ARDS-1 to formalize a Jira
+  control-plane authority policy before expanding toward full Jira control.
+  The policy must keep ARDS/SDD as source of truth, require explicit gates for
+  Jira writes, preserve sanitized evidence, and define how Jira signals can be
+  consumed without mutating local state automatically.
+
+expected_outcome: >
+  A formal policy path exists for Jira control-plane authority, with local
+  control-plane adoption, core promotion intent, delegated Jira ticket payload,
+  and validation gates documented before implementation.

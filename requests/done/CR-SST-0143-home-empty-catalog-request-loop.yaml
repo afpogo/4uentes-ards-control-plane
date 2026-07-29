@@ -1,0 +1,45 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0143"
+title: "Stop authenticated Home empty-catalog request loop"
+status: done
+source_request: "requests/inbox/CR-SST-0143-home-empty-catalog-request-loop.yaml"
+planned_request: "requests/planned/CR-SST-0143-home-empty-catalog-request-loop.yaml"
+completed_at: "2026-07-18"
+requester: "4uentes"
+summary: "Home now requests the article briefing once per mount and treats an empty successful catalog as loaded state."
+scope:
+  solution: "sst"
+  services_modified: ["sst-fend", "4uentes-orchestor"]
+  functional_repositories_modified: true
+  runtime_code_modified: true
+implementation:
+  initiative_id: "INIT-SST-0005"
+  jira_epic_key: "SST-57"
+  jira_issue_key: "SST-83"
+  jira_status_observed: "Listo"
+  jira_source_of_truth: false
+  completed_slice: "Home load lifecycle guard, regression test and owner documentation."
+owner_documentation:
+  status: "satisfied"
+  owner_repos: ["sst-fend"]
+  evidence_refs:
+    - "evidence/requests/CR-SST-0143/implementation.md"
+validation:
+  status: "validated-local"
+  passed:
+    - "Focused Home empty-catalog regression test"
+    - "sst-fend npm.cmd run check (30 suites, 187 tests)"
+    - "Authenticated Home QA at desktop and mobile viewports"
+    - "4uentes-orchestor npm.cmd run check"
+  warnings:
+    - "Existing hooks/deprecation warnings and bundle-size advisories remain non-blocking."
+evidence_refs:
+  - "evidence/requests/CR-SST-0143/discovery.md"
+  - "evidence/requests/CR-SST-0143/implementation.md"
+  - "evidence/requests/CR-SST-0143/jira-mirror.md"
+  - "evidence/requests/CR-SST-0143/jira-closure.md"
+decision:
+  status: "closed-local"
+  approver: "4uentes"
+  note: "No release or publication is implied."

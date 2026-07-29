@@ -1,0 +1,33 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0114"
+title: "Implement contextual tagging over text selection"
+status: inbox
+created_at: "2026-07-04"
+requester: "4uentes"
+
+summary: >
+  Add selection-based LearningContentTag and relevance controls over the text
+  sheet, using a floating or contextual menu when the user selects lines,
+  paragraphs, blocks, or manual text ranges.
+
+source:
+  initiative_id: "INIT-SST-0001"
+  parent_request_id: "CR-SST-0113"
+  jira_epic_key: "SST-27"
+  active_jira_issue_key: "SST-6"
+  jira_subtask_key: "SST-44"
+  reason: >
+    The core value of the text-entry experience is turning selected text into
+    structured learning context without confusing article-wide tags with
+    content-level tags.
+
+scope:
+  solution: "sst"
+  services:
+    - "sst-fend"
+    - "4uentes-orchestor"
+  excludes:
+    - "Backend persistence beyond existing preview contract"
+    - "Automatic TagDefinition creation"
+    - "Mobile-specific editor behavior"

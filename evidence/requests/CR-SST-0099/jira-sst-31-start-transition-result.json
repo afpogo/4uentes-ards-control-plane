@@ -1,0 +1,112 @@
+{
+  "issueKey": "SST-31",
+  "before": {
+    "summary": "[SST][INIT-SST-0003][CR-SST-0099] Add session snapshot outcomes and warnings",
+    "status": "Tareas por hacer",
+    "statusCategory": "Por hacer",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-07-02T18:18:00.545-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0099",
+      "init-sst-0003",
+      "session-capture",
+      "sst-extension"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10069\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10069\",\"key\":\"SST-31\",\"fields\":{\"summary\":\"[SST][INIT-SST-0003][CR-SST-0099] Add session snapshot outcomes and warnings\",\"description\":\"CR: CR-SST-0099  \\nInitiative: INIT-SST-0003  \\nEpic: SST-29\\n\\nPurpose:\\n\\nAdd explicit session snapshot outcome and warning metadata for visual capture, textual fallback, unsupported URLs, permissions, timeouts and failures.\\n\\nSubtasks / checklist:\\n\\n- [ ] Definir snapshot.captureMode o snapshot.outcome.\\n- [ ] Definir warnings\\\\[\\\\] por tab.\\n- [ ] Actualizar specs/docs owner de sst-extension.\\n- [ ] Actualizar normalizadores de storage.\\n- [ ] Actualizar payload hacia node-auth sin romper compatibilidad.\\n- [ ] Agregar tests de migracion/normalizacion.\\n\\nDefinition of Done:\\n\\n- [ ] PDF visual y PDF textual fallback son distinguibles.\\n- [ ] Warnings son per-tab y sanitizados.\\n- [ ] Payload antiguo sigue normalizando de forma compatible.\\n- [ ] Evidencia central lista rutas owner actualizadas o excepcion aprobada.\\n\\nOwner documentation gate:\\n\\n* sst-extension owner ARDS/SDD specs/docs must be updated for any mutated behavior, or an explicit owner-documentation exception must be recorded before closure.\\n\\nControl-plane source:\\n\\n* requests/planned/cr-sst-0099-TODO.yaml\\n* initiatives/INIT-SST-0003-sst-extension-construction.yaml\\n* evidence/requests/CR-SST-0095/jira-cr-backlog-candidates.md\\n\\nBoundary:\\n\\n* Jira is an operational mirror; ARDS/SDD remains the source of truth.\\n* Do not store private page content, cookies, JWTs or plaintext secrets in Jira or evidence.\\n\\n\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-07-02T18:18:00.545-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10005\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"Tareas por hacer\",\"id\":\"10005\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/2\",\"id\":2,\"key\":\"new\",\"colorName\":\"blue-gray\",\"name\":\"Por hacer\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-sst-0099\",\"init-sst-0003\",\"session-capture\",\"sst-extension\"]}}"
+  },
+  "after": {
+    "summary": "[SST][INIT-SST-0003][CR-SST-0099] Add session snapshot outcomes and warnings",
+    "status": "En curso",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-07-04T03:01:30.276-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0099",
+      "init-sst-0003",
+      "session-capture",
+      "sst-extension"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10069\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10069\",\"key\":\"SST-31\",\"fields\":{\"summary\":\"[SST][INIT-SST-0003][CR-SST-0099] Add session snapshot outcomes and warnings\",\"description\":\"CR: CR-SST-0099  \\nInitiative: INIT-SST-0003  \\nEpic: SST-29\\n\\nPurpose:\\n\\nAdd explicit session snapshot outcome and warning metadata for visual capture, textual fallback, unsupported URLs, permissions, timeouts and failures.\\n\\nSubtasks / checklist:\\n\\n- [ ] Definir snapshot.captureMode o snapshot.outcome.\\n- [ ] Definir warnings\\\\[\\\\] por tab.\\n- [ ] Actualizar specs/docs owner de sst-extension.\\n- [ ] Actualizar normalizadores de storage.\\n- [ ] Actualizar payload hacia node-auth sin romper compatibilidad.\\n- [ ] Agregar tests de migracion/normalizacion.\\n\\nDefinition of Done:\\n\\n- [ ] PDF visual y PDF textual fallback son distinguibles.\\n- [ ] Warnings son per-tab y sanitizados.\\n- [ ] Payload antiguo sigue normalizando de forma compatible.\\n- [ ] Evidencia central lista rutas owner actualizadas o excepcion aprobada.\\n\\nOwner documentation gate:\\n\\n* sst-extension owner ARDS/SDD specs/docs must be updated for any mutated behavior, or an explicit owner-documentation exception must be recorded before closure.\\n\\nControl-plane source:\\n\\n* requests/planned/cr-sst-0099-TODO.yaml\\n* initiatives/INIT-SST-0003-sst-extension-construction.yaml\\n* evidence/requests/CR-SST-0095/jira-cr-backlog-candidates.md\\n\\nBoundary:\\n\\n* Jira is an operational mirror; ARDS/SDD remains the source of truth.\\n* Do not store private page content, cookies, JWTs or plaintext secrets in Jira or evidence.\\n\\n\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-07-04T03:01:30.276-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10006\",\"description\":\"La persona asignada está trabajando actualmente en esta actividad.\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En curso\",\"id\":\"10006\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-sst-0099\",\"init-sst-0003\",\"session-capture\",\"sst-extension\"]}}"
+  },
+  "transitions": [
+    {
+      "id": "11",
+      "name": "Por hacer",
+      "toStatus": "Tareas por hacer",
+      "toStatusCategory": "Por hacer"
+    },
+    {
+      "id": "21",
+      "name": "En curso",
+      "toStatus": "En curso",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "31",
+      "name": "In Review",
+      "toStatus": "En revisión",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "41",
+      "name": "Listo",
+      "toStatus": "Finalizada",
+      "toStatusCategory": "Listo"
+    }
+  ],
+  "selectedTransition": {
+    "id": "21",
+    "name": "En curso",
+    "toStatus": "En curso",
+    "toStatusCategory": "En curso"
+  },
+  "transitionResult": {
+    "success": true
+  },
+  "commentResult": {
+    "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10069/comment/10072",
+    "id": "10072",
+    "author": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "body": "CR-SST-0099 start checkpoint.\n\nThis starts the next scoped slice under INIT-SST-0003 after CR-SST-0098 / SST-30 was closed.\n\nPurpose:\n\n* Add explicit session snapshot outcomes and warnings in sst-extension.\n* Preserve compatibility with existing local queue data.\n* Keep node-auth and SST backend contracts unchanged.\n* Prepare a clean data surface for the later UI progress/degradation work in CR-SST-0100 / SST-32.\n\nInitial outcome/warning taxonomy to validate in code:\n\n* visual PDF capture\n* textual PDF fallback\n* skipped / unsupported URL\n* host permission denied\n* tab load timeout\n* capture timeout\n* PDF materialization failure\n* storage warning\n\nGuardrails:\n\n* Do not store private page content, real PDF bodies, cookies, JWTs or plaintext secrets in Jira/evidence.\n* Do not change sst-bend or node-auth in this CR.\n* Owner documentation in sst-extension must be updated before closure.\n* Control-plane owner-documentation enforcement must pass before closure.\n\nEvidence:\n\n* `requests/planned/CR-SST-0099-sst-extension-session-outcomes-warnings.yaml`\n* `evidence/requests/CR-SST-0099/preliminary-analysis.md`\n* `evidence/requests/CR-SST-0099/subagent-atomized-plan.md`\n\nBoundary:\n\n* Jira is an operational mirror; ARDS/SDD remains the source of truth.\n\n",
+    "updateAuthor": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "created": "2026-07-04T03:01:30.276-0300",
+    "updated": "2026-07-04T03:01:30.276-0300",
+    "jsdPublic": true
+  },
+  "commentBody": "CR-SST-0099 start checkpoint.\n\nThis starts the next scoped slice under INIT-SST-0003 after CR-SST-0098 / SST-30 was closed.\n\nPurpose:\n\n- Add explicit session snapshot outcomes and warnings in sst-extension.\n- Preserve compatibility with existing local queue data.\n- Keep node-auth and SST backend contracts unchanged.\n- Prepare a clean data surface for the later UI progress/degradation work in CR-SST-0100 / SST-32.\n\nInitial outcome/warning taxonomy to validate in code:\n\n- visual PDF capture\n- textual PDF fallback\n- skipped / unsupported URL\n- host permission denied\n- tab load timeout\n- capture timeout\n- PDF materialization failure\n- storage warning\n\nGuardrails:\n\n- Do not store private page content, real PDF bodies, cookies, JWTs or plaintext secrets in Jira/evidence.\n- Do not change sst-bend or node-auth in this CR.\n- Owner documentation in sst-extension must be updated before closure.\n- Control-plane owner-documentation enforcement must pass before closure.\n\nEvidence:\n\n- `requests/planned/CR-SST-0099-sst-extension-session-outcomes-warnings.yaml`\n- `evidence/requests/CR-SST-0099/preliminary-analysis.md`\n- `evidence/requests/CR-SST-0099/subagent-atomized-plan.md`\n\nBoundary:\n\n- Jira is an operational mirror; ARDS/SDD remains the source of truth.\n",
+  "externalWrite": true
+}

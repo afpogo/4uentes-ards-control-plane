@@ -1,0 +1,153 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0079"
+title: "SST Tags - Reproducible API QA documentation"
+status: done
+source_request: "requests/inbox/CR-SST-0079-sst-tags-governance-reproducible-api-qa.yaml"
+created_at: "2026-06-18"
+requester: "4uentes"
+
+business_context: >
+  CR-SST-0073 dejo implementados endpoints backend para tags governance, pero
+  la verificacion manual basada en instrucciones de chat no es reproducible ni
+  auditable. SST-21 necesita una forma liviana, versionada y repetible de
+  ejecutar el flujo de QA con bajo consumo de contexto.
+
+requested_change: >
+  Incorporar documentacion y una coleccion `.http` para probar los endpoints de
+  tags governance de `sst-bend`, usando variables de entorno para base URL y
+  JWT owner. Mantener OpenAPI como contrato formal y `.http` como harness local
+  ejecutable.
+
+expected_outcome: >
+  Un operador puede validar SST-21 desde VS Code o CLI compatible con `.http`
+  sin copiar pasos desde el chat, sin exponer secretos, y con evidencia clara
+  para cerrar la revision manual.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - "sst-bend"
+    - "4uentes-orchestor"
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "sst-bend"
+      via: "API QA documentation and executable .http request collection"
+      service_kind: "api"
+      ards_kind: "backend-api"
+      status: "active"
+    - service_id: "4uentes-orchestor"
+      via: "request lifecycle and evidence tracking"
+      service_kind: "control-plane"
+      ards_kind: "ards-sdd-control-plane"
+      status: "active"
+  affected_ards:
+    - "backend-api"
+    - "ards-sdd-control-plane"
+  capabilities:
+    - "sst-tags-governance"
+    - "article-tags"
+  risks:
+    - id: "SECRET_EXPOSURE_IN_QA_DOCS"
+      severity: "medium"
+    - id: "API_CONTRACT_DRIFT"
+      severity: "medium"
+
+required_context:
+  - "AGENTS.md"
+  - "specs/integration/policies.yaml"
+  - "docs/policies/agent-resource-degradation-policy.md"
+  - "docs/policies/agent-task-atomization-policy.md"
+  - "docs/policies/agent-context-management-policy.md"
+  - "requests/planned/CR-SST-0073-sst-tags-search-and-resource-binding-api.yaml"
+  - "state/features/sst-tags-governance.current.yaml"
+  - "catalog/services/sst-bend.yaml"
+
+required_checks:
+  - service_id: "sst-bend"
+    command: "node --check scripts/test-tags-governance.js"
+  - service_id: "4uentes-orchestor"
+    command: "npm run check"
+
+risk:
+  level: "medium"
+  score: 5
+  drivers:
+    - id: "SECRET_EXPOSURE_IN_QA_DOCS"
+      severity: "medium"
+    - id: "API_CONTRACT_DRIFT"
+      severity: "medium"
+
+task_weight:
+  classification: "short-defined-task"
+  risk_level: "medium"
+  drivers:
+    - "documentation-only runtime impact"
+    - "requires secret-safe examples"
+    - "must stay aligned with CR-SST-0073 endpoint contract"
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.3-spark"
+  fallback_profile: "fast-verifiable-task-profile"
+  reason: "Bounded documentation and QA harness task with verifiable file outputs."
+
+subagent_deployment_plan:
+  required: false
+  parallelizable: false
+  roles: []
+  fallback: "Perform sequentially in the main agent and validate with repo checks."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "one-branch-per-repo"
+  local_implementation_started: true
+  local_implementation_started_at: "2026-06-19"
+  completed_at: "2026-06-19"
+  planned_implementation_units:
+    - id: "qa-http-collection"
+      objective: "Add a `.http` collection for the SST tags governance endpoint flow."
+      target_repo: "sst-bend"
+      expected_files:
+        - "httpPruebas/Tags-http/sst.tags-governance.http"
+      validation:
+        - "No JWT or secret is committed."
+        - "Requests use environment variables for base URL and token."
+      implementation_note: "Used the existing repo convention `httpPruebas/*.http` instead of introducing `docs/http`."
+    - id: "qa-docs"
+      objective: "Document how to execute and interpret the API QA flow."
+      target_repo: "sst-bend"
+      expected_files:
+        - "docs/api/24-sst-tags-governance-manual-qa.md"
+      validation:
+        - "Notes legacy `includeTags` behavior during CR-SST-0073."
+        - "Explains expected duplicate conflict and clear semantics."
+    - id: "control-plane-evidence"
+      objective: "Record implementation notes and validation evidence."
+      target_repo: "4uentes-orchestor"
+      expected_files:
+        - "evidence/requests/CR-SST-0079/implementation-plan.md"
+        - "evidence/requests/CR-SST-0079/changed-files-summary.md"
+        - "evidence/requests/CR-SST-0079/validation-results.md"
+      validation:
+        - "`npm run check` passes in 4uentes-orchestor or records a concrete blocker."
+
+validation:
+  required_checks:
+    - "sst-bend: node --check scripts/test-tags-governance.js"
+    - "4uentes-orchestor: npm run check"
+  evidence_required:
+    - "changed_files_summary"
+    - "manual_qa_execution_notes"
+    - "secret_safe_review"
+
+decision:
+  status: "implemented-local"
+  approver: "4uentes"
+  approved_at: "2026-06-18"
+  note: "Implemented as a bounded follow-up to make SST-21 API validation reproducible through versioned OpenAPI plus `.http` assets."

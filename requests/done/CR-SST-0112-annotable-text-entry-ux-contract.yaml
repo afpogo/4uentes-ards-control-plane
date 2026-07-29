@@ -1,0 +1,64 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0112"
+title: "Define annotable text entry UX contract"
+status: done
+source_request: "requests/inbox/CR-SST-0112-annotable-text-entry-ux-contract.yaml"
+planned_request: "requests/planned/CR-SST-0112-annotable-text-entry-ux-contract.yaml"
+completed_at: "2026-07-04"
+requester: "4uentes"
+
+summary: >
+  Closed the control-plane UX contract for an annotable text-entry editor. The
+  contract defines the sheet/editor surface, selection model, contextual menu,
+  preview semantics, accepted rendering intention, accessibility baseline,
+  anti-patterns, and implementation boundaries for CR-SST-0113 and
+  CR-SST-0114.
+
+scope:
+  solution: "sst"
+  services_modified:
+    - "4uentes-orchestor"
+  functional_repositories_modified: false
+  runtime_code_modified: false
+
+implementation:
+  initiative_id: "INIT-SST-0001"
+  active_feature_state: "learning-content-tags"
+  jira_epic_key: "SST-27"
+  jira_issue_key: "SST-6"
+  jira_subtask_key: "SST-42"
+  jira_status_observed: "Listo"
+  jira_source_of_truth: false
+  completed_slice: >
+    The annotable text-entry experience is defined as an editor-like sheet where
+    text is the primary interface and selected fragments can later receive
+    LearningContentTag metadata, relevance, preview state, and accepted render
+    output.
+  not_closed:
+    - "The editable sheet runtime implementation remains in CR-SST-0113."
+    - "Contextual selection tagging remains in CR-SST-0114."
+    - "BFF/API contract and persistence remain in CR-SST-0115 and CR-SST-0116."
+
+validation:
+  status: "validated-local"
+  passed:
+    - "4uentes-orchestor npm.cmd run check"
+  notes:
+    - "Owner documentation enforcement passed as part of the control-plane check."
+    - "No owner docs in child repos were required because this CR did not mutate child repos."
+
+evidence_refs:
+  - "evidence/requests/CR-SST-0112/intent-summary.md"
+  - "evidence/requests/CR-SST-0112/ux-contract.md"
+  - "evidence/requests/CR-SST-0112/implementation-readiness.md"
+  - "evidence/requests/CR-SST-0112/jira-sync-summary.md"
+  - "evidence/requests/CR-SST-0112/jira-close-transition-summary.md"
+  - "evidence/requests/CR-SST-0112/validation-results.md"
+
+decision:
+  status: "closed-local"
+  approver: "4uentes"
+  note: >
+    CR-SST-0112 closes locally as the UX contract for SST-42. Jira remains an
+    operational mirror.

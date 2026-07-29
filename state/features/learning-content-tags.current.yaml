@@ -3,7 +3,7 @@ kind: "feature_state"
 id: "learning-content-tags"
 title: "SST Learning Content Tags"
 status: "implemented-local"
-updated_at: "2026-05-26"
+updated_at: "2026-07-10"
 solution_id: "sst"
 affected_services:
   - sst-bend
@@ -11,14 +11,124 @@ affected_services:
 request_ids:
   - CR-SST-0015
   - CR-SST-0016
+  - CR-SST-0088
+  - CR-SST-0089
+  - CR-SST-0090
+  - CR-SST-0091
+  - CR-SST-0092
+  - CR-SST-0097
+  - CR-SST-0107
+  - CR-SST-0109
+  - CR-SST-0110
+  - CR-SST-0111
+  - CR-SST-0112
+  - CR-SST-0113
+  - CR-SST-0114
+  - CR-SST-0115
+  - CR-SST-0116
+  - CR-SST-0117
+  - CR-SST-0118
+  - CR-SST-0122
+  - CR-SST-0123
+  - CR-SST-0124
+  - CR-SST-0125
 capability_refs:
   - "learning-content-tags"
-spec_refs: []
+spec_refs:
+  - "requests/planned/CR-SST-0097-sst-bend-learning-workspace-owner-docs-remediation.yaml"
+  - "requests/done/CR-SST-0092-sst-bend-learning-workspace-first-runtime-slice.yaml"
+  - "requests/done/CR-SST-0097-sst-bend-learning-workspace-owner-docs-remediation.yaml"
+  - "evidence/requests/CR-SST-0097/consumer-scope-decision.md"
+  - "evidence/requests/CR-SST-0097/changed-files-summary.md"
+  - "requests/planned/CR-SST-0107-sst-fend-learning-workspace-sheet-adoption.yaml"
+  - "evidence/requests/CR-SST-0107/frontend-intent-and-boundary.md"
+  - "evidence/requests/CR-SST-0107/implementation-discovery.md"
+  - "evidence/requests/CR-SST-0107/sst-fend-file-plan.md"
+  - "evidence/requests/CR-SST-0107/validation-results.md"
+  - "requests/planned/CR-SST-0109-node-auth-learning-workspace-bff-passthrough.yaml"
+  - "evidence/requests/CR-SST-0109/implementation-plan.md"
+  - "evidence/requests/CR-SST-0109/changed-files-summary.md"
+  - "requests/planned/CR-SST-0110-sst-fend-learning-workspace-text-article-adoption.yaml"
+  - "evidence/requests/CR-SST-0110/implementation-plan.md"
+  - "requests/done/CR-SST-0110-sst-fend-learning-workspace-text-article-adoption.yaml"
+  - "requests/planned/CR-SST-0111-learning-content-tagging-intent-contract.yaml"
+  - "evidence/requests/CR-SST-0111/tagging-intent-contract.md"
+  - "evidence/requests/CR-SST-0111/implementation-boundary.md"
+  - "requests/planned/CR-SST-0112-annotable-text-entry-ux-contract.yaml"
+  - "evidence/requests/CR-SST-0112/ux-contract.md"
+  - "evidence/requests/CR-SST-0112/implementation-readiness.md"
+  - "requests/planned/CR-SST-0113-sst-fend-editable-text-sheet-first-slice.yaml"
+  - "requests/planned/CR-SST-0114-sst-fend-contextual-text-selection-tagging.yaml"
+  - "requests/planned/CR-SST-0115-annotated-selection-bff-api-contract.yaml"
+  - "requests/done/CR-SST-0115-annotated-selection-bff-api-contract.yaml"
+  - "requests/planned/CR-SST-0116-sst-bend-persist-accepted-annotated-text-context.yaml"
+  - "requests/planned/CR-SST-0117-render-annotated-text-markdown-template-view.yaml"
+  - "requests/done/CR-SST-0117-render-annotated-text-markdown-template-view.yaml"
+  - "requests/planned/CR-SST-0118-annotable-text-entry-e2e-validation.yaml"
+  - "requests/planned/CR-SST-0124-sst-fend-native-article-runtime-url.yaml"
 evidence_refs:
   - "evidence/requests/CR-SST-0015/java-spring-course-structure-analysis.md"
   - "evidence/requests/CR-SST-0015/parser-boundary-recommendation.md"
   - "evidence/requests/CR-SST-0016/backend-poc-summary.md"
+  - "evidence/requests/CR-SST-0092/local-closure-2026-07-03.md"
+  - "evidence/requests/CR-SST-0092/sst-28-closure-validation-2026-07-03.md"
+  - "evidence/requests/CR-SST-0097/local-closure-2026-07-03.md"
+  - "evidence/requests/CR-SST-0097/execution-summary.md"
+  - "evidence/requests/CR-SST-0097/validation-results.md"
+  - "evidence/initiatives/INIT-SST-0001/sst-6-next-steps-analysis-2026-07-03.md"
+  - "evidence/requests/CR-SST-0107/changed-files-summary.md"
+  - "evidence/requests/CR-SST-0107/implementation-discovery.md"
+  - "evidence/requests/CR-SST-0107/sst-fend-file-plan.md"
+  - "evidence/requests/CR-SST-0107/validation-results.md"
+  - "evidence/requests/CR-SST-0109/changed-files-summary.md"
+  - "evidence/requests/CR-SST-0109/validation-results.md"
+  - "evidence/requests/CR-SST-0110/changed-files-summary.md"
+  - "evidence/requests/CR-SST-0110/validation-results.md"
+  - "evidence/requests/CR-SST-0111/tagging-intent-contract.md"
+  - "evidence/requests/CR-SST-0111/jira-sync-summary.md"
+  - "evidence/requests/CR-SST-0111/implementation-boundary.md"
+  - "evidence/requests/CR-SST-0111/validation-results.md"
+  - "evidence/requests/CR-SST-0112/intent-summary.md"
+  - "evidence/requests/CR-SST-0112/ux-contract.md"
+  - "evidence/requests/CR-SST-0112/implementation-readiness.md"
+  - "evidence/requests/CR-SST-0112/validation-results.md"
+  - "evidence/requests/CR-SST-0112/jira-close-transition-summary.md"
+  - "evidence/requests/CR-SST-0113/intent-summary.md"
+  - "evidence/requests/CR-SST-0113/execution-start.md"
+  - "evidence/requests/CR-SST-0114/intent-summary.md"
+  - "evidence/requests/CR-SST-0115/intent-summary.md"
+  - "evidence/requests/CR-SST-0115/annotated-selection-bff-api-contract.md"
+  - "evidence/requests/CR-SST-0115/implementation-boundary.md"
+  - "evidence/requests/CR-SST-0115/validation-results.md"
+  - "evidence/requests/CR-SST-0116/intent-summary.md"
+  - "evidence/requests/CR-SST-0117/intent-summary.md"
+  - "evidence/requests/CR-SST-0117/implementation-summary.md"
+  - "evidence/requests/CR-SST-0117/validation-results.md"
+  - "evidence/requests/CR-SST-0117/jira-sst-47-close-transition-summary.md"
+  - "evidence/requests/CR-SST-0116/sst-46-reconciliation-2026-07-04.md"
+  - "evidence/requests/CR-SST-0118/policy-and-owner-enforcement-start.md"
+  - "evidence/requests/CR-SST-0118/jira-sst-48-start-transition-summary.md"
+  - "evidence/requests/CR-SST-0118/intent-summary.md"
+  - "evidence/requests/CR-SST-0124/article-resource-learningworkspace-boundary.md"
+  - "evidence/requests/CR-SST-0124/validation-results.md"
+  - "evidence/requests/CR-SST-0124/closure-readiness.md"
+  - "evidence/requests/CR-SST-0124/jira-sst-53-review-transition-summary.md"
+  - "evidence/requests/CR-SST-0124/chrome-devtools-authenticated-qa-blocker.md"
+  - "evidence/requests/CR-SST-0124/node-auth-missing-url-fix.md"
+  - "evidence/requests/CR-SST-0124/manual-authenticated-qa-pass.md"
+  - "evidence/requests/CR-SST-0124/jira-sst-53-final-close-transition.md"
+  - "evidence/initiatives/INIT-SST-0001/sst-53-state-reconciliation-2026-07-10.md"
+  - "requests/planned/CR-SST-0125-sst-bend-learning-source-preview-import-normalization.yaml"
+  - "evidence/requests/CR-SST-0125/policy-and-owner-enforcement-start.md"
+  - "evidence/requests/CR-SST-0125/implementation-analysis-start.md"
+  - "evidence/requests/CR-SST-0125/jira-create-start-blocker.md"
+  - "evidence/requests/CR-SST-0125/jira-cr-sst-0125-create-start-summary.md"
 open_gaps:
-  - "Promote learning-content parser from POC module to runtime import/preview endpoint."
+  - "Promote remaining learning-content parser flows beyond the LearningWorkspace first runtime slice."
   - "Define frontend rendering for clase, nota, recordar, ejemplo, image, docs, and code blocks."
   - "Keep generated lab artifacts excluded from ingestion by default."
+  - "Execute CR-SST-0118 to complete end-to-end validation for the annotable text-entry product value proposition."
+  - "Keep Article creation independent from LearningWorkspace; LearningWorkspace materializes accepted context only after processing documents, PDFs, HTML/text or agent outputs."
+  - "CR-SST-0124 / SST-53 is closed: node-auth accepts payload.kind=text without url/sourceUrl, manual authenticated QA passed, and Jira mirror is Finalizada/Listo."
+  - "CR-SST-0125 / SST-55 is the active governed sst-bend parser/import normalization implementation cut; its Jira mirror is En curso under SST-6."
+  - "Keep Jira SST-42 through SST-48 synchronized as operational mirrors while ARDS/SDD remains source of truth."

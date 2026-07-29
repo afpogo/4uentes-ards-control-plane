@@ -1,0 +1,32 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-4UENTES-0018"
+title: "Portfolio sanitized CV asset replacement"
+status: "intake"
+created_at: "2026-07-04"
+requester: "4uentes"
+
+summary: >
+  Advance the follow-up from CR-4UENTES-0017 by defining the sanitized public CV
+  asset replacement gate for 4uentes-portfolio.
+
+scope:
+  solution: "4uentes"
+  services:
+    - "4uentes-portfolio"
+  include_optional_services: false
+
+intent:
+  - "Replace the current public CV asset only when a sanitized owner-approved PDF exists."
+  - "Keep public CV download disabled while the current asset still contains direct personal data."
+  - "Document the required sanitization checks in owner docs before future reactivation."
+
+constraints:
+  - "Do not publish direct phone, postal code, street address, or granular location."
+  - "Do not infer or rewrite professional claims beyond owner-approved portfolio content."
+  - "Do not add runtime services or external PDF generation dependencies."
+
+validation:
+  required_checks:
+    - "4uentes-portfolio: npm.cmd run check"
+    - "4uentes-orchestor: npm.cmd run check"

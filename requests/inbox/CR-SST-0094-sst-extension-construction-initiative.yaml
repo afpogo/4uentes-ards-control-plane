@@ -1,0 +1,23 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0094"
+title: "Open SST Extension construction initiative and Jira epic"
+status: inbox
+created_at: "2026-06-30"
+requester: "4uentes"
+
+business_context: >
+  sst-extension work is becoming a product construction track rather than a
+  single implementation fix. The control-plane needs a dedicated Initiative and
+  Jira Epic mirror where extension CRs can live as Jira tasks, with subtasks or
+  comments used for execution breakdown inside each CR ticket.
+
+requested_change: >
+  Create the local INIT-SST-0003 initiative for SST Extension Construction and
+  open or reuse a Jira Epic mirror in project SST. Keep Jira as an operational
+  mirror; ARDS/SDD remains the source of truth.
+
+expected_outcome: >
+  Future sst-extension work, including session PDF capture, DictionarySecret
+  integration, browser permissions, UI surface, and QA automation, has a stable
+  Initiative/Epic parent before child repository mutations begin.

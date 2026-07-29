@@ -1,0 +1,25 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0092"
+title: "Implement sst-bend LearningWorkspace first runtime slice"
+status: inbox
+created_at: "2026-06-30"
+requester: "4uentes"
+
+business_context: >
+  CR-SST-0090 defined LearningWorkspace as the governed runtime container for
+  accepted learning context, and CR-SST-0091 prepared the sst-bend file plan.
+  The next step is to implement the first backend runtime slice in sst-bend
+  under the INIT-SST-0001 Jira epic SST-27.
+
+requested_change: >
+  Implement the first sst-bend LearningWorkspace runtime slice: lazy workspace
+  creation from account context, preview-only source preview, explicit accepted
+  source consolidation, rejected preview handling, scoped chatbot context read,
+  idempotency, tests, migration rollback, and local evidence.
+
+expected_outcome: >
+  sst-bend exposes a governed backend implementation that preserves
+  preview-only behavior until explicit acceptance, filters by account/user
+  context, avoids automatic TagDefinition creation, and provides evidence for
+  the next chatbot/frontend adoption requests.

@@ -1,0 +1,27 @@
+schema_version: "1.0"
+kind: "feature_state"
+id: "portfolio-experience-readable-impact"
+title: "Portfolio Experience Readable Impact"
+status: "done"
+updated_at: "2026-07-10"
+solution_id: "4uentes"
+affected_services:
+  - 4uentes-portfolio
+request_ids:
+  - CR-4UENTES-0036
+capability_refs:
+  - "portfolio-experience-readable-impact"
+spec_refs:
+  - "requests/done/CR-4UENTES-0036-portfolio-experience-readable-impact.yaml"
+  - "initiatives/INIT-PORTFOLIO-0003-portfolio-professionalization.yaml"
+evidence_refs:
+  - "evidence/requests/CR-4UENTES-0036/implementation-plan.md"
+  - "evidence/requests/CR-4UENTES-0036/current-experience-ui-analysis.md"
+  - "evidence/requests/CR-4UENTES-0036/jira-task-sync-summary.md"
+  - "evidence/requests/CR-4UENTES-0036/jira-port-19-start-transition-summary.md"
+  - "evidence/requests/CR-4UENTES-0036/changed-files-summary.md"
+  - "evidence/requests/CR-4UENTES-0036/child-validation-results.md"
+  - "evidence/requests/CR-4UENTES-0036/visual-qa-results.md"
+  - "evidence/requests/CR-4UENTES-0036/control-plane-validation-results.md"
+  - "evidence/requests/CR-4UENTES-0036/jira-port-19-close-transition-summary.md"
+open_gaps: []

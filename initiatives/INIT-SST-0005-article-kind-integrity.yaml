@@ -1,0 +1,86 @@
+schema_version: "1.0"
+kind: "initiative"
+id: "INIT-SST-0005"
+title: "SST Article Kind Integrity"
+status: "active"
+updated_at: "2026-07-19"
+owner_repository: "4uentes-orchestor"
+objective: >
+  Make article semantic kind explicit, consistent and auditable across SST
+  native creation, backend persistence, BFF responses, browser-extension
+  producers, Plaud ingestion, legacy data and filter security boundaries.
+initial_hypothesis: >
+  Article semantic kind needs its own Initiative because the outcome crosses
+  sst-fend, sst-bend, node-auth, sst-extension, Plaud, historical data and an
+  independent security boundary. INIT-SST-0001 and INIT-SST-0003 remain related
+  but do not own this cross-cutting outcome.
+source_evidence_refs:
+  - "evidence/initiatives/INIT-SST-0005/initiative-decision.md"
+  - "evidence/initiatives/INIT-SST-0005/jira-readonly-preflight.md"
+  - "evidence/initiatives/INIT-SST-0005/jira-mirror-plan.md"
+  - "requests/planned/CR-SST-0128-jira-cr-mirror-hierarchy-policy.yaml"
+model_refs:
+  - "specs/initiatives/initiative-model.yaml"
+  - "docs/requests/initiative-model.md"
+known_change_requests:
+  - "CR-SST-0128"
+  - "CR-SST-0129"
+  - "CR-SST-0130"
+  - "CR-SST-0131"
+  - "CR-SST-0132"
+  - "CR-SST-0133"
+  - "CR-SST-0134"
+  - "CR-SST-0135"
+  - "CR-SST-0141"
+  - "CR-SST-0142"
+  - "CR-SST-0143"
+  - "CR-SST-0144"
+  - "CR-SST-0145"
+related_change_requests:
+  - id: "CR-SST-0127"
+    relation: "predecessor-and-related-existing-jira-subtask"
+tracking:
+  jira:
+    role: "mirror"
+    source_of_truth: false
+    project_key: "SST"
+    issue_type: "Epic"
+    issue_key: "SST-57"
+    current_status_observed: "En curso"
+    write_status: "created-and-started"
+    read_status: "available"
+    evidence_ref: "evidence/initiatives/INIT-SST-0005/jira-mirror-plan.md"
+    parent_task_key: "SST-58"
+    associated_issue_keys:
+      - "SST-56"
+      - "SST-58"
+      - "SST-59"
+      - "SST-60"
+      - "SST-61"
+      - "SST-62"
+      - "SST-63"
+      - "SST-64"
+      - "SST-65"
+      - "SST-71"
+      - "SST-82"
+      - "SST-83"
+      - "SST-84"
+      - "SST-85"
+adjacencies:
+  - initiative_id: "INIT-SST-0001"
+    jira_epic_key: "SST-27"
+    reason: "Existing Articles/Learning UI continuity and CR-SST-0127 predecessor."
+  - initiative_id: "INIT-SST-0003"
+    jira_epic_key: "SST-29"
+    reason: "Existing extension construction work including session capture."
+boundaries:
+  mutates_child_repositories: false
+  promotes_runtime: false
+  changes_core_canon: false
+open_gaps:
+  - "Writer, query, security and Plaud convergence CRs are closed locally; only reviewed historical reconciliation remains open."
+  - "CR-SST-0134 remains non-mutating until producer fixes and a reviewed execution addendum exist."
+  - "CR-SST-0135 is an independent security slice and must not be hidden inside classification work."
+  - "CR-SST-0141 / SST-71 tracks native Web payload persistence discovered during CR-SST-0130 audit."
+  - "CR-SST-0142 / SST-82 closed the Plaud aggregate/job transaction and stale lease recovery gap."
+  - "CR-SST-0144 and CR-SST-0145 validate native Text/Web creation and semantic payloadKind catalog filtering; they do not replace the human-reviewed historical reconciliation gate CR-SST-0134 / SST-64."

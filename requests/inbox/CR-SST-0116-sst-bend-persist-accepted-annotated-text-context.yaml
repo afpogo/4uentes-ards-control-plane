@@ -1,0 +1,32 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0116"
+title: "Persist accepted annotated text context"
+status: inbox
+created_at: "2026-07-04"
+requester: "4uentes"
+
+summary: >
+  Persist accepted annotated text selections as queryable learning context,
+  preserving source anchors, selectors, tags, relevance, and relation to the
+  originating article or source.
+
+source:
+  initiative_id: "INIT-SST-0001"
+  parent_request_id: "CR-SST-0115"
+  jira_epic_key: "SST-27"
+  active_jira_issue_key: "SST-6"
+  jira_subtask_key: "SST-46"
+  reason: >
+    Previewed annotations only become platform value when accepted context can
+    be stored, queried, and traced back to its source.
+
+scope:
+  solution: "sst"
+  services:
+    - "sst-bend"
+    - "node-auth"
+    - "4uentes-orchestor"
+  excludes:
+    - "Frontend editor redesign"
+    - "Final rendered template UX"

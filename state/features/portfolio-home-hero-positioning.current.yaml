@@ -1,0 +1,26 @@
+schema_version: "1.0"
+kind: "feature_state"
+id: "portfolio-home-hero-positioning"
+title: "Portfolio Home Hero Positioning"
+status: "done"
+updated_at: "2026-07-07"
+solution_id: "4uentes"
+affected_services:
+  - 4uentes-portfolio
+request_ids:
+  - CR-4UENTES-0034
+capability_refs:
+  - "portfolio-home-hero-positioning"
+spec_refs:
+  - "requests/planned/CR-4UENTES-0034-portfolio-home-hero-positioning-cta-clarity.yaml"
+  - "initiatives/INIT-PORTFOLIO-0003-portfolio-professionalization.yaml"
+evidence_refs:
+  - "evidence/requests/CR-4UENTES-0034/implementation-plan.md"
+  - "evidence/requests/CR-4UENTES-0034/jira-task-sync-summary.md"
+  - "evidence/requests/CR-4UENTES-0034/jira-port-11-start-transition-summary.md"
+  - "evidence/requests/CR-4UENTES-0034/changed-files-summary.md"
+  - "evidence/requests/CR-4UENTES-0034/child-validation-results.md"
+  - "evidence/requests/CR-4UENTES-0034/visual-qa-results.md"
+  - "evidence/requests/CR-4UENTES-0034/control-plane-validation-results.md"
+  - "evidence/requests/CR-4UENTES-0034/jira-port-11-close-transition-summary.md"
+open_gaps: []

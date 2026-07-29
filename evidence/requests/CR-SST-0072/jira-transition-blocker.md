@@ -1,4 +1,4 @@
-# Jira Transition Blocker
+# Bloqueo De Transicion Jira
 
 ## Estado
 

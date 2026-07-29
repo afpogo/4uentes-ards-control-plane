@@ -1,0 +1,92 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0112"
+title: "Define annotable text entry UX contract"
+status: closed-local
+source_request: "requests/inbox/CR-SST-0112-annotable-text-entry-ux-contract.yaml"
+created_at: "2026-07-04"
+requester: "4uentes"
+
+summary: >
+  Record the UX/product contract for an annotable text-entry editor before
+  runtime implementation.
+
+control_plane_context:
+  initiative_id: "INIT-SST-0001"
+  initiative_file: "initiatives/INIT-SST-0001-tags-governance-continuity.yaml"
+  active_feature_state: "learning-content-tags"
+  active_feature_state_file: "state/features/learning-content-tags.current.yaml"
+  parent_request_id: "CR-SST-0111"
+  jira_epic_key: "SST-27"
+  active_jira_issue_key: "SST-6"
+  jira_subtask_key: "SST-42"
+  current_jira_status_observed: "Listo"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "sst-fend"
+      via: "Future annotable editor UX"
+      service_kind: "frontend-spa"
+      ards_kind: "frontend-web"
+      status: "active"
+    - service_id: "4uentes-orchestor"
+      via: "request lifecycle, intent contract and evidence"
+      service_kind: "control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+  affected_ards:
+    - learning-content-tags
+    - article-creation
+    - request-lifecycle
+    - evidence
+  risks:
+    - id: UX_VALUE_PROPOSITION_UNCLEAR
+      severity: high
+
+execution:
+  requires_human_approval: false
+  allowed_window: manual
+  branch_strategy: "control-plane-first"
+  child_repo_mutation_allowed: false
+  implementation_boundary: >
+    This CR defines the editor UX contract only. Runtime changes require later
+    child-repo CRs.
+  owner_documentation:
+    required: false
+    status: not-required-control-plane-only
+    owner_refs: []
+    evidence_refs:
+      - "evidence/requests/CR-SST-0112/intent-summary.md"
+      - "evidence/requests/CR-SST-0112/jira-sync-summary.md"
+      - "evidence/requests/CR-SST-0112/ux-contract.md"
+      - "evidence/requests/CR-SST-0112/implementation-readiness.md"
+      - "evidence/requests/CR-SST-0112/validation-results.md"
+      - "evidence/requests/CR-SST-0112/jira-close-transition-summary.md"
+
+required_checks:
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check"
+
+validation:
+  required_checks:
+    - "The editor surface, selection model, contextual menu, preview and accepted rendering are described."
+    - "ArticleTag remains separate from LearningContentTag."
+    - "The next child-repo implementation boundary is explicit."
+    - "Owner documentation enforcement is deferred only because this CR does not mutate child repos."
+  evidence_required:
+    - "intent_summary"
+    - "jira_sync_summary"
+    - "ux_contract"
+    - "implementation_readiness"
+    - "validation_results"
+
+decision:
+  status: closed-local
+  approver: "4uentes"
+  note: >
+    Closed locally as the annotable text-entry UX contract. No child
+    repositories were modified. CR-SST-0113 is the next implementation slice and
+    must apply owner documentation enforcement.

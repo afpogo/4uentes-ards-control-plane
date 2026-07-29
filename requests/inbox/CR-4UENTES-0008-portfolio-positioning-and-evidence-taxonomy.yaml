@@ -1,0 +1,74 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-4UENTES-0008"
+title: "Portfolio public positioning and evidence taxonomy"
+status: "inbox"
+created_at: "2026-07-04"
+requester: "4uentes"
+
+business_context: >
+  INIT-PORTFOLIO-0001 has stabilized 4uentes-portfolio technically. The next
+  publication-readiness blocker is product/content clarity: what public
+  positioning the portfolio should claim, which evidence types support it, and
+  which claims remain internal or future.
+
+requested_change: >
+  Define a control-plane decision baseline for portfolio positioning and
+  evidence taxonomy before mutating visible portfolio UI copy.
+
+expected_outcome: >
+  Future portfolio UI/content CRs can use a clear employment-first positioning,
+  evidence labels, and guardrails for 4uentes/SST/GitHub claims.
+
+initial_scope:
+  solution: "4uentes"
+  services:
+    - "4uentes-portfolio"
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services:
+    - "4uentes-portfolio"
+  affected_ards:
+    - "publication-readiness"
+    - "evidence-taxonomy"
+    - "public-positioning"
+  capabilities:
+    - "portfolio-positioning-and-evidence-taxonomy"
+
+required_context:
+  - "4uentes-portfolio: docs/portfolio-intent.md"
+  - "4uentes-portfolio: docs/evidence/README.md"
+  - "4uentes-portfolio: docs/integration/github-profile-enrichment.md"
+  - "4uentes-portfolio: specs/features/00-index.yaml"
+  - "initiatives/INIT-PORTFOLIO-0001-portfolio-publication-readiness.yaml"
+
+required_checks:
+  - "4uentes-orchestor: npm.cmd run check"
+
+risk:
+  level: "medium"
+  score: 5
+  drivers:
+    - "public claims can overstate evidence"
+    - "4uentes/SST relationship must stay scoped and non-confidential"
+    - "GitHub enrichment must stay editorial until approved"
+
+execution:
+  requires_human_approval: false
+  allowed_window: "manual"
+  branch_strategy: "control-plane-only"
+  child_repo_mutation_allowed: false
+
+validation:
+  required_checks:
+    - "4uentes-orchestor: npm.cmd run check"
+  evidence_required:
+    - "positioning_decision"
+    - "changed_files_summary"
+    - "validation_results"
+
+decision:
+  status: "pending"
+  approver: "TODO"

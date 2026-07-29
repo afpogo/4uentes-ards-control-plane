@@ -1,0 +1,27 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0082"
+title: "Reconcile sst-chatbot core and orchestrator sync state"
+status: inbox
+created_at: "2026-06-21"
+requester: "4uentes"
+
+summary: >
+  Reconcile the control-plane view of `sst-chatbot` with the child repository
+  after previously observed child changes and the CR-SST-0077 evidence
+  contradiction. The child already carried prior ARDS/SDD sync work before this
+  lifecycle was opened; this request records that ordering deviation and closes
+  the remaining `docs/ai/policy.md` gap.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - "sst-chatbot"
+  include_optional_services: false
+
+notes:
+  - "This request is a reconciliation lifecycle for an already-modified child repo state."
+  - "The remaining required child artifact is `docs/ai/policy.md`."
+  - "The orchestrator must stop reporting `orchestrator_link` as pending for `sst-chatbot` once evidence is current."
+  - "Runtime handoff transport remains open; HTTP, queue, and worker options are not selected here."
+  - "The inbound capability stays `draft` because there is no real runtime transport yet."

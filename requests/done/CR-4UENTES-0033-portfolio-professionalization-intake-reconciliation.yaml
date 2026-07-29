@@ -1,0 +1,76 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-4UENTES-0033"
+title: "Portfolio professionalization intake reconciliation"
+status: "done"
+source_request: "requests/inbox/CR-4UENTES-0033-portfolio-professionalization-intake-reconciliation.yaml"
+planned_request: "requests/planned/CR-4UENTES-0033-portfolio-professionalization-intake-reconciliation.yaml"
+closed_at: "2026-07-07"
+requester: "4uentes-portfolio"
+
+summary: >
+  Reconciled the child-originated portfolio professionalization intake into the
+  4uentes-orchestor lifecycle by creating the local Initiative, state,
+  capability link, Jira Epic, and Jira Task mirror.
+
+initial_scope:
+  solution: "4uentes"
+  services:
+    - "4uentes-portfolio"
+  include_optional_services: false
+
+control_plane_context:
+  initiative_id: "INIT-PORTFOLIO-0003"
+  source_child_capability: "portfolio-professionalization-intake"
+  feature_id: "portfolio-professionalization-intake"
+  child_repo: "4uentes-portfolio"
+  work_origin: "child-repo"
+  correlation_id: "portfolio-professionalization-2026-07-05"
+
+execution:
+  child_repo_mutation_allowed: false
+  owner_documentation_required: false
+  implementation_boundary: >
+    Control-plane reconciliation only. No child repo mutation was performed.
+
+owner_documentation:
+  required: false
+  status: not-applicable
+  owner_repo: "4uentes-portfolio"
+  reason: >
+    The child repository already produced the outbound capability and intake
+    documentation. This CR recorded the control-plane reconciliation only and
+    did not mutate the child repo.
+  child_owner_refs:
+    - repo: "4uentes-portfolio"
+      paths:
+        - "specs/capabilities/outbound/portfolio-professionalization-intake.yaml"
+        - "docs/integration/orchestrator-intake/portfolio-professionalization.md"
+
+jira:
+  role: "mirror"
+  source_of_truth: false
+  project_key: "PORT"
+  epic_key: "PORT-9"
+  issue_key: "PORT-10"
+  issue_type: "Tarea"
+  current_status_observed: "Listo"
+  transition_refs:
+    creation_ref: "evidence/requests/CR-4UENTES-0033/jira-epic-and-task-sync-summary.md"
+    close_transition_ref: "evidence/requests/CR-4UENTES-0033/jira-port-10-close-transition-summary.md"
+
+validation:
+  required_checks:
+    - "4uentes-orchestor: npm.cmd run check"
+  evidence_refs:
+    - "evidence/requests/CR-4UENTES-0033/intake-reconciliation.md"
+    - "evidence/requests/CR-4UENTES-0033/jira-mcp-connection-review.md"
+    - "evidence/requests/CR-4UENTES-0033/jira-epic-and-task-sync-summary.md"
+    - "evidence/requests/CR-4UENTES-0033/jira-port-10-close-transition-summary.md"
+    - "evidence/requests/CR-4UENTES-0033/changed-files-summary.md"
+    - "evidence/requests/CR-4UENTES-0033/validation-results.md"
+
+decision:
+  status: "closed"
+  approver: "4uentes"
+  blocker: "none"

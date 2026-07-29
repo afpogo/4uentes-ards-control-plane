@@ -1,0 +1,26 @@
+schema_version: "1.0"
+kind: "feature_state"
+id: "portfolio-experience-i18n-jira-structure"
+title: "Portfolio Experience I18N And Jira Structure"
+status: "ards-documented"
+updated_at: "2026-07-04"
+solution_id: "4uentes"
+affected_services:
+  - 4uentes-portfolio
+request_ids:
+  - CR-4UENTES-0021
+capability_refs:
+  - "portfolio-experience-i18n-jira-structure"
+spec_refs:
+  - "requests/planned/CR-4UENTES-0021-portfolio-experience-i18n-and-jira-project-structure.yaml"
+  - "initiatives/INIT-FUENTES-0001-portfolio-product-i18n-and-jira-foundation.yaml"
+  - "initiatives/INIT-PORTFOLIO-0001-portfolio-publication-readiness.yaml"
+evidence_refs:
+  - "evidence/requests/CR-4UENTES-0021/experience-i18n-structure.md"
+  - "evidence/requests/CR-4UENTES-0021/jira-project-boundary-analysis.md"
+  - "evidence/requests/CR-4UENTES-0021/changed-files-summary.md"
+  - "evidence/requests/CR-4UENTES-0021/validation-results.md"
+open_gaps:
+  - "Open a follow-up child-repo mutation CR to move experience copy into I18N resources."
+  - "Confirm Jira project key/name for non-SST 4UENTES portfolio work."
+  - "Create or link Jira issue only after cloudId/site URL and project key are confirmed."

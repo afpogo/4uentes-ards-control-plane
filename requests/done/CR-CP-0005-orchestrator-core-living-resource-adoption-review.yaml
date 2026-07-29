@@ -1,0 +1,144 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-CP-0005"
+title: "Review orchestrator adoption of core living resources"
+status: "done"
+source_request: "requests/inbox/CR-CP-0005-orchestrator-core-living-resource-adoption-review.yaml"
+planned_request: "requests/planned/CR-CP-0005-orchestrator-core-living-resource-adoption-review.yaml"
+created_at: "2026-07-07"
+started_at: "2026-07-12"
+closed_at: "2026-07-12"
+requester: "4uentes"
+
+summary: >
+  Reviewed and validated the orchestrator's local adoption of the living
+  resources promoted into 4uentes-ards-core, preserving local identity,
+  aliases, request ownership, and request-driven child rollout boundaries.
+
+control_plane_context:
+  initiative_id: "INIT-CP-0002"
+  jira_epic_key: "ARDS-1"
+  jira_issue_key: "ARDS-6"
+  jira_status_before_closure_sync: "En curso"
+  jira_status_observed: "Listo"
+  jira_resolution_observed: "Listo"
+  jira_assignee_observed: "unassigned"
+  jira_closure_sync_ref: "evidence/requests/CR-CP-0005/jira-ards-6-close-transition-2026-07-12.md"
+  local_closure_ref: "evidence/requests/CR-CP-0005/closure-summary.md"
+
+canon_observed:
+  repository: "4uentes-ards-core"
+  revision: "f07ca6a"
+  canonical_ref: "4uentes-ards-core@f07ca6a"
+  observation_ref: "evidence/requests/CR-CP-0005/core-adoption-review-2026-07-12.md"
+
+local_adoptions:
+  - resource: "common-policies"
+    status: "adopted-by-reference"
+    local_refs:
+      - "specs/integration/policies.yaml"
+      - "state/policy-links.yaml"
+  - resource: "feature-bugfix-state-model"
+    status: "adopted"
+    local_refs:
+      - "specs/states/feature-bugfix-state-model.yaml"
+      - "specs/states/state-read-model-adoption.yaml"
+  - resource: "initiative-model"
+    status: "active-core-adopted"
+    local_refs:
+      - "specs/initiatives/initiative-model.yaml"
+      - "specs/initiatives/initiative-adoption.yaml"
+  - resource: "control_plane_link"
+    status: "adopted-with-local-alias"
+    local_alias: "orchestrator_link"
+    local_refs:
+      - "specs/integration/policies.yaml"
+      - "state/policy-links.yaml"
+
+boundaries:
+  core_repo_mutated: false
+  child_repositories_mutated: false
+  child_rollout_status: "request-driven"
+  source_of_truth: "4uentes-orchestor local lifecycle"
+  jira_source_of_truth: false
+
+agent_execution:
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  task_weight: "complex-high-risk-task"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5"
+  fallback_reasoning_effort: "high"
+  subagent_deployment_plan: "none; Jira closure and evidence verification remain sequential in the primary agent"
+
+validation:
+  command: "npm.cmd run check"
+  result: "passed"
+  exit_code: 0
+  warnings: 0
+  failures: 0
+  outcome: "validated-local"
+  evidence_refs:
+    - "evidence/requests/CR-CP-0005/jira-policy-preflight-2026-07-12.md"
+    - "evidence/requests/CR-CP-0005/jira-ards-6-start-transition-2026-07-12.md"
+    - "evidence/requests/CR-CP-0005/core-adoption-review-2026-07-12.md"
+    - "evidence/requests/CR-CP-0005/validation-results-2026-07-12.md"
+    - "evidence/requests/CR-CP-0005/closure-summary.md"
+    - "evidence/requests/CR-CP-0005/jira-ards-6-close-transition-2026-07-12.md"
+
+jira_closure_batch_authorization:
+  approved_by: "4uentes"
+  approval_ref: "user message 2026-07-12 ordering implementation of the CR-CP-0005 / ARDS-6 closure plan"
+  request_id: "CR-CP-0005"
+  provider: "jira"
+  project: "ARDS"
+  issues:
+    - "ARDS-6"
+  exact_search: 'project = ARDS AND labels = "cr-cp-0005"'
+  allowed_operations:
+    - "run the exact enumerated JQL search and require ARDS-6 as its only result"
+    - "confirm ARDS-6 identity, parent ARDS-1, issue type Task, and current status En curso"
+    - "confirm transition 41 is available and targets Listo"
+    - "transition ARDS-6 directly to Listo using transition 41"
+    - "read ARDS-6 after transition and store sanitized status, resolution, assignee, and labels evidence"
+  forbidden_operations:
+    - "comments"
+    - "edits"
+    - "new issue creation"
+    - "deletion"
+    - "any transition other than 41"
+    - "transition through En revision"
+    - "assignee correction or any workflow-generated field correction"
+  expected_parent: "ARDS-1"
+  expected_issue_type: "Task"
+  expected_status_before: "En curso"
+  expected_status_after: "Listo"
+  allowed_transition_id: "41"
+  required_post_read_fields:
+    - "status"
+    - "resolution"
+    - "assignee"
+    - "labels"
+  execution_window: "this approved closure session"
+  consumption_rule: "Consumed or expired after the enumerated closure sync completes."
+  execution_status: "consumed"
+
+separated_gaps:
+  - "Core registry classification metadata remains owned by a separate core lifecycle."
+  - "Promotion of work-tracker-control-plane-authority-policy to core remains a separate request."
+  - "CR-CP-0006 and any child repository rollout remain request-driven and are not started by this closure."
+
+handoff:
+  target: "future approved core or child adoption lifecycles"
+  status: "pending-separate-request"
+  mutation_in_this_cr: false
+
+decision:
+  status: "closed"
+  approver: "4uentes"
+  closure_reason: >
+    The orchestrator adoption review is complete and validated locally without
+    core or child repository mutation, and the enumerated ARDS-6 mirror was
+    synchronized directly to Listo with terminal resolution.

@@ -1,0 +1,22 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0098"
+title: "Fix sst-extension session tab-by-tab visual PDF capture"
+status: inbox
+created_at: "2026-07-02"
+requester: "4uentes"
+
+business_context: >
+  Session capture is the first reliability blocker for SST Extension
+  Construction. Private authenticated pages must be captured tab by tab with a
+  trustworthy visual PDF flow before higher-level CredentialedWebSource or
+  LearningWorkspace integration is built.
+
+requested_change: >
+  Fix sst-extension session visual PDF capture so each tab is foregrounded,
+  settled, captured, and the original active tab is restored. Include owner
+  documentation updates in sst-extension.
+
+expected_outcome: >
+  The extension can produce dependable session PDF artifacts per tab and records
+  evidence without private page content.

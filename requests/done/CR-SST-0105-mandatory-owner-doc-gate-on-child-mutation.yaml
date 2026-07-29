@@ -1,0 +1,70 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0105"
+title: "Make owner documentation gate mandatory for child repo mutation workflows"
+status: done
+source_request: "requests/inbox/CR-SST-0105-mandatory-owner-doc-gate-on-child-mutation.yaml"
+planned_request: "requests/planned/CR-SST-0105-mandatory-owner-doc-gate-on-child-mutation.yaml"
+completed_at: "2026-07-02"
+requester: "4uentes"
+
+summary: >
+  Hardened the owner documentation gate so child repository mutation workflows
+  cannot treat it as optional. The control-plane policy now requires full
+  `npm.cmd run check` before local closure when a CR allows or performs child
+  repo mutation, and the validator checks its own package wiring plus required
+  control-plane checks in child mutation requests.
+
+scope:
+  solution: "control-plane"
+  services_modified:
+    - "4uentes-orchestor"
+  functional_repositories_modified: false
+  runtime_code_modified: false
+
+implementation:
+  validator: "scripts/verify-owner-documentation.js"
+  policy_docs:
+    - "docs/policies/owner-documentation-authority-policy.md"
+    - "docs/policies/README.md"
+    - "AGENTS.md"
+  registry: "specs/integration/policies.yaml"
+  enforced_rules:
+    - "package.json scripts.check must include `node scripts/verify-owner-documentation.js`."
+    - "package.json scripts.check:owner-docs must run `node scripts/verify-owner-documentation.js`."
+    - "Requests with `child_repo_mutation_allowed: true` must require control-plane `npm run check` or `check:owner-docs`."
+    - "Policy states that child-repo-only checks cannot replace the control-plane gate."
+
+jira_mirror:
+  epic_key: "SST-36"
+  issue_key: "SST-38"
+  sync_ref: "evidence/initiatives/INIT-CP-0001/jira-mirror-sync-2026-07-03.md"
+  close_ref: "evidence/requests/CR-SST-0105/jira-sst-38-close-transition-summary.md"
+  status_observed: "Finalizada"
+  resolution_observed: "Listo"
+  source_of_truth: false
+
+validation:
+  status: "validated-local"
+  passed:
+    - "node --check scripts\\verify-owner-documentation.js"
+    - "npm.cmd run check:owner-docs"
+    - "npm.cmd run check:initiatives"
+    - "npm.cmd run check"
+  accepted_warnings:
+    - "Local bindings remote observation warnings are preexisting."
+    - "Two historical bugfix state files still lack request/evidence refs."
+
+evidence_refs:
+  - "evidence/requests/CR-SST-0105/implementation-summary.md"
+  - "evidence/requests/CR-SST-0105/changed-files-summary.md"
+  - "evidence/requests/CR-SST-0105/validation-results.md"
+  - "evidence/requests/CR-SST-0105/jira-sst-38-close-transition-summary.md"
+
+decision:
+  status: "closed-local"
+  approver: "4uentes"
+  note: >
+    CR-SST-0105 closes locally as validated-local. Jira mirror SST-38 was
+    later closed as Finalizada/Listo on 2026-07-03 after mandatory gate policy
+    review and enforcement validation.

@@ -1,0 +1,59 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0121"
+title: "Harden sst-extension session capture reliability, privacy, and limits"
+status: inbox
+created_at: "2026-07-05"
+requester: "4uentes"
+
+summary: >
+  Harden sst-extension session capture after SST-49 by addressing Manifest V3
+  long-running capture reliability, local artifact retention, storage/payload
+  limits, partial-tab failure behavior, and textual PDF robustness.
+
+source_context:
+  initiative_id: "INIT-SST-0003"
+  parent_epic_key: "SST-29"
+  discovered_from: "CR-SST-0119 code review risk assessment"
+  source_issue_key: "SST-49"
+
+initial_scope:
+  solution: "sst"
+  services:
+    - "sst-extension"
+    - "4uentes-orchestor"
+  include_optional_services: false
+
+problem_statement: >
+  SST-49 delivered the configurable capture mode selector, but code review
+  identified production hardening risks that should not be silently folded into
+  SST-49: service worker lifecycle during long captures, local retention of
+  private PDF snapshots, storage/request size limits, partial failure handling,
+  and long-token textual PDF layout.
+
+candidate_options:
+  - id: "mv3-keepalive-or-durable-job"
+    description: "Keep long-running capture alive or move it to a durable/offscreen mechanism with persisted progress."
+  - id: "artifact-retention-policy"
+    description: "Purge or minimize synced session artifacts while preserving explicitly required restore metadata."
+  - id: "storage-and-payload-limits"
+    description: "Add explicit per-tab/per-session limits and typed oversize reasons."
+  - id: "partial-tab-failure"
+    description: "Persist successful tabs or record per-tab failures instead of aborting the whole session."
+  - id: "textual-pdf-layout-hardening"
+    description: "Split long tokens and validate PDF layout for URLs/querystrings/private long text."
+
+owner_documentation:
+  required: true
+  status: planned
+  owner_repo: "sst-extension"
+  planned_owner_docs:
+    - "specs/features/sessions.yaml"
+    - "docs/00-overview.md"
+    - "docs/qa/session-capture-validation.md"
+
+guardrails:
+  - "Do not store private page content, raw PDFs, cookies, JWTs, screenshots, or secrets in Jira/evidence."
+  - "Do not change BFF payload contracts unless a separate owner contract is approved."
+  - "Keep CR-SST-0120 / SST-50 focused on preview image behavior, not capture reliability hardening."
+

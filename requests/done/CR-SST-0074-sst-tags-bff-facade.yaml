@@ -1,0 +1,83 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-SST-0074"
+title: "SST Tags - BFF governance facade"
+status: "done"
+source_request: "requests/inbox/CR-SST-0074-sst-tags-bff-facade.yaml"
+planned_request: "requests/planned/CR-SST-0074-sst-tags-bff-facade.yaml"
+created_at: "2026-06-13"
+completed_at: "2026-06-21"
+requester: "4uentes"
+
+summary: >
+  Implemented the authenticated BFF facade for SST governed tags in
+  `4uentes-auth`, preserving upstream contract shape and status codes for
+  definitions, values create/search, and resource binding endpoints.
+
+scope:
+  solution: "sst"
+  repository: "4uentes-orchestor"
+  functional_repositories_modified: true
+  modified_repositories:
+    - "4uentes-auth"
+  jira_read_executed: true
+  jira_write_executed: true
+  local_state_transitions_executed: false
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "shared auth provider boundary"
+    - "proxy contract preservation"
+    - "authenticated account-scope semantics"
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The work changed a shared auth-provider boundary and required preserving downstream SST governance semantics."
+
+subagent_deployment_plan:
+  required: true
+  roles:
+    - "security-contract-reviewer"
+    - "backend-contract-reviewer"
+    - "validation-reviewer"
+  fallback: "The local runtime did not expose subagent deployment, so implementation and review were executed sequentially in the main agent."
+  evidence_ref: "evidence/requests/CR-SST-0074/execution-start-notes.md"
+
+results:
+  runtime_outputs:
+    - "Added authenticated BFF routes for `GET /api/tags/definitions`."
+    - "Added authenticated BFF routes for `GET /api/tags/values`."
+    - "Added authenticated BFF route for `POST /api/tags/values`."
+    - "Added authenticated BFF route for `PUT /api/tags/resources/:resourceType/:resourceId`."
+  compatibility:
+    - "The BFF preserved upstream SST response shapes instead of reinterpreting governed tags payloads."
+    - "The auth boundary kept `401` handling in `4uentes-auth` when the bearer token is missing or invalid."
+    - "Account-scope authorization errors continued to surface as upstream `403` responses."
+  qa_outputs:
+    - "The facade was validated with a real `node-auth` JWT and active SST account context."
+    - "The remaining negative smoke validated `403` preservation with owner JWT plus mismatched `x-active-account-id`."
+
+evidence:
+  required:
+    - "evidence/requests/CR-SST-0074/execution-start-notes.md"
+    - "evidence/requests/CR-SST-0074/validation-results.md"
+    - "evidence/requests/CR-SST-0074/jira-sst-22-start-transition-summary.md"
+    - "evidence/requests/CR-SST-0074/jira-sst-22-transition-summary.md"
+
+validation:
+  required_checks:
+    - "4uentes-auth: npm run check"
+    - "4uentes-orchestor: npm run check"
+  status: "pass"
+  notes:
+    - "The closing smoke used a real login JWT from `node-auth` and preserved `200`, `201`, `204`, `401`, `403` and `409` semantics through the BFF facade."
+    - "Jira subtask `SST-22` was transitioned to `Finalizada` and the result was recorded in local evidence."
+
+decision:
+  status: "approved-done"
+  approver: "4uentes"
+  note: "CR-SST-0074 closes the auth/BFF slice for governed tags. Frontend and dictionary adoption remain open in CR-SST-0075 and CR-SST-0076."

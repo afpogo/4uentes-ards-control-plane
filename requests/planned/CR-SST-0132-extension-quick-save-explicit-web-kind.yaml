@@ -1,0 +1,41 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0132"
+title: "Persist explicit web kind for extension quick save"
+status: done
+source_request: "requests/inbox/CR-SST-0132-extension-quick-save-explicit-web-kind.yaml"
+created_at: "2026-07-11"
+requester: "4uentes"
+summary: "Make extension quick-save an explicit Web article writer."
+control_plane_context: {initiative_id: "INIT-SST-0005", parent_request_id: "CR-SST-0128", predecessor_requests: ["CR-SST-0129"], related_requests: ["CR-SST-0131"], jira_epic_key: "SST-57", jira_parent_issue_key: "SST-58", jira_role: "mirror", jira_source_of_truth: false}
+impact_analysis:
+  required: true
+  affected_services:
+    - {service_id: "sst-extension", via: "quick-save producer", service_kind: "browser-extension", ards_kind: "frontend-extension", status: "optional-active"}
+    - {service_id: "node-auth", via: "quick-save BFF adapter", service_kind: "backend-bff", ards_kind: "backend-bff", status: "active"}
+    - {service_id: "sst-bend", via: "article payload persistence", service_kind: "backend-api", ards_kind: "backend-api", status: "active"}
+    - {service_id: "4uentes-orchestor", via: "lifecycle and evidence", service_kind: "control-plane", ards_kind: "control-plane", status: "active"}
+  affected_ards: ["browser-extension-article-ingestion", "article-semantic-kind"]
+  risks: [{id: "METADATA_ONLY_ARTICLE_AMBIGUITY", severity: high}]
+execution:
+  requires_human_approval: false
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets: ["sst-extension", "node-auth", "sst-bend"]
+  implementation_boundary: "Quick-save writer, adapters, tests and owner docs only."
+owner_documentation:
+  required: true
+  status: satisfied
+  owner_repos: ["sst-extension", "node-auth", "sst-bend"]
+  planned_owner_docs:
+    - "specs/features/quick-save.yaml"
+    - "specs/integration/quick-save-bff-save.yaml"
+    - "specs/capabilities/outbound/browser-extension-article-ingestion.yaml"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0132/owner-documentation-summary.md"
+required_checks:
+  - {service_id: "sst-extension", command: "pnpm check"}
+  - {service_id: "node-auth", command: "npm.cmd run check"}
+  - {service_id: "sst-bend", command: "npm.cmd run check"}
+  - {service_id: "4uentes-orchestor", command: "npm.cmd run check"}
+decision: {status: closed-local, approver: "4uentes", decided_at: "2026-07-12", note: "All owner gates and restored BFF HTTP passed."}
+jira_sync: {status: synchronized, desired_issue_type: "Subtask", parent_issue_key: "SST-58", issue_key: "SST-62", status_observed: "Listo"}

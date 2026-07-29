@@ -1,0 +1,73 @@
+{
+  "issueKey": "ARDS-5",
+  "before": {
+    "summary": "[CP][CR-CP-0004] Promote Initiative model to core",
+    "status": "En curso",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-07-10T18:42:20.165-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-cp-0004",
+      "init-cp-0002"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10113\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10113\",\"key\":\"ARDS-5\",\"fields\":{\"summary\":\"[CP][CR-CP-0004] Promote Initiative model to core\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-07-10T18:42:20.165-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10043\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En curso\",\"id\":\"10043\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-cp-0004\",\"init-cp-0002\"]}}"
+  },
+  "after": {
+    "summary": "[CP][CR-CP-0004] Promote Initiative model to core",
+    "status": "En curso",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-07-10T19:25:10.647-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-cp-0004",
+      "init-cp-0002"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10113\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10113\",\"key\":\"ARDS-5\",\"fields\":{\"summary\":\"[CP][CR-CP-0004] Promote Initiative model to core\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-07-10T19:25:10.647-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10043\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En curso\",\"id\":\"10043\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-cp-0004\",\"init-cp-0002\"]}}"
+  },
+  "commentResult": {
+    "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10113/comment/10165",
+    "id": "10165",
+    "author": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/48",
+        "24x24": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/24",
+        "16x16": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/16",
+        "32x32": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/32"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "body": "# ARDS-5 / CR-CP-0004 - Avance\n\nAvance local del control-plane:\n\n* Se genero el mapping `initiative-model -> core-profile-scoped-living-resource`.\n* Se dejo handoff para ejecutar la promocion canonica en `4uentes-ards-core`.\n* Se actualizo `specs/initiatives/initiative-model.yaml` con `core_promotion_request: CR-CP-0004`.\n* Se mantuvo Jira como mirror operativo, con `source_of_truth: false`.\n* No se mutaron repos hijos.\n\nValidacion local:\n\n* `npm.cmd run check:initiatives`: 13 OK, 0 WARN, 0 FAIL.\n* `npm.cmd run check`: 0 WARN, 0 FAIL en todos los bloques.\n\nBoundary:\n\nLa escritura canonica del core queda pendiente para ejecutarse desde el workspace  \nde `4uentes-ards-core`, usando el handoff de este CR como entrada.",
+    "updateAuthor": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/48",
+        "24x24": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/24",
+        "16x16": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/16",
+        "32x32": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/32"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "created": "2026-07-10T19:25:10.647-0300",
+    "updated": "2026-07-10T19:25:10.647-0300",
+    "jsdPublic": true
+  },
+  "commentBody": "# ARDS-5 / CR-CP-0004 - Avance\n\nAvance local del control-plane:\n\n- Se genero el mapping `initiative-model -> core-profile-scoped-living-resource`.\n- Se dejo handoff para ejecutar la promocion canonica en `4uentes-ards-core`.\n- Se actualizo `specs/initiatives/initiative-model.yaml` con `core_promotion_request: CR-CP-0004`.\n- Se mantuvo Jira como mirror operativo, con `source_of_truth: false`.\n- No se mutaron repos hijos.\n\nValidacion local:\n\n- `npm.cmd run check:initiatives`: 13 OK, 0 WARN, 0 FAIL.\n- `npm.cmd run check`: 0 WARN, 0 FAIL en todos los bloques.\n\nBoundary:\n\nLa escritura canonica del core queda pendiente para ejecutarse desde el workspace\nde `4uentes-ards-core`, usando el handoff de este CR como entrada.\n",
+  "externalWrite": true
+}

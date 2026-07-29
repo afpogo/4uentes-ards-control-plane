@@ -1,0 +1,52 @@
+service_id: finanzas-personales-backend
+canonical_identity: finanzas-personales-backend
+kind: api
+status: draft
+shared: false
+solution_ids:
+  - finanzas-personales
+repo:
+  canonical_repo: finanzas-personales
+  repo_subpath: backend
+  remote: git@github.com:mena28/finanzas-personales.git
+  branch_observed: main
+  upstream_observed: origin/main
+  head_observed: edf4c9c
+  working_tree_observed: clean
+  observed_at: 2026-07-12
+local_binding_evidence:
+  - id: local-finanzas-personales
+    role: monorepo-working-copy
+    observed_at: 2026-07-12
+    path_record: inventory/evidence/git/finanzas-personales.md
+package:
+  name: TODO
+  runtime: planned-node-api
+  stack:
+    - Node.js TODO
+    - TypeScript TODO
+    - Python internal services TODO
+ards:
+  kind: backend-api
+  status: product-draft
+  agents_md: true
+  specs_index: true
+  docs_overview: true
+  docs_ai_policy: true
+validation:
+  check_command: TODO
+orchestrator_link_contract:
+  required: true
+  status: pending-child-adoption
+  rule_ref: "docs/cross-repo/child-repo-orchestrator-link-rule.md"
+  template_ref: "templates/child-orchestrator-link-rule.md"
+  metadata_key: "orchestrator_link"
+  capability_state_map: "state/capability-links.yaml"
+integrations:
+  produces:
+    - finanzas-personales-backend-api
+notes:
+  - Backend ARDS/SDD service root inside the finanzas-personales monorepo.
+  - Python, OCR and AI components remain internal draft boundaries until independent runtime evidence exists.
+  - HTTP QA harness adoption and an executable validation route are pending CR-HPT-0002.
+

@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { execSync } = require('child_process');
+const { execFileSync } = require('child_process');
 
 const ROOT = process.cwd();
 const bindingsPath = path.join(ROOT, 'environments', 'local', 'bindings.local.yaml');
@@ -44,10 +44,12 @@ for (const binding of bindings) {
     continue;
   }
 
+  const resolvedLocalPath = fs.realpathSync(localPath);
+
   report('OK', `${binding.id} path exists`);
 
   for (const artifact of binding.requiredArtifacts) {
-    const artifactPath = path.join(localPath, artifact);
+    const artifactPath = path.join(resolvedLocalPath, artifact);
     if (fs.existsSync(artifactPath)) report('OK', `${binding.id} has ${artifact}`);
     else report('FAIL', `${binding.id} missing ${artifact}`);
   }
@@ -55,8 +57,9 @@ for (const binding of bindings) {
   const expectedRemote = catalog.get(binding.id);
   if (expectedRemote) {
     try {
-      const observedRemote = execSync('git remote get-url origin', {
-        cwd: localPath,
+      const safeDirectory = resolvedLocalPath.replace(/\\/g, '/');
+      const observedRemote = execFileSync('git', ['-c', `safe.directory=${safeDirectory}`, 'remote', 'get-url', 'origin'], {
+        cwd: resolvedLocalPath,
         encoding: 'utf8',
         stdio: ['ignore', 'pipe', 'ignore'],
       }).trim();

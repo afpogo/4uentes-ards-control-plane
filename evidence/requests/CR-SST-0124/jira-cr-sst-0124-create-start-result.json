@@ -1,0 +1,87 @@
+{
+  "requestId": "CR-SST-0124",
+  "initiativeId": "INIT-SST-0001",
+  "parentIssueKey": "SST-6",
+  "relatedIssueKey": "SST-52",
+  "issue": {
+    "key": "SST-53",
+    "summary": "[SST][CR-SST-0124] Native SST article runtime URL",
+    "parentKey": "SST-6",
+    "issueTypeName": "Subtask",
+    "source": "created",
+    "raw": "{\"id\":\"10101\",\"key\":\"SST-53\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10101\"}"
+  },
+  "existing": false,
+  "selectedTransition": {
+    "id": "21",
+    "name": "En curso",
+    "toStatus": "En curso"
+  },
+  "transitions": [
+    {
+      "id": "11",
+      "name": "Por hacer",
+      "toStatus": "Tareas por hacer"
+    },
+    {
+      "id": "21",
+      "name": "En curso",
+      "toStatus": "En curso"
+    },
+    {
+      "id": "31",
+      "name": "In Review",
+      "toStatus": "En revisión"
+    },
+    {
+      "id": "41",
+      "name": "Listo",
+      "toStatus": "Finalizada"
+    }
+  ],
+  "linkResult": {
+    "message": "Issue link created"
+  },
+  "transitionResult": {
+    "success": true
+  },
+  "commentResult": {
+    "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10101/comment/10111",
+    "id": "10111",
+    "author": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "body": "Starting CR-SST-0124 under INIT-SST-0001.\n\nParent: SST-6  \nRelated: SST-52  \nTransition requested: En curso (21)\n\nScope:\n\n* MVP runtime/app URL for SST-native text articles.\n* Keep source URL and runtime URL separate.\n* Start in sst-fend; node-auth/sst-bend remain verify-only unless analysis proves contract changes are required.\n\n",
+    "updateAuthor": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "created": "2026-07-07T14:08:45.436-0300",
+    "updated": "2026-07-07T14:08:45.436-0300",
+    "jsdPublic": true
+  },
+  "externalWrite": true
+}

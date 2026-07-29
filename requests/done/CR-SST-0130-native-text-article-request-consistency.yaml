@@ -1,0 +1,45 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0130"
+title: "Align native text article request builders"
+status: done
+source_request: "requests/inbox/CR-SST-0130-native-text-article-request-consistency.yaml"
+planned_request: "requests/planned/CR-SST-0130-native-text-article-request-consistency.yaml"
+completed_at: "2026-07-12"
+requester: "4uentes"
+summary: >
+  Native Text creation now sends and preserves explicit semantic payload data
+  while omitting empty URL fields.
+scope:
+  solution: "sst"
+  services_modified: ["sst-fend", "node-auth", "4uentes-orchestor"]
+  functional_repositories_modified: true
+  runtime_code_modified: true
+implementation:
+  initiative_id: "INIT-SST-0005"
+  jira_epic_key: "SST-57"
+  jira_parent_issue_key: "SST-58"
+  jira_issue_key: "SST-60"
+  jira_status_observed: "Listo"
+  jira_source_of_truth: false
+  completed_slice: "Text builders and adapter preserve payload.kind=text and omit empty URL/sourceUrl fields."
+owner_documentation:
+  status: "satisfied"
+  owner_repos: ["sst-fend", "node-auth"]
+  evidence_refs:
+    - "evidence/requests/CR-SST-0130/owner-documentation-summary.md"
+validation:
+  status: "validated-local"
+  passed:
+    - "node-auth npm.cmd run check"
+    - "sst-fend npm.cmd run check: 29 suites and 180 tests"
+    - "Restored sst-fend IPv4 HTTP 200 and node-auth JWKS HTTP 200"
+evidence_refs:
+  - "evidence/requests/CR-SST-0130/implementation.md"
+  - "evidence/requests/CR-SST-0130/node-auth-validation.md"
+  - "evidence/requests/CR-SST-0130/sst-fend-validation.md"
+  - "evidence/requests/CR-SST-0130/owner-documentation-summary.md"
+decision:
+  status: "closed-local"
+  approver: "4uentes"
+  note: "Validated locally; no release or publication is implied."

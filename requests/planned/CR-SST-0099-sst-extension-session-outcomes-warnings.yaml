@@ -1,0 +1,116 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0099"
+title: "Add session snapshot outcomes and warnings"
+status: closed-local
+source_request: "requests/inbox/CR-SST-0099-sst-extension-session-outcomes-warnings.yaml"
+created_at: "2026-07-02"
+requester: "4uentes"
+
+summary: >
+  Add explicit session snapshot outcome and warning taxonomy in sst-extension,
+  preserving compatibility with existing local queue data and node-auth payloads.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - "sst-extension"
+    - "4uentes-orchestor"
+  include_optional_services: false
+
+control_plane_context:
+  initiative_id: "INIT-SST-0003"
+  jira_epic_key: "SST-29"
+  jira_issue_key: "SST-31"
+  policy_ref: "docs/policies/owner-documentation-authority-policy.md"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "sst-extension"
+      via: "shared session types, storage normalization, API payload, specs/docs/tests"
+      service_kind: "browser-extension"
+      ards_kind: "frontend-extension"
+      status: "optional-active"
+    - service_id: "4uentes-orchestor"
+      via: "request lifecycle and evidence"
+      service_kind: "control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+  affected_ards:
+    - frontend-extension
+    - browser-extension-session-capture
+    - child-repo-owner-documentation
+  capabilities:
+    - "browser-extension-session-capture"
+  risks:
+    - id: DOWNSTREAM_PAYLOAD_COMPATIBILITY
+      severity: high
+    - id: OWNER_DOCS_STALE
+      severity: high
+
+required_checks:
+  - service_id: "sst-extension"
+    command: "pnpm test"
+  - service_id: "sst-extension"
+    command: "pnpm build"
+  - service_id: "sst-extension"
+    command: "pnpm check"
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check"
+
+execution:
+  child_repo_mutation_allowed: true
+  child_repo_mutation_target:
+    service_id: "sst-extension"
+  owner_documentation_required: true
+  jira_write_executed: true
+  jira_write_ref: "evidence/initiatives/INIT-SST-0003/jira-extension-backlog-sync-summary.md"
+  jira_start_executed: true
+  jira_start_ref: "evidence/requests/CR-SST-0099/jira-sst-31-start-transition-summary.md"
+  jira_start_result_ref: "evidence/requests/CR-SST-0099/jira-sst-31-start-transition-result.json"
+  preliminary_analysis_ref: "evidence/requests/CR-SST-0099/preliminary-analysis.md"
+  subagent_plan_ref: "evidence/requests/CR-SST-0099/subagent-atomized-plan.md"
+  implementation_summary_ref: "evidence/requests/CR-SST-0099/implementation-summary.md"
+  validation_results_ref: "evidence/requests/CR-SST-0099/validation-results.md"
+  owner_documentation_enforcement_ref: "evidence/requests/CR-SST-0099/owner-documentation-enforcement.md"
+  jira_implementation_comment_executed: true
+  jira_implementation_comment_ref: "evidence/requests/CR-SST-0099/jira-sst-31-implementation-sync-summary.md"
+  jira_implementation_comment_result_ref: "evidence/requests/CR-SST-0099/jira-sst-31-implementation-sync-result.json"
+  jira_connection_policy_review_ref: "evidence/requests/CR-SST-0099/jira-connection-policy-review.md"
+  jira_close_executed: true
+  jira_close_ref: "evidence/requests/CR-SST-0099/jira-sst-31-close-transition-summary.md"
+  jira_close_observation_ref: "evidence/requests/CR-SST-0099/jira-issue-SST-31-observation.md"
+
+owner_documentation:
+  required: true
+  status: satisfied
+  owner_repo: "sst-extension"
+  planned_owner_docs:
+    - "specs/features/sessions.yaml"
+    - "specs/integration/node-auth-extension-session-ingestion.yaml"
+    - "docs/integration/node-auth-extension-session-ingestion.md"
+  updated_owner_docs:
+    - "specs/features/sessions.yaml"
+    - "docs/integration/node-auth-extension-session-ingestion.md"
+  owner_refs:
+    - repo: "sst-extension"
+      paths:
+        - "specs/features/sessions.yaml"
+        - "docs/integration/node-auth-extension-session-ingestion.md"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0099/implementation-summary.md"
+    - "evidence/requests/CR-SST-0099/validation-results.md"
+    - "evidence/requests/CR-SST-0099/owner-documentation-enforcement.md"
+
+validation:
+  required_checks:
+    - "Visual PDF and textual fallback are distinguishable."
+    - "Warnings are per-tab and sanitized."
+    - "Existing queue items normalize compatibly."
+    - "Owner docs/specs are updated or exception is recorded."
+
+decision:
+  status: closed-local
+  approver: "4uentes"
+  note: "Implemented local sst-extension outcomes/warnings taxonomy with node-auth payload compatibility preserved. Jira SST-31 observed in Listo; local ARDS/SDD closure complete."

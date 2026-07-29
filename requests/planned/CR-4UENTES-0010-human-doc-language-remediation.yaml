@@ -1,0 +1,56 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-4UENTES-0010"
+title: "Human documentation language remediation"
+status: "planned"
+source_request: "requests/inbox/CR-4UENTES-0010-human-doc-language-remediation.yaml"
+created_at: "2026-07-04"
+requester: "4uentes"
+
+summary: >
+  Translate recent human-facing Markdown from the portfolio publication-readiness
+  track into Spanish and expose the active language policy in project views.
+
+initial_scope:
+  solution: "4uentes"
+  services:
+    - "4uentes-portfolio"
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "4uentes-orchestor"
+      via: "human-facing Markdown remediation and project documentation indexes"
+      service_kind: "control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+  affected_ards:
+    - "human-documentation-language"
+    - "project-doc-views"
+    - "portfolio-publication-readiness"
+  capabilities:
+    - "human-doc-language-remediation"
+
+execution:
+  requires_human_approval: false
+  allowed_window: "manual"
+  branch_strategy: "control-plane-only"
+  child_repo_mutation_allowed: false
+  implementation_boundary: >
+    Translate prose in human-facing Markdown only. Do not translate YAML keys,
+    stable identifiers, commands, filenames, paths, request IDs, service IDs, or
+    lifecycle statuses.
+
+validation:
+  required_checks:
+    - "4uentes-orchestor: npm.cmd run check"
+  evidence_required:
+    - "language_remediation"
+    - "changed_files_summary"
+    - "validation_results"
+
+decision:
+  status: "approved-for-local-execution"
+  approver: "4uentes"
+  blocker: "none"

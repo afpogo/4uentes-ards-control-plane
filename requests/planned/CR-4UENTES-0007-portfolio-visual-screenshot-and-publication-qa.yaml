@@ -1,0 +1,104 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-4UENTES-0007"
+title: "Portfolio visual screenshot and publication QA"
+status: "planned"
+source_request: "requests/inbox/CR-4UENTES-0007-portfolio-visual-screenshot-and-publication-qa.yaml"
+created_at: "2026-07-04"
+requester: "4uentes"
+
+summary: >
+  Use Chrome DevTools MCP to perform manual local preview QA for
+  4uentes-portfolio and fix local preview blockers that prevent visual route
+  inspection.
+
+initial_scope:
+  solution: "4uentes"
+  services:
+    - "4uentes-portfolio"
+  include_optional_services: false
+
+control_plane_context:
+  initiative_id: "INIT-PORTFOLIO-0001"
+  parent_request_id: "CR-4UENTES-0006"
+  feature_id: "portfolio-visual-screenshot-publication-qa"
+  child_repo: "4uentes-portfolio"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "4uentes-portfolio"
+      via: "local dev preview, SPA fallback behavior, and QA evidence"
+      service_kind: "frontend-spa"
+      ards_kind: "frontend-web"
+      status: "active"
+  affected_ards:
+    - "local-preview"
+    - "spa-fallback"
+    - "manual-qa"
+    - "owner-documentation"
+  capabilities:
+    - "portfolio-visual-screenshot-publication-qa"
+
+required_context:
+  - "4uentes-portfolio: vite.config.mts"
+  - "4uentes-portfolio: docs/qa/visual-checklist.md"
+  - "4uentes-portfolio: specs/features/00-index.yaml"
+
+risk:
+  level: "medium"
+  score: 4
+  drivers:
+    - "manual QA is blocked when dev server fallback serves HTML for module imports"
+    - "SPA fallback changes can affect direct-route preview behavior"
+    - "publication QA requires accurate console and network signals"
+
+execution:
+  requires_human_approval: false
+  allowed_window: "manual"
+  branch_strategy: "child-repo-manual-qa-cut"
+  child_repo_mutation_allowed: true
+  child_repo_mutation_target:
+    service_id: "4uentes-portfolio"
+  owner_documentation_required: true
+  implementation_boundary: >
+    Limit changes to local preview fallback behavior and owner QA docs needed to
+    continue Chrome DevTools manual QA. Do not change content positioning,
+    contact policy, CV publication state, deployment, or runtime services.
+
+owner_documentation:
+  required: true
+  status: satisfied
+  owner_repo: "4uentes-portfolio"
+  planned_owner_docs:
+    - "docs/qa/visual-checklist.md"
+    - "docs/qa/stabilization-checklist.md"
+    - "specs/features/00-index.yaml"
+  updated_owner_docs:
+    - "docs/qa/visual-checklist.md"
+    - "docs/qa/stabilization-checklist.md"
+    - "specs/features/00-index.yaml"
+  owner_refs:
+    - repo: "4uentes-portfolio"
+      paths:
+        - "docs/qa/visual-checklist.md"
+        - "docs/qa/stabilization-checklist.md"
+        - "specs/features/00-index.yaml"
+  evidence_refs:
+    - "evidence/requests/CR-4UENTES-0007/manual-qa-results.md"
+    - "evidence/requests/CR-4UENTES-0007/changed-files-summary.md"
+    - "evidence/requests/CR-4UENTES-0007/validation-results.md"
+
+validation:
+  required_checks:
+    - "4uentes-portfolio: npm.cmd run check"
+    - "4uentes-orchestor: npm.cmd run check"
+  evidence_required:
+    - "manual_qa_results"
+    - "changed_files_summary"
+    - "validation_results"
+
+decision:
+  status: "approved-for-local-execution"
+  approver: "4uentes"
+  blocker: "none"

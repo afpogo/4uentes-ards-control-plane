@@ -1,0 +1,19 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-CP-0004"
+title: "Promote Initiative model to core"
+status: "inbox"
+created_at: "2026-07-07"
+requester: "4uentes"
+
+business_context: >
+  Initiatives are now used to group broad outcomes, CRs, evidence, and Jira
+  Epic mirrors in the control-plane.
+
+requested_change: >
+  Promote the Initiative model as a reusable core construct while keeping Jira
+  as an optional mirror.
+
+expected_outcome: >
+  Core defines Initiative shape and templates; local orchestrators keep their
+  concrete INIT records and evidence.

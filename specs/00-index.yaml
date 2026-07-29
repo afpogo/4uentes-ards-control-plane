@@ -19,6 +19,7 @@ scripts:
   verify_catalog: "scripts/verify-catalog.js"
   verify_local_bindings: "scripts/verify-local-bindings.js"
   verify_state_model: "scripts/verify-state-model.js"
+  verify_initiatives: "scripts/verify-initiatives.js"
   plan_change: "scripts/plan-change.js"
 docs:
   overview: "docs/00-overview.md"
@@ -37,8 +38,15 @@ requests:
   running: "requests/running/"
   done: "requests/done/"
   rejected: "requests/rejected/"
+initiatives:
+  status: "active-core-adopted"
+  model: "specs/initiatives/initiative-model.yaml"
+  index: "initiatives/00-index.yaml"
 templates:
   change_request: "templates/change-request.template.yaml"
+  human_doc_language_policy: "templates/human-doc-language-policy.template.md"
+  policy_adoption_manifest: "templates/policy-adoption-manifest.template.yaml"
+  policy_exception_manifest: "templates/policy-exception-manifest.template.yaml"
 inventory:
   phase_0: "inventory/phase-0.md"
   gate_0_decision: "inventory/phase-0-decision.md"
@@ -59,4 +67,5 @@ capabilities:
 validation:
   check_command: "npm run check"
   check_state_command: "npm run check:state"
+  check_initiatives_command: "npm run check:initiatives"
   plan_change_command: "npm run plan:change -- requests/inbox/TODO.yaml"

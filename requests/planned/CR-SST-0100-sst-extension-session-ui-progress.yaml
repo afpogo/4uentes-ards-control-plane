@@ -1,0 +1,131 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0100"
+title: "Show session capture progress and per-tab degradations"
+status: closed-local
+source_request: "requests/inbox/CR-SST-0100-sst-extension-session-ui-progress.yaml"
+created_at: "2026-07-02"
+requester: "4uentes"
+
+summary: >
+  Improve sst-extension session UI so users can see visual/text/failure counts
+  and per-tab warnings after capture.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - "sst-extension"
+    - "4uentes-orchestor"
+  include_optional_services: false
+
+control_plane_context:
+  initiative_id: "INIT-SST-0003"
+  jira_epic_key: "SST-29"
+  jira_issue_key: "SST-32"
+  policy_ref: "docs/policies/owner-documentation-authority-policy.md"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "sst-extension"
+      via: "popup/sidepanel UI, presentation helpers, specs/docs/tests"
+      service_kind: "browser-extension"
+      ards_kind: "frontend-extension"
+      status: "optional-active"
+    - service_id: "4uentes-orchestor"
+      via: "request lifecycle and evidence"
+      service_kind: "control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+  affected_ards:
+    - frontend-extension
+    - browser-extension-session-capture
+    - child-repo-owner-documentation
+  risks:
+    - id: PRIVATE_CONTENT_UI_EXPOSURE
+      severity: high
+    - id: UI_LAYOUT_REGRESSION
+      severity: medium
+
+required_checks:
+  - service_id: "sst-extension"
+    command: "pnpm test"
+  - service_id: "sst-extension"
+    command: "pnpm build"
+  - service_id: "sst-extension"
+    command: "pnpm check"
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check"
+
+execution:
+  child_repo_mutation_allowed: true
+  child_repo_mutation_target:
+    service_id: "sst-extension"
+  owner_documentation_required: true
+  jira_write_executed: true
+  jira_write_ref: "evidence/initiatives/INIT-SST-0003/jira-extension-backlog-sync-summary.md"
+  jira_start_executed: true
+  jira_start_ref: "evidence/requests/CR-SST-0100/jira-sst-32-start-summary.md"
+  jira_start_result_ref: "evidence/requests/CR-SST-0100/jira-sst-32-start-result.json"
+  jira_start_description_ref: "evidence/requests/CR-SST-0100/jira-sst-32-start-description.md"
+  jira_start_comment_ref: "evidence/requests/CR-SST-0100/jira-sst-32-start-comment.md"
+  jira_observation_ref: "evidence/requests/CR-SST-0100/jira-issue-SST-32-observation.md"
+  jira_connection_policy_review_ref: "evidence/requests/CR-SST-0100/jira-connection-policy-review.md"
+  preliminary_analysis_ref: "evidence/requests/CR-SST-0100/preliminary-analysis.md"
+  implementation_summary_ref: "evidence/requests/CR-SST-0100/implementation-summary.md"
+  validation_results_ref: "evidence/requests/CR-SST-0100/validation-results.md"
+  owner_documentation_enforcement_ref: "evidence/requests/CR-SST-0100/owner-documentation-enforcement.md"
+  manual_qa_gap_analysis_ref: "evidence/requests/CR-SST-0100/manual-qa-gap-analysis.md"
+  closure_readiness_ref: "evidence/requests/CR-SST-0100/closure-readiness.md"
+  followup_configurable_capture_mode_request: "requests/planned/CR-SST-0119-sst-extension-configurable-session-capture-mode.yaml"
+  followup_session_article_preview_image_request: "requests/planned/CR-SST-0120-session-derived-article-preview-image-contract.yaml"
+  jira_reason_codes_comment_executed: true
+  jira_reason_codes_comment_ref: "evidence/requests/CR-SST-0100/jira-sst-32-reason-codes-sync-summary.md"
+  jira_reason_codes_comment_result_ref: "evidence/requests/CR-SST-0100/jira-sst-32-reason-codes-sync-result.json"
+  jira_implementation_comment_executed: true
+  jira_implementation_comment_ref: "evidence/requests/CR-SST-0100/jira-sst-32-implementation-sync-summary.md"
+  jira_implementation_comment_result_ref: "evidence/requests/CR-SST-0100/jira-sst-32-implementation-sync-result.json"
+  jira_closure_comment_ref: "evidence/requests/CR-SST-0100/jira-sst-32-close-comment.md"
+  jira_close_executed: true
+  jira_close_ref: "evidence/requests/CR-SST-0100/jira-sst-32-close-transition-summary.md"
+  jira_close_result_ref: "evidence/requests/CR-SST-0100/jira-sst-32-close-transition-result.json"
+
+owner_documentation:
+  required: true
+  status: satisfied
+  owner_repo: "sst-extension"
+  planned_owner_docs:
+    - "specs/features/sessions.yaml"
+    - "docs/00-overview.md"
+    - "docs/qa/session-capture-validation.md"
+  updated_owner_docs:
+    - "specs/features/sessions.yaml"
+    - "docs/00-overview.md"
+    - "docs/qa/session-capture-validation.md"
+  owner_refs:
+    - repo: "sst-extension"
+      paths:
+        - "specs/features/sessions.yaml"
+        - "docs/00-overview.md"
+        - "docs/qa/session-capture-validation.md"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0100/implementation-summary.md"
+    - "evidence/requests/CR-SST-0100/validation-results.md"
+    - "evidence/requests/CR-SST-0100/owner-documentation-enforcement.md"
+    - "evidence/requests/CR-SST-0100/closure-readiness.md"
+
+validation:
+  required_checks:
+    - "UI displays per-tab degradation metadata only, not private content."
+    - "Visual fallback reason codes are specific when the browser exposes a safe cause."
+    - "Retry, restore and delete remain available."
+    - "Owner docs/specs are updated or exception is recorded."
+  manual_qa:
+    status: passed_by_user_manual_qa
+    evidence_ref: "evidence/requests/CR-SST-0100/closure-readiness.md"
+    note: "User manual QA confirmed session capture creates SST session and derived articles/PDFs; preview-image gap reserved as CR-SST-0120 / SST-50."
+
+decision:
+  status: closed_local
+  approver: "4uentes"
+  note: "Implementation, owner-documentation updates, extension validation, user manual QA, follow-up split to CR-SST-0119/SST-49 and CR-SST-0120/SST-50, local closure readiness, and Jira SST-32 transition to Listo completed."

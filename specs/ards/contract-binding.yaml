@@ -6,8 +6,8 @@ core_contract:
   tool: "ards.get_sync_contract"
   requested_contract_version: "latest"
   resolved_contract_version: "ards-core-contract-v0.1"
-  core_ref: "4uentes-ards-core@2ad4e0f"
+  core_ref: "4uentes-ards-core@f07ca6a"
 orchestrator:
   id: "4uentes-ards-control-plane"
-  last_validated_at: "2026-06-13"
-  last_report_ref: "specs/capabilities/outbound/4uentes-orchestor--core-agent-policy-governance-handoff.yaml"
+  last_validated_at: "2026-07-12"
+  last_report_ref: "evidence/requests/CR-CP-0005/core-adoption-review-2026-07-12.md"

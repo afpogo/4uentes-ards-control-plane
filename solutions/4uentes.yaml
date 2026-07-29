@@ -1,0 +1,19 @@
+solution_id: 4uentes
+name: 4uentes
+status: active
+services:
+  core:
+    - 4uentes-portfolio
+  shared: []
+  optional: []
+  infrastructure: []
+relationships: []
+observed_deployment_targets:
+  - local
+  - static-hosting-todo
+related_solutions:
+  - sst
+notes:
+  - Company umbrella solution for public-facing 4uentes assets.
+  - SST remains modeled separately in solutions/sst.yaml and is not governed by the portfolio repo.
+  - Local paths are evidence only and must not define canonical identity.

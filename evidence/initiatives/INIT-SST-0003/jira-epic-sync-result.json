@@ -1,0 +1,12 @@
+{
+  "initiativeId": "INIT-SST-0003",
+  "epic": {
+    "key": "SST-29",
+    "summary": "[SST][INIT-SST-0003] SST Extension Construction",
+    "source": "created",
+    "raw": "{\"id\":\"10067\",\"key\":\"SST-29\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10067\"}"
+  },
+  "created": true,
+  "relatedIssues": [],
+  "associations": []
+}

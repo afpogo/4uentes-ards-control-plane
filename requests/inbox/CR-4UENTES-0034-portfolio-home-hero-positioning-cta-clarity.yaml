@@ -1,0 +1,27 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-4UENTES-0034"
+title: "Portfolio home hero positioning and CTA clarity"
+status: "intake"
+created_at: "2026-07-07"
+requester: "4uentes"
+
+summary: >
+  Improve the Portfolio first screen so recruiters and professional reviewers
+  understand identity, value proposition, and primary actions quickly.
+
+scope:
+  solution: "4uentes"
+  services:
+    - "4uentes-portfolio"
+  include_optional_services: false
+
+intent:
+  - "Improve first impression without converting the app into a generic landing page."
+  - "Clarify professional positioning and CTA hierarchy."
+  - "Keep CV download governed by the existing sanitized CV gate."
+
+validation:
+  required_checks:
+    - "4uentes-portfolio: npm.cmd run build"
+    - "4uentes-orchestor: npm.cmd run check"

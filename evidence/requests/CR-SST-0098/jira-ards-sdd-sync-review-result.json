@@ -1,0 +1,184 @@
+{
+  "requestId": "CR-SST-0098",
+  "initiativeId": "INIT-SST-0003",
+  "epicKey": "SST-29",
+  "issueKey": "SST-30",
+  "mode": "approved-write",
+  "externalWrite": true,
+  "epic": {
+    "before": {
+      "summary": "[SST][INIT-SST-0003] SST Extension Construction",
+      "status": "En curso",
+      "statusCategory": "En curso",
+      "resolution": "no-detectado",
+      "assignee": "Fuentes Sandferand",
+      "updated": "2026-07-03T01:56:13.956-0300",
+      "labels": [
+        "ards-sdd",
+        "control-plane",
+        "init-sst-0003",
+        "sst-extension"
+      ]
+    },
+    "after": {
+      "summary": "[SST][INIT-SST-0003] SST Extension Construction",
+      "status": "En curso",
+      "statusCategory": "En curso",
+      "resolution": "no-detectado",
+      "assignee": "Fuentes Sandferand",
+      "updated": "2026-07-03T02:29:48.867-0300",
+      "labels": [
+        "ards-sdd",
+        "control-plane",
+        "init-sst-0003",
+        "sst-extension"
+      ]
+    },
+    "commentResult": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10067/comment/10053",
+      "id": "10053",
+      "author": {
+        "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+        "accountId": "[accountId-redacted]",
+        "emailAddress": "[email-redacted]",
+        "avatarUrls": {
+          "48x48": "[avatar-url-redacted]",
+          "24x24": "[avatar-url-redacted]",
+          "16x16": "[avatar-url-redacted]",
+          "32x32": "[avatar-url-redacted]"
+        },
+        "displayName": "Fuentes Sandferand",
+        "active": true,
+        "timeZone": "America/Buenos_Aires",
+        "accountType": "atlassian"
+      },
+      "body": "INIT-SST-0003 ARDS/SDD sync checkpoint.\n\n`CR-SST-0098` / `SST-30` completed its implementation slice and is ready for review.\n\nCurrent INIT/Epic mapping:\n\n* ARDS/SDD initiative: `INIT-SST-0003`\n* Jira epic mirror: `SST-29`\n* First implemented CR: `CR-SST-0098`\n* Jira ticket mirror: `SST-30`\n\nImplemented scope:\n\n* Stabilized `sst-extension` session tab-by-tab visual PDF capture.\n* Restores original active tab best-effort after the capture batch.\n* Adds bounded ready/settle before visual capture.\n* Restores per-tab scroll best-effort.\n* Keeps visual capture timeout/degradation on the existing safe fallback path.\n* Updated owner documentation in `sst-extension`.\n\nValidation:\n\n* `sst-extension`: `pnpm check` passed.\n* `4uentes-orchestor`: `npm.cmd run check` passed.\n* Owner-documentation gate passed for `CR-SST-0098`.\n\nEvidence:\n\n* `evidence/requests/CR-SST-0098/implementation-summary.md`\n* `evidence/requests/CR-SST-0098/changed-files-summary.md`\n* `evidence/requests/CR-SST-0098/validation-results.md`\n\nBoundary:\n\n* Jira remains an operational mirror.\n* ARDS/SDD remains the source of truth.\n* No private page content, cookies, JWTs, plaintext secrets, real PDFs from private pages, or sensitive screenshots were stored in Jira or evidence.\n\n",
+      "updateAuthor": {
+        "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+        "accountId": "[accountId-redacted]",
+        "emailAddress": "[email-redacted]",
+        "avatarUrls": {
+          "48x48": "[avatar-url-redacted]",
+          "24x24": "[avatar-url-redacted]",
+          "16x16": "[avatar-url-redacted]",
+          "32x32": "[avatar-url-redacted]"
+        },
+        "displayName": "Fuentes Sandferand",
+        "active": true,
+        "timeZone": "America/Buenos_Aires",
+        "accountType": "atlassian"
+      },
+      "created": "2026-07-03T02:29:48.867-0300",
+      "updated": "2026-07-03T02:29:48.867-0300",
+      "jsdPublic": true
+    }
+  },
+  "issue": {
+    "before": {
+      "summary": "[SST][INIT-SST-0003][CR-SST-0098] Fix sst-extension session tab-by-tab visual PDF capture",
+      "status": "En curso",
+      "statusCategory": "En curso",
+      "resolution": "no-detectado",
+      "assignee": "Fuentes Sandferand",
+      "updated": "2026-07-03T02:20:08.384-0300",
+      "labels": [
+        "ards-sdd",
+        "control-plane",
+        "cr-sst-0098",
+        "init-sst-0003",
+        "session-capture",
+        "sst-extension"
+      ]
+    },
+    "after": {
+      "summary": "[SST][INIT-SST-0003][CR-SST-0098] Fix sst-extension session tab-by-tab visual PDF capture",
+      "status": "En revisión",
+      "statusCategory": "En curso",
+      "resolution": "no-detectado",
+      "assignee": "Fuentes Sandferand",
+      "updated": "2026-07-03T02:29:50.084-0300",
+      "labels": [
+        "ards-sdd",
+        "control-plane",
+        "cr-sst-0098",
+        "init-sst-0003",
+        "session-capture",
+        "sst-extension"
+      ]
+    },
+    "transitions": [
+      {
+        "id": "11",
+        "name": "Por hacer",
+        "toStatus": "Tareas por hacer",
+        "toStatusCategory": "Por hacer"
+      },
+      {
+        "id": "21",
+        "name": "En curso",
+        "toStatus": "En curso",
+        "toStatusCategory": "En curso"
+      },
+      {
+        "id": "31",
+        "name": "In Review",
+        "toStatus": "En revisión",
+        "toStatusCategory": "En curso"
+      },
+      {
+        "id": "41",
+        "name": "Listo",
+        "toStatus": "Finalizada",
+        "toStatusCategory": "Listo"
+      }
+    ],
+    "selectedTransition": {
+      "id": "31",
+      "name": "In Review",
+      "toStatus": "En revisión",
+      "toStatusCategory": "En curso"
+    },
+    "alreadyReview": false,
+    "transitionResult": {
+      "success": true
+    },
+    "commentResult": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10068/comment/10054",
+      "id": "10054",
+      "author": {
+        "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+        "accountId": "[accountId-redacted]",
+        "emailAddress": "[email-redacted]",
+        "avatarUrls": {
+          "48x48": "[avatar-url-redacted]",
+          "24x24": "[avatar-url-redacted]",
+          "16x16": "[avatar-url-redacted]",
+          "32x32": "[avatar-url-redacted]"
+        },
+        "displayName": "Fuentes Sandferand",
+        "active": true,
+        "timeZone": "America/Buenos_Aires",
+        "accountType": "atlassian"
+      },
+      "body": "CR-SST-0098 / SST-30 implementation checkpoint.\n\nThis ticket is ready for review against the ARDS/SDD source of truth.\n\nImplemented:\n\n* `sst-extension` now restores the original active tab best-effort after session capture.\n* Visual PDF capture waits for bounded tab readiness/settle before measuring and capturing.\n* Per-tab scroll is restored best-effort after full-page segment capture.\n* Readiness timeouts remain controlled errors and keep the existing safe fallback to textual PDF.\n* Tests were added for visual capture readiness/scroll and original active-tab restoration.\n* Owner documentation was updated in `sst-extension`.\n\nOwner documentation satisfied:\n\n* `sst-extension/specs/features/sessions.yaml`\n* `sst-extension/docs/integration/node-auth-extension-session-ingestion.md`\n* `sst-extension/docs/qa/session-capture-validation.md`\n\nValidation:\n\n* `pnpm test -- src/platform/tabs/capture-session-tab-fullpage-pdf.test.ts src/features/sessions/create-session-capture-service.test.ts`: passed, 2 files / 11 tests.\n* `pnpm check` in `sst-extension`: passed, baseline + 21 test files / 86 tests + WXT build.\n* `npm.cmd run check` in `4uentes-orchestor`: passed, including owner-documentation gate for `CR-SST-0098`.\n\nEvidence:\n\n* `evidence/requests/CR-SST-0098/implementation-summary.md`\n* `evidence/requests/CR-SST-0098/changed-files-summary.md`\n* `evidence/requests/CR-SST-0098/validation-results.md`\n\nSecurity/evidence boundary:\n\n* No private page content, cookies, JWTs, plaintext secrets, real PDFs from private pages, or sensitive screenshots were stored in Jira or evidence.\n* No backend/BFF/API contract changes were made in this CR.\n\n",
+      "updateAuthor": {
+        "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+        "accountId": "[accountId-redacted]",
+        "emailAddress": "[email-redacted]",
+        "avatarUrls": {
+          "48x48": "[avatar-url-redacted]",
+          "24x24": "[avatar-url-redacted]",
+          "16x16": "[avatar-url-redacted]",
+          "32x32": "[avatar-url-redacted]"
+        },
+        "displayName": "Fuentes Sandferand",
+        "active": true,
+        "timeZone": "America/Buenos_Aires",
+        "accountType": "atlassian"
+      },
+      "created": "2026-07-03T02:29:50.084-0300",
+      "updated": "2026-07-03T02:29:50.084-0300",
+      "jsdPublic": true
+    }
+  }
+}

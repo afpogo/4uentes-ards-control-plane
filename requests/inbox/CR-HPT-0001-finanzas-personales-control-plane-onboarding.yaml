@@ -1,0 +1,27 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-HPT-0001"
+title: "Finanzas personales control-plane onboarding"
+status: "inbox"
+created_at: "2026-07-12"
+requester: "4uentes"
+business_context: >
+  The finanzas-personales monorepo needs stable logical identities, an isolated
+  solution scope and a Jira HPT mirror without becoming part of SST or the
+  corporate portfolio solution.
+requested_change: >
+  Catalog the frontend and backend service roots, create the logical solution,
+  record local Git/binding evidence and establish Initiative/Jira correlation.
+expected_outcome: >
+  The project is discoverable and governable from the control-plane without
+  mutating the child repository or promoting draft runtime architecture.
+initial_scope:
+  solution: "finanzas-personales"
+  services:
+    - "finanzas-personales-frontend"
+    - "finanzas-personales-backend"
+  include_optional_services: false
+decision:
+  status: "accepted-for-planning"
+  approver: "4uentes"
+

@@ -1,0 +1,46 @@
+{
+  "issueKey": "SST-6",
+  "issue": {
+    "summary": "[SST][feature-state] Completar ruta runtime de SST Learning Content Tags",
+    "status": "En curso",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "Fuentes Sandferand",
+    "updated": "2026-06-24T18:23:18.578-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "feature-state",
+      "implemented-local",
+      "not-done"
+    ],
+    "description": "Proceso de sincronizacion:\n\n* CR-SST-0039\n\nProcesos origen:\n\n* CR-SST-0015\n* CR-SST-0016\n\nEstado actual: implemented-local.\n\nObjetivo:  \nAvanzar esta funcionalidad desde el read-model del control-plane y cerrar los gaps abiertos mediante el lifecycle aprobado.\n\nGaps abiertos:\n\n* Promote learning-content parser from POC module to runtime import/preview endpoint.\n* Define frontend rendering for clase, nota, recordar, ejemplo, image, docs, and code blocks.\n* Keep generated lab artifacts excluded from ingestion by default.\n\nState id:\n\n* learning-content-tags\n\nServicios afectados:\n\n* sst-bend\n* sst-fend\n\nRequest ids relacionados:\n\n* CR-SST-0015\n* CR-SST-0016\n\nFuente control-plane:\n\n* state/features/learning-content-tags.current.yaml\n\nEvidence refs:\n\n* evidence/requests/CR-SST-0015/java-spring-course-structure-analysis.md\n* evidence/requests/CR-SST-0015/parser-boundary-recommendation.md\n* evidence/requests/CR-SST-0016/backend-poc-summary.md\n\nValidation refs:\n\n* ninguno\n\nCriterio de cierre esperado:\n\n* La decision o implementacion pendiente queda registrada en evidencia.\n* Los cambios en repos funcionales, si hacen falta, entran por request aprobado.\n* El feature_state se actualiza solo cuando la evidencia soporte una transicion de estado.\n\n",
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10014\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10014\",\"key\":\"SST-6\",\"fields\":{\"summary\":\"[SST][feature-state] Completar ruta runtime de SST Learning Content Tags\",\"description\":\"Proceso de sincronizacion:\\n\\n* CR-SST-0039\\n\\nProcesos origen:\\n\\n* CR-SST-0015\\n* CR-SST-0016\\n\\nEstado actual: implemented-local.\\n\\nObjetivo:  \\nAvanzar esta funcionalidad desde el read-model del control-plane y cerrar los gaps abiertos mediante el lifecycle aprobado.\\n\\nGaps abiertos:\\n\\n* Promote learning-content parser from POC module to runtime import/preview endpoint.\\n* Define frontend rendering for clase, nota, recordar, ejemplo, image, docs, and code blocks.\\n* Keep generated lab artifacts excluded from ingestion by default.\\n\\nState id:\\n\\n* learning-content-tags\\n\\nServicios afectados:\\n\\n* sst-bend\\n* sst-fend\\n\\nRequest ids relacionados:\\n\\n* CR-SST-0015\\n* CR-SST-0016\\n\\nFuente control-plane:\\n\\n* state/features/learning-content-tags.current.yaml\\n\\nEvidence refs:\\n\\n* evidence/requests/CR-SST-0015/java-spring-course-structure-analysis.md\\n* evidence/requests/CR-SST-0015/parser-boundary-recommendation.md\\n* evidence/requests/CR-SST-0016/backend-poc-summary.md\\n\\nValidation refs:\\n\\n* ninguno\\n\\nCriterio de cierre esperado:\\n\\n* La decision o implementacion pendiente queda registrada en evidencia.\\n* Los cambios en repos funcionales, si hacen falta, entran por request aprobado.\\n* El feature_state se actualiza solo cuando la evidencia soporte una transicion de estado.\\n\\n\",\"assignee\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]\",\"accountId\": \"[accountId-redacted]\",\"emailAddress\":\"[email-redacted]\",\"avatarUrls\":{\"48x48\":\"[avatar-url-redacted]\",\"24x24\":\"[avatar-url-redacted]\",\"16x16\":\"[avatar-url-redacted]\",\"32x32\":\"[avatar-url-redacted]\"},\"displayName\":\"Fuentes Sandferand\",\"active\":true,\"timeZone\":\"America/Buenos_Aires\",\"accountType\":\"atlassian\"},\"resolution\":null,\"updated\":\"2026-06-24T18:23:18.578-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10006\",\"description\":\"La persona asignada está trabajando actualmente en esta actividad.\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En curso\",\"id\":\"10006\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"feature-state\",\"implemented-local\",\"not-done\"]}}"
+  },
+  "transitions": [
+    {
+      "id": "11",
+      "name": "Por hacer",
+      "toStatus": "Tareas por hacer",
+      "toStatusCategory": "Por hacer"
+    },
+    {
+      "id": "21",
+      "name": "En curso",
+      "toStatus": "En curso",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "31",
+      "name": "In Review",
+      "toStatus": "En revisión",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "41",
+      "name": "Listo",
+      "toStatus": "Finalizada",
+      "toStatusCategory": "Listo"
+    }
+  ]
+}

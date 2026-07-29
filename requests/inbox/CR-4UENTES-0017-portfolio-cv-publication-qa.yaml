@@ -1,0 +1,86 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-4UENTES-0017"
+title: "Portfolio CV freshness and publication QA"
+status: "inbox"
+created_at: "2026-07-04"
+requester: "4uentes"
+
+summary: >
+  Validate the portfolio CV asset and publication-readiness checklist after
+  contact exposure policy, blocking public CV download until a sanitized CV is
+  approved.
+
+initial_scope:
+  solution: "4uentes"
+  services:
+    - "4uentes-portfolio"
+  include_optional_services: false
+
+control_plane_context:
+  initiative_id: "INIT-PORTFOLIO-0001"
+  parent_request_id: "CR-4UENTES-0016"
+  feature_id: "portfolio-cv-publication-qa"
+  child_repo: "4uentes-portfolio"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "4uentes-portfolio"
+      via: "CV download behavior, publication QA docs, and owner docs"
+      service_kind: "frontend-spa"
+      ards_kind: "frontend-web"
+      status: "active"
+  affected_ards:
+    - "publication-readiness"
+    - "contact-asset"
+    - "static-assets"
+    - "owner-documentation"
+  capabilities:
+    - "portfolio-cv-publication-qa"
+
+required_context:
+  - "requests/planned/CR-4UENTES-0016-portfolio-github-evidence-allowlist-review.yaml"
+  - "4uentes-portfolio: src/pages/Home/components/Hero/index.tsx"
+  - "4uentes-portfolio: src/assets/resources/afpogo_cv.pdf"
+  - "4uentes-portfolio: docs/qa/visual-checklist.md"
+  - "4uentes-portfolio: docs/qa/stabilization-checklist.md"
+  - "4uentes-portfolio: specs/features/00-index.yaml"
+
+execution:
+  requires_human_approval: false
+  allowed_window: "manual"
+  branch_strategy: "child-repo-publication-qa-cut"
+  child_repo_mutation_allowed: true
+  child_repo_mutation_target:
+    service_id: "4uentes-portfolio"
+  owner_documentation_required: true
+  implementation_boundary: >
+    Validate and document CV/publication readiness, and disable public download
+    of the current CV if it violates contact exposure policy. Do not generate a
+    replacement CV, add backend/runtime services, change deployment, or alter
+    GitHub evidence.
+
+owner_documentation:
+  required: true
+  status: planned
+  owner_repo: "4uentes-portfolio"
+  planned_owner_docs:
+    - "docs/evidence/README.md"
+    - "docs/qa/visual-checklist.md"
+    - "docs/qa/stabilization-checklist.md"
+    - "specs/features/00-index.yaml"
+
+validation:
+  required_checks:
+    - "4uentes-portfolio: npm.cmd run check"
+    - "4uentes-orchestor: npm.cmd run check"
+  evidence_required:
+    - "cv_publication_qa"
+    - "changed_files_summary"
+    - "validation_results"
+
+decision:
+  status: "approved-for-local-execution"
+  approver: "4uentes"
+  blocker: "none"

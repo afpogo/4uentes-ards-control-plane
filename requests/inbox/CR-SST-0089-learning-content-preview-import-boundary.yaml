@@ -1,0 +1,24 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0089"
+title: "Define learning-content preview/import runtime boundary"
+status: inbox
+created_at: "2026-06-28"
+requester: "4uentes"
+
+business_context: >
+  CR-SST-0088 defined the first local ARDS/SDD source and document model for
+  SST-6 learning-content. The next step is to define the runtime boundary for
+  a future sst-bend preview/import endpoint without mutating the child
+  repository in this planning step.
+
+requested_change: >
+  Plan the sst-bend preview/import runtime contract for CourseSource and
+  WebArticleSource payloads. The planned output is KnowledgeDocument,
+  ContentBlock arrays, TagSuggestion arrays, and warnings, with preview-only
+  persistence by default.
+
+expected_outcome: >
+  The control-plane records the accepted runtime boundary, validation gates,
+  child repository mutation guardrails, and evidence requirements before any
+  sst-bend implementation work begins.

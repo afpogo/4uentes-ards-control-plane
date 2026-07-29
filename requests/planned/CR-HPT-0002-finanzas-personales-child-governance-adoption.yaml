@@ -1,0 +1,150 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-HPT-0002"
+title: "Finanzas personales child governance adoption"
+status: "planned"
+source_request: "requests/inbox/CR-HPT-0002-finanzas-personales-child-governance-adoption.yaml"
+created_at: "2026-07-12"
+requester: "4uentes"
+
+summary: >
+  Reconcile the frontend and backend ARDS roots with the current core common
+  policy runtime, adopt control-plane linkage and establish executable owner
+  documentation validation without changing product runtime.
+
+initial_scope:
+  solution: "finanzas-personales"
+  services:
+    - "finanzas-personales-frontend"
+    - "finanzas-personales-backend"
+  include_optional_services: false
+
+control_plane_context:
+  initiative_id: "INIT-HPT-0001"
+  parent_request_id: "CR-HPT-0001"
+  feature_id: "finanzas-personales-child-governance-adoption"
+  child_repo: "finanzas-personales"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "finanzas-personales-frontend"
+      via: "policy manifests, contract binding, control-plane link and owner docs"
+      ards_kind: "frontend-web"
+    - service_id: "finanzas-personales-backend"
+      via: "policy manifests, contract binding, control-plane link and owner docs"
+      ards_kind: "backend-api"
+  affected_ards:
+    - "policy-adoption"
+    - "contract-binding"
+    - "control-plane-link"
+    - "owner-documentation"
+  capabilities:
+    - "finanzas-personales-child-governance-adoption"
+  risks:
+    - id: "CHILD_POLICY_SCOPE_DRIFT"
+      severity: "medium"
+    - id: "OWNER_DOCUMENTATION_GAP"
+      severity: "high"
+
+required_context:
+  - "4uentes-ards-core: specs/integration/policies.yaml"
+  - "4uentes-ards-core: standard/ARDS_FRONTEND_WEB_CORE_PROFILE_v1.md"
+  - "4uentes-ards-core: standard/ARDS_BACKEND_API_CORE_PROFILE_v1.md"
+  - "finanzas-personales: frontend/AGENTS.md"
+  - "finanzas-personales: backend/AGENTS.md"
+
+risk:
+  level: "medium"
+  score: 6
+  drivers:
+    - "request-driven child repo mutation"
+    - "two service roots share one Git repository"
+    - "policy adoption must not redefine core canon"
+
+task_weight:
+  classification: "long-context-task"
+  risk_level: "medium"
+  drivers:
+    - "cross-repo policy reconciliation"
+    - "owner documentation enforcement"
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "high"
+  fallback_profile: "gpt-5.4-fast-high"
+  reason: "Long-context child policy adoption with owner enforcement."
+
+subagent_deployment_plan:
+  required: false
+  parallelizable: false
+  roles: []
+  fallback: "Keep policy applicability and owner decisions in the main agent."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  allowed_window: "future-approved-window"
+  branch_strategy: "child-repo-governance-only"
+  child_repo_mutation_allowed: true
+  child_repo_mutation_target:
+    service_ids:
+      - "finanzas-personales-frontend"
+      - "finanzas-personales-backend"
+  owner_documentation_required: true
+  implementation_boundary: >
+    Change only AGENTS, docs, specs, policy manifests, control-plane linkage and
+    validation metadata. Do not implement UI, API, auth, persistence, OCR or AI.
+
+owner_documentation:
+  required: true
+  status: planned
+  owner_repo: "finanzas-personales"
+  planned_owner_docs:
+    - "docs/policies/README.md"
+    - "specs/00-index.yaml"
+    - "specs/ards/contract-binding.yaml"
+    - "specs/integration/policies.yaml"
+  owner_refs:
+    - repo: "finanzas-personales/frontend"
+      paths:
+        - "docs/policies/README.md"
+        - "specs/00-index.yaml"
+        - "specs/ards/contract-binding.yaml"
+        - "specs/integration/policies.yaml"
+    - repo: "finanzas-personales/backend"
+      paths:
+        - "docs/policies/README.md"
+        - "specs/00-index.yaml"
+        - "specs/ards/contract-binding.yaml"
+        - "specs/integration/policies.yaml"
+
+jira:
+  role: "mirror"
+  source_of_truth: false
+  project_key: "HPT"
+  epic_key: "HPT-1"
+  issue_key: "HPT-3"
+  issue_type: "Tarea"
+  current_status_observed: "Por hacer"
+  execution_authorized: false
+
+validation:
+  required_checks:
+    - "finanzas-personales frontend: validation route defined by this CR"
+    - "finanzas-personales backend: validation route defined by this CR"
+    - "4uentes-orchestor: npm.cmd run check"
+  evidence_required:
+    - "policy_adoption_summary"
+    - "owner_documentation_summary"
+    - "changed_files_summary"
+    - "validation_results"
+
+decision:
+  status: "planned-awaiting-child-execution-approval"
+  approver: "TODO"
+  blocker: "technical owner and child execution window must be confirmed"

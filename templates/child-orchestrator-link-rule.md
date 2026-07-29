@@ -1,4 +1,4 @@
-# Orchestrator Link Rule
+# Regla De Orchestrator Link
 
 Este repo esta gobernado por `4uentes-orchestor`.
 
@@ -34,4 +34,3 @@ Valores permitidos para `work_origin`:
 `status_hint` debe usar un estado canonico del orchestrator. El repo hijo solo
 propone el estado; `4uentes-orchestor` lo reconcilia contra requests,
 evidencia y validacion.
-

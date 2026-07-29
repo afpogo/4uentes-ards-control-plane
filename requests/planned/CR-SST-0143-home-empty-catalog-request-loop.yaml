@@ -1,0 +1,78 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0143"
+title: "Stop authenticated Home empty-catalog request loop"
+status: done
+source_request: "requests/inbox/CR-SST-0143-home-empty-catalog-request-loop.yaml"
+created_at: "2026-07-13"
+requester: "4uentes"
+summary: "Treat an empty successful article catalog as loaded state and prevent repeated Home fetches."
+control_plane_context:
+  initiative_id: "INIT-SST-0005"
+  predecessor_requests: ["CR-SST-0129", "CR-SST-0142"]
+  jira_epic_key: "SST-57"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+impact_analysis:
+  required: true
+  affected_services:
+    - {service_id: "sst-fend", via: "Authenticated Home article briefing load lifecycle", service_kind: "frontend-web", ards_kind: "frontend-web", status: "active"}
+    - {service_id: "4uentes-orchestor", via: "Lifecycle and QA evidence", service_kind: "control-plane", ards_kind: "control-plane", status: "active"}
+  affected_ards: ["home-frontend", "article-catalog-query"]
+  risks:
+    - {id: "EMPTY_CATALOG_REQUEST_LOOP", severity: high}
+execution:
+  local_implementation_started_at: "2026-07-18"
+  requires_human_approval: false
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets: ["sst-fend"]
+  implementation_boundary: "Home loading lifecycle and focused tests/docs only; no article contract, backend, BFF or visual refactor."
+owner_documentation:
+  required: true
+  status: satisfied
+  owner_repos: ["sst-fend"]
+  planned_owner_docs:
+    - "specs/35-home-frontend.yml"
+    - "docs/35-home-frontend.md"
+  updated_owner_docs:
+    - "specs/35-home-frontend.yml"
+    - "docs/35-home-frontend.md"
+    - "docs/tasks/2026-07-18-cr-sst-0143-home-empty-catalog-request-loop.md"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0143/implementation.md"
+required_checks:
+  - {service_id: "sst-fend", command: "npm.cmd test -- Home --runInBand"}
+  - {service_id: "sst-fend", command: "npm.cmd run check"}
+  - {service_id: "4uentes-orchestor", command: "npm.cmd run check"}
+decision:
+  status: "closed-local"
+  approver: "4uentes"
+  decided_at: "2026-07-13"
+  completed_at: "2026-07-18"
+jira_sync:
+  status: "synced"
+  desired_issue_type: "Task"
+  parent_issue_key: "SST-57"
+  issue_key: "SST-83"
+  status_observed: "Listo"
+  write_authorization:
+    authorized_by: "4uentes"
+    authorized_at: "2026-07-18"
+    provider: "jira"
+    project_key: "SST"
+    issue_keys: ["SST-83"]
+    permitted_operations: ["add-initial-comment", "transition-to-in-progress"]
+    expected_parent_issue_key: "SST-57"
+    expected_issue_type: "Task"
+    execution_window: "current implementation turn"
+  closure_write_authorization:
+    authorized_by: "4uentes"
+    authorized_at: "2026-07-18"
+    provider: "jira"
+    project_key: "SST"
+    issue_keys: ["SST-83"]
+    permitted_operations: ["add-closure-comment", "transition-to-done"]
+    expected_parent_issue_key: "SST-57"
+    expected_issue_type: "Task"
+    expected_status: "Listo"
+    execution_window: "current closure turn"

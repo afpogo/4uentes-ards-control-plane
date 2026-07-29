@@ -1,0 +1,94 @@
+schema_version: "1.0"
+kind: "initiative"
+id: "INIT-PORTFOLIO-0002"
+title: "Portfolio Mobile Section Readiness"
+status: "active"
+updated_at: "2026-07-05"
+owner_repository: "4uentes-orchestor"
+objective: >
+  Stabilize the mobile experience of individual Portfolio sections after the
+  first mobile shell cut, focusing on section-level layout, readability,
+  navigation, and bilingual presentation before public publication.
+initial_hypothesis: >
+  CR-4UENTES-0027 made the portfolio navigable on mobile, but manual QA found
+  that some inner sections still need dedicated mobile design and validation.
+  This work is broad enough to require its own Initiative/Epic instead of
+  extending the already reviewed mobile shell ticket.
+source_evidence_refs:
+  - "evidence/requests/CR-4UENTES-0027/mobile-layout-implementation-summary.md"
+  - "evidence/requests/CR-4UENTES-0027/validation-results.md"
+  - "evidence/requests/CR-4UENTES-0024/qa-results.md"
+  - "evidence/initiatives/INIT-PORTFOLIO-0002/initiative-scope.md"
+  - "evidence/initiatives/INIT-PORTFOLIO-0002/jira-epic-creation-summary.md"
+  - "docs/requests/initiative-model.md"
+  - "docs/policies/owner-documentation-authority-policy.md"
+model_refs:
+  - "specs/initiatives/initiative-model.yaml"
+  - "docs/requests/initiative-model.md"
+parent_initiative_refs:
+  - "INIT-FUENTES-0001"
+  - "INIT-PORTFOLIO-0001"
+known_change_requests:
+  - "CR-4UENTES-0027"
+candidate_change_requests:
+  - id: "CR-4UENTES-0028"
+    title: "Portfolio mobile section audit and backlog decomposition"
+    status: "candidate"
+    jira_priority: "High"
+    urgency: "urgent"
+    execution_order: "first"
+  - id: "CR-4UENTES-0029"
+    title: "Portfolio mobile experience section layout remediation"
+    status: "candidate"
+    jira_priority: "High"
+    urgency: "urgent"
+    execution_order: "after-audit"
+  - id: "CR-4UENTES-0030"
+    title: "Portfolio mobile projects and skills section layout remediation"
+    status: "candidate"
+    jira_priority: "High"
+    urgency: "urgent"
+    execution_order: "after-experience-section"
+  - id: "CR-4UENTES-0031"
+    title: "Portfolio mobile contact and CV CTA publication flow QA"
+    status: "candidate"
+    jira_priority: "High"
+    urgency: "urgent"
+    execution_order: "after-core-sections"
+  - id: "CR-4UENTES-0032"
+    title: "Portfolio mobile cross-route visual QA closure"
+    status: "candidate"
+    jira_priority: "High"
+    urgency: "urgent"
+    execution_order: "last"
+discovered_change_requests: []
+tracking:
+  jira:
+    role: "mirror"
+    source_of_truth: false
+    project_key: "PORT"
+    issue_type: "Epic"
+    issue_key: "PORT-8"
+    current_status_observed: "Por hacer"
+    write_status: "executed"
+    read_status: "verified"
+    associated_issue_keys: []
+boundaries:
+  mutates_child_repositories: true
+  promotes_runtime: false
+  changes_core_canon: false
+  belongs_to_sst: false
+policy_application:
+  owner_documentation_enforcement: >
+    Every child-repo mutation CR under this Initiative must update
+    4uentes-portfolio owner docs/specs or record an explicit owner documentation
+    exception before closure.
+  jira_boundary: >
+    Jira Epic and child issues are mirrors. Local Initiative, CR lifecycle,
+    owner docs, and evidence remain the source of truth.
+  atomization: >
+    Section remediation must be split into small CRs by route/section and must
+    not reopen the mobile shell CR unless the shell contract itself changes.
+open_gaps:
+  - "Create CR-4UENTES-0028 to audit mobile section defects and decompose remediation."
+  - "Run visual/mobile QA before closing section remediation CRs."

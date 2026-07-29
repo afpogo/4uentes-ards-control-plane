@@ -1,0 +1,214 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0124"
+title: "Expose native SST article runtime URL"
+status: planned
+source_request: "requests/inbox/CR-SST-0124-sst-fend-native-article-runtime-url.yaml"
+created_at: "2026-07-07"
+requester: "4uentes"
+
+summary: >
+  Implement the first MVP intention for native SST text articles: a user can
+  create an article without an external URL and still get a local/app runtime
+  URL that opens the generated document in a browser. The runtime URL must be
+  derived from the article identity and must not be stored as the external
+  article url/sourceUrl.
+
+control_plane_context:
+  initiative_id: "INIT-SST-0001"
+  active_feature_state: "learning-content-tags"
+  parent_request_id: "CR-SST-0123"
+  jira_epic_key: "SST-27"
+  active_jira_issue_key: "SST-6"
+  related_jira_issue_keys:
+    - "SST-52"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "sst-fend"
+      via: "Article creation result, article detail/open action and LearningWorkspace origin context"
+      service_kind: "frontend-spa"
+      ards_kind: "frontend-web"
+      status: "active"
+    - service_id: "node-auth"
+      via: "BFF contract verification only if runtime URL must be exposed by API"
+      service_kind: "bff"
+      ards_kind: "backend-service"
+      status: "verify-only"
+    - service_id: "sst-bend"
+      via: "API contract verification only if persisted response requires explicit runtimeUrl/appUrl"
+      service_kind: "api"
+      ards_kind: "backend-service"
+      status: "verify-only"
+    - service_id: "4uentes-orchestor"
+      via: "request lifecycle, Jira mirror and owner enforcement"
+      service_kind: "control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+  affected_ards:
+    - learning-content-tags
+    - frontend-web
+    - article-text-ingestion
+    - child-repo-owner-documentation
+    - evidence
+  risks:
+    - id: SOURCE_URL_RUNTIME_URL_COLLISION
+      severity: high
+      note: "Internal app URLs must not be treated as scrapeable external source URLs."
+    - id: LOCAL_URL_ENV_DRIFT
+      severity: medium
+      note: "The derived URL must work in localhost and deployed origins without hard-coded hostnames."
+    - id: ARTICLE_DETAIL_ROUTE_GAP
+      severity: medium
+      note: "If no browser-openable detail route exists, this CR must define the smallest route or link pattern."
+
+execution:
+  requires_human_approval: false
+  allowed_window: manual
+  branch_strategy: "one-branch-per-repo"
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets:
+    - service_id: "sst-fend"
+      local_path_ref: "environments/local/bindings.local.yaml#sst-fend"
+    - service_id: "node-auth"
+      local_path_ref: "environments/local/bindings.local.yaml#4uentes-auth"
+  implementation_boundary: >
+    Planned mutation starts in sst-fend. node-auth and sst-bend remain
+    verify-only unless analysis proves that a stable runtimeUrl/appUrl field
+    must be carried by the API contract. The CR must not reintroduce required
+    URL/sourceUrl for payload.kind=text and must not route internal article
+    URLs into scraper/source ingestion paths.
+  owner_documentation:
+    required: true
+    status: satisfied
+    owner_refs:
+      - repo: "sst-fend"
+        paths:
+          - "docs/33-articles-frontend.md"
+          - "specs/33-articles-frontend.yml"
+          - "docs/38-learning-workspace-frontend.md"
+          - "specs/38-learning-workspace-frontend.yml"
+      - repo: "node-auth"
+        paths:
+          - "docs/bf/03-routing.md"
+          - "specs/routing.yaml"
+          - "specs/integrations-api.yaml"
+          - "docs/capabilities/inbound/sst-bend--article-text-ingestion.md"
+          - "specs/capabilities/inbound/sst-bend--article-text-ingestion.yaml"
+          - "docs/capabilities/outbound/article-text-ingestion.md"
+          - "specs/capabilities/outbound/article-text-ingestion.yaml"
+    evidence_refs:
+      - "evidence/requests/CR-SST-0124/policy-and-owner-enforcement-start.md"
+      - "evidence/requests/CR-SST-0124/implementation-analysis-start.md"
+      - "evidence/requests/CR-SST-0124/article-resource-learningworkspace-boundary.md"
+      - "evidence/requests/CR-SST-0124/subagent-delegation-boundary-analysis.md"
+      - "evidence/requests/CR-SST-0124/validation-results.md"
+      - "evidence/requests/CR-SST-0124/node-auth-missing-url-fix.md"
+      - "evidence/requests/CR-SST-0124/post-fix-qa-and-jira-blockers.md"
+      - "evidence/requests/CR-SST-0124/manual-authenticated-qa-pass.md"
+      - "evidence/requests/CR-SST-0124/jira-sst-53-final-close-transition-blocked.md"
+      - "evidence/requests/CR-SST-0124/jira-sst-53-final-close-transition.md"
+
+required_checks:
+  - service_id: "sst-fend"
+    command: "npm.cmd test -- ArticleCreateFlow.test.tsx LearningWorkspace.test.tsx --runInBand"
+  - service_id: "sst-fend"
+    command: "npm.cmd run check"
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check"
+
+validation:
+  required_checks:
+    - "A text article can be created without an external URL."
+    - "The create result exposes an action/link that opens the article through the SST runtime origin."
+    - "The derived runtime URL is based on article id and the current app origin, not a fake external source."
+    - "The persisted article url/sourceUrl remains empty or external-only for native text articles."
+    - "Existing web article source URL behavior remains unchanged."
+  evidence_required:
+    - "policy_and_owner_enforcement_start"
+    - "article_resource_learningworkspace_boundary"
+    - "implementation_analysis"
+    - "changed_files_summary"
+    - "owner_documentation_summary"
+    - "validation_results"
+    - "jira_sync_summary"
+
+decision:
+  status: completed-jira-synchronized
+  approver: "4uentes"
+  note: >
+    Opened as the immediate MVP continuation after CR-SST-0123 confirmed that
+    native text articles should not require invented external URLs. The
+    documented boundary now clarifies that Article creation is the base SST
+    resource flow, while LearningWorkspace is the later processing and
+    materialization surface for documents, PDFs, HTML/text and accepted agent
+    context.
+
+analysis_update:
+  observed_at: "2026-07-07"
+  status: "article-learningworkspace-boundary-documented"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0124/article-resource-learningworkspace-boundary.md"
+    - "evidence/requests/CR-SST-0124/subagent-delegation-boundary-analysis.md"
+    - "evidence/requests/CR-SST-0124/validation-results.md"
+  summary: >
+    Article creation must remain independent from LearningWorkspace. A user can
+    create a simple SST article with title, description, optional external URL
+    and ArticleTags without IA. LearningWorkspace starts when a document,
+    textual PDF, visual PDF, HTML/text or agent output is processed, reviewed
+    and accepted into materialized SST context visible in the article sheet.
+
+implementation_update:
+  observed_at: "2026-07-07"
+  status: "manual-authenticated-qa-pass-jira-listo"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0124/changed-files-summary.md"
+    - "evidence/requests/CR-SST-0124/owner-documentation-summary.md"
+    - "evidence/requests/CR-SST-0124/validation-results.md"
+    - "evidence/requests/CR-SST-0124/closure-readiness.md"
+    - "evidence/requests/CR-SST-0124/jira-sst-53-review-transition-summary.md"
+    - "evidence/requests/CR-SST-0124/chrome-devtools-authenticated-qa-blocker.md"
+    - "evidence/requests/CR-SST-0124/node-auth-missing-url-fix.md"
+    - "evidence/requests/CR-SST-0124/post-fix-qa-and-jira-blockers.md"
+    - "evidence/requests/CR-SST-0124/manual-authenticated-qa-pass.md"
+    - "evidence/requests/CR-SST-0124/jira-sst-53-final-close-transition-blocked.md"
+    - "evidence/requests/CR-SST-0124/jira-sst-53-final-close-transition.md"
+  summary: >
+    sst-fend derives and renders a runtime URL for created native text articles
+    as the current SPA origin plus /leafArticulo/:id. Authenticated Chrome
+    DevTools QA then found node-auth rejected the correct frontend payload with
+    400 Missing url. The node-auth BFF DTO, create request body, response mapper
+    and owner ARDS/SDD docs were updated so payload.kind=text with data:{} can
+    omit url/sourceUrl while web creates still require a valid URL. node-auth
+    build, targeted DTO/mapper validation and npm run check now pass. The owner
+    manually confirmed authenticated QA can create a text article without URL.
+    Local closure evidence is complete. Jira final transition to Listo was
+    completed through the configured Atlassian MCP after explicit approval.
+
+jira_sync:
+  status: created-started-progress-commented-review-blocked-returned-to-progress-final-commented-and-listo
+  parent_issue_key: "SST-6"
+  epic_key: "SST-27"
+  issue_key: "SST-53"
+  status_observed: "Finalizada"
+  resolution_observed: "Listo"
+  related_issue_keys:
+    - "SST-52"
+  evidence_ref: "evidence/requests/CR-SST-0124/jira-cr-sst-0124-create-start-summary.md"
+  progress_comment_ref: "evidence/requests/CR-SST-0124/jira-sst-53-runtime-url-progress-comment-summary.md"
+  review_transition_ref: "evidence/requests/CR-SST-0124/jira-sst-53-review-transition-summary.md"
+  qa_blocker_ref: "evidence/requests/CR-SST-0124/chrome-devtools-authenticated-qa-blocker.md"
+  post_fix_blocker_ref: "evidence/requests/CR-SST-0124/post-fix-qa-and-jira-blockers.md"
+  final_close_comment_ref: "evidence/requests/CR-SST-0124/jira-sst-53-final-close-comment.md"
+  final_close_blocker_ref: "evidence/requests/CR-SST-0124/jira-sst-53-final-close-transition-blocked.md"
+  final_close_transition_ref: "evidence/requests/CR-SST-0124/jira-sst-53-final-close-transition.md"
+  final_close_comment_id: "10134"
+  read_connection_validation_ref: "evidence/requests/CR-SST-0124/jira-issue-SST-53-observation.md"
+  codex_config_mcp_validation_ref: "evidence/requests/CR-SST-0124/codex-config-jira-mcp-validation.md"
+  available_final_transition:
+    name: "Listo"
+    id: "41"
+    to_status: "Finalizada"

@@ -1,0 +1,83 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-4UENTES-0016"
+title: "Portfolio GitHub evidence allowlist review"
+status: "inbox"
+created_at: "2026-07-04"
+requester: "4uentes"
+
+summary: >
+  Run an editorial GitHub evidence review for the explicit portfolio repo
+  allowlist and record owner docs guidance without adding runtime GitHub
+  fetching or new public production claims.
+
+initial_scope:
+  solution: "4uentes"
+  services:
+    - "4uentes-portfolio"
+  include_optional_services: false
+
+control_plane_context:
+  initiative_id: "INIT-PORTFOLIO-0001"
+  parent_request_id: "CR-4UENTES-0015"
+  feature_id: "portfolio-github-evidence-allowlist-review"
+  child_repo: "4uentes-portfolio"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "4uentes-portfolio"
+      via: "GitHub evidence allowlist, editorial review notes, and owner docs"
+      service_kind: "frontend-spa"
+      ards_kind: "frontend-web"
+      status: "active"
+  affected_ards:
+    - "github-evidence"
+    - "evidence-taxonomy"
+    - "publication-readiness"
+    - "owner-documentation"
+  capabilities:
+    - "portfolio-github-evidence-allowlist-review"
+
+required_context:
+  - "requests/planned/CR-4UENTES-0015-portfolio-contact-exposure-policy.yaml"
+  - "4uentes-portfolio: docs/integration/github-profile-enrichment.md"
+  - "4uentes-portfolio: docs/evidence/README.md"
+  - "4uentes-portfolio: specs/features/00-index.yaml"
+  - "4uentes-portfolio: src/pages/Dashboard/screens/Projects/constants.ts"
+
+execution:
+  requires_human_approval: false
+  allowed_window: "manual"
+  branch_strategy: "child-repo-owner-docs-and-evidence-only"
+  child_repo_mutation_allowed: true
+  child_repo_mutation_target:
+    service_id: "4uentes-portfolio"
+  owner_documentation_required: true
+  implementation_boundary: >
+    Mutate GitHub evidence docs/specs only. Do not add runtime GitHub fetching,
+    change project UI labels, infer production impact, alter contact exposure,
+    or publish private data.
+
+owner_documentation:
+  required: true
+  status: planned
+  owner_repo: "4uentes-portfolio"
+  planned_owner_docs:
+    - "docs/integration/github-profile-enrichment.md"
+    - "docs/evidence/README.md"
+    - "specs/features/00-index.yaml"
+
+validation:
+  required_checks:
+    - "4uentes-portfolio: npm.cmd run check"
+    - "4uentes-orchestor: npm.cmd run check"
+  evidence_required:
+    - "github_evidence_review"
+    - "changed_files_summary"
+    - "validation_results"
+
+decision:
+  status: "approved-for-local-execution"
+  approver: "4uentes"
+  blocker: "none"

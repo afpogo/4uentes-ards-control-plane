@@ -1,0 +1,77 @@
+{
+  "requestId": "CR-SST-0098",
+  "issueKey": "SST-30",
+  "mode": "approved-write",
+  "action": "closure-prep-comment",
+  "before": {
+    "summary": "[SST][INIT-SST-0003][CR-SST-0098] Fix sst-extension session tab-by-tab visual PDF capture",
+    "status": "En revisión",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "Fuentes Sandferand",
+    "updated": "2026-07-03T02:29:50.084-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0098",
+      "init-sst-0003",
+      "session-capture",
+      "sst-extension"
+    ]
+  },
+  "after": {
+    "summary": "[SST][INIT-SST-0003][CR-SST-0098] Fix sst-extension session tab-by-tab visual PDF capture",
+    "status": "En revisión",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "Fuentes Sandferand",
+    "updated": "2026-07-03T02:55:18.880-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0098",
+      "init-sst-0003",
+      "session-capture",
+      "sst-extension"
+    ]
+  },
+  "commentResult": {
+    "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10068/comment/10062",
+    "id": "10062",
+    "author": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "body": "CR-SST-0098 / SST-30 closure preparation checkpoint.\n\nImplementation, owner documentation and automated enforcement are complete.\n\nReady:\n\n* `sst-extension` implementation completed.\n* Owner documentation policy satisfied.\n* `pnpm check` in `sst-extension`: passed.\n* `npm.cmd run check` in `4uentes-orchestor`: passed.\n* `CR-SST-0098 owner_documentation gate is valid`.\n\nPending before final closure:\n\n* Manual QA with Chrome DevTools MCP is still blocked by the DevTools MCP Chrome profile already running:\n  `C:\\Users\\andre\\.cache\\chrome-devtools-mcp\\chrome-profile`.\n* The MCP could not list pages or open a new page, and the related Chrome process could not be safely identified from this environment.\n\nDecision:\n\n* Keep `SST-30` in review.\n* Do not transition to `Listo` until manual QA is executed and recorded, or an explicit exception is approved.\n\nEvidence:\n\n* `evidence/requests/CR-SST-0098/closure-readiness.md`\n* `evidence/requests/CR-SST-0098/manual-qa-chrome-devtools-attempt.md`\n* `evidence/requests/CR-SST-0098/owner-documentation-enforcement.md`\n* `evidence/requests/CR-SST-0098/validation-results.md`\n\n",
+    "updateAuthor": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "created": "2026-07-03T02:55:18.880-0300",
+    "updated": "2026-07-03T02:55:18.880-0300",
+    "jsdPublic": true
+  },
+  "externalWrite": true
+}

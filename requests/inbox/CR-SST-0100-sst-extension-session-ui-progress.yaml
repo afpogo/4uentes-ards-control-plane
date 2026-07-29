@@ -1,0 +1,18 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0100"
+title: "Show session capture progress and per-tab degradations"
+status: inbox
+created_at: "2026-07-02"
+requester: "4uentes"
+
+business_context: >
+  Users need visible feedback for session capture quality so textual fallback
+  and partial failures are not mistaken for complete visual capture.
+
+requested_change: >
+  Update sst-extension UI to show session capture progress, counts and per-tab
+  degradation states without exposing captured private content.
+
+expected_outcome: >
+  The extension surface makes capture status understandable and actionable.

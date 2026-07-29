@@ -43,8 +43,8 @@ function requireEvidenceArgs(args) {
   if (!requestId) {
     throw new Error('El argumento --request-id es obligatorio para comandos Jira operativos.');
   }
-  if (!/^CR-SST-\d{4}$/.test(requestId)) {
-    throw new Error('El argumento --request-id debe tener formato CR-SST-****.');
+  if (!/^CR-(SST|CP)-\d{4}$/.test(requestId)) {
+    throw new Error('El argumento --request-id debe tener formato CR-SST-**** o CR-CP-****.');
   }
   if (!outputDir) {
     throw new Error('El argumento --output-dir es obligatorio para comandos Jira operativos.');

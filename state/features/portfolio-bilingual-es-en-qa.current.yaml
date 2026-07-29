@@ -1,0 +1,24 @@
+schema_version: "1.0"
+kind: "feature_state"
+id: "portfolio-bilingual-es-en-qa"
+title: "Portfolio Bilingual ES EN QA"
+status: "validated-local"
+updated_at: "2026-07-05"
+solution_id: "4uentes"
+affected_services:
+  - 4uentes-portfolio
+request_ids:
+  - CR-4UENTES-0024
+capability_refs:
+  - "portfolio-bilingual-es-en-qa"
+spec_refs:
+  - "requests/planned/CR-4UENTES-0024-portfolio-bilingual-es-en-qa.yaml"
+  - "initiatives/INIT-FUENTES-0001-portfolio-product-i18n-and-jira-foundation.yaml"
+  - "initiatives/INIT-PORTFOLIO-0001-portfolio-publication-readiness.yaml"
+evidence_refs:
+  - "evidence/requests/CR-4UENTES-0024/qa-results.md"
+  - "evidence/requests/CR-4UENTES-0024/changed-files-summary.md"
+  - "evidence/requests/CR-4UENTES-0024/validation-results.md"
+open_gaps:
+  - "Browser visual QA with real click interaction remains recommended before closing the Jira mirror."
+  - "Record any remaining visual or copy defects for follow-up during CR-4UENTES-0024 review."

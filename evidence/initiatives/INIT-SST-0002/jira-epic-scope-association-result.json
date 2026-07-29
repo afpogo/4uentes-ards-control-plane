@@ -1,0 +1,50 @@
+{
+  "initiativeId": "INIT-SST-0002",
+  "epicKey": "SST-25",
+  "results": [
+    {
+      "issueKey": "SST-10",
+      "action": "parent-set",
+      "parent": "SST-25",
+      "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10018\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10018\",\"key\":\"SST-10\",\"fields\":{\"summary\":\"[SST][feature-state] Completar validacion live y cierre de gobernanza de SST Dictionary Tags\",\"issuetype\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issuetype/10008\",\"id\":\"10008\",\"description\":\"Un trabajo pequeño e independiente.\",\"iconUrl\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/2/universal_avatar/view/type/issuetype/avatar/10318?size=medium\",\"name\":\"Tarea\",\"subtask\":false,\"avatarId\":10318,\"entityId\":\"[cloudId-redacted]\",\"hierarchyLevel\":0},\"components\":[],\"created\":\"2026-06-06T09:48:34.911-0300\",\"description\":\"Estado actual: validated-live.\\n\\nResultado:\\n\\n* SST Dictionary Tags quedo validado en runtime local bajo CR-SST-0064.\\n* Backend, BFF y frontend pasaron validacion local-live.\\n* dictionary-tags avanzo de validated-local a validated-live en el control-plane.\\n\\nEvidencia principal:\\n\\n* requests/done/CR-SST-0064-dictionary-tags-validated-live-closure.yaml\\n* evidence/requests/CR-SST-0064/runtime-validation-results.md\\n* evidence/requests/CR-SST-0064/qa-manual-dictionary-management-created-entry.png\\n* state/features/dictionary-tags.current.yaml\\n\\nValidaciones ejecutadas:\\n\\n* sst-bend: npm.cmd run test:diccionario -> PASS 10/10\\n* sst-bend: npm.cmd run test:diccionario:stage2 -> PASS 9/9\\n* sst-bend: npm.cmd run test:diccionario:stage3 -> PASS 11/11\\n* sst-bend: npm.cmd run qa:diccionario:stage3 -> PASS\\n* sst-bend: npm.cmd run check -> PASS\\n* 4uentes-auth: npm.cmd run check -> PASS\\n* BFF /api/diccionario/\\\\* smoke -> PASS\\n* sst-fend: npm.cmd run check -> PASS, 24 suites / 142 tests\\n* Chrome DevTools /dictionary manual QA -> PASS\\n* 4uentes-orchestor: npm.cmd run check -> PASS, 0 fails\\n\\nGaps aceptados fuera de este cierre:\\n\\n* TagDefinition public CRUD/governance queda para request futuro.\\n* sst-extension account-context queda como follow-up no bloqueante.\\n* Encryption-at-rest, offline model, translations y aliases quedan fuera de este validated-live closure.\\n\\nFuente canonica:\\n\\n* El control-plane ARDS/SDD conserva la fuente canonica. Jira es superficie operativa de visibilidad.\\n\\n\",\"project\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/project/10001\",\"id\":\"10001\",\"key\":\"SST\",\"name\":\"SST-Team\",\"projectTypeKey\":\"software\",\"simplified\":true,\"avatarUrls\":{\"48x48\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/universal_avatar/view/type/project/avatar/10416\",\"24x24\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/universal_avatar/view/type/project/avatar/10416?size=small\",\"16x16\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/universal_avatar/view/type/project/avatar/10416?size=xsmall\",\"32x32\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/universal_avatar/view/type/project/avatar/10416?size=medium\"}},\"reporter\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]\",\"accountId\": \"[accountId-redacted]\",\"emailAddress\":\"[email-redacted]\",\"avatarUrls\":{\"48x48\":\"[avatar-url-redacted]\",\"24x24\":\"[avatar-url-redacted]\",\"16x16\":\"[avatar-url-redacted]\",\"32x32\":\"[avatar-url-redacted]\"},\"displayName\":\"Fuentes Sandferand\",\"active\":true,\"timeZone\":\"America/Buenos_Aires\",\"accountType\":\"atlassian\"},\"priority\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/priority/3\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"Medium\",\"id\":\"3\"},\"resolution\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/resolution/10000\",\"id\":\"10000\",\"description\":\"Se ha terminado el trabajo relacionado con esta incidencia.\",\"name\":\"Listo\"},\"labels\":[\"ards-sdd\",\"control-plane\",\"done\",\"feature-state\",\"validated-live\"],\"assignee\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]\",\"accountId\": \"[accountId-redacted]\",\"emailAddress\":\"[email-redacted]\",\"avatarUrls\":{\"48x48\":\"[avatar-url-redacted]\",\"24x24\":\"[avatar-url-redacted]\",\"16x16\":\"[avatar-url-redacted]\",\"32x32\":\"[avatar-url-redacted]\"},\"displayName\":\"Fuentes Sandferand\",\"active\":true,\"timeZone\":\"America/Buenos_Aires\",\"accountType\":\"atlassian\"},\"updated\":\"2026-06-28T18:46:34.042-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10008\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"Finalizada\",\"id\":\"10008\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/3\",\"id\":3,\"key\":\"done\",\"colorName\":\"green\",\"name\":\"Listo\"}}}}"
+    },
+    {
+      "issueKey": "SST-20",
+      "action": "parent-set",
+      "parent": "SST-25",
+      "raw": "{\"error\":true,\"message\":\"{\\\"errorMessages\\\":[],\\\"errors\\\":{\\\"pid\\\":\\\"Las incidencias con este tipo de incidencia deben crearse en el mismo proyecto que la incidencia principal.\\\"}}\",\"rateLimit\":{\"limit\":300,\"remaining\":299,\"headers\":{\"x-ratelimit-limit\":\"300\",\"x-ratelimit-remaining\":\"299\"}}}"
+    },
+    {
+      "issueKey": "SST-21",
+      "action": "parent-set",
+      "parent": "SST-25",
+      "raw": "{\"error\":true,\"message\":\"{\\\"errorMessages\\\":[],\\\"errors\\\":{\\\"pid\\\":\\\"Las incidencias con este tipo de incidencia deben crearse en el mismo proyecto que la incidencia principal.\\\"}}\",\"rateLimit\":{\"limit\":300,\"remaining\":298,\"headers\":{\"x-ratelimit-limit\":\"300\",\"x-ratelimit-remaining\":\"298\"}}}"
+    },
+    {
+      "issueKey": "SST-22",
+      "action": "parent-set",
+      "parent": "SST-25",
+      "raw": "{\"error\":true,\"message\":\"{\\\"errorMessages\\\":[],\\\"errors\\\":{\\\"pid\\\":\\\"Las incidencias con este tipo de incidencia deben crearse en el mismo proyecto que la incidencia principal.\\\"}}\",\"rateLimit\":{\"limit\":300,\"remaining\":297,\"headers\":{\"x-ratelimit-limit\":\"300\",\"x-ratelimit-remaining\":\"297\"}}}"
+    },
+    {
+      "issueKey": "SST-23",
+      "action": "parent-set",
+      "parent": "SST-25",
+      "raw": "{\"error\":true,\"message\":\"{\\\"errorMessages\\\":[],\\\"errors\\\":{\\\"pid\\\":\\\"Las incidencias con este tipo de incidencia deben crearse en el mismo proyecto que la incidencia principal.\\\"}}\",\"rateLimit\":{\"limit\":300,\"remaining\":299,\"headers\":{\"x-ratelimit-limit\":\"300\",\"x-ratelimit-remaining\":\"299\"}}}"
+    },
+    {
+      "issueKey": "SST-24",
+      "action": "parent-set",
+      "parent": "SST-25",
+      "raw": "{\"error\":true,\"message\":\"{\\\"errorMessages\\\":[],\\\"errors\\\":{\\\"pid\\\":\\\"Las incidencias con este tipo de incidencia deben crearse en el mismo proyecto que la incidencia principal.\\\"}}\",\"rateLimit\":{\"limit\":300,\"remaining\":298,\"headers\":{\"x-ratelimit-limit\":\"300\",\"x-ratelimit-remaining\":\"298\"}}}"
+    }
+  ],
+  "createdTask": {
+    "action": "created",
+    "issueKeys": [
+      "SST-26"
+    ],
+    "summary": "[SST][CR-SST-0086] Dictionary Secrets release readiness",
+    "raw": "{\"id\":\"10064\",\"key\":\"SST-26\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10064\"}"
+  }
+}

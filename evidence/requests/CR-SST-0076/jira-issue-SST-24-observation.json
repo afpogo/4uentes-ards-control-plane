@@ -1,0 +1,47 @@
+{
+  "issueKey": "SST-24",
+  "issue": {
+    "summary": "[SST-4][CR-SST-0076] Dictionary adoption and global closure",
+    "status": "En curso",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "Fuentes Sandferand",
+    "updated": "2026-06-23T21:42:44.221-0300",
+    "labels": [
+      "active-work",
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0076",
+      "sst-tags-governance",
+      "subtask"
+    ],
+    "description": "Subtask under `SST-4` for the final governed tags closure slice.\n\n* CR: `CR-SST-0076`\n* Scope: dictionary adoption and global governance closure.\n* Source request: `requests/planned/CR-SST-0076-dictionary-adoption-and-governed-closure.yaml`.\n* Goal: adopt or reconcile Diccionario against the global tags model and prepare SST-4 closure evidence.\n* Dependencies closed: `CR-SST-0072`, `CR-SST-0073`, `CR-SST-0074`, `CR-SST-0075`.\n\nExecution guardrails:\n\n* Preserve `dictionary-tags` validated-live behavior.\n* Do not regress legacy dictionary readers while reconciling global tag governance.\n* Keep `learning-content` and `bitacora` explicitly future/reserved scopes.\n* Close `SST-4` only after evidence supports the global governed tags closure.\n\nCanonical control-plane refs:\n\n* `docs/requests/sst-tags-governance-contract.md`\n* `state/features/sst-tags-governance.current.yaml`\n* `state/features/dictionary-tags.current.yaml`\n* `requests/planned/CR-SST-0076-dictionary-adoption-and-governed-closure.yaml`\n\n",
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10032\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10032\",\"key\":\"SST-24\",\"fields\":{\"summary\":\"[SST-4][CR-SST-0076] Dictionary adoption and global closure\",\"description\":\"Subtask under `SST-4` for the final governed tags closure slice.\\n\\n* CR: `CR-SST-0076`\\n* Scope: dictionary adoption and global governance closure.\\n* Source request: `requests/planned/CR-SST-0076-dictionary-adoption-and-governed-closure.yaml`.\\n* Goal: adopt or reconcile Diccionario against the global tags model and prepare SST-4 closure evidence.\\n* Dependencies closed: `CR-SST-0072`, `CR-SST-0073`, `CR-SST-0074`, `CR-SST-0075`.\\n\\nExecution guardrails:\\n\\n* Preserve `dictionary-tags` validated-live behavior.\\n* Do not regress legacy dictionary readers while reconciling global tag governance.\\n* Keep `learning-content` and `bitacora` explicitly future/reserved scopes.\\n* Close `SST-4` only after evidence supports the global governed tags closure.\\n\\nCanonical control-plane refs:\\n\\n* `docs/requests/sst-tags-governance-contract.md`\\n* `state/features/sst-tags-governance.current.yaml`\\n* `state/features/dictionary-tags.current.yaml`\\n* `requests/planned/CR-SST-0076-dictionary-adoption-and-governed-closure.yaml`\\n\\n\",\"assignee\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]\",\"accountId\": \"[accountId-redacted]\",\"emailAddress\":\"[email-redacted]\",\"avatarUrls\":{\"48x48\":\"[avatar-url-redacted]\",\"24x24\":\"[avatar-url-redacted]\",\"16x16\":\"[avatar-url-redacted]\",\"32x32\":\"[avatar-url-redacted]\"},\"displayName\":\"Fuentes Sandferand\",\"active\":true,\"timeZone\":\"America/Buenos_Aires\",\"accountType\":\"atlassian\"},\"resolution\":null,\"updated\":\"2026-06-23T21:42:44.221-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10006\",\"description\":\"La persona asignada está trabajando actualmente en esta actividad.\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En curso\",\"id\":\"10006\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"active-work\",\"ards-sdd\",\"control-plane\",\"cr-sst-0076\",\"sst-tags-governance\",\"subtask\"]}}"
+  },
+  "transitions": [
+    {
+      "id": "11",
+      "name": "Por hacer",
+      "toStatus": "Tareas por hacer",
+      "toStatusCategory": "Por hacer"
+    },
+    {
+      "id": "21",
+      "name": "En curso",
+      "toStatus": "En curso",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "31",
+      "name": "In Review",
+      "toStatus": "En revisión",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "41",
+      "name": "Listo",
+      "toStatus": "Finalizada",
+      "toStatusCategory": "Listo"
+    }
+  ]
+}

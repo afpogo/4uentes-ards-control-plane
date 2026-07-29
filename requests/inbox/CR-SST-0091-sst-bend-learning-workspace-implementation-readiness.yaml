@@ -1,0 +1,25 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0091"
+title: "Prepare sst-bend LearningWorkspace implementation"
+status: inbox
+created_at: "2026-06-29"
+requester: "4uentes"
+
+business_context: >
+  CR-SST-0090 defined SST LearningWorkspace as the governed runtime container
+  for accepted learning context. The next step is to prepare the sst-bend
+  implementation with concrete backend scope, API contract, persistence gates,
+  tests, and rollback expectations before modifying the child repository.
+
+requested_change: >
+  Create the sst-bend implementation readiness request for LearningWorkspace.
+  The request must name the backend responsibilities, discovery checklist,
+  internal APIs, data model expectations, authorization rules, idempotency
+  rules, and validation gates required before any runtime mutation.
+
+expected_outcome: >
+  The control-plane has an auditable implementation gate for sst-bend. A later
+  execution can modify sst-bend only after confirming target files, tests,
+  migration strategy, rollback, and proof that preview-only content cannot enter
+  durable recall before approval.

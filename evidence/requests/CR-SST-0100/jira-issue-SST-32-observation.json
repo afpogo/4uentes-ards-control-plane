@@ -1,0 +1,47 @@
+{
+  "issueKey": "SST-32",
+  "issue": {
+    "summary": "[SST][INIT-SST-0003][CR-SST-0100] Show session capture progress and per-tab degradations",
+    "status": "En curso",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "Fuentes Sandferand",
+    "updated": "2026-07-04T15:08:20.486-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0100",
+      "extension-ui",
+      "init-sst-0003",
+      "sst-extension"
+    ],
+    "description": "CR: CR-SST-0100  \nInitiative: INIT-SST-0003  \nEpic: SST-29\n\nPurpose:\n\nShow session capture progress and per-tab degradation metadata in `sst-extension`\nso users can understand whether each tab was captured as visual PDF or textual  \nfallback, without exposing private page content.\n\nScope:\n\n* Surface session capture progress in popup/sidepanel.\n* Show aggregate counts for visual PDF captures, textual PDF fallback and  \n  degraded tabs.\n* Show per-tab sanitized warning metadata based on local snapshot fields from\n  `CR-SST-0099`: `outcome`, `captureMode`, `warnings`.\n* Preserve retry, restore and delete actions.\n* Keep all metadata local to the extension UI unless an existing contract already  \n  exposes it.\n* Update `sst-extension` owner specs/docs for observable UI behavior.\n\nOut of scope:\n\n* No backend/BFF contract changes.\n* No `node-auth` mutation.\n* No `sst-bend` mutation.\n* No real private page text, cookies, JWTs, secrets, raw PDFs or credentials in  \n  Jira or ARDS/SDD evidence.\n* No LearningWorkspace handoff implementation in this CR.\n\nSubtasks / checklist:\n\n* \\[ \\] Analyze current popup/sidepanel session queue UI.\n* \\[ \\] Define presentation helpers for visual/text/degraded counts.\n* \\[ \\] Render per-tab sanitized degradation metadata.\n* \\[ \\] Preserve retry/restore/delete controls.\n* \\[ \\] Add focused tests for presentation helpers and UI state.\n* \\[ \\] Update owner docs/specs or record an explicit owner-documentation exception.\n* \\[ \\] Run `pnpm.cmd check` in `sst-extension`.\n* \\[ \\] Run `npm.cmd run check` in `4uentes-orchestor`.\n\nDefinition of Done:\n\n- [ ] The user can understand capture quality per session.\n- [ ] Per-tab metadata does not expose private content.\n- [ ] Existing session queue actions remain available.\n- [ ] Owner documentation gate passes.\n- [ ] Jira is updated as mirror; ARDS/SDD remains source of truth.\n\n",
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10070\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10070\",\"key\":\"SST-32\",\"fields\":{\"summary\":\"[SST][INIT-SST-0003][CR-SST-0100] Show session capture progress and per-tab degradations\",\"description\":\"CR: CR-SST-0100  \\nInitiative: INIT-SST-0003  \\nEpic: SST-29\\n\\nPurpose:\\n\\nShow session capture progress and per-tab degradation metadata in `sst-extension`\\nso users can understand whether each tab was captured as visual PDF or textual  \\nfallback, without exposing private page content.\\n\\nScope:\\n\\n* Surface session capture progress in popup/sidepanel.\\n* Show aggregate counts for visual PDF captures, textual PDF fallback and  \\n  degraded tabs.\\n* Show per-tab sanitized warning metadata based on local snapshot fields from\\n  `CR-SST-0099`: `outcome`, `captureMode`, `warnings`.\\n* Preserve retry, restore and delete actions.\\n* Keep all metadata local to the extension UI unless an existing contract already  \\n  exposes it.\\n* Update `sst-extension` owner specs/docs for observable UI behavior.\\n\\nOut of scope:\\n\\n* No backend/BFF contract changes.\\n* No `node-auth` mutation.\\n* No `sst-bend` mutation.\\n* No real private page text, cookies, JWTs, secrets, raw PDFs or credentials in  \\n  Jira or ARDS/SDD evidence.\\n* No LearningWorkspace handoff implementation in this CR.\\n\\nSubtasks / checklist:\\n\\n* \\\\[ \\\\] Analyze current popup/sidepanel session queue UI.\\n* \\\\[ \\\\] Define presentation helpers for visual/text/degraded counts.\\n* \\\\[ \\\\] Render per-tab sanitized degradation metadata.\\n* \\\\[ \\\\] Preserve retry/restore/delete controls.\\n* \\\\[ \\\\] Add focused tests for presentation helpers and UI state.\\n* \\\\[ \\\\] Update owner docs/specs or record an explicit owner-documentation exception.\\n* \\\\[ \\\\] Run `pnpm.cmd check` in `sst-extension`.\\n* \\\\[ \\\\] Run `npm.cmd run check` in `4uentes-orchestor`.\\n\\nDefinition of Done:\\n\\n- [ ] The user can understand capture quality per session.\\n- [ ] Per-tab metadata does not expose private content.\\n- [ ] Existing session queue actions remain available.\\n- [ ] Owner documentation gate passes.\\n- [ ] Jira is updated as mirror; ARDS/SDD remains source of truth.\\n\\n\",\"assignee\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]\",\"accountId\": \"[accountId-redacted]\",\"emailAddress\":\"[email-redacted]\",\"avatarUrls\":{\"48x48\":\"[avatar-url-redacted]\",\"24x24\":\"[avatar-url-redacted]\",\"16x16\":\"[avatar-url-redacted]\",\"32x32\":\"[avatar-url-redacted]\"},\"displayName\":\"Fuentes Sandferand\",\"active\":true,\"timeZone\":\"America/Buenos_Aires\",\"accountType\":\"atlassian\"},\"resolution\":null,\"updated\":\"2026-07-04T15:08:20.486-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10006\",\"description\":\"La persona asignada está trabajando actualmente en esta actividad.\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En curso\",\"id\":\"10006\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-sst-0100\",\"extension-ui\",\"init-sst-0003\",\"sst-extension\"]}}"
+  },
+  "transitions": [
+    {
+      "id": "11",
+      "name": "Por hacer",
+      "toStatus": "Tareas por hacer",
+      "toStatusCategory": "Por hacer"
+    },
+    {
+      "id": "21",
+      "name": "En curso",
+      "toStatus": "En curso",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "31",
+      "name": "In Review",
+      "toStatus": "En revisión",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "41",
+      "name": "Listo",
+      "toStatus": "Finalizada",
+      "toStatusCategory": "Listo"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "initiativeId": "INIT-SST-0002",
+  "issueKeys": [
+    "SST-25"
+  ],
+  "summary": "[SST][INIT-SST-0002] SST Dictionary Management",
+  "raw": "{\"id\":\"10063\",\"key\":\"SST-25\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10063\"}"
+}

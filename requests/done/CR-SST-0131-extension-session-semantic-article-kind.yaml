@@ -1,0 +1,45 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0131"
+title: "Preserve semantic article kind in extension sessions"
+status: done
+source_request: "requests/inbox/CR-SST-0131-extension-session-semantic-article-kind.yaml"
+planned_request: "requests/planned/CR-SST-0131-extension-session-semantic-article-kind.yaml"
+completed_at: "2026-07-12"
+requester: "4uentes"
+summary: "Extension sessions now carry semantic article kind independently from snapshot format."
+scope:
+  solution: "sst"
+  services_modified: ["sst-extension", "node-auth", "sst-bend", "4uentes-orchestor"]
+  functional_repositories_modified: true
+  runtime_code_modified: true
+implementation:
+  initiative_id: "INIT-SST-0005"
+  jira_epic_key: "SST-57"
+  jira_parent_issue_key: "SST-58"
+  jira_issue_key: "SST-61"
+  jira_status_observed: "Listo"
+  jira_source_of_truth: false
+  completed_slice: "Session tabs carry optional web/text semantics and capture mode with explicit legacy fallback."
+owner_documentation:
+  status: "satisfied"
+  owner_repos: ["sst-extension", "node-auth", "sst-bend"]
+  evidence_refs:
+    - "evidence/requests/CR-SST-0131/owner-documentation-summary.md"
+validation:
+  status: "validated-local"
+  passed:
+    - "sst-extension pnpm.cmd check: 26 files and 106 tests"
+    - "node-auth npm.cmd run check"
+    - "sst-bend npm.cmd run check"
+    - "Restored node-auth JWKS HTTP 200"
+evidence_refs:
+  - "evidence/requests/CR-SST-0131/implementation.md"
+  - "evidence/requests/CR-SST-0131/node-auth-validation.md"
+  - "evidence/requests/CR-SST-0131/sst-extension-validation.md"
+  - "evidence/requests/CR-SST-0131/sst-bend-validation.md"
+  - "evidence/requests/CR-SST-0131/owner-documentation-summary.md"
+decision:
+  status: "closed-local"
+  approver: "4uentes"
+  note: "Validated locally; no historical migration, release or publication is implied."

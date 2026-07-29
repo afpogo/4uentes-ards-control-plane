@@ -1,7 +1,7 @@
-# CR-SST-0077 Validation Results
+# CR-SST-0077 Resultados De Validacion
 
 - Request: `CR-SST-0077`
-- Checked at: `2026-06-13`
+- Validado en: `2026-06-13`
 
 - `4uentes-ards-core: npm.cmd run mcp:build` -> `passed`
 - `4uentes-ards-core: npm.cmd run mcp:smoke` -> `failed`

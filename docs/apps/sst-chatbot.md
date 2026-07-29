@@ -1,13 +1,13 @@
 # sst-chatbot
 
-## Catalog Role
+## Rol En El Catalogo
 
-`sst-chatbot` is the SST agent runtime and integration repository. It owns
-provider-agnostic agent contracts, private prompt handling, retrieval/RAG
-contracts, generated ARDS/SDD workspace proposals, and structured handoff
-payloads for `4uentes-orchestor`.
+`sst-chatbot` es el runtime agentico y repositorio de integracion de SST. Es
+dueno de contratos agenticos provider-agnostic, manejo de prompts privados,
+contratos de retrieval/RAG, propuestas de workspaces ARDS/SDD generados y
+payloads estructurados de handoff hacia `4uentes-orchestor`.
 
-The control plane catalogs it as:
+El control-plane lo cataloga como:
 
 - service: `sst-chatbot`
 - service kind: `agent-runtime`
@@ -15,18 +15,19 @@ The control plane catalogs it as:
 - solution: `sst`
 - status: `active`
 
-`backend-api` is used because the current ARDS standard models repos that
-publish runtime or cross-repo capabilities as backend capability producers.
+`backend-api` se usa porque el standard ARDS vigente modela repos que publican
+capabilities runtime o cross-repo como productores backend.
 
-## Source Refs
+## Referencias Fuente
 
-- Catalog: `catalog/services/sst-chatbot.yaml`
-- Local binding evidence: `inventory/evidence/git/sst-chatbot.md`
-- Orchestrator inbound capability:
+- Catalogo: `catalog/services/sst-chatbot.yaml`
+- Evidencia de binding local: `inventory/evidence/git/sst-chatbot.md`
+- Capability inbound del orchestrator:
   `specs/capabilities/inbound/4uentes-orchestor--sst-chatbot-agent-handoff.yaml`
-- State: `state/features/sst-chatbot.current.yaml`
+- Estado: `state/features/sst-chatbot.current.yaml`
+- Evidencia de reconciliacion: `evidence/requests/CR-SST-0082/`
 
-## Observed Child Capabilities
+## Capabilities Observadas En El Hijo
 
 - `provider-abstraction`
 - `ards-structure-generation`
@@ -40,11 +41,15 @@ publish runtime or cross-repo capabilities as backend capability producers.
 - `plaud-transcript-derivations`
 - `prompt-catalog-and-versioning`
 
-## Control Plane Boundary
+## Boundary Del Control-Plane
 
-`sst-chatbot` may propose structured operation intents and validated agent
-results. `4uentes-orchestor` owns acceptance, queueing, retry policy, execution
-timing, audit, and cross-repo reconciliation.
+`sst-chatbot` puede proponer operation intents estructurados y resultados
+agenticos validados. `4uentes-orchestor` conserva ownership sobre aceptacion,
+queueing, retry policy, timing de ejecucion, audit y reconciliacion cross-repo.
 
-The child repo has ARDS/SDD documentation and tests. Adoption of the explicit
-`orchestrator_link` metadata remains pending in the child repo.
+El repo hijo ya tiene documentacion ARDS/SDD, `docs/ai/policy.md` y adopcion
+documentada de `orchestrator_link` reconciliada bajo `CR-SST-0082`.
+
+El transporte runtime real sigue abierto. El adapter fake local continua siendo
+infraestructura de test hasta que un request aprobado seleccione HTTP, queue,
+worker u otro mecanismo explicito.

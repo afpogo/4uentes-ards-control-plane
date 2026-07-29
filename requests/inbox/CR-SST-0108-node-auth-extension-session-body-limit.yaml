@@ -1,0 +1,86 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0108"
+title: "Harden node-auth extension session payload ingestion"
+status: inbox
+created_at: "2026-07-04"
+requester: "4uentes"
+
+summary: >
+  Fix the node-auth gateway failure observed during SST-30 manual QA where
+  browser extension session submit reaches `/api/extension/sessions` but fails
+  before the handler with `PayloadTooLargeError` because multi-tab PDF
+  snapshots exceed the default 100 KB Express JSON body limit.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - "4uentes-auth"
+    - "4uentes-orchestor"
+  include_optional_services: false
+
+control_plane_context:
+  initiative_id: "INIT-SST-0003"
+  initiative_file: "initiatives/INIT-SST-0003-sst-extension-construction.yaml"
+  related_cr: "CR-SST-0098"
+  related_jira_issue_key: "SST-30"
+  jira_epic_key: "SST-29"
+  policy_ref: "docs/policies/owner-documentation-authority-policy.md"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "4uentes-auth"
+      via: "BF request parsing and extension session facade"
+      service_kind: "backend-for-frontend"
+      ards_kind: "auth-gateway"
+      status: "active"
+    - service_id: "4uentes-orchestor"
+      via: "request lifecycle, initiative tracking and evidence"
+      service_kind: "control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+  affected_ards:
+    - auth-gateway
+    - browser-extension-session-ingestion
+    - child-repo-owner-documentation
+  capabilities:
+    - "browser-extension-session-ingestion"
+  risks:
+    - id: REQUEST_BODY_MEMORY_PRESSURE
+      severity: high
+    - id: OVERBROAD_BODY_LIMIT
+      severity: medium
+    - id: OWNER_DOCS_STALE
+      severity: high
+
+requested_execution:
+  child_repo_mutation_requested: true
+  child_repo_mutation_target:
+    service_id: "4uentes-auth"
+    legacy_repo_alias: "node-auth"
+  owner_documentation_required: true
+  jira_write_requested: true
+
+recommended_approach:
+  immediate_slice: >
+    Keep the default Express body limit for general BF routes, add a
+    configurable larger JSON body limit only for `/api/extension/sessions`, and
+    normalize oversized request failures to HTTP 413 instead of generic 500.
+  scalability_follow_up: >
+    A future CR should replace JSON base64 multi-tab upload with chunked,
+    multipart, or object-storage-backed artifact ingestion. This CR does not
+    introduce that protocol change.
+
+validation:
+  required_checks:
+    - "node-auth npm.cmd run build"
+    - "node-auth npm.cmd run check"
+    - "4uentes-orchestor npm.cmd run check"
+    - "Manual retry from sst-extension session queue against localhost:8088"
+
+decision:
+  status: approved_by_user
+  approver: "4uentes"
+  approved_at: "2026-07-04"
+  note: "User approved opening a separate node-auth CR after SST-30 manual QA exposed the BF request-size limit."

@@ -1,0 +1,63 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-CP-0012"
+title: "Implement audit capsule and policy runtime runner MVP"
+status: "planned"
+created_at: "2026-07-10"
+requester: "4uentes"
+summary: >
+  Implement the MVP runner that executes selected policy runtime controls and
+  writes normalized Audit Capsule evidence for each run.
+control_plane_context:
+  initiative_id: "INIT-CP-0003"
+  parent_initiative_id: "INIT-CP-0001"
+  target_jira_epic_key: "ARDS-1"
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "4uentes-orchestor"
+      via: "audit capsule and runtime runner"
+      service_kind: "control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+  affected_ards:
+    - "audit-runtime"
+    - "audit-capsule"
+    - "policy-gate"
+required_context:
+  - "evidence/requests/CR-CP-0003/audit-runtime-policy-enforcement-review.md"
+  - "requests/planned/CR-CP-0008-audit-binding-and-pack-skeleton.yaml"
+  - "requests/planned/CR-CP-0009-policy-control-probe-gate-model.yaml"
+risk:
+  level: "medium"
+  score: 7
+  drivers:
+    - "runner must remain controlled and auditable"
+    - "gate mode must not apply remediations automatically"
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "single-control-plane-branch"
+  child_repo_mutation_allowed: false
+  core_repo_mutation_allowed: false
+  implementation_boundary: >
+    Implement read-only audit execution and evidence capture. Do not implement
+    automatic remediation.
+jira:
+  role: "mirror"
+  source_of_truth: false
+  project_key: "ARDS"
+  epic_key: "ARDS-13"
+  related_epic_key: "ARDS-1"
+  issue_key: "ARDS-11"
+validation:
+  required_checks:
+    - "4uentes-orchestor: npm.cmd run audit:policy -- --mode targeted"
+    - "4uentes-orchestor: npm.cmd run check"
+  evidence_required:
+    - "audit_capsule_contract"
+    - "runner_execution_summary"
+    - "validation_results"
+decision:
+  status: "pending"
+  approver: "TODO"

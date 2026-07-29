@@ -1,0 +1,41 @@
+schema_version: "1.0"
+kind: "state_read_model_adoption"
+id: "4uentes-orchestor-feature-bugfix-state-model"
+resource_id: "feature-bugfix-state-model"
+resource_class: "core-profile-scoped-living-resource"
+origin_repo: "4uentes-orchestor"
+canonical_owner: "4uentes-ards-core"
+applicability: >
+  Applies to 4uentes-orchestor because this repo owns the cross-repo request
+  lifecycle, feature_state and bugfix_state read-model, capability-state links,
+  and validation evidence.
+adoption_mode: "profile-required"
+adoption_status: "adopted"
+required_for_profiles:
+  - "control-plane"
+optional_for_profiles:
+  - "backend-api"
+  - "backend-bff"
+  - "frontend-web"
+  - "frontend-extension"
+  - "infra"
+  - "shared-auth-provider"
+template_binding:
+  feature_state: "templates/specs/states/feature-state.template.yaml"
+  bugfix_state: "templates/specs/states/bugfix-state.template.yaml"
+  states_index: "templates/specs/states/00-index.template.yaml"
+  state_machine: "templates/specs/states/state-machine.template.yaml"
+materialized_paths:
+  states_index: "state/00-index.yaml"
+  state_machine: "state/state-machine.yaml"
+  feature_states: "state/features/*.current.yaml"
+  bugfix_states: "state/bugfixes/*.current.yaml"
+  capability_links: "state/capability-links.yaml"
+validation:
+  command: "npm.cmd run check:state"
+  latest_evidence: "evidence/requests/CR-CP-0003/validation-results.md"
+request_refs:
+  - "CR-CP-0003"
+notes:
+  - "This adoption records a living resource, not a policy."
+  - "Child repo adoption remains request-driven and is not performed by CR-CP-0003."

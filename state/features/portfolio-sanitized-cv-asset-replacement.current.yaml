@@ -1,0 +1,24 @@
+schema_version: "1.0"
+kind: "feature_state"
+id: "portfolio-sanitized-cv-asset-replacement"
+title: "Portfolio Sanitized CV Asset Replacement"
+status: "blocked"
+updated_at: "2026-07-04"
+solution_id: "4uentes"
+affected_services:
+  - 4uentes-portfolio
+request_ids:
+  - CR-4UENTES-0018
+capability_refs:
+  - "portfolio-sanitized-cv-asset-replacement"
+spec_refs:
+  - "requests/planned/CR-4UENTES-0018-portfolio-sanitized-cv-asset-replacement.yaml"
+  - "initiatives/INIT-PORTFOLIO-0001-portfolio-publication-readiness.yaml"
+evidence_refs:
+  - "evidence/requests/CR-4UENTES-0018/sanitized-cv-replacement-gate.md"
+  - "evidence/requests/CR-4UENTES-0018/changed-files-summary.md"
+  - "evidence/requests/CR-4UENTES-0018/validation-results.md"
+open_gaps:
+  - "Owner must provide or approve a sanitized public CV PDF before download can be restored."
+  - "Future replacement must pass visible text and metadata checks before activation."
+  - "Run browser/screenshot publication QA after the replacement asset is accepted."

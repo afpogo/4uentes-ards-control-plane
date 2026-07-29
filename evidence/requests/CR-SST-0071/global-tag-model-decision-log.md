@@ -1,10 +1,10 @@
-# Global Tag Model Decision Log
+# Log De Decisiones Del Modelo Global De Tags
 
 ## Estado
 
 - Fecha: 2026-06-13
 - Request: CR-SST-0071
-- Modo: control-plane contract closure
+- Modo: cierre contractual de control-plane
 - Repos funcionales modificados: no
 - Jira write ejecutado: no
 

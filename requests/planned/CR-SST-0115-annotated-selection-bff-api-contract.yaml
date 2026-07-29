@@ -1,0 +1,88 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0115"
+title: "Define annotated selection BFF/API contract"
+status: done
+source_request: "requests/inbox/CR-SST-0115-annotated-selection-bff-api-contract.yaml"
+created_at: "2026-07-04"
+requester: "4uentes"
+
+summary: >
+  Define the cross-repo DTO and endpoint contract for annotated text selections.
+
+control_plane_context:
+  initiative_id: "INIT-SST-0001"
+  active_feature_state: "learning-content-tags"
+  parent_request_id: "CR-SST-0114"
+  jira_epic_key: "SST-27"
+  active_jira_issue_key: "SST-6"
+  jira_subtask_key: "SST-45"
+  current_jira_status_observed: "Por hacer"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "sst-fend"
+      via: "Future outbound annotated selection payload"
+      service_kind: "frontend-spa"
+      ards_kind: "frontend-web"
+      status: "active"
+    - service_id: "node-auth"
+      via: "BFF contract for annotated selection preview and accept"
+      service_kind: "bff"
+      ards_kind: "backend-service"
+      status: "active"
+    - service_id: "sst-bend"
+      via: "API contract for annotated selection persistence"
+      service_kind: "api"
+      ards_kind: "backend-service"
+      status: "active"
+  affected_ards:
+    - learning-content-tags
+    - bff-contract
+    - backend-api
+    - request-lifecycle
+  risks:
+    - id: CROSS_REPO_CONTRACT_DRIFT
+      severity: high
+
+execution:
+  requires_human_approval: false
+  allowed_window: manual
+  branch_strategy: "control-plane-first"
+  child_repo_mutation_allowed: false
+  implementation_boundary: >
+    This CR defines the contract only. Runtime BFF/API changes belong to
+    CR-SST-0116 or a follow-up implementation CR.
+  owner_documentation:
+    required: false
+    status: not-required-control-plane-only
+    owner_refs: []
+    evidence_refs:
+      - "evidence/requests/CR-SST-0115/intent-summary.md"
+      - "evidence/requests/CR-SST-0115/jira-sync-summary.md"
+
+required_checks:
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check"
+
+validation:
+  required_checks:
+    - "DTO fields for sourceRef, selector, tags, relevance and acceptance state are defined."
+    - "BFF remains the integration boundary."
+  evidence_required:
+    - "intent_summary"
+    - "jira_sync_summary"
+    - "annotated_selection_bff_api_contract"
+    - "implementation_boundary"
+    - "validation_results"
+
+decision:
+  status: closed-local
+  approver: "4uentes"
+  note: >
+    CR-SST-0115 closes locally as the annotated selection BFF/API contract for
+    SST-45. Jira remains a mirror and requires explicit synchronization once
+    Atlassian MCP tenant access is available.

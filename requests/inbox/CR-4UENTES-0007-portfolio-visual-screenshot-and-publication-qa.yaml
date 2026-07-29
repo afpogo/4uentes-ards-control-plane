@@ -1,0 +1,28 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-4UENTES-0007"
+title: "Portfolio visual screenshot and publication QA"
+status: "intake"
+created_at: "2026-07-04"
+requester: "4uentes"
+
+summary: >
+  Run manual Chrome DevTools QA for 4uentes-portfolio local dev preview and
+  remediate blockers that prevent route inspection.
+
+scope:
+  solution: "4uentes"
+  services:
+    - "4uentes-portfolio"
+  include_optional_services: false
+
+intent:
+  - "Start the portfolio dev server locally."
+  - "Connect Chrome DevTools MCP for manual browser QA."
+  - "Capture evidence for blank pages, console errors, network failures, and screenshots."
+  - "Fix small local preview blockers required to continue manual QA."
+
+validation:
+  required_checks:
+    - "4uentes-portfolio: npm.cmd run check"
+    - "4uentes-orchestor: npm.cmd run check"

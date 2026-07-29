@@ -1,0 +1,222 @@
+{
+  "requestId": "CR-SST-0074",
+  "issueKey": "SST-22",
+  "mode": "approved-write",
+  "transitionMode": "terminal",
+  "before": {
+    "summary": "[SST-4][CR-SST-0074] BFF tags governance facade",
+    "status": "En curso",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "Fuentes Sandferand",
+    "updated": "2026-06-20T01:05:07.258-0300",
+    "labels": [
+      "active-work",
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0074",
+      "sst-tags-governance",
+      "subtask"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10030\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10030\",\"key\":\"SST-22\",\"fields\":{\"summary\":\"[SST-4][CR-SST-0074] BFF tags governance facade\",\"description\":\"Subtask under `SST-4` for the next governed execution slice.\\n\\n* CR: `CR-SST-0074`\\n* Scope: `4uentes-auth` pass-through facade and minimal validation for governed tag endpoints.\\n* Source request: `requests/planned/CR-SST-0074-sst-tags-bff-facade.yaml`\\n* Goal: preserve JWT and account context while exposing the backend tags service without degrading payload shape.\\n* Dependency: API contract from `CR-SST-0073`.\\n\\n\",\"assignee\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]\",\"accountId\": \"[accountId-redacted]\",\"emailAddress\":\"[email-redacted]\",\"avatarUrls\":{\"48x48\":\"[avatar-url-redacted]\",\"24x24\":\"[avatar-url-redacted]\",\"16x16\":\"[avatar-url-redacted]\",\"32x32\":\"[avatar-url-redacted]\"},\"displayName\":\"Fuentes Sandferand\",\"active\":true,\"timeZone\":\"America/Buenos_Aires\",\"accountType\":\"atlassian\"},\"resolution\":null,\"updated\":\"2026-06-20T01:05:07.258-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10006\",\"description\":\"La persona asignada está trabajando actualmente en esta actividad.\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En curso\",\"id\":\"10006\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"active-work\",\"ards-sdd\",\"control-plane\",\"cr-sst-0074\",\"sst-tags-governance\",\"subtask\"]}}"
+  },
+  "after": {
+    "summary": "[SST-4][CR-SST-0074] BFF tags governance facade",
+    "status": "Finalizada",
+    "statusCategory": "Listo",
+    "resolution": "Listo",
+    "assignee": "Fuentes Sandferand",
+    "updated": "2026-06-20T13:26:36.748-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0074",
+      "done",
+      "sst-tags-governance",
+      "subtask",
+      "validated-live"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10030\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10030\",\"key\":\"SST-22\",\"fields\":{\"summary\":\"[SST-4][CR-SST-0074] BFF tags governance facade\",\"description\":\"Proceso de sincronizacion:\\n\\n* CR-SST-0074\\n\\nEstado actual: fachada BFF autenticada para SST Tags Governance validada tecnicamente con JWT real.\\n\\nResultado:\\n\\n* `4uentes-auth` expone y preserva la fachada `GET /api/tags/definitions`.\\n* `4uentes-auth` preserva `401` cuando falta bearer en el boundary de autenticacion.\\n* `4uentes-auth` preserva `409` en duplicate create semantics de `POST /api/tags/values`.\\n* `4uentes-auth` preserva `403` cuando un owner JWT real usa `x-active-account-id` inconsistente y fuera de scope.\\n* El cierre tecnico final no dependio de un usuario `member` real ni requirio cambios de runtime.\\n\\nCriterio de cierre tecnico cumplido:\\n\\n* Smoke baseline `200` sobre la fachada BFF ejecutado con JWT real.\\n* Smoke negativo `403` ejecutado con owner JWT real mas `x-active-account-id` ajeno.\\n* Boundaries `200`, `401`, `403` y `409` preservados sin drift funcional.\\n* Evidencia local actualizada y `4uentes-orchestor: npm.cmd run check` en PASS.\\n\\nEvidencia principal:\\n\\n* evidence/requests/CR-SST-0074/validation-results.md\\n* evidence/requests/CR-SST-0074/execution-start-notes.md\\n* evidence/requests/CR-SST-0074/jira-sst-22-start-transition-summary.md\\n\\nValidaciones ejecutadas:\\n\\n* `POST http://localhost:4000/api/auth/login`: PASS.\\n* `GET http://localhost:3005/4uentes/v1/me` con JWT real: PASS, role `owner`.\\n* `GET http://localhost:4000/api/tags/definitions?resourceType=articulo&limit=5`: PASS, `200`.\\n* `POST http://localhost:4000/api/tags/values` con `x-active-account-id` fuera de scope: PASS, `403`.\\n* `4uentes-orchestor: npm.cmd run check`: PASS.\\n\\nLimites explicitados:\\n\\n* El request local `CR-SST-0074` permanece `in_progress` hasta reconciliacion posterior del lifecycle del control-plane.\\n* Este paso transiciona Jira; no mueve aun el request local a `done`.\\n\\nNota de workflow:\\n\\n* El workflow permite cierre directo desde `En curso`; se solicita transicion terminal en este mismo paso.\\n\\nFuente canonica:\\n\\n* El control-plane ARDS/SDD conserva la fuente canonica. Jira es superficie operativa de visibilidad.\\n\\n\",\"assignee\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]\",\"accountId\": \"[accountId-redacted]\",\"emailAddress\":\"[email-redacted]\",\"avatarUrls\":{\"48x48\":\"[avatar-url-redacted]\",\"24x24\":\"[avatar-url-redacted]\",\"16x16\":\"[avatar-url-redacted]\",\"32x32\":\"[avatar-url-redacted]\"},\"displayName\":\"Fuentes Sandferand\",\"active\":true,\"timeZone\":\"America/Buenos_Aires\",\"accountType\":\"atlassian\"},\"resolution\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/resolution/10000\",\"id\":\"10000\",\"description\":\"Se ha terminado el trabajo relacionado con esta incidencia.\",\"name\":\"Listo\"},\"updated\":\"2026-06-20T13:26:36.748-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10008\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"Finalizada\",\"id\":\"10008\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/3\",\"id\":3,\"key\":\"done\",\"colorName\":\"green\",\"name\":\"Listo\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-sst-0074\",\"done\",\"sst-tags-governance\",\"subtask\",\"validated-live\"]}}"
+  },
+  "selectedTransition": {
+    "id": "41",
+    "name": "Listo",
+    "toStatus": "Finalizada",
+    "toStatusCategory": "Listo"
+  },
+  "transitions": [
+    {
+      "id": "11",
+      "name": "Por hacer",
+      "toStatus": "Tareas por hacer",
+      "toStatusCategory": "Por hacer"
+    },
+    {
+      "id": "21",
+      "name": "En curso",
+      "toStatus": "En curso",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "31",
+      "name": "In Review",
+      "toStatus": "En revisión",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "41",
+      "name": "Listo",
+      "toStatus": "Finalizada",
+      "toStatusCategory": "Listo"
+    }
+  ],
+  "labels": [
+    "ards-sdd",
+    "control-plane",
+    "cr-sst-0074",
+    "done",
+    "sst-tags-governance",
+    "subtask",
+    "validated-live"
+  ],
+  "editResult": {
+    "expand": "renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations",
+    "id": "10030",
+    "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10030",
+    "key": "SST-22",
+    "fields": {
+      "summary": "[SST-4][CR-SST-0074] BFF tags governance facade",
+      "issuetype": {
+        "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issuetype/10006",
+        "id": "10006",
+        "description": "Subtasks track small pieces of work that are part of a larger task.",
+        "iconUrl": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/2/universal_avatar/view/type/issuetype/avatar/10316?size=medium",
+        "name": "Subtask",
+        "subtask": true,
+        "avatarId": 10316,
+        "entityId": "[cloudId-redacted]",
+        "hierarchyLevel": -1
+      },
+      "components": [],
+      "created": "2026-06-13T11:34:50.225-0300",
+      "description": "Proceso de sincronizacion:\n\n* CR-SST-0074\n\nEstado actual: fachada BFF autenticada para SST Tags Governance validada tecnicamente con JWT real.\n\nResultado:\n\n* `4uentes-auth` expone y preserva la fachada `GET /api/tags/definitions`.\n* `4uentes-auth` preserva `401` cuando falta bearer en el boundary de autenticacion.\n* `4uentes-auth` preserva `409` en duplicate create semantics de `POST /api/tags/values`.\n* `4uentes-auth` preserva `403` cuando un owner JWT real usa `x-active-account-id` inconsistente y fuera de scope.\n* El cierre tecnico final no dependio de un usuario `member` real ni requirio cambios de runtime.\n\nCriterio de cierre tecnico cumplido:\n\n* Smoke baseline `200` sobre la fachada BFF ejecutado con JWT real.\n* Smoke negativo `403` ejecutado con owner JWT real mas `x-active-account-id` ajeno.\n* Boundaries `200`, `401`, `403` y `409` preservados sin drift funcional.\n* Evidencia local actualizada y `4uentes-orchestor: npm.cmd run check` en PASS.\n\nEvidencia principal:\n\n* evidence/requests/CR-SST-0074/validation-results.md\n* evidence/requests/CR-SST-0074/execution-start-notes.md\n* evidence/requests/CR-SST-0074/jira-sst-22-start-transition-summary.md\n\nValidaciones ejecutadas:\n\n* `POST http://localhost:4000/api/auth/login`: PASS.\n* `GET http://localhost:3005/4uentes/v1/me` con JWT real: PASS, role `owner`.\n* `GET http://localhost:4000/api/tags/definitions?resourceType=articulo&limit=5`: PASS, `200`.\n* `POST http://localhost:4000/api/tags/values` con `x-active-account-id` fuera de scope: PASS, `403`.\n* `4uentes-orchestor: npm.cmd run check`: PASS.\n\nLimites explicitados:\n\n* El request local `CR-SST-0074` permanece `in_progress` hasta reconciliacion posterior del lifecycle del control-plane.\n* Este paso transiciona Jira; no mueve aun el request local a `done`.\n\nNota de workflow:\n\n* El workflow permite cierre directo desde `En curso`; se solicita transicion terminal en este mismo paso.\n\nFuente canonica:\n\n* El control-plane ARDS/SDD conserva la fuente canonica. Jira es superficie operativa de visibilidad.\n\n",
+      "project": {
+        "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/project/10001",
+        "id": "10001",
+        "key": "SST",
+        "name": "SST-Team",
+        "projectTypeKey": "software",
+        "simplified": true,
+        "avatarUrls": {
+          "48x48": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/universal_avatar/view/type/project/avatar/10416",
+          "24x24": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/universal_avatar/view/type/project/avatar/10416?size=small",
+          "16x16": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/universal_avatar/view/type/project/avatar/10416?size=xsmall",
+          "32x32": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/universal_avatar/view/type/project/avatar/10416?size=medium"
+        }
+      },
+      "reporter": {
+        "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+        "accountId": "[accountId-redacted]",
+        "emailAddress": "[email-redacted]",
+        "avatarUrls": {
+          "48x48": "[avatar-url-redacted]",
+          "24x24": "[avatar-url-redacted]",
+          "16x16": "[avatar-url-redacted]",
+          "32x32": "[avatar-url-redacted]"
+        },
+        "displayName": "Fuentes Sandferand",
+        "active": true,
+        "timeZone": "America/Buenos_Aires",
+        "accountType": "atlassian"
+      },
+      "priority": {
+        "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/priority/3",
+        "iconUrl": "[jira-site-redacted]",
+        "name": "Medium",
+        "id": "3"
+      },
+      "resolution": null,
+      "labels": [
+        "ards-sdd",
+        "control-plane",
+        "cr-sst-0074",
+        "done",
+        "sst-tags-governance",
+        "subtask",
+        "validated-live"
+      ],
+      "assignee": {
+        "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+        "accountId": "[accountId-redacted]",
+        "emailAddress": "[email-redacted]",
+        "avatarUrls": {
+          "48x48": "[avatar-url-redacted]",
+          "24x24": "[avatar-url-redacted]",
+          "16x16": "[avatar-url-redacted]",
+          "32x32": "[avatar-url-redacted]"
+        },
+        "displayName": "Fuentes Sandferand",
+        "active": true,
+        "timeZone": "America/Buenos_Aires",
+        "accountType": "atlassian"
+      },
+      "updated": "2026-06-20T13:26:34.549-0300",
+      "status": {
+        "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10006",
+        "description": "La persona asignada está trabajando actualmente en esta actividad.",
+        "iconUrl": "[jira-site-redacted]",
+        "name": "En curso",
+        "id": "10006",
+        "statusCategory": {
+          "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4",
+          "id": 4,
+          "key": "indeterminate",
+          "colorName": "yellow",
+          "name": "En curso"
+        }
+      }
+    }
+  },
+  "transitionResult": {
+    "success": true
+  },
+  "commentResult": {
+    "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10030/comment/10041",
+    "id": "10041",
+    "author": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "body": "CR-SST cierre tecnico: CR-SST-0074\n\n`SST-22` queda listo para cierre operativo contra la evidencia local de `CR-SST-0074`.\n\nResumen:\n\n* La fachada BFF de governed tags en `4uentes-auth` fue validada con JWT real de `node-auth`.\n* `GET /api/tags/definitions` preservo `200`.\n* `GET /api/tags/definitions` sin bearer preservo `401` en el auth boundary del BF.\n* `POST /api/tags/values` preservo `409` en duplicate create semantics.\n* `POST /api/tags/values` preservo `403` cuando se uso owner JWT real con `x-active-account-id` inconsistente y fuera de scope.\n\nValidaciones clave:\n\n* `POST /api/auth/login`: PASS.\n* `GET /4uentes/v1/me` con JWT real: PASS, cuenta activa owner resuelta.\n* `GET /api/tags/definitions?resourceType=articulo&limit=5`: PASS 200.\n* `POST /api/tags/values` con `x-active-account-id` ajeno: PASS 403.\n* `4uentes-orchestor: npm.cmd run check`: PASS.\n\nEvidencia:\n\n* `evidence/requests/CR-SST-0074/validation-results.md`\n* `evidence/requests/CR-SST-0074/execution-start-notes.md`\n\nBefore status: En curso  \nTransition: Listo (41) \\[mode=terminal\\]\n\nNota: el lifecycle local del request sigue fuera de este paso; aqui solo se reconcilia la superficie Jira.",
+    "updateAuthor": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "created": "2026-06-20T13:26:36.748-0300",
+    "updated": "2026-06-20T13:26:36.748-0300",
+    "jsdPublic": true
+  },
+  "externalWrite": true
+}

@@ -1,0 +1,81 @@
+{
+  "issueKey": "SST-48",
+  "before": {
+    "summary": "[SST][CR-SST-0118] Validate annotable text entry end-to-end",
+    "status": "En curso",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-07-05T19:33:37.330-0300",
+    "labels": [
+      "ards-sdd",
+      "chrome-devtools",
+      "control-plane",
+      "cr-sst-0118",
+      "e2e-validation",
+      "init-sst-0001",
+      "learning-content-tags",
+      "subtask"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10086\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10086\",\"key\":\"SST-48\",\"fields\":{\"summary\":\"[SST][CR-SST-0118] Validate annotable text entry end-to-end\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-07-05T19:33:37.330-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10006\",\"description\":\"La persona asignada está trabajando actualmente en esta actividad.\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En curso\",\"id\":\"10006\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"ards-sdd\",\"chrome-devtools\",\"control-plane\",\"cr-sst-0118\",\"e2e-validation\",\"init-sst-0001\",\"learning-content-tags\",\"subtask\"]}}"
+  },
+  "after": {
+    "summary": "[SST][CR-SST-0118] Validate annotable text entry end-to-end",
+    "status": "En curso",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-07-05T19:36:36.031-0300",
+    "labels": [
+      "ards-sdd",
+      "chrome-devtools",
+      "control-plane",
+      "cr-sst-0118",
+      "e2e-validation",
+      "init-sst-0001",
+      "learning-content-tags",
+      "subtask"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10086\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10086\",\"key\":\"SST-48\",\"fields\":{\"summary\":\"[SST][CR-SST-0118] Validate annotable text entry end-to-end\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-07-05T19:36:36.031-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10006\",\"description\":\"La persona asignada está trabajando actualmente en esta actividad.\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En curso\",\"id\":\"10006\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"ards-sdd\",\"chrome-devtools\",\"control-plane\",\"cr-sst-0118\",\"e2e-validation\",\"init-sst-0001\",\"learning-content-tags\",\"subtask\"]}}"
+  },
+  "commentResult": {
+    "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10086/comment/10106",
+    "id": "10106",
+    "author": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "body": "# SST-48 / CR-SST-0118 - Revalidacion posterior a CR-SST-0122\n\nSe reejecuto la validacion en `/learning` despues de cerrar `CR-SST-0122 / SST-51`.\n\nResultado:\n\n* El bug backend de `accept(annotationIds)` por comparacion hash-vs-UUID ya no se reproduce.\n* En Chrome, `/learning` muestra la hoja, genera preview y permite aceptar.\n* Red:\n\n    * `POST /api/learning-workspaces/sources/preview`: 200.\n    * `POST /api/learning-workspaces/sources/{previewId}/accept`: 201.\n    * `GET /api/learning-workspaces/context`: 200.\n    \n* Consola: sin errores JavaScript relevantes.\n\nBloqueo residual:\n\n* El contexto aceptado visible queda con `annotations: []` y `contentBlocks: []`.\n* Esto no cumple todavia el E2E de SST-48, porque la intencion requiere validar contenido anotado aceptado y render/template con bloques/anotaciones.\n\nDecision:\n\n* No mover `SST-48` a `Listo`.\n* Mantener `SST-48` En curso.\n* Crear follow-up para corregir payload/render frontend si se confirma que la UI no envia o no consume las anotaciones esperadas.\n\nEvidencia ARDS/SDD:\n\n* `evidence/requests/CR-SST-0118/e2e-revalidation-after-cr-sst-0122-2026-07-05.md`\n* `evidence/requests/CR-SST-0118/chrome-learning-after-cr-sst-0122-2026-07-05.png`\n\n",
+    "updateAuthor": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "created": "2026-07-05T19:36:36.031-0300",
+    "updated": "2026-07-05T19:36:36.031-0300",
+    "jsdPublic": true
+  },
+  "commentBody": "# SST-48 / CR-SST-0118 - Revalidacion posterior a CR-SST-0122\n\nSe reejecuto la validacion en `/learning` despues de cerrar `CR-SST-0122 / SST-51`.\n\nResultado:\n\n- El bug backend de `accept(annotationIds)` por comparacion hash-vs-UUID ya no se reproduce.\n- En Chrome, `/learning` muestra la hoja, genera preview y permite aceptar.\n- Red:\n  - `POST /api/learning-workspaces/sources/preview`: 200.\n  - `POST /api/learning-workspaces/sources/{previewId}/accept`: 201.\n  - `GET /api/learning-workspaces/context`: 200.\n- Consola: sin errores JavaScript relevantes.\n\nBloqueo residual:\n\n- El contexto aceptado visible queda con `annotations: []` y `contentBlocks: []`.\n- Esto no cumple todavia el E2E de SST-48, porque la intencion requiere validar contenido anotado aceptado y render/template con bloques/anotaciones.\n\nDecision:\n\n- No mover `SST-48` a `Listo`.\n- Mantener `SST-48` En curso.\n- Crear follow-up para corregir payload/render frontend si se confirma que la UI no envia o no consume las anotaciones esperadas.\n\nEvidencia ARDS/SDD:\n\n- `evidence/requests/CR-SST-0118/e2e-revalidation-after-cr-sst-0122-2026-07-05.md`\n- `evidence/requests/CR-SST-0118/chrome-learning-after-cr-sst-0122-2026-07-05.png`\n",
+  "externalWrite": true
+}

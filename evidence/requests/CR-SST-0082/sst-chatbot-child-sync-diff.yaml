@@ -1,0 +1,69 @@
+schema_version: "0.1"
+kind: "ards_child_sync_diff"
+repo: "sst-chatbot"
+project_type: "backend-api"
+requested_contract_version: "latest"
+resolved_contract_version: "ards-core-contract-v0.1"
+binding_ref: "specs/ards/contract-binding.yaml"
+child_commit: "90a6272"
+evidence_manifest_hash: "ecedfaed9662ed1db381ee3b936301bcc9cffcdb62fb2fcb49c0327aa716dc85"
+sync_status: "synced"
+core_revision_decision: "no-core-change-needed"
+checked_at: "2026-06-21"
+source:
+  core_contract: "ards.get_sync_contract"
+  child_repo_ref: "inventory/evidence/git/sst-chatbot.md"
+  reconciliation_request: "CR-SST-0082"
+evidence_manifest:
+  required_paths:
+    present:
+      - "AGENTS.md"
+      - "docs/00-overview.md"
+      - "specs/00-index.yaml"
+      - "specs/ards/contract-binding.yaml"
+      - "specs/policies/00-index.yaml"
+      - "specs/integration/policies.yaml"
+      - "docs/policies/README.md"
+      - "docs/ai/policy.md"
+    missing: []
+  ards_sdd_hashes:
+    - path: "AGENTS.md"
+      sha256: "1c2071e6875bf494ac3886c41cf72ae59a37b6f64c8386e3a3716f65dda6cee7"
+    - path: "docs/00-overview.md"
+      sha256: "075ad9e40dcedca0697eb6873e20c49f1ba6ad04c1c8efe9b7704e51d7c23d8d"
+    - path: "specs/00-index.yaml"
+      sha256: "e0da5cf84616722e68bdcac27e824b8b7d95e47636a1c4a92db3c34970228fff"
+    - path: "specs/ards/contract-binding.yaml"
+      sha256: "e0103402a82babeb3c0a6a94a551f8899de6dd1ff0c95d2857abe698120bb8de"
+    - path: "specs/policies/00-index.yaml"
+      sha256: "bec39a10ca9ae38da08a7ca248d0a1cb734c7ac680c381ba13293a9aeed8604c"
+    - path: "specs/integration/policies.yaml"
+      sha256: "a378b50fb01eca14b8b5b7a801db12d41743936593b75fcccc973ef86c60d017"
+    - path: "docs/policies/README.md"
+      sha256: "f7e0dad0985077532f3905c190f284c9cba64879f67829831ddfaee740224fc7"
+    - path: "docs/ai/policy.md"
+      sha256: "15a6c1bb321d32f69405eff77c60f97fa2051aea6c08f5600228eaa3f31445cb"
+  yaml_status:
+    - path: "specs/00-index.yaml"
+      status: "valid"
+    - path: "specs/ards/contract-binding.yaml"
+      status: "valid"
+    - path: "specs/policies/00-index.yaml"
+      status: "valid"
+    - path: "specs/integration/policies.yaml"
+      status: "valid"
+  local_todos_or_exceptions: []
+summary:
+  missing_in_child: 0
+  extra_or_stale_in_child: 0
+  candidate_for_core: 0
+  conflicts: 0
+items:
+  - id: "docs-ai-policy-gap"
+    previous_evidence_ref: "evidence/requests/CR-SST-0077/sst-chatbot-child-sync-diff.yaml"
+    previous_status: "needs-child-update"
+    current_status: "synced"
+    resolved_by: "sst-chatbot/docs/ai/policy.md"
+recommended_actions:
+  - "Do not promote runtime handoff capability beyond draft until a real transport is selected."
+

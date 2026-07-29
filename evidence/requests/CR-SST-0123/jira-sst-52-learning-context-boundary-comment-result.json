@@ -1,0 +1,83 @@
+{
+  "issueKey": "SST-52",
+  "before": {
+    "summary": "[SST][CR-SST-0123] Fix LearningWorkspace annotated context render",
+    "status": "En curso",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-07-07T14:08:43.383-0300",
+    "labels": [
+      "ards-sdd",
+      "bugfix",
+      "control-plane",
+      "cr-sst-0123",
+      "frontend",
+      "init-sst-0001",
+      "learning-content-tags",
+      "sst-fend",
+      "subtask"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10097\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10097\",\"key\":\"SST-52\",\"fields\":{\"summary\":\"[SST][CR-SST-0123] Fix LearningWorkspace annotated context render\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-07-07T14:08:43.383-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10006\",\"description\":\"La persona asignada está trabajando actualmente en esta actividad.\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En curso\",\"id\":\"10006\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"ards-sdd\",\"bugfix\",\"control-plane\",\"cr-sst-0123\",\"frontend\",\"init-sst-0001\",\"learning-content-tags\",\"sst-fend\",\"subtask\"]}}"
+  },
+  "after": {
+    "summary": "[SST][CR-SST-0123] Fix LearningWorkspace annotated context render",
+    "status": "En curso",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-07-07T17:19:08.142-0300",
+    "labels": [
+      "ards-sdd",
+      "bugfix",
+      "control-plane",
+      "cr-sst-0123",
+      "frontend",
+      "init-sst-0001",
+      "learning-content-tags",
+      "sst-fend",
+      "subtask"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10097\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10097\",\"key\":\"SST-52\",\"fields\":{\"summary\":\"[SST][CR-SST-0123] Fix LearningWorkspace annotated context render\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-07-07T17:19:08.142-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10006\",\"description\":\"La persona asignada está trabajando actualmente en esta actividad.\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En curso\",\"id\":\"10006\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"ards-sdd\",\"bugfix\",\"control-plane\",\"cr-sst-0123\",\"frontend\",\"init-sst-0001\",\"learning-content-tags\",\"sst-fend\",\"subtask\"]}}"
+  },
+  "commentResult": {
+    "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10097/comment/10125",
+    "id": "10125",
+    "author": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "body": "CR-SST-0123 / SST-52 capability boundary update.\n\nWe clarified the backend/BFF capabilities so frontend QA can validate the real content-generation sheet as a LearningContext surface, separate from live Article resources.\n\nOwner docs/specs updated:\n\n* sst-bend outbound capability:\n\n    * `specs/capabilities/outbound/learning-workspace-context.yaml`\n    * `docs/capabilities/outbound/learning-workspace-context.md`\n    \n* node-auth inbound capability:\n\n    * `specs/capabilities/inbound/sst-bend--learning-workspace-context.yaml`\n    * `docs/capabilities/inbound/sst-bend--learning-workspace-context.md`\n    \n\nContract clarified:\n\n* LearningContext can be previewed/accepted without creating an Article first.\n* LearningContext does not require external `url` or `sourceUrl`.\n* `originArticleId` is optional linkage/provenance, not a required identity.\n* ArticleTag remains article-wide; LearningContentTag/relevance applies to fragments/content blocks.\n* BFF must not convert LearningContext payloads into Article CRUD requests.\n\nValidation:\n\n* `sst-bend npm.cmd run check`: exit 0, protected smoke coverage remains partial without `SMOKE_JWT`.\n* `node-auth npm.cmd run check`: PASS.\n* `4uentes-orchestor npm.cmd run check`: PASS.\n\nRelation to SST-53:\n\n* SST-53 remains a separate Article runtime issue for native text Article creation without URL returning `400 Missing url`.\n* SST-52 frontend UX QA can proceed through LearningWorkspace preview/accept/context without depending on Article creation.\n\n",
+    "updateAuthor": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "created": "2026-07-07T17:19:08.142-0300",
+    "updated": "2026-07-07T17:19:08.142-0300",
+    "jsdPublic": true
+  },
+  "commentBody": "CR-SST-0123 / SST-52 capability boundary update.\n\nWe clarified the backend/BFF capabilities so frontend QA can validate the real content-generation sheet as a LearningContext surface, separate from live Article resources.\n\nOwner docs/specs updated:\n\n- sst-bend outbound capability:\n  - `specs/capabilities/outbound/learning-workspace-context.yaml`\n  - `docs/capabilities/outbound/learning-workspace-context.md`\n- node-auth inbound capability:\n  - `specs/capabilities/inbound/sst-bend--learning-workspace-context.yaml`\n  - `docs/capabilities/inbound/sst-bend--learning-workspace-context.md`\n\nContract clarified:\n\n- LearningContext can be previewed/accepted without creating an Article first.\n- LearningContext does not require external `url` or `sourceUrl`.\n- `originArticleId` is optional linkage/provenance, not a required identity.\n- ArticleTag remains article-wide; LearningContentTag/relevance applies to fragments/content blocks.\n- BFF must not convert LearningContext payloads into Article CRUD requests.\n\nValidation:\n\n- `sst-bend npm.cmd run check`: exit 0, protected smoke coverage remains partial without `SMOKE_JWT`.\n- `node-auth npm.cmd run check`: PASS.\n- `4uentes-orchestor npm.cmd run check`: PASS.\n\nRelation to SST-53:\n\n- SST-53 remains a separate Article runtime issue for native text Article creation without URL returning `400 Missing url`.\n- SST-52 frontend UX QA can proceed through LearningWorkspace preview/accept/context without depending on Article creation.\n",
+  "externalWrite": true
+}

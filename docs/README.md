@@ -5,7 +5,11 @@
 Este es el indice principal de la documentacion del control-plane.
 
 La documentacion humana de este repo usa espanol como idioma base. La politica
-canonica de idioma y migracion esta en:
+activa de idioma esta en:
+
+- [policies/human-doc-language-policy.md](policies/human-doc-language-policy.md)
+
+La guia detallada de idioma y migracion esta en:
 
 - [idioma-markdown.md](idioma-markdown.md)
 
@@ -13,6 +17,7 @@ canonica de idioma y migracion esta en:
 
 - [ai/model-selection-policy.md](ai/model-selection-policy.md)
 - [policies/](policies/)
+- [projects/README.md](projects/README.md)
 - [apps/README.md](apps/README.md)
 - [platform/README.md](platform/README.md)
 - [requests/README.md](requests/README.md)
@@ -22,6 +27,7 @@ canonica de idioma y migracion esta en:
 
 - [00-overview.md](00-overview.md)
 - [documentation-information-architecture.md](documentation-information-architecture.md)
+- [policies/human-doc-language-policy.md](policies/human-doc-language-policy.md)
 - [idioma-markdown.md](idioma-markdown.md)
 
 ## Boundaries Operativos

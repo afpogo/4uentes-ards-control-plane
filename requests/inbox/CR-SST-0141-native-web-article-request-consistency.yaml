@@ -1,0 +1,18 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0141"
+title: "Align native web article request builders"
+status: inbox
+created_at: "2026-07-12"
+requester: "4uentes"
+business_context: >
+  Native Web creation can send only a top-level URL and omit the semantic
+  payload. SST accepts that transport shape but persists no payload, so the
+  canonical query contract correctly returns payloadKind=unclassified.
+requested_change: >
+  Make the native Web writer send an explicit web payload with the canonical
+  source URL, preserve node-auth passthrough, and add regression coverage.
+expected_outcome: >
+  Newly created native Web articles persist and render as Web without URL or
+  filter heuristics, while historical rows remain untouched.
+ordering_deviation: null

@@ -1,0 +1,111 @@
+{
+  "requestId": "CR-SST-0122",
+  "initiativeId": "INIT-SST-0001",
+  "parentIssueKey": "SST-6",
+  "relatedIssueKey": "SST-48",
+  "issue": {
+    "key": "SST-51",
+    "summary": "[SST][CR-SST-0122] Fix LearningWorkspace accept by annotationIds",
+    "parentKey": "SST-6",
+    "issueTypeName": "Subtask",
+    "source": "created",
+    "raw": "{\"id\":\"10096\",\"key\":\"SST-51\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10096\"}"
+  },
+  "existing": false,
+  "action": "created-commented-and-transitioned",
+  "before": {
+    "summary": "[SST][CR-SST-0122] Fix LearningWorkspace accept by annotationIds",
+    "status": "Tareas por hacer",
+    "statusCategory": "Por hacer",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-07-05T19:33:37.688-0300",
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10096\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10096\",\"key\":\"SST-51\",\"fields\":{\"summary\":\"[SST][CR-SST-0122] Fix LearningWorkspace accept by annotationIds\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-07-05T19:33:37.688-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10005\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"Tareas por hacer\",\"id\":\"10005\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/2\",\"id\":2,\"key\":\"new\",\"colorName\":\"blue-gray\",\"name\":\"Por hacer\"}},\"labels\":[\"ards-sdd\",\"bugfix\",\"control-plane\",\"cr-sst-0122\",\"init-sst-0001\",\"learning-content-tags\",\"sst-bend\",\"subtask\"]}}"
+  },
+  "after": {
+    "summary": "[SST][CR-SST-0122] Fix LearningWorkspace accept by annotationIds",
+    "status": "Listo",
+    "statusCategory": "Listo",
+    "resolution": "Listo",
+    "assignee": "no-asignado",
+    "updated": "2026-07-05T19:33:40.028-0300",
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10096\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10096\",\"key\":\"SST-51\",\"fields\":{\"summary\":\"[SST][CR-SST-0122] Fix LearningWorkspace accept by annotationIds\",\"assignee\":null,\"resolution\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/resolution/10000\",\"id\":\"10000\",\"description\":\"Se ha terminado el trabajo relacionado con esta incidencia.\",\"name\":\"Listo\"},\"updated\":\"2026-07-05T19:33:40.028-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10008\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"Finalizada\",\"id\":\"10008\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/3\",\"id\":3,\"key\":\"done\",\"colorName\":\"green\",\"name\":\"Listo\"}},\"labels\":[\"ards-sdd\",\"bugfix\",\"control-plane\",\"cr-sst-0122\",\"init-sst-0001\",\"learning-content-tags\",\"sst-bend\",\"subtask\"]}}"
+  },
+  "selectedTransition": {
+    "id": "41",
+    "name": "Listo",
+    "toStatus": "Finalizada",
+    "toStatusCategory": "Listo"
+  },
+  "transitions": [
+    {
+      "id": "11",
+      "name": "Por hacer",
+      "toStatus": "Tareas por hacer",
+      "toStatusCategory": "Por hacer"
+    },
+    {
+      "id": "21",
+      "name": "En curso",
+      "toStatus": "En curso",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "31",
+      "name": "In Review",
+      "toStatus": "En revisión",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "41",
+      "name": "Listo",
+      "toStatus": "Finalizada",
+      "toStatusCategory": "Listo"
+    }
+  ],
+  "linkResult": {
+    "message": "Issue link created"
+  },
+  "transitionResult": {
+    "success": true
+  },
+  "commentResult": {
+    "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10096/comment/10105",
+    "id": "10105",
+    "author": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "body": "CR-SST-0122 technical fix checkpoint.\n\nCompleted:\n\n* Fixed sst-bend LearningWorkspace annotationIds filtering.\n* `serverAnnotationId` hashes are matched only against `serverAnnotationId`.\n* Internal UUID values are still matched against `id`.\n* Accept/reject share the same safe filter helper.\n* Owner ARDS/SDD docs/specs were updated in sst-bend.\n\nValidation:\n\n* `sst-bend npm.cmd run test:learning-workspace`: PASS, 15/15.\n* BF/API smoke preview -> accept by serverAnnotationId -> context: PASS.\n* `sst-bend npm.cmd run check`: PASS.\n* `node-auth npm.cmd run check`: PASS.\n* `4uentes-orchestor npm.cmd run check`: PASS.\n\nBefore status: Tareas por hacer  \nAction: created-commented-and-transitioned  \nTransition: Listo (41)\n\nEvidence:\n\n* `evidence/requests/CR-SST-0122/implementation-summary.md`\n* `evidence/requests/CR-SST-0122/validation-results.md`\n\nNext:\n\n* Retomar CR-SST-0118 / SST-48 E2E validation and close SST-48 only after the complete validation passes.\n\n",
+    "updateAuthor": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "created": "2026-07-05T19:33:40.028-0300",
+    "updated": "2026-07-05T19:33:40.028-0300",
+    "jsdPublic": true
+  },
+  "externalWrite": true
+}

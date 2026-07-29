@@ -1,0 +1,99 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-4UENTES-0035"
+title: "Portfolio projects evidence system"
+status: "done"
+source_request: "requests/inbox/CR-4UENTES-0035-portfolio-projects-evidence-system.yaml"
+planned_request: "archived-by-done-lifecycle"
+closed_at: "2026-07-09"
+requester: "4uentes"
+
+summary: >
+  Improved Portfolio project cards so public projects present evidence type,
+  role, stack, repository availability, and claim limits without overstating
+  seniority, production usage, client impact, or enterprise delivery.
+
+initial_scope:
+  solution: "4uentes"
+  services:
+    - "4uentes-portfolio"
+  include_optional_services: false
+
+control_plane_context:
+  initiative_id: "INIT-PORTFOLIO-0003"
+  parent_request_id: "CR-4UENTES-0034"
+  feature_id: "portfolio-projects-evidence-system"
+  child_repo: "4uentes-portfolio"
+  work_origin: "orchestrator-request"
+
+execution:
+  child_repo_mutation_allowed: true
+  child_repo_mutation_target:
+    service_id: "4uentes-portfolio"
+  owner_documentation_required: true
+  implementation_boundary: >
+    Project evidence presentation and directly related docs/specs only. No
+    runtime GitHub fetching, backend/BFF/auth/analytics, production claims, CV
+    behavior changes, Home/Hero changes, Experience rewrite, Skills/Certs
+    rewrite, or broad mobile remediation was introduced.
+
+owner_documentation:
+  required: true
+  status: satisfied
+  owner_repo: "4uentes-portfolio"
+  updated_owner_docs:
+    - "docs/evidence/README.md"
+    - "docs/portfolio-intent.md"
+    - "docs/qa/visual-checklist.md"
+    - "specs/features/00-index.yaml"
+  owner_refs:
+    - repo: "4uentes-portfolio"
+      paths:
+        - "docs/evidence/README.md"
+        - "docs/portfolio-intent.md"
+        - "docs/qa/visual-checklist.md"
+        - "specs/features/00-index.yaml"
+  evidence_refs:
+    - "evidence/requests/CR-4UENTES-0035/changed-files-summary.md"
+    - "evidence/requests/CR-4UENTES-0035/child-validation-results.md"
+    - "evidence/requests/CR-4UENTES-0035/visual-qa-results.md"
+    - "evidence/requests/CR-4UENTES-0035/control-plane-validation-results.md"
+
+jira:
+  role: "mirror"
+  source_of_truth: false
+  project_key: "PORT"
+  epic_key: "PORT-9"
+  issue_key: "PORT-18"
+  issue_type: "Tarea"
+  current_status_observed: "Listo"
+  transition_refs:
+    creation_ref: "evidence/requests/CR-4UENTES-0035/jira-task-sync-summary.md"
+    start_transition_ref: "evidence/requests/CR-4UENTES-0035/jira-port-18-start-transition-summary.md"
+    start_comment_ref: "evidence/requests/CR-4UENTES-0035/jira-port-18-start-comment-summary.md"
+    implementation_comment_ref: "evidence/requests/CR-4UENTES-0035/jira-port-18-implementation-comment-summary.md"
+    validation_comment_ref: "evidence/requests/CR-4UENTES-0035/jira-port-18-validation-comment-summary.md"
+    close_transition_ref: "evidence/requests/CR-4UENTES-0035/jira-port-18-close-transition-summary.md"
+
+validation:
+  required_checks:
+    - "4uentes-portfolio: npm.cmd run build"
+    - "4uentes-orchestor: npm.cmd run check"
+  evidence_refs:
+    - "evidence/requests/CR-4UENTES-0035/implementation-plan.md"
+    - "evidence/requests/CR-4UENTES-0035/current-projects-ui-analysis.md"
+    - "evidence/requests/CR-4UENTES-0035/implementation-start-summary.md"
+    - "evidence/requests/CR-4UENTES-0035/changed-files-summary.md"
+    - "evidence/requests/CR-4UENTES-0035/child-validation-results.md"
+    - "evidence/requests/CR-4UENTES-0035/visual-qa-results.md"
+    - "evidence/requests/CR-4UENTES-0035/control-plane-validation-results.md"
+    - "evidence/requests/CR-4UENTES-0035/jira-port-18-close-transition-summary.md"
+
+follow_up:
+  non_blocking:
+    - "Consider a later visual refinement CR for the horizontal project filter on mobile."
+
+decision:
+  status: "closed"
+  approver: "4uentes"
+  blocker: "none"

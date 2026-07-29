@@ -1,0 +1,61 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0110"
+title: "Adopt LearningWorkspace inside sst-fend text article creation"
+status: done
+source_request: "requests/inbox/CR-SST-0110-sst-fend-learning-workspace-text-article-adoption.yaml"
+planned_request: "requests/planned/CR-SST-0110-sst-fend-learning-workspace-text-article-adoption.yaml"
+completed_at: "2026-07-04"
+requester: "4uentes"
+
+summary: >
+  Closed the first sst-fend Article creation Text tab adoption locally as a
+  functional plumbing slice. The implementation proves that a Text article
+  draft can feed LearningWorkspace preview/accept/reject through node-auth, but
+  the intended granular tagging UX remains open for the next request.
+
+scope:
+  solution: "sst"
+  services_modified:
+    - "sst-fend"
+    - "4uentes-orchestor"
+  functional_repositories_modified: true
+  runtime_code_modified: true
+
+implementation:
+  initiative_id: "INIT-SST-0001"
+  active_feature_state: "learning-content-tags"
+  jira_epic_key: "SST-27"
+  jira_issue_key: "SST-6"
+  jira_source_of_truth: false
+  completed_slice: >
+    sst-fend creates a reusable LearningWorkspace sheet component, keeps
+    /learning as QA/lab surface, enables Article creation Text tab as a real
+    form, and embeds LearningWorkspace preview/accept/reject controls that
+    consume the article draft.
+  not_closed:
+    - "The final product UX for a real text sheet with granular tagging remains open."
+    - "The contract between ArticleTag and LearningContentTag remains open."
+    - "sst-bend parser/import expansion remains open."
+
+validation:
+  status: "validated-local"
+  passed:
+    - "sst-fend npm.cmd run check"
+    - "4uentes-orchestor npm.cmd run check"
+    - "manual QA: Text article creation generated an article"
+  accepted_warnings:
+    - "sst-fend has 22 existing React hook/deprecation warnings."
+    - "The current UI is accepted only as functional plumbing, not as final UX intent."
+
+evidence_refs:
+  - "evidence/requests/CR-SST-0110/implementation-plan.md"
+  - "evidence/requests/CR-SST-0110/changed-files-summary.md"
+  - "evidence/requests/CR-SST-0110/validation-results.md"
+
+decision:
+  status: "closed-local"
+  approver: "4uentes"
+  note: >
+    CR-SST-0110 closes locally as validated-local for functional integration.
+    Product intent continues in CR-SST-0111.

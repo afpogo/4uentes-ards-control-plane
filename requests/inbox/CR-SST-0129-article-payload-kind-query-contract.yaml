@@ -1,0 +1,17 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0129"
+title: "Define canonical article payload kind query contract"
+status: inbox
+created_at: "2026-07-11"
+requester: "4uentes"
+business_context: >
+  Article semantic kind and legacy filter type are currently conflated across
+  persistence, BFF and UI reads, producing ambiguous text and web results.
+requested_change: >
+  Make payload.kind the canonical semantic article kind across sst-bend,
+  node-auth and sst-fend while preserving filter.type as an independent legacy
+  filter field and explicit compatibility fallback.
+expected_outcome: >
+  Reads and writes expose one validated semantic kind without inferring it from
+  filter.type or silently converting unknown values to web.

@@ -1,0 +1,121 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-4UENTES-0023"
+title: "Portfolio experience initiatives I18N migration"
+status: "planned"
+source_request: "requests/inbox/CR-4UENTES-0023-portfolio-experience-initiatives-i18n-migration.yaml"
+created_at: "2026-07-05"
+requester: "4uentes"
+
+summary: >
+  Continue the Portfolio I18N implementation by migrating visible initiative,
+  achievement, and detail-card labels in the experience company detail route to
+  the repo's I18N ownership model.
+
+initial_scope:
+  solution: "4uentes"
+  services:
+    - "4uentes-portfolio"
+  include_optional_services: false
+
+control_plane_context:
+  initiative_id: "INIT-FUENTES-0001"
+  product_initiative_id: "INIT-PORTFOLIO-0001"
+  parent_request_id: "CR-4UENTES-0021"
+  predecessor_request_id: "CR-4UENTES-0022"
+  feature_id: "portfolio-experience-initiatives-i18n"
+  child_repo: "4uentes-portfolio"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "4uentes-portfolio"
+      via: "experience company detail cards, achievements, and I18N ownership"
+      service_kind: "frontend-spa"
+      ards_kind: "frontend-web"
+      status: "active"
+  affected_ards:
+    - "frontend-web"
+    - "i18n"
+    - "professional-experience"
+    - "owner-documentation"
+  capabilities:
+    - "portfolio-experience-initiatives-i18n"
+
+required_context:
+  - "requests/planned/CR-4UENTES-0021-portfolio-experience-i18n-and-jira-project-structure.yaml"
+  - "requests/planned/CR-4UENTES-0022-portfolio-experience-company-cards-i18n-migration.yaml"
+  - "4uentes-portfolio: src/pages/Dashboard/screens/Experience/screens/ExperienceCompany/constants.tsx"
+  - "4uentes-portfolio: src/pages/Dashboard/screens/Experience/components/FrontCardExperience/index.tsx"
+  - "4uentes-portfolio: src/pages/Dashboard/screens/Experience/components/BackCardExperience/index.tsx"
+  - "4uentes-portfolio: specs/features/00-index.yaml"
+
+risk:
+  level: "medium"
+  score: 6
+  drivers:
+    - "initiative and achievement copy supports CV revalidation and professional positioning"
+    - "I18N migration can accidentally change visible Spanish narrative"
+    - "implementation must avoid broad route rewrites and invented impact claims"
+
+execution:
+  requires_human_approval: false
+  allowed_window: "manual"
+  branch_strategy: "child-repo-experience-initiative-i18n-cut"
+  child_repo_mutation_allowed: true
+  child_repo_mutation_target:
+    service_id: "4uentes-portfolio"
+  owner_documentation_required: true
+  implementation_boundary: >
+    Migrate experience company detail card visible copy to I18N-ready ownership.
+    Do not change the professional claims, contact exposure, CV download gate,
+    mobile layout, or project evidence taxonomy.
+
+owner_documentation:
+  required: true
+  status: satisfied
+  owner_repo: "4uentes-portfolio"
+  planned_owner_docs:
+    - "docs/architecture/README.md"
+    - "docs/qa/visual-checklist.md"
+    - "specs/features/00-index.yaml"
+  updated_owner_docs:
+    - "docs/architecture/README.md"
+    - "docs/qa/visual-checklist.md"
+    - "specs/features/00-index.yaml"
+  owner_refs:
+    - repo: "4uentes-portfolio"
+      paths:
+        - "docs/architecture/README.md"
+        - "docs/qa/visual-checklist.md"
+        - "specs/features/00-index.yaml"
+  evidence_refs:
+    - "evidence/requests/CR-4UENTES-0023/implementation-summary.md"
+    - "evidence/requests/CR-4UENTES-0023/changed-files-summary.md"
+    - "evidence/requests/CR-4UENTES-0023/validation-results.md"
+
+jira:
+  role: "mirror"
+  source_of_truth: false
+  project_key: "PORT"
+  epic_key: "PORT-1"
+  issue_key: "PORT-5"
+  current_status_observed: "En revision"
+  transition_refs:
+    start_transition_ref: "evidence/requests/CR-4UENTES-0023/jira-port-5-start-transition-summary.md"
+    review_transition_ref: "evidence/requests/CR-4UENTES-0023/jira-port-5-review-transition-summary.md"
+
+validation:
+  required_checks:
+    - "4uentes-portfolio: npm.cmd run check"
+    - "4uentes-orchestor: npm.cmd run check"
+  evidence_required:
+    - "implementation_summary"
+    - "changed_files_summary"
+    - "validation_results"
+  latest_results_ref: "evidence/requests/CR-4UENTES-0023/validation-results.md"
+
+decision:
+  status: "approved-for-local-execution"
+  approver: "4uentes"
+  blocker: "none"

@@ -1,0 +1,51 @@
+service_id: finanzas-personales-frontend
+canonical_identity: finanzas-personales-frontend
+kind: frontend-spa
+status: draft
+shared: false
+solution_ids:
+  - finanzas-personales
+repo:
+  canonical_repo: finanzas-personales
+  repo_subpath: frontend
+  remote: git@github.com:mena28/finanzas-personales.git
+  branch_observed: main
+  upstream_observed: origin/main
+  head_observed: edf4c9c
+  working_tree_observed: clean
+  observed_at: 2026-07-12
+local_binding_evidence:
+  - id: local-finanzas-personales
+    role: monorepo-working-copy
+    observed_at: 2026-07-12
+    path_record: inventory/evidence/git/finanzas-personales.md
+package:
+  name: TODO
+  runtime: planned-web-app
+  stack:
+    - Next.js TODO
+    - TypeScript TODO
+ards:
+  kind: frontend-web
+  status: product-draft
+  agents_md: true
+  specs_index: true
+  docs_overview: true
+  docs_ai_policy: true
+validation:
+  check_command: TODO
+orchestrator_link_contract:
+  required: true
+  status: pending-child-adoption
+  rule_ref: "docs/cross-repo/child-repo-orchestrator-link-rule.md"
+  template_ref: "templates/child-orchestrator-link-rule.md"
+  metadata_key: "orchestrator_link"
+  capability_state_map: "state/capability-links.yaml"
+integrations:
+  consumes:
+    - finanzas-personales-backend
+notes:
+  - Frontend ARDS/SDD service root inside the finanzas-personales monorepo.
+  - Direct backend-api consumption is a draft architecture exception tracked by CR-HPT-0003.
+  - No product runtime or executable validation route was observed.
+

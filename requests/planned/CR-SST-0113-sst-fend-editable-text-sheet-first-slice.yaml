@@ -1,0 +1,106 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0113"
+title: "Implement first editable text sheet in sst-fend"
+status: done
+source_request: "requests/inbox/CR-SST-0113-sst-fend-editable-text-sheet-first-slice.yaml"
+created_at: "2026-07-04"
+requester: "4uentes"
+
+summary: >
+  Implement the first editable text sheet in sst-fend as the base authoring
+  surface for later contextual tagging.
+
+control_plane_context:
+  initiative_id: "INIT-SST-0001"
+  active_feature_state: "learning-content-tags"
+  parent_request_id: "CR-SST-0112"
+  jira_epic_key: "SST-27"
+  active_jira_issue_key: "SST-6"
+  jira_subtask_key: "SST-43"
+  current_jira_status_observed: "En curso"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "sst-fend"
+      via: "Article creation Text tab editable sheet"
+      service_kind: "frontend-spa"
+      ards_kind: "frontend-web"
+      status: "active"
+    - service_id: "4uentes-orchestor"
+      via: "request lifecycle and owner enforcement"
+      service_kind: "control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+  affected_ards:
+    - frontend-web
+    - learning-content-tags
+    - article-creation
+    - child-repo-owner-documentation
+  risks:
+    - id: EDITOR_SURFACE_TOO_FORM_LIKE
+      severity: high
+
+execution:
+  requires_human_approval: false
+  allowed_window: manual
+  branch_strategy: "one-branch-per-repo"
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets:
+    - service_id: "sst-fend"
+      local_path_ref: "environments/local/bindings.local.yaml#sst-fend"
+  implementation_boundary: >
+    This CR may modify sst-fend editor UI and owner docs. It must not implement
+    backend persistence or parser/import expansion.
+  owner_documentation:
+    required: true
+    status: satisfied
+    owner_refs:
+      - repo: "sst-fend"
+        paths:
+          - "docs/38-learning-workspace-frontend.md"
+          - "specs/38-learning-workspace-frontend.yml"
+    evidence_refs:
+      - "evidence/requests/CR-SST-0113/intent-summary.md"
+      - "evidence/requests/CR-SST-0113/jira-sync-summary.md"
+      - "evidence/requests/CR-SST-0113/execution-start.md"
+      - "evidence/requests/CR-SST-0113/subagent-delegation.md"
+      - "evidence/requests/CR-SST-0113/pre-implementation-analysis.md"
+      - "evidence/requests/CR-SST-0113/subagent-plan-review.md"
+      - "evidence/requests/CR-SST-0113/subagent-child-readiness.md"
+      - "evidence/requests/CR-SST-0113/file-plan.md"
+      - "evidence/requests/CR-SST-0113/implementation-summary.md"
+      - "evidence/requests/CR-SST-0113/validation-results.md"
+      - "evidence/requests/CR-SST-0113/owner-documentation-summary.md"
+      - "evidence/requests/CR-SST-0113/jira-sync-blocker.md"
+
+required_checks:
+  - service_id: "sst-fend"
+    command: "npm.cmd run check"
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check"
+
+validation:
+  required_checks:
+    - "Text tab renders a real editable sheet surface."
+    - "Article tags remain separate from content annotations."
+  evidence_required:
+    - "intent_summary"
+    - "jira_sync_summary"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0113/implementation-summary.md"
+    - "evidence/requests/CR-SST-0113/validation-results.md"
+    - "evidence/requests/CR-SST-0113/owner-documentation-summary.md"
+    - "evidence/requests/CR-SST-0113/jira-sync-blocker.md"
+
+decision:
+  status: closed-local
+  approver: "4uentes"
+  note: >
+    Closed locally after implementing the first editable text sheet in sst-fend,
+    updating owner documentation, and passing sst-fend plus control-plane
+    enforcement checks. Jira remains an operational mirror and still requires
+    explicit sync/transition when MCP write access is available.

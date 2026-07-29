@@ -1,0 +1,19 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0102"
+title: "Prepare LearningWorkspace preview handoff for extension session artifacts"
+status: inbox
+created_at: "2026-07-02"
+requester: "4uentes"
+
+business_context: >
+  Captured extension artifacts should enter SST as preview-only learning
+  sources before any durable LearningWorkspace acceptance.
+
+requested_change: >
+  Prepare the cross-repo handoff contract for extension session artifacts to
+  LearningWorkspace preview, identifying producer, consumer and owner docs.
+
+expected_outcome: >
+  Extension artifacts can be routed toward preview without bypassing acceptance,
+  scoping or owner documentation gates.

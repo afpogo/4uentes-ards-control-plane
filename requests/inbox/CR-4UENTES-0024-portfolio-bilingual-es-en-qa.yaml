@@ -1,0 +1,28 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-4UENTES-0024"
+title: "Portfolio bilingual ES/EN QA"
+status: "intake"
+created_at: "2026-07-05"
+requester: "4uentes"
+
+summary: >
+  Validate the Portfolio ES/EN bilingual experience after the company card and
+  initiative/detail I18N migrations, recording defects and applying scoped QA
+  fixes when they block validation.
+
+scope:
+  solution: "4uentes"
+  services:
+    - "4uentes-portfolio"
+  include_optional_services: false
+
+intent:
+  - "QA the Spanish and English experience route surfaces migrated in CR-4UENTES-0022 and CR-4UENTES-0023."
+  - "Verify language switching works for the portfolio shell."
+  - "Keep fixes limited to blockers found during bilingual QA."
+
+validation:
+  required_checks:
+    - "4uentes-portfolio: npm.cmd run check"
+    - "4uentes-orchestor: npm.cmd run check"

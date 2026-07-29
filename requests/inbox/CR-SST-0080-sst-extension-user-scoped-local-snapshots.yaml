@@ -1,0 +1,24 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0080"
+title: "Isolate or purge sst-extension local snapshots when the authenticated user changes"
+status: inbox
+created_at: "2026-06-20"
+requester: "4uentes"
+
+summary: >
+  Review and correct the `sst-extension` local snapshot model so quick-save,
+  text-article-pdf, and captured-session data from one authenticated user does
+  not remain visible or retryable after logout or login by a different user in
+  the same browser profile.
+
+scope:
+  solution: "sst"
+  services:
+    - "sst-extension"
+
+notes:
+  - "Current local queues are stored in browser.storage.local with global keys."
+  - "Current logout and base-url update flows clear auth state but do not purge local snapshot queues."
+  - "Minimum expected fix is a safe purge boundary on logout and user/base-url changes."
+  - "A follow-up may evaluate per-user ownership metadata if the product later needs multi-user local isolation instead of purge-on-switch."

@@ -1,0 +1,46 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0141"
+title: "Align native web article request builders"
+status: done
+source_request: "requests/inbox/CR-SST-0141-native-web-article-request-consistency.yaml"
+created_at: "2026-07-12"
+requester: "4uentes"
+summary: "Persist an explicit semantic Web payload from native article creation."
+control_plane_context:
+  initiative_id: "INIT-SST-0005"
+  parent_request_id: "CR-SST-0128"
+  predecessor_requests: ["CR-SST-0129", "CR-SST-0130"]
+  jira_epic_key: "SST-57"
+  jira_parent_issue_key: "SST-58"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+impact_analysis:
+  required: true
+  affected_services:
+    - {service_id: "sst-fend", via: "Native Web create request builder", service_kind: "frontend-spa", ards_kind: "frontend-web", status: "active"}
+    - {service_id: "node-auth", via: "Native Web create passthrough", service_kind: "backend-bff", ards_kind: "backend-bff", status: "active"}
+    - {service_id: "4uentes-orchestor", via: "Lifecycle and evidence", service_kind: "control-plane", ards_kind: "control-plane", status: "active"}
+  affected_ards: ["article-persisted-filters", "articles-frontend", "article-semantic-kind"]
+  risks: [{id: "NATIVE_WEB_UNCLASSIFIED", severity: high}]
+execution:
+  requires_human_approval: false
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets: ["sst-fend", "node-auth"]
+  implementation_boundary: "Native Web builder/passthrough, focused tests and owner docs; no historical mutation."
+owner_documentation:
+  required: true
+  status: satisfied
+  owner_repos: ["sst-fend", "node-auth"]
+  planned_owner_docs:
+    - "specs/33-articles-frontend.yml"
+    - "docs/33-articles-frontend.md"
+    - "specs/integrations-api.yaml"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0141/owner-documentation-summary.md"
+required_checks:
+  - {service_id: "sst-fend", command: "npm.cmd run check"}
+  - {service_id: "node-auth", command: "npm.cmd run check"}
+  - {service_id: "4uentes-orchestor", command: "npm.cmd run check"}
+decision: {status: closed-local, approver: "4uentes", decided_at: "2026-07-12", note: "Owner gates and restored HTTP runtime passed."}
+jira_sync: {status: synchronized, desired_issue_type: "Subtask", parent_issue_key: "SST-58", issue_key: "SST-71", status_observed: "Listo"}

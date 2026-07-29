@@ -1,0 +1,165 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0125"
+title: "Implement sst-bend LearningWorkspace source preview/import normalization"
+status: planned
+source_request: "requests/inbox/CR-SST-0125-sst-bend-learning-source-preview-import-normalization.yaml"
+created_at: "2026-07-10"
+requester: "4uentes"
+
+summary: >
+  Implement the next backend slice for INIT-SST-0001 / SST-6 by extending the
+  existing sst-bend LearningWorkspace preview flow. The endpoint stays
+  preview-only, but input normalization must move beyond a raw sourceText-only
+  path so frontend and future import flows can submit bounded learning sources
+  with selectors, exclusion policy and warning-first feedback.
+
+control_plane_context:
+  initiative_id: "INIT-SST-0001"
+  initiative_file: "initiatives/INIT-SST-0001-tags-governance-continuity.yaml"
+  active_feature_state: "learning-content-tags"
+  active_feature_state_file: "state/features/learning-content-tags.current.yaml"
+  parent_jira_issue_key: "SST-6"
+  jira_epic_key: "SST-27"
+  preceding_request_ids:
+    - "CR-SST-0089"
+    - "CR-SST-0092"
+    - "CR-SST-0123"
+    - "CR-SST-0124"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "sst-bend"
+      via: "LearningWorkspace preview/import normalization runtime"
+      service_kind: "api"
+      ards_kind: "backend-service"
+      status: "active"
+    - service_id: "node-auth"
+      via: "BFF passthrough verification only"
+      service_kind: "bff"
+      ards_kind: "backend-service"
+      status: "verify-only"
+    - service_id: "4uentes-orchestor"
+      via: "request lifecycle, evidence, Jira mirror and owner enforcement"
+      service_kind: "control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+  affected_ards:
+    - "learning-content-tags"
+    - "learning-workspace-context"
+    - "learning-content-preview-import"
+    - "child-repo-owner-documentation"
+    - "evidence"
+  risks:
+    - id: "PREVIEW_ONLY_GATE_BYPASS"
+      severity: high
+      note: "Preview normalization must not persist or publish source content."
+    - id: "SCRAPING_SCOPE_CREEP"
+      severity: high
+      note: "WebArticleSource is bounded input, not a crawler seed."
+    - id: "GENERATED_ARTIFACT_INGESTION"
+      severity: high
+      note: "Generated labs/build folders must be excluded or warned."
+    - id: "BFF_CONTRACT_DRIFT"
+      severity: medium
+      note: "node-auth should remain thin passthrough unless validation proves otherwise."
+
+execution:
+  requires_human_approval: false
+  allowed_window: manual
+  branch_strategy: "one-branch-per-repo"
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets:
+    - service_id: "sst-bend"
+      local_path_ref: "environments/local/bindings.local.yaml#sst-bend"
+  implementation_boundary: >
+    Mutate sst-bend only. Keep node-auth and sst-fend verify-only unless
+    runtime evidence proves their contracts block the backend slice. Reuse
+    POST /learning-workspaces/sources/preview; do not introduce another public
+    endpoint unless analysis proves the existing surface cannot carry the
+    contract safely.
+  owner_documentation:
+    required: true
+    status: planned
+    owner_refs:
+      - repo: "sst-bend"
+        paths:
+          - "specs/api/learning-workspaces.yaml"
+          - "docs/api/26-learning-workspaces.md"
+          - "specs/capabilities/outbound/learning-workspace-context.yaml"
+          - "docs/capabilities/outbound/learning-workspace-context.md"
+    evidence_refs:
+      - "evidence/requests/CR-SST-0125/policy-and-owner-enforcement-start.md"
+      - "evidence/requests/CR-SST-0125/implementation-analysis-start.md"
+      - "evidence/requests/CR-SST-0125/jira-create-start-blocker.md"
+      - "evidence/requests/CR-SST-0125/jira-manual-payload.md"
+      - "evidence/requests/CR-SST-0125/jira-issue-SST-6-observation.md"
+      - "evidence/requests/CR-SST-0125/jira-create-start-runtime-blocker-2026-07-10.md"
+      - "evidence/requests/CR-SST-0125/jira-cr-sst-0125-create-start-summary.md"
+
+required_checks:
+  - service_id: "sst-bend"
+    command: "npm.cmd run test:learning-workspace"
+  - service_id: "sst-bend"
+    command: "npm.cmd run test:tag-engine"
+  - service_id: "sst-bend"
+    command: "npm.cmd run check"
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check"
+
+implementation_target:
+  target_endpoint: "POST /4uentes/v1/learning-workspaces/sources/preview"
+  source_modes:
+    - "manual_text/sourceText"
+    - "CourseSource manifest with bounded text/document entries"
+    - "WebArticleSource payload with bounded supplied text/html"
+  expected_outputs:
+    - "contractVersion=sst-learning-workspace.preview.v1"
+    - "persistenceMode=preview-only"
+    - "persisted=false"
+    - "source normalized with sourceType/sourceRef/title/originArticleId/articleTags"
+    - "materialized.contentBlocks"
+    - "warnings[] for exclusions, unsupported selectors and missing assets"
+    - "tagDefinitions only as suggested/observed registry output, not created records"
+  forbidden_v1_actions:
+    - "crawler recursion"
+    - "mass scraping"
+    - "automatic publish"
+    - "automatic TagDefinition creation"
+    - "persist preview source as accepted context without explicit accept"
+
+validation:
+  required_checks:
+    - "CourseSource-style payload is normalized into sourceText/materialized blocks."
+    - "WebArticleSource/manual text payload remains bounded and does not crawl."
+    - "Generated/excluded paths produce warnings, not silent ingestion."
+    - "Preview response remains preview-only and non-persisted."
+    - "Existing annotation preview/accept behavior remains valid."
+    - "Owner docs/specs in sst-bend are updated."
+    - "Control-plane npm.cmd run check passes."
+  evidence_required:
+    - "policy_and_owner_enforcement_start"
+    - "implementation_analysis"
+    - "changed_files_summary"
+    - "owner_documentation_summary"
+    - "validation_results"
+    - "jira_sync_or_blocker"
+
+decision:
+  status: pending
+  approver: TODO
+
+jira_sync:
+  status: created-and-started
+  parent_issue_key: "SST-6"
+  epic_key: "SST-27"
+  issue_key: "SST-55"
+  issue_type: "Subtask"
+  status_observed: "En curso"
+  evidence_ref: "evidence/requests/CR-SST-0125/jira-cr-sst-0125-create-start-summary.md"
+  manual_payload_ref: "evidence/requests/CR-SST-0125/jira-manual-payload.md"
+  parent_observation_ref: "evidence/requests/CR-SST-0125/jira-issue-SST-6-observation.md"
+  historical_blocker_ref: "evidence/requests/CR-SST-0125/jira-create-start-runtime-blocker-2026-07-10.md"

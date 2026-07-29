@@ -1,0 +1,73 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-4UENTES-0027"
+title: "Portfolio mobile linear layout implementation"
+status: done
+source_request: "requests/inbox/CR-4UENTES-0027-portfolio-mobile-linear-layout-implementation.yaml"
+planned_request: "requests/planned/CR-4UENTES-0027-portfolio-mobile-linear-layout-implementation.yaml"
+completed_at: "2026-07-05"
+requester: "4uentes"
+
+summary: >
+  Implemented the first navigable mobile portfolio shell and refined the home
+  entry experience after manual QA feedback. The mobile desktop-only blocker
+  was removed, the home now presents a professional recruiter-facing entry
+  point, and the interior header includes candidate identity and role context.
+
+scope:
+  solution: "4uentes"
+  services_modified:
+    - "4uentes-portfolio"
+  functional_repositories_modified: true
+  runtime_code_modified: true
+  owner_documentation_modified: true
+
+implementation:
+  child_repo: "4uentes-portfolio"
+  highlights:
+    - "Replaced the mobile desktop-only blocker with a linear mobile shell."
+    - "Preserved the existing route outlet instead of duplicating route content."
+    - "Refined the home hero with centered professional positioning and more spacing."
+    - "Kept only necessary recruiter actions: profile, experience, and visible CV intent."
+    - "Restored visible CV CTA while keeping download disabled until sanitized asset approval."
+    - "Added identity and role context to the interior portfolio header."
+  governance_boundary: >
+    CR-4UENTES-0027 does not activate public CV download, does not replace the
+    CV asset, does not migrate deep experience copy to I18N, and does not alter
+    contact exposure policy.
+
+owner_documentation:
+  status: satisfied
+  owner_repo: "4uentes-portfolio"
+  updated_owner_docs:
+    - "docs/architecture/README.md"
+    - "docs/qa/visual-checklist.md"
+    - "specs/features/00-index.yaml"
+
+jira_mirror:
+  epic_key: "PORT-1"
+  issue_key: "PORT-3"
+  close_ref: "evidence/requests/CR-4UENTES-0027/jira-port-3-close-transition-summary.md"
+  status_observed: "Listo"
+  source_of_truth: false
+
+validation:
+  status: "validated-local"
+  passed:
+    - "4uentes-portfolio: npm.cmd run check"
+    - "4uentes-orchestor: npm.cmd run check"
+  owner_documentation_gate: "PASS"
+
+evidence_refs:
+  - "evidence/requests/CR-4UENTES-0027/mobile-layout-implementation-summary.md"
+  - "evidence/requests/CR-4UENTES-0027/changed-files-summary.md"
+  - "evidence/requests/CR-4UENTES-0027/validation-results.md"
+  - "evidence/requests/CR-4UENTES-0027/jira-port-3-close-transition-summary.md"
+
+decision:
+  status: "closed-local"
+  approver: "4uentes"
+  note: >
+    Closed after manual QA review accepted the home/header direction and after
+    preserving CV publication policy by keeping the CTA visible but download
+    disabled until CR-4UENTES-0018 provides an approved sanitized PDF.
