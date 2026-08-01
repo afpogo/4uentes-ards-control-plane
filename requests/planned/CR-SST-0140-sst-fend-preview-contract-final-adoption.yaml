@@ -22,6 +22,10 @@ execution:
   owner_documentation_required: true
   implementation_boundary: "sst-fend only"
   duplicate_search_ref: "evidence/initiatives/INIT-SST-0003/preview-owner-slices-duplicate-search-2026-07-11.md"
+  qa_drift:
+    discovered_at: "2026-07-23"
+    status: "corrected-and-validated"
+    evidence_ref: "evidence/requests/CR-SST-0140/preview-source-normalization-drift-2026-07-23.md"
 owner_documentation:
   required: true
   status: "satisfied"
@@ -33,6 +37,6 @@ owner_documentation:
     - "docs/capabilities/inbound/node-auth--article-preview-resolution-v1.md"
   evidence_refs:
     - "evidence/requests/CR-SST-0140/implementation-and-validation-2026-07-12.md"
-validation: {required_checks: ["all preview states", "legacy fallback", "unknown reason fallback", "object URL cleanup", "per-tab deploy preview", "sst-fend full check", "control-plane npm.cmd run check"]}
+validation: {required_checks: ["all preview states", "extension-thumbnail and video-poster normalization", "legacy fallback", "unknown reason fallback", "object URL cleanup", "per-tab deploy preview", "sst-fend full check", "control-plane npm.cmd run check"]}
 decision: {status: "approved-in-progress", approver: "4uentes", note: "Final frontend adoption and owner capability are implemented; private-page E2E remains in CR-SST-0103."}
-jira_sync: {status: "created", desired_issue_type: "Subtask", parent_issue_key: "SST-50", epic_key: "SST-29", issue_key: "SST-70"}
+jira_sync: {status: "in-review", desired_issue_type: "Subtask", parent_issue_key: "SST-50", epic_key: "SST-29", issue_key: "SST-70", transitioned_at: "2026-07-23", comment_id: "10262"}
