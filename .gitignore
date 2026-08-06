@@ -1,3 +1,4 @@
 environments/local/bindings.local.yaml
 environments/local/jira-mcp.local.yaml
 environments/local/jira-writer.local.yaml
+.worktrees/

@@ -3,9 +3,18 @@ kind: "sst_development_promotion_manifest"
 id: "CR-SST-0152-promotion"
 request_id: "CR-SST-0152"
 initiative_id: "INIT-SST-0004"
-status: "planned-pending-control-plane-approval"
+status: "approved-recomposition-blocked-pending-allowlist-amendment"
 observed_at: "2026-08-06"
 target_environment: "development"
+control_plane_approval:
+  pull_request: "https://github.com/afpogo/4uentes-ards-control-plane/pull/2"
+  merged_at: "2026-08-06T22:28:31Z"
+  merge_commit_sha: "fddbb57ee8031499a253b002544f92d40e6f62ec"
+  scope: "approve isolated child-repository recomposition; child merges remain separately human-gated"
+allowlist_amendment:
+  status: "pending-follow-up-pr-merge"
+  reason: "post-approval source expansion found zero-match patterns and omitted runtime/owner-discovery dependencies"
+  evidence_ref: "evidence/requests/CR-SST-0152/allowlist-reconciliation-2026-08-06.md"
 historical_baseline:
   request_id: "CR-SST-0003"
   role: "historical-deployment-and-gitops-baseline-only"
@@ -34,7 +43,7 @@ repositories:
       - name: "learning-annotations"
         request_ids: ["CR-SST-0116", "CR-SST-0122"]
       - name: "article-semantics-and-filter-retirement"
-        request_ids: ["CR-SST-0129", "CR-SST-0131", "CR-SST-0132", "CR-SST-0134", "CR-SST-0135", "CR-SST-0145"]
+        request_ids: ["CR-SST-0123", "CR-SST-0129", "CR-SST-0131", "CR-SST-0132", "CR-SST-0134", "CR-SST-0135", "CR-SST-0145"]
       - name: "plaud-convergence"
         request_ids: ["CR-SST-0133", "CR-SST-0142"]
       - name: "preview-resolution-cohort"
@@ -49,9 +58,19 @@ repositories:
       - "db/models/articulo.js"
       - "db/models/index.js"
       - "src/apps/sst/domain/learning-workspaces/**"
-      - "src/apps/sst/application/use-cases/learning-workspaces/**"
-      - "src/apps/sst/infrastructure/repositories/sequelize-learning-workspace.repository.js"
-      - "src/apps/sst/presentation/dtos/learning-workspace.dto.js"
+      - "src/apps/sst/application/learning-workspaces/{accept-learning-source,preview-learning-source,reject-learning-source}.usecase.js"
+      - "src/apps/sst/infrastructure/db/postgres/learning-workspaces/sequelize-learning-workspace.repository.js"
+      - "src/apps/sst/presentation/schemas/learning-workspace.dto.js"
+      - "src/apps/sst/application/articulos/{create-articulo,create-extension-session,create-extension-text-article,get-extension-session-deploy,update-articulo}.usecase.js"
+      - "src/apps/sst/application/articulos/{article-preview-resolver.service,preview-candidate.inspector}.js"
+      - "src/apps/sst/domain/articulos/article-aggregate.entity.js"
+      - "src/apps/sst/domain/filters/filter.repository.js"
+      - "src/apps/sst/domain/integrations/plaud/plaud-ingestion-job.repository.js"
+      - "src/apps/sst/infrastructure/db/postgres/articulos/{sequelize-article-preview-resolutions,sequelize-preview-assets}.repository.js"
+      - "src/apps/sst/infrastructure/db/postgres/filters/sequelize-filters.repository.js"
+      - "src/apps/sst/presentation/routes/{index,articulos.routes,extensions.routes}.js"
+      - "src/apps/sst/presentation/schemas/{extensions.dto,preview-candidate.dto}.js"
+      - "src/apps/sst/presentation/server/plaud.runtime.js"
       - "src/apps/sst/**/articulo.dto.js"
       - "src/apps/sst/**/list-articulos.usecase.js"
       - "src/apps/sst/**/sequelize-articulos.repository.js"
@@ -81,6 +100,18 @@ repositories:
       - "docs/api/plaud-ingestion.md"
       - "docs/api/filter-articles.md"
       - "docs/api/article-kind-reconciliation.md"
+      - "docs/00-overview.md"
+      - "docs/api/{04-auth,06-integrations-api,13-endpoint-test-map,19-browser-extension-sessions}.md"
+      - "docs/capabilities/00-overview.md"
+      - "docs/capabilities/outbound/article-text-ingestion.md"
+      - "docs/features/{00-overview,article-preview-resolution}.md"
+      - "specs/api/00-index.yaml"
+      - "specs/api/{auth,document-processing,users-accounts-robots}.yaml"
+      - "specs/capabilities/outbound/00-index.yaml"
+      - "specs/capabilities/outbound/article-text-ingestion.yaml"
+      - "specs/features/{00-index,article-preview-resolution}.yaml"
+      - ".env.example"
+      - "config/index.js"
       - "specs/capabilities/outbound/{learning-workspace-context,article-persisted-filters,article-preview-resolution-v1,browser-extension-session-ingestion,browser-extension-article-ingestion}.yaml"
       - "docs/capabilities/outbound/{learning-workspace-context,article-persisted-filters,article-preview-resolution-v1,browser-extension-session-ingestion,browser-extension-article-ingestion}.md"
     explicit_exclusions:
@@ -89,6 +120,9 @@ repositories:
       - {path: ".github/workflows/node.js.yml", reason: "retirement commit has no observed lifecycle"}
       - {path: ".github/workflows/build-publish-development.yml", reason: "historical SST-26 workflow delta is not allowlisted here"}
       - {path: "package.json", reason: "whole-file formatting noise; only separately proven script hunks may be proposed"}
+    hunk_rules:
+      - {paths: ["specs/api/00-index.yaml", "specs/api/document-processing.yaml", "docs/api/19-browser-extension-sessions.md"], rule: "attribute and stage only the applicable article, Plaud or preview cohort hunks"}
+      - {paths: ["db/models/index.js", "src/apps/sst/domain/articulos/article-aggregate.entity.js", "src/apps/sst/**/sequelize-articulos.repository.js", "src/apps/sst/**/articulo.dto.js", "src/apps/sst/presentation/schemas/extensions.dto.js", "src/apps/sst/application/articulos/create-extension-article.usecase.js", "src/apps/sst/application/articulos/create-extension-session.usecase.js", "src/apps/sst/application/articulos/create-extension-text-article.usecase.js"], rule: "separate article-semantics and preview-resolution hunks by commit unit"}
     owner_docs:
       - "specs/api/learning-workspaces.yaml"
       - "docs/api/26-learning-workspaces.md"
@@ -101,13 +135,13 @@ repositories:
     checks:
       - "npm.cmd run test:learning-workspace"
       - "npm.cmd run test:tag-engine"
-      - "npm.cmd run test:article-kind-contract"
-      - "npm.cmd run test:filterarts-retired"
+      - "node scripts/test-article-kind-query-contract.js"
+      - "node scripts/test-filterarts-retired-mount.js"
       - "node scripts/test-extension-quick-save-web-kind.js"
       - "node scripts/test-extension-session-semantic-kind.js"
       - "node scripts/test-plaud-article-filter-atomicity.js"
-      - "npm.cmd run test:plaud-job-convergence"
-      - "npm.cmd run test:article-preview-resolution"
+      - "node scripts/test-plaud-job-completion-convergence.js"
+      - "node scripts/test-article-preview-resolution.js"
       - "npm.cmd run build"
       - "npm.cmd run check"
       - "ephemeral DB migrations up/down/up"
@@ -143,6 +177,8 @@ repositories:
       - "src/presentation/server.ts"
       - "src/presentation/middlewares/error.handler.ts"
       - "src/domain/constants/{articulo,extension-session,learning-workspaces}.constants.ts"
+      - "src/domain/constants/index.ts"
+      - "src/domain/index.ts"
       - "src/domain/datasources/learning-workspaces.datasource.ts"
       - "src/domain/repositories/learning-workspaces.repository.ts"
       - "src/domain/use-cases/LearningWorkspaces/**"
@@ -153,6 +189,7 @@ repositories:
       - "src/infrastructure/datasources/{articulo,learning-workspaces}.datasource.impl.ts"
       - "src/infrastructure/mapperers/articulo.mapper.ts"
       - "src/infrastructure/repositories/learning-workspaces.repository.ts"
+      - "src/infrastructure/index.ts"
       - "src/presentation/articulo/controller.ts"
       - "src/presentation/extension/routes.ts"
       - "src/presentation/learning-workspaces/{controller,routes}.ts"
@@ -165,8 +202,12 @@ repositories:
       - "specs/integrations-api.yaml"
       - "specs/routing.yaml"
       - "docs/bf/{03-routing,06-integrations-api,07-error-handling,11-endpoints-e2e-map}.md"
-      - "specs/capabilities/{inbound,outbound}/{learning-workspace-context,article-persisted-filters,article-preview-resolution-v1,article-text-ingestion,browser-extension-article-ingestion,browser-extension-session-ingestion}.yaml"
-      - "docs/capabilities/{inbound,outbound}/{learning-workspace-context,article-persisted-filters,article-preview-resolution-v1,article-text-ingestion,browser-extension-article-ingestion,browser-extension-session-ingestion}.md"
+      - "specs/capabilities/inbound/sst-bend--{learning-workspace-context,article-persisted-filters,article-preview-resolution-v1,article-text-ingestion,browser-extension-article-ingestion,browser-extension-session-ingestion}.yaml"
+      - "docs/capabilities/inbound/sst-bend--{learning-workspace-context,article-persisted-filters,article-preview-resolution-v1,article-text-ingestion,browser-extension-article-ingestion,browser-extension-session-ingestion}.md"
+      - "specs/capabilities/outbound/{learning-workspace-context,article-persisted-filters,article-preview-resolution-v1,article-text-ingestion,browser-extension-article-ingestion,browser-extension-session-ingestion}.yaml"
+      - "docs/capabilities/outbound/{learning-workspace-context,article-persisted-filters,article-preview-resolution-v1,article-text-ingestion,browser-extension-article-ingestion,browser-extension-session-ingestion}.md"
+      - "specs/capabilities/{inbound,outbound}/00-index.yaml"
+      - "docs/capabilities/00-overview.md"
     explicit_exclusions:
       - {path: "tmp-bf-dev.err", reason: "local runtime log; potentially sensitive"}
       - {path: "tmp-bf-dev.log", reason: "local runtime log; potentially sensitive"}
@@ -206,37 +247,51 @@ repositories:
       ref: "fix/SST-26/CR-SST-0086/dictionary-secrets-panel"
       sha: "832b39e3811e887f567fa94550e02841057885cf"
       state: "committed-mixed-source; separate CR-SST-0149 delta remains uncommitted"
+    source_delta_evidence:
+      base_sha: "164c19cfcb88c22048eb5cbf5b6c47aa2fa09776"
+      source_sha: "832b39e3811e887f567fa94550e02841057885cf"
+      changed_path_count: 112
+      full_path_exclusion_count: 13
+      candidate_path_count: 99
+      selection: "hunk-reviewed"
     commit_units:
-      - {name: "sheet-and-learning-workflow", request_ids: ["CR-SST-0107", "CR-SST-0110", "CR-SST-0113", "CR-SST-0114", "CR-SST-0117", "CR-SST-0123", "CR-SST-0124", "CR-SST-0126", "CR-SST-0127", "CR-SST-0136"]}
+      - {name: "sheet-and-learning-workflow", request_ids: ["CR-SST-0107", "CR-SST-0110", "CR-SST-0113", "CR-SST-0114", "CR-SST-0117", "CR-SST-0123", "CR-SST-0124", "CR-SST-0126", "CR-SST-0127", "CR-SST-0136"], merge_gate: "reconcile the three request_id TODO learning bugfix lifecycles or reconstruct and prove governed pre-fix behavior"}
       - {name: "article-semantics", request_ids: ["CR-SST-0129", "CR-SST-0130", "CR-SST-0134", "CR-SST-0141", "CR-SST-0145"]}
       - {name: "preview-adoption", request_ids: ["CR-SST-0120", "CR-SST-0140"], merge_gate: "serial preview cohort and private QA pending"}
       - {name: "home-loop", request_ids: ["CR-SST-0143"]}
     path_allowlist:
+      - "docs/00-overview.md"
+      - "docs/{33-articles-frontend,35-home-frontend,38-learning-workspace-frontend}.md"
+      - "docs/architecture/articles-modal-sheet.md"
+      - "docs/capabilities/00-overview.md"
+      - "docs/capabilities/inbound/node-auth--{article-persisted-filters,article-preview-resolution-v1,article-text-ingestion,learning-workspace-context}.md"
+      - "docs/tasks/{2026-07-03-cr-sst-0107-learning-workspace-sheet-adoption,2026-07-04-cr-sst-0113-editable-text-sheet,2026-07-04-cr-sst-0114-contextual-text-selection-tagging,2026-07-04-cr-sst-0117-render-annotated-text-template,2026-07-05-cr-sst-0120-article-preview-resolution-ui,2026-07-07-sst-text-article-learning-workspace-visual-separation,2026-07-10-sst-sheet-workspace-ui,2026-07-18-cr-sst-0143-home-empty-catalog-request-loop}.md"
+      - "docs/tasks/README.md"
+      - "specs/00-index.yaml"
+      - "specs/{33-articles-frontend,35-home-frontend,38-learning-workspace-frontend}.yml"
+      - "specs/capabilities/inbound/00-index.yaml"
+      - "specs/capabilities/inbound/node-auth--{article-persisted-filters,article-preview-resolution-v1,article-text-ingestion,learning-workspace-context}.yaml"
+      - "specs/features/00-index.yaml"
+      - "src/__tests__/articulo.action.test.ts"
+      - "src/components/Inputs/fields/TextAreaField/**"
+      - "src/components/Routes/index.tsx"
       - "src/components/SstSheetWorkspace/**"
+      - "src/pages/Articles/**"
+      - "src/pages/Dashboard/pages/Home/**"
       - "src/pages/LearningWorkspace/**"
-      - "src/pages/Articles/components/ArticleCreateFlow/**"
-      - "src/pages/Articles/components/ArticleForm/**"
-      - "src/pages/Articles/components/ArticleFormView/**"
-      - "src/pages/Articles/components/ArticleModal/**"
-      - "src/pages/Articles/components/ArticlesList/**"
-      - "src/pages/Articles/components/ArticlesToolbar/**"
-      - "src/pages/Articles/{index.tsx,__tests__/**,articles.mappers.ts}"
-      - "src/pages/Dashboard/pages/Home/{index.tsx,constants.tsx,__tests__/Home.test.tsx}"
-      - "src/components/Fields/TextAreaField/**"
-      - "src/services/{articuloService,articleNodeService,learningWorkspaceService}.ts"
+      - "src/services/{articleNodeService,articuloService,learningWorkspaceService}.ts"
+      - "src/services/constants/servicePaths.ts"
       - "src/services/types/{articulo,learningWorkspace}.ts"
       - "src/store/actions/articulo.action.ts"
-      - "src/__tests__/{articulo.action,articleNodeService}.test.ts"
-      - "src/**/articleKindRegistry.ts"
-      - "specs/{33-articles-frontend.yml,35-home-frontend.yml,38-learning-workspace-frontend.yml}"
-      - "docs/{33-articles-frontend.md,35-home-frontend.md,38-learning-workspace-frontend.md}"
-      - "specs/capabilities/inbound/{node-auth--learning-workspace-context,node-auth--article-persisted-filters,node-auth--article-text-ingestion,node-auth--article-preview-resolution-v1}.yaml"
-      - "docs/capabilities/inbound/{node-auth--learning-workspace-context,node-auth--article-persisted-filters,node-auth--article-text-ingestion,node-auth--article-preview-resolution-v1}.md"
-      - "docs/tasks/{2026-07-03-cr-sst-0107-learning-workspace-sheet-adoption.md,2026-07-04-cr-sst-0113-*,2026-07-04-cr-sst-0114-*,2026-07-05-cr-sst-0120-article-preview-resolution-ui.md,2026-07-07-*visual-separation*,2026-07-10-sst-sheet-workspace-ui.md,2026-07-18-cr-sst-0143-home-empty-catalog-request-loop.md}"
     explicit_exclusions:
       - {path: ".github/workflows/build-publish-development.yml", reason: "historical SST-26 delta"}
       - {path: "src/pages/Dictionary/components/DictionarySecretsPanel.tsx", reason: "SST-26 delta outside release train"}
       - {path: "src/components/SstInfoPill/**", reason: "pilot has request_id TODO and pending QA"}
+      - {path: "src/pages/Articles/components/ArticleTreeExplorer/ArticleTreeExplorer.tsx", reason: "pilot-only source delta; retain the base renderInfoTrigger implementation"}
+      - {path: "src/pages/Articles/components/ArticleTreeExplorer/styles.module.scss", reason: "pilot-only and formatting-only source delta; retain base styles"}
+      - {path: "src/pages/Articles/components/ArticleTreeExplorer/styles.module.scss.d.ts", reason: "pilot-only source delta; retain base style declarations"}
+      - {path: "src/pages/Articles/components/ArticleDetailView/styles.module.scss", reason: "pilot-only and formatting-only source delta; retain base styles"}
+      - {path: "src/pages/Articles/components/ArticleDetailView/styles.module.scss.d.ts", reason: "pilot-only source delta; retain base style declarations"}
       - {path: "docs/tasks/2026-07-11-modal-context-pill-pilot.md", reason: "request_id TODO"}
       - {path: "docs/tasks/2026-07-12-learning-closure-reconciliation.md", reason: "request_id TODO"}
       - {path: "docs/tasks/2026-07-12-learning-preview-accepted-context-separation-fix.md", reason: "request_id TODO"}
@@ -244,6 +299,14 @@ repositories:
       - {path: "src/pages/Auth/pages/Register/components/Form/**", reason: "CR-SST-0149 uses a separate branch and PR"}
       - {path: "tmp-*.png", reason: "local runtime evidence"}
       - {path: "*.log", reason: "local logs"}
+    hunk_rules:
+      - {path: "docs/tasks/README.md", include: "2026-07-07 and 2026-07-10 governed task links", exclude: "the four request_id TODO task links"}
+      - {path: "docs/architecture/articles-modal-sheet.md", include: "Shared Platform Pattern section for SstSheetWorkspace", exclude: "Piloto De Pastillas Contextuales section"}
+      - {path: "specs/33-articles-frontend.yml", include: "governed hunks for CR-SST-0120/0124/0126/0127/0129/0130/0134/0141/0145", exclude: "format-only rewrites and changes to pre-existing request_id TODO capabilities"}
+      - {paths: ["src/pages/Articles/components/ArticleCreateFlow/ArticleCreateFlow.tsx", "src/pages/Articles/components/ArticleDetailView/ArticleDetailView.tsx", "src/pages/Articles/components/ArticleForm/index.tsx", "src/pages/Articles/components/ArticleFormView/ArticleFormView.tsx", "src/pages/Articles/components/ArticleModal/ArticleModal.tsx"], include: "governed learning, semantic, preview and shared sheet behavior while preserving the base renderInfoTrigger implementation", exclude: "all SstInfoPill imports and usages"}
+      - {path: "src/pages/Articles/components/ArticleCreateFlow/__tests__/ArticleCreateFlow.test.tsx", exclude: "SstInfoPill-specific moreInfo assertion"}
+      - {paths: ["docs/capabilities/inbound/node-auth--learning-workspace-context.md", "docs/38-learning-workspace-frontend.md", "specs/capabilities/inbound/node-auth--learning-workspace-context.yaml"], exclude: "references to the three 2026-07-12 request_id TODO reports"}
+      - {paths: ["src/pages/LearningWorkspace/components/LearningWorkspaceSheet.tsx", "src/pages/LearningWorkspace/__tests__/LearningWorkspace.test.tsx"], rule: "reconcile the request_id TODO manual source-type and accepted-context bugfix lifecycles before merge, or reconstruct governed pre-fix behavior and prove build/tests"}
     owner_docs:
       - "specs/33-articles-frontend.yml"
       - "docs/33-articles-frontend.md"
@@ -282,23 +345,38 @@ repositories:
         release_branch: "reconcile/SST-29/extension-governed-runtime"
         request_ids: ["CR-SST-0098", "CR-SST-0099", "CR-SST-0100", "CR-SST-0101", "CR-SST-0119", "CR-SST-0131", "CR-SST-0132"]
         path_allowlist:
+          - "specs/00-index.yaml"
+          - "specs/features/00-index.yaml"
           - "specs/features/{credentialed-web-source,quick-save,sessions}.yaml"
           - "docs/features/credentialed-web-source.md"
           - "docs/00-overview.md"
           - "docs/qa/session-capture-validation.md"
           - "specs/integration/{quick-save-bff-save,node-auth-extension-session-ingestion}.yaml"
+          - "specs/integration/node-auth-extension-session.yaml"
           - "specs/integration/inbound/node-auth--browser-extension-{article,session}-ingestion.yaml"
+          - "specs/runtime/internal-messaging-contracts.yaml"
           - "docs/integration/**"
           - "src/features/sessions/**"
+          - "src/features/node-auth-session/create-node-auth-session-service.test.ts"
+          - "src/platform/api/{node-auth-client,quick-save-bff-gateway,sessions-bff-gateway}.{ts,test.ts}"
           - "src/platform/api/node-auth-browser-extension-{article,session}.ts"
           - "src/platform/api/node-auth-browser-extension-{article,session}.test.ts"
           - "src/platform/messaging/extension-message-clients.ts"
+          - "src/platform/pdf/{materialize-session-pdf,materialize-text-article-pdf}.{ts,test.ts}"
           - "src/platform/runtime/{bootstrap-background,create-session-capture-command-handler}.ts"
+          - "src/platform/runtime/{active-tab-host-permissions,session-capture-host-permissions}.{ts,test.ts}"
+          - "src/platform/runtime/create-session-capture-command-handler.test.ts"
           - "src/platform/storage/extension-storage.ts"
+          - "src/platform/storage/extension-storage.test.ts"
           - "src/platform/tabs/**"
           - "src/shared/{extension-messages,sessions}.ts"
           - "src/ui/{quick-save,extension-surface}/**"
           - "wxt.config.ts"
+        hunk_rules:
+          - {path: "specs/features/credentialed-web-source.yaml", include: "semantic authenticated Web source projection", exclude: "private-preview claims and CR-SST-0139 references"}
+          - {path: "docs/features/credentialed-web-source.md", include: "semantic authenticated Web source projection", exclude: "private-preview claims and CR-SST-0139 references"}
+          - {paths: ["src/platform/runtime/create-session-capture-command-handler.ts", "src/platform/runtime/session-capture-host-permissions.ts", "src/platform/messaging/extension-message-clients.ts", "src/shared/extension-messages.ts", "src/shared/sessions.ts", "src/ui/quick-save/**", "src/ui/extension-surface/**", "wxt.config.ts"], include: "Draft A capture, outcome, semantic kind and explicit Web behavior", exclude: "Draft B permission lease, global host permission, private preview, previewCandidate, firstFrameDataUrl and private consent UI"}
+          - {path: "specs/integration/inbound/00-index.yaml", rule: "exclude; its observed source delta belongs only to Draft B"}
       - name: "B"
         release_branch: "feat/SST-29/private-session-hardening"
         stacked_on: "reconcile/SST-29/extension-governed-runtime"
@@ -380,6 +458,15 @@ separate_follow_ups:
     status: "separate-draft-after-main-frontend-rebase"
     source_commit_sha: null
     source_state: "eight-path uncommitted worktree delta; governed capture required"
+    source_paths:
+      - "docs/31-auth-frontend.md"
+      - "docs/capabilities/inbound/node-auth--auth-frontend-access-ui.md"
+      - "specs/15-ui-framework.yml"
+      - "specs/31-auth-frontend.yml"
+      - "specs/capabilities/inbound/node-auth--auth-frontend-access-ui.yaml"
+      - "src/pages/Auth/pages/Register/components/Form/styles.module.scss"
+      - "docs/tasks/2026-08-04-cr-sst-0149-signup-responsive-structure-repair.md"
+      - "src/pages/Auth/pages/Register/components/Form/__tests__/RegisterFormLayout.test.ts"
     checks:
       - "RegisterFormLayout.test.ts"
       - "npm.cmd run check"

@@ -156,6 +156,7 @@ owner_documentation:
   evidence_refs:
     - "evidence/requests/CR-SST-0152/policy-and-subagent-evidence.md"
     - "evidence/requests/CR-SST-0152/recomposition-plan.md"
+    - "evidence/requests/CR-SST-0152/allowlist-reconciliation-2026-08-06.md"
 
 required_checks:
   - {service_id: "sst-bend", command: "npm.cmd run check plus contractual suites and ephemeral DB migration up/down/up"}
@@ -203,11 +204,16 @@ validation:
     - "workflow, image, infra, Argo, smoke and rollback evidence"
 
 decision:
-  status: "pending-control-plane-merge-approval"
-  approver: "TODO"
+  status: "approved-for-child-recomposition"
+  approver: "human-via-control-plane-pr-merge"
+  approved_at: "2026-08-06T22:28:31Z"
+  approval_pr: "https://github.com/afpogo/4uentes-ards-control-plane/pull/2"
+  approval_merge_commit: "fddbb57ee8031499a253b002544f92d40e6f62ec"
   note: >
-    Merging the control-plane pull request is the effective approval to begin
-    isolated child-repository recomposition. It does not approve any child merge.
+    The merged control-plane pull request approved isolated child-repository
+    recomposition. Discovery then found literal allowlist mismatches, so any
+    path expansion remains blocked until the follow-up manifest amendment is
+    merged. No child merge is approved.
 
 jira_sync:
   status: "readonly-preflight-complete-no-write-authorization"
