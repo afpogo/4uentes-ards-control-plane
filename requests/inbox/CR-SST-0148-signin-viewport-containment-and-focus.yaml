@@ -1,0 +1,10 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0148"
+title: "Contain signin within viewport and restore focus behavior"
+status: inbox
+created_at: "2026-08-04"
+requester: "4uentes"
+business_context: "The signin popover exceeds short viewports and does not contain keyboard focus."
+requested_change: "Redesign the signin container so borders, content, scroll and focus stay within the active viewport."
+expected_outcome: "Signin remains reachable and operable without horizontal overflow or background focus leakage."

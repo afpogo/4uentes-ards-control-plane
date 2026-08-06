@@ -3,7 +3,7 @@ kind: "feature_state"
 id: "article-semantic-kind"
 title: "SST Article Semantic Kind Integrity"
 status: "validated-local"
-updated_at: "2026-07-19"
+updated_at: "2026-08-02"
 solution_id: "sst"
 affected_services:
   - sst-bend
@@ -39,9 +39,10 @@ evidence_refs:
   - "evidence/requests/CR-SST-0144/validation-plan.md"
   - "evidence/requests/CR-SST-0144/authenticated-e2e-results.md"
   - "evidence/requests/CR-SST-0145/implementation-validation.md"
+  - "evidence/requests/CR-SST-0134/closure-acceptance-2026-08-02.md"
 open_gaps:
-  - "All producer, query, security and Plaud job convergence slices are closed locally."
-  - "CR-SST-0134 inventory found 23 ambiguous legacy rows and zero safe automatic classifications; human evidence/addendum is required before mutation."
+  - "All producer, query, security, Plaud job and governed manual-classification slices are closed locally."
+  - "Eighteen non-visible historical rows remain a governed residual across four anonymous owner scopes."
   - "Historical rows must not be reclassified by transport or filter.type heuristics."
   - "Do not mark released without publication evidence."
-  - "CR-SST-0144 authenticated integral E2E and CR-SST-0145 semantic payloadKind filtering are validated locally; neither replaces CR-SST-0134 human-reviewed historical reconciliation."
+  - "Future reconciliation requires article-specific human authority and must not access another account merely to eliminate the residual count."

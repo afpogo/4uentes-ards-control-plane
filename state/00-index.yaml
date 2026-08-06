@@ -45,6 +45,7 @@ features:
   - "state/features/sst-tags-governance.current.yaml"
   - "state/features/learning-content-tags.current.yaml"
   - "state/features/article-semantic-kind.current.yaml"
+  - "state/features/auth-frontend-access-ui.current.yaml"
   - "state/features/sst-sheet-workspace-ui.current.yaml"
   - "state/features/sst-tag-prefix-engine.current.yaml"
   - "state/features/robots.current.yaml"

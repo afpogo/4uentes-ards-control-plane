@@ -1,0 +1,46 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0150"
+title: "Complete signup visual rebranding"
+status: planned
+source_request: "requests/inbox/CR-SST-0150-signup-complete-visual-rebranding.yaml"
+created_at: "2026-08-04"
+requester: "4uentes"
+summary: "Rebrand signup with official SST assets, semantic tokens and a responsive content hierarchy."
+control_plane_context: {initiative_id: "INIT-SST-0006", jira_epic_key: "SST-72", jira_role: "mirror", jira_source_of_truth: false}
+impact_analysis:
+  required: true
+  affected_services:
+    - {service_id: "sst-fend", via: "AuthLayout, Register and shared auth presentation", service_kind: "frontend-web", ards_kind: "frontend-web", status: "active"}
+  affected_ards: ["auth-frontend-access-ui", "branding-frontend", "design-tokens", "i18n"]
+  risks:
+    - {id: "AUTH_CONTRACT_REGRESSION", severity: high}
+    - {id: "BRAND_TOKEN_DRIFT", severity: medium}
+execution:
+  requires_human_approval: false
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets: ["sst-fend"]
+  implementation_boundary: "Visual hierarchy, official assets, tokens and ES/EN copy; no auth flow, payload, terms/privacy or route changes."
+owner_documentation:
+  required: true
+  status: planned
+  owner_repos: ["sst-fend"]
+  planned_owner_docs:
+    - "specs/37-branding-frontend.yml"
+    - "docs/37-branding-frontend.md"
+    - "specs/31-auth-frontend.yml"
+    - "docs/31-auth-frontend.md"
+    - "specs/capabilities/inbound/node-auth--auth-frontend-access-ui.yaml"
+required_checks:
+  - {service_id: "sst-fend", command: "npm.cmd run check"}
+  - {service_id: "4uentes-orchestor", command: "npm.cmd run check"}
+acceptance:
+  - "Official SST assets and semantic tokens replace legacy inline SVG and component/page hardcoded brand colors."
+  - "The signup hierarchy remains legible in ES and EN at required viewports and 200% zoom."
+  - "No authentication, session, API, RBAC, legal or routing contract changes."
+decision: {status: approved-plan, approver: "4uentes", decided_at: "2026-08-04", note: "A new Jira Task is needed because no existing issue covers full rebranding."}
+jira_sync:
+  status: "pending-create-authorization"
+  desired_issue_type: "Task"
+  parent_issue_key: "SST-72"
+  issue_candidate: "New Task for CR-SST-0150 under SST-72"

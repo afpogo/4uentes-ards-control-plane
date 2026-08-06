@@ -17,5 +17,6 @@ initiatives:
   - "initiatives/INIT-SST-0003-sst-extension-construction.yaml"
   - "initiatives/INIT-SST-0004-infrastructure-production-readiness.yaml"
   - "initiatives/INIT-SST-0005-article-kind-integrity.yaml"
+  - "initiatives/INIT-SST-0006-auth-access-ui-resilience-and-rebranding.yaml"
 validation:
   command: "npm.cmd run check:initiatives"

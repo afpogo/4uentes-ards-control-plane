@@ -2,7 +2,7 @@ schema_version: "1.0"
 phase: 2
 id: "CR-SST-0134"
 title: "Reconcile legacy article semantic kinds with evidence"
-status: running
+status: done
 source_request: "requests/inbox/CR-SST-0134-legacy-article-kind-reconciliation.yaml"
 created_at: "2026-07-11"
 requester: "4uentes"
@@ -44,12 +44,13 @@ required_checks:
   - {service_id: "sst-bend", command: "npm.cmd run check"}
   - {service_id: "4uentes-orchestor", command: "npm.cmd run check"}
 decision:
-  status: approved-for-manual-implementation
+  status: closed-local-with-governed-residual
   approver: "4uentes"
-  decided_at: "2026-07-24"
+  decided_at: "2026-08-02"
   note: >
-    The user remains the authority for each article. Web and Text are the only
-    repair choices; URL is preserved as data and never used to infer kind.
+    The user validated the manual classification path for the accessible
+    account. Eighteen non-visible historical rows remain a governed residual;
+    they are not inferred, mutated or treated as a current product failure.
 agent_execution:
   provider: "codex"
   resource_level: "normal"
@@ -61,15 +62,18 @@ agent_execution:
   subagent_deployment_plan: "none; repository policy and current runtime disable proactive delegation"
   reason: "Cross-repo lifecycle, overlapping dirty worktrees, frontend behavior, owner documentation and authenticated QA require one integrated context."
 jira_sync:
-  status: implementation-in-progress-with-data-blocker
+  status: synchronized
   desired_issue_type: "Subtask"
   parent_issue_key: "SST-58"
   issue_key: "SST-64"
-  desired_status: "En curso"
-  status_observed: "En curso"
+  desired_status: "Listo"
+  status_observed: "Listo"
   implementation_start_comment_id: "10263"
   implementation_progress_comment_id: "10264"
   closure_blocker_comment_id: "10297"
   publication_progress_comment_id: "10298"
-  closure_blocker: "Final read-only inventory on 2026-07-28 observed 108 total articles, 90 with payload, 18 without payload and 0 kind/payload_kind mismatches."
+  closure_comment_id: "10304"
+  closure_transition_id: "41"
+  closure_evidence_ref: "evidence/requests/CR-SST-0134/closure-acceptance-2026-08-02.md"
+  accepted_residual: "Final read-only inventory observed 18 rows without payload across four anonymous owner scopes; no automatic inference or cross-account access is authorized."
   former_blockers: ["SST-59", "SST-61", "SST-62", "SST-63"]

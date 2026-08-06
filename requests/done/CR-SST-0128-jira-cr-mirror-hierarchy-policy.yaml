@@ -34,6 +34,7 @@ evidence_refs:
   - "evidence/initiatives/INIT-SST-0005/jira-readonly-preflight.md"
   - "evidence/initiatives/INIT-SST-0005/jira-mirror-plan.md"
   - "evidence/initiatives/INIT-SST-0005/jira-write-summary.md"
+  - "evidence/requests/CR-SST-0128/jira-sst-58-close-reconciliation-2026-08-02.md"
 decision:
   status: "closed-local"
   approver: "4uentes"

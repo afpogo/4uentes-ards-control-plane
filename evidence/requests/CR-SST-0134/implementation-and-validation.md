@@ -151,3 +151,15 @@ La apertura de PRs queda bloqueada por condiciones externas verificadas:
 El comentario Jira `10298` replica esta publicación parcial sin transferir
 autoridad al tracker. Ninguna rama publicada elimina el blocker de 18 artículos
 sin payload ni habilita `done`, `Listo` o `released`.
+
+## Decisión de cierre - 2026-08-02
+
+La persona aceptó como concluida la validación funcional después de confirmar
+que clasificó los artículos visibles en su sesión. Los 18 artículos restantes,
+distribuidos en cuatro buckets anónimos de owner y no expuestos a la cuenta de
+QA, pasan de blocker de ejecución a residual histórico gobernado.
+
+No se los reclasificó, no se accedió a otras cuentas y no se modificó la regla
+que prohíbe inferir el kind. La decisión completa está en
+`evidence/requests/CR-SST-0134/closure-acceptance-2026-08-02.md`. Este cierre no
+declara publicación ni `released`.

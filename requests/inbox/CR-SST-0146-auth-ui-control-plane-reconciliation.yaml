@@ -1,0 +1,10 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0146"
+title: "Reconcile SST auth UI Initiative and tracker backlog"
+status: inbox
+created_at: "2026-08-04"
+requester: "4uentes"
+business_context: "SST-72 through SST-81 exist in Jira without local Initiative or CR correlation."
+requested_change: "Adopt SST-72 as the Initiative mirror and record a non-duplicating CR/Jira reconciliation plan."
+expected_outcome: "One auditable ARDS/SDD program owns auth UI work before child-repository mutation."

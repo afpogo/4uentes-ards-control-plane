@@ -122,8 +122,9 @@ subagent_deployment_plan:
 
 execution_state:
   started_at: "2026-07-19"
-  current_step: "permission-fix-and-current-compose-stack-validation-in-progress"
+  current_step: "interactive-qa-blocked-by-mcp-disable-extensions-flag"
   evidence_ref: "evidence/requests/CR-SST-0103/execution-start-2026-07-19.md"
+  resume_evidence_ref: "evidence/requests/CR-SST-0103/qa-resume-preflight-2026-08-02.md"
   blocking_findings:
     - id: "MULTI_TAB_VISUAL_CAPTURE_PERMISSION_GAP"
       disposition: "approved under CR-SST-0121; implementation and validation in progress"
@@ -132,6 +133,9 @@ execution_state:
     - id: "PREVIEW_STACK_NOT_DEPLOYED"
       disposition: "resolved for local-code QA through isolated Compose stack on 127.0.0.1; canonical kind deploy remains out of this execution"
       evidence_ref: "evidence/requests/CR-SST-0103/manual-qa-case-1-preview-off-2026-07-19.md"
+    - id: "CHROME_MCP_EXTENSIONS_DISABLED"
+      disposition: "confirmed; local MCP configuration upgrade and extension category enablement require explicit authorization and client restart"
+      evidence_ref: "evidence/requests/CR-SST-0103/chrome-mcp-extension-blocker-2026-08-02.md"
   readiness_evidence_ref: "evidence/requests/CR-SST-0103/current-compose-stack-readiness-2026-07-23.md"
   jira_trace_evidence_ref: "evidence/requests/CR-SST-0103/jira-execution-transitions-2026-07-23.md"
 

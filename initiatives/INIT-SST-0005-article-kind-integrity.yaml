@@ -2,8 +2,8 @@ schema_version: "1.0"
 kind: "initiative"
 id: "INIT-SST-0005"
 title: "SST Article Kind Integrity"
-status: "active"
-updated_at: "2026-07-19"
+status: "done"
+updated_at: "2026-08-02"
 owner_repository: "4uentes-orchestor"
 objective: >
   Make article semantic kind explicit, consistent and auditable across SST
@@ -18,6 +18,8 @@ source_evidence_refs:
   - "evidence/initiatives/INIT-SST-0005/initiative-decision.md"
   - "evidence/initiatives/INIT-SST-0005/jira-readonly-preflight.md"
   - "evidence/initiatives/INIT-SST-0005/jira-mirror-plan.md"
+  - "evidence/requests/CR-SST-0128/jira-sst-58-close-reconciliation-2026-08-02.md"
+  - "evidence/requests/CR-SST-0134/closure-acceptance-2026-08-02.md"
   - "requests/planned/CR-SST-0128-jira-cr-mirror-hierarchy-policy.yaml"
 model_refs:
   - "specs/initiatives/initiative-model.yaml"
@@ -46,11 +48,16 @@ tracking:
     project_key: "SST"
     issue_type: "Epic"
     issue_key: "SST-57"
-    current_status_observed: "En curso"
-    write_status: "created-and-started"
+    current_status_observed: "Listo"
+    write_status: "closure-synchronized"
     read_status: "available"
     evidence_ref: "evidence/initiatives/INIT-SST-0005/jira-mirror-plan.md"
     parent_task_key: "SST-58"
+    parent_task_status_observed: "Listo"
+    parent_task_closure_ref: "evidence/requests/CR-SST-0128/jira-sst-58-close-reconciliation-2026-08-02.md"
+    closure_comment_id: "10306"
+    closure_transition_id: "41"
+    parent_task_aggregate_comment_id: "10305"
     associated_issue_keys:
       - "SST-56"
       - "SST-58"
@@ -77,10 +84,14 @@ boundaries:
   mutates_child_repositories: false
   promotes_runtime: false
   changes_core_canon: false
-open_gaps:
-  - "Writer, query, security and Plaud convergence CRs are closed locally; only reviewed historical reconciliation remains open."
-  - "CR-SST-0134 remains non-mutating until producer fixes and a reviewed execution addendum exist."
-  - "CR-SST-0135 is an independent security slice and must not be hidden inside classification work."
-  - "CR-SST-0141 / SST-71 tracks native Web payload persistence discovered during CR-SST-0130 audit."
-  - "CR-SST-0142 / SST-82 closed the Plaud aggregate/job transaction and stale lease recovery gap."
-  - "CR-SST-0144 and CR-SST-0145 validate native Text/Web creation and semantic payloadKind catalog filtering; they do not replace the human-reviewed historical reconciliation gate CR-SST-0134 / SST-64."
+closure_summary:
+  completed_at: "2026-08-02"
+  decision_ref: "evidence/requests/CR-SST-0134/closure-acceptance-2026-08-02.md"
+  accepted_outcomes:
+    - "Writer, query, security, Plaud and native Text/Web semantic-kind slices are closed locally."
+    - "The human-authorized manual classification path was validated in the accessible account."
+    - "No observed kind/payload_kind mismatches remain."
+  governed_residuals:
+    - "Eighteen historical rows without payload remain across four anonymous owner scopes not exposed to the QA account."
+    - "Residual rows must not be inferred from URL, filter.type, transport or preview and were not mutated during closure."
+    - "Closure does not imply publication or released state."

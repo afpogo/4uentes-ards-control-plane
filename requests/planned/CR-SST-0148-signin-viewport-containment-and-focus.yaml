@@ -1,0 +1,41 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0148"
+title: "Contain signin within viewport and restore focus behavior"
+status: planned
+source_request: "requests/inbox/CR-SST-0148-signin-viewport-containment-and-focus.yaml"
+created_at: "2026-08-04"
+requester: "4uentes"
+summary: "Replace brittle popover positioning with a viewport-bounded, keyboard-operable signin surface."
+control_plane_context: {initiative_id: "INIT-SST-0006", jira_epic_key: "SST-72", jira_issue_key: "SST-76", jira_role: "mirror", jira_source_of_truth: false}
+impact_analysis:
+  required: true
+  affected_services:
+    - {service_id: "sst-fend", via: "Guest header signin trigger, overlay and LoginDropdown", service_kind: "frontend-web", ards_kind: "frontend-web", status: "active"}
+  affected_ards: ["auth-frontend-access-ui", "responsive-layout", "accessibility"]
+  risks:
+    - {id: "VIEWPORT_OVERFLOW", severity: high}
+    - {id: "FOCUS_ESCAPE", severity: high}
+execution:
+  requires_human_approval: false
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets: ["sst-fend"]
+  implementation_boundary: "Preserve /?auth=login, /login redirect and LoginForm/AuthActor contracts; change container, hierarchy and presentation only."
+owner_documentation:
+  required: true
+  status: planned
+  owner_repos: ["sst-fend"]
+  planned_owner_docs:
+    - "specs/31-auth-frontend.yml"
+    - "docs/31-auth-frontend.md"
+    - "docs/architecture/authentication.md"
+    - "specs/capabilities/inbound/node-auth--auth-frontend-access-ui.yaml"
+required_checks:
+  - {service_id: "sst-fend", command: "npm.cmd run check"}
+  - {service_id: "4uentes-orchestor", command: "npm.cmd run check"}
+acceptance:
+  - "At 320x568, 360x800, 390x844, 412x915, 768x1024, 1366x768 and 1440x900 the visible panel rect stays inside the viewport or exposes one intentional internal vertical scroll."
+  - "documentElement.scrollWidth is not greater than clientWidth."
+  - "Opening moves focus into signin; Tab stays within it; Escape closes it and restores focus to the trigger."
+decision: {status: approved-plan, approver: "4uentes", decided_at: "2026-08-04", note: "Chrome DevTools reproduction confirms the defect."}
+jira_sync: {status: "pending-type-reconciliation-and-write-authorization", desired_issue_type: "Task", parent_issue_key: "SST-72", issue_key: "SST-76", current_issue_type_observed: "Error"}
