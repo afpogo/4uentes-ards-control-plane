@@ -1,0 +1,24 @@
+{
+  "issue": {
+    "key": "SST-28",
+    "summary": "[SST][CR-SST-0092] Implement sst-bend LearningWorkspace first runtime slice",
+    "raw": "{\"id\":\"10066\",\"key\":\"SST-28\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10066\"}"
+  },
+  "existing": false,
+  "observed": {
+    "key": "SST-28",
+    "summary": "[SST][CR-SST-0092] Implement sst-bend LearningWorkspace first runtime slice",
+    "status": "En curso",
+    "statusCategory": "En curso",
+    "parentKey": "SST-27",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0092",
+      "init-sst-0001",
+      "learning-content-tags",
+      "sst-bend"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10066\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10066\",\"key\":\"SST-28\",\"fields\":{\"summary\":\"[SST][CR-SST-0092] Implement sst-bend LearningWorkspace first runtime slice\",\"parent\":{\"id\":\"10065\",\"key\":\"SST-27\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10065\",\"fields\":{\"summary\":\"[SST][INIT-SST-0001] SST Tags Governance Continuity\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10006\",\"description\":\"La persona asignada está trabajando actualmente en esta actividad.\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En curso\",\"id\":\"10006\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"priority\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/priority/3\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"Medium\",\"id\":\"3\"},\"issuetype\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issuetype/10005\",\"id\":\"10005\",\"description\":\"Una colección de errores, historias y tareas relacionadas.\",\"iconUrl\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/2/universal_avatar/view/type/issuetype/avatar/10307?size=medium\",\"name\":\"Epic\",\"subtask\":false,\"avatarId\":10307,\"entityId\":\"[cloudId-redacted]\",\"hierarchyLevel\":1}}},\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10006\",\"description\":\"La persona asignada está trabajando actualmente en esta actividad.\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En curso\",\"id\":\"10006\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-sst-0092\",\"init-sst-0001\",\"learning-content-tags\",\"sst-bend\"]}}"
+  }
+}

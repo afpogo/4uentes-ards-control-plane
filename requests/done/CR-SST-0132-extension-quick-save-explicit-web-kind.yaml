@@ -1,0 +1,45 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0132"
+title: "Persist explicit web kind for extension quick save"
+status: done
+source_request: "requests/inbox/CR-SST-0132-extension-quick-save-explicit-web-kind.yaml"
+planned_request: "requests/planned/CR-SST-0132-extension-quick-save-explicit-web-kind.yaml"
+completed_at: "2026-07-12"
+requester: "4uentes"
+summary: "Extension quick-save now writes an explicit canonical Web payload."
+scope:
+  solution: "sst"
+  services_modified: ["sst-extension", "node-auth", "sst-bend", "4uentes-orchestor"]
+  functional_repositories_modified: true
+  runtime_code_modified: true
+implementation:
+  initiative_id: "INIT-SST-0005"
+  jira_epic_key: "SST-57"
+  jira_parent_issue_key: "SST-58"
+  jira_issue_key: "SST-62"
+  jira_status_observed: "Listo"
+  jira_source_of_truth: false
+  completed_slice: "Quick-save requires identical canonical URL in transport and explicit Web payload."
+owner_documentation:
+  status: "satisfied"
+  owner_repos: ["sst-extension", "node-auth", "sst-bend"]
+  evidence_refs:
+    - "evidence/requests/CR-SST-0132/owner-documentation-summary.md"
+validation:
+  status: "validated-local"
+  passed:
+    - "sst-extension pnpm.cmd check: 26 files and 106 tests"
+    - "node-auth npm.cmd run check"
+    - "sst-bend npm.cmd run check"
+    - "Restored node-auth JWKS HTTP 200"
+evidence_refs:
+  - "evidence/requests/CR-SST-0132/implementation.md"
+  - "evidence/requests/CR-SST-0132/node-auth-validation.md"
+  - "evidence/requests/CR-SST-0132/sst-extension-validation.md"
+  - "evidence/requests/CR-SST-0132/sst-bend-validation.md"
+  - "evidence/requests/CR-SST-0132/owner-documentation-summary.md"
+decision:
+  status: "closed-local"
+  approver: "4uentes"
+  note: "Validated locally; no historical rewrite, release or publication is implied."

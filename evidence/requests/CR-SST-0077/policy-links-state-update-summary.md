@@ -1,11 +1,11 @@
-# CR-SST-0077 Policy Links State Update Summary
+# CR-SST-0077 Resumen De Actualizacion Del Estado De Policy Links
 
-## Purpose
+## Proposito
 
-Record how `CR-SST-0077` changed the control-plane view of agent operating
-policy adoption.
+Registrar como `CR-SST-0077` cambio la vista del control-plane sobre la
+adopcion de agent operating policies.
 
-## Updates
+## Actualizaciones
 
 - `agent-model-selection-policy` -> `linked`
 - `agent-resource-degradation-policy` -> `linked`
@@ -14,16 +14,16 @@ policy adoption.
 - `agent-context-management-policy` -> `linked`
 - `agent-architecture-boundary-policy` -> `linked`
 
-## Meaning
+## Significado
 
-These six policies are no longer tracked as `pending-core-handoff` in the
-orchestrator. The core now exposes the canonical policy registry and the SST
-child repos expose the minimum local adoption artifacts required by the sync
-contract.
+Estas seis policies ya no se rastrean como `pending-core-handoff` en el
+orchestrator. El core ahora expone el registry canonico de policies y los child
+repos de SST exponen los artefactos minimos de adopcion local requeridos por el
+contrato de sync.
 
-## Remaining Open Items
+## Items Abiertos Restantes
 
-- `human-doc-language` still needs a separate core handoff decision.
-- Broader rollout beyond the SST solution remains future work.
-- Some repo-level validation commands still fail and are tracked separately in
+- `human-doc-language` todavia necesita una decision separada de handoff al core.
+- El rollout mas amplio fuera de la solucion SST sigue siendo trabajo futuro.
+- Algunos comandos de validacion a nivel repo todavia fallan y se rastrean por separado en
   `evidence/requests/CR-SST-0077/validation-results.md`.

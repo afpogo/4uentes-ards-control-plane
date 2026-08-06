@@ -1,0 +1,227 @@
+{
+  "requestId": "CR-SST-0098",
+  "issueKey": "SST-30",
+  "approved": true,
+  "action": "updated-and-transitioned",
+  "before": {
+    "summary": "[SST][INIT-SST-0003][CR-SST-0098] Fix sst-extension session tab-by-tab visual PDF capture",
+    "status": "En revisión",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "Fuentes Sandferand",
+    "updated": "2026-07-04T01:50:53.850-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0098",
+      "init-sst-0003",
+      "session-capture",
+      "sst-extension"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10068\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10068\",\"key\":\"SST-30\",\"fields\":{\"summary\":\"[SST][INIT-SST-0003][CR-SST-0098] Fix sst-extension session tab-by-tab visual PDF capture\",\"description\":\"CR: CR-SST-0098  \\nInitiative: INIT-SST-0003  \\nEpic: SST-29\\n\\nPurpose:\\n\\nFix robust visual PDF capture for each session tab, including tab focus, ready/settle wait, partial failure handling, and original active tab restoration.\\n\\nSubtasks / checklist:\\n\\n- [ ] Actualizar spec sessions con carga, settle y restauracion de foco.\\n- [ ] Actualizar docs owner de sst-extension afectadas por el cambio.\\n- [ ] Capturar y restaurar tab activa original.\\n- [ ] Agregar wait strategy por tab: tabs.onUpdated, document.readyState, settle y timeout.\\n- [ ] Preservar scroll inicial por tab cuando sea posible.\\n- [ ] Mantener fallo parcial sin abortar todo el lote.\\n- [ ] Agregar unit tests de tab activation, timeout y restore original.\\n- [ ] Ejecutar pnpm test, pnpm build y pnpm check.\\n\\nDefinition of Done:\\n\\n- [ ] La tab original queda activa al terminar.\\n- [ ] Tabs lentas no se capturan antes de ready/settle o producen warning.\\n- [ ] Una tab fallida no invalida necesariamente toda la sesion.\\n- [ ] No se introducen content scripts persistentes sin spec.\\n- [ ] Evidencia central lista rutas owner actualizadas en sst-extension.\\n\\nOwner documentation gate:\\n\\n* sst-extension owner ARDS/SDD specs/docs must be updated for any mutated behavior, or an explicit owner-documentation exception must be recorded before closure.\\n\\nControl-plane source:\\n\\n* requests/planned/cr-sst-0098-TODO.yaml\\n* initiatives/INIT-SST-0003-sst-extension-construction.yaml\\n* evidence/requests/CR-SST-0095/jira-cr-backlog-candidates.md\\n\\nBoundary:\\n\\n* Jira is an operational mirror; ARDS/SDD remains the source of truth.\\n* Do not store private page content, cookies, JWTs or plaintext secrets in Jira or evidence.\\n\\n\",\"assignee\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]\",\"accountId\": \"[accountId-redacted]\",\"emailAddress\":\"[email-redacted]\",\"avatarUrls\":{\"48x48\":\"[avatar-url-redacted]\",\"24x24\":\"[avatar-url-redacted]\",\"16x16\":\"[avatar-url-redacted]\",\"32x32\":\"[avatar-url-redacted]\"},\"displayName\":\"Fuentes Sandferand\",\"active\":true,\"timeZone\":\"America/Buenos_Aires\",\"accountType\":\"atlassian\"},\"resolution\":null,\"updated\":\"2026-07-04T01:50:53.850-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10007\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En revisión\",\"id\":\"10007\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-sst-0098\",\"init-sst-0003\",\"session-capture\",\"sst-extension\"]}}"
+  },
+  "after": {
+    "summary": "[SST][INIT-SST-0003][CR-SST-0098] Fix sst-extension session tab-by-tab visual PDF capture",
+    "status": "Listo",
+    "statusCategory": "Listo",
+    "resolution": "Listo",
+    "assignee": "Fuentes Sandferand",
+    "updated": "2026-07-04T02:59:57.550-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0098",
+      "done",
+      "init-sst-0003",
+      "session-capture",
+      "sst-extension",
+      "validated-live"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10068\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10068\",\"key\":\"SST-30\",\"fields\":{\"summary\":\"[SST][INIT-SST-0003][CR-SST-0098] Fix sst-extension session tab-by-tab visual PDF capture\",\"description\":\"Estado actual: validated-live.\\n\\nResultado:\\n\\n* SST Dictionary Tags quedo validado en runtime local bajo CR-SST-0064.\\n* Backend, BFF y frontend pasaron validacion local-live.\\n* dictionary-tags avanzo de validated-local a validated-live en el control-plane.\\n\\nEvidencia principal:\\n\\n* requests/done/CR-SST-0064-dictionary-tags-validated-live-closure.yaml\\n* evidence/requests/CR-SST-0064/runtime-validation-results.md\\n* evidence/requests/CR-SST-0064/qa-manual-dictionary-management-created-entry.png\\n* state/features/dictionary-tags.current.yaml\\n\\nValidaciones ejecutadas:\\n\\n* sst-bend: npm.cmd run test:diccionario -> PASS 10/10\\n* sst-bend: npm.cmd run test:diccionario:stage2 -> PASS 9/9\\n* sst-bend: npm.cmd run test:diccionario:stage3 -> PASS 11/11\\n* sst-bend: npm.cmd run qa:diccionario:stage3 -> PASS\\n* sst-bend: npm.cmd run check -> PASS\\n* 4uentes-auth: npm.cmd run check -> PASS\\n* BFF /api/diccionario/\\\\* smoke -> PASS\\n* sst-fend: npm.cmd run check -> PASS, 24 suites / 142 tests\\n* Chrome DevTools /dictionary manual QA -> PASS\\n* 4uentes-orchestor: npm.cmd run check -> PASS, 0 fails\\n\\nGaps aceptados fuera de este cierre:\\n\\n* TagDefinition public CRUD/governance queda para request futuro.\\n* sst-extension account-context queda como follow-up no bloqueante.\\n* Encryption-at-rest, offline model, translations y aliases quedan fuera de este validated-live closure.\\n\\nFuente canonica:\\n\\n* El control-plane ARDS/SDD conserva la fuente canonica. Jira es superficie operativa de visibilidad.\\n\\n\",\"assignee\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]\",\"accountId\": \"[accountId-redacted]\",\"emailAddress\":\"[email-redacted]\",\"avatarUrls\":{\"48x48\":\"[avatar-url-redacted]\",\"24x24\":\"[avatar-url-redacted]\",\"16x16\":\"[avatar-url-redacted]\",\"32x32\":\"[avatar-url-redacted]\"},\"displayName\":\"Fuentes Sandferand\",\"active\":true,\"timeZone\":\"America/Buenos_Aires\",\"accountType\":\"atlassian\"},\"resolution\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/resolution/10000\",\"id\":\"10000\",\"description\":\"Se ha terminado el trabajo relacionado con esta incidencia.\",\"name\":\"Listo\"},\"updated\":\"2026-07-04T02:59:57.550-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10008\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"Finalizada\",\"id\":\"10008\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/3\",\"id\":3,\"key\":\"done\",\"colorName\":\"green\",\"name\":\"Listo\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-sst-0098\",\"done\",\"init-sst-0003\",\"session-capture\",\"sst-extension\",\"validated-live\"]}}"
+  },
+  "selectedTransition": {
+    "id": "41",
+    "name": "Listo",
+    "toStatus": "Finalizada",
+    "toStatusCategory": "Listo"
+  },
+  "transitions": [
+    {
+      "id": "11",
+      "name": "Por hacer",
+      "toStatus": "Tareas por hacer",
+      "toStatusCategory": "Por hacer"
+    },
+    {
+      "id": "21",
+      "name": "En curso",
+      "toStatus": "En curso",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "31",
+      "name": "In Review",
+      "toStatus": "En revisión",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "41",
+      "name": "Listo",
+      "toStatus": "Finalizada",
+      "toStatusCategory": "Listo"
+    }
+  ],
+  "plannedLabels": [
+    "ards-sdd",
+    "control-plane",
+    "cr-sst-0098",
+    "done",
+    "init-sst-0003",
+    "session-capture",
+    "sst-extension",
+    "validated-live"
+  ],
+  "plannedDescription": "Estado actual: validated-live.\n\nResultado:\n- SST Dictionary Tags quedo validado en runtime local bajo CR-SST-0064.\n- Backend, BFF y frontend pasaron validacion local-live.\n- dictionary-tags avanzo de validated-local a validated-live en el control-plane.\n\nEvidencia principal:\n- requests/done/CR-SST-0064-dictionary-tags-validated-live-closure.yaml\n- evidence/requests/CR-SST-0064/runtime-validation-results.md\n- evidence/requests/CR-SST-0064/qa-manual-dictionary-management-created-entry.png\n- state/features/dictionary-tags.current.yaml\n\nValidaciones ejecutadas:\n- sst-bend: npm.cmd run test:diccionario -> PASS 10/10\n- sst-bend: npm.cmd run test:diccionario:stage2 -> PASS 9/9\n- sst-bend: npm.cmd run test:diccionario:stage3 -> PASS 11/11\n- sst-bend: npm.cmd run qa:diccionario:stage3 -> PASS\n- sst-bend: npm.cmd run check -> PASS\n- 4uentes-auth: npm.cmd run check -> PASS\n- BFF /api/diccionario/* smoke -> PASS\n- sst-fend: npm.cmd run check -> PASS, 24 suites / 142 tests\n- Chrome DevTools /dictionary manual QA -> PASS\n- 4uentes-orchestor: npm.cmd run check -> PASS, 0 fails\n\nGaps aceptados fuera de este cierre:\n- TagDefinition public CRUD/governance queda para request futuro.\n- sst-extension account-context queda como follow-up no bloqueante.\n- Encryption-at-rest, offline model, translations y aliases quedan fuera de este validated-live closure.\n\nFuente canonica:\n- El control-plane ARDS/SDD conserva la fuente canonica. Jira es superficie operativa de visibilidad.",
+  "plannedComment": "CR-SST-0098 closure checkpoint.\n\nManual QA final result:\n\n- `POST http://localhost:8088/api/extension/sessions`\n- observed status: `201`\n- SST session was created.\n- tab PDFs were generated.\n\nImplementation summary:\n\n- sst-extension now performs tab-by-tab session capture with visual PDF snapshots.\n- Original active tab is restored after capture.\n- Host permission preflight is explicit for session and PDF capture paths.\n- Long session capture continues in background after popup closure.\n- Local queue preserves complete session metadata while outbound submit filters non-HTTP(S) tabs and removes local-only fields.\n- PDF-safe text normalization prevents `pdf-lib` failures on unsupported characters.\n- `unlimitedStorage` was added as a local mitigation for queued PDF artifacts.\n\nBFF follow-up resolved:\n\n- `CR-SST-0108` / `SST-40` fixed the node-auth request body parser limit exposed during SST-30 QA.\n- `SST-40` is closed as `Listo`.\n- After that fix, the real session submit passed with `201`.\n\nValidation:\n\n- sst-extension focal tests: PASS.\n- sst-extension `pnpm check`: PASS, latest run had 25 test files and 98 tests.\n- node-auth follow-up `npm.cmd run build`: PASS.\n- node-auth follow-up `npm.cmd run check`: PASS.\n- control-plane `npm.cmd run check`: PASS with owner-documentation gate valid for `CR-SST-0098` and `CR-SST-0108`.\n- user manual QA final session submit: PASS with `201`.\n\nEvidence:\n\n- `requests/planned/CR-SST-0098-sst-extension-session-tab-pdf-capture.yaml`\n- `evidence/requests/CR-SST-0098/implementation-summary.md`\n- `evidence/requests/CR-SST-0098/changed-files-summary.md`\n- `evidence/requests/CR-SST-0098/validation-results.md`\n- `evidence/requests/CR-SST-0098/owner-documentation-enforcement.md`\n- `evidence/requests/CR-SST-0098/manual-qa-session-capture-bug.md`\n- `evidence/requests/CR-SST-0098/manual-qa-final-session-success.md`\n- `evidence/requests/CR-SST-0108/manual-qa-success.md`\n\nBoundary:\n\n- Jira is an operational mirror; ARDS/SDD remains the source of truth.\n- No private page content, real PDF bodies, cookies, JWTs, secret plaintext or sensitive screenshots were included in Jira or evidence.\n",
+  "editResult": {
+    "expand": "renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations",
+    "id": "10068",
+    "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10068",
+    "key": "SST-30",
+    "fields": {
+      "summary": "[SST][INIT-SST-0003][CR-SST-0098] Fix sst-extension session tab-by-tab visual PDF capture",
+      "issuetype": {
+        "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issuetype/10008",
+        "id": "10008",
+        "description": "Un trabajo pequeño e independiente.",
+        "iconUrl": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/2/universal_avatar/view/type/issuetype/avatar/10318?size=medium",
+        "name": "Tarea",
+        "subtask": false,
+        "avatarId": 10318,
+        "entityId": "[cloudId-redacted]",
+        "hierarchyLevel": 0
+      },
+      "components": [],
+      "created": "2026-07-02T18:17:58.276-0300",
+      "description": "Estado actual: validated-live.\n\nResultado:\n\n* SST Dictionary Tags quedo validado en runtime local bajo CR-SST-0064.\n* Backend, BFF y frontend pasaron validacion local-live.\n* dictionary-tags avanzo de validated-local a validated-live en el control-plane.\n\nEvidencia principal:\n\n* requests/done/CR-SST-0064-dictionary-tags-validated-live-closure.yaml\n* evidence/requests/CR-SST-0064/runtime-validation-results.md\n* evidence/requests/CR-SST-0064/qa-manual-dictionary-management-created-entry.png\n* state/features/dictionary-tags.current.yaml\n\nValidaciones ejecutadas:\n\n* sst-bend: npm.cmd run test:diccionario -> PASS 10/10\n* sst-bend: npm.cmd run test:diccionario:stage2 -> PASS 9/9\n* sst-bend: npm.cmd run test:diccionario:stage3 -> PASS 11/11\n* sst-bend: npm.cmd run qa:diccionario:stage3 -> PASS\n* sst-bend: npm.cmd run check -> PASS\n* 4uentes-auth: npm.cmd run check -> PASS\n* BFF /api/diccionario/\\* smoke -> PASS\n* sst-fend: npm.cmd run check -> PASS, 24 suites / 142 tests\n* Chrome DevTools /dictionary manual QA -> PASS\n* 4uentes-orchestor: npm.cmd run check -> PASS, 0 fails\n\nGaps aceptados fuera de este cierre:\n\n* TagDefinition public CRUD/governance queda para request futuro.\n* sst-extension account-context queda como follow-up no bloqueante.\n* Encryption-at-rest, offline model, translations y aliases quedan fuera de este validated-live closure.\n\nFuente canonica:\n\n* El control-plane ARDS/SDD conserva la fuente canonica. Jira es superficie operativa de visibilidad.\n\n",
+      "project": {
+        "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/project/10001",
+        "id": "10001",
+        "key": "SST",
+        "name": "SST-Team",
+        "projectTypeKey": "software",
+        "simplified": true,
+        "avatarUrls": {
+          "48x48": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/universal_avatar/view/type/project/avatar/10416",
+          "24x24": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/universal_avatar/view/type/project/avatar/10416?size=small",
+          "16x16": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/universal_avatar/view/type/project/avatar/10416?size=xsmall",
+          "32x32": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/universal_avatar/view/type/project/avatar/10416?size=medium"
+        }
+      },
+      "reporter": {
+        "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+        "accountId": "[accountId-redacted]",
+        "emailAddress": "[email-redacted]",
+        "avatarUrls": {
+          "48x48": "[avatar-url-redacted]",
+          "24x24": "[avatar-url-redacted]",
+          "16x16": "[avatar-url-redacted]",
+          "32x32": "[avatar-url-redacted]"
+        },
+        "displayName": "Fuentes Sandferand",
+        "active": true,
+        "timeZone": "America/Buenos_Aires",
+        "accountType": "atlassian"
+      },
+      "priority": {
+        "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/priority/3",
+        "iconUrl": "[jira-site-redacted]",
+        "name": "Medium",
+        "id": "3"
+      },
+      "resolution": null,
+      "labels": [
+        "ards-sdd",
+        "control-plane",
+        "cr-sst-0098",
+        "done",
+        "init-sst-0003",
+        "session-capture",
+        "sst-extension",
+        "validated-live"
+      ],
+      "assignee": {
+        "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+        "accountId": "[accountId-redacted]",
+        "emailAddress": "[email-redacted]",
+        "avatarUrls": {
+          "48x48": "[avatar-url-redacted]",
+          "24x24": "[avatar-url-redacted]",
+          "16x16": "[avatar-url-redacted]",
+          "32x32": "[avatar-url-redacted]"
+        },
+        "displayName": "Fuentes Sandferand",
+        "active": true,
+        "timeZone": "America/Buenos_Aires",
+        "accountType": "atlassian"
+      },
+      "updated": "2026-07-04T02:59:55.607-0300",
+      "status": {
+        "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10007",
+        "description": "",
+        "iconUrl": "[jira-site-redacted]",
+        "name": "En revisión",
+        "id": "10007",
+        "statusCategory": {
+          "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4",
+          "id": 4,
+          "key": "indeterminate",
+          "colorName": "yellow",
+          "name": "En curso"
+        }
+      }
+    }
+  },
+  "transitionResult": {
+    "success": true
+  },
+  "commentResult": {
+    "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10068/comment/10071",
+    "id": "10071",
+    "author": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "body": "CR-SST-0098 closure checkpoint.\n\nManual QA final result:\n\n* `POST http://localhost:8088/api/extension/sessions`\n* observed status: `201`\n* SST session was created.\n* tab PDFs were generated.\n\nImplementation summary:\n\n* sst-extension now performs tab-by-tab session capture with visual PDF snapshots.\n* Original active tab is restored after capture.\n* Host permission preflight is explicit for session and PDF capture paths.\n* Long session capture continues in background after popup closure.\n* Local queue preserves complete session metadata while outbound submit filters non-HTTP(S) tabs and removes local-only fields.\n* PDF-safe text normalization prevents `pdf-lib` failures on unsupported characters.\n* `unlimitedStorage` was added as a local mitigation for queued PDF artifacts.\n\nBFF follow-up resolved:\n\n* `CR-SST-0108` / `SST-40` fixed the node-auth request body parser limit exposed during SST-30 QA.\n* `SST-40` is closed as `Listo`.\n* After that fix, the real session submit passed with `201`.\n\nValidation:\n\n* sst-extension focal tests: PASS.\n* sst-extension `pnpm check`: PASS, latest run had 25 test files and 98 tests.\n* node-auth follow-up `npm.cmd run build`: PASS.\n* node-auth follow-up `npm.cmd run check`: PASS.\n* control-plane `npm.cmd run check`: PASS with owner-documentation gate valid for `CR-SST-0098` and `CR-SST-0108`.\n* user manual QA final session submit: PASS with `201`.\n\nEvidence:\n\n* `requests/planned/CR-SST-0098-sst-extension-session-tab-pdf-capture.yaml`\n* `evidence/requests/CR-SST-0098/implementation-summary.md`\n* `evidence/requests/CR-SST-0098/changed-files-summary.md`\n* `evidence/requests/CR-SST-0098/validation-results.md`\n* `evidence/requests/CR-SST-0098/owner-documentation-enforcement.md`\n* `evidence/requests/CR-SST-0098/manual-qa-session-capture-bug.md`\n* `evidence/requests/CR-SST-0098/manual-qa-final-session-success.md`\n* `evidence/requests/CR-SST-0108/manual-qa-success.md`\n\nBoundary:\n\n* Jira is an operational mirror; ARDS/SDD remains the source of truth.\n* No private page content, real PDF bodies, cookies, JWTs, secret plaintext or sensitive screenshots were included in Jira or evidence.\n\n",
+    "updateAuthor": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "created": "2026-07-04T02:59:57.550-0300",
+    "updated": "2026-07-04T02:59:57.550-0300",
+    "jsdPublic": true
+  },
+  "externalWrite": true
+}

@@ -1,0 +1,36 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0112"
+title: "Define annotable text entry UX contract"
+status: inbox
+created_at: "2026-07-04"
+requester: "4uentes"
+
+summary: >
+  Define the product UX for a text-entry authoring surface similar to a rich
+  document editor where users can write, select text, apply contextual tags and
+  relevance, preview the intention, and later accept it into a rendered
+  learning context.
+
+source:
+  initiative_id: "INIT-SST-0001"
+  parent_request_id: "CR-SST-0111"
+  jira_epic_key: "SST-27"
+  active_jira_issue_key: "SST-6"
+  jira_subtask_key: "SST-42"
+  reason: >
+    CR-SST-0111 separated ArticleTag and LearningContentTag. The next step is
+    to capture the intended authoring experience before mutating frontend or
+    backend runtime.
+
+scope:
+  solution: "sst"
+  services:
+    - "sst-fend"
+    - "node-auth"
+    - "sst-bend"
+    - "4uentes-orchestor"
+  excludes:
+    - "Runtime implementation"
+    - "Persistence changes"
+    - "Direct frontend-to-sst-bend calls"

@@ -3,7 +3,7 @@ kind: "feature_state"
 id: "cluster-publication-ngrok-domain"
 title: "Cluster publication through ngrok and productive domain"
 status: "validated-live"
-updated_at: "2026-06-02"
+updated_at: "2026-06-29"
 solution_id: "sst"
 affected_services:
   - sst-fend
@@ -12,6 +12,8 @@ affected_services:
   - sst-4uentes-infra
 request_ids:
   - CR-SST-0020
+capability_refs:
+  - "capability.platform.public-development-url"
 spec_refs:
   - "docs/requests/execution-model.md"
   - "docs/ai/model-selection-policy.md"
@@ -28,9 +30,13 @@ evidence_refs:
   - "evidence/requests/CR-SST-0020/subagent-deployment-evidence.md"
   - "evidence/requests/CR-SST-0020/infra-operational-edge-result.md"
   - "evidence/requests/CR-SST-0020/stage-close-validation.md"
+  - "evidence/requests/CR-SST-0020/orchestrator-infra-reconciliation.md"
 open_gaps:
   - "Install or reconcile ngrok as a Windows service if startup durability is required."
   - "Run app login, refresh/logout and protected-route smokes in a later approved phase with credentials outside Git."
   - "Run persistence create/read/delete smoke in a later approved phase."
   - "Promote app images by immutable release tag or digest before release readiness."
-  - "Reconcile infra orchestrator_link.state_id with feature_state id cluster-publication-ngrok-domain."
+  - "Define the release-grade production/staging origin; infra still leaves `production_public.required_base_url` and environment rows as TODO."
+notes:
+  - "Infra already confirms the local `http://localhost:8088` origin, the reserved ngrok public-development edge, and the `sst-extension` deployment contract."
+  - "The remaining work is release-grade hardening, not revalidating the already-implemented development edge."

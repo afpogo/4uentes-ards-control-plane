@@ -1,0 +1,93 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0116"
+title: "Persist accepted annotated text context"
+status: done
+source_request: "requests/inbox/CR-SST-0116-sst-bend-persist-accepted-annotated-text-context.yaml"
+planned_request: "requests/planned/CR-SST-0116-sst-bend-persist-accepted-annotated-text-context.yaml"
+completed_at: "2026-07-04"
+requester: "4uentes"
+
+summary: >
+  Closed the runtime cut for accepted annotated text context. `sst-bend` now
+  supports previewed annotation state, accept/reject by annotationIds, accepted
+  annotation context, and owner documentation. `node-auth` preserves the BFF
+  boundary and now has a configurable JSON body limit for LearningWorkspace
+  payloads.
+
+scope:
+  solution: "sst"
+  services_modified:
+    - "sst-bend"
+    - "node-auth"
+    - "4uentes-orchestor"
+  functional_repositories_modified: true
+  runtime_code_modified: true
+
+implementation:
+  initiative_id: "INIT-SST-0001"
+  active_feature_state: "learning-content-tags"
+  jira_epic_key: "SST-27"
+  jira_issue_key: "SST-6"
+  jira_subtask_key: "SST-46"
+  jira_status_observed: "Listo"
+  jira_source_of_truth: false
+  completed_slice: >
+    Annotated selections can be previewed, accepted by annotationIds, rejected,
+    and read as accepted-only context through the governed BFF/API path.
+  not_closed:
+    - "Rendered Markdown/template view remains in CR-SST-0117."
+    - "End-to-end Chrome/HTTP validation remains in CR-SST-0118."
+    - "Final rich editor UX still needs a later frontend refinement."
+    - "Jira SST-46 transitioned to Listo."
+
+owner_documentation:
+  status: "satisfied"
+  owner_refs:
+    - repo: "sst-bend"
+      paths:
+        - "docs/api/26-learning-workspaces.md"
+        - "specs/api/learning-workspaces.yaml"
+        - "docs/capabilities/outbound/learning-workspace-context.md"
+        - "specs/capabilities/outbound/learning-workspace-context.yaml"
+    - repo: "node-auth"
+      paths:
+        - "docs/bf/06-integrations-api.md"
+        - "specs/integrations-api.yaml"
+        - "docs/capabilities/inbound/sst-bend--learning-workspace-context.md"
+        - "docs/capabilities/outbound/learning-workspace-context.md"
+        - "specs/capabilities/inbound/sst-bend--learning-workspace-context.yaml"
+        - "specs/capabilities/outbound/learning-workspace-context.yaml"
+
+validation:
+  status: "validated-local"
+  passed:
+    - "sst-bend npm.cmd run migration:run"
+    - "sst-bend npm.cmd run test:learning-workspace"
+    - "sst-bend npm.cmd run check"
+    - "node-auth npm.cmd run check"
+    - "4uentes-orchestor npm.cmd run check"
+  notes:
+    - "sst-bend check passed with existing partial protected smoke warning because SMOKE_JWT/SMOKE_JWT_OWNER were not provided."
+    - "node-auth check required escalated rerun because the first sandboxed run hit EPERM while deleting dist."
+    - "Jira SST-46 was transitioned to Listo through the MCP fallback script."
+
+evidence_refs:
+  - "evidence/requests/CR-SST-0116/intent-summary.md"
+  - "evidence/requests/CR-SST-0116/jira-sync-summary.md"
+  - "evidence/requests/CR-SST-0116/subagent-delegation.md"
+  - "evidence/requests/CR-SST-0116/pre-implementation-analysis.md"
+  - "evidence/requests/CR-SST-0116/implementation-summary.md"
+  - "evidence/requests/CR-SST-0116/owner-documentation-summary.md"
+  - "evidence/requests/CR-SST-0116/validation-results.md"
+  - "evidence/requests/CR-SST-0116/jira-transition-fallback-2026-07-04.md"
+  - "evidence/requests/CR-SST-0116/jira-sst-46-close-transition-summary.md"
+  - "evidence/requests/CR-SST-0116/sst-46-reconciliation-2026-07-04.md"
+
+decision:
+  status: "closed-local"
+  approver: "4uentes"
+  note: >
+    CR-SST-0116 closes locally as the annotated selection persistence runtime
+    implementation for SST-46. Jira mirror was synchronized to Listo through
+    the MCP fallback script.

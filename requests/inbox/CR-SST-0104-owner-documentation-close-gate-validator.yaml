@@ -1,0 +1,23 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0104"
+title: "Enforce owner documentation gate for child repo mutation requests"
+status: inbox
+created_at: "2026-07-02"
+requester: "4uentes"
+
+business_context: >
+  CR-SST-0096 adopted the owner documentation authority policy and CR-SST-0097
+  remediated the immediate sst-bend gap. The next governance step is to make the
+  control-plane check fail when a child repo mutation request does not declare
+  owner documentation or an explicit exception.
+
+requested_change: >
+  Add a control-plane validator that scans planned/done requests with
+  `child_repo_mutation_allowed: true` and requires an `owner_documentation`
+  block. Wire the validator into `npm run check` and update current child repo
+  mutation requests to satisfy the new gate.
+
+expected_outcome: >
+  Future child repo mutation CRs cannot pass control-plane validation unless
+  they plan, satisfy, or explicitly except owner ARDS/SDD documentation.

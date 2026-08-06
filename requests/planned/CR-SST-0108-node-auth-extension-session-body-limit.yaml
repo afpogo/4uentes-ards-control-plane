@@ -1,0 +1,148 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0108"
+title: "Harden node-auth extension session payload ingestion"
+status: closed-local
+source_request: "requests/inbox/CR-SST-0108-node-auth-extension-session-body-limit.yaml"
+created_at: "2026-07-04"
+requester: "4uentes"
+
+summary: >
+  Add a scoped, configurable request body limit for node-auth browser extension
+  session ingestion and return explicit 413 responses for oversized payloads.
+  This unblocks SST-30 manual QA without broadening the body limit for all BF
+  routes.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - "4uentes-auth"
+    - "4uentes-orchestor"
+  include_optional_services: false
+
+control_plane_context:
+  initiative_id: "INIT-SST-0003"
+  initiative_file: "initiatives/INIT-SST-0003-sst-extension-construction.yaml"
+  related_cr: "CR-SST-0098"
+  related_jira_issue_key: "SST-30"
+  jira_epic_key: "SST-29"
+  jira_issue_key: "SST-40"
+  policy_ref: "docs/policies/owner-documentation-authority-policy.md"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "4uentes-auth"
+      via: "presentation request parser, error middleware, specs/docs/capability"
+      service_kind: "backend-for-frontend"
+      ards_kind: "auth-gateway"
+      status: "active"
+    - service_id: "4uentes-orchestor"
+      via: "request lifecycle and evidence"
+      service_kind: "control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+  affected_ards:
+    - auth-gateway
+    - browser-extension-session-ingestion
+    - child-repo-owner-documentation
+  capabilities:
+    - "browser-extension-session-ingestion"
+  risks:
+    - id: REQUEST_BODY_MEMORY_PRESSURE
+      severity: high
+    - id: OVERBROAD_BODY_LIMIT
+      severity: medium
+    - id: DOWNSTREAM_PAYLOAD_COMPATIBILITY
+      severity: medium
+    - id: OWNER_DOCS_STALE
+      severity: high
+
+required_context:
+  - "docs/policies/agent-delegation-policy.md"
+  - "docs/policies/agent-task-atomization-policy.md"
+  - "docs/policies/agent-architecture-boundary-policy.md"
+  - "docs/policies/owner-documentation-authority-policy.md"
+  - "node-auth/AGENTS.md"
+  - "node-auth/src/presentation/server.ts"
+  - "node-auth/src/presentation/extension/routes.ts"
+  - "node-auth/src/presentation/middlewares/error.handler.ts"
+  - "node-auth/specs/integrations-api.yaml"
+  - "node-auth/specs/capabilities/outbound/browser-extension-session-ingestion.yaml"
+
+required_checks:
+  - service_id: "4uentes-auth"
+    command: "npm.cmd run build"
+  - service_id: "4uentes-auth"
+    command: "npm.cmd run check"
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check"
+
+execution:
+  child_repo_mutation_allowed: true
+  child_repo_mutation_target:
+    service_id: "4uentes-auth"
+    legacy_repo_alias: "node-auth"
+  owner_documentation_required: true
+  jira_write_executed: false
+  jira_create_executed: true
+  jira_create_ref: "evidence/requests/CR-SST-0108/jira-cr-sst-0108-create-summary.md"
+  jira_create_result_ref: "evidence/requests/CR-SST-0108/jira-cr-sst-0108-create-result.json"
+  jira_start_executed: true
+  jira_start_ref: "evidence/requests/CR-SST-0108/jira-sst-40-start-transition-summary.md"
+  jira_start_result_ref: "evidence/requests/CR-SST-0108/jira-sst-40-start-transition-result.json"
+  jira_close_executed: true
+  jira_close_ref: "evidence/requests/CR-SST-0108/jira-sst-40-close-transition-summary.md"
+  jira_close_result_ref: "evidence/requests/CR-SST-0108/jira-sst-40-close-transition-result.json"
+  analysis_ref: "evidence/requests/CR-SST-0108/payload-limit-analysis.md"
+  changed_files_summary_ref: "evidence/requests/CR-SST-0108/changed-files-summary.md"
+  validation_results_ref: "evidence/requests/CR-SST-0108/validation-results.md"
+  manual_qa_success_ref: "evidence/requests/CR-SST-0108/manual-qa-success.md"
+  local_deploy_executed: true
+  local_deploy_note: "Built and loaded current node-auth image tag into kind, then restarted deployment/node-auth."
+
+owner_documentation:
+  required: true
+  status: satisfied
+  owner_repo: "4uentes-auth"
+  legacy_repo_alias: "node-auth"
+  planned_owner_docs:
+    - "specs/integrations-api.yaml"
+    - "specs/capabilities/outbound/browser-extension-session-ingestion.yaml"
+    - "specs/routing.yaml"
+    - "docs/capabilities/outbound/browser-extension-session-ingestion.md"
+    - "docs/bf/03-routing.md"
+    - "docs/bf/07-error-handling.md"
+  updated_owner_docs:
+    - "specs/integrations-api.yaml"
+    - "specs/capabilities/outbound/browser-extension-session-ingestion.yaml"
+    - "specs/routing.yaml"
+    - "docs/capabilities/outbound/browser-extension-session-ingestion.md"
+    - "docs/bf/03-routing.md"
+    - "docs/bf/07-error-handling.md"
+  owner_refs:
+    - repo: "4uentes-auth"
+      legacy_repo_alias: "node-auth"
+      paths:
+        - "specs/integrations-api.yaml"
+        - "specs/capabilities/outbound/browser-extension-session-ingestion.yaml"
+        - "specs/routing.yaml"
+        - "docs/capabilities/outbound/browser-extension-session-ingestion.md"
+        - "docs/bf/03-routing.md"
+        - "docs/bf/07-error-handling.md"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0108/payload-limit-analysis.md"
+    - "evidence/requests/CR-SST-0108/changed-files-summary.md"
+    - "evidence/requests/CR-SST-0108/validation-results.md"
+
+validation:
+  required_checks:
+    - "General BF routes keep the default small body limit."
+    - "`POST /api/extension/sessions` accepts session PDF snapshots above 100 KB up to the configured limit."
+    - "Oversized bodies return HTTP 413 with sanitized error text."
+    - "No private page content, PDF body, cookies, JWTs or secrets are written to evidence."
+
+decision:
+  status: closed_local
+  approver: "4uentes"
+  note: "Closed after implementation, local deployment, synthetic smokes, owner-documentation enforcement, user manual QA retry and Jira SST-40 close transition completed successfully."

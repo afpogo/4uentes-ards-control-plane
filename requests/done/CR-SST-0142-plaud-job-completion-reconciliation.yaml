@@ -1,0 +1,48 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0142"
+title: "Reconcile Plaud job completion after aggregate commit"
+status: done
+source_request: "requests/inbox/CR-SST-0142-plaud-job-completion-reconciliation.yaml"
+planned_request: "requests/planned/CR-SST-0142-plaud-job-completion-reconciliation.yaml"
+completed_at: "2026-07-12"
+requester: "4uentes"
+summary: "Plaud aggregate persistence and job completion now share one fenced PostgreSQL transaction with bounded stale recovery."
+scope:
+  solution: "sst"
+  services_modified: ["sst-bend", "4uentes-orchestor"]
+  functional_repositories_modified: true
+  runtime_code_modified: true
+implementation:
+  initiative_id: "INIT-SST-0005"
+  jira_epic_key: "SST-57"
+  jira_parent_issue_key: "SST-58"
+  jira_issue_key: "SST-82"
+  jira_status_observed: "Listo"
+  jira_source_of_truth: false
+  completed_slice: "Atomic Plaud aggregate/job completion, fenced leases and bounded stale recovery."
+owner_documentation:
+  status: "satisfied"
+  owner_repos: ["sst-bend"]
+  evidence_refs:
+    - "evidence/requests/CR-SST-0142/owner-documentation-summary.md"
+validation:
+  status: "validated-local"
+  passed:
+    - "Plaud job completion convergence focused harness"
+    - "Plaud aggregate atomicity focused harness"
+    - "sst-bend npm.cmd run check"
+    - "three independent read-only audits"
+  warnings:
+    - "Protected smoke partial without SMOKE_JWT; preexisting and non-blocking."
+    - "No real two-connection PostgreSQL SKIP LOCKED integration harness in this slice."
+evidence_refs:
+  - "evidence/requests/CR-SST-0142/discovery.md"
+  - "evidence/requests/CR-SST-0142/implementation.md"
+  - "evidence/requests/CR-SST-0142/sst-bend-validation.md"
+  - "evidence/requests/CR-SST-0142/owner-documentation-summary.md"
+  - "evidence/requests/CR-SST-0142/jira-closure.md"
+decision:
+  status: "closed-local"
+  approver: "4uentes"
+  note: "No release, publication or historical article rewrite is implied."

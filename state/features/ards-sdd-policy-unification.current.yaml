@@ -3,7 +3,7 @@ kind: "feature_state"
 id: "ards-sdd-policy-unification"
 title: "ARDS/SDD Policy Unification"
 status: "validated-local"
-updated_at: "2026-06-13"
+updated_at: "2026-07-02"
 solution_id: "sst"
 affected_services:
   - 4uentes-auth
@@ -16,6 +16,11 @@ request_ids:
   - CR-SST-0024
   - CR-SST-0025
   - CR-SST-0077
+  - CR-SST-0081
+  - CR-SST-0096
+  - CR-SST-0104
+  - CR-SST-0105
+  - CR-SST-0106
 spec_refs:
   - "specs/policies/00-index.yaml"
   - "specs/policies/ards-sdd-policy-component-model.yaml"
@@ -23,6 +28,7 @@ spec_refs:
   - "specs/capabilities/outbound/00-index.yaml"
   - "specs/capabilities/outbound/4uentes-orchestor--core-agent-policy-governance-handoff.yaml"
   - "docs/idioma-markdown.md"
+  - "docs/policies/human-doc-language-policy.md"
   - "docs/ai/model-selection-policy.md"
   - "docs/policies/README.md"
   - "docs/policies/agent-model-selection-policy.md"
@@ -31,6 +37,7 @@ spec_refs:
   - "docs/policies/agent-delegation-policy.md"
   - "docs/policies/agent-context-management-policy.md"
   - "docs/policies/agent-architecture-boundary-policy.md"
+  - "docs/policies/owner-documentation-authority-policy.md"
   - "docs/cross-repo/child-repo-orchestrator-link-rule.md"
   - "docs/requests/capability-state-linkage.md"
 capability_refs:
@@ -56,8 +63,16 @@ evidence_refs:
   - "evidence/requests/CR-SST-0025/subagent-deployment-evidence.md"
   - "evidence/requests/CR-SST-0025/changed-files-summary.md"
   - "evidence/requests/CR-SST-0025/validation-results.md"
+  - "evidence/requests/CR-SST-0081/intake-summary.md"
+  - "evidence/requests/CR-SST-0096/policy-summary.md"
+  - "evidence/requests/CR-SST-0096/current-gap-review.md"
+  - "evidence/requests/CR-SST-0104/validation-results.md"
+  - "evidence/requests/CR-SST-0105/validation-results.md"
+  - "evidence/requests/CR-SST-0106/bugfix-state-reconciliation.md"
+  - "evidence/requests/CR-SST-0106/validation-results.md"
 open_gaps:
-  - "Handoff human-doc-language from docs/idioma-markdown.md to 4uentes-core as a reusable policy while preserving its orchestrator origin."
+  - "Handoff `human-doc-language` to 4uentes-ards-core as a reusable policy template while preserving the now-active orchestrator registry entry and local source docs."
   - "Resolve canonical identity for 4uentes-core versus 4uentes-ards-core."
-  - "Broaden policy adoption beyond the SST solution through future approved requests."
+  - "Execute future non-SST child repo rollout through `CR-SST-0081` or follow-up approved requests using `policy_adoption_manifest` or `policy_exception_manifest`."
   - "Investigate repo-level check failures captured in CR-SST-0077 validation evidence."
+  - "Continue broader lifecycle promotion gates beyond owner documentation and state evidence reconciliation."

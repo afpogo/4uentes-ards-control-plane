@@ -1,0 +1,38 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-4UENTES-0039"
+title: "Portfolio publication base reconciliation"
+status: "inbox"
+created_at: "2026-07-10"
+requester: "4uentes"
+
+summary: >
+  Reconcile the Portfolio child repository publication base before attempting
+  small feature PRs. The current local Portfolio state validates as an
+  accumulated Vite/Sass/runtime baseline, while isolated Experience changes do
+  not build against origin/develop.
+
+initial_scope:
+  solution: "4uentes"
+  services:
+    - "4uentes-portfolio"
+  include_optional_services: false
+
+control_plane_context:
+  initiative_id: "INIT-PORTFOLIO-0003"
+  parent_request_id: "CR-4UENTES-0036"
+  feature_id: "portfolio-publication-base-reconciliation"
+  child_repo: "4uentes-portfolio"
+  work_origin: "orchestrator-request"
+
+execution:
+  child_repo_mutation_allowed: true
+  child_repo_mutation_target:
+    service_id: "4uentes-portfolio"
+  owner_documentation_required: true
+  implementation_boundary: >
+    Stabilize the Portfolio publication base required by current local work:
+    build tooling, Sass module compatibility, owner docs/specs, and validation
+    evidence. Do not add backend/BFF/auth, activate CV download, or broaden into
+    SST/control-plane reconciliation unrelated to Portfolio publication.
+

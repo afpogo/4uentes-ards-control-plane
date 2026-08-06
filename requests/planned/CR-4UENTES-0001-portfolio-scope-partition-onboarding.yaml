@@ -1,0 +1,130 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-4UENTES-0001"
+title: "Portfolio scope partition onboarding"
+status: "planned"
+source_request: "requests/inbox/CR-4UENTES-0001-portfolio-scope-partition-onboarding.yaml"
+created_at: "2026-07-03"
+requester: "4uentes"
+
+summary: >
+  Establish a non-SST integration track for 4uentes-portfolio and future apps
+  such as Fulbito by treating SST, 4uentes, and future products as separate
+  logical solutions inside the same control-plane.
+
+initial_scope:
+  solution: "4uentes"
+  services:
+    - "4uentes-portfolio"
+  include_optional_services: false
+
+control_plane_context:
+  feature_id: "multi-solution-scope-partition"
+  feature_file: "state/features/multi-solution-scope-partition.current.yaml"
+  governing_docs:
+    - "docs/cross-repo/control-plane-scope-partition.md"
+    - "docs/cross-repo/solutions-model.md"
+    - "docs/apps/4uentes-portfolio.md"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "4uentes-portfolio"
+      via: "service catalog, 4uentes solution map, local binding evidence, and scope partition docs"
+      service_kind: "frontend-spa"
+      ards_kind: "frontend-web"
+      status: "active"
+  affected_ards:
+    - "catalog"
+    - "solutions"
+    - "state-read-model"
+    - "request-lifecycle"
+    - "cross-repo-governance"
+  capabilities:
+    - "multi-solution-scope-partition"
+  risks:
+    - id: "SST_SCOPE_DRIFT"
+      severity: "high"
+    - id: "FUTURE_APP_ONBOARDING_AMBIGUITY"
+      severity: "medium"
+    - id: "CONTROL_PLANE_RUNTIME_OVERLOAD"
+      severity: "medium"
+
+required_context:
+  - "AGENTS.md"
+  - "specs/integration/policies.yaml"
+  - "docs/policies/agent-architecture-boundary-policy.md"
+  - "docs/policies/owner-documentation-authority-policy.md"
+  - "catalog/services/4uentes-portfolio.yaml"
+  - "solutions/4uentes.yaml"
+  - "docs/apps/4uentes-portfolio.md"
+  - "docs/cross-repo/solutions-model.md"
+  - "docs/cross-repo/control-plane-scope-partition.md"
+
+required_checks:
+  - service_id: "4uentes-portfolio"
+    command: "npm run build"
+    required_when: "child repo behavior or owner docs are mutated"
+  - service_id: "4uentes-portfolio"
+    command: "local ARDS/SDD check if defined by the child repo"
+    required_when: "child repo ARDS/SDD is mutated"
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check"
+
+risk:
+  level: "medium"
+  score: 5
+  drivers:
+    - "scope partition affects future solution onboarding"
+    - "non-SST child repo must not inherit SST lifecycle by default"
+    - "control-plane must remain governance and evidence layer, not product runtime"
+
+task_weight:
+  classification: "long-context-task"
+  risk_level: "medium"
+  drivers:
+    - "cross-solution boundary"
+    - "future Fulbito onboarding model"
+    - "owner documentation boundary for 4uentes-portfolio"
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.4-fast-high"
+  fallback_profile: "highest-available-long-context-profile"
+  reason: "This is a governance and scope partition task with future cross-repo impact."
+
+subagent_deployment_plan:
+  required: false
+  parallelizable: false
+  roles: []
+  fallback: "Keep in the main agent because the task defines architecture boundaries."
+  evidence_required: true
+
+execution:
+  requires_human_approval: false
+  allowed_window: "manual"
+  branch_strategy: "control-plane-only"
+  child_repo_mutation_allowed: false
+  implementation_boundary: >
+    This CR documents control-plane scope partition only. It does not authorize
+    mutation of 4uentes-portfolio or future Fulbito repositories.
+  next_authorized_step: >
+    If owner docs or runtime behavior in 4uentes-portfolio need changes, open a
+    follow-up CR with child_repo_mutation_allowed true and owner_documentation
+    gates.
+
+validation:
+  required_checks:
+    - "Control-plane solution map keeps 4uentes separate from sst."
+    - "4uentes-portfolio local binding validates on this workstation."
+    - "State read-model tracks multi-solution-scope-partition."
+    - "Full control-plane check passes."
+  evidence_required:
+    - "scope_partition_analysis"
+    - "validation_results"
+    - "changed_files_summary"
+
+decision:
+  status: "pending"
+  approver: "TODO"
+  blocker: "none"

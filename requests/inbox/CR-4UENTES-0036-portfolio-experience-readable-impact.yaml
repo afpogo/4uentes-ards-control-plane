@@ -1,0 +1,30 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-4UENTES-0036"
+title: "Portfolio experience readable impact"
+status: "inbox"
+created_at: "2026-07-10"
+requester: "4uentes"
+
+summary: >
+  Improve the Portfolio experience section so professional reviewers can scan
+  responsibilities, evidence, scope, and impact more quickly without relying on
+  the CV as the primary source.
+
+initial_scope:
+  solution: "4uentes"
+  services:
+    - "4uentes-portfolio"
+  include_optional_services: false
+
+control_plane_context:
+  initiative_id: "INIT-PORTFOLIO-0003"
+  parent_request_id: "CR-4UENTES-0035"
+  feature_id: "portfolio-experience-readable-impact"
+  child_repo: "4uentes-portfolio"
+  work_origin: "orchestrator-request"
+
+requested_outcome: >
+  Make current labor history easier to understand and more valuable for
+  recruiter review through clearer narrative, better hierarchy, and explicit
+  evidence boundaries.

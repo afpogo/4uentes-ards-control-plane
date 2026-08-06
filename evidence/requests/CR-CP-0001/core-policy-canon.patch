@@ -1,0 +1,361 @@
+diff --git a/docs/policies/human-doc-language-policy.md b/docs/policies/human-doc-language-policy.md
+new file mode 100644
+index 0000000..1111111
+--- /dev/null
++++ b/docs/policies/human-doc-language-policy.md
+@@ -0,0 +1,72 @@
++# Human Documentation Language Policy
++
++## Proposito
++
++Definir el idioma operativo esperado para documentacion humana, instrucciones
++agent-facing, specs normativos y artefactos YAML dentro de repos ARDS/SDD.
++
++Esta policy evita drift entre documentos escritos para personas y artefactos
++estables consumidos por agentes, tooling o validadores.
++
++## Regla Base
++
++- Markdown humano: usar el idioma operativo del repo o producto.
++- Markdown agent-facing: usar ingles tecnico o wording tecnico estable cuando
++  la precision para agentes o herramientas dependa de ese texto.
++- Specs normativos y YAML: mantener claves, valores de estado, IDs y contratos
++  en ingles tecnico estable.
++- Identificadores tecnicos estables: no traducir.
++
++## Alcance
++
++Markdown humano incluye, cuando existan:
++
++- `README.md`;
++- `docs/`;
++- `inventory/`;
++- `evidence/`;
++- `knowledge/`;
++- decision logs o runbooks dirigidos a personas.
++
++Markdown agent-facing incluye, cuando existan:
++
++- `AGENTS.md`;
++- `docs/ai/`;
++- prompts;
++- skills o instrucciones operativas cuyo valor dependa de wording estable.
++
++Specs y YAML normativos incluyen, cuando existan:
++
++- `specs/`;
++- `requests/`;
++- `catalog/`;
++- `solutions/`;
++- `state/`;
++- `templates/`.
++
++## Identificadores Que No Deben Traducirse
++
++No traducir:
++
++- filenames y paths;
++- claves YAML;
++- `service_id`, `capability_id`, `policy_id`, `request_id`, `state_id`;
++- comandos CLI;
++- nombres de servicios, features, productos tecnicos y repos;
++- estados de lifecycle como `inbox`, `planned`, `queued`, `running`, `done`,
++  `rejected`, `blocked`, `deferred`;
++- nombres de endpoints, headers, payload fields, env vars o tokens tecnicos.
++
++## Enforcement
++
++- Antes de crear o migrar documentacion humana, verificar que la prosa nueva
++  use el idioma operativo definido por el repo.
++- No traducir comandos, payloads, IDs ni referencias estables usadas por
++  tooling o validadores.
++- Si un documento humano debe permanecer en otro idioma por una razon
++  operativa, registrar excepcion, gap o rationale en el request/evidence
++  aplicable.
++- Repos que adopten esta policy pueden declarar su idioma humano local, siempre
++  que no cambien IDs, schemas ni contratos canonicos.
++
++## Relacion Con ARDS/SDD
++
++Esta policy gobierna lenguaje documental. No cambia ownership, lifecycle,
++contracts, capabilities, security, RBAC ni arquitectura.
++
++## Definition of Done
++
++- La documentacion humana nueva respeta el idioma operativo del repo.
++- Artefactos agent-facing mantienen wording tecnico estable.
++- Specs/YAML/IDs permanecen estables y no traducidos.
++- Cualquier excepcion queda documentada y trazable.
+diff --git a/docs/policies/owner-documentation-authority-policy.md b/docs/policies/owner-documentation-authority-policy.md
+new file mode 100644
+index 0000000..2222222
+--- /dev/null
++++ b/docs/policies/owner-documentation-authority-policy.md
+@@ -0,0 +1,124 @@
++# Owner Documentation Authority Policy
++
++## Proposito
++
++Definir que repositorio o componente es autoridad documental cuando un cambio
++afecta runtime, contratos, capabilities, evidencia central o trabajo
++orquestado cross-repo.
++
++La policy evita que una implementacion quede documentada solo en un
++control-plane, tracker o evidencia central cuando el comportamiento real vive
++en otro repo.
++
++## Principio
++
++La documentacion principal vive donde vive la responsabilidad tecnica.
++
++Un control-plane puede registrar decision, plan, evidencia, scope,
++orquestacion y mirrors operativos. Esa evidencia no reemplaza las specs, docs
++o contracts del repo que implementa o expone el comportamiento.
++
++## Autoridades
++
++### Repo owner
++
++El repo que implementa o expone comportamiento es autoridad para:
++
++- comportamiento runtime propio;
++- modelos, migraciones, endpoints, workers, UI, extension code o infra propia;
++- specs tecnicas del repo;
++- docs tecnicas del repo;
++- pruebas y validacion local;
++- capabilities que produce hacia otros repos.
++
++Cuando una CR o cambio muta un repo, ese repo debe recibir la actualizacion
++ARDS/SDD owner correspondiente dentro del mismo lifecycle, salvo excepcion
++explicita.
++
++### Productor de capability
++
++El repo que produce una capability es autoridad para:
++
++- contrato outbound;
++- versionado del contrato;
++- compatibilidad y breaking changes;
++- evidencia de validacion del productor.
++
++### Consumidor de capability
++
++El repo que consume una capability es autoridad para:
++
++- contrato inbound o adopcion local;
++- supuestos de integracion;
++- degradacion y fallback local;
++- evidencia de validacion del consumidor.
++
++### Control-plane u orquestador
++
++Un control-plane es autoridad para:
++
++- request lifecycle;
++- iniciativa, backlog gobernado o programa de cambio;
++- evidencia de ejecucion y decision;
++- ownership cross-repo observado;
++- catalogo logico de servicios y soluciones, cuando aplique;
++- planes de orquestacion;
++- Jira u otros trackers como mirror, no source of truth.
++
++La evidencia central puede probar que un cambio ocurrio, pero no sustituye la
++documentacion owner del repo responsable.
++
++### Core canonico
++
++`4uentes-ards-core` es autoridad para estandares ARDS/SDD compartidos, kinds,
++profiles, templates, schemas, policies canonicas y handoff rules.
++
++Repos adoptantes pueden registrar adopcion local, pero no redefinir el canon
++del core sin un cambio aprobado al core.
++
++## Reglas Obligatorias
++
++- Si un cambio modifica runtime o contratos de un repo, debe actualizar la
++  documentacion ARDS/SDD owner de ese repo o registrar excepcion explicita.
++- Si no existe superficie documental estable en el repo owner, el lifecycle
++  debe crear una excepcion con motivo, owner, riesgo, deuda y follow-up.
++- La evidencia central debe listar rutas owner actualizadas o referencia de la
++  excepcion aprobada.
++- Un cambio no debe cerrarse como completo solo con evidencia central si el
++  repo owner quedo desactualizado.
++- Las capabilities cross-repo deben identificar productor, consumidor y, si
++  existe, rol del control-plane.
++- Jira, GitHub Issues u otros trackers son mirrors operativos; no reemplazan
++  specs, docs, contracts ni evidence versionada.
++- No se debe usar un control-plane para esconder deuda documental de un repo
++  owner.
++
++## Mapa De Ownership
++
++| Cambio | Autoridad primaria | Evidencia esperada |
++| --- | --- | --- |
++| Endpoint, modelo, migracion o service runtime | Repo implementador | Specs/docs/tests del repo y evidencia central si aplica |
++| UI, frontend o extension behavior | Repo implementador | Specs/docs/tests del repo y evidencia central si aplica |
++| Infra, GitOps o deployment behavior | Repo infra/platform owner | Specs/docs/runbooks del repo y evidencia central si aplica |
++| Capability outbound | Repo productor | Capability outbound o superficie equivalente |
++| Capability inbound | Repo consumidor | Capability inbound/adopcion local o superficie equivalente |
++| Decision cross-repo, scope, plan, tracker mirror | Control-plane | Request, Initiative, evidence |
++| Canon ARDS/SDD compartido | `4uentes-ards-core` | Core specs/templates/policies |
++
++## Checklist Para Cambios Cross-Repo
++
++Antes de modificar:
++
++- Identificar repo owner y superficies ARDS/SDD afectadas.
++- Identificar producer/consumer si hay capability cross-repo.
++- Registrar plan de archivos owner o excepcion prevista.
++
++Durante implementacion:
++
++- Actualizar codigo y documentacion owner en el mismo lifecycle.
++- Mantener evidencia central con rutas exactas.
++- No cerrar gaps documentales como validacion exitosa.
++
++Antes de cierre:
++
++- Validar el repo owner con comandos locales relevantes.
++- Confirmar que la evidencia central referencia owner docs actualizados o una
++  excepcion documentada.
++- Ejecutar los gates del control-plane cuando el workflow local los requiera.
++
++## Excepciones
++
++Una excepcion solo es valida si incluye:
++
++- repo afectado;
++- owner responsable;
++- razon por la que no se actualizo documentacion owner;
++- riesgo;
++- follow-up o TODO verificable;
++- evidencia de que el control-plane no sustituye la autoridad owner.
++
++## Definition of Done
++
++- La autoridad documental queda identificada antes de mutar repos.
++- El repo owner conserva specs/docs/capabilities actualizados.
++- El control-plane conserva evidencia de orquestacion y rutas owner, si aplica.
++- Las excepciones quedan explicitas y trazables.
+diff --git a/docs/policies/README.md b/docs/policies/README.md
+index 3333333..4444444 100644
+--- a/docs/policies/README.md
++++ b/docs/policies/README.md
+@@ -20,6 +20,8 @@ El policy component model vive en:
+ - [agent-delegation-policy.md](agent-delegation-policy.md)
+ - [agent-context-management-policy.md](agent-context-management-policy.md)
+ - [agent-architecture-boundary-policy.md](agent-architecture-boundary-policy.md)
++- [human-doc-language-policy.md](human-doc-language-policy.md)
++- [owner-documentation-authority-policy.md](owner-documentation-authority-policy.md)
+ 
+ Estas policies complementan `AGENTS.md`, `governance/ai-guardrails.md`, specs,
+ docs y prompts. No reemplazan contratos funcionales, capabilities, ownership ni
+diff --git a/specs/integration/policies.yaml b/specs/integration/policies.yaml
+index 5555555..6666666 100644
+--- a/specs/integration/policies.yaml
++++ b/specs/integration/policies.yaml
+@@ -1,10 +1,11 @@
+ schema_version: "1.0"
+ kind: "ards_sdd_agent_policy_registry"
+ status: "active"
+-updated_at: "2026-06-20"
++updated_at: "2026-07-07"
+ purpose: >
+-  Machine-readable registry for living ARDS/SDD agent operating policies. These
+-  policies govern agent execution, resource use, delegation, context handling,
+-  task atomization, and architecture boundaries without replacing functional
++  Machine-readable registry for living ARDS/SDD policies. These policies govern
++  agent execution, resource use, delegation, context handling, task
++  atomization, documentation authority, documentation language, and
++  architecture boundaries without replacing functional
+   contracts, capabilities, requests, handoffs, or repo ownership.
+@@ -207,6 +208,60 @@ policies:
+       - "agent-delegation-policy"
+       - "agent-model-selection-policy"
+       - "agent-resource-degradation-policy"
++
++  - id: "human-doc-language"
++    name: "Human Documentation Language Policy"
++    type: "documentation-governance-policy"
++    status: "active"
++    scope:
++      - "human-documentation-language"
++      - "markdown-authoring"
++      - "agent-facing-documentation"
++      - "stable-technical-identifiers"
++    owner: "4uentes-ards-core"
++    human_doc: "docs/policies/human-doc-language-policy.md"
++    enforcement:
++      expected: "Human-facing Markdown uses the repo's operational language while agent-facing docs, specs, YAML, commands, and stable technical identifiers remain technically stable and are not translated."
++      mode: "operational-review"
++      failure_behavior: "record-gap-or-exception"
++    evidence:
++      - "docs/policies/human-doc-language-policy.md"
++      - "docs/reference-sources.md"
++      - "specs/integration/policies.yaml"
++    relates_to:
++      - "agent-context-management-policy"
++      - "agent-architecture-boundary-policy"
++
++  - id: "owner-documentation-authority-policy"
++    name: "Owner Documentation Authority Policy"
++    type: "ards-sdd-governance-policy"
++    status: "active"
++    scope:
++      - "repo-owner-documentation"
++      - "cross-repo-capability-ownership"
++      - "control-plane-evidence-boundary"
++      - "request-closure-gates"
++    owner: "4uentes-ards-core"
++    human_doc: "docs/policies/owner-documentation-authority-policy.md"
++    enforcement:
++      expected: "A change that mutates repo-owned runtime, contracts, capabilities, or integration behavior updates that repo's owner ARDS/SDD docs or records an explicit exception; central evidence and tracker mirrors do not replace owner docs."
++      mode: "mandatory-operational-boundary"
++      failure_behavior: "block-closure-or-create-approved-follow-up"
++    evidence:
++      - "docs/policies/owner-documentation-authority-policy.md"
++      - "docs/reference-sources.md"
++      - "specs/integration/policies.yaml"
++    relates_to:
++      - "agent-architecture-boundary-policy"
++      - "agent-context-management-policy"
++      - "human-doc-language"
+ 
+ gaps:
+   - id: "automated-policy-validation-pending"
+diff --git a/docs/reference-sources.md b/docs/reference-sources.md
+index 7777777..8888888 100644
+--- a/docs/reference-sources.md
++++ b/docs/reference-sources.md
+@@ -168,6 +168,41 @@ open_questions: []
+ ```
+ 
+ ```yaml
++schema_version: "1.0"
++kind: "source_map"
++source_id: "source.decision.common-doc-governance-policies"
++source_type: "decision"
++title: "Decision interna: common documentation governance policies"
++location: "CR-CP-0001 / ARDS-2"
++validated_on: "2026-07-07"
++status: "validated"
++applies_to:
++  - "docs/policies/human-doc-language-policy.md"
++  - "docs/policies/owner-documentation-authority-policy.md"
++  - "docs/policies/README.md"
++  - "specs/integration/policies.yaml"
++extracted_rules:
++  - "La documentacion humana debe respetar el idioma operativo del repo sin traducir identificadores tecnicos estables."
++  - "La documentacion owner vive donde vive la responsabilidad tecnica."
++  - "La evidencia central y los trackers son mirrors o evidencia; no sustituyen specs/docs/contracts del repo owner."
++  - "Los cambios cross-repo deben identificar repo owner, productor, consumidor y excepciones documentales cuando apliquen."
++validation_notes: "Decision interna promovida desde recursos vivos validados en 4uentes-orchestor bajo INIT-CP-0002 / CR-CP-0001."
++owner: "4uentes"
++open_questions:
++  - "Definir un validador core generico para adopcion de owner documentation authority en repos hijos."
++```
++
++```yaml
+ schema_version: "1.0"
+ kind: "source_map"
+ source_id: "source.control-plane.observed.4uentes-orchestor"

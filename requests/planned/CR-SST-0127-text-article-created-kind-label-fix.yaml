@@ -1,0 +1,111 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0127"
+title: "Fix text article created kind label"
+status: planned
+source_request: "requests/inbox/CR-SST-0127-text-article-created-kind-label-fix.yaml"
+created_at: "2026-07-10"
+requester: "4uentes"
+
+summary: >
+  Normalize direct and enveloped article-create responses, reject empty create
+  results and resolve the created kind from validated response data or the
+  submitted draft instead of silently defaulting to Web.
+
+control_plane_context:
+  initiative_id: "INIT-SST-0001"
+  related_initiative_id: "INIT-SST-0005"
+  parent_request_id: "CR-SST-0126"
+  active_feature_state: "sst-sheet-workspace-ui"
+  parent_jira_issue_key: "SST-6"
+  jira_epic_key: "SST-27"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "sst-fend"
+      via: "article create response normalization, result validation, kind resolution and focused tests"
+      service_kind: "frontend-spa"
+      ards_kind: "frontend-web"
+      status: "active"
+    - service_id: "4uentes-orchestor"
+      via: "separate bugfix lifecycle, evidence and Jira mirror"
+      service_kind: "control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+  affected_ards:
+    - "text-article-learning-workspace-visual-separation-ui"
+    - "evidence"
+  risks:
+    - id: "CREATED_KIND_FALSE_WEB_LABEL"
+      severity: medium
+      note: "The success UI contradicts the persisted Text article kind."
+    - id: "DIRTY_CHILD_WORKTREE_SCOPE_MIX"
+      severity: high
+      note: "Limit future implementation to the fallback, its test and owner evidence."
+
+execution:
+  requires_human_approval: false
+  allowed_window: manual
+  branch_strategy: "preserve-existing-dirty-worktree"
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets:
+    - service_id: "sst-fend"
+      local_path_ref: "environments/local/bindings.local.yaml#sst-fend"
+  implementation_boundary: >
+    A future implementation may change the sst-fend create response normalizer,
+    empty-result handling, ArticleCreateFlow created-kind resolution, focused
+    regression tests and required owner documentation. It must not alter
+    SstSheetWorkspace layout, backend contracts, persistence or
+    LearningWorkspace semantics.
+  owner_documentation:
+    required: true
+    status: planned
+    owner_refs:
+      - repo: "sst-fend"
+        paths:
+          - "specs/33-articles-frontend.yml"
+          - "docs/33-articles-frontend.md"
+    evidence_refs:
+      - "evidence/requests/CR-SST-0126/authenticated-visual-qa-2026-07-10.md"
+
+required_checks:
+  - service_id: "sst-fend"
+    command: "npm.cmd test -- ArticleCreateFlow.test.tsx --runInBand"
+  - service_id: "sst-fend"
+    command: "npm.cmd run check"
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check"
+
+validation:
+  required_checks:
+    - "Direct and enveloped create responses normalize to the created article."
+    - "An empty create result fails explicitly instead of rendering a false success."
+    - "A Text create response without payload.kind renders Text from the submitted draft."
+    - "Web and Transcript creation-result labels retain their own kind."
+    - "Authenticated desktop and mobile creation QA passes."
+  evidence_required:
+    - "implementation_start"
+    - "changed_files_summary"
+    - "owner_documentation_summary"
+    - "validation_results"
+    - "jira_sync_summary"
+
+decision:
+  status: approved-in-progress
+  approver: "4uentes"
+  decided_at: "2026-07-11"
+  parent_blocker_ref: "evidence/requests/CR-SST-0126/authenticated-visual-qa-2026-07-10.md"
+
+jira_sync:
+  status: created
+  parent_issue_key: "SST-6"
+  epic_key: "SST-27"
+  desired_issue_type: "Sub-task"
+  desired_initial_status: "Tareas por hacer"
+  issue_key: "SST-56"
+  status_observed: "Listo"
+  related_initiative_id: "INIT-SST-0005"
+  related_program_issue_key: "SST-58"

@@ -1,0 +1,109 @@
+{
+  "issueKey": "SST-27",
+  "before": {
+    "summary": "[SST][INIT-SST-0001] SST Tags Governance Continuity",
+    "status": "Tareas por hacer",
+    "statusCategory": "Por hacer",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-06-29T00:04:15.807-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "init-sst-0001",
+      "learning-content-tags",
+      "sst-tags-governance"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10065\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10065\",\"key\":\"SST-27\",\"fields\":{\"summary\":\"[SST][INIT-SST-0001] SST Tags Governance Continuity\",\"description\":\"Initiative/Epic mirror for INIT-SST-0001.\\n\\nPurpose:\\n\\n* Govern SST tags continuity after the closed SST-4 cut.\\n* Separate completed dictionary/article governance from the active learning-content track.\\n* Keep CR-SST-0088, CR-SST-0089, CR-SST-0090 and CR-SST-0091 visible under one initiative-level Jira epic.\\n\\nControl-plane source:\\n\\n* initiatives/INIT-SST-0001-tags-governance-continuity.yaml\\n* state/features/learning-content-tags.current.yaml\\n* requests/planned/CR-SST-0088-learning-source-model-boundary.yaml\\n* requests/planned/CR-SST-0089-learning-content-preview-import-boundary.yaml\\n* requests/planned/CR-SST-0090-learning-workspace-controlled-adoption.yaml\\n* requests/planned/CR-SST-0091-sst-bend-learning-workspace-implementation-readiness.yaml\\n\\nBoundary:\\n\\n* Jira is an operational mirror.\\n* ARDS/SDD remains the source of truth.\\n* This epic does not authorize direct child-repo mutation.\\n\\n\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-06-29T00:04:15.807-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10005\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"Tareas por hacer\",\"id\":\"10005\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/2\",\"id\":2,\"key\":\"new\",\"colorName\":\"blue-gray\",\"name\":\"Por hacer\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"init-sst-0001\",\"learning-content-tags\",\"sst-tags-governance\"]}}"
+  },
+  "after": {
+    "summary": "[SST][INIT-SST-0001] SST Tags Governance Continuity",
+    "status": "En curso",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-06-29T22:38:45.856-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "init-sst-0001",
+      "learning-content-tags",
+      "sst-tags-governance"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10065\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10065\",\"key\":\"SST-27\",\"fields\":{\"summary\":\"[SST][INIT-SST-0001] SST Tags Governance Continuity\",\"description\":\"Initiative/Epic mirror for INIT-SST-0001.\\n\\nPurpose:\\n\\n* Govern SST tags continuity after the closed SST-4 cut.\\n* Separate completed dictionary/article governance from the active learning-content track.\\n* Keep CR-SST-0088, CR-SST-0089, CR-SST-0090 and CR-SST-0091 visible under one initiative-level Jira epic.\\n\\nControl-plane source:\\n\\n* initiatives/INIT-SST-0001-tags-governance-continuity.yaml\\n* state/features/learning-content-tags.current.yaml\\n* requests/planned/CR-SST-0088-learning-source-model-boundary.yaml\\n* requests/planned/CR-SST-0089-learning-content-preview-import-boundary.yaml\\n* requests/planned/CR-SST-0090-learning-workspace-controlled-adoption.yaml\\n* requests/planned/CR-SST-0091-sst-bend-learning-workspace-implementation-readiness.yaml\\n\\nBoundary:\\n\\n* Jira is an operational mirror.\\n* ARDS/SDD remains the source of truth.\\n* This epic does not authorize direct child-repo mutation.\\n\\n\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-06-29T22:38:45.856-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10006\",\"description\":\"La persona asignada está trabajando actualmente en esta actividad.\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En curso\",\"id\":\"10006\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"init-sst-0001\",\"learning-content-tags\",\"sst-tags-governance\"]}}"
+  },
+  "transitions": [
+    {
+      "id": "11",
+      "name": "Por hacer",
+      "toStatus": "Tareas por hacer",
+      "toStatusCategory": "Por hacer"
+    },
+    {
+      "id": "21",
+      "name": "En curso",
+      "toStatus": "En curso",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "31",
+      "name": "In Review",
+      "toStatus": "En revisión",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "41",
+      "name": "Listo",
+      "toStatus": "Finalizada",
+      "toStatusCategory": "Listo"
+    }
+  ],
+  "selectedTransition": {
+    "id": "21",
+    "name": "En curso",
+    "toStatus": "En curso",
+    "toStatusCategory": "En curso"
+  },
+  "transitionResult": {
+    "success": true
+  },
+  "commentResult": {
+    "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10065/comment/10050",
+    "id": "10050",
+    "author": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "body": "INIT-SST-0001 epic start.\n\n`SST-27` now tracks SST Tags Governance Continuity as the initiative-level Jira mirror.\n\nScope:\n\n* Keep dictionary/article tags governance separated from the active learning-content track.\n* Keep `SST-4` and `SST-6` associated under this epic.\n* Continue CR-SST-0088/0089/0090/0091 through control-plane evidence before child repo mutation.\n\nBoundary:\n\n* Jira is an operational mirror.\n* ARDS/SDD remains the source of truth.\n* This transition does not authorize direct child-repo mutation.\n\nBefore status: Tareas por hacer.  \nTransition: En curso (21).",
+    "updateAuthor": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "created": "2026-06-29T22:38:45.856-0300",
+    "updated": "2026-06-29T22:38:45.856-0300",
+    "jsdPublic": true
+  },
+  "externalWrite": true
+}

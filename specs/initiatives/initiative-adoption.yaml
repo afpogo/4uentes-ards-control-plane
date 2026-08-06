@@ -1,0 +1,31 @@
+schema_version: "1.0"
+kind: "initiative_model_adoption"
+id: "4uentes-orchestor-initiative-model-adoption"
+resource_id: "initiative-model"
+resource_class: "core-profile-scoped-living-resource"
+origin_repo: "4uentes-orchestor"
+canonical_owner: "4uentes-ards-core"
+applicability: >
+  Adopted by this control-plane because it owns multi-CR Initiatives,
+  request-lifecycle coordination, Jira Epic mirrors, and evidence boundaries.
+adoption_mode: "profile-required"
+adoption_status: "adopted"
+required_for_profiles:
+  - "control-plane"
+optional_for_contexts:
+  - "multi-repo-solution"
+  - "child-repo-with-local-program-tracking"
+template_binding:
+  initiative: "templates/specs/initiatives/initiative.template.yaml"
+  initiatives_index: "templates/specs/initiatives/00-index.template.yaml"
+materialized_paths:
+  model: "specs/initiatives/initiative-model.yaml"
+  initiatives_index: "initiatives/00-index.yaml"
+  initiatives: "initiatives/*.yaml"
+validation:
+  command: "npm.cmd run check:initiatives && npm.cmd run check"
+  latest_evidence: "evidence/requests/CR-CP-0004/control-plane-resync-validation.md"
+notes:
+  - "This manifest records living-resource adoption; use policy manifests only for policies."
+  - "The control-plane owns concrete Initiative IDs, request links, tracker keys, and evidence."
+  - "Jira mirrors remain operational only and must keep source_of_truth false."

@@ -1,0 +1,139 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0088"
+title: "Define learning-content source and document model boundary"
+status: planned
+source_request: "requests/inbox/CR-SST-0088-learning-source-model-boundary.yaml"
+created_at: "2026-06-28"
+requester: "4uentes"
+
+summary: >
+  Design the first local ARDS/SDD model for SST-6 learning-content sources.
+  This request separates CourseSource and WebArticleSource from processable
+  KnowledgeDocument output, reserves TranscriptionSource for later work, and
+  keeps runtime import/persistence outside scope.
+
+initial_scope:
+  solution: "sst"
+  services: []
+  include_optional_services: false
+
+control_plane_context:
+  initiative_id: "INIT-SST-0001"
+  initiative_file: "initiatives/INIT-SST-0001-tags-governance-continuity.yaml"
+  governing_request: "CR-SST-0088"
+  parent_jira_issue_key: "SST-4"
+  active_jira_issue_key: "SST-6"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  active_feature_state: "learning-content-tags"
+  active_feature_state_file: "state/features/learning-content-tags.current.yaml"
+  follow_up_request_id: "CR-SST-0089"
+  follow_up_boundary: "sst-bend preview/import runtime boundary; preview-only persistence by default."
+
+impact_analysis:
+  required: true
+  affected_services:
+    - "4uentes-orchestor"
+  affected_ards:
+    - control-plane
+    - request-lifecycle
+    - evidence
+    - learning-content-source-model
+    - jira-mirror
+  capabilities:
+    - "learning-content-tags"
+  risks:
+    - id: SOURCE_DOCUMENT_CONFLATION
+      severity: medium
+    - id: RUNTIME_SCOPE_CREEP
+      severity: medium
+    - id: JIRA_MCP_EXTERNAL_ACCESS_BLOCKER
+      severity: medium
+
+required_context:
+  - "AGENTS.md"
+  - "specs/integration/policies.yaml"
+  - "docs/policies/"
+  - "initiatives/INIT-SST-0001-tags-governance-continuity.yaml"
+  - "state/features/learning-content-tags.current.yaml"
+  - "evidence/requests/CR-SST-0087/tags-governance-current-state.md"
+  - "evidence/requests/CR-SST-0087/jira-mcp-review.md"
+
+required_checks:
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check"
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check:initiatives"
+
+risk:
+  level: medium
+  score: 5
+  drivers:
+    - SOURCE_DOCUMENT_CONFLATION
+    - RUNTIME_SCOPE_CREEP
+    - JIRA_MCP_EXTERNAL_ACCESS_BLOCKER
+
+task_weight:
+  classification: "long-context-task"
+  risk_level: "medium"
+  drivers:
+    - "Defines a local ARDS/SDD model boundary for an active SST-6 track."
+    - "Must avoid promoting runtime, persistence, scraping, or child repository mutation."
+    - "Jira remains mirror-only and may be blocked by external MCP access."
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.4-fast-high"
+  fallback_profile: "highest-available-long-context-profile"
+  reason: >
+    The request is control-plane-only design work with cross-request context and
+    architecture boundaries, but it does not mutate product runtime or security
+    contracts.
+
+subagent_deployment_plan:
+  required: false
+  parallelizable: false
+  roles: []
+  fallback: "Main agent review is sufficient because the work is local planning and design evidence."
+  evidence_required: true
+
+execution:
+  requires_human_approval: false
+  allowed_window: manual
+  branch_strategy: control-plane-only
+  implementation_boundary: >
+    Local request and evidence only. Do not modify child repositories, do not
+    implement runtime import, do not persist content, do not perform Jira
+    writes, and do not change the core ARDS/SDD canon.
+  jira_read_executed: false
+  jira_write_executed: false
+  jira_write_target:
+    desired_artifact: "No write in this request"
+    desired_initial_status: "not requested"
+  jira_read_blocked_reason: "Existing CR-SST-0087 evidence records Atlassian MCP 403 app-not-installed; Jira remains mirror-only."
+
+validation:
+  required_checks:
+    - "Control-plane validation passes."
+    - "Evidence references INIT-SST-0001 and SST-6."
+    - "Evidence does not declare Jira as source of truth."
+    - "No child repositories are modified."
+    - "No runtime implementation or persistence is promoted."
+    - "state/features/learning-content-tags.current.yaml remains implemented-local until a later CR."
+  evidence_required:
+    - "learning_source_model"
+    - "runtime_boundary_and_follow_up"
+    - "changed_files_summary"
+    - "validation_results"
+
+decision:
+  status: pending
+  approver: TODO
+
+planner_notes:
+  - "CourseSource is not an ArticleDocument; a course contains documents and resources."
+  - "WebArticleSource is a documentary source and may produce a KnowledgeDocument."
+  - "CourseSource and WebArticleSource can both produce KnowledgeDocument, ContentBlock arrays, and later AI derivations."
+  - "TranscriptionSource is reserved for a later CR and is not implemented or validated here."
+  - "CR-SST-0089 should define the sst-bend preview/import boundary with preview-only persistence by default."

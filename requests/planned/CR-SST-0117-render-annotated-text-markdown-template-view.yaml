@@ -1,0 +1,108 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0117"
+title: "Render Markdown/template view from annotated text"
+status: planned
+source_request: "requests/inbox/CR-SST-0117-render-annotated-text-markdown-template-view.yaml"
+created_at: "2026-07-04"
+requester: "4uentes"
+
+summary: >
+  Render accepted annotated text into a stable Markdown-like or themed view
+  while preserving the semantic source model.
+
+control_plane_context:
+  initiative_id: "INIT-SST-0001"
+  active_feature_state: "learning-content-tags"
+  parent_request_id: "CR-SST-0116"
+  jira_epic_key: "SST-27"
+  active_jira_issue_key: "SST-6"
+  jira_subtask_key: "SST-47"
+  current_jira_status_observed: "Listo"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "sst-fend"
+      via: "Rendered article/context template view"
+      service_kind: "frontend-spa"
+      ards_kind: "frontend-web"
+      status: "active"
+    - service_id: "sst-bend"
+      via: "Rendered source data if template generation requires backend read model"
+      service_kind: "api"
+      ards_kind: "backend-service"
+      status: "active"
+    - service_id: "4uentes-orchestor"
+      via: "request lifecycle and owner enforcement"
+      service_kind: "control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+  affected_ards:
+    - frontend-web
+    - backend-service
+    - learning-content-tags
+    - child-repo-owner-documentation
+  risks:
+    - id: RENDER_LOSES_SEMANTIC_STRUCTURE
+      severity: high
+
+execution:
+  requires_human_approval: false
+  allowed_window: manual
+  branch_strategy: "one-branch-per-repo"
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets:
+    - service_id: "sst-fend"
+      local_path_ref: "environments/local/bindings.local.yaml#sst-fend"
+    - service_id: "sst-bend"
+      local_path_ref: "environments/local/bindings.local.yaml#sst-bend"
+  implementation_boundary: >
+    This CR may implement rendered views/templates for accepted annotated text.
+    It must not discard source selectors or accepted learning metadata.
+  owner_documentation:
+    required: true
+    status: satisfied
+    owner_refs:
+      - repo: "sst-fend"
+        paths:
+          - "docs/38-learning-workspace-frontend.md"
+          - "specs/38-learning-workspace-frontend.yml"
+          - "docs/tasks/2026-07-04-cr-sst-0117-render-annotated-text-template.md"
+      - repo: "sst-bend"
+        paths:
+          - "docs/39-learning-workspace-runtime.md"
+          - "specs/39-learning-workspace-runtime.yaml"
+    evidence_refs:
+      - "evidence/requests/CR-SST-0117/intent-summary.md"
+      - "evidence/requests/CR-SST-0117/jira-sync-summary.md"
+      - "evidence/requests/CR-SST-0117/jira-sst-47-start-transition-summary.md"
+      - "evidence/requests/CR-SST-0117/owner-documentation-summary.md"
+      - "evidence/requests/CR-SST-0117/validation-results.md"
+      - "evidence/requests/CR-SST-0117/jira-sst-47-close-transition-summary.md"
+
+required_checks:
+  - service_id: "sst-fend"
+    command: "npm.cmd run check"
+  - service_id: "sst-bend"
+    command: "npm.cmd run check"
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check"
+
+validation:
+  required_checks:
+    - "Accepted annotated text renders as Markdown/template view."
+    - "Semantic annotations remain traceable after rendering."
+  evidence_required:
+    - "intent_summary"
+    - "jira_sync_summary"
+
+decision:
+  status: closed-local
+  approver: "4uentes"
+  note: >
+    CR-SST-0117 closes locally as the first frontend render/template cut.
+    Jira mirror SST-47 was synchronized to Listo through the MCP fallback
+    script.

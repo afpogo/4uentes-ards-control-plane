@@ -1,0 +1,116 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0110"
+title: "Adopt LearningWorkspace inside sst-fend text article creation"
+status: closed-local
+source_request: "requests/inbox/CR-SST-0110-sst-fend-learning-workspace-text-article-adoption.yaml"
+created_at: "2026-07-04"
+requester: "4uentes"
+
+summary: >
+  Reuse the LearningWorkspace sheet controls inside Article creation when the
+  selected article kind is Text. The Article body remains the source of truth
+  for the draft text; LearningWorkspace consumes that draft for preview-only
+  materialization and explicit accept/reject decisions.
+
+control_plane_context:
+  initiative_id: "INIT-SST-0001"
+  initiative_file: "initiatives/INIT-SST-0001-tags-governance-continuity.yaml"
+  active_feature_state: "learning-content-tags"
+  active_feature_state_file: "state/features/learning-content-tags.current.yaml"
+  parent_request_id: "CR-SST-0107"
+  prerequisite_request_id: "CR-SST-0109"
+  jira_epic_key: "SST-27"
+  active_jira_issue_key: "SST-6"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "sst-fend"
+      via: "Article creation Text tab, LearningWorkspace reusable sheet component, owner docs/specs and tests"
+      service_kind: "frontend-spa"
+      ards_kind: "frontend-web"
+      status: "active"
+    - service_id: "4uentes-orchestor"
+      via: "request lifecycle, evidence, initiative tracking and owner enforcement"
+      service_kind: "control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+  affected_ards:
+    - frontend-web
+    - request-lifecycle
+    - evidence
+    - child-repo-owner-documentation
+    - learning-content-tags
+    - learning-workspace-context
+    - article-creation
+  risks:
+    - id: PREVIEW_ONLY_GATE_BYPASS
+      severity: high
+    - id: ARTICLE_TEXT_DRAFT_AND_LEARNING_SOURCE_DRIFT
+      severity: medium
+    - id: OWNER_DOCS_STALE_AFTER_PRODUCT_ADOPTION
+      severity: high
+    - id: FRONTEND_DIRECT_SST_CALL
+      severity: high
+
+execution:
+  requires_human_approval: false
+  allowed_window: manual
+  branch_strategy: "one-branch-per-repo"
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets:
+    - service_id: "sst-fend"
+      local_path_ref: "environments/local/bindings.local.yaml#sst-fend"
+  excluded_child_repo_mutation:
+    - service_id: "node-auth"
+      reason: "BFF pass-through was implemented in CR-SST-0109 and remains sufficient."
+    - service_id: "sst-bend"
+      reason: "Parser/import completion remains the immediate next separate request."
+  implementation_boundary: >
+    This CR may modify sst-fend runtime UI, tests and owner documentation plus
+    control-plane evidence. It must preserve LearningWorkspace preview-only
+    semantics until explicit accept, must keep article creation persistence
+    separate from accepted LearningWorkspace context, and must continue calling
+    LearningWorkspace only through node-auth.
+  owner_documentation:
+    required: true
+    status: planned
+    owner_refs:
+      - repo: "sst-fend"
+        paths:
+          - "docs/38-learning-workspace-frontend.md"
+          - "specs/38-learning-workspace-frontend.yml"
+          - "docs/capabilities/inbound/node-auth--learning-workspace-context.md"
+          - "specs/capabilities/inbound/node-auth--learning-workspace-context.yaml"
+    evidence_refs:
+      - "evidence/requests/CR-SST-0110/implementation-plan.md"
+      - "evidence/requests/CR-SST-0110/changed-files-summary.md"
+      - "evidence/requests/CR-SST-0110/validation-results.md"
+
+required_checks:
+  - service_id: "sst-fend"
+    command: "npm.cmd run check"
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check"
+
+validation:
+  required_checks:
+    - "Article creation Text tab renders a usable text article form instead of construction placeholder."
+    - "The LearningWorkspace panel consumes the article text draft for preview/accept/reject through node-auth."
+    - "Article creation and LearningWorkspace acceptance remain separate explicit actions."
+    - "No node-auth or sst-bend runtime files are modified."
+    - "Control-plane owner documentation gate passes."
+  evidence_required:
+    - "implementation_plan"
+    - "changed_files_summary"
+    - "validation_results"
+
+decision:
+  status: closed-local
+  approver: "4uentes"
+  note: >
+    Closed as functional plumbing validated by automated checks and manual QA.
+    Final text sheet tagging UX continues in CR-SST-0111.

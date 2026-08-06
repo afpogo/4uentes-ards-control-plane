@@ -1,0 +1,42 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0140"
+title: "Complete article preview contract adoption in sst-fend"
+status: "in-progress"
+source_request: "requests/inbox/CR-SST-0140-sst-fend-preview-contract-final-adoption.yaml"
+created_at: "2026-07-11"
+requester: "4uentes"
+summary: "Consume deployed preview and tabs[].preview contracts, retain previewAssetId fallback, normalize captures, avoid legacy fetch for terminal states, and clean object URLs."
+depends_on: ["CR-SST-0137", "CR-SST-0138", "CR-SST-0139"]
+control_plane_context: {initiative_id: "INIT-SST-0003", jira_epic_key: "SST-29", jira_issue_key: "SST-70", jira_issue_type: "Subtask", jira_parent_issue_key: "SST-50", jira_role: "mirror", jira_source_of_truth: false}
+impact_analysis:
+  required: true
+  affected_services: [{service_id: "sst-fend", via: "final preview capability adoption", status: "active"}]
+  risks: [{id: "DEPLOY_CONTRACT_DRIFT", severity: "medium"}, {id: "OBJECT_URL_LEAK", severity: "medium"}]
+task_weight: {classification: "long-context-task", risk_level: "medium", drivers: ["CONSUMER_CONTRACT", "DEPLOY_RECONCILIATION"]}
+model_selection: {policy_ref: "docs/policies/agent-model-selection-policy.md", primary_profile: "gpt-5.4-fast-high", fallback_profile: "highest-available-context-profile"}
+subagent_deployment_plan: {required: true, roles: ["read-only deploy mapper discovery", "UI test review"]}
+execution:
+  child_repo_mutation_allowed: true
+  child_repo_mutation_target: {service_id: "sst-fend"}
+  owner_documentation_required: true
+  implementation_boundary: "sst-fend only"
+  duplicate_search_ref: "evidence/initiatives/INIT-SST-0003/preview-owner-slices-duplicate-search-2026-07-11.md"
+  qa_drift:
+    discovered_at: "2026-07-23"
+    status: "corrected-and-validated"
+    evidence_ref: "evidence/requests/CR-SST-0140/preview-source-normalization-drift-2026-07-23.md"
+owner_documentation:
+  required: true
+  status: "satisfied"
+  owner_repo: "sst-fend"
+  updated_owner_docs:
+    - "specs/33-articles-frontend.yml"
+    - "docs/33-articles-frontend.md"
+    - "specs/capabilities/inbound/node-auth--article-preview-resolution-v1.yaml"
+    - "docs/capabilities/inbound/node-auth--article-preview-resolution-v1.md"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0140/implementation-and-validation-2026-07-12.md"
+validation: {required_checks: ["all preview states", "extension-thumbnail and video-poster normalization", "legacy fallback", "unknown reason fallback", "object URL cleanup", "per-tab deploy preview", "sst-fend full check", "control-plane npm.cmd run check"]}
+decision: {status: "approved-in-progress", approver: "4uentes", note: "Final frontend adoption and owner capability are implemented; private-page E2E remains in CR-SST-0103."}
+jira_sync: {status: "in-review", desired_issue_type: "Subtask", parent_issue_key: "SST-50", epic_key: "SST-29", issue_key: "SST-70", transitioned_at: "2026-07-23", comment_id: "10262"}

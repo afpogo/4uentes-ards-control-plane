@@ -1,0 +1,71 @@
+schema_version: "1.0"
+kind: "initiative"
+id: "INIT-SST-0002"
+title: "SST Dictionary Management"
+status: "planned"
+updated_at: "2026-06-28"
+owner_repository: "4uentes-orchestor"
+objective: >
+  Govern the SST Dictionary as a product capability family, keeping legacy
+  dictionary read, dictionary tags, dictionary governance, and dictionary secret
+  management aligned across ARDS/SDD, Jira visibility, backend, BFF, and
+  frontend surfaces.
+initial_hypothesis: >
+  Dictionary work needs a single Initiative/Epic mirror because runtime slices
+  such as tags, governed dictionary APIs, and secret management are related from
+  a product and operations perspective but must continue to execute through
+  separate auditable CRs.
+source_evidence_refs:
+  - "evidence/initiatives/INIT-SST-0002/policy-application.md"
+  - "state/features/dictionary-tags.current.yaml"
+  - "state/features/dictionary-secret-management.current.yaml"
+  - "docs/requests/dictionary-secret-management-contract.md"
+  - "evidence/requests/CR-SST-0064/runtime-validation-results.md"
+  - "evidence/requests/CR-SST-0084/closure-decision.md"
+  - "evidence/requests/CR-SST-0086/validation-results.md"
+model_refs:
+  - "specs/initiatives/initiative-model.yaml"
+  - "docs/requests/initiative-model.md"
+known_change_requests:
+  - "CR-SST-0064"
+  - "CR-SST-0066"
+  - "CR-SST-0073"
+  - "CR-SST-0076"
+  - "CR-SST-0084"
+  - "CR-SST-0086"
+candidate_change_requests:
+  - id: "CR-SST-TODO"
+    title: "Dictionary management epic reconciliation and next slice planning"
+    status: "candidate"
+discovered_change_requests: []
+tracking:
+  jira:
+    role: "mirror"
+    source_of_truth: false
+    project_key: "SST"
+    issue_type: "Epic"
+    issue_key: "SST-25"
+    current_status_observed: "created"
+    write_status: "created"
+    read_status: "available"
+    evidence_ref: "evidence/initiatives/INIT-SST-0002/jira-epic-creation-summary.md"
+    scope_association_evidence_ref: "evidence/initiatives/INIT-SST-0002/jira-epic-scope-association-summary.md"
+    active_issue_start_evidence_ref: "evidence/initiatives/INIT-SST-0002/jira-sst-26-start-summary.md"
+    active_issue_progress_evidence_ref: "evidence/initiatives/INIT-SST-0002/jira-sst-26-progress-smoke-summary.md"
+    associated_issue_keys:
+      - "SST-10"
+      - "SST-20"
+      - "SST-21"
+      - "SST-22"
+      - "SST-23"
+      - "SST-24"
+      - "SST-26"
+    active_release_readiness_issue_key: "SST-26"
+    active_release_readiness_status_observed: "En curso"
+boundaries:
+  mutates_child_repositories: false
+  promotes_runtime: false
+  changes_core_canon: false
+open_gaps:
+  - "Dictionary secret management remains validated-local until release-readiness gaps are closed."
+  - "Future Dictionary runtime changes must continue through scoped CRs; this Initiative does not authorize direct child-repo mutation."

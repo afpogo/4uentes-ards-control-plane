@@ -1,0 +1,65 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-CP-0011"
+title: "Implement policy registry and adoption runtime validator"
+status: "planned"
+created_at: "2026-07-10"
+requester: "4uentes"
+summary: >
+  Validate that active policies declare required classification, enforcement,
+  adoption, gap, and template metadata, and that adopted policies have
+  manifests or explicit exceptions when required.
+control_plane_context:
+  initiative_id: "INIT-CP-0003"
+  parent_initiative_id: "INIT-CP-0001"
+  target_jira_epic_key: "ARDS-1"
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "4uentes-orchestor"
+      via: "policy registry and adoption enforcement"
+      service_kind: "control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+  affected_ards:
+    - "policy-registry"
+    - "policy-adoption"
+    - "policy-exception"
+required_context:
+  - "specs/integration/policies.yaml"
+  - "specs/policies/ards-sdd-policy-component-model.yaml"
+  - "templates/policy-adoption-manifest.template.yaml"
+  - "templates/policy-exception-manifest.template.yaml"
+risk:
+  level: "medium"
+  score: 6
+  drivers:
+    - "validator must distinguish core-general from profile-scoped policies"
+    - "child repo rollout must remain request-driven"
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "single-control-plane-branch"
+  child_repo_mutation_allowed: false
+  core_repo_mutation_allowed: false
+  implementation_boundary: >
+    Validate local registry/adoption shape only. Do not mutate child repos or
+    force global adoption.
+jira:
+  role: "mirror"
+  source_of_truth: false
+  project_key: "ARDS"
+  epic_key: "ARDS-13"
+  related_epic_key: "ARDS-1"
+  issue_key: "ARDS-10"
+validation:
+  required_checks:
+    - "4uentes-orchestor: npm.cmd run check:policy-runtime"
+    - "4uentes-orchestor: npm.cmd run check"
+  evidence_required:
+    - "policy_registry_validator_design"
+    - "adoption_exception_rules"
+    - "validation_results"
+decision:
+  status: "pending"
+  approver: "TODO"

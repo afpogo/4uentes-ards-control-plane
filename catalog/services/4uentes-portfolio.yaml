@@ -1,0 +1,56 @@
+service_id: 4uentes-portfolio
+canonical_identity: 4uentes-portfolio
+kind: frontend-spa
+status: active
+shared: false
+solution_ids:
+  - 4uentes
+repo:
+  canonical_repo: 4uentes-portfolio
+  remote: git@github.com:afpogo/4uentes-portfolio.git
+  branch_observed: develop
+  upstream_observed: TODO
+  divergence_observed: TODO
+  head_observed: 5227ef7
+  working_tree_observed: dirty-portfolio-professionalization
+  stash_observed: TODO
+  observed_at: 2026-07-03
+local_binding_evidence:
+  - id: local-4uentes-portfolio
+    role: repo-working-copy
+    observed_at: 2026-07-03
+    path_record: inventory/evidence/git/4uentes-portfolio.md
+package:
+  name: portfolio
+  description: Static professional portfolio for Andres Pogo Fuentes under the 4uentes company context.
+  runtime: web-app
+  stack:
+    - React 18
+    - TypeScript
+    - Sass
+    - Vite
+ards:
+  kind: frontend-web
+  status: ready
+  agents_md: true
+  specs_index: true
+  docs_overview: true
+  docs_ai_policy: true
+validation:
+  check_command: npm run build
+orchestrator_link_contract:
+  required: true
+  status: adopted
+  rule_ref: "docs/cross-repo/child-repo-orchestrator-link-rule.md"
+  template_ref: "templates/child-orchestrator-link-rule.md"
+  metadata_key: "orchestrator_link"
+  capability_state_map: "state/capability-links.yaml"
+integrations:
+  consumes: []
+deployment_targets_observed:
+  - local
+  - static-hosting-todo
+notes:
+  - Static frontend portfolio; no owned backend, BFF, auth provider, or runtime GitHub API integration observed.
+  - Intended as a 4uentes public portfolio asset alongside SST as a separate governed solution.
+  - GitHub profile enrichment is documented as a future editorial or build-time evidence workflow, not as runtime product behavior.

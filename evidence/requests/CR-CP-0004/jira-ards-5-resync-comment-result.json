@@ -1,0 +1,73 @@
+{
+  "issueKey": "ARDS-5",
+  "before": {
+    "summary": "[CP][CR-CP-0004] Promote Initiative model to core",
+    "status": "En curso",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-07-10T19:25:10.647-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-cp-0004",
+      "init-cp-0002"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10113\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10113\",\"key\":\"ARDS-5\",\"fields\":{\"summary\":\"[CP][CR-CP-0004] Promote Initiative model to core\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-07-10T19:25:10.647-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10043\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En curso\",\"id\":\"10043\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-cp-0004\",\"init-cp-0002\"]}}"
+  },
+  "after": {
+    "summary": "[CP][CR-CP-0004] Promote Initiative model to core",
+    "status": "En curso",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-07-10T20:23:14.649-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-cp-0004",
+      "init-cp-0002"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10113\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10113\",\"key\":\"ARDS-5\",\"fields\":{\"summary\":\"[CP][CR-CP-0004] Promote Initiative model to core\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-07-10T20:23:14.649-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10043\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En curso\",\"id\":\"10043\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-cp-0004\",\"init-cp-0002\"]}}"
+  },
+  "commentResult": {
+    "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10113/comment/10166",
+    "id": "10166",
+    "author": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/48",
+        "24x24": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/24",
+        "16x16": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/16",
+        "32x32": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/32"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "body": "# ARDS-5 / CR-CP-0004 - Resincronizacion Control-Plane\n\nEl core promovio `initiative-model` como living resource reusable en\n`4uentes-ards-core@f07ca6a`.\n\nResincronizacion local realizada:\n\n* `specs/ards/contract-binding.yaml` actualizado al core ref promovido.\n* `specs/initiatives/initiative-model.yaml` actualizado para declarar\n  `4uentes-ards-core` como source of truth del canon reusable.\n* `specs/initiatives/initiative-adoption.yaml` creado para registrar adopcion  \n  local.\n* Las instancias `INIT-*`, links a CRs, evidencia y mirrors Jira siguen bajo  \n  ownership local del control-plane.\n* No se mutaron repos hijos.\n\nValidacion:\n\n* `npm.cmd run check:initiatives`: 13 OK, 0 WARN, 0 FAIL.\n* `npm.cmd run check`: 0 WARN, 0 FAIL.\n\n",
+    "updateAuthor": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/48",
+        "24x24": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/24",
+        "16x16": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/16",
+        "32x32": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/32"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "created": "2026-07-10T20:23:14.649-0300",
+    "updated": "2026-07-10T20:23:14.649-0300",
+    "jsdPublic": true
+  },
+  "commentBody": "# ARDS-5 / CR-CP-0004 - Resincronizacion Control-Plane\n\nEl core promovio `initiative-model` como living resource reusable en\n`4uentes-ards-core@f07ca6a`.\n\nResincronizacion local realizada:\n\n- `specs/ards/contract-binding.yaml` actualizado al core ref promovido.\n- `specs/initiatives/initiative-model.yaml` actualizado para declarar\n  `4uentes-ards-core` como source of truth del canon reusable.\n- `specs/initiatives/initiative-adoption.yaml` creado para registrar adopcion\n  local.\n- Las instancias `INIT-*`, links a CRs, evidencia y mirrors Jira siguen bajo\n  ownership local del control-plane.\n- No se mutaron repos hijos.\n\nValidacion:\n\n- `npm.cmd run check:initiatives`: 13 OK, 0 WARN, 0 FAIL.\n- `npm.cmd run check`: 0 WARN, 0 FAIL.\n",
+  "externalWrite": true
+}

@@ -1,0 +1,47 @@
+{
+  "issueKey": "SST-23",
+  "issue": {
+    "summary": "[SST-4][CR-SST-0075] Governed article tag selector UI",
+    "status": "En curso",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-06-21T22:24:26.483-0300",
+    "labels": [
+      "active-work",
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0075",
+      "sst-tags-governance",
+      "subtask"
+    ],
+    "description": "Subtask under `SST-4` for the next governed execution slice.\n\n* CR: `CR-SST-0075`\n* Scope: `sst-fend` governed selector or autocomplete for article tags.\n* Source request: `requests/planned/CR-SST-0075-fend-governed-article-tag-selector.yaml`\n* Goal: replace comma-separated tag input with governed search, explicit create action, dedup, and empty-state detach support.\n* Dependency: backend and BFF tags endpoints from `CR-SST-0073` and `CR-SST-0074`.\n* Risk: high due to frontend contract migration, autocomplete UX, and payload compatibility.\n\nExecution guardrails:\n\n* Keep this CR inside `sst-fend` only.\n* Do not modify `sst-bend`, `4uentes-auth`, or `sst-extension` in this CR.\n* Preserve the governed payload contract exposed by `SST-21` and `SST-22`.\n* Keep explicit create semantics for `TagValue`; do not degrade the flow back to freeform comma-separated strings.\n\nCanonical control-plane refs:\n\n* docs/requests/sst-tags-governance-contract.md\n* state/features/sst-tags-governance.current.yaml\n* requests/planned/CR-SST-0075-fend-governed-article-tag-selector.yaml\n\n",
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10031\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10031\",\"key\":\"SST-23\",\"fields\":{\"summary\":\"[SST-4][CR-SST-0075] Governed article tag selector UI\",\"description\":\"Subtask under `SST-4` for the next governed execution slice.\\n\\n* CR: `CR-SST-0075`\\n* Scope: `sst-fend` governed selector or autocomplete for article tags.\\n* Source request: `requests/planned/CR-SST-0075-fend-governed-article-tag-selector.yaml`\\n* Goal: replace comma-separated tag input with governed search, explicit create action, dedup, and empty-state detach support.\\n* Dependency: backend and BFF tags endpoints from `CR-SST-0073` and `CR-SST-0074`.\\n* Risk: high due to frontend contract migration, autocomplete UX, and payload compatibility.\\n\\nExecution guardrails:\\n\\n* Keep this CR inside `sst-fend` only.\\n* Do not modify `sst-bend`, `4uentes-auth`, or `sst-extension` in this CR.\\n* Preserve the governed payload contract exposed by `SST-21` and `SST-22`.\\n* Keep explicit create semantics for `TagValue`; do not degrade the flow back to freeform comma-separated strings.\\n\\nCanonical control-plane refs:\\n\\n* docs/requests/sst-tags-governance-contract.md\\n* state/features/sst-tags-governance.current.yaml\\n* requests/planned/CR-SST-0075-fend-governed-article-tag-selector.yaml\\n\\n\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-06-21T22:24:26.483-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10006\",\"description\":\"La persona asignada está trabajando actualmente en esta actividad.\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En curso\",\"id\":\"10006\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"active-work\",\"ards-sdd\",\"control-plane\",\"cr-sst-0075\",\"sst-tags-governance\",\"subtask\"]}}"
+  },
+  "transitions": [
+    {
+      "id": "11",
+      "name": "Por hacer",
+      "toStatus": "Tareas por hacer",
+      "toStatusCategory": "Por hacer"
+    },
+    {
+      "id": "21",
+      "name": "En curso",
+      "toStatus": "En curso",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "31",
+      "name": "In Review",
+      "toStatus": "En revisión",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "41",
+      "name": "Listo",
+      "toStatus": "Finalizada",
+      "toStatusCategory": "Listo"
+    }
+  ]
+}

@@ -2,8 +2,8 @@ schema_version: "1.0"
 kind: "feature_state"
 id: "sst-chatbot"
 title: "SST Chatbot Capability Trace"
-status: "implemented-local"
-updated_at: "2026-05-31"
+status: "validated-local"
+updated_at: "2026-06-21"
 solution_id: "sst"
 affected_services:
   - sst-chatbot
@@ -17,6 +17,9 @@ request_ids:
   - CR-SST-0016
   - CR-SST-0021
   - CR-SST-0022
+  - CR-SST-0077
+  - CR-SST-0082
+  - CR-SST-0083
 capability_refs:
   - "capability.inbound.sst-chatbot-agent-handoff"
 spec_refs:
@@ -34,9 +37,17 @@ evidence_refs:
   - "evidence/requests/CR-SST-0022/baseline.md"
   - "evidence/requests/CR-SST-0022/implementation-summary.md"
   - "evidence/requests/CR-SST-0022/changed-files-summary.md"
+  - "evidence/requests/CR-SST-0077/sst-chatbot-child-sync-diff.yaml"
+  - "evidence/requests/CR-SST-0082/intake-and-reconciliation-notes.md"
+  - "evidence/requests/CR-SST-0082/sst-chatbot-child-sync-diff.yaml"
+  - "evidence/requests/CR-SST-0082/changed-files-summary.md"
+  - "evidence/requests/CR-SST-0083/transport-decision.md"
+  - "evidence/requests/CR-SST-0083/changed-files-summary.md"
 validation_refs:
   - "evidence/requests/CR-SST-0016/validation-results.md"
   - "evidence/requests/CR-SST-0021/validation-results.md"
   - "evidence/requests/CR-SST-0022/validation-results.md"
+  - "evidence/requests/CR-SST-0082/validation-results.md"
+  - "evidence/requests/CR-SST-0083/validation-results.md"
 open_gaps:
-  - "Transport for runtime orchestrator handoff is not selected; CR-SST-0022 implements a local/fake adapter only."
+  - "Transport for runtime orchestrator handoff is not selected yet; CR-SST-0083 recommends HTTP ingress into orchestrator acceptance while CR-SST-0022 and CR-SST-0082 keep the local/fake adapter as test infrastructure only."

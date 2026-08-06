@@ -1,0 +1,114 @@
+{
+  "issueKey": "SST-49",
+  "before": {
+    "summary": "[SST][INIT-SST-0003][CR-SST-0119] Add configurable sst-extension session capture mode",
+    "status": "Tareas por hacer",
+    "statusCategory": "Por hacer",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-07-04T19:47:03.819-0300",
+    "labels": [
+      "ards-sdd",
+      "capture-mode",
+      "control-plane",
+      "cr-sst-0119",
+      "init-sst-0003",
+      "session-capture",
+      "sst-extension"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10094\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10094\",\"key\":\"SST-49\",\"fields\":{\"summary\":\"[SST][INIT-SST-0003][CR-SST-0119] Add configurable sst-extension session capture mode\",\"description\":\"CR: CR-SST-0119  \\nInitiative: INIT-SST-0003  \\nEpic: SST-29  \\nDiscovered from: SST-32 / CR-SST-0100 manual QA\\n\\nPurpose:\\n\\nAdd a user-configurable session capture mode in sst-extension so users can choose between auto, visual-only, text-only, and prefer-text behavior.\\n\\nSubtasks / checklist:\\n\\n- [ ] Define capture mode enum and local preference boundary.\\n- [ ] Expose mode selection in the extension UI without leaking private content.\\n- [ ] Auto mode preserves current visual-first/textual-fallback behavior.\\n- [ ] Visual-only mode marks failed visual captures instead of silently generating textual PDFs.\\n- [ ] Text-only mode skips visual capture and generates textual artifacts intentionally.\\n- [ ] Prefer-text mode prioritizes text for private or long pages while retaining documented fallback behavior.\\n- [ ] Update sst-extension owner specs/docs and QA notes.\\n- [ ] Add tests for mode selection, capture branching, warning labels, and storage normalization.\\n\\nDefinition of Done:\\n\\n* \\\\[ \\\\] The user can identify and choose the capture mode before session capture.\\n* \\\\[ \\\\] Mode behavior is explicit in UI and documentation.\\n* \\\\[ \\\\] No private page content, cookies, JWTs or plaintext secrets are stored in Jira or evidence.\\n* \\\\[ \\\\] sst-extension owner documentation is updated or an exception is recorded.\\n* \\\\[ \\\\] `pnpm check` passes in sst-extension and `npm run check` passes in control-plane.\\n\\nOwner documentation gate:\\n\\n* Owner ARDS/SDD specs/docs must be updated in every mutated repository, or an explicit owner-documentation exception must be recorded before closure.\\n\\nControl-plane source:\\n\\n* requests/planned/CR-SST-0119-sst-extension-configurable-session-capture-mode.yaml\\n* initiatives/INIT-SST-0003-sst-extension-construction.yaml\\n* evidence/requests/CR-SST-0100/manual-qa-gap-analysis.md\\n\\nBoundary:\\n\\n* Jira is an operational mirror; ARDS/SDD remains the source of truth.\\n* Do not store private page content, cookies, JWTs, raw PDFs, thumbnails from private pages, or plaintext secrets in Jira or evidence.\\n\\n\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-07-04T19:47:03.819-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10005\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"Tareas por hacer\",\"id\":\"10005\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/2\",\"id\":2,\"key\":\"new\",\"colorName\":\"blue-gray\",\"name\":\"Por hacer\"}},\"labels\":[\"ards-sdd\",\"capture-mode\",\"control-plane\",\"cr-sst-0119\",\"init-sst-0003\",\"session-capture\",\"sst-extension\"]}}"
+  },
+  "after": {
+    "summary": "[SST][INIT-SST-0003][CR-SST-0119] Add configurable sst-extension session capture mode",
+    "status": "En curso",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-07-04T20:44:42.328-0300",
+    "labels": [
+      "ards-sdd",
+      "capture-mode",
+      "control-plane",
+      "cr-sst-0119",
+      "init-sst-0003",
+      "session-capture",
+      "sst-extension"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10094\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10094\",\"key\":\"SST-49\",\"fields\":{\"summary\":\"[SST][INIT-SST-0003][CR-SST-0119] Add configurable sst-extension session capture mode\",\"description\":\"CR: CR-SST-0119  \\nInitiative: INIT-SST-0003  \\nEpic: SST-29  \\nDiscovered from: SST-32 / CR-SST-0100 manual QA\\n\\nPurpose:\\n\\nAdd a user-configurable session capture mode in sst-extension so users can choose between auto, visual-only, text-only, and prefer-text behavior.\\n\\nSubtasks / checklist:\\n\\n- [ ] Define capture mode enum and local preference boundary.\\n- [ ] Expose mode selection in the extension UI without leaking private content.\\n- [ ] Auto mode preserves current visual-first/textual-fallback behavior.\\n- [ ] Visual-only mode marks failed visual captures instead of silently generating textual PDFs.\\n- [ ] Text-only mode skips visual capture and generates textual artifacts intentionally.\\n- [ ] Prefer-text mode prioritizes text for private or long pages while retaining documented fallback behavior.\\n- [ ] Update sst-extension owner specs/docs and QA notes.\\n- [ ] Add tests for mode selection, capture branching, warning labels, and storage normalization.\\n\\nDefinition of Done:\\n\\n* \\\\[ \\\\] The user can identify and choose the capture mode before session capture.\\n* \\\\[ \\\\] Mode behavior is explicit in UI and documentation.\\n* \\\\[ \\\\] No private page content, cookies, JWTs or plaintext secrets are stored in Jira or evidence.\\n* \\\\[ \\\\] sst-extension owner documentation is updated or an exception is recorded.\\n* \\\\[ \\\\] `pnpm check` passes in sst-extension and `npm run check` passes in control-plane.\\n\\nOwner documentation gate:\\n\\n* Owner ARDS/SDD specs/docs must be updated in every mutated repository, or an explicit owner-documentation exception must be recorded before closure.\\n\\nControl-plane source:\\n\\n* requests/planned/CR-SST-0119-sst-extension-configurable-session-capture-mode.yaml\\n* initiatives/INIT-SST-0003-sst-extension-construction.yaml\\n* evidence/requests/CR-SST-0100/manual-qa-gap-analysis.md\\n\\nBoundary:\\n\\n* Jira is an operational mirror; ARDS/SDD remains the source of truth.\\n* Do not store private page content, cookies, JWTs, raw PDFs, thumbnails from private pages, or plaintext secrets in Jira or evidence.\\n\\n\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-07-04T20:44:42.328-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10006\",\"description\":\"La persona asignada está trabajando actualmente en esta actividad.\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En curso\",\"id\":\"10006\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"ards-sdd\",\"capture-mode\",\"control-plane\",\"cr-sst-0119\",\"init-sst-0003\",\"session-capture\",\"sst-extension\"]}}"
+  },
+  "transitions": [
+    {
+      "id": "11",
+      "name": "Por hacer",
+      "toStatus": "Tareas por hacer",
+      "toStatusCategory": "Por hacer"
+    },
+    {
+      "id": "21",
+      "name": "En curso",
+      "toStatus": "En curso",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "31",
+      "name": "In Review",
+      "toStatus": "En revisión",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "41",
+      "name": "Listo",
+      "toStatus": "Finalizada",
+      "toStatusCategory": "Listo"
+    }
+  ],
+  "selectedTransition": {
+    "id": "21",
+    "name": "En curso",
+    "toStatus": "En curso",
+    "toStatusCategory": "En curso"
+  },
+  "transitionResult": {
+    "success": true
+  },
+  "commentResult": {
+    "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10094/comment/10091",
+    "id": "10091",
+    "author": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "body": "CR-SST-0119 / SST-49 - inicio de trabajo\n\nSe inicia el analisis/implementacion del modo configurable de captura de sesion en `sst-extension`.\n\nAlcance:\n\n* `auto`: mantener comportamiento actual visual-first con fallback textual.\n* `visual-only`: no generar PDF textual silencioso si falla la captura visual.\n* `text-only`: omitir captura visual y generar PDF textual.\n* `prefer-text`: priorizar texto para paginas privadas/largas.\n\nBoundary:\n\n* Mutacion prevista: `sst-extension` + evidencia control-plane.\n* Sin cambios en `node-auth`, `sst-fend` o `sst-bend`.\n* Sin cambios de payload BFF salvo contrato futuro.\n* Owner docs requeridas en `sst-extension`.\n\nEvidencia inicial:\n\n* `evidence/requests/CR-SST-0119/preliminary-analysis.md`\n\nJira es mirror operativo; ARDS/SDD permanece como fuente de verdad.",
+    "updateAuthor": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "created": "2026-07-04T20:44:42.328-0300",
+    "updated": "2026-07-04T20:44:42.328-0300",
+    "jsdPublic": true
+  },
+  "commentBody": "CR-SST-0119 / SST-49 - inicio de trabajo\n\nSe inicia el analisis/implementacion del modo configurable de captura de sesion en `sst-extension`.\n\nAlcance:\n\n- `auto`: mantener comportamiento actual visual-first con fallback textual.\n- `visual-only`: no generar PDF textual silencioso si falla la captura visual.\n- `text-only`: omitir captura visual y generar PDF textual.\n- `prefer-text`: priorizar texto para paginas privadas/largas.\n\nBoundary:\n\n- Mutacion prevista: `sst-extension` + evidencia control-plane.\n- Sin cambios en `node-auth`, `sst-fend` o `sst-bend`.\n- Sin cambios de payload BFF salvo contrato futuro.\n- Owner docs requeridas en `sst-extension`.\n\nEvidencia inicial:\n\n- `evidence/requests/CR-SST-0119/preliminary-analysis.md`\n\nJira es mirror operativo; ARDS/SDD permanece como fuente de verdad.\n",
+  "externalWrite": true
+}

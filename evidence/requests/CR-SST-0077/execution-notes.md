@@ -1,11 +1,12 @@
-# CR-SST-0077 Execution Notes
+# CR-SST-0077 Notas De Ejecucion
 
 - Request: `CR-SST-0077`
 - Date: `2026-06-13`
 
-## Scope Executed
+## Alcance Ejecutado
 
-This rollout synchronized policy adoption artifacts across the SST child repos:
+Este rollout sincronizo artefactos de adopcion de policies a traves de los
+child repos de SST:
 
 - `4uentes-auth`
 - `sst-fend`
@@ -14,31 +15,33 @@ This rollout synchronized policy adoption artifacts across the SST child repos:
 - `sst-chatbot`
 - `sst-4uentes-infra`
 
-## Changes Applied In Child Repos
+## Cambios Aplicados En Child Repos
 
-- Added `docs/policies/README.md`
-- Added `specs/policies/00-index.yaml`
-- Added `specs/integration/policies.yaml`
-- Updated `AGENTS.md` to reference `Agent Operating Policies`
-- Updated `specs/00-index.yaml` to expose policy index and registry
-- Updated `specs/ards/contract-binding.yaml` with `last_validated_at` and the
-  new `CR-SST-0077` sync report reference
+- Agregado `docs/policies/README.md`
+- Agregado `specs/policies/00-index.yaml`
+- Agregado `specs/integration/policies.yaml`
+- Actualizado `AGENTS.md` para referenciar `Agent Operating Policies`
+- Actualizado `specs/00-index.yaml` para exponer el indice y registry de policies
+- Actualizado `specs/ards/contract-binding.yaml` con `last_validated_at` y la
+  nueva referencia al reporte de sync `CR-SST-0077`
 
-## Orchestrator Updates
+## Actualizaciones En Orchestrator
 
-- Regenerated six `ards_child_sync_diff` reports under
+- Regenerados seis reportes `ards_child_sync_diff` bajo
   `evidence/requests/CR-SST-0077/`
-- Marked the agent operating policies as `linked` in `state/policy-links.yaml`
-- Promoted `ards-sdd-policy-unification` to `validated-local`
-- Recorded SST rollout evidence and request closure artifacts
+- Marcadas las agent operating policies como `linked` en
+  `state/policy-links.yaml`
+- Promovido `ards-sdd-policy-unification` a `validated-local`
+- Registrada la evidencia del rollout SST y los artefactos de cierre del request
 
-## Result
+## Resultado
 
-All six child sync reports show `sync_status: synced` with `missing_in_child: 0`
-for the policy adoption paths required by the core sync contract.
+Los seis reportes de sync de hijos muestran `sync_status: synced` con
+`missing_in_child: 0` para las rutas de adopcion de policies requeridas por el
+contrato core de sync.
 
-## Residual Risk
+## Riesgo Residual
 
-Repo-level validation is mixed. Some checks still fail outside the narrow sync
-artifact scope and remain documented in
+La validacion a nivel repo es mixta. Algunos checks siguen fallando fuera del
+alcance acotado de estos artefactos de sync y permanecen documentados en
 `evidence/requests/CR-SST-0077/validation-results.md`.

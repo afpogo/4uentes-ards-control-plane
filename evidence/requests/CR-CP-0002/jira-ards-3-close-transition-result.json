@@ -1,0 +1,108 @@
+{
+  "issueKey": "ARDS-3",
+  "before": {
+    "summary": "[CP][CR-CP-0002] Define child-to-control-plane reconciliation link policy and template",
+    "status": "En curso",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "Fuentes Sandferand",
+    "updated": "2026-07-07T17:58:49.555-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-cp-0002",
+      "init-cp-0002"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10111\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10111\",\"key\":\"ARDS-3\",\"fields\":{\"summary\":\"[CP][CR-CP-0002] Define child-to-control-plane reconciliation link policy and template\",\"assignee\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]\",\"accountId\": \"[accountId-redacted]\",\"emailAddress\":\"[email-redacted]\",\"avatarUrls\":{\"48x48\":\"[avatar-url-redacted]\",\"24x24\":\"[avatar-url-redacted]\",\"16x16\":\"[avatar-url-redacted]\",\"32x32\":\"[avatar-url-redacted]\"},\"displayName\":\"Fuentes Sandferand\",\"active\":true,\"timeZone\":\"America/Buenos_Aires\",\"accountType\":\"atlassian\"},\"resolution\":null,\"updated\":\"2026-07-07T17:58:49.555-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10043\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En curso\",\"id\":\"10043\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-cp-0002\",\"init-cp-0002\"]}}"
+  },
+  "after": {
+    "summary": "[CP][CR-CP-0002] Define child-to-control-plane reconciliation link policy and template",
+    "status": "Listo",
+    "statusCategory": "Listo",
+    "resolution": "Listo",
+    "assignee": "Fuentes Sandferand",
+    "updated": "2026-07-07T21:13:03.010-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-cp-0002",
+      "init-cp-0002"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10111\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10111\",\"key\":\"ARDS-3\",\"fields\":{\"summary\":\"[CP][CR-CP-0002] Define child-to-control-plane reconciliation link policy and template\",\"assignee\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]\",\"accountId\": \"[accountId-redacted]\",\"emailAddress\":\"[email-redacted]\",\"avatarUrls\":{\"48x48\":\"[avatar-url-redacted]\",\"24x24\":\"[avatar-url-redacted]\",\"16x16\":\"[avatar-url-redacted]\",\"32x32\":\"[avatar-url-redacted]\"},\"displayName\":\"Fuentes Sandferand\",\"active\":true,\"timeZone\":\"America/Buenos_Aires\",\"accountType\":\"atlassian\"},\"resolution\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/resolution/10000\",\"id\":\"10000\",\"description\":\"Se ha terminado el trabajo relacionado con esta incidencia.\",\"name\":\"Listo\"},\"updated\":\"2026-07-07T21:13:03.010-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10045\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"Listo\",\"id\":\"10045\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/3\",\"id\":3,\"key\":\"done\",\"colorName\":\"green\",\"name\":\"Listo\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-cp-0002\",\"init-cp-0002\"]}}"
+  },
+  "transitions": [
+    {
+      "id": "11",
+      "name": "Por hacer",
+      "toStatus": "Por hacer",
+      "toStatusCategory": "Por hacer"
+    },
+    {
+      "id": "21",
+      "name": "En curso",
+      "toStatus": "En curso",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "31",
+      "name": "En revisión",
+      "toStatus": "En revisión",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "41",
+      "name": "Listo",
+      "toStatus": "Listo",
+      "toStatusCategory": "Listo"
+    }
+  ],
+  "selectedTransition": {
+    "id": "41",
+    "name": "Listo",
+    "toStatus": "Listo",
+    "toStatusCategory": "Listo"
+  },
+  "transitionResult": {
+    "success": true
+  },
+  "commentResult": {
+    "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10111/comment/10130",
+    "id": "10130",
+    "author": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "body": "# ARDS-3 avance de clasificacion de policies\n\nSe ajusto el modelo local del control-plane para tratar policies como recursos  \nvivos con clasificacion explicita.\n\nResumen:\n\n* `control-plane-link-policy` queda como `core-profile-scoped`, no como policy  \n  general para todos los repos.\n* El canon reusable es `control_plane_link`.\n* `orchestrator_link` queda como alias local del control-plane actual.\n* Child repo rollout queda request-driven mediante `policy_adoption_manifest` o\n  `policy_exception_manifest`.\n* No se mutaron repos hijos.\n\nValidacion:\n\n* `4uentes-orchestor`: `npm.cmd run check` paso con `0 WARN / 0 FAIL`.\n* `4uentes-ards-core`: `npm.cmd run check` paso con `0 errors / 0 warnings`.\n\nEvidencia local:\n\n* `specs/integration/policies.yaml`\n* `state/policy-links.yaml`\n* `templates/policy-adoption-manifest.template.yaml`\n* `templates/policy-exception-manifest.template.yaml`\n* `evidence/requests/CR-CP-0002/core-reconciliation-link-policy-summary.md`\n* `evidence/requests/CR-CP-0002/template-alias-decision.md`\n* `evidence/requests/CR-CP-0002/validation-results.md`\n\n",
+    "updateAuthor": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "created": "2026-07-07T21:13:03.010-0300",
+    "updated": "2026-07-07T21:13:03.010-0300",
+    "jsdPublic": true
+  },
+  "commentBody": "# ARDS-3 avance de clasificacion de policies\n\nSe ajusto el modelo local del control-plane para tratar policies como recursos\nvivos con clasificacion explicita.\n\nResumen:\n\n- `control-plane-link-policy` queda como `core-profile-scoped`, no como policy\n  general para todos los repos.\n- El canon reusable es `control_plane_link`.\n- `orchestrator_link` queda como alias local del control-plane actual.\n- Child repo rollout queda request-driven mediante `policy_adoption_manifest` o\n  `policy_exception_manifest`.\n- No se mutaron repos hijos.\n\nValidacion:\n\n- `4uentes-orchestor`: `npm.cmd run check` paso con `0 WARN / 0 FAIL`.\n- `4uentes-ards-core`: `npm.cmd run check` paso con `0 errors / 0 warnings`.\n\nEvidencia local:\n\n- `specs/integration/policies.yaml`\n- `state/policy-links.yaml`\n- `templates/policy-adoption-manifest.template.yaml`\n- `templates/policy-exception-manifest.template.yaml`\n- `evidence/requests/CR-CP-0002/core-reconciliation-link-policy-summary.md`\n- `evidence/requests/CR-CP-0002/template-alias-decision.md`\n- `evidence/requests/CR-CP-0002/validation-results.md`\n",
+  "externalWrite": true
+}

@@ -1,0 +1,112 @@
+{
+  "issueKey": "SST-32",
+  "before": {
+    "summary": "[SST][INIT-SST-0003][CR-SST-0100] Show session capture progress and per-tab degradations",
+    "status": "En curso",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "Fuentes Sandferand",
+    "updated": "2026-07-04T19:47:06.325-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0100",
+      "extension-ui",
+      "init-sst-0003",
+      "sst-extension"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10070\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10070\",\"key\":\"SST-32\",\"fields\":{\"summary\":\"[SST][INIT-SST-0003][CR-SST-0100] Show session capture progress and per-tab degradations\",\"assignee\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]\",\"accountId\": \"[accountId-redacted]\",\"emailAddress\":\"[email-redacted]\",\"avatarUrls\":{\"48x48\":\"[avatar-url-redacted]\",\"24x24\":\"[avatar-url-redacted]\",\"16x16\":\"[avatar-url-redacted]\",\"32x32\":\"[avatar-url-redacted]\"},\"displayName\":\"Fuentes Sandferand\",\"active\":true,\"timeZone\":\"America/Buenos_Aires\",\"accountType\":\"atlassian\"},\"resolution\":null,\"updated\":\"2026-07-04T19:47:06.325-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10006\",\"description\":\"La persona asignada está trabajando actualmente en esta actividad.\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En curso\",\"id\":\"10006\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-sst-0100\",\"extension-ui\",\"init-sst-0003\",\"sst-extension\"]}}"
+  },
+  "after": {
+    "summary": "[SST][INIT-SST-0003][CR-SST-0100] Show session capture progress and per-tab degradations",
+    "status": "Listo",
+    "statusCategory": "Listo",
+    "resolution": "Listo",
+    "assignee": "Fuentes Sandferand",
+    "updated": "2026-07-04T19:52:20.744-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0100",
+      "extension-ui",
+      "init-sst-0003",
+      "sst-extension"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10070\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10070\",\"key\":\"SST-32\",\"fields\":{\"summary\":\"[SST][INIT-SST-0003][CR-SST-0100] Show session capture progress and per-tab degradations\",\"assignee\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]\",\"accountId\": \"[accountId-redacted]\",\"emailAddress\":\"[email-redacted]\",\"avatarUrls\":{\"48x48\":\"[avatar-url-redacted]\",\"24x24\":\"[avatar-url-redacted]\",\"16x16\":\"[avatar-url-redacted]\",\"32x32\":\"[avatar-url-redacted]\"},\"displayName\":\"Fuentes Sandferand\",\"active\":true,\"timeZone\":\"America/Buenos_Aires\",\"accountType\":\"atlassian\"},\"resolution\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/resolution/10000\",\"id\":\"10000\",\"description\":\"Se ha terminado el trabajo relacionado con esta incidencia.\",\"name\":\"Listo\"},\"updated\":\"2026-07-04T19:52:20.744-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10008\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"Finalizada\",\"id\":\"10008\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/3\",\"id\":3,\"key\":\"done\",\"colorName\":\"green\",\"name\":\"Listo\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-sst-0100\",\"extension-ui\",\"init-sst-0003\",\"sst-extension\"]}}"
+  },
+  "transitions": [
+    {
+      "id": "11",
+      "name": "Por hacer",
+      "toStatus": "Tareas por hacer",
+      "toStatusCategory": "Por hacer"
+    },
+    {
+      "id": "21",
+      "name": "En curso",
+      "toStatus": "En curso",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "31",
+      "name": "In Review",
+      "toStatus": "En revisión",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "41",
+      "name": "Listo",
+      "toStatus": "Finalizada",
+      "toStatusCategory": "Listo"
+    }
+  ],
+  "selectedTransition": {
+    "id": "41",
+    "name": "Listo",
+    "toStatus": "Finalizada",
+    "toStatusCategory": "Listo"
+  },
+  "transitionResult": {
+    "success": true
+  },
+  "commentResult": {
+    "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10070/comment/10085",
+    "id": "10085",
+    "author": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "body": "CR-SST-0100 / SST-32 - cierre operativo\n\nResultado:\n\n* Implementacion completada en `sst-extension`.\n* La lista de sesiones muestra calidad de captura agregada: PDF visual, PDF textual fallback y tabs con warnings.\n* La UI muestra degradaciones por pestania desde metadata sanitizada, sin exponer contenido privado.\n* Acciones existentes preservadas: retry, restore/open origin y delete.\n* Owner documentation policy satisfecha.\n\nValidacion:\n\n* `sst-extension` tests/check: PASS.\n* `4uentes-orchestor npm run check`: PASS.\n* QA manual del usuario: captura de sesion ejecutada, sesion creada en SST y articulos/PDFs generados.\n\nGaps separados fuera de este cierre:\n\n* `CR-SST-0119` / `SST-49`: parametrizacion de modo de captura.\n* `CR-SST-0120` / `SST-50`: contrato de `preview image` para articulos derivados de sesion, incluyendo PDFs textuales sin preview visual.\n\nBoundary:\n\n* Jira es mirror operativo; ARDS/SDD permanece como fuente de verdad.\n* No se incluyeron contenido privado, raw PDFs, thumbnails privados, cookies, JWTs ni secretos en evidencia.\n\n",
+    "updateAuthor": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "created": "2026-07-04T19:52:20.744-0300",
+    "updated": "2026-07-04T19:52:20.744-0300",
+    "jsdPublic": true
+  },
+  "commentBody": "CR-SST-0100 / SST-32 - cierre operativo\n\nResultado:\n\n- Implementacion completada en `sst-extension`.\n- La lista de sesiones muestra calidad de captura agregada: PDF visual, PDF textual fallback y tabs con warnings.\n- La UI muestra degradaciones por pestania desde metadata sanitizada, sin exponer contenido privado.\n- Acciones existentes preservadas: retry, restore/open origin y delete.\n- Owner documentation policy satisfecha.\n\nValidacion:\n\n- `sst-extension` tests/check: PASS.\n- `4uentes-orchestor npm run check`: PASS.\n- QA manual del usuario: captura de sesion ejecutada, sesion creada en SST y articulos/PDFs generados.\n\nGaps separados fuera de este cierre:\n\n- `CR-SST-0119` / `SST-49`: parametrizacion de modo de captura.\n- `CR-SST-0120` / `SST-50`: contrato de `preview image` para articulos derivados de sesion, incluyendo PDFs textuales sin preview visual.\n\nBoundary:\n\n- Jira es mirror operativo; ARDS/SDD permanece como fuente de verdad.\n- No se incluyeron contenido privado, raw PDFs, thumbnails privados, cookies, JWTs ni secretos en evidencia.\n",
+  "externalWrite": true
+}

@@ -1,0 +1,38 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0083"
+title: "Select runtime transport for sst-chatbot orchestrator handoff"
+status: inbox
+created_at: "2026-06-21"
+requester: "4uentes"
+
+summary: >
+  Decide the first real runtime transport for the `sst-chatbot` to
+  `4uentes-orchestor` handoff. The ARDS/SDD sync gap is already reconciled by
+  CR-SST-0082; the remaining open boundary is transport selection and payload
+  mapping strategy without yet promoting the inbound capability beyond `draft`.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - "sst-chatbot"
+  include_optional_services: false
+
+control_plane_context:
+  feature_state: "sst-chatbot"
+  feature_state_file: "state/features/sst-chatbot.current.yaml"
+  jira_issue_key: "SST-7"
+  jira_parent_issue_key: "SST-7"
+  jira_subtask_expected: true
+  jira_subtask_summary: "[SST-7][CR-SST-0083] Select runtime transport for sst-chatbot handoff"
+  current_jira_status_observed: "Tareas por hacer"
+  jira_observation_ref: "evidence/requests/CR-SST-0008/jira-sync-health-results.json"
+  jira_write_blocked_ref: "evidence/requests/CR-SST-0083/jira-subtask-and-transition-blocker.md"
+
+notes:
+  - "This request is decision-first: it selects the transport boundary before runtime implementation."
+  - "Recommended first cut: HTTP ingress into orchestrator-owned acceptance/validation, with queueing remaining internal to the orchestrator after acceptance."
+  - "Direct child-to-queue transport remains an option only if auth, replay, idempotency, and audit semantics are specified explicitly."
+  - "Worker-only execution is not sufficient as the cross-repo transport because it weakens the external boundary contract."
+  - "The inbound capability remains `draft` until a later approved request implements the selected transport."
+  - "The feature-state issue already exists as SST-7; CR-SST-0083 is intended to be represented as a Jira subtask under that parent when external write access is available."

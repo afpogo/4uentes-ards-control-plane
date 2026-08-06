@@ -1,0 +1,20 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0144"
+title: "Validate article semantic kind integral end-to-end"
+status: received
+created_at: "2026-07-18"
+requester: "4uentes"
+summary: >
+  Produce authenticated, cross-service evidence that native Text and Web
+  article creation preserve their explicit semantic kind through persistence,
+  BFF query and browser consumption before assessing Epic SST-57 closure.
+source:
+  kind: "initiative-release-gate"
+  evidence_ref: "evidence/requests/CR-SST-0144/validation-plan.md"
+control_plane_context:
+  initiative_id: "INIT-SST-0005"
+  predecessor_requests: ["CR-SST-0129", "CR-SST-0130", "CR-SST-0141", "CR-SST-0142", "CR-SST-0143"]
+  jira_epic_key: "SST-57"
+  jira_role: "mirror"
+  jira_source_of_truth: false

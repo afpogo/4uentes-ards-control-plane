@@ -1,0 +1,22 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0106"
+title: "Reconcile State evidence gaps"
+status: inbox
+created_at: "2026-07-02"
+requester: "4uentes"
+
+summary: >
+  Normalize historical bugfix_state records that currently produce control-plane
+  warnings because they lack request_ids and evidence_refs.
+
+motivation: >
+  INIT-CP-0001 tracks lifecycle enforcement and State evidence quality. The
+  control-plane check still reports warnings for two historical bugfix_state
+  records that predate complete lifecycle evidence.
+
+requested_outcome:
+  - "Create a reconciliation CR for the two historical bugfix states."
+  - "Attach request_ids and evidence_refs without claiming original authorship."
+  - "Remove the State validator warnings for those records."
+  - "Keep the reconciliation control-plane-only."

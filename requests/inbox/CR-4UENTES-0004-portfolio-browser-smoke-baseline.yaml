@@ -1,0 +1,78 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-4UENTES-0004"
+title: "Portfolio browser smoke baseline"
+status: "inbox"
+created_at: "2026-07-04"
+requester: "4uentes"
+
+business_context: >
+  CR-4UENTES-0003 established a reproducible local check command for
+  4uentes-portfolio. The next stabilization step is to verify the static
+  portfolio in a browser across the main public routes before larger visual,
+  mobile, or publication work advances.
+
+requested_change: >
+  Run and document a local browser smoke baseline for 4uentes-portfolio using
+  the existing preview route set and visual QA checklist.
+
+expected_outcome: >
+  The control-plane has evidence of whether the portfolio can be previewed and
+  navigated through its primary routes without blank screens, obvious routing
+  failures, or application console errors.
+
+initial_scope:
+  solution: "4uentes"
+  services:
+    - "4uentes-portfolio"
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services:
+    - "4uentes-portfolio"
+  affected_ards:
+    - "browser-smoke"
+    - "visual-qa"
+    - "publication-readiness"
+  capabilities:
+    - "portfolio-browser-smoke-baseline"
+
+required_context:
+  - "4uentes-portfolio: docs/qa/visual-checklist.md"
+  - "4uentes-portfolio: docs/qa/stabilization-checklist.md"
+  - "4uentes-portfolio: package.json"
+  - "state/features/portfolio-local-stabilization-baseline.current.yaml"
+
+required_checks:
+  - "4uentes-portfolio: npm.cmd run check"
+  - "4uentes-portfolio: npm.cmd run preview"
+  - "4uentes-orchestor: npm.cmd run check"
+
+risk:
+  level: "medium"
+  score: 5
+  drivers:
+    - "browser validation may reveal user-facing defects"
+    - "manual/automated smoke is publication-readiness evidence"
+    - "child repo validation evidence must stay tied to control-plane lifecycle"
+
+execution:
+  requires_human_approval: false
+  allowed_window: "manual"
+  branch_strategy: "one-branch-per-repo"
+  child_repo_mutation_allowed: false
+
+validation:
+  required_checks:
+    - "4uentes-portfolio: npm.cmd run check"
+    - "Browser smoke over routes from docs/qa/visual-checklist.md"
+    - "4uentes-orchestor: npm.cmd run check"
+  evidence_required:
+    - "browser_smoke_results"
+    - "validation_results"
+    - "changed_files_summary"
+
+decision:
+  status: "pending"
+  approver: "TODO"

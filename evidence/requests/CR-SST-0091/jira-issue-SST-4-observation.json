@@ -1,0 +1,46 @@
+{
+  "issueKey": "SST-4",
+  "issue": {
+    "summary": "[SST][feature-state] Cerrar gaps runtime-partial de SST Tags Governance",
+    "status": "Listo",
+    "statusCategory": "Listo",
+    "resolution": "Listo",
+    "assignee": "Fuentes Sandferand",
+    "updated": "2026-06-24T18:23:11.390-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "feature-state",
+      "not-done",
+      "runtime-partial"
+    ],
+    "description": "Proceso de sincronizacion:\n\n* CR-SST-0039\n\nProcesos origen:\n\n* CR-SST-0010\n* CR-SST-0014\n* CR-SST-0015\n* CR-SST-0016\n\nEstado actual: runtime-partial.\n\nObjetivo:  \nAvanzar esta funcionalidad desde el read-model del control-plane y cerrar los gaps abiertos mediante el lifecycle aprobado.\n\nGaps abiertos:\n\n* Promote article-tags from draft to an active governed SST capability.\n* Adopt structured article tags in BFF and frontend create/update flows.\n* Promote sst-tag-prefix-engine from backend POC to runtime preview/import endpoint.\n* Keep real-time transcription as a separate future intake request.\n\nState id:\n\n* sst-tags-governance\n\nServicios afectados:\n\n* sst-bend\n* 4uentes-auth\n* sst-fend\n* sst-extension\n\nRequest ids relacionados:\n\n* CR-SST-0010\n* CR-SST-0014\n* CR-SST-0015\n* CR-SST-0016\n\nFuente control-plane:\n\n* state/features/sst-tags-governance.current.yaml\n\nEvidence refs:\n\n* evidence/requests/CR-SST-0002/implementation-state-report.md\n* evidence/requests/CR-SST-0002/findings.yaml\n* evidence/requests/CR-SST-0002/runtime-readiness-summary.md\n* evidence/requests/CR-SST-0014/implementation-state-analysis.md\n* evidence/requests/CR-SST-0014/course-tags-analysis.md\n* evidence/requests/CR-SST-0014/next-request-boundary.md\n* evidence/requests/CR-SST-0015/java-spring-course-structure-analysis.md\n* evidence/requests/CR-SST-0016/backend-poc-summary.md\n\nValidation refs:\n\n* ninguno\n\nCriterio de cierre esperado:\n\n* La decision o implementacion pendiente queda registrada en evidencia.\n* Los cambios en repos funcionales, si hacen falta, entran por request aprobado.\n* El feature_state se actualiza solo cuando la evidencia soporte una transicion de estado.\n\n",
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10012\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10012\",\"key\":\"SST-4\",\"fields\":{\"summary\":\"[SST][feature-state] Cerrar gaps runtime-partial de SST Tags Governance\",\"description\":\"Proceso de sincronizacion:\\n\\n* CR-SST-0039\\n\\nProcesos origen:\\n\\n* CR-SST-0010\\n* CR-SST-0014\\n* CR-SST-0015\\n* CR-SST-0016\\n\\nEstado actual: runtime-partial.\\n\\nObjetivo:  \\nAvanzar esta funcionalidad desde el read-model del control-plane y cerrar los gaps abiertos mediante el lifecycle aprobado.\\n\\nGaps abiertos:\\n\\n* Promote article-tags from draft to an active governed SST capability.\\n* Adopt structured article tags in BFF and frontend create/update flows.\\n* Promote sst-tag-prefix-engine from backend POC to runtime preview/import endpoint.\\n* Keep real-time transcription as a separate future intake request.\\n\\nState id:\\n\\n* sst-tags-governance\\n\\nServicios afectados:\\n\\n* sst-bend\\n* 4uentes-auth\\n* sst-fend\\n* sst-extension\\n\\nRequest ids relacionados:\\n\\n* CR-SST-0010\\n* CR-SST-0014\\n* CR-SST-0015\\n* CR-SST-0016\\n\\nFuente control-plane:\\n\\n* state/features/sst-tags-governance.current.yaml\\n\\nEvidence refs:\\n\\n* evidence/requests/CR-SST-0002/implementation-state-report.md\\n* evidence/requests/CR-SST-0002/findings.yaml\\n* evidence/requests/CR-SST-0002/runtime-readiness-summary.md\\n* evidence/requests/CR-SST-0014/implementation-state-analysis.md\\n* evidence/requests/CR-SST-0014/course-tags-analysis.md\\n* evidence/requests/CR-SST-0014/next-request-boundary.md\\n* evidence/requests/CR-SST-0015/java-spring-course-structure-analysis.md\\n* evidence/requests/CR-SST-0016/backend-poc-summary.md\\n\\nValidation refs:\\n\\n* ninguno\\n\\nCriterio de cierre esperado:\\n\\n* La decision o implementacion pendiente queda registrada en evidencia.\\n* Los cambios en repos funcionales, si hacen falta, entran por request aprobado.\\n* El feature_state se actualiza solo cuando la evidencia soporte una transicion de estado.\\n\\n\",\"assignee\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]\",\"accountId\": \"[accountId-redacted]\",\"emailAddress\":\"[email-redacted]\",\"avatarUrls\":{\"48x48\":\"[avatar-url-redacted]\",\"24x24\":\"[avatar-url-redacted]\",\"16x16\":\"[avatar-url-redacted]\",\"32x32\":\"[avatar-url-redacted]\"},\"displayName\":\"Fuentes Sandferand\",\"active\":true,\"timeZone\":\"America/Buenos_Aires\",\"accountType\":\"atlassian\"},\"resolution\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/resolution/10000\",\"id\":\"10000\",\"description\":\"Se ha terminado el trabajo relacionado con esta incidencia.\",\"name\":\"Listo\"},\"updated\":\"2026-06-24T18:23:11.390-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10008\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"Finalizada\",\"id\":\"10008\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/3\",\"id\":3,\"key\":\"done\",\"colorName\":\"green\",\"name\":\"Listo\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"feature-state\",\"not-done\",\"runtime-partial\"]}}"
+  },
+  "transitions": [
+    {
+      "id": "11",
+      "name": "Por hacer",
+      "toStatus": "Tareas por hacer",
+      "toStatusCategory": "Por hacer"
+    },
+    {
+      "id": "21",
+      "name": "En curso",
+      "toStatus": "En curso",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "31",
+      "name": "In Review",
+      "toStatus": "En revisión",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "41",
+      "name": "Listo",
+      "toStatus": "Finalizada",
+      "toStatusCategory": "Listo"
+    }
+  ]
+}

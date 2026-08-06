@@ -2,162 +2,56 @@
 
 ## Proposito
 
-Este anexo operativo complementa el ARDS/SDD existente del control-plane. No
-redefine perfiles, specs, playbooks, working agreements ni decisiones vigentes.
-
-Su objetivo es que los agentes puedan elegir modelo o subagente segun el tipo
-de tarea sin que el usuario tenga que repetir esta politica en cada prompt.
+Este anexo aplica la `agent-model-selection-policy` al planner del control
+plane. Decide como ejecutar trabajo con Codex; no autoriza cambios funcionales
+ni reemplaza requests, ownership, specs o validaciones.
 
 ## Clasificacion previa
 
-Antes de planificar o ejecutar una tarea, el agente debe clasificarla como una
-de estas categorias:
+El planner conserva estas categorias:
 
 - `short-defined-task`
 - `long-context-task`
 - `complex-high-risk-task`
 
-La clasificacion no reemplaza el criterio del usuario durante procesos de
-descubrimiento funcional, tecnico o documental. El agente debe adaptarse al
-flujo que marque el usuario y no intentar cerrar, rigidizar o redisenar el
-proceso por su cuenta.
+La clasificacion se deriva de alcance, cantidad de servicios, riesgo,
+seguridad, contratos, incertidumbre y validaciones requeridas.
 
-## Analisis de peso de tarea
+## Disponibilidad de recursos
 
-La clasificacion debe surgir de un analisis explicito del peso de la feature,
-bugfix o investigacion. Para requests del control-plane, ese analisis debe
-quedar registrado en `requests/planned/*.yaml`.
+`model_selection.resource_level` acepta `very-low`, `low`, `normal` y `high`.
+Si el inbox no lo declara, el planner usa:
 
-El analisis minimo debe considerar:
+```yaml
+resource_level: "normal"
+resource_source: "default"
+```
 
-- cantidad de servicios o repos afectados
-- cantidad de capas, modulos o dominios atravesados
-- impacto sobre seguridad, autenticacion, autorizacion, datos o contratos
-- incertidumbre documental o tecnica
-- estado del working tree observado
-- criticidad de validaciones requeridas
-- riesgo de drift cross-repo
+Un valor declarado usa `resource_source: "manual"`. La fuente `runtime` se
+incorporara cuando ARDS-13 implemente la senal automatica.
 
-La salida esperada es:
+## Routing Codex
 
-- `task_weight.classification`
-- `task_weight.risk_level`
-- `task_weight.drivers`
-- `model_selection.primary_profile`
-- `subagent_deployment_plan.required`
-- `subagent_deployment_plan.roles`
-- `subagent_deployment_plan.fallback`
+| Recursos | Tarea corta | Contexto largo | Alto riesgo |
+| --- | --- | --- | --- |
+| `high` | `gpt-5.6-sol/high` | `gpt-5.6-sol/high` | `gpt-5.6-sol/max` |
+| `normal` | `gpt-5.6-sol/low` | `gpt-5.6-sol/high` | `gpt-5.6-sol/max` |
+| `low` | `gpt-5.3-spark/low` | `gpt-5.4-fast-high/high` | `gpt-5.5/high` |
+| `very-low` | Spark solo para bajo riesgo | atomizar o bloquear | bloquear |
 
-## Politica de seleccion
+El mapa anterior se conserva como degradacion de recursos, no como evidencia
+historica obsoleta ni como una segunda policy.
 
-### `short-defined-task`
+## Subagentes y seguridad
 
-Usar el perfil/modelo:
+Las reglas de delegacion existentes no cambian. Un nivel bajo de recursos no
+autoriza delegar seguridad, arquitectura o contratos a un perfil rapido. Bajo
+`very-low`, el planner debe fallar si la tarea no puede reducirse a una unidad
+corta, verificable y de bajo riesgo.
 
-- `gpt-5.3-spark`
+## Compatibilidad
 
-Aplica para:
-
-- cambios pequenos
-- correcciones simples
-- ajustes de nombres
-- mensajes de commit o PR
-- refactors menores
-- documentacion menor
-- tareas mecanicas o repetitivas
-- implementaciones puntuales con instrucciones claras
-
-Deployment esperado:
-
-- `subagent_deployment_plan.required: false`
-- el agente principal puede ejecutar localmente
-- usar subagente solo si el usuario lo pide o si hay una tarea paralela
-  claramente independiente
-
-### `long-context-task`
-
-Usar subagentes con el perfil/modelo:
-
-- `gpt-5.4-fast-high`
-
-Aplica para:
-
-- analisis de multiples archivos
-- lectura de documentacion existente
-- revision de arquitectura
-- relevamiento de estado observable del repo
-- preparacion de planes de implementacion
-- validacion contra ARDS/SDD
-- cambios que atraviesan varias capas, modulos o dominios
-
-Deployment esperado:
-
-- `subagent_deployment_plan.required: true` cuando existan subtareas
-  paralelizables
-- roles sugeridos:
-  - `repo-context-explorer`
-  - `ards-sdd-validator`
-  - `implementation-planner`
-- si no hay herramienta de subagentes disponible, registrar fallback y ejecutar
-  de forma secuencial con el mismo perfil de razonamiento
-
-### `complex-high-risk-task`
-
-Usar subagentes con el perfil/modelo:
-
-- `gpt-5.5`
-
-Aplica para:
-
-- decisiones arquitectonicas
-- seguridad
-- autenticacion
-- autorizacion
-- RBAC
-- datos sensibles
-- contratos API
-- contratos cross-repo
-- debugging complejo
-- incidentes
-- migraciones criticas
-- decisiones con trade-offs tecnicos relevantes
-
-Deployment esperado:
-
-- `subagent_deployment_plan.required: true`
-- usar subagentes para separar analisis de arquitectura, seguridad, contratos,
-  validacion o repos afectados cuando el runtime lo permita
-- roles sugeridos:
-  - `architecture-reviewer`
-  - `security-contract-reviewer`
-  - `cross-repo-impact-reviewer`
-  - `validation-reviewer`
-- si no hay herramienta de subagentes disponible, registrar fallback explicito y
-  mantener el perfil de mayor razonamiento en el agente principal
-
-## Reglas operativas
-
-- No basta con nombrar la categoria; en trabajo planificado debe quedar
-  documentado si se desplegaran subagentes, con que roles y con que fallback.
-- No asumir que el ARDS/SDD esta incompleto solo porque se agrega este anexo.
-- No redisenar la estructura documental salvo pedido explicito del usuario.
-- No crear carpetas top-level nuevas para aplicar esta politica.
-- No modificar codigo funcional por efecto de esta politica.
-- No duplicar reglas existentes; si existe una regla similar, extenderla en vez
-  de reemplazarla.
-- Integrar referencias a este anexo solo donde ayuden a descubrimiento y
-  navegacion.
-- Si hay duda entre perfiles, elegir el modelo de mayor razonamiento cuando el
-  riesgo tecnico sea alto.
-- Tratar los nombres de modelos como aliases o configuracion del entorno. Si el
-  runtime no reconoce un alias exacto, usar el perfil disponible mas cercano sin
-  bloquear la ejecucion.
-- Si el usuario pide no usar subagentes, registrar la excepcion en el plan y
-  continuar con el perfil/modelo correspondiente en el agente principal.
-
-## Boundary con ARDS/SDD
-
-Esta politica decide como ejecutar trabajo agentico; no autoriza cambios que el
-ARDS/SDD vigente no permita. Para trabajo cross-repo, requests, handoffs,
-capabilities, specs y validaciones siguen gobernados por los documentos
-existentes del repo.
+- La policy conserva su id actual.
+- Requests y evidencia existentes no se migran.
+- Repos hijos adoptan la revision mediante request y manifest separados.
+- `gpt-5.6` puede resolverse como alias de `gpt-5.6-sol`.

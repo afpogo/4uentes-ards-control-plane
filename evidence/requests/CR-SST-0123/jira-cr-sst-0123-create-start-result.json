@@ -1,0 +1,111 @@
+{
+  "requestId": "CR-SST-0123",
+  "initiativeId": "INIT-SST-0001",
+  "parentIssueKey": "SST-6",
+  "relatedIssueKey": "SST-48",
+  "issue": {
+    "key": "SST-52",
+    "summary": "[SST][CR-SST-0123] Fix LearningWorkspace annotated context render",
+    "parentKey": "SST-6",
+    "issueTypeName": "Subtask",
+    "source": "created",
+    "raw": "{\"id\":\"10097\",\"key\":\"SST-52\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10097\"}"
+  },
+  "existing": false,
+  "action": "created-commented-and-transitioned",
+  "before": {
+    "summary": "[SST][CR-SST-0123] Fix LearningWorkspace annotated context render",
+    "status": "Tareas por hacer",
+    "statusCategory": "Por hacer",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-07-05T19:42:33.222-0300",
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10097\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10097\",\"key\":\"SST-52\",\"fields\":{\"summary\":\"[SST][CR-SST-0123] Fix LearningWorkspace annotated context render\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-07-05T19:42:33.222-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10005\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"Tareas por hacer\",\"id\":\"10005\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/2\",\"id\":2,\"key\":\"new\",\"colorName\":\"blue-gray\",\"name\":\"Por hacer\"}},\"labels\":[\"ards-sdd\",\"bugfix\",\"control-plane\",\"cr-sst-0123\",\"frontend\",\"init-sst-0001\",\"learning-content-tags\",\"sst-fend\",\"subtask\"]}}"
+  },
+  "after": {
+    "summary": "[SST][CR-SST-0123] Fix LearningWorkspace annotated context render",
+    "status": "En curso",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-07-05T19:42:35.343-0300",
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10097\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10097\",\"key\":\"SST-52\",\"fields\":{\"summary\":\"[SST][CR-SST-0123] Fix LearningWorkspace annotated context render\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-07-05T19:42:35.343-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10006\",\"description\":\"La persona asignada está trabajando actualmente en esta actividad.\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En curso\",\"id\":\"10006\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"ards-sdd\",\"bugfix\",\"control-plane\",\"cr-sst-0123\",\"frontend\",\"init-sst-0001\",\"learning-content-tags\",\"sst-fend\",\"subtask\"]}}"
+  },
+  "selectedTransition": {
+    "id": "21",
+    "name": "En curso",
+    "toStatus": "En curso",
+    "toStatusCategory": "En curso"
+  },
+  "transitions": [
+    {
+      "id": "11",
+      "name": "Por hacer",
+      "toStatus": "Tareas por hacer",
+      "toStatusCategory": "Por hacer"
+    },
+    {
+      "id": "21",
+      "name": "En curso",
+      "toStatus": "En curso",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "31",
+      "name": "In Review",
+      "toStatus": "En revisión",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "41",
+      "name": "Listo",
+      "toStatus": "Finalizada",
+      "toStatusCategory": "Listo"
+    }
+  ],
+  "linkResult": {
+    "message": "Issue link created"
+  },
+  "transitionResult": {
+    "success": true
+  },
+  "commentResult": {
+    "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10097/comment/10108",
+    "id": "10108",
+    "author": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "body": "CR-SST-0123 start checkpoint.\n\nThis is the next technical follow-up after CR-SST-0122.\n\nObserved blocker:\n\n* /learning preview returns 200.\n* accept returns 201.\n* context returns 200.\n* visible accepted context still shows `annotations: []` and `contentBlocks: []`.\n\nScope:\n\n* Start with sst-fend payload/render analysis.\n* Mutate sst-fend only unless evidence proves node-auth or sst-bend owns the gap.\n* Keep SST-48 En curso until full E2E validation passes.\n\nPolicies:\n\n* Owner documentation gate is required before closure.\n* Control-plane `npm.cmd run check` passed before Jira sync.\n\nBefore status: Tareas por hacer  \nAction: created-commented-and-transitioned  \nTransition: En curso (21)\n\nEvidence:\n\n* `evidence/requests/CR-SST-0123/policy-and-owner-enforcement-start.md`\n* `evidence/requests/CR-SST-0123/implementation-analysis-start.md`\n\n",
+    "updateAuthor": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "created": "2026-07-05T19:42:35.343-0300",
+    "updated": "2026-07-05T19:42:35.343-0300",
+    "jsdPublic": true
+  },
+  "externalWrite": true
+}

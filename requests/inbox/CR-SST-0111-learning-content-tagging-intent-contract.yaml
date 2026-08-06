@@ -1,0 +1,35 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0111"
+title: "Define ArticleTag and LearningContentTag intent contract"
+status: inbox
+created_at: "2026-07-04"
+requester: "4uentes"
+
+summary: >
+  Define the product and technical contract that separates general article tags
+  from granular learning-content tags/relevance over source text, so the next
+  frontend implementation can represent the intended sheet experience.
+
+source:
+  initiative_id: "INIT-SST-0001"
+  parent_request_id: "CR-SST-0110"
+  jira_epic_key: "SST-27"
+  active_jira_issue_key: "SST-6"
+  jira_subtask_key: "SST-41"
+  reason: >
+    CR-SST-0110 proved functional connectivity but exposed that the current UI
+    does not match the intended authoring experience. The next cut must define
+    how article-level tags and learning-content tags coexist before runtime
+    refactor.
+
+scope:
+  solution: "sst"
+  services:
+    - "sst-fend"
+    - "sst-bend"
+    - "4uentes-orchestor"
+  excludes:
+    - "Immediate runtime refactor"
+    - "Direct frontend-to-sst-bend calls"
+    - "Automatic TagDefinition creation"

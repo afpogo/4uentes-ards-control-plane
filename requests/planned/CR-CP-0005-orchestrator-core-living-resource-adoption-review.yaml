@@ -1,0 +1,135 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-CP-0005"
+title: "Review orchestrator adoption of core living resources"
+status: "planned"
+source_request: "requests/inbox/CR-CP-0005-orchestrator-core-living-resource-adoption-review.yaml"
+created_at: "2026-07-07"
+started_at: "2026-07-12"
+requester: "4uentes"
+
+summary: >
+  After core promotion CRs land, update the orchestrator's local adoption
+  registry, state links, templates, and docs so it consumes the new core canon
+  without redefining it locally.
+
+control_plane_context:
+  initiative_id: "INIT-CP-0002"
+  parent_initiative_id: "INIT-CP-0001"
+  related_jira_epic_key: "SST-36"
+  target_jira_epic_key: "ARDS-1"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "4uentes-orchestor"
+      via: "local core adoption registry and docs"
+      service_kind: "control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+  affected_ards:
+    - "policy-adoption"
+    - "state-read-model"
+    - "initiative"
+    - "control-plane-link"
+
+required_context:
+  - "specs/00-index.yaml"
+  - "specs/integration/policies.yaml"
+  - "state/policy-links.yaml"
+  - "specs/ards/contract-binding.yaml"
+  - "docs/policies/README.md"
+  - "requests/planned/CR-CP-0001-core-common-policy-canon.yaml"
+  - "requests/planned/CR-CP-0002-core-child-control-plane-reconciliation-link.yaml"
+  - "requests/planned/CR-CP-0003-core-state-read-model.yaml"
+  - "requests/planned/CR-CP-0004-core-initiative-model.yaml"
+
+risk:
+  level: "high"
+  score: 7
+  drivers:
+    - "local registry may drift from core canon"
+    - "existing local aliases must remain auditable"
+    - "child rollout must stay request-driven"
+
+execution:
+  requires_human_approval: true
+  human_approval_ref: "user message 2026-07-12: connect through Jira MCP Work, review the policy, transition if needed, and advance"
+  allowed_window: "manual"
+  branch_strategy: "control-plane-adoption-branch"
+  child_repo_mutation_allowed: false
+  core_repo_mutation_allowed: false
+  implementation_boundary: >
+    Update only the orchestrator's adoption references and local docs after
+    core canon exists. Do not mutate child repositories.
+
+jira:
+  role: "mirror"
+  source_of_truth: false
+  project_key: "ARDS"
+  mirror_project_key: "ARDS"
+  epic_key: "ARDS-1"
+  related_epic_key: "SST-36"
+  replaced_misplaced_epic_key: "PORT-12"
+  issue_key: "ARDS-6"
+  replaced_misplaced_issue_key: "PORT-17"
+  desired_artifact: "Task under the new INIT-CP-0002 Epic"
+  sync_ref: "evidence/initiatives/INIT-CP-0002/jira-epic-sync-summary.md"
+  current_status_observed: "Por hacer"
+  desired_status: "En curso"
+  write_status: "approved-start-batch"
+  current_status_observed_after_sync: "En curso"
+  start_sync_ref: "evidence/requests/CR-CP-0005/jira-ards-6-start-transition-2026-07-12.md"
+
+jira_start_batch_authorization:
+  request_id: "CR-CP-0005"
+  provider: "jira"
+  project: "ARDS"
+  issues:
+    - "ARDS-6"
+  allowed_operations:
+    - "confirm ARDS-6 identity, parent, type, uniqueness, and current status"
+    - "transition ARDS-6 to En curso using transition 21"
+    - "read ARDS-6 after transition and store sanitized evidence"
+  forbidden_operations:
+    - "comments"
+    - "edits"
+    - "new issue creation"
+    - "any transition other than 21"
+    - "deletion"
+  expected_parent: "ARDS-1"
+  expected_issue_type: "Task"
+  expected_status_before: "Por hacer"
+  expected_status_after: "En curso"
+  execution_window: "this approved start session"
+  consumption_rule: "Consumed or expired after the enumerated start sync completes."
+  execution_status: "consumed"
+
+validation:
+  required_checks:
+    - "4uentes-orchestor: npm.cmd run check"
+  evidence_required:
+    - "orchestrator_adoption_summary"
+    - "core_ref_update"
+    - "validation_results"
+  evidence_refs:
+    - "evidence/requests/CR-CP-0005/jira-policy-preflight-2026-07-12.md"
+    - "evidence/requests/CR-CP-0005/jira-ards-6-start-transition-2026-07-12.md"
+    - "evidence/requests/CR-CP-0005/core-adoption-review-2026-07-12.md"
+
+implementation_progress:
+  status: "validated-local-ready-for-closure"
+  core_ref_observed: "4uentes-ards-core@f07ca6a"
+  core_mutation_performed: false
+  child_repo_mutation_performed: false
+  changes:
+    - "refresh orchestrator contract-binding validation evidence"
+    - "mark the locally adopted Initiative model active"
+    - "bind the local feature/bugfix state model to its core canon and adoption manifest"
+    - "document reference-based consumption of core-owned policy human docs"
+  validation_ref: "evidence/requests/CR-CP-0005/validation-results-2026-07-12.md"
+
+decision:
+  status: "approved-for-implementation"
+  approver: "4uentes"
+  note: "Approval starts the local adoption review and only the enumerated ARDS-6 Jira transition batch."

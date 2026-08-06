@@ -1,0 +1,26 @@
+schema_version: "1.0"
+kind: "feature_state"
+id: "portfolio-owner-docs-evidence-taxonomy-adoption"
+title: "Portfolio Owner Docs Evidence Taxonomy Adoption"
+status: "ards-documented"
+updated_at: "2026-07-04"
+solution_id: "4uentes"
+affected_services:
+  - 4uentes-portfolio
+request_ids:
+  - CR-4UENTES-0011
+capability_refs:
+  - "portfolio-owner-docs-evidence-taxonomy-adoption"
+spec_refs:
+  - "requests/planned/CR-4UENTES-0011-portfolio-owner-docs-evidence-taxonomy-adoption.yaml"
+  - "initiatives/INIT-PORTFOLIO-0001-portfolio-publication-readiness.yaml"
+  - "docs/apps/4uentes-portfolio.md"
+evidence_refs:
+  - "evidence/requests/CR-4UENTES-0011/owner-docs-taxonomy-adoption.md"
+  - "evidence/requests/CR-4UENTES-0011/changed-files-summary.md"
+  - "evidence/requests/CR-4UENTES-0011/validation-results.md"
+open_gaps:
+  - "Apply evidence labels to visible project content in a separate child-repo mutation CR."
+  - "Rewrite visible experience copy in a separate child-repo mutation CR."
+  - "Define contact exposure policy before changing public contact data."
+  - "Run GitHub evidence review only after an explicit repo allowlist is approved."

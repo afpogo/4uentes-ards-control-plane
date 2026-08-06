@@ -60,21 +60,36 @@ Human-readable policies:
 
 - `docs/policies/`
 
-Initial policies:
+Locally documented policies:
 
+- `human-doc-language`
 - `agent-model-selection-policy`
 - `agent-resource-degradation-policy`
 - `agent-task-atomization-policy`
 - `agent-delegation-policy`
 - `agent-context-management-policy`
 - `agent-architecture-boundary-policy`
+- `owner-documentation-authority-policy`
+
+Core-owned policy adoptions tracked locally:
+
+- `http-qa-harness-policy`
 
 These policies define how to select model aliases, degrade strategy when
-resources are limited, atomize tasks, delegate work, manage context, and respect
-architecture boundaries.
+resources are limited, atomize tasks, delegate work, manage context, respect
+architecture boundaries, and keep reproducible HTTP QA harnesses aligned with
+the core-owned canon when that policy is adopted locally.
 
 They complement working agreements, specs, docs and playbooks. They do not
 replace functional contracts or cross-repo ownership.
+
+Child repo propagation remains request-driven:
+
+- `4uentes-ards-core` stays canonical for shared policy definitions.
+- `4uentes-orchestor` records only local adoption plus rollout state.
+- Future child repo rollout must advance an approved request lifecycle before
+  repo mutation and must use either `policy_adoption_manifest` or
+  `policy_exception_manifest`.
 
 ## Validation
 
@@ -88,5 +103,14 @@ This runs:
 
 - `node scripts/verify-catalog.js`
 - `node scripts/verify-local-bindings.js --optional`
+- `node scripts/verify-state-model.js`
+- `node scripts/verify-initiatives.js`
+- `node scripts/verify-owner-documentation.js`
+
+For any control-plane workflow that allows or performs child repository
+mutation, `npm run check` is mandatory before local closure. The owner
+documentation validator must not be skipped in favor of child-repo-only checks.
+Use `npm run check:owner-docs` only as a focused diagnostic; closure evidence
+must still include the full control-plane check or an explicit blocker.
 
 Validation failures must be fixed before moving to requests.

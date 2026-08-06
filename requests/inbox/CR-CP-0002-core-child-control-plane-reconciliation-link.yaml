@@ -1,0 +1,21 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-CP-0002"
+title: "Define child-to-control-plane reconciliation link policy and template"
+status: "inbox"
+created_at: "2026-07-07"
+requester: "4uentes"
+
+business_context: >
+  The current orchestrator_link pattern is useful beyond this control-plane,
+  but must be generalized before becoming shared canon.
+
+requested_change: >
+  Promote a profile-scoped control_plane_link policy/template tied to
+  control-plane project creation, with orchestrator_link retained as a local
+  alias/adoption.
+
+expected_outcome: >
+  Control-plane repos receive a common reconciliation link contract. Child repos
+  can adopt it through a manifest or declare an explicit exception without
+  treating the policy as globally required by default.

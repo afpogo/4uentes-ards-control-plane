@@ -1,0 +1,110 @@
+{
+  "issueKey": "SST-32",
+  "before": {
+    "summary": "[SST][INIT-SST-0003][CR-SST-0100] Show session capture progress and per-tab degradations",
+    "status": "En curso",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "Fuentes Sandferand",
+    "updated": "2026-07-04T16:34:15.572-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0100",
+      "extension-ui",
+      "init-sst-0003",
+      "sst-extension"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10070\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10070\",\"key\":\"SST-32\",\"fields\":{\"summary\":\"[SST][INIT-SST-0003][CR-SST-0100] Show session capture progress and per-tab degradations\",\"description\":\"CR: CR-SST-0100  \\nInitiative: INIT-SST-0003  \\nEpic: SST-29\\n\\nPurpose:\\n\\nShow session capture progress and per-tab degradation metadata in `sst-extension`\\nso users can understand whether each tab was captured as visual PDF or textual  \\nfallback, without exposing private page content.\\n\\nScope:\\n\\n* Surface session capture progress in popup/sidepanel.\\n* Show aggregate counts for visual PDF captures, textual PDF fallback and  \\n  degraded tabs.\\n* Show per-tab sanitized warning metadata based on local snapshot fields from\\n  `CR-SST-0099`: `outcome`, `captureMode`, `warnings`.\\n* Preserve retry, restore and delete actions.\\n* Keep all metadata local to the extension UI unless an existing contract already  \\n  exposes it.\\n* Update `sst-extension` owner specs/docs for observable UI behavior.\\n\\nOut of scope:\\n\\n* No backend/BFF contract changes.\\n* No `node-auth` mutation.\\n* No `sst-bend` mutation.\\n* No real private page text, cookies, JWTs, secrets, raw PDFs or credentials in  \\n  Jira or ARDS/SDD evidence.\\n* No LearningWorkspace handoff implementation in this CR.\\n\\nSubtasks / checklist:\\n\\n* \\\\[ \\\\] Analyze current popup/sidepanel session queue UI.\\n* \\\\[ \\\\] Define presentation helpers for visual/text/degraded counts.\\n* \\\\[ \\\\] Render per-tab sanitized degradation metadata.\\n* \\\\[ \\\\] Preserve retry/restore/delete controls.\\n* \\\\[ \\\\] Add focused tests for presentation helpers and UI state.\\n* \\\\[ \\\\] Update owner docs/specs or record an explicit owner-documentation exception.\\n* \\\\[ \\\\] Run `pnpm.cmd check` in `sst-extension`.\\n* \\\\[ \\\\] Run `npm.cmd run check` in `4uentes-orchestor`.\\n\\nDefinition of Done:\\n\\n- [ ] The user can understand capture quality per session.\\n- [ ] Per-tab metadata does not expose private content.\\n- [ ] Existing session queue actions remain available.\\n- [ ] Owner documentation gate passes.\\n- [ ] Jira is updated as mirror; ARDS/SDD remains source of truth.\\n\\n\",\"assignee\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]\",\"accountId\": \"[accountId-redacted]\",\"emailAddress\":\"[email-redacted]\",\"avatarUrls\":{\"48x48\":\"[avatar-url-redacted]\",\"24x24\":\"[avatar-url-redacted]\",\"16x16\":\"[avatar-url-redacted]\",\"32x32\":\"[avatar-url-redacted]\"},\"displayName\":\"Fuentes Sandferand\",\"active\":true,\"timeZone\":\"America/Buenos_Aires\",\"accountType\":\"atlassian\"},\"resolution\":null,\"updated\":\"2026-07-04T16:34:15.572-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10006\",\"description\":\"La persona asignada está trabajando actualmente en esta actividad.\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En curso\",\"id\":\"10006\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-sst-0100\",\"extension-ui\",\"init-sst-0003\",\"sst-extension\"]}}"
+  },
+  "after": {
+    "summary": "[SST][INIT-SST-0003][CR-SST-0100] Show session capture progress and per-tab degradations",
+    "status": "En curso",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "Fuentes Sandferand",
+    "updated": "2026-07-04T18:58:03.846-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0100",
+      "extension-ui",
+      "init-sst-0003",
+      "sst-extension"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10070\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10070\",\"key\":\"SST-32\",\"fields\":{\"summary\":\"[SST][INIT-SST-0003][CR-SST-0100] Show session capture progress and per-tab degradations\",\"description\":\"CR: CR-SST-0100  \\nInitiative: INIT-SST-0003  \\nEpic: SST-29\\n\\nPurpose:\\n\\nShow session capture progress and per-tab degradation metadata in `sst-extension`\\nso users can understand whether each tab was captured as visual PDF or textual  \\nfallback, without exposing private page content.\\n\\nScope:\\n\\n* Surface session capture progress in popup/sidepanel.\\n* Show aggregate counts for visual PDF captures, textual PDF fallback and  \\n  degraded tabs.\\n* Show per-tab sanitized warning metadata based on local snapshot fields from\\n  `CR-SST-0099`: `outcome`, `captureMode`, `warnings`.\\n* Preserve retry, restore and delete actions.\\n* Keep all metadata local to the extension UI unless an existing contract already  \\n  exposes it.\\n* Update `sst-extension` owner specs/docs for observable UI behavior.\\n\\nOut of scope:\\n\\n* No backend/BFF contract changes.\\n* No `node-auth` mutation.\\n* No `sst-bend` mutation.\\n* No real private page text, cookies, JWTs, secrets, raw PDFs or credentials in  \\n  Jira or ARDS/SDD evidence.\\n* No LearningWorkspace handoff implementation in this CR.\\n\\nSubtasks / checklist:\\n\\n* \\\\[ \\\\] Analyze current popup/sidepanel session queue UI.\\n* \\\\[ \\\\] Define presentation helpers for visual/text/degraded counts.\\n* \\\\[ \\\\] Render per-tab sanitized degradation metadata.\\n* \\\\[ \\\\] Preserve retry/restore/delete controls.\\n* \\\\[ \\\\] Add focused tests for presentation helpers and UI state.\\n* \\\\[ \\\\] Update owner docs/specs or record an explicit owner-documentation exception.\\n* \\\\[ \\\\] Run `pnpm.cmd check` in `sst-extension`.\\n* \\\\[ \\\\] Run `npm.cmd run check` in `4uentes-orchestor`.\\n\\nDefinition of Done:\\n\\n- [ ] The user can understand capture quality per session.\\n- [ ] Per-tab metadata does not expose private content.\\n- [ ] Existing session queue actions remain available.\\n- [ ] Owner documentation gate passes.\\n- [ ] Jira is updated as mirror; ARDS/SDD remains source of truth.\\n\\n\",\"assignee\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]\",\"accountId\": \"[accountId-redacted]\",\"emailAddress\":\"[email-redacted]\",\"avatarUrls\":{\"48x48\":\"[avatar-url-redacted]\",\"24x24\":\"[avatar-url-redacted]\",\"16x16\":\"[avatar-url-redacted]\",\"32x32\":\"[avatar-url-redacted]\"},\"displayName\":\"Fuentes Sandferand\",\"active\":true,\"timeZone\":\"America/Buenos_Aires\",\"accountType\":\"atlassian\"},\"resolution\":null,\"updated\":\"2026-07-04T18:58:03.846-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10006\",\"description\":\"La persona asignada está trabajando actualmente en esta actividad.\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En curso\",\"id\":\"10006\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-sst-0100\",\"extension-ui\",\"init-sst-0003\",\"sst-extension\"]}}"
+  },
+  "transitions": [
+    {
+      "id": "11",
+      "name": "Por hacer",
+      "toStatus": "Tareas por hacer",
+      "toStatusCategory": "Por hacer"
+    },
+    {
+      "id": "21",
+      "name": "En curso",
+      "toStatus": "En curso",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "31",
+      "name": "In Review",
+      "toStatus": "En revisión",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "41",
+      "name": "Listo",
+      "toStatus": "Finalizada",
+      "toStatusCategory": "Listo"
+    }
+  ],
+  "selectedTransition": {
+    "id": "21",
+    "name": "En curso",
+    "toStatus": "En curso",
+    "toStatusCategory": "En curso"
+  },
+  "transitionResult": null,
+  "commentResult": {
+    "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10070/comment/10082",
+    "id": "10082",
+    "author": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "body": "CR-SST-0100 / SST-32 - QA manual gap registrado\n\nSe confirma QA manual de captura de sesion: la sesion se crea en SST y los articulos derivados pueden quedar persistidos con PDFs textuales validos cuando la captura visual no esta disponible.\n\nGap registrado: esos articulos de tipo texto pueden mostrarse sin `preview image` en SST, porque el PDF textual conserva contenido textual pero no una imagen visual confiable de la web.\n\nDecision ARDS/SDD:\n\n* `SST-32` mantiene el alcance de visibilidad UI de calidad de captura y warnings por pestania.\n* `CR-SST-0119` queda reservado para parametrizar modo de captura: auto, solo visual, solo texto, preferir texto.\n* `CR-SST-0120` queda reservado para definir contrato cross-repo de `preview image` en articulos derivados de sesion: thumbnail visual, derivacion downstream o razon explicita `preview unavailable`.\n\nEvidencia local actualizada:\n\n* `evidence/requests/CR-SST-0100/manual-qa-gap-analysis.md`\n* `evidence/requests/CR-SST-0100/implementation-summary.md`\n* `evidence/requests/CR-SST-0100/owner-documentation-enforcement.md`\n* `evidence/requests/CR-SST-0100/validation-results.md`\n\nControl-plane enforcement ejecutado: `npm run check` OK.",
+    "updateAuthor": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "created": "2026-07-04T18:58:03.846-0300",
+    "updated": "2026-07-04T18:58:03.846-0300",
+    "jsdPublic": true
+  },
+  "commentBody": "CR-SST-0100 / SST-32 - QA manual gap registrado\n\nSe confirma QA manual de captura de sesion: la sesion se crea en SST y los articulos derivados pueden quedar persistidos con PDFs textuales validos cuando la captura visual no esta disponible.\n\nGap registrado: esos articulos de tipo texto pueden mostrarse sin `preview image` en SST, porque el PDF textual conserva contenido textual pero no una imagen visual confiable de la web.\n\nDecision ARDS/SDD:\n- `SST-32` mantiene el alcance de visibilidad UI de calidad de captura y warnings por pestania.\n- `CR-SST-0119` queda reservado para parametrizar modo de captura: auto, solo visual, solo texto, preferir texto.\n- `CR-SST-0120` queda reservado para definir contrato cross-repo de `preview image` en articulos derivados de sesion: thumbnail visual, derivacion downstream o razon explicita `preview unavailable`.\n\nEvidencia local actualizada:\n- `evidence/requests/CR-SST-0100/manual-qa-gap-analysis.md`\n- `evidence/requests/CR-SST-0100/implementation-summary.md`\n- `evidence/requests/CR-SST-0100/owner-documentation-enforcement.md`\n- `evidence/requests/CR-SST-0100/validation-results.md`\n\nControl-plane enforcement ejecutado: `npm run check` OK.\n",
+  "externalWrite": true
+}

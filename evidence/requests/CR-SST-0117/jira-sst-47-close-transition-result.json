@@ -1,0 +1,116 @@
+{
+  "issueKey": "SST-47",
+  "before": {
+    "summary": "[SST][CR-SST-0117] Render Markdown/template view from annotated text",
+    "status": "En curso",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "Fuentes Sandferand",
+    "updated": "2026-07-04T19:57:24.377-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0117",
+      "init-sst-0001",
+      "learning-content-tags",
+      "markdown-template",
+      "rendering",
+      "subtask"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10085\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10085\",\"key\":\"SST-47\",\"fields\":{\"summary\":\"[SST][CR-SST-0117] Render Markdown/template view from annotated text\",\"assignee\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]\",\"accountId\": \"[accountId-redacted]\",\"emailAddress\":\"[email-redacted]\",\"avatarUrls\":{\"48x48\":\"[avatar-url-redacted]\",\"24x24\":\"[avatar-url-redacted]\",\"16x16\":\"[avatar-url-redacted]\",\"32x32\":\"[avatar-url-redacted]\"},\"displayName\":\"Fuentes Sandferand\",\"active\":true,\"timeZone\":\"America/Buenos_Aires\",\"accountType\":\"atlassian\"},\"resolution\":null,\"updated\":\"2026-07-04T19:57:24.377-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10006\",\"description\":\"La persona asignada está trabajando actualmente en esta actividad.\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En curso\",\"id\":\"10006\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-sst-0117\",\"init-sst-0001\",\"learning-content-tags\",\"markdown-template\",\"rendering\",\"subtask\"]}}"
+  },
+  "after": {
+    "summary": "[SST][CR-SST-0117] Render Markdown/template view from annotated text",
+    "status": "Listo",
+    "statusCategory": "Listo",
+    "resolution": "Listo",
+    "assignee": "Fuentes Sandferand",
+    "updated": "2026-07-04T21:09:20.374-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0117",
+      "init-sst-0001",
+      "learning-content-tags",
+      "markdown-template",
+      "rendering",
+      "subtask"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10085\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10085\",\"key\":\"SST-47\",\"fields\":{\"summary\":\"[SST][CR-SST-0117] Render Markdown/template view from annotated text\",\"assignee\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]\",\"accountId\": \"[accountId-redacted]\",\"emailAddress\":\"[email-redacted]\",\"avatarUrls\":{\"48x48\":\"[avatar-url-redacted]\",\"24x24\":\"[avatar-url-redacted]\",\"16x16\":\"[avatar-url-redacted]\",\"32x32\":\"[avatar-url-redacted]\"},\"displayName\":\"Fuentes Sandferand\",\"active\":true,\"timeZone\":\"America/Buenos_Aires\",\"accountType\":\"atlassian\"},\"resolution\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/resolution/10000\",\"id\":\"10000\",\"description\":\"Se ha terminado el trabajo relacionado con esta incidencia.\",\"name\":\"Listo\"},\"updated\":\"2026-07-04T21:09:20.374-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10008\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"Finalizada\",\"id\":\"10008\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/3\",\"id\":3,\"key\":\"done\",\"colorName\":\"green\",\"name\":\"Listo\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-sst-0117\",\"init-sst-0001\",\"learning-content-tags\",\"markdown-template\",\"rendering\",\"subtask\"]}}"
+  },
+  "transitions": [
+    {
+      "id": "11",
+      "name": "Por hacer",
+      "toStatus": "Tareas por hacer",
+      "toStatusCategory": "Por hacer"
+    },
+    {
+      "id": "21",
+      "name": "En curso",
+      "toStatus": "En curso",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "31",
+      "name": "In Review",
+      "toStatus": "En revisión",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "41",
+      "name": "Listo",
+      "toStatus": "Finalizada",
+      "toStatusCategory": "Listo"
+    }
+  ],
+  "selectedTransition": {
+    "id": "41",
+    "name": "Listo",
+    "toStatus": "Finalizada",
+    "toStatusCategory": "Listo"
+  },
+  "transitionResult": {
+    "success": true
+  },
+  "commentResult": {
+    "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10085/comment/10096",
+    "id": "10096",
+    "author": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "body": "CR-SST-0117 closure checkpoint.\n\nSST-47 can move to `Listo`.\n\nCompleted:\n\n* Implemented the first Markdown-like/template renderer for accepted LearningWorkspace context in `sst-fend`.\n* Connected local Text tab annotations to LearningWorkspace preview payloads.\n* Accept/reject now sends `annotationIds` when the backend returns server annotation identifiers.\n* Kept backend as discovery-only because accepted context already exposes content blocks and annotations.\n* Updated `sst-fend` owner ARDS/SDD documentation.\n\nValidation:\n\n* `sst-fend npm.cmd test -- LearningWorkspace.test.tsx ArticleCreateFlow.test.tsx --runInBand`: PASS.\n* `sst-fend npm.cmd run check`: PASS.\n* Owner documentation enforcement will be validated through `4uentes-orchestor npm.cmd run check`.\n\nEvidence:\n\n* `evidence/requests/CR-SST-0117/subagent-delegation.md`\n* `evidence/requests/CR-SST-0117/pre-implementation-analysis.md`\n* `evidence/requests/CR-SST-0117/implementation-summary.md`\n* `evidence/requests/CR-SST-0117/owner-documentation-summary.md`\n* `evidence/requests/CR-SST-0117/validation-results.md`\n\n",
+    "updateAuthor": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "created": "2026-07-04T21:09:20.374-0300",
+    "updated": "2026-07-04T21:09:20.374-0300",
+    "jsdPublic": true
+  },
+  "commentBody": "CR-SST-0117 closure checkpoint.\n\nSST-47 can move to `Listo`.\n\nCompleted:\n- Implemented the first Markdown-like/template renderer for accepted LearningWorkspace context in `sst-fend`.\n- Connected local Text tab annotations to LearningWorkspace preview payloads.\n- Accept/reject now sends `annotationIds` when the backend returns server annotation identifiers.\n- Kept backend as discovery-only because accepted context already exposes content blocks and annotations.\n- Updated `sst-fend` owner ARDS/SDD documentation.\n\nValidation:\n- `sst-fend npm.cmd test -- LearningWorkspace.test.tsx ArticleCreateFlow.test.tsx --runInBand`: PASS.\n- `sst-fend npm.cmd run check`: PASS.\n- Owner documentation enforcement will be validated through `4uentes-orchestor npm.cmd run check`.\n\nEvidence:\n- `evidence/requests/CR-SST-0117/subagent-delegation.md`\n- `evidence/requests/CR-SST-0117/pre-implementation-analysis.md`\n- `evidence/requests/CR-SST-0117/implementation-summary.md`\n- `evidence/requests/CR-SST-0117/owner-documentation-summary.md`\n- `evidence/requests/CR-SST-0117/validation-results.md`\n",
+  "externalWrite": true
+}

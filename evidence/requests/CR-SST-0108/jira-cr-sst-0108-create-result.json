@@ -1,0 +1,18 @@
+{
+  "requestId": "CR-SST-0108",
+  "initiativeId": "INIT-SST-0003",
+  "epicKey": "SST-29",
+  "relatedIssueKey": "SST-30",
+  "issue": {
+    "key": "SST-40",
+    "summary": "[SST][INIT-SST-0003][CR-SST-0108] Harden node-auth extension session payload ingestion",
+    "parentKey": "SST-29",
+    "source": "created",
+    "raw": "{\"id\":\"10078\",\"key\":\"SST-40\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10078\"}"
+  },
+  "existing": false,
+  "linkResult": {
+    "message": "Issue link created"
+  },
+  "externalWrite": true
+}

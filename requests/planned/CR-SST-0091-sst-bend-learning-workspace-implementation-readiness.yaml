@@ -1,0 +1,280 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0091"
+title: "Prepare sst-bend LearningWorkspace implementation"
+status: planned
+source_request: "requests/inbox/CR-SST-0091-sst-bend-learning-workspace-implementation-readiness.yaml"
+created_at: "2026-06-29"
+requester: "4uentes"
+
+summary: >
+  Prepare the sst-bend implementation gate for LearningWorkspace. This request
+  does not mutate the child repository yet; it defines the backend contract,
+  discovery checklist, persistence model, API shape, authorization rules,
+  idempotency requirements, tests, and rollback evidence required for the later
+  implementation execution.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - "sst-bend"
+  include_optional_services: false
+
+control_plane_context:
+  initiative_id: "INIT-SST-0001"
+  initiative_file: "initiatives/INIT-SST-0001-tags-governance-continuity.yaml"
+  governing_request: "CR-SST-0091"
+  parent_jira_issue_key: "SST-4"
+  active_jira_issue_key: "SST-6"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  active_feature_state: "learning-content-tags"
+  active_feature_state_file: "state/features/learning-content-tags.current.yaml"
+  preceding_requests:
+    - "CR-SST-0030"
+    - "CR-SST-0031"
+    - "CR-SST-0088"
+    - "CR-SST-0089"
+    - "CR-SST-0090"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "sst-bend"
+      via: "future runtime model, migrations, internal APIs, and chatbot context endpoint"
+      service_kind: "api"
+      ards_kind: "backend-api"
+      status: "active"
+    - service_id: "4uentes-orchestor"
+      via: "control-plane planning and evidence"
+      service_kind: "control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+  affected_ards:
+    - backend-api
+    - control-plane
+    - request-lifecycle
+    - evidence
+    - sst-user-internal-memory
+    - learning-content-preview-import
+    - chatbot-context-read-contract
+  capabilities:
+    - "learning-content-tags"
+    - "user-activity-ards-memory"
+    - "application-context-connector"
+    - "prompt-catalog-and-versioning"
+  risks:
+    - id: CHILD_REPO_MUTATION_WITHOUT_FILE_PLAN
+      severity: high
+    - id: CROSS_SCOPE_CONTEXT_LEAK
+      severity: high
+    - id: PREVIEW_ONLY_GATE_BYPASS
+      severity: high
+    - id: CHATBOT_DIRECT_PERSISTENCE_BYPASS
+      severity: high
+    - id: MIGRATION_ROLLBACK_GAP
+      severity: high
+    - id: IDEMPOTENCY_DUPLICATE_IMPORTS
+      severity: high
+
+required_context:
+  - "AGENTS.md"
+  - "specs/integration/policies.yaml"
+  - "docs/policies/"
+  - "catalog/services/sst-bend.yaml"
+  - "initiatives/INIT-SST-0001-tags-governance-continuity.yaml"
+  - "state/features/learning-content-tags.current.yaml"
+  - "requests/planned/CR-SST-0088-learning-source-model-boundary.yaml"
+  - "requests/planned/CR-SST-0089-learning-content-preview-import-boundary.yaml"
+  - "requests/planned/CR-SST-0090-learning-workspace-controlled-adoption.yaml"
+  - "evidence/requests/CR-SST-0088/learning-source-model.md"
+  - "evidence/requests/CR-SST-0089/runtime-contract.md"
+  - "evidence/requests/CR-SST-0089/future-implementation-plan.md"
+  - "evidence/requests/CR-SST-0090/workspace-boundary.md"
+  - "evidence/requests/CR-SST-0090/chatbot-read-contract.md"
+  - "evidence/requests/CR-SST-0090/cr-sst-0089-adjustment.md"
+  - "evidence/requests/CR-SST-0091/sst-bend-read-only-discovery.md"
+  - "evidence/requests/CR-SST-0091/sst-bend-file-plan.md"
+
+required_checks:
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check"
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check:initiatives"
+  - service_id: "sst-bend"
+    command: "Future execution must run npm run check or the repo-local equivalent after target files are confirmed."
+
+risk:
+  level: high
+  score: 8
+  drivers:
+    - CHILD_REPO_MUTATION_WITHOUT_FILE_PLAN
+    - CROSS_SCOPE_CONTEXT_LEAK
+    - PREVIEW_ONLY_GATE_BYPASS
+    - CHATBOT_DIRECT_PERSISTENCE_BYPASS
+    - MIGRATION_ROLLBACK_GAP
+    - IDEMPOTENCY_DUPLICATE_IMPORTS
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "The following implementation will add backend persistence and scoped context APIs."
+    - "The design must protect private user/account/tenant scope."
+    - "The preview-only gate must remain impossible to bypass accidentally."
+    - "Migrations and rollback must be explicit before runtime mutation."
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-high-reasoning-profile"
+  reason: >
+    The request prepares backend persistence, authorization, migration,
+    idempotency, and chatbot context contracts for private learning memory.
+
+subagent_deployment_plan:
+  required: false
+  parallelizable: true
+  roles:
+    - id: "backend-file-discovery"
+      objective: "Read sst-bend structure and propose exact files for models, migrations, services, controllers, routes, and tests."
+      risk: medium
+      suggested_profile: "long_context_task"
+      validation: "Output lists exact paths and does not modify sst-bend."
+    - id: "backend-security-contract-review"
+      objective: "Check tenant/account/user scope, chatbot read constraints, and preview-only recall exclusion."
+      risk: high
+      suggested_profile: "high_reasoning_task"
+      validation: "Output maps negative tests to each scope and persistence rule."
+  fallback: "Main agent performs read-only discovery and security review sequentially before any child repository mutation."
+  evidence_required: true
+
+execution:
+  requires_human_approval: false
+  allowed_window: manual
+  branch_strategy: "one-branch-per-repo"
+  implementation_boundary: >
+    This request creates the sst-bend implementation readiness gate only. It
+    does not modify sst-bend yet, does not create migrations or endpoints, does
+    not persist content, does not expose chatbot context, and does not write
+    Jira. Future execution may perform read-only sst-bend discovery first, then
+    must record exact files and tests before applying mutations.
+  child_repo_mutation_allowed: false
+  read_only_child_repo_discovery_allowed: true
+  read_only_child_repo_discovery_executed: true
+  read_only_child_repo_discovery_evidence:
+    - "evidence/requests/CR-SST-0091/sst-bend-read-only-discovery.md"
+    - "evidence/requests/CR-SST-0091/sst-bend-file-plan.md"
+  future_child_repo_mutation_condition: >
+    Mutating sst-bend requires a recorded implementation file plan, tests,
+    migration and rollback plan, idempotency strategy, explicit scope-filter
+    checks, and evidence that previews are excluded from durable recall until
+    accepted.
+  jira_read_executed: false
+  jira_write_executed: false
+  jira_write_target:
+    desired_artifact: "No write in this readiness request"
+    desired_initial_status: "not requested"
+  jira_read_blocked_reason: "Existing CR-SST-0087 evidence records Atlassian MCP 403 app-not-installed; Jira remains mirror-only."
+
+sst_bend_target_contract:
+  creation_policy:
+    preferred: "Create empty LearningWorkspace during account provisioning if a reliable hook exists."
+    fallback: "Create lazily on first workspace/source/context use."
+  runtime_entities:
+    required:
+      - "LearningWorkspace"
+      - "LearningSourceRef"
+      - "LearningDocumentRef"
+      - "LearningContentBlockRef"
+      - "LearningAssetRef"
+      - "LearningLabRef"
+      - "LearningSpecRef"
+      - "LearningImportWarning"
+      - "LearningImportProvenance"
+    memory_links:
+      - "user_memory_event"
+      - "user_memory_fact"
+      - "user_memory_intention"
+  api_surface:
+    internal_or_authenticated:
+      - id: "workspace_get_or_create"
+        purpose: "Return the scoped workspace or create it according to creation policy."
+      - id: "source_preview"
+        purpose: "Return preview-only documents, blocks, tag suggestions, warnings, and provenance."
+      - id: "source_accept"
+        purpose: "Consolidate an approved preview into durable workspace entries."
+      - id: "source_reject"
+        purpose: "Record rejection without durable recall entries."
+      - id: "workspace_context"
+        purpose: "Return LearningWorkspaceContext for chatbot reads."
+  authorization:
+    required_scope_filters:
+      - "tenant_id"
+      - "account_id"
+      - "user_id"
+    negative_tests:
+      - "same tenant, different account cannot read workspace"
+      - "same account, different user cannot read workspace"
+      - "different tenant cannot read workspace"
+  preview_gate:
+    durable_recall_allowed_only_after: "source_accept"
+    forbidden:
+      - "persist preview output as accepted content"
+      - "return unapproved preview in LearningWorkspaceContext"
+      - "create TagDefinition automatically"
+      - "allow sst-chatbot direct persistence"
+  idempotency:
+    required_keys:
+      - "tenant_id"
+      - "account_id"
+      - "user_id"
+      - "source fingerprint"
+      - "accepted preview fingerprint"
+    behavior: "Repeated accept/import must update or no-op deterministically without duplicate documents, blocks, warnings, or memory events."
+
+implementation_discovery_checklist:
+  must_record_before_mutation:
+    - "sst-bend repo path and branch"
+    - "dirty worktree summary"
+    - "existing ORM/migration framework"
+    - "existing auth scope middleware"
+    - "existing user memory models or services"
+    - "existing learning-content parser/POC files"
+    - "target model/entity files"
+    - "target migration files"
+    - "target service files"
+    - "target controller/route files"
+    - "target tests"
+    - "commands for check/build/test"
+    - "rollback strategy"
+
+validation:
+  required_checks:
+    - "Control-plane validation passes."
+    - "Initiative validation passes."
+    - "CR-SST-0091 references CR-SST-0090 and the preceding source/preview/user-memory CRs."
+    - "No child repositories are modified by this readiness step."
+    - "Future sst-bend mutation remains gated by exact file plan and tests."
+    - "Authorization and negative tests are named before implementation."
+    - "Preview-only exclusion from durable recall is explicit."
+    - "Automatic TagDefinition creation remains forbidden."
+  evidence_required:
+    - "implementation_readiness"
+    - "backend_contract"
+    - "discovery_checklist"
+    - "sst_bend_read_only_discovery"
+    - "sst_bend_file_plan"
+    - "changed_files_summary"
+    - "validation_results"
+
+decision:
+  status: pending
+  approver: TODO
+
+planner_notes:
+  - "This CR is the readiness gate for sst-bend implementation, not the implementation itself."
+  - "Exact sst-bend files are intentionally discovered in a read-only child repo pass before mutation."
+  - "Do not implement sst-chatbot or sst-fend in this CR."
+  - "Do not create TagDefinition automatically."
+  - "Do not allow preview-only content into durable recall."

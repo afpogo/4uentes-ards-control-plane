@@ -2,7 +2,7 @@ schema_version: "1.0"
 phase: 2
 id: "CR-SST-0073"
 title: "SST Tags - Search and resource binding API"
-status: planned
+status: done
 source_request: "requests/inbox/CR-SST-0073-sst-tags-search-and-resource-binding-api.yaml"
 created_at: "2026-06-13"
 requester: "4uentes"
@@ -12,6 +12,16 @@ initial_scope:
   services:
     - "sst-bend"
   include_optional_services: false
+
+control_plane_context:
+  feature_state: "sst-tags-governance"
+  feature_state_file: "state/features/sst-tags-governance.current.yaml"
+  jira_issue_key: "SST-21"
+  current_jira_status_observed: "Finalizada"
+  governing_request: "CR-SST-0073"
+  upstream_persistence_request: "CR-SST-0072"
+  contract_ref: "docs/requests/sst-tags-governance-contract.md"
+  jira_observation_ref: "evidence/requests/CR-SST-0073/jira-issue-SST-21-observation.md"
 
 impact_analysis:
   required: true
@@ -79,6 +89,19 @@ execution:
   requires_human_approval: true
   allowed_window: manual
   branch_strategy: one-branch-per-repo
+  jira_read_executed: true
+  jira_write_executed: true
+  jira_transition_ref: "evidence/requests/CR-SST-0073/jira-sst-21-start-transition-summary.md"
+  jira_review_transition_ref: "evidence/requests/CR-SST-0073/jira-sst-21-review-transition-summary.md"
+  jira_close_transition_ref: "evidence/requests/CR-SST-0073/jira-sst-21-close-transition-summary.md"
+  jira_transition_blocked_ref: "evidence/requests/CR-SST-0073/jira-transition-blocker.md"
+  local_implementation_started: true
+  local_implementation_started_at: "2026-06-18"
+  completed_at: "2026-06-20"
+  implementation_evidence_refs:
+    - "evidence/requests/CR-SST-0073/implementation-notes.md"
+    - "evidence/requests/CR-SST-0073/changed-files-summary.md"
+    - "evidence/requests/CR-SST-0073/closure-runtime-qa-notes.md"
 
 validation:
   required_checks:
@@ -89,5 +112,7 @@ validation:
     - "search/dedup test notes"
 
 decision:
-  status: pending
-  approver: TODO
+  status: "approved-done"
+  approver: "4uentes"
+  approved_at: "2026-06-18"
+  note: "SST-21 was closed as `Finalizada` on 2026-06-20. CR-SST-0073 backend implementation is complete and downstream adoption continues in CR-SST-0074..0076."

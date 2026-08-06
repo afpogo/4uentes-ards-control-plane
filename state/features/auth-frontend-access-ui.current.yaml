@@ -1,0 +1,26 @@
+schema_version: "1.0"
+kind: "feature_state"
+id: "auth-frontend-access-ui"
+title: "SST Auth Frontend Access UI"
+status: "implementation-pending"
+updated_at: "2026-08-04"
+solution_id: "sst"
+affected_services: ["sst-fend", "4uentes-auth"]
+request_ids: ["CR-SST-0146", "CR-SST-0147", "CR-SST-0148", "CR-SST-0149", "CR-SST-0150", "CR-SST-0151"]
+capability_refs: ["auth-frontend-access-ui"]
+spec_refs:
+  - "initiatives/INIT-SST-0006-auth-access-ui-resilience-and-rebranding.yaml"
+  - "requests/planned/CR-SST-0148-signin-viewport-containment-and-focus.yaml"
+  - "requests/planned/CR-SST-0149-signup-responsive-structure-repair.yaml"
+  - "requests/planned/CR-SST-0150-signup-complete-visual-rebranding.yaml"
+evidence_refs:
+  - "evidence/initiatives/INIT-SST-0006/chrome-devtools-visual-audit-2026-08-04.md"
+  - "evidence/initiatives/INIT-SST-0006/jira-readonly-preflight.md"
+  - "evidence/requests/CR-SST-0149/execution-start-and-jira-preflight.md"
+  - "evidence/requests/CR-SST-0149/jira-start-sync-results.md"
+  - "evidence/requests/CR-SST-0149/implementation-and-validation.md"
+  - "evidence/requests/CR-SST-0149/closure-authorization-and-preflight.md"
+  - "evidence/requests/CR-SST-0149/jira-closure.md"
+open_gaps:
+  - "Signin exceeds short viewport boundaries and lacks contained keyboard focus."
+  - "Jira issue-type reconciliation and new Task creation require an enumerated write authorization."

@@ -1,0 +1,24 @@
+schema_version: "1.0"
+kind: "feature_state"
+id: "portfolio-cv-publication-qa"
+title: "Portfolio CV Publication QA"
+status: "ards-documented"
+updated_at: "2026-07-04"
+solution_id: "4uentes"
+affected_services:
+  - 4uentes-portfolio
+request_ids:
+  - CR-4UENTES-0017
+capability_refs:
+  - "portfolio-cv-publication-qa"
+spec_refs:
+  - "requests/planned/CR-4UENTES-0017-portfolio-cv-publication-qa.yaml"
+  - "initiatives/INIT-PORTFOLIO-0001-portfolio-publication-readiness.yaml"
+evidence_refs:
+  - "evidence/requests/CR-4UENTES-0017/cv-publication-qa.md"
+  - "evidence/requests/CR-4UENTES-0017/changed-files-summary.md"
+  - "evidence/requests/CR-4UENTES-0017/validation-results.md"
+open_gaps:
+  - "Replace current CV PDF with a sanitized owner-approved CV asset."
+  - "Run browser/screenshot publication QA when visual tooling is available."
+  - "Translate or remediate legacy human-facing Markdown covered by the human-doc-language exception."

@@ -1,0 +1,193 @@
+{
+  "requestId": "CR-SST-0073",
+  "issueKey": "SST-21",
+  "mode": "approved-write",
+  "before": {
+    "summary": "[SST-4][CR-SST-0073] Tag search and resource binding API",
+    "status": "En curso",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "Fuentes Sandferand",
+    "updated": "2026-06-18T20:05:47.100-0300",
+    "labels": [
+      "active-work",
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0073",
+      "sst-tags-governance",
+      "subtask"
+    ]
+  },
+  "after": {
+    "summary": "[SST-4][CR-SST-0073] Tag search and resource binding API",
+    "status": "En revisión",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "Fuentes Sandferand",
+    "updated": "2026-06-18T20:58:24.108-0300",
+    "labels": [
+      "active-work",
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0073",
+      "in-review",
+      "sst-tags-governance",
+      "subtask"
+    ]
+  },
+  "selectedTransition": {
+    "id": "31",
+    "name": "In Review",
+    "toStatus": "En revisión",
+    "toStatusCategory": "En curso"
+  },
+  "labels": [
+    "active-work",
+    "ards-sdd",
+    "control-plane",
+    "cr-sst-0073",
+    "in-review",
+    "sst-tags-governance",
+    "subtask"
+  ],
+  "editResult": {
+    "expand": "renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations",
+    "id": "10029",
+    "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10029",
+    "key": "SST-21",
+    "fields": {
+      "summary": "[SST-4][CR-SST-0073] Tag search and resource binding API",
+      "issuetype": {
+        "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issuetype/10006",
+        "id": "10006",
+        "description": "Subtasks track small pieces of work that are part of a larger task.",
+        "iconUrl": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/2/universal_avatar/view/type/issuetype/avatar/10316?size=medium",
+        "name": "Subtask",
+        "subtask": true,
+        "avatarId": 10316,
+        "entityId": "[cloudId-redacted]",
+        "hierarchyLevel": -1
+      },
+      "components": [],
+      "created": "2026-06-13T11:34:48.453-0300",
+      "description": "Subtask under `SST-4` for the next governed execution slice.\n\n* CR: `CR-SST-0073`\n* Scope: `sst-bend` governed tags search, explicit value creation, and resource binding API.\n* Source request: `requests/planned/CR-SST-0073-sst-tags-search-and-resource-binding-api.yaml`\n* Goal: expose `GET /tags/definitions`, `GET /tags/values`, `POST /tags/values`, and `PUT /tags/resources/:resourceType/:resourceId` on top of the global persistence model delivered in `CR-SST-0072`.\n* Risk: high due to public backend API contract, attach/detach semantics, and future BFF/frontend adoption.\n\nExecution guardrails:\n\n* Keep this CR inside `sst-bend` only.\n* Do not modify `4uentes-auth`, `sst-fend`, or `sst-extension` in this CR.\n* Do not change existing public dictionary/article response shapes unless explicitly required by the contract.\n* Preserve `dictionary-tags` validated-live behavior while introducing governed tag API surfaces.\n\nCanonical control-plane refs:\n\n* docs/requests/sst-tags-governance-contract.md\n* state/features/sst-tags-governance.current.yaml\n* requests/planned/CR-SST-0073-sst-tags-search-and-resource-binding-api.yaml\n\n",
+      "project": {
+        "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/project/10001",
+        "id": "10001",
+        "key": "SST",
+        "name": "SST-Team",
+        "projectTypeKey": "software",
+        "simplified": true,
+        "avatarUrls": {
+          "48x48": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/universal_avatar/view/type/project/avatar/10416",
+          "24x24": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/universal_avatar/view/type/project/avatar/10416?size=small",
+          "16x16": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/universal_avatar/view/type/project/avatar/10416?size=xsmall",
+          "32x32": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/universal_avatar/view/type/project/avatar/10416?size=medium"
+        }
+      },
+      "reporter": {
+        "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+        "accountId": "[accountId-redacted]",
+        "emailAddress": "[email-redacted]",
+        "avatarUrls": {
+          "48x48": "[avatar-url-redacted]",
+          "24x24": "[avatar-url-redacted]",
+          "16x16": "[avatar-url-redacted]",
+          "32x32": "[avatar-url-redacted]"
+        },
+        "displayName": "Fuentes Sandferand",
+        "active": true,
+        "timeZone": "America/Buenos_Aires",
+        "accountType": "atlassian"
+      },
+      "priority": {
+        "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/priority/3",
+        "iconUrl": "[jira-site-redacted]",
+        "name": "Medium",
+        "id": "3"
+      },
+      "resolution": null,
+      "labels": [
+        "active-work",
+        "ards-sdd",
+        "control-plane",
+        "cr-sst-0073",
+        "in-review",
+        "sst-tags-governance",
+        "subtask"
+      ],
+      "assignee": {
+        "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+        "accountId": "[accountId-redacted]",
+        "emailAddress": "[email-redacted]",
+        "avatarUrls": {
+          "48x48": "[avatar-url-redacted]",
+          "24x24": "[avatar-url-redacted]",
+          "16x16": "[avatar-url-redacted]",
+          "32x32": "[avatar-url-redacted]"
+        },
+        "displayName": "Fuentes Sandferand",
+        "active": true,
+        "timeZone": "America/Buenos_Aires",
+        "accountType": "atlassian"
+      },
+      "updated": "2026-06-18T20:58:21.511-0300",
+      "status": {
+        "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10006",
+        "description": "La persona asignada está trabajando actualmente en esta actividad.",
+        "iconUrl": "[jira-site-redacted]",
+        "name": "En curso",
+        "id": "10006",
+        "statusCategory": {
+          "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4",
+          "id": 4,
+          "key": "indeterminate",
+          "colorName": "yellow",
+          "name": "En curso"
+        }
+      }
+    }
+  },
+  "transitionResult": {
+    "success": true
+  },
+  "commentResult": {
+    "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10029/comment/10038",
+    "id": "10038",
+    "author": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "body": "CR-SST technical review checkpoint: CR-SST-0073\n\nBackend producer-side scope for SST Tags Governance was strengthened and validated.\n\nCompleted:\n\n* Fixed global tags migration JSONB serialization for `tag_definitions`, `tag_values`, and `tag_occurrences`.\n* Re-ran `npm run migration:run` successfully on local Postgres.\n* Verified backfill parity: `tag_values=21` vs legacy `dictionary_tag_values=21`; `tag_occurrences=45` vs legacy `dictionary_tag_occurrences=45`; `tag_definitions=39`.\n* Verified required indexes for global tag definitions, values, and occurrences.\n* Aligned resource binding validation to currently supported resources: `articulo` and `diccionario`.\n* Verified unauthenticated protected route boundary returns 401 for definitions, values, and resource binding.\n\nValidation:\n\n* `node scripts/test-tags-governance.js`: PASS 4/4.\n* `npm run test:tag-engine`: PASS 7/7.\n* `npm run test:diccionario:stage3`: PASS 11/11.\n* `npm run check` in `sst-bend`: exit 0 with expected protected-smoke skips due missing `SMOKE_JWT`/`SMOKE_JWT_OWNER`.\n* `npm run check` in `4uentes-orchestor`: PASS.\n\nRemaining gap before final closure:\n\n* Authenticated endpoint smoke with owner JWT (`SMOKE_JWT_OWNER`) was not executed because the token is not available in the environment.\n\nEvidence:\n\n* `evidence/requests/CR-SST-0073/technical-closure-review.md`\n* `evidence/requests/CR-SST-0073/validation-results.md`\n\nBefore status: En curso  \nTransition: In Review (31)",
+    "updateAuthor": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "created": "2026-06-18T20:58:24.108-0300",
+    "updated": "2026-06-18T20:58:24.108-0300",
+    "jsdPublic": true
+  },
+  "externalWrite": true
+}

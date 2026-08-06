@@ -1,0 +1,127 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0083"
+title: "Select runtime transport for sst-chatbot orchestrator handoff"
+status: planned
+source_request: "requests/inbox/CR-SST-0083-select-runtime-transport-for-sst-chatbot-handoff.yaml"
+created_at: "2026-06-21"
+requester: "4uentes"
+
+initial_scope:
+  solution: "sst"
+  services:
+    - sst-chatbot
+  include_optional_services: false
+
+control_plane_context:
+  feature_state: "sst-chatbot"
+  feature_state_file: "state/features/sst-chatbot.current.yaml"
+  jira_issue_key: "SST-7"
+  current_jira_status_observed: "Tareas por hacer"
+  jira_parent_issue_key: "SST-7"
+  jira_subtask_expected: true
+  jira_subtask_summary: "[SST-7][CR-SST-0083] Select runtime transport for sst-chatbot handoff"
+  governing_request: "CR-SST-0083"
+  jira_observation_ref: "evidence/requests/CR-SST-0008/jira-sync-health-results.json"
+  jira_write_blocked_ref: "evidence/requests/CR-SST-0083/jira-subtask-and-transition-blocker.md"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: sst-chatbot
+      via: initial_scope.services
+      service_kind: agent-runtime
+      ards_kind: backend-api
+      status: active
+  affected_ards:
+    - backend-api
+    - control-plane
+  capabilities:
+    - "capability.inbound.sst-chatbot-agent-handoff"
+  risks:
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: sst-chatbot
+      severity: medium
+    - id: CROSS_REPO_TRANSPORT_BOUNDARY_SELECTION
+      service_id: sst-chatbot
+      severity: high
+    - id: AUTH_IDEMPOTENCY_AUDIT_COUPLING
+      service_id: sst-chatbot
+      severity: high
+
+required_context:
+  - catalog/services/sst-chatbot.yaml
+  - state/features/sst-chatbot.current.yaml
+  - docs/cross-repo/sst-chatbot-orchestrator-handoff.md
+  - specs/capabilities/inbound/4uentes-orchestor--sst-chatbot-agent-handoff.yaml
+  - inventory/evidence/git/sst-chatbot.md
+  - requests/done/CR-SST-0022-local-fake-orchestrator-handoff-adapter.yaml
+  - requests/done/CR-SST-0082-sst-chatbot-core-orchestrator-sync-reconciliation.yaml
+  - AGENTS.md
+
+required_checks:
+  - service_id: 4uentes-orchestor
+    command: "npm.cmd run check"
+  - service_id: sst-chatbot
+    command: "No child mutation is planned in CR-SST-0083; reuse last validated state from CR-SST-0082 unless a later implementation request changes the child repo."
+
+risk:
+  level: high
+  score: 6
+  drivers:
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: sst-chatbot
+      severity: medium
+    - id: CROSS_REPO_TRANSPORT_BOUNDARY_SELECTION
+      service_id: sst-chatbot
+      severity: high
+    - id: AUTH_IDEMPOTENCY_AUDIT_COUPLING
+      service_id: sst-chatbot
+      severity: high
+
+task_weight:
+  classification: complex-high-risk-task
+  risk_level: high
+  drivers:
+    - DIRTY_WORKING_TREE_OBSERVED
+    - CROSS_REPO_TRANSPORT_BOUNDARY_SELECTION
+    - AUTH_IDEMPOTENCY_AUDIT_COUPLING
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "Transport selection changes cross-repo authority, acceptance semantics, auth, idempotency, and audit boundaries."
+
+subagent_deployment_plan:
+  required: true
+  parallelizable: false
+  roles:
+    - architecture-reviewer
+    - cross-repo-contract-reviewer
+  fallback: "Subagents are unavailable in this runtime; perform the transport review sequentially in the main agent and record the reasoning in evidence."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  allowed_window: manual
+  branch_strategy: one-branch-per-repo
+  implementation_boundary: "CR-SST-0083 selects and documents the transport only; any child or runtime code changes require a later approved implementation request."
+  jira_read_executed: true
+  jira_write_executed: false
+  jira_write_target:
+    parent_issue_key: "SST-7"
+    desired_artifact: "subtask"
+    desired_initial_status: "En curso"
+  jira_write_blocked_reason: "Atlassian connector search/write path returned 403 because the app is not installed on the target instance."
+
+decision:
+  status: pending
+  approver: TODO
+
+planner_notes:
+  - "The generator-assigned low-risk classification was manually overridden because transport selection changes the runtime authority boundary."
+  - "Recommended first transport: authenticated HTTP ingress into orchestrator acceptance, then orchestrator-owned queueing after acceptance."
+  - "Direct child-to-queue transport is intentionally not the default because it front-loads auth, replay, audit, and retry coupling into the cross-repo boundary."
+  - "Worker-only execution is insufficient as the external contract because it does not create a clear transport boundary from child to orchestrator."
+  - "The active feature-state Jira issue is SST-7; CR-SST-0083 is prepared as a child subtask but the remote write is currently blocked."

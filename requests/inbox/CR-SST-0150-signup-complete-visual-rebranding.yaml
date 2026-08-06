@@ -1,0 +1,10 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0150"
+title: "Complete signup visual rebranding"
+status: inbox
+created_at: "2026-08-04"
+requester: "4uentes"
+business_context: "Signup still uses a legacy logo, mixed editorial language and a shell inconsistent with the adopted SST brand system."
+requested_change: "Apply a complete signup visual rebrand using official assets, semantic tokens and a clearer responsive hierarchy."
+expected_outcome: "Signup expresses the current SST brand while preserving all functional and security contracts."

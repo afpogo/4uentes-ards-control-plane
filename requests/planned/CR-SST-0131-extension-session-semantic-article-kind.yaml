@@ -1,0 +1,42 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0131"
+title: "Preserve semantic article kind in extension sessions"
+status: done
+source_request: "requests/inbox/CR-SST-0131-extension-session-semantic-article-kind.yaml"
+created_at: "2026-07-11"
+requester: "4uentes"
+summary: "Add an optional semantic article-kind field to session handoff independent from PDF/MHTML transport format."
+control_plane_context: {initiative_id: "INIT-SST-0005", parent_request_id: "CR-SST-0128", predecessor_requests: ["CR-SST-0129"], related_requests: ["CR-SST-0119", "CR-SST-0120"], jira_epic_key: "SST-57", jira_parent_issue_key: "SST-58", jira_role: "mirror", jira_source_of_truth: false}
+impact_analysis:
+  required: true
+  affected_services:
+    - {service_id: "sst-extension", via: "session snapshot producer contract", service_kind: "browser-extension", ards_kind: "frontend-extension", status: "optional-active"}
+    - {service_id: "node-auth", via: "session BFF handoff", service_kind: "backend-bff", ards_kind: "backend-bff", status: "active"}
+    - {service_id: "sst-bend", via: "session-derived article persistence", service_kind: "backend-api", ards_kind: "backend-api", status: "active"}
+    - {service_id: "4uentes-orchestor", via: "lifecycle and evidence", service_kind: "control-plane", ards_kind: "control-plane", status: "active"}
+  affected_ards: ["browser-extension-session-ingestion", "article-semantic-kind"]
+  risks: [{id: "LEGACY_EXTENSION_COMPATIBILITY", severity: high}, {id: "PRIVATE_CAPTURE_METADATA", severity: high}]
+execution:
+  requires_human_approval: false
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets: ["sst-extension", "node-auth", "sst-bend"]
+  implementation_boundary: "Typed semantic metadata, compatibility fallback, tests and owner docs; no historical rewrite."
+owner_documentation:
+  required: true
+  status: satisfied
+  owner_repos: ["sst-extension", "node-auth", "sst-bend"]
+  planned_owner_docs:
+    - "specs/features/sessions.yaml"
+    - "specs/integration/node-auth-extension-session-ingestion.yaml"
+    - "specs/capabilities/outbound/browser-extension-session-ingestion.yaml"
+    - "docs/qa/session-capture-validation.md"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0131/owner-documentation-summary.md"
+required_checks:
+  - {service_id: "sst-extension", command: "pnpm check"}
+  - {service_id: "node-auth", command: "npm.cmd run check"}
+  - {service_id: "sst-bend", command: "npm.cmd run check"}
+  - {service_id: "4uentes-orchestor", command: "npm.cmd run check"}
+decision: {status: closed-local, approver: "4uentes", decided_at: "2026-07-12", note: "All owner gates and restored BFF HTTP passed."}
+jira_sync: {status: synchronized, desired_issue_type: "Subtask", parent_issue_key: "SST-58", issue_key: "SST-61", status_observed: "Listo"}

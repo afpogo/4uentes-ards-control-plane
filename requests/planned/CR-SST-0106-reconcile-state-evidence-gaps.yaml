@@ -1,0 +1,83 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0106"
+title: "Reconcile State evidence gaps"
+status: planned
+source_request: "requests/inbox/CR-SST-0106-reconcile-state-evidence-gaps.yaml"
+created_at: "2026-07-02"
+requester: "4uentes"
+
+summary: >
+  Reconcile two historical bugfix_state records so INIT-CP-0001 can advance
+  State evidence enforcement with fewer accepted warnings.
+
+initial_scope:
+  solution: "control-plane"
+  services:
+    - "4uentes-orchestor"
+  include_optional_services: false
+
+control_plane_context:
+  initiative_id: "INIT-CP-0001"
+  initiative_file: "initiatives/INIT-CP-0001-control-plane-lifecycle-enforcement.yaml"
+  governing_request: "CR-SST-0106"
+  candidate_replaces: "CR-SST-0086 candidate label in INIT-CP-0001"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "4uentes-orchestor"
+      via: "state read-model metadata, initiative metadata and evidence"
+      service_kind: "control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+  affected_ards:
+    - control-plane
+    - state-read-model
+    - evidence
+    - request-lifecycle
+  capabilities:
+    - "ards-sdd-governance"
+
+required_context:
+  - "state/bugfixes/login-504-proxy-timeout.current.yaml"
+  - "state/bugfixes/sst-bend-emfile-watchers.current.yaml"
+  - "scripts/verify-state-model.js"
+  - "initiatives/INIT-CP-0001-control-plane-lifecycle-enforcement.yaml"
+
+required_checks:
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check:state"
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check"
+
+execution:
+  requires_human_approval: false
+  allowed_window: manual
+  branch_strategy: "control-plane-only"
+  implementation_boundary: >
+    This CR reconciles control-plane State metadata and evidence only. It does
+    not modify child repositories and does not claim to be the original bugfix
+    implementation lifecycle.
+  child_repo_mutation_allowed: false
+  jira_read_executed: true
+  jira_write_executed: true
+  jira_issue_key: "SST-39"
+  jira_epic_key: "SST-36"
+  jira_write_ref: "evidence/initiatives/INIT-CP-0001/jira-mirror-sync-2026-07-03.md"
+
+validation:
+  required_checks:
+    - "Bugfix states list request_ids."
+    - "Bugfix states list existing evidence_refs."
+    - "State validator no longer warns for those two records."
+    - "Full control-plane check passes."
+  evidence_required:
+    - "implementation_summary"
+    - "bugfix_state_reconciliation"
+    - "changed_files_summary"
+    - "validation_results"
+
+decision:
+  status: pending
+  approver: TODO

@@ -1,0 +1,33 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0085"
+title: "Adopt control-plane audit findings through local Initiative model"
+status: inbox
+created_at: "2026-06-27"
+requester: "4uentes"
+
+summary: >
+  Adopt the generated control-plane audit report as planning evidence and
+  introduce a local Initiative model to group the lifecycle enforcement program
+  before any child repository mutation, Core promotion, Jira write, or runtime
+  transport implementation.
+
+initial_scope:
+  solution: "sst"
+  services: []
+  include_optional_services: false
+
+control_plane_context:
+  initiative_id: "INIT-CP-0001"
+  initiative_file: "initiatives/INIT-CP-0001-control-plane-lifecycle-enforcement.yaml"
+  audit_report_ref: ".ards/audits/control-plane/latest.md"
+  jira_epic_expected: true
+  jira_project_key: "SST"
+  jira_issue_type: "Epic"
+  jira_write_expected: false
+
+notes:
+  - "This request is local to the control-plane."
+  - "The audit report is adopted as evidence and handoff, not as automatic Core canon."
+  - "Jira Epic tracking remains a mirror and is not created by this request."
+  - "Child repositories and runtime handoff implementation are explicitly out of scope."

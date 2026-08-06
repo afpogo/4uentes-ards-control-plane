@@ -1,0 +1,46 @@
+{
+  "issueKey": "SST-27",
+  "issue": {
+    "summary": "[SST][INIT-SST-0001] SST Tags Governance Continuity",
+    "status": "Tareas por hacer",
+    "statusCategory": "Por hacer",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-06-29T00:04:15.807-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "init-sst-0001",
+      "learning-content-tags",
+      "sst-tags-governance"
+    ],
+    "description": "Initiative/Epic mirror for INIT-SST-0001.\n\nPurpose:\n\n* Govern SST tags continuity after the closed SST-4 cut.\n* Separate completed dictionary/article governance from the active learning-content track.\n* Keep CR-SST-0088, CR-SST-0089, CR-SST-0090 and CR-SST-0091 visible under one initiative-level Jira epic.\n\nControl-plane source:\n\n* initiatives/INIT-SST-0001-tags-governance-continuity.yaml\n* state/features/learning-content-tags.current.yaml\n* requests/planned/CR-SST-0088-learning-source-model-boundary.yaml\n* requests/planned/CR-SST-0089-learning-content-preview-import-boundary.yaml\n* requests/planned/CR-SST-0090-learning-workspace-controlled-adoption.yaml\n* requests/planned/CR-SST-0091-sst-bend-learning-workspace-implementation-readiness.yaml\n\nBoundary:\n\n* Jira is an operational mirror.\n* ARDS/SDD remains the source of truth.\n* This epic does not authorize direct child-repo mutation.\n\n",
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10065\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10065\",\"key\":\"SST-27\",\"fields\":{\"summary\":\"[SST][INIT-SST-0001] SST Tags Governance Continuity\",\"description\":\"Initiative/Epic mirror for INIT-SST-0001.\\n\\nPurpose:\\n\\n* Govern SST tags continuity after the closed SST-4 cut.\\n* Separate completed dictionary/article governance from the active learning-content track.\\n* Keep CR-SST-0088, CR-SST-0089, CR-SST-0090 and CR-SST-0091 visible under one initiative-level Jira epic.\\n\\nControl-plane source:\\n\\n* initiatives/INIT-SST-0001-tags-governance-continuity.yaml\\n* state/features/learning-content-tags.current.yaml\\n* requests/planned/CR-SST-0088-learning-source-model-boundary.yaml\\n* requests/planned/CR-SST-0089-learning-content-preview-import-boundary.yaml\\n* requests/planned/CR-SST-0090-learning-workspace-controlled-adoption.yaml\\n* requests/planned/CR-SST-0091-sst-bend-learning-workspace-implementation-readiness.yaml\\n\\nBoundary:\\n\\n* Jira is an operational mirror.\\n* ARDS/SDD remains the source of truth.\\n* This epic does not authorize direct child-repo mutation.\\n\\n\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-06-29T00:04:15.807-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10005\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"Tareas por hacer\",\"id\":\"10005\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/2\",\"id\":2,\"key\":\"new\",\"colorName\":\"blue-gray\",\"name\":\"Por hacer\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"init-sst-0001\",\"learning-content-tags\",\"sst-tags-governance\"]}}"
+  },
+  "transitions": [
+    {
+      "id": "11",
+      "name": "Por hacer",
+      "toStatus": "Tareas por hacer",
+      "toStatusCategory": "Por hacer"
+    },
+    {
+      "id": "21",
+      "name": "En curso",
+      "toStatus": "En curso",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "31",
+      "name": "In Review",
+      "toStatus": "En revisión",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "41",
+      "name": "Listo",
+      "toStatus": "Finalizada",
+      "toStatusCategory": "Listo"
+    }
+  ]
+}

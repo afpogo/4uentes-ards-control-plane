@@ -1,0 +1,31 @@
+schema_version: "1.0"
+kind: "feature_state"
+id: "multi-solution-scope-partition"
+title: "Multi-Solution Scope Partition"
+status: "ards-documented"
+updated_at: "2026-07-03"
+solution_id: "4uentes"
+affected_services:
+  - 4uentes-portfolio
+request_ids:
+  - CR-4UENTES-0001
+  - CR-4UENTES-0002
+capability_refs:
+  - "multi-solution-scope-partition"
+spec_refs:
+  - "docs/cross-repo/control-plane-scope-partition.md"
+  - "docs/cross-repo/solutions-model.md"
+  - "docs/apps/4uentes-portfolio.md"
+  - "catalog/services/4uentes-portfolio.yaml"
+  - "solutions/4uentes.yaml"
+evidence_refs:
+  - "evidence/requests/CR-4UENTES-0001/scope-partition-analysis.md"
+  - "evidence/requests/CR-4UENTES-0001/changed-files-summary.md"
+  - "evidence/requests/CR-4UENTES-0001/validation-results.md"
+  - "evidence/requests/CR-4UENTES-0002/owner-docs-reconciliation.md"
+  - "evidence/requests/CR-4UENTES-0002/changed-files-summary.md"
+  - "evidence/requests/CR-4UENTES-0002/validation-results.md"
+open_gaps:
+  - "Decide whether public portfolio positioning should be personal brand, 4uentes company asset, or both."
+  - "Create a future Fulbito solution only after repo identity and evidence exist."
+  - "Avoid using CR-SST naming for future non-SST solution work unless the request actually belongs to SST."

@@ -1,0 +1,31 @@
+schema_version: "1.0"
+kind: "feature_state"
+id: "portfolio-projects-evidence-system"
+title: "Portfolio Projects Evidence System"
+status: "done"
+updated_at: "2026-07-09"
+solution_id: "4uentes"
+affected_services:
+  - 4uentes-portfolio
+request_ids:
+  - CR-4UENTES-0035
+capability_refs:
+  - "portfolio-projects-evidence-system"
+spec_refs:
+  - "requests/done/CR-4UENTES-0035-portfolio-projects-evidence-system.yaml"
+  - "initiatives/INIT-PORTFOLIO-0003-portfolio-professionalization.yaml"
+evidence_refs:
+  - "evidence/requests/CR-4UENTES-0035/implementation-plan.md"
+  - "evidence/requests/CR-4UENTES-0035/current-projects-ui-analysis.md"
+  - "evidence/requests/CR-4UENTES-0035/jira-task-sync-summary.md"
+  - "evidence/requests/CR-4UENTES-0035/jira-port-18-start-transition-summary.md"
+  - "evidence/requests/CR-4UENTES-0035/jira-port-18-start-comment-summary.md"
+  - "evidence/requests/CR-4UENTES-0035/jira-port-18-implementation-comment-summary.md"
+  - "evidence/requests/CR-4UENTES-0035/implementation-start-summary.md"
+  - "evidence/requests/CR-4UENTES-0035/changed-files-summary.md"
+  - "evidence/requests/CR-4UENTES-0035/child-validation-results.md"
+  - "evidence/requests/CR-4UENTES-0035/visual-qa-results.md"
+  - "evidence/requests/CR-4UENTES-0035/control-plane-validation-results.md"
+  - "evidence/requests/CR-4UENTES-0035/jira-port-18-validation-comment-summary.md"
+  - "evidence/requests/CR-4UENTES-0035/jira-port-18-close-transition-summary.md"
+open_gaps: []

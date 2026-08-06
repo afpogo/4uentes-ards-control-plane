@@ -1,0 +1,26 @@
+solution_id: finanzas-personales
+name: Finanzas Personales
+status: planned
+services:
+  core:
+    - finanzas-personales-frontend
+    - finanzas-personales-backend
+  shared: []
+  optional: []
+  infrastructure: []
+relationships:
+  - from: finanzas-personales-frontend
+    to: finanzas-personales-backend
+    type: consumes-api-direct-exception-draft
+observed_deployment_targets:
+  - local-todo
+related_solutions: []
+tracking:
+  jira_project_key: HPT
+  jira_project_name_observed: home-phinance-ticket
+notes:
+  - Independent product solution governed by the global 4uentes control-plane.
+  - Both logical services currently share one Git monorepo.
+  - The repository root is a workspace, not a third runtime service or control-plane.
+  - Proposed Python, OCR and AI runtimes are not cataloged independently without implementation evidence.
+

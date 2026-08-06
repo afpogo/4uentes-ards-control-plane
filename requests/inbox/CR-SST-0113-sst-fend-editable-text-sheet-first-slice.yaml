@@ -1,0 +1,32 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0113"
+title: "Implement first editable text sheet in sst-fend"
+status: inbox
+created_at: "2026-07-04"
+requester: "4uentes"
+
+summary: >
+  Replace the current text-tab plumbing with the first usable editable text
+  sheet experience in sst-fend, keeping ArticleTag controls separate from
+  learning-content controls.
+
+source:
+  initiative_id: "INIT-SST-0001"
+  parent_request_id: "CR-SST-0112"
+  jira_epic_key: "SST-27"
+  active_jira_issue_key: "SST-6"
+  jira_subtask_key: "SST-43"
+  reason: >
+    The platform needs a real writing surface before granular tagging can be
+    implemented with a good user experience.
+
+scope:
+  solution: "sst"
+  services:
+    - "sst-fend"
+    - "4uentes-orchestor"
+  excludes:
+    - "Backend persistence changes"
+    - "Advanced parser/import"
+    - "Final visual templates"

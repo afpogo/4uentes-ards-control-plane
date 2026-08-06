@@ -1,0 +1,25 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0081"
+title: "Prepare request-driven child policy adoption beyond the closed SST rollout"
+status: inbox
+created_at: "2026-06-20"
+requester: "4uentes"
+
+summary: >
+  Record the post-CR-SST-0077 governance path for future child repo policy
+  adoption outside the closed SST rollout, including the reusable requirement
+  that each future rollout declare either a `policy_adoption_manifest` or a
+  `policy_exception_manifest` before child repo validation can close.
+
+scope:
+  solution: "sst"
+  services:
+    - "4uentes-orchestor"
+
+notes:
+  - "This request is control-plane-only preparation. It does not approve changes in child repos."
+  - "4uentes-ards-core remains the canonical source for shared policy definitions, including `http-qa-harness-policy`."
+  - "Any future non-SST or post-SST child adoption must open or advance its own approved lifecycle before repo mutation."
+  - "Child rollouts must use either `policy_adoption_manifest` or `policy_exception_manifest`."
+  - "Reusable templates live in `templates/policy-adoption-manifest.template.yaml` and `templates/policy-exception-manifest.template.yaml`."

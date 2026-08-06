@@ -1,0 +1,23 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0105"
+title: "Make owner documentation gate mandatory for child repo mutation workflows"
+status: inbox
+created_at: "2026-07-02"
+requester: "4uentes"
+
+summary: >
+  Ensure that the owner documentation validator is not optional when the
+  control-plane allows or performs child repository mutation. The policy must
+  require full control-plane validation, not only child-repo-local checks.
+
+motivation: >
+  CR-SST-0104 added the validator and wired it into `npm.cmd run check`, but
+  the operating policy and registry still need to state that this gate must be
+  executed for child repo mutation closure and must not be excluded.
+
+requested_outcome:
+  - "Policy explicitly requires `npm.cmd run check` after child repo mutation."
+  - "Validator fails if package.json no longer wires the owner-doc gate into `check`."
+  - "Validator fails if a child mutation request omits control-plane check requirements."
+  - "Evidence records the enforcement behavior."

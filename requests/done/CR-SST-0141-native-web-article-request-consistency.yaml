@@ -1,0 +1,44 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0141"
+title: "Align native web article request builders"
+status: done
+source_request: "requests/inbox/CR-SST-0141-native-web-article-request-consistency.yaml"
+planned_request: "requests/planned/CR-SST-0141-native-web-article-request-consistency.yaml"
+completed_at: "2026-07-12"
+requester: "4uentes"
+summary: "Native Web creation now persists an explicit semantic Web payload."
+scope:
+  solution: "sst"
+  services_modified: ["sst-fend", "node-auth", "4uentes-orchestor"]
+  functional_repositories_modified: true
+  runtime_code_modified: true
+implementation:
+  initiative_id: "INIT-SST-0005"
+  jira_epic_key: "SST-57"
+  jira_parent_issue_key: "SST-58"
+  jira_issue_key: "SST-71"
+  jira_status_observed: "Listo"
+  jira_source_of_truth: false
+  completed_slice: "Native Web sends identical canonical URL in the transport field and explicit web payload."
+owner_documentation:
+  status: "satisfied"
+  owner_repos: ["sst-fend", "node-auth"]
+  evidence_refs:
+    - "evidence/requests/CR-SST-0141/owner-documentation-summary.md"
+validation:
+  status: "validated-local"
+  passed:
+    - "node-auth npm.cmd run check"
+    - "sst-fend npm.cmd run check: 29 suites and 184 tests"
+    - "Restored frontend and BFF HTTP 200"
+evidence_refs:
+  - "evidence/requests/CR-SST-0141/discovery.md"
+  - "evidence/requests/CR-SST-0141/implementation.md"
+  - "evidence/requests/CR-SST-0141/node-auth-validation.md"
+  - "evidence/requests/CR-SST-0141/sst-fend-validation.md"
+  - "evidence/requests/CR-SST-0141/owner-documentation-summary.md"
+decision:
+  status: "closed-local"
+  approver: "4uentes"
+  note: "Validated locally; no historical migration, release or publication is implied."

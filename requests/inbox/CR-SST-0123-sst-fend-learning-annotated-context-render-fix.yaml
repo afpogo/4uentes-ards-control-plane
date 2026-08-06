@@ -1,0 +1,9 @@
+schema_version: "1.0"
+id: "CR-SST-0123"
+title: "Fix sst-fend LearningWorkspace annotated context render"
+created_at: "2026-07-05"
+requester: "4uentes"
+summary: >
+  Fix the residual CR-SST-0118 / SST-48 E2E gap where /learning can generate
+  and accept a preview after CR-SST-0122, but the visible accepted context still
+  shows no annotations or contentBlocks.

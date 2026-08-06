@@ -1,0 +1,108 @@
+{
+  "issueKey": "ARDS-4",
+  "before": {
+    "summary": "[CP][CR-CP-0003] Promote feature and bugfix state read-model to core",
+    "status": "Por hacer",
+    "statusCategory": "Por hacer",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-07-07T16:58:48.867-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-cp-0003",
+      "init-cp-0002"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10112\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10112\",\"key\":\"ARDS-4\",\"fields\":{\"summary\":\"[CP][CR-CP-0003] Promote feature and bugfix state read-model to core\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-07-07T16:58:48.867-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10042\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"Por hacer\",\"id\":\"10042\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/2\",\"id\":2,\"key\":\"new\",\"colorName\":\"blue-gray\",\"name\":\"Por hacer\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-cp-0003\",\"init-cp-0002\"]}}"
+  },
+  "after": {
+    "summary": "[CP][CR-CP-0003] Promote feature and bugfix state read-model to core",
+    "status": "En curso",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-07-07T22:50:29.167-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-cp-0003",
+      "init-cp-0002"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10112\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10112\",\"key\":\"ARDS-4\",\"fields\":{\"summary\":\"[CP][CR-CP-0003] Promote feature and bugfix state read-model to core\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-07-07T22:50:29.167-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10043\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En curso\",\"id\":\"10043\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-cp-0003\",\"init-cp-0002\"]}}"
+  },
+  "transitions": [
+    {
+      "id": "11",
+      "name": "Por hacer",
+      "toStatus": "Por hacer",
+      "toStatusCategory": "Por hacer"
+    },
+    {
+      "id": "21",
+      "name": "En curso",
+      "toStatus": "En curso",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "31",
+      "name": "En revisión",
+      "toStatus": "En revisión",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "41",
+      "name": "Listo",
+      "toStatus": "Listo",
+      "toStatusCategory": "Listo"
+    }
+  ],
+  "selectedTransition": {
+    "id": "21",
+    "name": "En curso",
+    "toStatus": "En curso",
+    "toStatusCategory": "En curso"
+  },
+  "transitionResult": {
+    "success": true
+  },
+  "commentResult": {
+    "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10112/comment/10136",
+    "id": "10136",
+    "author": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "body": "# ARDS-4 / CR-CP-0003\n\nInicio CR-CP-0003 para promover `feature_state` y `bugfix_state` como  \nstate read-model reusable del core.\n\nDecision de clasificacion:\n\n* no se crea una policy nueva;\n* `feature-bugfix-state-model` queda como living resource core-owned;\n* `4uentes-orchestor` queda como origin repo y adopta localmente el recurso;\n* `4uentes-ards-core` queda como canonical owner del canon reusable;\n* adopcion requerida para perfil `control-plane`;\n* adopcion opt-in/request-driven para repos hijos u otros perfiles;\n* no hubo mutacion de repos hijos.\n\nEvidencia local:\n\n* `evidence/requests/CR-CP-0003/state-model-core-mapping.md`\n* `evidence/requests/CR-CP-0003/validator-boundary-decision.md`\n* `evidence/requests/CR-CP-0003/validation-results.md`\n\n",
+    "updateAuthor": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "created": "2026-07-07T22:50:29.167-0300",
+    "updated": "2026-07-07T22:50:29.167-0300",
+    "jsdPublic": true
+  },
+  "commentBody": "# ARDS-4 / CR-CP-0003\n\nInicio CR-CP-0003 para promover `feature_state` y `bugfix_state` como\nstate read-model reusable del core.\n\nDecision de clasificacion:\n\n- no se crea una policy nueva;\n- `feature-bugfix-state-model` queda como living resource core-owned;\n- `4uentes-orchestor` queda como origin repo y adopta localmente el recurso;\n- `4uentes-ards-core` queda como canonical owner del canon reusable;\n- adopcion requerida para perfil `control-plane`;\n- adopcion opt-in/request-driven para repos hijos u otros perfiles;\n- no hubo mutacion de repos hijos.\n\nEvidencia local:\n\n- `evidence/requests/CR-CP-0003/state-model-core-mapping.md`\n- `evidence/requests/CR-CP-0003/validator-boundary-decision.md`\n- `evidence/requests/CR-CP-0003/validation-results.md`\n",
+  "externalWrite": true
+}

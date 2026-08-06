@@ -1,0 +1,157 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0098"
+title: "Fix sst-extension session tab-by-tab visual PDF capture"
+status: closed-local
+source_request: "requests/inbox/CR-SST-0098-sst-extension-session-tab-pdf-capture.yaml"
+created_at: "2026-07-02"
+requester: "4uentes"
+
+summary: >
+  Implement the first sst-extension stabilization slice under INIT-SST-0003:
+  robust tab-by-tab visual PDF capture for session items.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - "sst-extension"
+    - "4uentes-orchestor"
+  include_optional_services: false
+
+control_plane_context:
+  initiative_id: "INIT-SST-0003"
+  initiative_file: "initiatives/INIT-SST-0003-sst-extension-construction.yaml"
+  governing_request: "CR-SST-0098"
+  jira_epic_key: "SST-29"
+  jira_issue_key: "SST-30"
+  policy_ref: "docs/policies/owner-documentation-authority-policy.md"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "sst-extension"
+      via: "session capture runtime, specs, docs and tests"
+      service_kind: "browser-extension"
+      ards_kind: "frontend-extension"
+      status: "optional-active"
+    - service_id: "4uentes-orchestor"
+      via: "request lifecycle and evidence"
+      service_kind: "control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+  affected_ards:
+    - frontend-extension
+    - browser-extension-session-capture
+    - child-repo-owner-documentation
+  capabilities:
+    - "browser-extension-session-capture"
+  risks:
+    - id: PRIVATE_PAGE_CAPTURE_LEAK
+      severity: high
+    - id: TAB_FOCUS_DISRUPTION
+      severity: medium
+    - id: OWNER_DOCS_STALE
+      severity: high
+
+required_context:
+  - "docs/policies/owner-documentation-authority-policy.md"
+  - "evidence/requests/CR-SST-0095/jira-cr-backlog-candidates.md"
+  - "sst-extension/AGENTS.md"
+  - "sst-extension/specs/features/sessions.yaml"
+  - "sst-extension/src/platform/tabs/capture-session-tab-fullpage-pdf.ts"
+  - "sst-extension/src/features/sessions/create-session-capture-service.ts"
+
+required_checks:
+  - service_id: "sst-extension"
+    command: "pnpm test"
+  - service_id: "sst-extension"
+    command: "pnpm build"
+  - service_id: "sst-extension"
+    command: "pnpm check"
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check"
+
+execution:
+  child_repo_mutation_allowed: true
+  child_repo_mutation_target:
+    service_id: "sst-extension"
+  owner_documentation_required: true
+  owner_documentation_expected:
+    - "sst-extension/specs/features/sessions.yaml"
+    - "sst-extension/docs integration or QA docs affected by capture behavior"
+  jira_write_executed: true
+  jira_write_ref: "evidence/initiatives/INIT-SST-0003/jira-extension-backlog-sync-summary.md"
+  jira_start_executed: true
+  jira_epic_start_ref: "evidence/requests/CR-SST-0098/jira-sst-29-start-transition-summary.md"
+  jira_issue_start_ref: "evidence/requests/CR-SST-0098/jira-sst-30-start-transition-summary.md"
+  preliminary_analysis_ref: "evidence/requests/CR-SST-0098/preliminary-analysis.md"
+  subagent_plan_ref: "evidence/requests/CR-SST-0098/subagent-atomized-plan.md"
+  implementation_summary_ref: "evidence/requests/CR-SST-0098/implementation-summary.md"
+  changed_files_summary_ref: "evidence/requests/CR-SST-0098/changed-files-summary.md"
+  validation_results_ref: "evidence/requests/CR-SST-0098/validation-results.md"
+  jira_review_sync_executed: true
+  jira_review_sync_ref: "evidence/requests/CR-SST-0098/jira-ards-sdd-sync-review-summary.md"
+  jira_review_sync_result_ref: "evidence/requests/CR-SST-0098/jira-ards-sdd-sync-review-result.json"
+  owner_documentation_enforcement_ref: "evidence/requests/CR-SST-0098/owner-documentation-enforcement.md"
+  manual_qa_chrome_devtools_attempt_ref: "evidence/requests/CR-SST-0098/manual-qa-chrome-devtools-attempt.md"
+  manual_qa_chrome_devtools_retry_ref: "evidence/requests/CR-SST-0098/manual-qa-chrome-devtools-retry.md"
+  manual_qa_extension_load_diagnostics_ref: "evidence/requests/CR-SST-0098/manual-qa-extension-load-diagnostics.md"
+  manual_qa_session_capture_bug_ref: "evidence/requests/CR-SST-0098/manual-qa-session-capture-bug.md"
+  closure_readiness_ref: "evidence/requests/CR-SST-0098/closure-readiness.md"
+  jira_closure_prep_comment_ref: "evidence/requests/CR-SST-0098/jira-sst-30-closure-prep-comment-summary.md"
+  jira_closure_prep_comment_result_ref: "evidence/requests/CR-SST-0098/jira-sst-30-closure-prep-comment-result.json"
+  jira_session_capture_bugfix_comment_ref: "evidence/requests/CR-SST-0098/jira-sst-30-session-capture-bugfix-comment-summary.md"
+  jira_session_capture_bugfix_comment_result_ref: "evidence/requests/CR-SST-0098/jira-sst-30-session-capture-bugfix-comment-result.json"
+  jira_session_capture_async_followup_comment_ref: "evidence/requests/CR-SST-0098/jira-sst-30-session-capture-async-followup-comment-summary.md"
+  jira_session_capture_async_followup_comment_result_ref: "evidence/requests/CR-SST-0098/jira-sst-30-session-capture-async-followup-comment-result.json"
+  manual_qa_final_session_success_ref: "evidence/requests/CR-SST-0098/manual-qa-final-session-success.md"
+  bff_followup_request_ref: "requests/planned/CR-SST-0108-node-auth-extension-session-body-limit.yaml"
+  bff_followup_jira_issue_key: "SST-40"
+  jira_close_executed: true
+  jira_close_ref: "evidence/requests/CR-SST-0098/jira-sst-30-close-transition-summary.md"
+  jira_close_result_ref: "evidence/requests/CR-SST-0098/jira-sst-30-close-transition-result.json"
+
+owner_documentation:
+  required: true
+  status: satisfied
+  owner_repo: "sst-extension"
+  planned_owner_docs:
+    - "specs/features/sessions.yaml"
+    - "specs/integration/node-auth-extension-session.yaml"
+    - "docs/integration/node-auth-extension-session-ingestion.md"
+    - "docs/qa/session-capture-validation.md"
+  updated_owner_docs:
+    - "specs/features/sessions.yaml"
+    - "docs/integration/node-auth-extension-session-ingestion.md"
+    - "docs/qa/session-capture-validation.md"
+  owner_refs:
+    - repo: "sst-extension"
+      paths:
+        - "specs/features/sessions.yaml"
+        - "specs/integration/node-auth-extension-session.yaml"
+        - "docs/integration/node-auth-extension-session-ingestion.md"
+        - "docs/qa/session-capture-validation.md"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0098/implementation-summary.md"
+    - "evidence/requests/CR-SST-0098/changed-files-summary.md"
+    - "evidence/requests/CR-SST-0098/validation-results.md"
+    - "evidence/requests/CR-SST-0098/owner-documentation-enforcement.md"
+    - "evidence/requests/CR-SST-0098/manual-qa-session-capture-bug.md"
+    - "evidence/requests/CR-SST-0098/manual-qa-final-session-success.md"
+
+validation:
+  required_checks:
+    - "Original active tab is restored after capture."
+    - "Tabs wait for ready/settle or record timeout/failure."
+    - "No persistent content script is introduced without spec."
+    - "Owner docs/specs are updated or exception is recorded."
+  manual_qa:
+    chrome_devtools_mcp:
+      status: passed_by_user_manual_qa
+      evidence_ref: "evidence/requests/CR-SST-0098/manual-qa-final-session-success.md"
+      note: "User manual QA confirmed session submit returns 201, creates SST session and generates PDFs after CR-SST-0108 resolved the node-auth body-size blocker."
+
+decision:
+  status: closed_local
+  approver: "4uentes"
+  note: "Implementation, owner-documentation updates, extension validation, CR-SST-0108 BFF follow-up, final user manual QA and Jira SST-30 close transition completed successfully."

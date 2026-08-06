@@ -1,0 +1,64 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0079"
+title: "SST Tags - Reproducible API QA documentation"
+status: done
+source_request: "requests/inbox/CR-SST-0079-sst-tags-governance-reproducible-api-qa.yaml"
+planned_request: "requests/planned/CR-SST-0079-sst-tags-governance-reproducible-api-qa.yaml"
+completed_at: "2026-06-19"
+requester: "4uentes"
+
+summary: >
+  Added reproducible SST Tags Governance API QA documentation and a versioned
+  `.http` collection aligned with the existing `sst-bend` manual QA convention.
+
+scope:
+  solution: "sst"
+  services_modified:
+    - "sst-bend"
+    - "4uentes-orchestor"
+  functional_repositories_modified: true
+  runtime_code_modified: false
+
+implementation:
+  sst_bend:
+    http_collection: "httpPruebas/Tags-http/sst.tags-governance.http"
+    manual_qa_doc: "docs/api/24-sst-tags-governance-manual-qa.md"
+    updated_indexes:
+      - "docs/api/README.md"
+      - "docs/api/13-endpoint-test-map.md"
+      - "docs/00-overview.md"
+      - "specs/api/00-index.yaml"
+      - ".env.example"
+  orchestrator:
+    evidence:
+      - "evidence/requests/CR-SST-0079/implementation-plan.md"
+      - "evidence/requests/CR-SST-0079/changed-files-summary.md"
+      - "evidence/requests/CR-SST-0079/validation-results.md"
+
+validation:
+  status: "partial"
+  passed:
+    - "sst-bend: secret scan over new QA assets"
+    - "sst-bend: node --check scripts/test-tags-governance.js"
+    - "sst-bend: node scripts/test-tags-governance.js"
+    - "sst-bend: npm.cmd run test:tag-engine"
+    - "sst-bend: docker compose up -d"
+    - "sst-bend: docker compose ps"
+    - "sst-bend: npm.cmd run check"
+    - "4uentes-orchestor: npm.cmd run check"
+  blocker_notes:
+    - "No `SMOKE_JWT` or `SMOKE_JWT_OWNER` was available for authenticated live endpoint execution."
+
+evidence_refs:
+  - "evidence/requests/CR-SST-0079/implementation-plan.md"
+  - "evidence/requests/CR-SST-0079/changed-files-summary.md"
+  - "evidence/requests/CR-SST-0079/validation-results.md"
+
+accepted_gaps:
+  - "Live manual QA execution still requires an operator-provided `SMOKE_JWT_OWNER`."
+
+decision:
+  status: "closed-local"
+  approver: "4uentes"
+  note: "CR-SST-0079 closes the documentation/harness implementation. It does not claim live endpoint execution without local services and owner JWT."

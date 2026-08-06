@@ -1,0 +1,26 @@
+schema_version: "1.0"
+kind: "feature_state"
+id: "portfolio-mobile-linear-layout"
+title: "Portfolio Mobile Linear Layout"
+status: "implemented-local"
+updated_at: "2026-07-04"
+solution_id: "4uentes"
+affected_services:
+  - 4uentes-portfolio
+request_ids:
+  - CR-4UENTES-0027
+capability_refs:
+  - "portfolio-mobile-linear-layout"
+spec_refs:
+  - "requests/planned/CR-4UENTES-0027-portfolio-mobile-linear-layout-implementation.yaml"
+  - "initiatives/INIT-FUENTES-0001-portfolio-product-i18n-and-jira-foundation.yaml"
+  - "initiatives/INIT-PORTFOLIO-0001-portfolio-publication-readiness.yaml"
+evidence_refs:
+  - "evidence/requests/CR-4UENTES-0027/jira-port-3-start-transition-summary.md"
+  - "evidence/requests/CR-4UENTES-0027/jira-transition-to-next-summary.md"
+  - "evidence/requests/CR-4UENTES-0027/mobile-layout-implementation-summary.md"
+  - "evidence/requests/CR-4UENTES-0027/changed-files-summary.md"
+  - "evidence/requests/CR-4UENTES-0027/validation-results.md"
+open_gaps:
+  - "Run Chrome DevTools mobile viewport QA when the existing profile lock is cleared."
+  - "Continue route-level responsive refinements after the shell cut."

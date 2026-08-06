@@ -1,0 +1,46 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0151"
+title: "Validate integrated auth UI visual adoption"
+status: planned
+source_request: "requests/inbox/CR-SST-0151-auth-ui-integrated-visual-adoption-qa.yaml"
+created_at: "2026-08-04"
+requester: "4uentes"
+summary: "Close the program with RTL, visual geometry, keyboard, i18n and owner-adoption evidence."
+control_plane_context: {initiative_id: "INIT-SST-0006", jira_epic_key: "SST-72", jira_role: "mirror", jira_source_of_truth: false}
+impact_analysis:
+  required: true
+  affected_services:
+    - {service_id: "sst-fend", via: "Auth UI tests, docs and capability adoption", service_kind: "frontend-web", ards_kind: "frontend-web", status: "active"}
+    - {service_id: "4uentes-orchestor", via: "State and closure evidence", service_kind: "control-plane", ards_kind: "control-plane", status: "active"}
+  affected_ards: ["auth-frontend-access-ui", "owner-documentation", "visual-qa"]
+  risks: [{id: "FALSE_VISUAL_CLOSURE", severity: high}]
+execution:
+  requires_human_approval: false
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets: ["sst-fend"]
+  implementation_boundary: "Tests, owner docs, capability/orchestrator link and sanitized visual evidence; no production deployment."
+owner_documentation:
+  required: true
+  status: planned
+  owner_repos: ["sst-fend"]
+  planned_owner_docs:
+    - "specs/31-auth-frontend.yml"
+    - "docs/31-auth-frontend.md"
+    - "specs/37-branding-frontend.yml"
+    - "docs/37-branding-frontend.md"
+    - "specs/capabilities/inbound/node-auth--auth-frontend-access-ui.yaml"
+    - "docs/capabilities/inbound/node-auth--auth-frontend-access-ui.md"
+required_checks:
+  - {service_id: "sst-fend", command: "npm.cmd run check"}
+  - {service_id: "4uentes-orchestor", command: "npm.cmd run check"}
+acceptance:
+  - "RTL covers opener/query routing, focus/escape/restore, signup fields, password toggle and accessible errors."
+  - "Chrome DevTools QA covers 320x568, 360x800, 390x844, 412x915, 768x1024, 1366x768 and 1440x900 in ES/EN plus 200% zoom."
+  - "Owner docs and orchestrator_link no longer contain unresolved adoption TODOs for this change."
+decision: {status: approved-plan, approver: "4uentes", decided_at: "2026-08-04", note: "Closure requires fresh evidence; historical screenshots are insufficient."}
+jira_sync:
+  status: "pending-create-authorization"
+  desired_issue_type: "Task"
+  parent_issue_key: "SST-72"
+  issue_candidate: "New Task for CR-SST-0151 under SST-72"

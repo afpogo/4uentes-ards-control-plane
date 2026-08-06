@@ -1,0 +1,48 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0119"
+title: "Add configurable sst-extension session capture mode"
+status: inbox
+created_at: "2026-07-04"
+requester: "4uentes"
+
+summary: >
+  Add a user-configurable session capture mode in sst-extension so users can
+  choose between auto, visual-only, text-only, and prefer-text behavior.
+
+source_context:
+  initiative_id: "INIT-SST-0003"
+  parent_epic_key: "SST-29"
+  discovered_from: "CR-SST-0100 manual QA"
+  source_issue_key: "SST-32"
+
+initial_scope:
+  solution: "sst"
+  services:
+    - "sst-extension"
+    - "4uentes-orchestor"
+  include_optional_services: false
+
+candidate_modes:
+  - id: "auto"
+    behavior: "Attempt visual PDF first and fall back to textual PDF."
+  - id: "visual-only"
+    behavior: "Attempt visual PDF and mark tab degraded/failed if unavailable."
+  - id: "text-only"
+    behavior: "Skip visual capture and materialize textual PDF."
+  - id: "prefer-text"
+    behavior: "Use textual PDF by default while retaining visual capture as optional/future."
+
+owner_documentation:
+  required: true
+  status: planned
+  owner_repo: "sst-extension"
+  planned_owner_docs:
+    - "specs/features/sessions.yaml"
+    - "docs/00-overview.md"
+    - "docs/qa/session-capture-validation.md"
+
+guardrails:
+  - "No private page content, real PDF payloads, cookies, JWTs, secrets or plaintext credentials in evidence."
+  - "Do not change backend/BFF contracts unless a separate approved contract CR is opened."
+  - "Persisting user preference must stay local to the extension unless an owner contract expands that scope."

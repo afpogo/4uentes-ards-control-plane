@@ -1,0 +1,95 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-4UENTES-0013"
+title: "Portfolio child policy adoption and owner baseline"
+status: "inbox"
+created_at: "2026-07-04"
+requester: "4uentes"
+
+summary: >
+  Adopt the control-plane operating and governance policies in 4uentes-portfolio
+  before continuing with visible experience, contact, or GitHub evidence cuts.
+
+initial_scope:
+  solution: "4uentes"
+  services:
+    - "4uentes-portfolio"
+  include_optional_services: false
+
+control_plane_context:
+  initiative_id: "INIT-PORTFOLIO-0001"
+  parent_request_id: "CR-4UENTES-0012"
+  feature_id: "portfolio-child-policy-adoption"
+  child_repo: "4uentes-portfolio"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "4uentes-portfolio"
+      via: "policy adoption manifests, owner docs, and local ARDS/SDD specs"
+      service_kind: "frontend-spa"
+      ards_kind: "frontend-web"
+      status: "active"
+  affected_ards:
+    - "policy-adoption"
+    - "owner-documentation"
+    - "child-repo-governance"
+    - "publication-readiness"
+  capabilities:
+    - "portfolio-child-policy-adoption"
+
+required_context:
+  - "specs/integration/policies.yaml"
+  - "docs/policies/"
+  - "templates/policy-adoption-manifest.template.yaml"
+  - "templates/policy-exception-manifest.template.yaml"
+  - "4uentes-portfolio: AGENTS.md"
+  - "4uentes-portfolio: specs/00-index.yaml"
+  - "4uentes-portfolio: specs/ards/contract-binding.yaml"
+
+execution:
+  requires_human_approval: false
+  allowed_window: "manual"
+  branch_strategy: "child-repo-policy-docs-only"
+  child_repo_mutation_allowed: true
+  child_repo_mutation_target:
+    service_id: "4uentes-portfolio"
+  owner_documentation_required: true
+  implementation_boundary: >
+    Mutate only 4uentes-portfolio policy manifests, AGENTS/docs/specs, and
+    control-plane lifecycle evidence. Do not change React UI, runtime behavior,
+    visible portfolio content, assets, deployment, contact data, or GitHub
+    enrichment.
+
+owner_documentation:
+  required: true
+  status: planned
+  owner_repo: "4uentes-portfolio"
+  planned_owner_docs:
+    - "AGENTS.md"
+    - "docs/policies/README.md"
+    - "specs/00-index.yaml"
+    - "specs/ards/contract-binding.yaml"
+    - "specs/policies/adoptions/agent-architecture-boundary-policy.yaml"
+    - "specs/policies/adoptions/agent-context-management-policy.yaml"
+    - "specs/policies/adoptions/agent-delegation-policy.yaml"
+    - "specs/policies/adoptions/agent-model-selection-policy.yaml"
+    - "specs/policies/adoptions/agent-resource-degradation-policy.yaml"
+    - "specs/policies/adoptions/agent-task-atomization-policy.yaml"
+    - "specs/policies/adoptions/http-qa-harness-policy.yaml"
+    - "specs/policies/adoptions/owner-documentation-authority-policy.yaml"
+    - "specs/policies/exceptions/human-doc-language-policy.yaml"
+
+validation:
+  required_checks:
+    - "4uentes-portfolio: npm.cmd run check"
+    - "4uentes-orchestor: npm.cmd run check"
+  evidence_required:
+    - "policy_adoption_summary"
+    - "changed_files_summary"
+    - "validation_results"
+
+decision:
+  status: "approved-for-local-execution"
+  approver: "4uentes"
+  blocker: "none"

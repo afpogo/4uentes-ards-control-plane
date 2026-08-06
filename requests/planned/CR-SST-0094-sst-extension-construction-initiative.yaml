@@ -1,0 +1,137 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0094"
+title: "Open SST Extension construction initiative and Jira epic"
+status: planned
+source_request: "requests/inbox/CR-SST-0094-sst-extension-construction-initiative.yaml"
+created_at: "2026-06-30"
+requester: "4uentes"
+
+summary: >
+  Establish INIT-SST-0003 as the control-plane Initiative for SST Extension
+  Construction and create or reuse a Jira Epic mirror. This request does not
+  authorize child repository mutation.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - "4uentes-orchestor"
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "4uentes-orchestor"
+      via: "initiative, request lifecycle, Jira mirror evidence"
+      service_kind: "control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+    - service_id: "sst-extension"
+      via: "future execution target only"
+      service_kind: "browser-extension"
+      ards_kind: "frontend-extension"
+      status: "optional-active"
+  affected_ards:
+    - control-plane
+    - request-lifecycle
+    - initiative
+    - jira-mirror
+    - frontend-extension
+  capabilities:
+    - "browser-extension-session-capture"
+    - "dictionary-secret-management-v1"
+    - "learning-content-tags"
+  risks:
+    - id: JIRA_WRITE_EXTERNAL_SIDE_EFFECT
+      severity: medium
+    - id: CHILD_REPO_SCOPE_CREEP
+      severity: medium
+    - id: PRIVACY_CAPTURE_TRACK
+      severity: high
+
+required_context:
+  - "AGENTS.md"
+  - "specs/integration/policies.yaml"
+  - "docs/policies/"
+  - "specs/initiatives/initiative-model.yaml"
+  - "docs/requests/initiative-model.md"
+  - "docs/requests/jira-mcp-endpoint-connection-policy.md"
+  - "evidence/requests/CR-SST-0093/session-pdf-capture-gap-analysis.md"
+  - "evidence/requests/CR-SST-0093/credentialed-web-source-boundary.md"
+  - "evidence/requests/CR-SST-0093/future-implementation-plan.md"
+
+required_checks:
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check"
+
+risk:
+  level: high
+  score: 6
+  drivers:
+    - PRIVACY_CAPTURE_TRACK
+    - JIRA_WRITE_EXTERNAL_SIDE_EFFECT
+    - CHILD_REPO_SCOPE_CREEP
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "The extension track will handle browser sessions and private page capture."
+    - "Jira write creates an external artifact."
+    - "The initiative must not authorize child repo changes by itself."
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-high-reasoning-profile"
+  reason: >
+    The work defines governance for browser-extension construction involving
+    private content capture, future secret use, and Jira write mirroring.
+
+subagent_deployment_plan:
+  required: false
+  parallelizable: false
+  roles: []
+  fallback: "Main agent performs local governance update and Jira write attempt directly."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  approval_source: "User requested opening an epic for sst-extension construction."
+  allowed_window: manual
+  branch_strategy: "control-plane-only"
+  implementation_boundary: >
+    This request may modify only control-plane initiative/request/evidence
+    files and perform a Jira Epic mirror write. It must not modify
+    sst-extension or any child repository.
+  child_repo_mutation_allowed: false
+  jira_write_executed: true
+  jira_write_target:
+    desired_artifact: "Create or reuse Jira Epic for INIT-SST-0003"
+    desired_summary: "[SST][INIT-SST-0003] SST Extension Construction"
+    project_key: "SST"
+    issue_type: "Epic"
+    actual_issue_key: "SST-29"
+    evidence_ref: "evidence/initiatives/INIT-SST-0003/jira-epic-sync-summary.md"
+
+validation:
+  required_checks:
+    - "Control-plane validation passes."
+    - "Initiative is listed in initiatives/00-index.yaml."
+    - "Jira write result or blocker is recorded with sanitized evidence."
+    - "No child repositories are modified."
+  evidence_required:
+    - "initiative_decision"
+    - "jira_epic_sync_summary_or_blocker"
+    - "changed_files_summary"
+    - "validation_results"
+
+decision:
+  status: approved-for-local-initiative-and-jira-epic-write
+  approver: "4uentes"
+  decided_at: "2026-06-30"
+
+planner_notes:
+  - "INIT-SST-0003 should own future sst-extension construction tickets."
+  - "CR-SST-0093 remains the boundary/gap analysis that feeds the first implementation ticket under this initiative."
+  - "Tasks can live as Jira issues under the Epic; execution subtasks may be Jira subtasks or comments, but ARDS/SDD CRs remain the auditable unit."

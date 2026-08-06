@@ -1,0 +1,23 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0095"
+title: "Decompose SST Extension construction backlog into governed CRs"
+status: inbox
+created_at: "2026-06-30"
+requester: "4uentes"
+
+business_context: >
+  INIT-SST-0003 and Jira Epic SST-29 exist as the container for sst-extension
+  construction. The next step is to analyze the extension's current structure,
+  apply subagent/task/language governance, and name the executable CR/Jira
+  tasks and subtasks needed to fix current bugs and evolve the extension safely.
+
+requested_change: >
+  Produce a control-plane backlog decomposition for sst-extension construction:
+  current architecture facts, policy application, bug clusters, proposed CRs,
+  Jira task summaries, subtasks, risk, and validation criteria.
+
+expected_outcome: >
+  The team can approve a focused first implementation CR and optionally create
+  Jira tasks under SST-29 without mixing discovery, architecture decisions,
+  bugfixes, and future feature integration into one oversized request.

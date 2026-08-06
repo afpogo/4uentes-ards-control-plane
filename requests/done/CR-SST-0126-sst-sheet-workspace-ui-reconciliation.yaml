@@ -1,0 +1,50 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0126"
+title: "Reconcile sst-fend SST sheet workspace UI"
+status: done
+source_request: "requests/inbox/CR-SST-0126-sst-sheet-workspace-ui-reconciliation.yaml"
+planned_request: "requests/planned/CR-SST-0126-sst-sheet-workspace-ui-reconciliation.yaml"
+completed_at: "2026-07-11"
+requester: "4uentes"
+summary: "Closed the retroactive SstSheetWorkspace reconciliation after authenticated QA and separate created-kind remediation."
+scope:
+  solution: "sst"
+  services_modified: ["sst-fend", "4uentes-orchestor"]
+  functional_repositories_modified: true
+  runtime_code_modified: false
+implementation:
+  initiative_id: "INIT-SST-0001"
+  active_feature_state: "sst-sheet-workspace-ui"
+  feature_status: "ready-for-release"
+  jira_epic_key: "SST-27"
+  jira_issue_key: "SST-54"
+  jira_status_observed: "Listo"
+  jira_source_of_truth: false
+  remediation_requests: ["CR-SST-0127", "CR-SST-0136"]
+owner_documentation:
+  status: "satisfied"
+  owner_refs:
+    - repo: "sst-fend"
+      paths:
+        - "specs/33-articles-frontend.yml"
+        - "docs/33-articles-frontend.md"
+        - "specs/38-learning-workspace-frontend.yml"
+        - "docs/38-learning-workspace-frontend.md"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0126/owner-documentation-summary.md"
+validation:
+  status: "validated-local-and-authenticated"
+  passed:
+    - "Authenticated desktop/mobile Articles, embedded Workspace SST and /learning QA"
+    - "Created Text kind remediation QA"
+    - "sst-fend npm.cmd run check: 29 suites and 176 tests"
+    - "4uentes-orchestor npm.cmd run check"
+evidence_refs:
+  - "evidence/requests/CR-SST-0126/authenticated-visual-qa-2026-07-10.md"
+  - "evidence/requests/CR-SST-0126/closure-2026-07-11.md"
+  - "evidence/requests/CR-SST-0127/authenticated-qa-2026-07-11.md"
+decision:
+  status: "closed-local"
+  approver: "4uentes"
+  note: "Ready for release only; no publication evidence exists."

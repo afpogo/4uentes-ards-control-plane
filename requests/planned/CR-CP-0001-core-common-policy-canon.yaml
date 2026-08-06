@@ -1,0 +1,91 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-CP-0001"
+title: "Promote common governance policies to core canon"
+status: "planned"
+source_request: "requests/inbox/CR-CP-0001-core-common-policy-canon.yaml"
+created_at: "2026-07-07"
+requester: "4uentes"
+
+summary: >
+  Promote reusable policy text for owner documentation authority/enforcement
+  and human documentation language into core-owned ARDS/SDD canon.
+
+control_plane_context:
+  initiative_id: "INIT-CP-0002"
+  parent_initiative_id: "INIT-CP-0001"
+  related_jira_epic_key: "SST-36"
+  target_jira_epic_key: "ARDS-1"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "4uentes-orchestor"
+      via: "source policy package and local adoption registry"
+      service_kind: "control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+    - service_id: "4uentes-ards-core"
+      via: "future core policy canon adoption"
+      service_kind: "ards-standard-source"
+      ards_kind: "control-plane"
+      status: "active"
+  affected_ards:
+    - "policy-governance"
+    - "owner-documentation"
+    - "human-documentation-language"
+  capabilities:
+    - "capability.outbound.core-agent-policy-governance-handoff"
+
+required_context:
+  - "docs/policies/owner-documentation-authority-policy.md"
+  - "docs/policies/human-doc-language-policy.md"
+  - "specs/integration/policies.yaml"
+  - "state/policy-links.yaml"
+  - "templates/policy-adoption-manifest.template.yaml"
+  - "templates/policy-exception-manifest.template.yaml"
+
+risk:
+  level: "high"
+  score: 8
+  drivers:
+    - "shared policy canon"
+    - "cross-repo documentation authority"
+    - "core/local ownership boundary"
+
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "separate-core-promotion-branch"
+  child_repo_mutation_allowed: false
+  core_repo_mutation_allowed: true
+  implementation_boundary: >
+    This CR may prepare and, after approval in the core workflow, modify only
+    core policy canon and the orchestrator adoption refs. It must not mutate
+    child repos.
+
+jira:
+  role: "mirror"
+  source_of_truth: false
+  project_key: "ARDS"
+  mirror_project_key: "ARDS"
+  epic_key: "ARDS-1"
+  related_epic_key: "SST-36"
+  replaced_misplaced_epic_key: "PORT-12"
+  issue_key: "ARDS-2"
+  replaced_misplaced_issue_key: "PORT-13"
+  desired_artifact: "Task under the new INIT-CP-0002 Epic"
+  sync_ref: "evidence/initiatives/INIT-CP-0002/jira-epic-sync-summary.md"
+
+validation:
+  required_checks:
+    - "4uentes-orchestor: npm.cmd run check"
+    - "4uentes-ards-core: core policy validation command, TODO"
+  evidence_required:
+    - "core_policy_diff_summary"
+    - "orchestrator_adoption_update"
+    - "validation_results"
+
+decision:
+  status: "pending"
+  approver: "TODO"

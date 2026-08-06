@@ -1,0 +1,21 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0128"
+title: "Formalize Jira CR mirror hierarchy and open article kind initiative"
+status: inbox
+created_at: "2026-07-11"
+requester: "4uentes"
+
+business_context: >
+  Jira mirroring already operates with Initiative, Epic, Task and Subtask
+  relationships, but the control plane has no living policy that makes the
+  one-CR-per-issue correlation and hierarchy mandatory.
+
+requested_change: >
+  Adopt a local Jira CR mirror hierarchy policy, create INIT-SST-0005 for SST
+  Article Kind Integrity, and create the approved Jira Epic and parent Task
+  mirrors without authorizing child repository mutation.
+
+expected_outcome: >
+  Every selected CR has exactly one traceable Jira Task or Subtask under the
+  appropriate Initiative Epic, while ARDS/SDD remains the source of truth.

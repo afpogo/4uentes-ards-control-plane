@@ -1,0 +1,48 @@
+schema_version: "1.0"
+kind: "feature_state"
+id: "article-semantic-kind"
+title: "SST Article Semantic Kind Integrity"
+status: "validated-local"
+updated_at: "2026-08-02"
+solution_id: "sst"
+affected_services:
+  - sst-bend
+  - 4uentes-auth
+  - sst-fend
+  - sst-extension
+request_ids:
+  - CR-SST-0129
+  - CR-SST-0130
+  - CR-SST-0131
+  - CR-SST-0132
+  - CR-SST-0133
+  - CR-SST-0134
+  - CR-SST-0135
+  - CR-SST-0141
+  - CR-SST-0142
+  - CR-SST-0143
+  - CR-SST-0144
+  - CR-SST-0145
+capability_refs:
+  - "article-persisted-filters"
+spec_refs:
+  - "initiatives/INIT-SST-0005-article-kind-integrity.yaml"
+  - "requests/planned/CR-SST-0129-article-payload-kind-query-contract.yaml"
+evidence_refs:
+  - "evidence/initiatives/INIT-SST-0005/initiative-decision.md"
+  - "evidence/initiatives/INIT-SST-0005/jira-write-summary.md"
+  - "evidence/requests/CR-SST-0129/implementation.md"
+  - "evidence/requests/CR-SST-0129/validation-results.md"
+  - "evidence/requests/CR-SST-0142/implementation.md"
+  - "evidence/requests/CR-SST-0142/sst-bend-validation.md"
+  - "evidence/requests/CR-SST-0143/implementation.md"
+  - "evidence/requests/CR-SST-0144/validation-plan.md"
+  - "evidence/requests/CR-SST-0144/authenticated-e2e-results.md"
+  - "evidence/requests/CR-SST-0145/implementation-validation.md"
+  - "evidence/requests/CR-SST-0134/closure-acceptance-2026-08-02.md"
+open_gaps:
+  - "All producer, query, security, Plaud job and governed manual-classification slices are closed locally."
+  - "Eighteen non-visible historical rows remain a governed residual across four anonymous owner scopes."
+  - "Historical rows must not be reclassified by transport or filter.type heuristics."
+  - "Do not mark released without publication evidence."
+  - "Future reconciliation requires article-specific human authority and must not access another account merely to eliminate the residual count."

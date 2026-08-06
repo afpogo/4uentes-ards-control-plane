@@ -1,0 +1,41 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0128"
+title: "Formalize Jira CR mirror hierarchy and open article kind initiative"
+status: done
+source_request: "requests/inbox/CR-SST-0128-jira-cr-mirror-hierarchy-policy.yaml"
+planned_request: "requests/planned/CR-SST-0128-jira-cr-mirror-hierarchy-policy.yaml"
+completed_at: "2026-07-11"
+requester: "4uentes"
+summary: >
+  Adopted the local Jira CR mirror hierarchy policy, created INIT-SST-0005 and
+  synchronized its approved Jira Epic, parent Task and seven CR Subtasks.
+scope:
+  solution: "sst"
+  services_modified: ["4uentes-orchestor"]
+  functional_repositories_modified: false
+  runtime_code_modified: false
+implementation:
+  initiative_id: "INIT-SST-0005"
+  jira_epic_key: "SST-57"
+  jira_issue_key: "SST-58"
+  jira_status_observed: "Listo"
+  jira_source_of_truth: false
+  policy_ref: "docs/policies/jira-cr-mirror-hierarchy-policy.md"
+validation:
+  status: "validated-local"
+  passed:
+    - "Lifecycle CR-SST-0128..0135 reserved with inbox and planned artifacts."
+    - "INIT-SST-0005 is indexed and validates."
+    - "Jira Epic, Task and Subtask hierarchy was reread after creation."
+    - "Control-plane npm.cmd run check passed before Jira write and after local closure."
+evidence_refs:
+  - "evidence/initiatives/INIT-SST-0005/initiative-decision.md"
+  - "evidence/initiatives/INIT-SST-0005/jira-readonly-preflight.md"
+  - "evidence/initiatives/INIT-SST-0005/jira-mirror-plan.md"
+  - "evidence/initiatives/INIT-SST-0005/jira-write-summary.md"
+  - "evidence/requests/CR-SST-0128/jira-sst-58-close-reconciliation-2026-08-02.md"
+decision:
+  status: "closed-local"
+  approver: "4uentes"
+  note: "The policy and mirror tree are complete; runtime CRs remain planned and independently gated."

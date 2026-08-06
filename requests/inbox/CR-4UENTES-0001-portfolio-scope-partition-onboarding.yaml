@@ -1,0 +1,101 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-4UENTES-0001"
+title: "Portfolio scope partition onboarding"
+status: "inbox"
+created_at: "2026-07-03"
+requester: "4uentes"
+
+business_context: >
+  4uentes-portfolio is a non-SST child repository that represents a public
+  professional portfolio for a specific user. The control-plane needs a clear
+  scope partition so SST remains one solution among others, not the global
+  product scope for every future repository.
+
+requested_change: >
+  Record the 4uentes portfolio integration as a 4uentes-solution scope and
+  define the reusable boundary for future non-SST apps such as Fulbito.
+
+expected_outcome: >
+  The orchestrator can catalog and govern 4uentes-portfolio without mixing its
+  roadmap, evidence, or request lifecycle with SST, and can onboard future apps
+  through their own solution scope.
+
+initial_scope:
+  solution: "4uentes"
+  services:
+    - "4uentes-portfolio"
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services:
+    - "4uentes-portfolio"
+  affected_ards:
+    - "catalog"
+    - "solutions"
+    - "cross-repo-scope"
+    - "child-repo-onboarding"
+  capabilities:
+    - "multi-solution-scope-partition"
+  risks:
+    - "SST scope treated as global scope for non-SST apps."
+    - "Future Fulbito onboarding mixed into SST lifecycle."
+    - "Control-plane used as product runtime instead of governance layer."
+
+required_context:
+  - "catalog/services/4uentes-portfolio.yaml"
+  - "solutions/4uentes.yaml"
+  - "docs/apps/4uentes-portfolio.md"
+  - "docs/cross-repo/solutions-model.md"
+  - "docs/cross-repo/control-plane-scope-partition.md"
+
+required_checks:
+  - "npm.cmd run check"
+
+risk:
+  level: "medium"
+  score: 5
+  drivers:
+    - "cross-solution governance boundary"
+    - "future child repository onboarding"
+    - "owner documentation authority for non-SST repositories"
+
+task_weight:
+  classification: "long-context-task"
+  risk_level: "medium"
+  drivers:
+    - "control-plane scope model"
+    - "non-SST repository integration"
+    - "future Fulbito onboarding path"
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.4-fast-high"
+  fallback_profile: "highest-available-long-context-profile"
+  reason: "The task is mostly governance and documentation, but it touches cross-solution boundaries."
+
+subagent_deployment_plan:
+  required: false
+  roles: []
+  parallelizable: false
+  fallback: "Perform sequentially in the main agent and validate with control-plane checks."
+  evidence_required: true
+
+execution:
+  requires_human_approval: false
+  allowed_window: "manual"
+  branch_strategy: "control-plane-only"
+  child_repo_mutation_allowed: false
+
+validation:
+  required_checks:
+    - "npm.cmd run check"
+  evidence_required:
+    - "scope_partition_analysis"
+    - "validation_results"
+    - "changed_files_summary"
+
+decision:
+  status: "pending"
+  approver: "TODO"

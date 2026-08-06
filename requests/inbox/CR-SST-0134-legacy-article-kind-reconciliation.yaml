@@ -1,0 +1,10 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0134"
+title: "Reconcile legacy article semantic kinds with evidence"
+status: inbox
+created_at: "2026-07-11"
+requester: "4uentes"
+business_context: "Historical rows include web/text mismatches and missing payloads that cannot be safely reclassified from transport or filter type alone."
+requested_change: "Inventory legacy ambiguity, define deterministic reconciliation rules and execute only reviewed, reversible corrections with before/after evidence."
+expected_outcome: "Legacy data quality is measured and reconciled without unsafe mass inference."

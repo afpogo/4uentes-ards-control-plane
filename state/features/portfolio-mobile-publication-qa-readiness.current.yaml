@@ -1,0 +1,30 @@
+schema_version: "1.0"
+kind: "feature_state"
+id: "portfolio-mobile-publication-qa-readiness"
+title: "Portfolio Mobile Publication QA Readiness"
+status: "ards-documented"
+updated_at: "2026-07-04"
+solution_id: "4uentes"
+affected_services:
+  - 4uentes-portfolio
+request_ids:
+  - CR-4UENTES-0026
+capability_refs:
+  - "portfolio-mobile-publication-qa-readiness"
+spec_refs:
+  - "requests/planned/CR-4UENTES-0026-portfolio-mobile-publication-qa-readiness.yaml"
+  - "initiatives/INIT-FUENTES-0001-portfolio-product-i18n-and-jira-foundation.yaml"
+  - "initiatives/INIT-PORTFOLIO-0001-portfolio-publication-readiness.yaml"
+evidence_refs:
+  - "evidence/requests/CR-4UENTES-0026/mobile-publication-readiness-analysis.md"
+  - "evidence/requests/CR-4UENTES-0026/jira-epic-linkage-plan.md"
+  - "evidence/requests/CR-4UENTES-0026/jira-mcp-connection-review.md"
+  - "evidence/requests/CR-4UENTES-0026/jira-project-and-ticket-create-blocker.md"
+  - "evidence/requests/CR-4UENTES-0026/jira-port-project-sync-summary.md"
+  - "evidence/requests/CR-4UENTES-0026/jira-port-2-start-transition-summary.md"
+  - "evidence/requests/CR-4UENTES-0026/changed-files-summary.md"
+  - "evidence/requests/CR-4UENTES-0026/validation-results.md"
+open_gaps:
+  - "Advance CR-4UENTES-0027 before mutating the child repo for mobile layout."
+  - "Open a follow-up child-repo mutation CR for mobile linear layout implementation."
+  - "Run Chrome DevTools mobile viewport QA after implementation."

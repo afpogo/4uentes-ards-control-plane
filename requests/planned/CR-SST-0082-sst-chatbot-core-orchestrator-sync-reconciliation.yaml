@@ -1,0 +1,101 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0082"
+title: "Reconcile sst-chatbot core and orchestrator sync state"
+status: planned
+source_request: "requests/inbox/CR-SST-0082-sst-chatbot-core-orchestrator-sync-reconciliation.yaml"
+created_at: "2026-06-21"
+requester: "4uentes"
+
+initial_scope:
+  solution: "sst"
+  services:
+    - sst-chatbot
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: sst-chatbot
+      via: initial_scope.services
+      service_kind: agent-runtime
+      ards_kind: backend-api
+      status: active
+  affected_ards:
+    - backend-api
+  capabilities:
+    - "capability.inbound.sst-chatbot-agent-handoff"
+  risks:
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: sst-chatbot
+      severity: medium
+    - id: RETROACTIVE_CHILD_REPO_RECONCILIATION
+      service_id: sst-chatbot
+      severity: high
+    - id: CROSS_REPO_CONTRACT_STATE_DRIFT
+      service_id: sst-chatbot
+      severity: high
+
+required_context:
+  - catalog/services/sst-chatbot.yaml
+  - inventory/evidence/git/sst-chatbot.md
+  - solutions/sst.yaml
+  - inventory/phase-0.md
+  - inventory/phase-0-decision.md
+  - AGENTS.md
+
+required_checks:
+  - service_id: sst-chatbot
+    command: ".\\.venv\\Scripts\\python.exe scripts\\check.py"
+
+risk:
+  level: high
+  score: 5
+  drivers:
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: sst-chatbot
+      severity: medium
+    - id: RETROACTIVE_CHILD_REPO_RECONCILIATION
+      service_id: sst-chatbot
+      severity: high
+    - id: CROSS_REPO_CONTRACT_STATE_DRIFT
+      service_id: sst-chatbot
+      severity: high
+
+task_weight:
+  classification: complex-high-risk-task
+  risk_level: high
+  drivers:
+    - DIRTY_WORKING_TREE_OBSERVED
+    - RETROACTIVE_CHILD_REPO_RECONCILIATION
+    - CROSS_REPO_CONTRACT_STATE_DRIFT
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The work reconciles cross-repo lifecycle evidence and child repository contract state."
+
+subagent_deployment_plan:
+  required: true
+  parallelizable: false
+  roles:
+    - cross-repo-impact-reviewer
+    - validation-reviewer
+  fallback: "Subagents are unavailable in this runtime; perform the review sequentially in the main agent and record the limitation in evidence."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  allowed_window: manual
+  branch_strategy: one-branch-per-repo
+  ordering_deviation: "sst-chatbot already contained related ARDS/SDD changes before CR-SST-0082 was opened; this request records retroactive reconciliation and the remaining docs/ai/policy.md closure."
+
+decision:
+  status: pending
+  approver: TODO
+
+planner_notes:
+  - "The generated plan was amended after `npm.cmd run plan:change` because the mechanical risk score did not capture the retroactive child-repo reconciliation boundary."
+  - "The only intended child repo mutation is `sst-chatbot/docs/ai/policy.md`."
+  - "Runtime transport remains undecided; the inbound capability stays draft."

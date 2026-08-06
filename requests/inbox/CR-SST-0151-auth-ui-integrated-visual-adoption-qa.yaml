@@ -1,0 +1,10 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0151"
+title: "Validate integrated auth UI visual adoption"
+status: inbox
+created_at: "2026-08-04"
+requester: "4uentes"
+business_context: "Historical auth UI evidence does not cover the current source at required mobile, short-height, zoom and keyboard conditions."
+requested_change: "Add reproducible component and Chrome DevTools QA plus owner-documentation and capability adoption evidence."
+expected_outcome: "Signin/signup adoption is demonstrable with automated and visual gates before local closure."

@@ -1,0 +1,79 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-4UENTES-0005"
+title: "Portfolio SPA preview fallback"
+status: "inbox"
+created_at: "2026-07-04"
+requester: "4uentes"
+
+business_context: >
+  CR-4UENTES-0004 browser smoke found that direct preview requests to
+  4uentes-portfolio SPA routes return 404 even though the root route builds and
+  serves. This blocks publication-readiness validation for deep links.
+
+requested_change: >
+  Add an explicit SPA fallback to the Vite preview/dev middleware so documented
+  portfolio routes can be loaded directly during local preview.
+
+expected_outcome: >
+  Direct requests to portfolio routes return the SPA HTML shell and allow the
+  React router to render the intended route.
+
+initial_scope:
+  solution: "4uentes"
+  services:
+    - "4uentes-portfolio"
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services:
+    - "4uentes-portfolio"
+  affected_ards:
+    - "preview-routing"
+    - "browser-smoke"
+    - "publication-readiness"
+  capabilities:
+    - "portfolio-spa-preview-fallback"
+
+required_checks:
+  - "4uentes-portfolio: npm.cmd run check"
+  - "HTTP smoke over direct SPA routes"
+  - "4uentes-orchestor: npm.cmd run check"
+
+risk:
+  level: "medium"
+  score: 5
+  drivers:
+    - "child repo runtime config mutation"
+    - "direct route preview is publication-readiness behavior"
+
+execution:
+  requires_human_approval: false
+  allowed_window: "manual"
+  branch_strategy: "one-branch-per-repo"
+  child_repo_mutation_allowed: true
+
+owner_documentation:
+  required: true
+  status: planned
+  owner_repo: "4uentes-portfolio"
+  planned_owner_docs:
+    - "docs/architecture/README.md"
+    - "docs/qa/stabilization-checklist.md"
+  control_plane_evidence_refs:
+    - "evidence/requests/CR-4UENTES-0005/spa-preview-fallback.md"
+
+validation:
+  required_checks:
+    - "4uentes-portfolio: npm.cmd run check"
+    - "HTTP smoke over direct SPA routes"
+    - "4uentes-orchestor: npm.cmd run check"
+  evidence_required:
+    - "spa_preview_fallback"
+    - "changed_files_summary"
+    - "validation_results"
+
+decision:
+  status: "pending"
+  approver: "TODO"

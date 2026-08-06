@@ -1,0 +1,89 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0105"
+title: "Make owner documentation gate mandatory for child repo mutation workflows"
+status: planned
+source_request: "requests/inbox/CR-SST-0105-mandatory-owner-doc-gate-on-child-mutation.yaml"
+created_at: "2026-07-02"
+requester: "4uentes"
+
+summary: >
+  Harden the owner documentation authority policy so the validator added in
+  CR-SST-0104 is mandatory for workflows that allow or perform child repository
+  mutation from the control-plane.
+
+initial_scope:
+  solution: "control-plane"
+  services:
+    - "4uentes-orchestor"
+  include_optional_services: false
+
+control_plane_context:
+  initiative_id: "INIT-CP-0001"
+  initiative_file: "initiatives/INIT-CP-0001-control-plane-lifecycle-enforcement.yaml"
+  governing_request: "CR-SST-0105"
+  policy_ref: "docs/policies/owner-documentation-authority-policy.md"
+  preceding_requests:
+    - "CR-SST-0096"
+    - "CR-SST-0104"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "4uentes-orchestor"
+      via: "policy text, policy registry, AGENTS validation contract, validator hardening and evidence"
+      service_kind: "control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+  affected_ards:
+    - control-plane
+    - request-lifecycle
+    - evidence
+    - child-repo-owner-documentation
+  capabilities:
+    - "ards-sdd-governance"
+    - "request-lifecycle-governance"
+
+required_context:
+  - "AGENTS.md"
+  - "docs/policies/owner-documentation-authority-policy.md"
+  - "specs/integration/policies.yaml"
+  - "scripts/verify-owner-documentation.js"
+  - "requests/done/CR-SST-0104-owner-documentation-close-gate-validator.yaml"
+
+required_checks:
+  - service_id: "4uentes-orchestor"
+    command: "node --check scripts\\verify-owner-documentation.js"
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check:owner-docs"
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check"
+
+execution:
+  requires_human_approval: false
+  allowed_window: manual
+  branch_strategy: "control-plane-only"
+  implementation_boundary: >
+    This CR modifies only control-plane policy, registry, validator and
+    lifecycle evidence. It does not mutate child repositories.
+  child_repo_mutation_allowed: false
+  jira_read_executed: true
+  jira_write_executed: true
+  jira_issue_key: "SST-38"
+  jira_epic_key: "SST-36"
+  jira_write_ref: "evidence/initiatives/INIT-CP-0001/jira-mirror-sync-2026-07-03.md"
+
+validation:
+  required_checks:
+    - "The validator checks that package.json keeps the owner-doc gate wired into `npm.cmd run check`."
+    - "The validator checks that child mutation CRs require a control-plane check or focused owner-doc gate."
+    - "The policy states that child-repo-only checks cannot replace the control-plane owner-doc gate."
+    - "Full control-plane check passes."
+  evidence_required:
+    - "implementation_summary"
+    - "changed_files_summary"
+    - "validation_results"
+
+decision:
+  status: pending
+  approver: TODO

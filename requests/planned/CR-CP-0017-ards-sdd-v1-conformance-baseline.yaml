@@ -1,0 +1,109 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-CP-0017"
+title: "Define ARDS/SDD v1 conformance baseline"
+status: "planned"
+source_request: "requests/inbox/CR-CP-0017-ards-sdd-v1-conformance-baseline.yaml"
+created_at: "2026-07-19"
+requester: "4uentes"
+
+control_plane_context:
+  initiative_id: "INIT-CP-0002"
+  jira_epic_key: "ARDS-1"
+  related_runtime_initiative_id: "INIT-CP-0003"
+  related_runtime_epic_key: "ARDS-13"
+  runtime_dependency: >
+    The v1 conformance baseline is a normative input for the ARDS-13 audit
+    binding, control, probe, and gate work.
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "4uentes-orchestor"
+      via: "local conformance analysis and evidence"
+      service_kind: "control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+    - service_id: "4uentes-ards-core"
+      via: "read-only canonical standard comparison"
+      service_kind: "ards-standard-source"
+      ards_kind: "control-plane"
+      status: "active"
+  affected_ards:
+    - "ards-sdd-v1"
+    - "core-standard"
+    - "control-plane-adoption"
+    - "runtime-enforcement-input"
+
+required_context:
+  - "inventory evidence for the ARDS-SDD/standar v1 intent corpus"
+  - "4uentes-ards-core: standard/ARDS_CORE_STANDARD_BASE_v1.md"
+  - "4uentes-ards-core: standard/ARDS_KIND_MODEL_v1.md"
+  - "4uentes-ards-core: standard/ARDS_CONTROL_PLANE_CORE_PROFILE_v1.md"
+  - "4uentes-ards-core: governance/source-validation.md"
+  - "initiatives/INIT-CP-0003-ards-sdd-runtime-enforcement.yaml"
+
+risk:
+  level: "medium"
+  score: 6
+  drivers:
+    - "defines normative input for future runtime enforcement"
+    - "must preserve Core authority and v1/v2 separation"
+
+task_weight:
+  classification: "long-context-task"
+  risk_level: "medium"
+  drivers:
+    - "semantic comparison across the intent corpus, Core, and Control Plane"
+
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "high"
+  fallback_profile: "gpt-5.4-fast-high"
+  reason: "Long-context governance analysis under normal resources."
+
+subagent_deployment_plan:
+  required: false
+  roles: []
+  parallelizable: false
+  fallback: "Keep architecture and ownership decisions in the main agent."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "single-control-plane-branch"
+  child_repo_mutation_allowed: false
+  core_repo_mutation_allowed: false
+  implementation_boundary: >
+    Create the v1 normative baseline, conformance matrix, validator coverage
+    analysis, and runtime handoff only. Do not modify the intent corpus, Core,
+    GitHub, runtime implementation, or child repositories.
+
+jira:
+  role: "mirror"
+  source_of_truth: false
+  project_key: "ARDS"
+  epic_key: "ARDS-1"
+  issue_type: "Tarea"
+  issue_key: "ARDS-16"
+  expected_status: "Por hacer"
+  status_observed: "Por hacer"
+
+validation:
+  required_checks:
+    - "4uentes-ards-core: npm.cmd run check"
+    - "4uentes-orchestor: npm.cmd run check"
+  evidence_required:
+    - "v1_conformance_intake"
+    - "v1_normative_rule_matrix"
+    - "validator_coverage_analysis"
+    - "validation_results"
+
+decision:
+  status: "approved"
+  approver: "4uentes"

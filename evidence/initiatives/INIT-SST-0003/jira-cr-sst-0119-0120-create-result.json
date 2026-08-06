@@ -1,0 +1,38 @@
+{
+  "initiativeId": "INIT-SST-0003",
+  "epicKey": "SST-29",
+  "relatedIssueKey": "SST-32",
+  "results": [
+    {
+      "cr": "CR-SST-0119",
+      "summary": "[SST][INIT-SST-0003][CR-SST-0119] Add configurable sst-extension session capture mode",
+      "issue": {
+        "key": "SST-49",
+        "summary": "[SST][INIT-SST-0003][CR-SST-0119] Add configurable sst-extension session capture mode",
+        "parentKey": "SST-29",
+        "source": "created",
+        "raw": "{\"id\":\"10094\",\"key\":\"SST-49\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10094\"}"
+      },
+      "existing": false,
+      "linkResult": {
+        "message": "Issue link created"
+      }
+    },
+    {
+      "cr": "CR-SST-0120",
+      "summary": "[SST][INIT-SST-0003][CR-SST-0120] Define preview image contract for session-derived articles",
+      "issue": {
+        "key": "SST-50",
+        "summary": "[SST][INIT-SST-0003][CR-SST-0120] Define preview image contract for session-derived articles",
+        "parentKey": "SST-29",
+        "source": "created",
+        "raw": "{\"id\":\"10095\",\"key\":\"SST-50\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10095\"}"
+      },
+      "existing": false,
+      "linkResult": {
+        "message": "Issue link created"
+      }
+    }
+  ],
+  "externalWrite": true
+}

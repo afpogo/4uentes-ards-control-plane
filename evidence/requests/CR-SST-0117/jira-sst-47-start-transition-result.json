@@ -1,0 +1,116 @@
+{
+  "issueKey": "SST-47",
+  "before": {
+    "summary": "[SST][CR-SST-0117] Render Markdown/template view from annotated text",
+    "status": "Tareas por hacer",
+    "statusCategory": "Por hacer",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-07-04T15:23:05.477-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0117",
+      "init-sst-0001",
+      "learning-content-tags",
+      "markdown-template",
+      "rendering",
+      "subtask"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10085\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10085\",\"key\":\"SST-47\",\"fields\":{\"summary\":\"[SST][CR-SST-0117] Render Markdown/template view from annotated text\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-07-04T15:23:05.477-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10005\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"Tareas por hacer\",\"id\":\"10005\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/2\",\"id\":2,\"key\":\"new\",\"colorName\":\"blue-gray\",\"name\":\"Por hacer\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-sst-0117\",\"init-sst-0001\",\"learning-content-tags\",\"markdown-template\",\"rendering\",\"subtask\"]}}"
+  },
+  "after": {
+    "summary": "[SST][CR-SST-0117] Render Markdown/template view from annotated text",
+    "status": "En curso",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-07-04T19:55:57.887-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0117",
+      "init-sst-0001",
+      "learning-content-tags",
+      "markdown-template",
+      "rendering",
+      "subtask"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10085\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10085\",\"key\":\"SST-47\",\"fields\":{\"summary\":\"[SST][CR-SST-0117] Render Markdown/template view from annotated text\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-07-04T19:55:57.887-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10006\",\"description\":\"La persona asignada está trabajando actualmente en esta actividad.\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En curso\",\"id\":\"10006\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-sst-0117\",\"init-sst-0001\",\"learning-content-tags\",\"markdown-template\",\"rendering\",\"subtask\"]}}"
+  },
+  "transitions": [
+    {
+      "id": "11",
+      "name": "Por hacer",
+      "toStatus": "Tareas por hacer",
+      "toStatusCategory": "Por hacer"
+    },
+    {
+      "id": "21",
+      "name": "En curso",
+      "toStatus": "En curso",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "31",
+      "name": "In Review",
+      "toStatus": "En revisión",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "41",
+      "name": "Listo",
+      "toStatus": "Finalizada",
+      "toStatusCategory": "Listo"
+    }
+  ],
+  "selectedTransition": {
+    "id": "21",
+    "name": "En curso",
+    "toStatus": "En curso",
+    "toStatusCategory": "En curso"
+  },
+  "transitionResult": {
+    "success": true
+  },
+  "commentResult": {
+    "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10085/comment/10089",
+    "id": "10089",
+    "author": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "body": "CR-SST-0117 start checkpoint.\n\nSST-47 can move to `En curso`.\n\nPurpose:\n\n* Render accepted annotated text into a stable Markdown-like or themed view.\n* Preserve semantic source metadata from accepted annotations.\n* Keep selectors, `contentTags`, `relevance`, source references and accepted  \n  state traceable after rendering.\n\nInputs already completed:\n\n* CR-SST-0114: contextual selection tagging in `sst-fend`.\n* CR-SST-0115: annotated selection BFF/API contract.\n* CR-SST-0116: backend/BFF persistence for accepted annotated text context.\n\nPlanned scope:\n\n* Review `sst-fend` and `sst-bend` readiness.\n* Implement render/template view without discarding semantic annotation data.\n* Update owner ARDS/SDD docs in affected repos.\n* Validate with repo checks and control-plane owner enforcement.\n\nBoundary:\n\n* Jira remains an operational mirror.\n* ARDS/SDD remains source of truth.\n* SST-6 remains `En curso` until remaining CRs are closed.\n\n",
+    "updateAuthor": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "created": "2026-07-04T19:55:57.887-0300",
+    "updated": "2026-07-04T19:55:57.887-0300",
+    "jsdPublic": true
+  },
+  "commentBody": "CR-SST-0117 start checkpoint.\n\nSST-47 can move to `En curso`.\n\nPurpose:\n\n- Render accepted annotated text into a stable Markdown-like or themed view.\n- Preserve semantic source metadata from accepted annotations.\n- Keep selectors, `contentTags`, `relevance`, source references and accepted\n  state traceable after rendering.\n\nInputs already completed:\n\n- CR-SST-0114: contextual selection tagging in `sst-fend`.\n- CR-SST-0115: annotated selection BFF/API contract.\n- CR-SST-0116: backend/BFF persistence for accepted annotated text context.\n\nPlanned scope:\n\n- Review `sst-fend` and `sst-bend` readiness.\n- Implement render/template view without discarding semantic annotation data.\n- Update owner ARDS/SDD docs in affected repos.\n- Validate with repo checks and control-plane owner enforcement.\n\nBoundary:\n\n- Jira remains an operational mirror.\n- ARDS/SDD remains source of truth.\n- SST-6 remains `En curso` until remaining CRs are closed.\n",
+  "externalWrite": true
+}

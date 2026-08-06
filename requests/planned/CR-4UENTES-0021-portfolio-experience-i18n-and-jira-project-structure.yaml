@@ -1,0 +1,89 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-4UENTES-0021"
+title: "Portfolio experience i18n and Jira project structure"
+status: "planned"
+source_request: "requests/inbox/CR-4UENTES-0021-portfolio-experience-i18n-and-jira-project-structure.yaml"
+created_at: "2026-07-04"
+requester: "4uentes"
+
+summary: >
+  Record the ARDS/SDD structure for internationalizing experience content in
+  4uentes-portfolio and decide the Jira project boundary for non-SST portfolio
+  requests.
+
+initial_scope:
+  solution: "4uentes"
+  services:
+    - "4uentes-portfolio"
+    - "4uentes-orchestor"
+  include_optional_services: false
+
+control_plane_context:
+  initiative_id: "INIT-FUENTES-0001"
+  product_initiative_id: "INIT-PORTFOLIO-0001"
+  parent_request_id: "CR-4UENTES-0020"
+  feature_id: "portfolio-experience-i18n-jira-structure"
+  child_repo: "4uentes-portfolio"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "4uentes-portfolio"
+      via: "future experience I18N refactor"
+      service_kind: "frontend-spa"
+      ards_kind: "frontend-web"
+      status: "active"
+    - service_id: "4uentes-orchestor"
+      via: "Jira project boundary and CR governance"
+      service_kind: "control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+  affected_ards:
+    - "internationalization"
+    - "professional-experience"
+    - "jira-governance"
+    - "scope-partition"
+  capabilities:
+    - "portfolio-experience-i18n-jira-structure"
+
+required_context:
+  - "requests/planned/CR-4UENTES-0020-portfolio-experience-impact-narrative.yaml"
+  - "4uentes-portfolio: src/pages/Dashboard/screens/Experience/Experience.i18n.ts"
+  - "4uentes-portfolio: src/pages/Dashboard/screens/Experience/constants.ts"
+  - "4uentes-portfolio: src/pages/Dashboard/screens/Experience/screens/ExperienceCompany/constants.tsx"
+  - "docs/cross-repo/control-plane-scope-partition.md"
+  - "docs/requests/jira-mcp-ticketing-playbook.md"
+
+risk:
+  level: "medium"
+  score: 4
+  drivers:
+    - "experience text is currently mixed into structural constants"
+    - "large i18n migration can break route rendering if done without small cuts"
+    - "using SST Jira for portfolio work would blur business boundaries"
+
+execution:
+  requires_human_approval: false
+  allowed_window: "manual"
+  branch_strategy: "control-plane-i18n-and-jira-structure-cut"
+  child_repo_mutation_allowed: false
+  owner_documentation_required: false
+  implementation_boundary: >
+    This cut defines structure and decisions only. Do not mutate the child repo
+    copy in this CR; open a follow-up child-repo mutation CR for actual I18N
+    implementation.
+
+validation:
+  required_checks:
+    - "4uentes-orchestor: npm.cmd run check"
+  evidence_required:
+    - "experience_i18n_structure"
+    - "jira_project_boundary_analysis"
+    - "changed_files_summary"
+    - "validation_results"
+
+decision:
+  status: "approved-for-local-execution"
+  approver: "4uentes"
+  blocker: "none"

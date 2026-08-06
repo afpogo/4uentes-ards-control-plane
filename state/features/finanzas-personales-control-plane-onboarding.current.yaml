@@ -1,0 +1,31 @@
+schema_version: "1.0"
+kind: "feature_state"
+id: "finanzas-personales-control-plane-onboarding"
+title: "Finanzas Personales Control Plane Onboarding"
+status: "planned"
+updated_at: "2026-07-12"
+solution_id: "finanzas-personales"
+affected_services:
+  - finanzas-personales-frontend
+  - finanzas-personales-backend
+request_ids:
+  - CR-HPT-0001
+  - CR-HPT-0002
+  - CR-HPT-0003
+capability_refs:
+  - "finanzas-personales-governance-onboarding"
+spec_refs:
+  - "requests/planned/CR-HPT-0001-finanzas-personales-control-plane-onboarding.yaml"
+  - "requests/planned/CR-HPT-0002-finanzas-personales-child-governance-adoption.yaml"
+  - "requests/planned/CR-HPT-0003-finanzas-personales-frontend-backend-boundary-reconciliation.yaml"
+  - "initiatives/INIT-HPT-0001-home-phinance-governance-adoption.yaml"
+evidence_refs:
+  - "evidence/initiatives/INIT-HPT-0001/intake-analysis.md"
+  - "evidence/initiatives/INIT-HPT-0001/jira-preflight.md"
+  - "evidence/initiatives/INIT-HPT-0001/jira-epic-and-task-sync-summary.md"
+  - "evidence/requests/CR-HPT-0001/changed-files-summary.md"
+  - "evidence/requests/CR-HPT-0001/validation-results.md"
+open_gaps:
+  - "Complete child policy and control-plane-link adoption under CR-HPT-0002."
+  - "Resolve frontend-backend architecture exception under CR-HPT-0003."
+  - "Define technical owner, release responsibility and executable validation."

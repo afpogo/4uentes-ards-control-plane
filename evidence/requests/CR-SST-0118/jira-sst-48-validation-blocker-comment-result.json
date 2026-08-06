@@ -1,0 +1,81 @@
+{
+  "issueKey": "SST-48",
+  "before": {
+    "summary": "[SST][CR-SST-0118] Validate annotable text entry end-to-end",
+    "status": "En curso",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-07-04T23:11:38.586-0300",
+    "labels": [
+      "ards-sdd",
+      "chrome-devtools",
+      "control-plane",
+      "cr-sst-0118",
+      "e2e-validation",
+      "init-sst-0001",
+      "learning-content-tags",
+      "subtask"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10086\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10086\",\"key\":\"SST-48\",\"fields\":{\"summary\":\"[SST][CR-SST-0118] Validate annotable text entry end-to-end\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-07-04T23:11:38.586-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10006\",\"description\":\"La persona asignada está trabajando actualmente en esta actividad.\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En curso\",\"id\":\"10006\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"ards-sdd\",\"chrome-devtools\",\"control-plane\",\"cr-sst-0118\",\"e2e-validation\",\"init-sst-0001\",\"learning-content-tags\",\"subtask\"]}}"
+  },
+  "after": {
+    "summary": "[SST][CR-SST-0118] Validate annotable text entry end-to-end",
+    "status": "En curso",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-07-05T09:57:10.764-0300",
+    "labels": [
+      "ards-sdd",
+      "chrome-devtools",
+      "control-plane",
+      "cr-sst-0118",
+      "e2e-validation",
+      "init-sst-0001",
+      "learning-content-tags",
+      "subtask"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10086\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10086\",\"key\":\"SST-48\",\"fields\":{\"summary\":\"[SST][CR-SST-0118] Validate annotable text entry end-to-end\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-07-05T09:57:10.764-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10006\",\"description\":\"La persona asignada está trabajando actualmente en esta actividad.\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En curso\",\"id\":\"10006\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"ards-sdd\",\"chrome-devtools\",\"control-plane\",\"cr-sst-0118\",\"e2e-validation\",\"init-sst-0001\",\"learning-content-tags\",\"subtask\"]}}"
+  },
+  "commentResult": {
+    "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10086/comment/10100",
+    "id": "10100",
+    "author": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "body": "# SST-48 / CR-SST-0118 - Validacion e2e bloqueada por defecto\n\nSe ejecuto la validacion local de CR-SST-0118.\n\nResultado:\n\n* Gates requeridos ejecutados:\n\n    * `4uentes-orchestor npm.cmd run check`: OK\n    * `sst-fend npm.cmd run check`: OK con warnings preexistentes\n    * `node-auth npm.cmd run check`: OK\n    * `sst-bend npm.cmd run check`: OK con cobertura protegida parcial por falta de `SMOKE_JWT`\n    \n* Browser Chrome DevTools MCP:\n\n    * `http://localhost:4090/learning` redirige a portada publica por falta de sesion autenticada.\n    * Se confirma bloqueo de login interactivo para browser e2e completo.\n    \n* BF/API:\n\n    * `GET /api/learning-workspaces/me`: OK con JWT smoke compatible.\n    * `GET /api/learning-workspaces/context`: OK.\n    * `POST /api/learning-workspaces/sources/preview`: OK con anotacion valida.\n    * `POST /api/learning-workspaces/sources/:previewId/accept` sin `annotationIds`: OK; contexto posterior devuelve documento, anotacion y bloque aceptado.\n    * `POST /api/learning-workspaces/sources/:previewId/accept` con `annotationIds=[serverAnnotationId]`: falla con 500.\n    \n\nDefecto detectado:\n\n* `sst-bend` compara `server_annotation_id` hash hex de 64 caracteres contra la columna UUID `id`.\n* Postgres devuelve `invalid input syntax for type uuid`.\n* Impacta el contrato documentado de aceptar selecciones especificas por `annotationIds`.\n\nDecision:\n\n* No transicionar SST-48 a Listo.\n* Mantener SST-48 En curso / bloqueado por defecto runtime.\n* Requiere CR de implementacion para corregir `accept(annotationIds)` en `sst-bend` o ajustar formalmente el contrato.\n\nEvidencia ARDS/SDD:\n\n* `evidence/requests/CR-SST-0118/e2e-validation-results-2026-07-05.md`\n* `evidence/requests/CR-SST-0118/chrome-learning-auth-block-2026-07-05.png`\n\n",
+    "updateAuthor": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "created": "2026-07-05T09:57:10.764-0300",
+    "updated": "2026-07-05T09:57:10.764-0300",
+    "jsdPublic": true
+  },
+  "commentBody": "# SST-48 / CR-SST-0118 - Validacion e2e bloqueada por defecto\n\nSe ejecuto la validacion local de CR-SST-0118.\n\nResultado:\n\n- Gates requeridos ejecutados:\n  - `4uentes-orchestor npm.cmd run check`: OK\n  - `sst-fend npm.cmd run check`: OK con warnings preexistentes\n  - `node-auth npm.cmd run check`: OK\n  - `sst-bend npm.cmd run check`: OK con cobertura protegida parcial por falta de `SMOKE_JWT`\n- Browser Chrome DevTools MCP:\n  - `http://localhost:4090/learning` redirige a portada publica por falta de sesion autenticada.\n  - Se confirma bloqueo de login interactivo para browser e2e completo.\n- BF/API:\n  - `GET /api/learning-workspaces/me`: OK con JWT smoke compatible.\n  - `GET /api/learning-workspaces/context`: OK.\n  - `POST /api/learning-workspaces/sources/preview`: OK con anotacion valida.\n  - `POST /api/learning-workspaces/sources/:previewId/accept` sin `annotationIds`: OK; contexto posterior devuelve documento, anotacion y bloque aceptado.\n  - `POST /api/learning-workspaces/sources/:previewId/accept` con `annotationIds=[serverAnnotationId]`: falla con 500.\n\nDefecto detectado:\n\n- `sst-bend` compara `server_annotation_id` hash hex de 64 caracteres contra la columna UUID `id`.\n- Postgres devuelve `invalid input syntax for type uuid`.\n- Impacta el contrato documentado de aceptar selecciones especificas por `annotationIds`.\n\nDecision:\n\n- No transicionar SST-48 a Listo.\n- Mantener SST-48 En curso / bloqueado por defecto runtime.\n- Requiere CR de implementacion para corregir `accept(annotationIds)` en `sst-bend` o ajustar formalmente el contrato.\n\nEvidencia ARDS/SDD:\n\n- `evidence/requests/CR-SST-0118/e2e-validation-results-2026-07-05.md`\n- `evidence/requests/CR-SST-0118/chrome-learning-auth-block-2026-07-05.png`\n",
+  "externalWrite": true
+}

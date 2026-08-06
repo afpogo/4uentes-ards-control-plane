@@ -1,0 +1,106 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-4UENTES-0020"
+title: "Portfolio experience impact narrative"
+status: "planned"
+source_request: "requests/inbox/CR-4UENTES-0020-portfolio-experience-impact-narrative.yaml"
+created_at: "2026-07-04"
+requester: "4uentes"
+
+summary: >
+  Strengthen 4uentes-portfolio experience copy for CV revalidation by making
+  role, context, contribution, evidence value, and stack more explicit while
+  keeping public information safe.
+
+initial_scope:
+  solution: "4uentes"
+  services:
+    - "4uentes-portfolio"
+  include_optional_services: false
+
+control_plane_context:
+  initiative_id: "INIT-PORTFOLIO-0001"
+  parent_request_id: "CR-4UENTES-0007"
+  feature_id: "portfolio-experience-impact-narrative"
+  child_repo: "4uentes-portfolio"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "4uentes-portfolio"
+      via: "visible experience copy and owner feature documentation"
+      service_kind: "frontend-spa"
+      ards_kind: "frontend-web"
+      status: "active"
+  affected_ards:
+    - "professional-experience"
+    - "publication-readiness"
+    - "owner-documentation"
+    - "cv-revalidation"
+  capabilities:
+    - "portfolio-experience-impact-narrative"
+
+required_context:
+  - "requests/planned/CR-4UENTES-0014-portfolio-experience-copy-review.yaml"
+  - "evidence/requests/CR-4UENTES-0007/manual-qa-results.md"
+  - "4uentes-portfolio: src/pages/Dashboard/screens/Experience/constants.ts"
+  - "4uentes-portfolio: src/pages/Dashboard/screens/Experience/screens/ExperienceCompany/constants.tsx"
+  - "4uentes-portfolio: specs/features/00-index.yaml"
+
+risk:
+  level: "medium"
+  score: 5
+  drivers:
+    - "experience copy influences CV revalidation and professional positioning"
+    - "enterprise details must remain high-level and not disclose confidential implementation"
+    - "overclaiming seniority, ownership, impact, or production outcomes would weaken trust"
+
+execution:
+  requires_human_approval: false
+  allowed_window: "manual"
+  branch_strategy: "child-repo-experience-impact-cut"
+  child_repo_mutation_allowed: true
+  child_repo_mutation_target:
+    service_id: "4uentes-portfolio"
+  owner_documentation_required: true
+  implementation_boundary: >
+    Improve visible experience copy and owner docs. Do not add new companies,
+    fabricate metrics, introduce client-confidential detail, alter contact
+    exposure policy, or reactivate CV download.
+
+owner_documentation:
+  required: true
+  status: satisfied
+  owner_repo: "4uentes-portfolio"
+  planned_owner_docs:
+    - "docs/evidence/README.md"
+    - "docs/qa/visual-checklist.md"
+    - "specs/features/00-index.yaml"
+  updated_owner_docs:
+    - "docs/evidence/README.md"
+    - "docs/qa/visual-checklist.md"
+    - "specs/features/00-index.yaml"
+  owner_refs:
+    - repo: "4uentes-portfolio"
+      paths:
+        - "docs/evidence/README.md"
+        - "docs/qa/visual-checklist.md"
+        - "specs/features/00-index.yaml"
+  evidence_refs:
+    - "evidence/requests/CR-4UENTES-0020/experience-current-analysis.md"
+    - "evidence/requests/CR-4UENTES-0020/changed-files-summary.md"
+    - "evidence/requests/CR-4UENTES-0020/validation-results.md"
+
+validation:
+  required_checks:
+    - "4uentes-portfolio: npm.cmd run check"
+    - "4uentes-orchestor: npm.cmd run check"
+  evidence_required:
+    - "experience_current_analysis"
+    - "changed_files_summary"
+    - "validation_results"
+
+decision:
+  status: "approved-for-local-execution"
+  approver: "4uentes"
+  blocker: "none"

@@ -70,3 +70,14 @@ orchestrator_link_contract:
 Mientras no se haya verificado, el estado correcto es
 `pending-child-adoption`.
 
+## Policies Y Manifests
+
+La adopcion de policies en repos hijos no se modela solo con
+`orchestrator_link_contract`. Cuando el rollout de policies aplique, el repo
+hijo debe incluir uno de estos artefactos segun corresponda:
+
+- `templates/policy-adoption-manifest.template.yaml`
+- `templates/policy-exception-manifest.template.yaml`
+
+La seleccion depende de si el repo hijo adopta la policy sin desviacion o si
+registra una excepcion acotada con cierre planificado.

@@ -1,0 +1,75 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0104"
+title: "Enforce owner documentation gate for child repo mutation requests"
+status: done
+source_request: "requests/inbox/CR-SST-0104-owner-documentation-close-gate-validator.yaml"
+planned_request: "requests/planned/CR-SST-0104-owner-documentation-close-gate-validator.yaml"
+completed_at: "2026-07-02"
+requester: "4uentes"
+
+summary: >
+  Implemented the control-plane owner documentation validator and wired it into
+  the standard `npm.cmd run check` path. Requests that allow child repository
+  mutation now fail validation unless they declare owner documentation status,
+  planned or satisfied owner docs/specs, evidence refs, or an explicit exception.
+
+scope:
+  solution: "control-plane"
+  services_modified:
+    - "4uentes-orchestor"
+  functional_repositories_modified: false
+  runtime_code_modified: false
+
+implementation:
+  validator: "scripts/verify-owner-documentation.js"
+  package_scripts:
+    - "check"
+    - "check:owner-docs"
+  normalized_requests:
+    - "CR-SST-0092"
+    - "CR-SST-0097"
+  validated_child_mutation_requests:
+    - "CR-SST-0092"
+    - "CR-SST-0097"
+    - "CR-SST-0098"
+    - "CR-SST-0099"
+    - "CR-SST-0100"
+    - "CR-SST-0101"
+    - "CR-SST-0102"
+    - "CR-SST-0103"
+
+jira_mirror:
+  epic_key: "SST-36"
+  issue_key: "SST-37"
+  sync_ref: "evidence/initiatives/INIT-CP-0001/jira-mirror-sync-2026-07-03.md"
+  close_ref: "evidence/requests/CR-SST-0104/jira-sst-37-close-transition-summary.md"
+  status_observed: "Finalizada"
+  resolution_observed: "Listo"
+  source_of_truth: false
+
+validation:
+  status: "validated-local"
+  passed:
+    - "node --check scripts\\verify-owner-documentation.js"
+    - "npm.cmd run check:owner-docs"
+    - "npm.cmd run check:initiatives"
+    - "npm.cmd run check"
+    - "git -c safe.directory=C:/Users/andre/Desktop/4uentes/apps/4uentes-orchestor diff --check"
+  accepted_warnings:
+    - "Local bindings remote observation warnings are preexisting."
+    - "Two historical bugfix state files still lack request/evidence refs."
+
+evidence_refs:
+  - "evidence/requests/CR-SST-0104/implementation-summary.md"
+  - "evidence/requests/CR-SST-0104/changed-files-summary.md"
+  - "evidence/requests/CR-SST-0104/validation-results.md"
+  - "evidence/requests/CR-SST-0104/jira-sst-37-close-transition-summary.md"
+
+decision:
+  status: "closed-local"
+  approver: "4uentes"
+  note: >
+    CR-SST-0104 closes locally as validated-local. Jira mirror SST-37 was
+    later closed as Finalizada/Listo on 2026-07-03 after owner policy review
+    and enforcement validation.

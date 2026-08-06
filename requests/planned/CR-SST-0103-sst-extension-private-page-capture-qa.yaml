@@ -1,0 +1,145 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0103"
+title: "Add QA harness for private authenticated page capture"
+status: in-progress
+source_request: "requests/inbox/CR-SST-0103-sst-extension-private-page-capture-qa.yaml"
+created_at: "2026-07-02"
+requester: "4uentes"
+
+summary: >
+  Add reproducible QA coverage for sst-extension private authenticated page
+  capture using sanitized fixtures and evidence.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - "sst-extension"
+    - "4uentes-orchestor"
+  include_optional_services: false
+
+control_plane_context:
+  initiative_id: "INIT-SST-0003"
+  jira_epic_key: "SST-29"
+  jira_issue_key: "SST-35"
+  policy_ref: "docs/policies/owner-documentation-authority-policy.md"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "sst-extension"
+      via: "QA harness, docs and validation evidence"
+      service_kind: "browser-extension"
+      ards_kind: "frontend-extension"
+      status: "optional-active"
+    - service_id: "4uentes-orchestor"
+      via: "request lifecycle and evidence"
+      service_kind: "control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+  affected_ards:
+    - frontend-extension
+    - browser-extension-session-capture
+    - qa-governance
+    - child-repo-owner-documentation
+  risks:
+    - id: PRIVATE_CONTENT_IN_EVIDENCE
+      severity: high
+    - id: NON_REPRODUCIBLE_QA
+      severity: medium
+
+required_checks:
+  - service_id: "sst-extension"
+    command: "pnpm test"
+  - service_id: "sst-extension"
+    command: "pnpm build"
+  - service_id: "sst-extension"
+    command: "pnpm check"
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check"
+
+execution:
+  child_repo_mutation_allowed: true
+  child_repo_mutation_target:
+    service_id: "sst-extension"
+  owner_documentation_required: true
+  jira_write_executed: true
+  jira_write_ref: "evidence/initiatives/INIT-SST-0003/jira-extension-backlog-sync-summary.md"
+  jira_execution_trace:
+    issue_key: "SST-35"
+    status: "En curso"
+    transitioned_at: "2026-07-23"
+    comment_id: "10260"
+
+owner_documentation:
+  required: true
+  status: planned
+  owner_repo: "sst-extension"
+  planned_owner_docs:
+    - "specs/features/sessions.yaml"
+    - "docs/qa/session-capture-validation.md"
+
+validation:
+  required_checks:
+    - "QA uses fictitious/local authenticated fixtures."
+    - "Evidence is sanitized."
+    - "Owner QA docs are updated and referenced centrally."
+
+qa_execution_strategy:
+  status: execution-started
+  evidence_ref: "evidence/requests/CR-SST-0103/manual-qa-execution-strategy-2026-07-18.md"
+  execution_surface: "isolated local Chrome QA profile with WXT unpacked output"
+  tooling_boundary: >
+    The Codex in-app browser/DevTools bridge is not a prerequisite for this
+    manual QA. Its availability is recorded separately from product behavior.
+  privacy_boundary:
+    - "Use only fictitious or local authenticated fixtures."
+    - "The user enters any QA login locally; no credentials, cookies or tokens enter evidence."
+    - "Do not retain private captured artifacts or full private URLs in evidence."
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "Authenticated browser state and private-page-derived artifacts."
+    - "Manifest V3 lifecycle can change when DevTools keeps the worker active."
+    - "Evidence must distinguish product behavior from browser-control failures."
+
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  selected_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  effective_runtime_model: "gpt-5"
+  note: "The runtime-selected model is recorded explicitly; privacy and QA disposition remain in the main agent."
+
+subagent_deployment_plan:
+  required: false
+  executed: false
+  reason: "The active environment requires the main agent to retain this interactive browser QA; the matrix is executed sequentially."
+
+execution_state:
+  started_at: "2026-07-19"
+  current_step: "interactive-qa-blocked-by-mcp-disable-extensions-flag"
+  evidence_ref: "evidence/requests/CR-SST-0103/execution-start-2026-07-19.md"
+  resume_evidence_ref: "evidence/requests/CR-SST-0103/qa-resume-preflight-2026-08-02.md"
+  blocking_findings:
+    - id: "MULTI_TAB_VISUAL_CAPTURE_PERMISSION_GAP"
+      disposition: "approved under CR-SST-0121; implementation and validation in progress"
+      evidence_ref: "evidence/requests/CR-SST-0103/visual-capture-permission-gap-2026-07-19.md"
+      owner_follow_up: "CR-SST-0121"
+    - id: "PREVIEW_STACK_NOT_DEPLOYED"
+      disposition: "resolved for local-code QA through isolated Compose stack on 127.0.0.1; canonical kind deploy remains out of this execution"
+      evidence_ref: "evidence/requests/CR-SST-0103/manual-qa-case-1-preview-off-2026-07-19.md"
+    - id: "CHROME_MCP_EXTENSIONS_DISABLED"
+      disposition: "confirmed; local MCP configuration upgrade and extension category enablement require explicit authorization and client restart"
+      evidence_ref: "evidence/requests/CR-SST-0103/chrome-mcp-extension-blocker-2026-08-02.md"
+  readiness_evidence_ref: "evidence/requests/CR-SST-0103/current-compose-stack-readiness-2026-07-23.md"
+  jira_trace_evidence_ref: "evidence/requests/CR-SST-0103/jira-execution-transitions-2026-07-23.md"
+
+decision:
+  status: approved-plan
+  approver: "4uentes"
+  note: "Advanced as final private-page QA after CR-SST-0137 through CR-SST-0140; sanitized fixtures and evidence remain mandatory."

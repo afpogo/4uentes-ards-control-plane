@@ -1,4 +1,4 @@
-# Validation Results
+# Resultados De Validacion
 
 ## Estado
 
@@ -6,7 +6,7 @@
 - Request: CR-SST-0071
 - Repos funcionales validados: no aplica
 
-## Checks requeridos
+## Checks Requeridos
 
 - `npm run check`
 
@@ -21,7 +21,7 @@
   - `state/bugfixes/sst-bend-emfile-watchers.current.yaml` sin `evidence_refs`.
 - No hubo `FAIL`.
 
-## Boundary
+## Boundary Mantenido
 
 - La validacion de este CR se limita al control-plane.
 - No se ejecutan checks de repos funcionales en `CR-SST-0071`.

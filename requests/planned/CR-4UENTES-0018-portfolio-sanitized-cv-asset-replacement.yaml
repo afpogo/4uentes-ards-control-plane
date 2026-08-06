@@ -1,0 +1,109 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-4UENTES-0018"
+title: "Portfolio sanitized CV asset replacement"
+status: "planned"
+source_request: "requests/inbox/CR-4UENTES-0018-portfolio-sanitized-cv-asset-replacement.yaml"
+created_at: "2026-07-04"
+requester: "4uentes"
+
+summary: >
+  Define and apply the sanitized CV publication gate for 4uentes-portfolio after
+  CR-4UENTES-0017 found that the current PDF is not safe for public download.
+
+initial_scope:
+  solution: "4uentes"
+  services:
+    - "4uentes-portfolio"
+  include_optional_services: false
+
+control_plane_context:
+  initiative_id: "INIT-PORTFOLIO-0001"
+  parent_request_id: "CR-4UENTES-0017"
+  feature_id: "portfolio-sanitized-cv-asset-replacement"
+  child_repo: "4uentes-portfolio"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "4uentes-portfolio"
+      via: "CV publication gate and owner documentation"
+      service_kind: "frontend-spa"
+      ards_kind: "frontend-web"
+      status: "active"
+  affected_ards:
+    - "contact-asset"
+    - "publication-readiness"
+    - "owner-documentation"
+    - "static-assets"
+  capabilities:
+    - "portfolio-sanitized-cv-asset-replacement"
+
+required_context:
+  - "requests/planned/CR-4UENTES-0017-portfolio-cv-publication-qa.yaml"
+  - "4uentes-portfolio: src/assets/resources/afpogo_cv.pdf"
+  - "4uentes-portfolio: docs/evidence/README.md"
+  - "4uentes-portfolio: docs/qa/visual-checklist.md"
+  - "4uentes-portfolio: specs/features/00-index.yaml"
+
+risk:
+  level: "medium"
+  score: 5
+  drivers:
+    - "the current CV PDF contains direct personal data"
+    - "publishing a generated replacement without owner approval can misrepresent the user"
+    - "PDF metadata and hidden text can leak information even when visible text looks safe"
+
+execution:
+  requires_human_approval: false
+  allowed_window: "manual"
+  branch_strategy: "child-repo-cv-sanitization-gate"
+  child_repo_mutation_allowed: true
+  child_repo_mutation_target:
+    service_id: "4uentes-portfolio"
+  owner_documentation_required: true
+  implementation_boundary: >
+    Record the sanitized CV replacement contract and keep the public download
+    blocked until an owner-approved PDF is supplied and verified. Do not invent
+    a new CV, do not publish the current PDF, and do not add PDF-generation
+    tooling to the runtime.
+
+owner_documentation:
+  required: true
+  status: satisfied
+  owner_repo: "4uentes-portfolio"
+  planned_owner_docs:
+    - "docs/evidence/README.md"
+    - "docs/qa/visual-checklist.md"
+    - "docs/qa/stabilization-checklist.md"
+    - "specs/features/00-index.yaml"
+  updated_owner_docs:
+    - "docs/evidence/README.md"
+    - "docs/qa/visual-checklist.md"
+    - "docs/qa/stabilization-checklist.md"
+    - "specs/features/00-index.yaml"
+  owner_refs:
+    - repo: "4uentes-portfolio"
+      paths:
+        - "docs/evidence/README.md"
+        - "docs/qa/visual-checklist.md"
+        - "docs/qa/stabilization-checklist.md"
+        - "specs/features/00-index.yaml"
+  evidence_refs:
+    - "evidence/requests/CR-4UENTES-0018/sanitized-cv-replacement-gate.md"
+    - "evidence/requests/CR-4UENTES-0018/changed-files-summary.md"
+    - "evidence/requests/CR-4UENTES-0018/validation-results.md"
+
+validation:
+  required_checks:
+    - "4uentes-portfolio: npm.cmd run check"
+    - "4uentes-orchestor: npm.cmd run check"
+  evidence_required:
+    - "sanitized_cv_replacement_gate"
+    - "changed_files_summary"
+    - "validation_results"
+
+decision:
+  status: "approved-for-local-execution"
+  approver: "4uentes"
+  blocker: "sanitized owner-approved PDF asset not supplied in this cut"

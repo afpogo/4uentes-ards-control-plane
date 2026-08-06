@@ -1,0 +1,10 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0149"
+title: "Repair signup responsive structure"
+status: inbox
+created_at: "2026-08-04"
+requester: "4uentes"
+business_context: "All five signup fields overlap at 390px because named grid areas apply before their template exists."
+requested_change: "Restore a stable one-column narrow layout and only enable multi-column layout when real content width supports it."
+expected_outcome: "Every signup control has a distinct readable position and the page scrolls naturally without clipping."

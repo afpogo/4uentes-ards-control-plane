@@ -1,0 +1,10 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0135"
+title: "Secure or retire legacy filterArts endpoint"
+status: inbox
+created_at: "2026-07-11"
+requester: "4uentes"
+business_context: "The legacy filterArts route lacks the authenticated account-scoping guarantees of the governed article query path."
+requested_change: "Authenticate and account-scope the endpoint or retire it with a documented migration path and consumer evidence."
+expected_outcome: "No legacy filter query can expose cross-account article metadata."

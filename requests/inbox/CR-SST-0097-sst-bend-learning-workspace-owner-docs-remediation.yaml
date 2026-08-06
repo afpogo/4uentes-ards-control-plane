@@ -1,0 +1,25 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0097"
+title: "Remediate sst-bend LearningWorkspace owner ARDS/SDD documentation"
+status: inbox
+created_at: "2026-07-02"
+requester: "4uentes"
+
+business_context: >
+  CR-SST-0092 implemented the first runtime slice of LearningWorkspace in
+  sst-bend. CR-SST-0096 then established that control-plane evidence cannot
+  replace owner repository ARDS/SDD documentation. The sst-bend owner docs,
+  specs, feature map and outbound capability publication must be remediated.
+
+requested_change: >
+  Update sst-bend owner ARDS/SDD documentation for the LearningWorkspace runtime
+  contract delivered by CR-SST-0092. Keep the implementation behavior unchanged
+  and record the control-plane evidence that consumer repos are not mutated in
+  this slice.
+
+expected_outcome: >
+  sst-bend becomes the documented authority for LearningWorkspace runtime API,
+  persistence, scope rules, preview-only boundary, accepted context reads and
+  draft outbound handoff. The control-plane evidence references the owner doc
+  paths and keeps historical gaps as a separate backlog.

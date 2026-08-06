@@ -1,0 +1,25 @@
+schema_version: "1.0"
+kind: "feature_state"
+id: "portfolio-positioning-and-evidence-taxonomy"
+title: "Portfolio Positioning and Evidence Taxonomy"
+status: "ards-documented"
+updated_at: "2026-07-04"
+solution_id: "4uentes"
+affected_services:
+  - 4uentes-portfolio
+request_ids:
+  - CR-4UENTES-0008
+capability_refs:
+  - "portfolio-positioning-and-evidence-taxonomy"
+spec_refs:
+  - "initiatives/INIT-PORTFOLIO-0001-portfolio-publication-readiness.yaml"
+  - "docs/projects/4uentes/README.md"
+  - "docs/apps/4uentes-portfolio.md"
+evidence_refs:
+  - "evidence/requests/CR-4UENTES-0008/positioning-decision.md"
+  - "evidence/requests/CR-4UENTES-0008/changed-files-summary.md"
+  - "evidence/requests/CR-4UENTES-0008/validation-results.md"
+open_gaps:
+  - "Apply taxonomy to 4uentes-portfolio owner docs in a child-repo mutation CR."
+  - "Apply project evidence labels and public copy changes in small UI/content CRs."
+  - "Define GitHub repo allowlist before any evidence enrichment."

@@ -1,0 +1,47 @@
+{
+  "issueKey": "SST-33",
+  "issue": {
+    "summary": "[SST][INIT-SST-0003][CR-SST-0101] Define sst-extension CredentialedWebSource producer contract",
+    "status": "Tareas por hacer",
+    "statusCategory": "Por hacer",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-07-02T18:18:04.030-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0101",
+      "credentialed-web-source",
+      "init-sst-0003",
+      "sst-extension"
+    ],
+    "description": "CR: CR-SST-0101  \nInitiative: INIT-SST-0003  \nEpic: SST-29\n\nPurpose:\n\nDefine sst-extension as producer of CredentialedWebSource in browser-session mode without using DictionarySecret plaintext in the client.\n\nSubtasks / checklist:\n\n- [ ] Definir sourceType: credentialed-web.\n- [ ] Definir captureMode: browser-session.\n- [ ] Crear o actualizar specs/docs owner en sst-extension.\n- [ ] Mapear artifacts: visualPdf, readableText y futuro rawHtml.\n- [ ] Declarar que DictionarySecret SecretRef queda fuera del cliente.\n- [ ] Definir provenance y preview-only gate.\n\nDefinition of Done:\n\n- [ ] Contrato documentado sin implementar crawler.\n- [ ] No hay flujo que entregue plaintext secret al frontend.\n- [ ] Queda claro como entra luego a LearningWorkspace.\n- [ ] sst-extension conserva autoridad documental del producer contract.\n\nOwner documentation gate:\n\n* sst-extension owner ARDS/SDD specs/docs must be updated for any mutated behavior, or an explicit owner-documentation exception must be recorded before closure.\n\nControl-plane source:\n\n* requests/planned/cr-sst-0101-TODO.yaml\n* initiatives/INIT-SST-0003-sst-extension-construction.yaml\n* evidence/requests/CR-SST-0095/jira-cr-backlog-candidates.md\n\nBoundary:\n\n* Jira is an operational mirror; ARDS/SDD remains the source of truth.\n* Do not store private page content, cookies, JWTs or plaintext secrets in Jira or evidence.\n\n",
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10071\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10071\",\"key\":\"SST-33\",\"fields\":{\"summary\":\"[SST][INIT-SST-0003][CR-SST-0101] Define sst-extension CredentialedWebSource producer contract\",\"description\":\"CR: CR-SST-0101  \\nInitiative: INIT-SST-0003  \\nEpic: SST-29\\n\\nPurpose:\\n\\nDefine sst-extension as producer of CredentialedWebSource in browser-session mode without using DictionarySecret plaintext in the client.\\n\\nSubtasks / checklist:\\n\\n- [ ] Definir sourceType: credentialed-web.\\n- [ ] Definir captureMode: browser-session.\\n- [ ] Crear o actualizar specs/docs owner en sst-extension.\\n- [ ] Mapear artifacts: visualPdf, readableText y futuro rawHtml.\\n- [ ] Declarar que DictionarySecret SecretRef queda fuera del cliente.\\n- [ ] Definir provenance y preview-only gate.\\n\\nDefinition of Done:\\n\\n- [ ] Contrato documentado sin implementar crawler.\\n- [ ] No hay flujo que entregue plaintext secret al frontend.\\n- [ ] Queda claro como entra luego a LearningWorkspace.\\n- [ ] sst-extension conserva autoridad documental del producer contract.\\n\\nOwner documentation gate:\\n\\n* sst-extension owner ARDS/SDD specs/docs must be updated for any mutated behavior, or an explicit owner-documentation exception must be recorded before closure.\\n\\nControl-plane source:\\n\\n* requests/planned/cr-sst-0101-TODO.yaml\\n* initiatives/INIT-SST-0003-sst-extension-construction.yaml\\n* evidence/requests/CR-SST-0095/jira-cr-backlog-candidates.md\\n\\nBoundary:\\n\\n* Jira is an operational mirror; ARDS/SDD remains the source of truth.\\n* Do not store private page content, cookies, JWTs or plaintext secrets in Jira or evidence.\\n\\n\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-07-02T18:18:04.030-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10005\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"Tareas por hacer\",\"id\":\"10005\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/2\",\"id\":2,\"key\":\"new\",\"colorName\":\"blue-gray\",\"name\":\"Por hacer\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-sst-0101\",\"credentialed-web-source\",\"init-sst-0003\",\"sst-extension\"]}}"
+  },
+  "transitions": [
+    {
+      "id": "11",
+      "name": "Por hacer",
+      "toStatus": "Tareas por hacer",
+      "toStatusCategory": "Por hacer"
+    },
+    {
+      "id": "21",
+      "name": "En curso",
+      "toStatus": "En curso",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "31",
+      "name": "In Review",
+      "toStatus": "En revisión",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "41",
+      "name": "Listo",
+      "toStatus": "Finalizada",
+      "toStatusCategory": "Listo"
+    }
+  ]
+}

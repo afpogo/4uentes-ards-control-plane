@@ -1,0 +1,146 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0119"
+title: "Add configurable sst-extension session capture mode"
+status: closed-local
+source_request: "requests/inbox/CR-SST-0119-sst-extension-configurable-session-capture-mode.yaml"
+created_at: "2026-07-04"
+requester: "4uentes"
+
+summary: >
+  Add a user-configurable session capture mode in sst-extension so users can
+  choose between auto, visual-only, text-only, and prefer-text behavior.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - "sst-extension"
+    - "4uentes-orchestor"
+  include_optional_services: false
+
+control_plane_context:
+  initiative_id: "INIT-SST-0003"
+  jira_epic_key: "SST-29"
+  jira_issue_key: "SST-49"
+  discovered_from: "CR-SST-0100 / SST-32 manual QA"
+  policy_ref: "docs/policies/owner-documentation-authority-policy.md"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "sst-extension"
+      via: "capture behavior, local preference, UI control, docs and tests"
+      service_kind: "browser-extension"
+      ards_kind: "frontend-extension"
+      status: "optional-active"
+    - service_id: "4uentes-orchestor"
+      via: "request lifecycle and evidence"
+      service_kind: "control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+  affected_ards:
+    - frontend-extension
+    - browser-extension-session-capture
+    - child-repo-owner-documentation
+  risks:
+    - id: CAPTURE_BEHAVIOR_REGRESSION
+      severity: high
+    - id: PRIVATE_CONTENT_UI_EXPOSURE
+      severity: high
+
+required_checks:
+  - service_id: "sst-extension"
+    command: "pnpm check"
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check"
+
+execution:
+  child_repo_mutation_allowed: true
+  child_repo_mutation_target:
+    service_id: "sst-extension"
+  owner_documentation_required: true
+  jira_write_executed: true
+  jira_write_ref: "evidence/initiatives/INIT-SST-0003/jira-cr-sst-0119-0120-create-summary.md"
+  preliminary_analysis_ref: "evidence/requests/CR-SST-0119/preliminary-analysis.md"
+  jira_start_comment_ref: "evidence/requests/CR-SST-0119/jira-sst-49-start-comment.md"
+  jira_start_executed: true
+  jira_start_ref: "evidence/requests/CR-SST-0119/jira-sst-49-start-summary.md"
+  jira_start_result_ref: "evidence/requests/CR-SST-0119/jira-sst-49-start-result.json"
+  jira_implementation_comment_ref: "evidence/requests/CR-SST-0119/jira-sst-49-implementation-comment-summary.md"
+  jira_implementation_comment_result_ref: "evidence/requests/CR-SST-0119/jira-sst-49-implementation-comment-result.json"
+  jira_close_comment_ref: "evidence/requests/CR-SST-0119/jira-sst-49-close-comment.md"
+  jira_close_executed: true
+  jira_close_ref: "evidence/requests/CR-SST-0119/jira-sst-49-close-transition-summary.md"
+  jira_close_result_ref: "evidence/requests/CR-SST-0119/jira-sst-49-close-transition-result.json"
+  closure_decision_ref: "evidence/requests/CR-SST-0119/closure-decision.md"
+  follow_up_hardening_ref: "requests/planned/CR-SST-0121-sst-extension-session-capture-hardening.yaml"
+
+owner_documentation:
+  required: true
+  status: satisfied
+  owner_repo: "sst-extension"
+  planned_owner_docs:
+    - "specs/features/sessions.yaml"
+    - "docs/00-overview.md"
+    - "docs/qa/session-capture-validation.md"
+  updated_owner_docs:
+    - "specs/features/sessions.yaml"
+    - "docs/00-overview.md"
+    - "docs/qa/session-capture-validation.md"
+  owner_refs:
+    - repo: "sst-extension"
+      paths:
+        - "specs/features/sessions.yaml"
+        - "docs/00-overview.md"
+        - "docs/qa/session-capture-validation.md"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0119/implementation-summary.md"
+    - "evidence/requests/CR-SST-0119/validation-results.md"
+    - "evidence/requests/CR-SST-0119/owner-documentation-enforcement.md"
+    - "evidence/requests/CR-SST-0119/jira-sst-49-implementation-comment-summary.md"
+
+validation:
+  required_checks:
+    - "Auto mode preserves current visual-first/textual-fallback behavior."
+    - "Visual-only mode does not silently generate textual PDFs."
+    - "Text-only/prefer-text modes do not attempt unnecessary visual capture."
+    - "Mode preference remains local unless a separate owner contract changes scope."
+  evidence_ref: "evidence/requests/CR-SST-0119/validation-results.md"
+  manual_qa:
+    status: passed_by_user_manual_qa
+    date: "2026-07-05"
+    note: "User confirmed the configurable capture mode works fluidly; hardening risks are split into CR-SST-0121."
+
+task_weight:
+  classification: "complex-high-risk-task"
+  drivers:
+    - "Browser extension Manifest V3 lifecycle can affect long-running capture."
+    - "Session artifacts may include private page-derived PDFs in local storage."
+    - "Capture behavior touches storage, UI, background messaging, and BFF handoff."
+    - "SST-49 must not expand into preview-image contract owned by CR-SST-0120."
+
+model_selection:
+  primary_profile: "gpt-5.5"
+  note: "Used highest-reasoning profile for final review decision; subagents used gpt-5.4 high for bounded static review."
+
+subagent_deployment_plan:
+  required: true
+  roles:
+    - "runtime-capture-reviewer"
+    - "ui-storage-reviewer"
+    - "ards-sdd-validator"
+  executed: true
+  evidence_ref: "evidence/requests/CR-SST-0119/code-review-risk-assessment.md"
+  fallback: "No fallback required; subagents were available and outputs were verified by the primary agent."
+
+decision:
+  status: closed_local
+  approver: "4uentes"
+  note: "SST-49 closes the configurable capture mode scope. Hardening risks are reserved in CR-SST-0121; preview image behavior remains in CR-SST-0120 / SST-50."
+
+implementation:
+  status: implemented
+  summary_ref: "evidence/requests/CR-SST-0119/implementation-summary.md"
+  owner_docs_ref: "evidence/requests/CR-SST-0119/owner-documentation-enforcement.md"
+  risk_assessment_ref: "evidence/requests/CR-SST-0119/code-review-risk-assessment.md"
+  closure_decision_ref: "evidence/requests/CR-SST-0119/closure-decision.md"

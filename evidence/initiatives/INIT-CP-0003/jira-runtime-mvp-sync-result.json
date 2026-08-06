@@ -1,0 +1,284 @@
+{
+  "initiativeId": "INIT-CP-0003",
+  "epicKey": "ARDS-1",
+  "projectKey": "ARDS",
+  "externalWrite": true,
+  "results": [
+    {
+      "requestId": "CR-CP-0008",
+      "issueKey": "ARDS-7",
+      "source": "created",
+      "status": null,
+      "summary": "[ARDS][INIT-CP-0003][CR-CP-0008] Define audit binding and policy enforcement pack skeleton",
+      "commentResult": {
+        "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10117/comment/10150",
+        "id": "10150",
+        "author": {
+          "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+          "accountId": "[accountId-redacted]",
+          "emailAddress": "[email-redacted]",
+          "avatarUrls": {
+            "48x48": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:[cloudId-redacted]/[cloudId-redacted]/48",
+            "24x24": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:[cloudId-redacted]/[cloudId-redacted]/24",
+            "16x16": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:[cloudId-redacted]/[cloudId-redacted]/16",
+            "32x32": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:[cloudId-redacted]/[cloudId-redacted]/32"
+          },
+          "displayName": "Fuentes Sandferand",
+          "active": true,
+          "timeZone": "America/Buenos_Aires",
+          "accountType": "atlassian"
+        },
+        "body": "CR-CP-0008 synced from INIT-CP-0003.\n\nRuntime enforcement chain:\n\n`Policy -> Control -> Probe -> Gate -> Evidence -> State/CR`\n\nThis task is part of the ARDS/SDD runtime enforcement MVP under ARDS-1.  \nJira is a mirror; ARDS/SDD files remain the source of truth.",
+        "updateAuthor": {
+          "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+          "accountId": "[accountId-redacted]",
+          "emailAddress": "[email-redacted]",
+          "avatarUrls": {
+            "48x48": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:[cloudId-redacted]/[cloudId-redacted]/48",
+            "24x24": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:[cloudId-redacted]/[cloudId-redacted]/24",
+            "16x16": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:[cloudId-redacted]/[cloudId-redacted]/16",
+            "32x32": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:[cloudId-redacted]/[cloudId-redacted]/32"
+          },
+          "displayName": "Fuentes Sandferand",
+          "active": true,
+          "timeZone": "America/Buenos_Aires",
+          "accountType": "atlassian"
+        },
+        "created": "2026-07-10T17:11:00.482-0300",
+        "updated": "2026-07-10T17:11:00.482-0300",
+        "jsdPublic": true
+      },
+      "raw": "{\"id\":\"10117\",\"key\":\"ARDS-7\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10117\"}"
+    },
+    {
+      "requestId": "CR-CP-0009",
+      "issueKey": "ARDS-8",
+      "source": "created",
+      "status": null,
+      "summary": "[ARDS][INIT-CP-0003][CR-CP-0009] Define reusable policy control, probe, and gate model",
+      "commentResult": {
+        "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10118/comment/10151",
+        "id": "10151",
+        "author": {
+          "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+          "accountId": "[accountId-redacted]",
+          "emailAddress": "[email-redacted]",
+          "avatarUrls": {
+            "48x48": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:[cloudId-redacted]/[cloudId-redacted]/48",
+            "24x24": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:[cloudId-redacted]/[cloudId-redacted]/24",
+            "16x16": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:[cloudId-redacted]/[cloudId-redacted]/16",
+            "32x32": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:[cloudId-redacted]/[cloudId-redacted]/32"
+          },
+          "displayName": "Fuentes Sandferand",
+          "active": true,
+          "timeZone": "America/Buenos_Aires",
+          "accountType": "atlassian"
+        },
+        "body": "CR-CP-0009 synced from INIT-CP-0003.\n\nRuntime enforcement chain:\n\n`Policy -> Control -> Probe -> Gate -> Evidence -> State/CR`\n\nThis task is part of the ARDS/SDD runtime enforcement MVP under ARDS-1.  \nJira is a mirror; ARDS/SDD files remain the source of truth.",
+        "updateAuthor": {
+          "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+          "accountId": "[accountId-redacted]",
+          "emailAddress": "[email-redacted]",
+          "avatarUrls": {
+            "48x48": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:[cloudId-redacted]/[cloudId-redacted]/48",
+            "24x24": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:[cloudId-redacted]/[cloudId-redacted]/24",
+            "16x16": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:[cloudId-redacted]/[cloudId-redacted]/16",
+            "32x32": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:[cloudId-redacted]/[cloudId-redacted]/32"
+          },
+          "displayName": "Fuentes Sandferand",
+          "active": true,
+          "timeZone": "America/Buenos_Aires",
+          "accountType": "atlassian"
+        },
+        "created": "2026-07-10T17:11:03.177-0300",
+        "updated": "2026-07-10T17:11:03.177-0300",
+        "jsdPublic": true
+      },
+      "raw": "{\"id\":\"10118\",\"key\":\"ARDS-8\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10118\"}"
+    },
+    {
+      "requestId": "CR-CP-0010",
+      "issueKey": "ARDS-9",
+      "source": "created",
+      "status": null,
+      "summary": "[ARDS][INIT-CP-0003][CR-CP-0010] Implement human documentation language runtime validator",
+      "commentResult": {
+        "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10119/comment/10152",
+        "id": "10152",
+        "author": {
+          "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+          "accountId": "[accountId-redacted]",
+          "emailAddress": "[email-redacted]",
+          "avatarUrls": {
+            "48x48": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:[cloudId-redacted]/[cloudId-redacted]/48",
+            "24x24": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:[cloudId-redacted]/[cloudId-redacted]/24",
+            "16x16": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:[cloudId-redacted]/[cloudId-redacted]/16",
+            "32x32": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:[cloudId-redacted]/[cloudId-redacted]/32"
+          },
+          "displayName": "Fuentes Sandferand",
+          "active": true,
+          "timeZone": "America/Buenos_Aires",
+          "accountType": "atlassian"
+        },
+        "body": "CR-CP-0010 synced from INIT-CP-0003.\n\nRuntime enforcement chain:\n\n`Policy -> Control -> Probe -> Gate -> Evidence -> State/CR`\n\nThis task is part of the ARDS/SDD runtime enforcement MVP under ARDS-1.  \nJira is a mirror; ARDS/SDD files remain the source of truth.",
+        "updateAuthor": {
+          "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+          "accountId": "[accountId-redacted]",
+          "emailAddress": "[email-redacted]",
+          "avatarUrls": {
+            "48x48": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:[cloudId-redacted]/[cloudId-redacted]/48",
+            "24x24": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:[cloudId-redacted]/[cloudId-redacted]/24",
+            "16x16": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:[cloudId-redacted]/[cloudId-redacted]/16",
+            "32x32": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:[cloudId-redacted]/[cloudId-redacted]/32"
+          },
+          "displayName": "Fuentes Sandferand",
+          "active": true,
+          "timeZone": "America/Buenos_Aires",
+          "accountType": "atlassian"
+        },
+        "created": "2026-07-10T17:11:05.901-0300",
+        "updated": "2026-07-10T17:11:05.901-0300",
+        "jsdPublic": true
+      },
+      "raw": "{\"id\":\"10119\",\"key\":\"ARDS-9\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10119\"}"
+    },
+    {
+      "requestId": "CR-CP-0011",
+      "issueKey": "ARDS-10",
+      "source": "created",
+      "status": null,
+      "summary": "[ARDS][INIT-CP-0003][CR-CP-0011] Implement policy registry and adoption runtime validator",
+      "commentResult": {
+        "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10120/comment/10153",
+        "id": "10153",
+        "author": {
+          "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+          "accountId": "[accountId-redacted]",
+          "emailAddress": "[email-redacted]",
+          "avatarUrls": {
+            "48x48": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:[cloudId-redacted]/[cloudId-redacted]/48",
+            "24x24": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:[cloudId-redacted]/[cloudId-redacted]/24",
+            "16x16": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:[cloudId-redacted]/[cloudId-redacted]/16",
+            "32x32": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:[cloudId-redacted]/[cloudId-redacted]/32"
+          },
+          "displayName": "Fuentes Sandferand",
+          "active": true,
+          "timeZone": "America/Buenos_Aires",
+          "accountType": "atlassian"
+        },
+        "body": "CR-CP-0011 synced from INIT-CP-0003.\n\nRuntime enforcement chain:\n\n`Policy -> Control -> Probe -> Gate -> Evidence -> State/CR`\n\nThis task is part of the ARDS/SDD runtime enforcement MVP under ARDS-1.  \nJira is a mirror; ARDS/SDD files remain the source of truth.",
+        "updateAuthor": {
+          "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+          "accountId": "[accountId-redacted]",
+          "emailAddress": "[email-redacted]",
+          "avatarUrls": {
+            "48x48": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:[cloudId-redacted]/[cloudId-redacted]/48",
+            "24x24": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:[cloudId-redacted]/[cloudId-redacted]/24",
+            "16x16": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:[cloudId-redacted]/[cloudId-redacted]/16",
+            "32x32": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:[cloudId-redacted]/[cloudId-redacted]/32"
+          },
+          "displayName": "Fuentes Sandferand",
+          "active": true,
+          "timeZone": "America/Buenos_Aires",
+          "accountType": "atlassian"
+        },
+        "created": "2026-07-10T17:11:08.435-0300",
+        "updated": "2026-07-10T17:11:08.435-0300",
+        "jsdPublic": true
+      },
+      "raw": "{\"id\":\"10120\",\"key\":\"ARDS-10\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10120\"}"
+    },
+    {
+      "requestId": "CR-CP-0012",
+      "issueKey": "ARDS-11",
+      "source": "created",
+      "status": null,
+      "summary": "[ARDS][INIT-CP-0003][CR-CP-0012] Implement audit capsule and policy runtime runner MVP",
+      "commentResult": {
+        "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10121/comment/10154",
+        "id": "10154",
+        "author": {
+          "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+          "accountId": "[accountId-redacted]",
+          "emailAddress": "[email-redacted]",
+          "avatarUrls": {
+            "48x48": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:[cloudId-redacted]/[cloudId-redacted]/48",
+            "24x24": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:[cloudId-redacted]/[cloudId-redacted]/24",
+            "16x16": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:[cloudId-redacted]/[cloudId-redacted]/16",
+            "32x32": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:[cloudId-redacted]/[cloudId-redacted]/32"
+          },
+          "displayName": "Fuentes Sandferand",
+          "active": true,
+          "timeZone": "America/Buenos_Aires",
+          "accountType": "atlassian"
+        },
+        "body": "CR-CP-0012 synced from INIT-CP-0003.\n\nRuntime enforcement chain:\n\n`Policy -> Control -> Probe -> Gate -> Evidence -> State/CR`\n\nThis task is part of the ARDS/SDD runtime enforcement MVP under ARDS-1.  \nJira is a mirror; ARDS/SDD files remain the source of truth.",
+        "updateAuthor": {
+          "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+          "accountId": "[accountId-redacted]",
+          "emailAddress": "[email-redacted]",
+          "avatarUrls": {
+            "48x48": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:[cloudId-redacted]/[cloudId-redacted]/48",
+            "24x24": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:[cloudId-redacted]/[cloudId-redacted]/24",
+            "16x16": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:[cloudId-redacted]/[cloudId-redacted]/16",
+            "32x32": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:[cloudId-redacted]/[cloudId-redacted]/32"
+          },
+          "displayName": "Fuentes Sandferand",
+          "active": true,
+          "timeZone": "America/Buenos_Aires",
+          "accountType": "atlassian"
+        },
+        "created": "2026-07-10T17:11:11.232-0300",
+        "updated": "2026-07-10T17:11:11.232-0300",
+        "jsdPublic": true
+      },
+      "raw": "{\"id\":\"10121\",\"key\":\"ARDS-11\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10121\"}"
+    },
+    {
+      "requestId": "CR-CP-0013",
+      "issueKey": "ARDS-12",
+      "source": "created",
+      "status": null,
+      "summary": "[ARDS][INIT-CP-0003][CR-CP-0013] Apply policy runtime MVP to local control-plane policies",
+      "commentResult": {
+        "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10122/comment/10155",
+        "id": "10155",
+        "author": {
+          "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+          "accountId": "[accountId-redacted]",
+          "emailAddress": "[email-redacted]",
+          "avatarUrls": {
+            "48x48": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:[cloudId-redacted]/[cloudId-redacted]/48",
+            "24x24": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:[cloudId-redacted]/[cloudId-redacted]/24",
+            "16x16": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:[cloudId-redacted]/[cloudId-redacted]/16",
+            "32x32": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:[cloudId-redacted]/[cloudId-redacted]/32"
+          },
+          "displayName": "Fuentes Sandferand",
+          "active": true,
+          "timeZone": "America/Buenos_Aires",
+          "accountType": "atlassian"
+        },
+        "body": "CR-CP-0013 synced from INIT-CP-0003.\n\nRuntime enforcement chain:\n\n`Policy -> Control -> Probe -> Gate -> Evidence -> State/CR`\n\nThis task is part of the ARDS/SDD runtime enforcement MVP under ARDS-1.  \nJira is a mirror; ARDS/SDD files remain the source of truth.",
+        "updateAuthor": {
+          "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+          "accountId": "[accountId-redacted]",
+          "emailAddress": "[email-redacted]",
+          "avatarUrls": {
+            "48x48": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:[cloudId-redacted]/[cloudId-redacted]/48",
+            "24x24": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:[cloudId-redacted]/[cloudId-redacted]/24",
+            "16x16": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:[cloudId-redacted]/[cloudId-redacted]/16",
+            "32x32": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/712020:[cloudId-redacted]/[cloudId-redacted]/32"
+          },
+          "displayName": "Fuentes Sandferand",
+          "active": true,
+          "timeZone": "America/Buenos_Aires",
+          "accountType": "atlassian"
+        },
+        "created": "2026-07-10T17:11:13.880-0300",
+        "updated": "2026-07-10T17:11:13.880-0300",
+        "jsdPublic": true
+      },
+      "raw": "{\"id\":\"10122\",\"key\":\"ARDS-12\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10122\"}"
+    }
+  ]
+}

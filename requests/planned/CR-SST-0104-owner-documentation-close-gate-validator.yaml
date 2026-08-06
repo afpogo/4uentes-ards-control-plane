@@ -1,0 +1,97 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0104"
+title: "Enforce owner documentation gate for child repo mutation requests"
+status: planned
+source_request: "requests/inbox/CR-SST-0104-owner-documentation-close-gate-validator.yaml"
+created_at: "2026-07-02"
+requester: "4uentes"
+
+summary: >
+  Implement a control-plane validator for the owner documentation authority
+  policy. Requests that explicitly allow child repo mutation must declare owner
+  documentation status and evidence or an exception before `npm run check`
+  passes.
+
+initial_scope:
+  solution: "control-plane"
+  services:
+    - "4uentes-orchestor"
+  include_optional_services: false
+
+control_plane_context:
+  initiative_id: "INIT-CP-0001"
+  initiative_file: "initiatives/INIT-CP-0001-control-plane-lifecycle-enforcement.yaml"
+  governing_request: "CR-SST-0104"
+  policy_ref: "docs/policies/owner-documentation-authority-policy.md"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  preceding_requests:
+    - "CR-SST-0096"
+    - "CR-SST-0097"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "4uentes-orchestor"
+      via: "control-plane validator, package check, request lifecycle, evidence"
+      service_kind: "control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+  affected_ards:
+    - control-plane
+    - request-lifecycle
+    - evidence
+    - child-repo-owner-documentation
+  capabilities:
+    - "ards-sdd-governance"
+    - "request-lifecycle-governance"
+
+required_context:
+  - "AGENTS.md"
+  - "docs/policies/owner-documentation-authority-policy.md"
+  - "requests/planned/CR-SST-0092-sst-bend-learning-workspace-first-runtime-slice.yaml"
+  - "requests/planned/CR-SST-0097-sst-bend-learning-workspace-owner-docs-remediation.yaml"
+  - "evidence/requests/CR-SST-0097/changed-files-summary.md"
+
+required_checks:
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check:owner-docs"
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check"
+
+risk:
+  level: medium
+  score: 5
+  drivers:
+    - "The validator changes the control-plane check gate."
+    - "Existing child mutation requests must be normalized to avoid false failures."
+
+execution:
+  requires_human_approval: false
+  allowed_window: manual
+  branch_strategy: "control-plane-only"
+  implementation_boundary: >
+    This CR modifies only the control-plane validator, package scripts, request
+    metadata and evidence. It does not mutate child repositories and does not
+    remediate historical owner documentation gaps.
+  child_repo_mutation_allowed: false
+  jira_read_executed: true
+  jira_write_executed: true
+  jira_issue_key: "SST-37"
+  jira_epic_key: "SST-36"
+  jira_write_ref: "evidence/initiatives/INIT-CP-0001/jira-mirror-sync-2026-07-03.md"
+
+validation:
+  required_checks:
+    - "Owner documentation validator passes."
+    - "Full control-plane check passes."
+    - "CR-SST-0092 and CR-SST-0097 satisfy the owner_documentation gate."
+  evidence_required:
+    - "implementation_summary"
+    - "changed_files_summary"
+    - "validation_results"
+
+decision:
+  status: pending
+  approver: TODO

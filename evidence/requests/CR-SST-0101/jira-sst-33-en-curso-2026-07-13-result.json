@@ -1,0 +1,112 @@
+{
+  "issueKey": "SST-33",
+  "before": {
+    "summary": "[SST][INIT-SST-0003][CR-SST-0101] Define sst-extension CredentialedWebSource producer contract",
+    "status": "Tareas por hacer",
+    "statusCategory": "Por hacer",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-07-02T18:18:04.030-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0101",
+      "credentialed-web-source",
+      "init-sst-0003",
+      "sst-extension"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10071\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10071\",\"key\":\"SST-33\",\"fields\":{\"summary\":\"[SST][INIT-SST-0003][CR-SST-0101] Define sst-extension CredentialedWebSource producer contract\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-07-02T18:18:04.030-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10005\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"Tareas por hacer\",\"id\":\"10005\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/2\",\"id\":2,\"key\":\"new\",\"colorName\":\"blue-gray\",\"name\":\"Por hacer\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-sst-0101\",\"credentialed-web-source\",\"init-sst-0003\",\"sst-extension\"]}}"
+  },
+  "after": {
+    "summary": "[SST][INIT-SST-0003][CR-SST-0101] Define sst-extension CredentialedWebSource producer contract",
+    "status": "En curso",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-07-13T00:06:47.995-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0101",
+      "credentialed-web-source",
+      "init-sst-0003",
+      "sst-extension"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10071\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10071\",\"key\":\"SST-33\",\"fields\":{\"summary\":\"[SST][INIT-SST-0003][CR-SST-0101] Define sst-extension CredentialedWebSource producer contract\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-07-13T00:06:47.995-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10006\",\"description\":\"La persona asignada está trabajando actualmente en esta actividad.\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En curso\",\"id\":\"10006\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-sst-0101\",\"credentialed-web-source\",\"init-sst-0003\",\"sst-extension\"]}}"
+  },
+  "transitions": [
+    {
+      "id": "11",
+      "name": "Por hacer",
+      "toStatus": "Tareas por hacer",
+      "toStatusCategory": "Por hacer"
+    },
+    {
+      "id": "21",
+      "name": "En curso",
+      "toStatus": "En curso",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "31",
+      "name": "In Review",
+      "toStatus": "En revisión",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "41",
+      "name": "Listo",
+      "toStatus": "Finalizada",
+      "toStatusCategory": "Listo"
+    }
+  ],
+  "selectedTransition": {
+    "id": "21",
+    "name": "En curso",
+    "toStatus": "En curso",
+    "toStatusCategory": "En curso"
+  },
+  "transitionResult": {
+    "success": true
+  },
+  "commentResult": {
+    "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10071/comment/10214",
+    "id": "10214",
+    "author": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/48",
+        "24x24": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/24",
+        "16x16": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/16",
+        "32x32": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/32"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "body": "Reconciliacion de inicio para `CR-SST-0101 / SST-33`.\n\nARDS/SDD es la fuente de verdad y Jira es el mirror operativo. El trabajo fue  \nejecutado localmente antes de esta sincronizacion; esta transicion registra el  \npaso por `En curso` sin alterar el alcance aprobado.\n\nAlcance ejecutado:\n\n* adopcion owner de `CredentialedWebSource v1` en `sst-extension`;\n* proyeccion semantica sobre captura `browser-session` existente;\n* sin nuevos campos HTTP, endpoints, storage ni codigo runtime;\n* sin plaintext o `SecretRef` de `DictionarySecret` en el cliente.\n\nEvidencia de plan y readiness:\n\n* `evidence/requests/CR-SST-0101/readiness-and-replan-2026-07-12.md`\n\n",
+    "updateAuthor": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/48",
+        "24x24": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/24",
+        "16x16": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/16",
+        "32x32": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/32"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "created": "2026-07-13T00:06:47.995-0300",
+    "updated": "2026-07-13T00:06:47.995-0300",
+    "jsdPublic": true
+  },
+  "commentBody": "Reconciliacion de inicio para `CR-SST-0101 / SST-33`.\n\nARDS/SDD es la fuente de verdad y Jira es el mirror operativo. El trabajo fue\nejecutado localmente antes de esta sincronizacion; esta transicion registra el\npaso por `En curso` sin alterar el alcance aprobado.\n\nAlcance ejecutado:\n\n- adopcion owner de `CredentialedWebSource v1` en `sst-extension`;\n- proyeccion semantica sobre captura `browser-session` existente;\n- sin nuevos campos HTTP, endpoints, storage ni codigo runtime;\n- sin plaintext o `SecretRef` de `DictionarySecret` en el cliente.\n\nEvidencia de plan y readiness:\n\n- `evidence/requests/CR-SST-0101/readiness-and-replan-2026-07-12.md`\n\n",
+  "externalWrite": true
+}

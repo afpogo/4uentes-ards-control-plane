@@ -1,0 +1,99 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-4UENTES-0005"
+title: "Portfolio SPA preview fallback"
+status: "planned"
+source_request: "requests/inbox/CR-4UENTES-0005-portfolio-spa-preview-fallback.yaml"
+created_at: "2026-07-04"
+requester: "4uentes"
+
+summary: >
+  Fix the local Vite preview behavior so direct requests to SPA routes return
+  the HTML shell instead of 404, enabling reliable browser smoke for portfolio
+  deep links.
+
+initial_scope:
+  solution: "4uentes"
+  services:
+    - "4uentes-portfolio"
+  include_optional_services: false
+
+control_plane_context:
+  discovered_by_request: "CR-4UENTES-0004"
+  feature_id: "portfolio-spa-preview-fallback"
+  child_repo: "4uentes-portfolio"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "4uentes-portfolio"
+      via: "Vite preview/dev middleware and owner documentation"
+      service_kind: "frontend-spa"
+      ards_kind: "frontend-web"
+      status: "active"
+  affected_ards:
+    - "preview-routing"
+    - "browser-smoke"
+    - "publication-readiness"
+  capabilities:
+    - "portfolio-spa-preview-fallback"
+  risks:
+    - id: "DIRECT_ROUTE_404"
+      severity: "high"
+    - id: "PREVIEW_DIFFERS_FROM_STATIC_HOSTING"
+      severity: "medium"
+
+required_context:
+  - "4uentes-portfolio: vite.config.mts"
+  - "4uentes-portfolio: docs/architecture/README.md"
+  - "4uentes-portfolio: docs/qa/stabilization-checklist.md"
+  - "evidence/requests/CR-4UENTES-0004/browser-smoke-results.md"
+
+required_checks:
+  - service_id: "4uentes-portfolio"
+    command: "npm.cmd run check"
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check"
+
+risk:
+  level: "medium"
+  score: 5
+  drivers:
+    - "child repo config mutation"
+    - "SPA route behavior affects publication readiness"
+    - "static host fallback still must be confirmed separately"
+
+execution:
+  requires_human_approval: false
+  allowed_window: "manual"
+  branch_strategy: "one-branch-per-repo"
+  child_repo_mutation_allowed: true
+  implementation_boundary: >
+    Add local preview/dev fallback only. Do not change React routes, visual
+    design, content, dependencies, or deployment configuration in this CR.
+
+owner_documentation:
+  required: true
+  status: satisfied
+  owner_repo: "4uentes-portfolio"
+  updated_owner_docs:
+    - "docs/architecture/README.md"
+    - "docs/qa/stabilization-checklist.md"
+  control_plane_evidence_refs:
+    - "evidence/requests/CR-4UENTES-0005/spa-preview-fallback.md"
+    - "evidence/requests/CR-4UENTES-0005/validation-results.md"
+
+validation:
+  required_checks:
+    - "4uentes-portfolio: npm.cmd run check"
+    - "HTTP smoke over direct SPA routes"
+    - "4uentes-orchestor: npm.cmd run check"
+  evidence_required:
+    - "spa_preview_fallback"
+    - "changed_files_summary"
+    - "validation_results"
+
+decision:
+  status: "validated-local"
+  approver: "4uentes"
+  blocker: "none"

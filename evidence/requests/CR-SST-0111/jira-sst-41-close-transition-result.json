@@ -1,0 +1,114 @@
+{
+  "issueKey": "SST-41",
+  "before": {
+    "summary": "[SST][CR-SST-0111] Define ArticleTag and LearningContentTag intent contract",
+    "status": "En curso",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "Fuentes Sandferand",
+    "updated": "2026-07-04T14:25:25.077-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0111",
+      "init-sst-0001",
+      "intent-contract",
+      "learning-content-tags",
+      "subtask"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10079\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10079\",\"key\":\"SST-41\",\"fields\":{\"summary\":\"[SST][CR-SST-0111] Define ArticleTag and LearningContentTag intent contract\",\"assignee\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]\",\"accountId\": \"[accountId-redacted]\",\"emailAddress\":\"[email-redacted]\",\"avatarUrls\":{\"48x48\":\"[avatar-url-redacted]\",\"24x24\":\"[avatar-url-redacted]\",\"16x16\":\"[avatar-url-redacted]\",\"32x32\":\"[avatar-url-redacted]\"},\"displayName\":\"Fuentes Sandferand\",\"active\":true,\"timeZone\":\"America/Buenos_Aires\",\"accountType\":\"atlassian\"},\"resolution\":null,\"updated\":\"2026-07-04T14:25:25.077-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10006\",\"description\":\"La persona asignada está trabajando actualmente en esta actividad.\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En curso\",\"id\":\"10006\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-sst-0111\",\"init-sst-0001\",\"intent-contract\",\"learning-content-tags\",\"subtask\"]}}"
+  },
+  "after": {
+    "summary": "[SST][CR-SST-0111] Define ArticleTag and LearningContentTag intent contract",
+    "status": "Listo",
+    "statusCategory": "Listo",
+    "resolution": "Listo",
+    "assignee": "Fuentes Sandferand",
+    "updated": "2026-07-04T20:49:31.450-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0111",
+      "init-sst-0001",
+      "intent-contract",
+      "learning-content-tags",
+      "subtask"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10079\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10079\",\"key\":\"SST-41\",\"fields\":{\"summary\":\"[SST][CR-SST-0111] Define ArticleTag and LearningContentTag intent contract\",\"assignee\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]\",\"accountId\": \"[accountId-redacted]\",\"emailAddress\":\"[email-redacted]\",\"avatarUrls\":{\"48x48\":\"[avatar-url-redacted]\",\"24x24\":\"[avatar-url-redacted]\",\"16x16\":\"[avatar-url-redacted]\",\"32x32\":\"[avatar-url-redacted]\"},\"displayName\":\"Fuentes Sandferand\",\"active\":true,\"timeZone\":\"America/Buenos_Aires\",\"accountType\":\"atlassian\"},\"resolution\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/resolution/10000\",\"id\":\"10000\",\"description\":\"Se ha terminado el trabajo relacionado con esta incidencia.\",\"name\":\"Listo\"},\"updated\":\"2026-07-04T20:49:31.450-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10008\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"Finalizada\",\"id\":\"10008\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/3\",\"id\":3,\"key\":\"done\",\"colorName\":\"green\",\"name\":\"Listo\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-sst-0111\",\"init-sst-0001\",\"intent-contract\",\"learning-content-tags\",\"subtask\"]}}"
+  },
+  "transitions": [
+    {
+      "id": "11",
+      "name": "Por hacer",
+      "toStatus": "Tareas por hacer",
+      "toStatusCategory": "Por hacer"
+    },
+    {
+      "id": "21",
+      "name": "En curso",
+      "toStatus": "En curso",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "31",
+      "name": "In Review",
+      "toStatus": "En revisión",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "41",
+      "name": "Listo",
+      "toStatus": "Finalizada",
+      "toStatusCategory": "Listo"
+    }
+  ],
+  "selectedTransition": {
+    "id": "41",
+    "name": "Listo",
+    "toStatus": "Finalizada",
+    "toStatusCategory": "Listo"
+  },
+  "transitionResult": {
+    "success": true
+  },
+  "commentResult": {
+    "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10079/comment/10093",
+    "id": "10093",
+    "author": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "body": "CR-SST-0111 closure checkpoint.\n\nSST-41 can move to `Listo`.\n\nCompleted:\n\n* Defined the ArticleTag versus LearningContentTag intent contract.\n* Defined source anchors, selectors, relevance, and acceptance-state expectations.\n* Established BFF/API considerations and the child-repo implementation boundary.\n* Kept this slice as a control-plane contract only; no runtime repository mutation was performed.\n\nValidation:\n\n* `4uentes-orchestor npm.cmd run check`: PASS.\n* Owner documentation enforcement: PASS.\n\nEvidence:\n\n* `evidence/requests/CR-SST-0111/tagging-intent-contract.md`\n* `evidence/requests/CR-SST-0111/implementation-boundary.md`\n* `evidence/requests/CR-SST-0111/validation-results.md`\n\nBoundary:\n\n* Runtime implementation continues in later CRs.\n* Jira remains operational mirror; ARDS/SDD remains source of truth.\n\n",
+    "updateAuthor": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "created": "2026-07-04T20:49:31.450-0300",
+    "updated": "2026-07-04T20:49:31.450-0300",
+    "jsdPublic": true
+  },
+  "commentBody": "CR-SST-0111 closure checkpoint.\n\nSST-41 can move to `Listo`.\n\nCompleted:\n- Defined the ArticleTag versus LearningContentTag intent contract.\n- Defined source anchors, selectors, relevance, and acceptance-state expectations.\n- Established BFF/API considerations and the child-repo implementation boundary.\n- Kept this slice as a control-plane contract only; no runtime repository mutation was performed.\n\nValidation:\n- `4uentes-orchestor npm.cmd run check`: PASS.\n- Owner documentation enforcement: PASS.\n\nEvidence:\n- `evidence/requests/CR-SST-0111/tagging-intent-contract.md`\n- `evidence/requests/CR-SST-0111/implementation-boundary.md`\n- `evidence/requests/CR-SST-0111/validation-results.md`\n\nBoundary:\n- Runtime implementation continues in later CRs.\n- Jira remains operational mirror; ARDS/SDD remains source of truth.\n",
+  "externalWrite": true
+}

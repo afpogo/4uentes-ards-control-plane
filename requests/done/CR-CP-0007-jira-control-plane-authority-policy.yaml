@@ -1,0 +1,93 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-CP-0007"
+title: "Define work-tracker control-plane authority policy and Jira profile"
+status: "done"
+source_request: "requests/inbox/CR-CP-0007-jira-control-plane-authority-policy.yaml"
+planned_request: "requests/planned/CR-CP-0007-jira-control-plane-authority-policy.yaml"
+created_at: "2026-07-10"
+started_at: "2026-07-11"
+closed_at: "2026-07-12"
+requester: "4uentes"
+
+summary: >
+  Defined and locally adopted the provider-generic work-tracker authority
+  policy, including the Jira provider profile and its required Initiative/Epic
+  plus CR/Task/Subtask hierarchy contract.
+
+control_plane_context:
+  initiative_id: "INIT-CP-0002"
+  jira_epic_key: "ARDS-1"
+  jira_issue_key: "ARDS-14"
+  jira_status_before_closure_sync: "En curso"
+  jira_status_observed: "Listo"
+  jira_resolution_observed: "Listo"
+  jira_closure_sync_ref: "evidence/requests/CR-CP-0007/jira-ards-14-close-transition.md"
+  local_closure_ref: "evidence/requests/CR-CP-0007/closure-summary.md"
+
+implementation:
+  policy_id: "work-tracker-control-plane-authority-policy"
+  policy_class: "origin-repo-policy"
+  origin_repo: "4uentes-orchestor"
+  adoption_mode: "local-conditional"
+  applicability: "control planes that integrate an external work tracker"
+  enforcement_mode: "operational-review"
+  jira_hierarchy_contract: "jira-cr-mirror-hierarchy-policy"
+  runtime_implementation_added: false
+  core_repo_mutated: false
+  child_repositories_mutated: false
+
+validation:
+  command: "npm.cmd run check"
+  result: "passed"
+  exit_code: 0
+  warnings: 0
+  failures: 0
+  evidence_refs:
+    - "evidence/requests/CR-CP-0007/policy-definition-and-adoption.md"
+    - "evidence/requests/CR-CP-0007/security-review.md"
+    - "evidence/requests/CR-CP-0007/runtime-separation-review.md"
+    - "evidence/requests/CR-CP-0007/registry-and-state-link-review.md"
+    - "evidence/requests/CR-CP-0007/normative-case-review.md"
+    - "evidence/requests/CR-CP-0007/validation-results.md"
+    - "evidence/requests/CR-CP-0007/closure-summary.md"
+
+jira_closure_batch_authorization:
+  approved_by: "4uentes"
+  approval_ref: "user message 2026-07-12 requesting policy application, development closure, and Jira transition"
+  request_id: "CR-CP-0007"
+  provider: "jira"
+  project: "ARDS"
+  issues:
+    - "ARDS-14"
+  allowed_operations:
+    - "confirm ARDS-14 identity, parent, type, and current status"
+    - "transition ARDS-14 to Listo using transition 41"
+    - "read ARDS-14 after transition and store sanitized evidence"
+  forbidden_operations:
+    - "comments"
+    - "edits"
+    - "new issue creation"
+    - "any transition other than 41"
+    - "deletion"
+  expected_parent: "ARDS-1"
+  expected_issue_type: "Task"
+  expected_status_before: "En curso"
+  expected_status_after: "Listo"
+  execution_window: "this approved closure session"
+  consumption_rule: "Consumed or expired after the enumerated closure sync completes."
+  execution_status: "consumed"
+
+handoff:
+  target: "4uentes-ards-core"
+  status: "pending-separate-request"
+  mutation_in_this_cr: false
+
+decision:
+  status: "closed"
+  approver: "4uentes"
+  closure_reason: >
+    The policy is defined, locally adopted, hierarchy-corrected, evidenced, and
+    validated with the full control-plane check, and synchronized to Jira
+    ARDS-14 as Listo. Executable runtime enforcement and core promotion remain
+    separate future lifecycles.

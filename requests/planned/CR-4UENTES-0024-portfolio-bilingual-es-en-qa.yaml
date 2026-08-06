@@ -1,0 +1,119 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-4UENTES-0024"
+title: "Portfolio bilingual ES/EN QA"
+status: "planned"
+source_request: "requests/inbox/CR-4UENTES-0024-portfolio-bilingual-es-en-qa.yaml"
+created_at: "2026-07-05"
+requester: "4uentes"
+
+summary: >
+  Validate the Portfolio ES/EN bilingual experience after the company card and
+  initiative/detail I18N migrations, recording defects and applying scoped QA
+  fixes when they block validation.
+
+initial_scope:
+  solution: "4uentes"
+  services:
+    - "4uentes-portfolio"
+  include_optional_services: false
+
+control_plane_context:
+  initiative_id: "INIT-FUENTES-0001"
+  product_initiative_id: "INIT-PORTFOLIO-0001"
+  parent_request_id: "CR-4UENTES-0021"
+  predecessor_request_ids:
+    - "CR-4UENTES-0022"
+    - "CR-4UENTES-0023"
+  feature_id: "portfolio-bilingual-es-en-qa"
+  child_repo: "4uentes-portfolio"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "4uentes-portfolio"
+      via: "bilingual QA and language switching"
+      service_kind: "frontend-spa"
+      ards_kind: "frontend-web"
+      status: "active"
+  affected_ards:
+    - "frontend-web"
+    - "i18n"
+    - "qa"
+    - "owner-documentation"
+  capabilities:
+    - "portfolio-bilingual-es-en-qa"
+
+required_context:
+  - "requests/planned/CR-4UENTES-0022-portfolio-experience-company-cards-i18n-migration.yaml"
+  - "requests/planned/CR-4UENTES-0023-portfolio-experience-initiatives-i18n-migration.yaml"
+  - "4uentes-portfolio: src/components/PortFolioLayout/index.tsx"
+  - "4uentes-portfolio: src/pages/Dashboard/screens/Experience"
+  - "4uentes-portfolio: docs/qa/visual-checklist.md"
+
+risk:
+  level: "medium"
+  score: 5
+  drivers:
+    - "language switching is required to verify I18N migrations"
+    - "bilingual copy is recruiter-facing and supports CV revalidation"
+    - "QA fixes must not become broad copy rewrites"
+
+execution:
+  requires_human_approval: false
+  allowed_window: "manual"
+  branch_strategy: "child-repo-bilingual-qa-cut"
+  child_repo_mutation_allowed: true
+  child_repo_mutation_target:
+    service_id: "4uentes-portfolio"
+  owner_documentation_required: true
+  implementation_boundary: >
+    Validate ES/EN migrated surfaces and apply only scoped fixes that block
+    bilingual QA. Do not rewrite professional claims, contact policy, CV
+    download gate, mobile layout, or project evidence taxonomy.
+
+owner_documentation:
+  required: true
+  status: satisfied
+  owner_repo: "4uentes-portfolio"
+  planned_owner_docs:
+    - "docs/qa/visual-checklist.md"
+    - "specs/features/00-index.yaml"
+  updated_owner_docs:
+    - "docs/qa/visual-checklist.md"
+    - "specs/features/00-index.yaml"
+  owner_refs:
+    - repo: "4uentes-portfolio"
+      paths:
+        - "docs/qa/visual-checklist.md"
+        - "specs/features/00-index.yaml"
+  evidence_refs:
+    - "evidence/requests/CR-4UENTES-0024/qa-results.md"
+    - "evidence/requests/CR-4UENTES-0024/changed-files-summary.md"
+    - "evidence/requests/CR-4UENTES-0024/validation-results.md"
+
+jira:
+  role: "mirror"
+  source_of_truth: false
+  project_key: "PORT"
+  epic_key: "PORT-1"
+  issue_key: "PORT-6"
+  current_status_observed: "En revision"
+  transition_refs:
+    start_transition_ref: "evidence/requests/CR-4UENTES-0024/jira-port-6-start-transition-summary.md"
+    review_transition_ref: "evidence/requests/CR-4UENTES-0024/jira-port-6-review-transition-summary.md"
+
+validation:
+  required_checks:
+    - "4uentes-portfolio: npm.cmd run check"
+    - "4uentes-orchestor: npm.cmd run check"
+  evidence_required:
+    - "qa_results"
+    - "changed_files_summary"
+    - "validation_results"
+  latest_results_ref: "evidence/requests/CR-4UENTES-0024/validation-results.md"
+
+decision:
+  status: "approved-for-local-execution"
+  approver: "4uentes"
+  blocker: "none"

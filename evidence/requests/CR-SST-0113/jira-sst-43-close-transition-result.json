@@ -1,0 +1,116 @@
+{
+  "issueKey": "SST-43",
+  "before": {
+    "summary": "[SST][CR-SST-0113] Implement first editable text sheet in sst-fend",
+    "status": "En curso",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "Fuentes Sandferand",
+    "updated": "2026-07-04T19:52:40.196-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0113",
+      "editable-sheet",
+      "init-sst-0001",
+      "learning-content-tags",
+      "sst-fend",
+      "subtask"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10081\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10081\",\"key\":\"SST-43\",\"fields\":{\"summary\":\"[SST][CR-SST-0113] Implement first editable text sheet in sst-fend\",\"assignee\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]\",\"accountId\": \"[accountId-redacted]\",\"emailAddress\":\"[email-redacted]\",\"avatarUrls\":{\"48x48\":\"[avatar-url-redacted]\",\"24x24\":\"[avatar-url-redacted]\",\"16x16\":\"[avatar-url-redacted]\",\"32x32\":\"[avatar-url-redacted]\"},\"displayName\":\"Fuentes Sandferand\",\"active\":true,\"timeZone\":\"America/Buenos_Aires\",\"accountType\":\"atlassian\"},\"resolution\":null,\"updated\":\"2026-07-04T19:52:40.196-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10006\",\"description\":\"La persona asignada está trabajando actualmente en esta actividad.\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En curso\",\"id\":\"10006\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-sst-0113\",\"editable-sheet\",\"init-sst-0001\",\"learning-content-tags\",\"sst-fend\",\"subtask\"]}}"
+  },
+  "after": {
+    "summary": "[SST][CR-SST-0113] Implement first editable text sheet in sst-fend",
+    "status": "Listo",
+    "statusCategory": "Listo",
+    "resolution": "Listo",
+    "assignee": "Fuentes Sandferand",
+    "updated": "2026-07-04T20:49:51.210-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0113",
+      "editable-sheet",
+      "init-sst-0001",
+      "learning-content-tags",
+      "sst-fend",
+      "subtask"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10081\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10081\",\"key\":\"SST-43\",\"fields\":{\"summary\":\"[SST][CR-SST-0113] Implement first editable text sheet in sst-fend\",\"assignee\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]\",\"accountId\": \"[accountId-redacted]\",\"emailAddress\":\"[email-redacted]\",\"avatarUrls\":{\"48x48\":\"[avatar-url-redacted]\",\"24x24\":\"[avatar-url-redacted]\",\"16x16\":\"[avatar-url-redacted]\",\"32x32\":\"[avatar-url-redacted]\"},\"displayName\":\"Fuentes Sandferand\",\"active\":true,\"timeZone\":\"America/Buenos_Aires\",\"accountType\":\"atlassian\"},\"resolution\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/resolution/10000\",\"id\":\"10000\",\"description\":\"Se ha terminado el trabajo relacionado con esta incidencia.\",\"name\":\"Listo\"},\"updated\":\"2026-07-04T20:49:51.210-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10008\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"Finalizada\",\"id\":\"10008\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/3\",\"id\":3,\"key\":\"done\",\"colorName\":\"green\",\"name\":\"Listo\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-sst-0113\",\"editable-sheet\",\"init-sst-0001\",\"learning-content-tags\",\"sst-fend\",\"subtask\"]}}"
+  },
+  "transitions": [
+    {
+      "id": "11",
+      "name": "Por hacer",
+      "toStatus": "Tareas por hacer",
+      "toStatusCategory": "Por hacer"
+    },
+    {
+      "id": "21",
+      "name": "En curso",
+      "toStatus": "En curso",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "31",
+      "name": "In Review",
+      "toStatus": "En revisión",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "41",
+      "name": "Listo",
+      "toStatus": "Finalizada",
+      "toStatusCategory": "Listo"
+    }
+  ],
+  "selectedTransition": {
+    "id": "41",
+    "name": "Listo",
+    "toStatus": "Finalizada",
+    "toStatusCategory": "Listo"
+  },
+  "transitionResult": {
+    "success": true
+  },
+  "commentResult": {
+    "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10081/comment/10094",
+    "id": "10094",
+    "author": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "body": "CR-SST-0113 closure checkpoint.\n\nSST-43 can move to `Listo`.\n\nCompleted:\n\n* Implemented the first editable text sheet runtime slice in `sst-fend`.\n* The Article creation Text tab now presents an editorial sheet surface for body authoring.\n* Local draft metrics and the LearningWorkspace preview panel are available.\n* Article tags remain separated from future content annotations.\n* Owner ARDS/SDD documentation was updated in `sst-fend`.\n\nValidation:\n\n* `sst-fend npm.cmd test -- ArticleCreateFlow.test.tsx --runInBand`: PASS.\n* `sst-fend npm.cmd run check`: PASS.\n* `4uentes-orchestor npm.cmd run check`: PASS.\n* Owner documentation enforcement: PASS.\n\nEvidence:\n\n* `evidence/requests/CR-SST-0113/implementation-summary.md`\n* `evidence/requests/CR-SST-0113/validation-results.md`\n* `evidence/requests/CR-SST-0113/owner-documentation-summary.md`\n\nBoundary:\n\n* Contextual tagging continues in CR-SST-0114.\n* BFF/API and persistence continue in CR-SST-0115 and CR-SST-0116.\n* Jira remains operational mirror; ARDS/SDD remains source of truth.\n\n",
+    "updateAuthor": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "created": "2026-07-04T20:49:51.210-0300",
+    "updated": "2026-07-04T20:49:51.210-0300",
+    "jsdPublic": true
+  },
+  "commentBody": "CR-SST-0113 closure checkpoint.\n\nSST-43 can move to `Listo`.\n\nCompleted:\n- Implemented the first editable text sheet runtime slice in `sst-fend`.\n- The Article creation Text tab now presents an editorial sheet surface for body authoring.\n- Local draft metrics and the LearningWorkspace preview panel are available.\n- Article tags remain separated from future content annotations.\n- Owner ARDS/SDD documentation was updated in `sst-fend`.\n\nValidation:\n- `sst-fend npm.cmd test -- ArticleCreateFlow.test.tsx --runInBand`: PASS.\n- `sst-fend npm.cmd run check`: PASS.\n- `4uentes-orchestor npm.cmd run check`: PASS.\n- Owner documentation enforcement: PASS.\n\nEvidence:\n- `evidence/requests/CR-SST-0113/implementation-summary.md`\n- `evidence/requests/CR-SST-0113/validation-results.md`\n- `evidence/requests/CR-SST-0113/owner-documentation-summary.md`\n\nBoundary:\n- Contextual tagging continues in CR-SST-0114.\n- BFF/API and persistence continue in CR-SST-0115 and CR-SST-0116.\n- Jira remains operational mirror; ARDS/SDD remains source of truth.\n",
+  "externalWrite": true
+}

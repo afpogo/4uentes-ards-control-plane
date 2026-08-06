@@ -1,0 +1,28 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-4UENTES-0021"
+title: "Portfolio experience i18n and Jira project structure"
+status: "intake"
+created_at: "2026-07-04"
+requester: "4uentes"
+
+summary: >
+  Define the next structure for internationalizing portfolio experience content
+  and decide whether 4UENTES/portfolio work should use a Jira project outside
+  SST.
+
+scope:
+  solution: "4uentes"
+  services:
+    - "4uentes-portfolio"
+    - "4uentes-orchestor"
+  include_optional_services: false
+
+intent:
+  - "Separate stable experience metadata from localized narrative copy."
+  - "Prepare the child repo mutation plan for moving experience text into I18N."
+  - "Define Jira project separation for non-SST portfolio work."
+
+validation:
+  required_checks:
+    - "4uentes-orchestor: npm.cmd run check"

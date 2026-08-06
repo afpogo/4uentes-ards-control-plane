@@ -1,0 +1,94 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0078"
+title: "Add assisted ngrok OAuth recovery UX for sst-extension development login flow"
+status: running
+source_request: "requests/inbox/CR-SST-0078-sst-extension-oauth-ux-assisted-flow.yaml"
+created_at: "2026-06-15"
+started_at: "2026-06-15"
+requester: "4uentes"
+
+initial_scope:
+  solution: "sst"
+  services:
+    - sst-extension
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "sst-extension"
+      via: initial_scope.services
+      service_kind: "browser-extension"
+      ards_kind: "frontend-browser-extension"
+      status: "active"
+  affected_ards:
+    - "frontend-browser-extension"
+  capabilities:
+    - "node-auth-extension-session"
+    - "bff-auth-boundary"
+  risks:
+    - id: "AUTH_FLOW_STATE_HANDLING"
+      severity: "high"
+    - id: "SESSION_STORAGE_OF_CREDENTIALS"
+      severity: "high"
+    - id: "BROWSER_EXTENSION_RUNTIME"
+      severity: "medium"
+
+required_context:
+  - "catalog/services/sst-extension.yaml"
+  - "inventory/evidence/git/sst-extension.md"
+  - "AGENTS.md"
+  - "specs/integration/policies.yaml"
+  - "docs/policies/agent-task-atomization-policy.md"
+  - "docs/policies/agent-architecture-boundary-policy.md"
+  - "docs/policies/agent-context-management-policy.md"
+  - "docs/cross-repo/deployment-request-playbook.md"
+  - "docs/integration/node-auth-extension-session.md"
+  - "specs/integration/node-auth-extension-session.yaml"
+  - "specs/integration/bff-auth-boundary.yaml"
+
+required_checks:
+  - service_id: "sst-extension"
+    command: "pnpm run check"
+
+risk:
+  level: "high"
+  score: 10
+  drivers:
+    - id: "AUTH_FLOW_STATE_HANDLING"
+      severity: "high"
+    - id: "SESSION_STORAGE_OF_CREDENTIALS"
+      severity: "high"
+    - id: "BROWSER_EXTENSION_RUNTIME"
+      severity: "medium"
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "AUTH_FLOW_STATE_HANDLING"
+    - "SESSION_STORAGE_OF_CREDENTIALS"
+    - "BROWSER_EXTENSION_RUNTIME"
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "Auth and browser extension runtime change with development OAuth flow."
+
+subagent_deployment_plan:
+  required: false
+  parallelizable: false
+  roles: []
+  fallback: "If subagents are unavailable, perform the implementation sequentially with the highest available reasoning profile."
+  evidence_required: false
+
+execution:
+  requires_human_approval: true
+  allowed_window: manual
+  branch_strategy: "one-branch-per-repo"
+
+decision:
+  status: "pending"
+  approver: "TODO"

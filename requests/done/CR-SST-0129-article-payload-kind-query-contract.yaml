@@ -1,0 +1,52 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0129"
+title: "Define canonical article payload kind query contract"
+status: done
+source_request: "requests/inbox/CR-SST-0129-article-payload-kind-query-contract.yaml"
+planned_request: "requests/planned/CR-SST-0129-article-payload-kind-query-contract.yaml"
+completed_at: "2026-07-12"
+requester: "4uentes"
+summary: >
+  Established payloadKind as the canonical article semantic kind across
+  sst-bend, node-auth and sst-fend, while keeping filterType independent.
+scope:
+  solution: "sst"
+  services_modified: ["sst-bend", "node-auth", "sst-fend", "4uentes-orchestor"]
+  functional_repositories_modified: true
+  runtime_code_modified: true
+implementation:
+  initiative_id: "INIT-SST-0005"
+  jira_epic_key: "SST-57"
+  jira_parent_issue_key: "SST-58"
+  jira_issue_key: "SST-59"
+  jira_status_observed: "Listo"
+  jira_source_of_truth: false
+  completed_slice: >
+    Query and BFF responses expose web, text, transcript or unclassified from
+    explicit semantic data only; URL and filter metadata never infer kind.
+owner_documentation:
+  status: "satisfied"
+  owner_repos: ["sst-bend", "node-auth", "sst-fend"]
+  evidence_refs:
+    - "evidence/requests/CR-SST-0129/owner-documentation-summary.md"
+validation:
+  status: "validated-local"
+  passed:
+    - "sst-bend npm.cmd run check"
+    - "node-auth npm.cmd run check"
+    - "sst-fend npm.cmd run check: build plus 29 suites and 179 tests"
+    - "Restored sst-fend HTTP 200 and node-auth JWKS HTTP 200"
+    - "4uentes-orchestor npm.cmd run check: zero failures"
+  warnings:
+    - "Protected backend smokes require SMOKE_JWT."
+    - "sst-fend retains 22 historical lint warnings."
+evidence_refs:
+  - "evidence/requests/CR-SST-0129/implementation.md"
+  - "evidence/requests/CR-SST-0129/validation-results.md"
+  - "evidence/requests/CR-SST-0129/owner-documentation-summary.md"
+  - "evidence/requests/CR-SST-0129/jira-sync.md"
+decision:
+  status: "closed-local"
+  approver: "4uentes"
+  note: "Validated locally; no release or publication is implied."

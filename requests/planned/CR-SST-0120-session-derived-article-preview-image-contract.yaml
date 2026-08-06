@@ -1,0 +1,166 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0120"
+title: "Define preview image contract for session-derived articles"
+status: in-progress
+source_request: "requests/inbox/CR-SST-0120-session-derived-article-preview-image-contract.yaml"
+created_at: "2026-07-04"
+requester: "4uentes"
+
+summary: >
+  Define how articles generated from sst-extension session capture should carry
+  or derive preview images when the captured artifact is textual PDF fallback,
+  and generalize the behavior into a reusable URL/provided-image preview
+  resolver for SST articles.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - "sst-extension"
+    - "node-auth"
+    - "sst-fend"
+    - "4uentes-orchestor"
+  include_optional_services: true
+
+control_plane_context:
+  initiative_id: "INIT-SST-0003"
+  jira_epic_key: "SST-29"
+  jira_issue_key: "SST-50"
+  discovered_from: "CR-SST-0100 / SST-32 manual QA"
+  policy_ref: "docs/policies/owner-documentation-authority-policy.md"
+  jira_issue_role: "program-task"
+  child_request_ids:
+    - "CR-SST-0137"
+    - "CR-SST-0138"
+    - "CR-SST-0139"
+    - "CR-SST-0140"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "sst-extension"
+      via: "possible preview/thumbnail producer metadata"
+      service_kind: "browser-extension"
+      ards_kind: "frontend-extension"
+      status: "optional-active"
+    - service_id: "node-auth"
+      via: "possible ingestion contract for preview metadata"
+      service_kind: "bff"
+      ards_kind: "backend-for-frontend"
+      status: "active"
+    - service_id: "sst-fend"
+      via: "article preview rendering and unavailable reason"
+      service_kind: "frontend"
+      ards_kind: "frontend-app"
+      status: "active"
+    - service_id: "4uentes-orchestor"
+      via: "cross-repo request lifecycle and evidence"
+      service_kind: "control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+  affected_ards:
+    - frontend-extension
+    - backend-for-frontend
+    - frontend-app
+    - browser-extension-session-capture
+    - child-repo-owner-documentation
+  risks:
+    - id: PRIVATE_PREVIEW_EXPOSURE
+      severity: high
+    - id: CROSS_REPO_CONTRACT_SCOPE
+      severity: high
+
+required_checks:
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check"
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "PRIVATE_PREVIEW_EXPOSURE"
+    - "CROSS_REPO_CONTRACT_SCOPE"
+    - "CHILD_REPO_OWNER_DOCUMENTATION"
+
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "The work touches private-content boundaries and a cross-repo preview contract; architecture and privacy decisions remain with the primary agent."
+
+subagent_deployment_plan:
+  required: true
+  roles:
+    - "read-only frontend owner-boundary discovery"
+    - "bounded test-coverage review"
+  prohibited_delegation:
+    - "privacy decisions"
+    - "cross-repo contract ownership"
+  evidence_ref: "evidence/requests/CR-SST-0120/subagent-delegation.md"
+
+execution:
+  child_repo_mutation_allowed: true
+  child_repo_mutation_target:
+    service_id: "sst-fend"
+  owner_documentation_required: true
+  jira_write_executed: true
+  jira_write_ref: "evidence/initiatives/INIT-SST-0003/jira-cr-sst-0119-0120-create-summary.md"
+  design_pattern_ref: "evidence/requests/CR-SST-0120/preview-image-design-pattern.md"
+  jira_design_comment_executed: true
+  jira_design_comment_ref: "evidence/requests/CR-SST-0120/jira-sst-50-preview-pattern-comment-summary.md"
+  jira_design_comment_result_ref: "evidence/requests/CR-SST-0120/jira-sst-50-preview-pattern-comment-result.json"
+  preliminary_analysis_ref: "evidence/requests/CR-SST-0120/preliminary-analysis.md"
+  jira_start_comment_ref: "evidence/requests/CR-SST-0120/jira-sst-50-start-comment.md"
+  jira_start_executed: true
+  jira_start_ref: "evidence/requests/CR-SST-0120/jira-sst-50-start-summary.md"
+  jira_start_result_ref: "evidence/requests/CR-SST-0120/jira-sst-50-start-result.json"
+  implementation_boundary: "cross-repo preview program; completed milestone is the initial sst-fend consumer slice"
+  implementation_summary_ref: "evidence/requests/CR-SST-0120/implementation-summary.md"
+  validation_results_ref: "evidence/requests/CR-SST-0120/validation-results.md"
+  subagent_delegation_ref: "evidence/requests/CR-SST-0120/subagent-delegation.md"
+  jira_implementation_comment_executed: true
+  jira_implementation_comment_ref: "evidence/requests/CR-SST-0120/jira-sst-50-implementation-comment-summary.md"
+  jira_implementation_comment_result_ref: "evidence/requests/CR-SST-0120/jira-sst-50-implementation-comment-result.json"
+
+owner_documentation:
+  required: true
+  status: satisfied
+  owner_repo: "sst-fend"
+  updated_owner_docs:
+    - "specs/33-articles-frontend.yml"
+    - "docs/33-articles-frontend.md"
+    - "docs/tasks/2026-07-05-cr-sst-0120-article-preview-resolution-ui.md"
+  owner_refs:
+    - repo: "sst-fend"
+      paths:
+        - "specs/33-articles-frontend.yml"
+        - "docs/33-articles-frontend.md"
+        - "docs/tasks/2026-07-05-cr-sst-0120-article-preview-resolution-ui.md"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0120/implementation-summary.md"
+    - "evidence/requests/CR-SST-0120/validation-results.md"
+    - "evidence/requests/CR-SST-0120/owner-documentation-enforcement.md"
+    - "evidence/requests/CR-SST-0120/subagent-delegation.md"
+    - "evidence/requests/CR-SST-0120/jira-sst-50-implementation-comment-summary.md"
+  enforcement_ref: "evidence/requests/CR-SST-0120/owner-documentation-enforcement.md"
+
+validation:
+  required_checks:
+    - "sst-fend consumes explicit available, pending, unavailable, and rejected preview states."
+    - "Unavailable or rejected previews do not trigger the legacy preview-image fetch."
+    - "Legacy previewAssetId behavior remains available when no explicit terminal preview state exists."
+    - "Text-only session-derived articles render a governed placeholder and reason."
+    - "No private preview image is stored in evidence."
+    - "sst-fend owner docs are updated for the consumer slice."
+    - "Targeted tests, lint, and build pass; the unrelated full-check CRLF blocker is explicitly accepted for this local closure."
+  visual_qa:
+    status: "waived"
+    reason: "No authenticated browser target or sanitized private fixture is available in this control-plane workspace; deterministic resolver and component tests cover the rendered states. Final private-page visual QA is retained in CR-SST-0103."
+  child_repo_full_check:
+    status: "accepted-scope-external-blocker"
+    evidence_ref: "evidence/requests/CR-SST-0120/validation-results.md"
+
+decision:
+  status: approved-in-progress
+  approver: "4uentes"
+  note: "Reopened as the program container for SST-50 after explicit user approval on 2026-07-12. The initial sst-fend consumer slice remains a completed milestone; final closure requires CR-SST-0137 through CR-SST-0140 and final private QA through CR-SST-0103."

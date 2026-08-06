@@ -1,0 +1,37 @@
+id: "CR-SST-0126"
+title: "Reconcile sst-fend SST sheet workspace UI"
+created_at: "2026-07-10"
+requester: "4uentes"
+summary: >
+  Retroactively reconcile the already implemented sst-fend
+  sst-sheet-workspace-ui capability with the ARDS/SDD control plane, owner
+  documentation, feature state and Jira mirror. The request does not authorize
+  new functional UI work or refactors.
+
+context:
+  initiative_id: "INIT-SST-0001"
+  parent_jira_issue_key: "SST-6"
+  jira_epic_key: "SST-27"
+  feature_state: "sst-sheet-workspace-ui"
+  current_capability: "sst-sheet-workspace-ui"
+  predecessor_capability: "text-article-learning-workspace-visual-separation-ui"
+  owner_repository: "sst-fend"
+  ordering_deviation: >
+    The sst-fend implementation and initial owner documentation existed before
+    this request lifecycle was created. This request records that deviation and
+    reconciles metadata and evidence without claiming the original ordering was
+    request-first.
+
+requested_outcome:
+  - "Register one retroactive CR for the existing local visual capability."
+  - "Link the feature state, both capabilities, INIT-SST-0001 and sst-fend owner evidence."
+  - "Complete authenticated desktop and mobile visual QA before local closure."
+  - "Keep Jira as an operational mirror rather than the source of truth."
+
+boundaries:
+  - "No new functional UI behavior or refactor."
+  - "Child mutation is limited to sst-fend ARDS/SDD owner metadata and documentation-only corrections."
+  - "Do not change learning-workspace-context producer, inbound contract or CR-SST-0123 linkage."
+  - "If QA identifies a code defect, keep this CR open and create a separate bugfix CR."
+  - "Do not publish, commit or include unrelated changes from the dirty sst-fend worktree."
+

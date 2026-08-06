@@ -1,0 +1,77 @@
+{
+  "issueKey": "SST-33",
+  "before": {
+    "summary": "[SST][INIT-SST-0003][CR-SST-0101] Define sst-extension CredentialedWebSource producer contract",
+    "status": "Listo",
+    "statusCategory": "Listo",
+    "resolution": "Listo",
+    "assignee": "Fuentes Sandferand",
+    "updated": "2026-07-13T00:30:14.491-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0101",
+      "credentialed-web-source",
+      "init-sst-0003",
+      "sst-extension"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10071\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10071\",\"key\":\"SST-33\",\"fields\":{\"summary\":\"[SST][INIT-SST-0003][CR-SST-0101] Define sst-extension CredentialedWebSource producer contract\",\"assignee\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]\",\"accountId\": \"[accountId-redacted]\",\"emailAddress\":\"[email-redacted]\",\"avatarUrls\":{\"48x48\":\"https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/48\",\"24x24\":\"https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/24\",\"16x16\":\"https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/16\",\"32x32\":\"https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/32\"},\"displayName\":\"Fuentes Sandferand\",\"active\":true,\"timeZone\":\"America/Buenos_Aires\",\"accountType\":\"atlassian\"},\"resolution\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/resolution/10000\",\"id\":\"10000\",\"description\":\"Se ha terminado el trabajo relacionado con esta incidencia.\",\"name\":\"Listo\"},\"updated\":\"2026-07-13T00:30:14.491-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10008\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"Finalizada\",\"id\":\"10008\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/3\",\"id\":3,\"key\":\"done\",\"colorName\":\"green\",\"name\":\"Listo\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-sst-0101\",\"credentialed-web-source\",\"init-sst-0003\",\"sst-extension\"]}}"
+  },
+  "after": {
+    "summary": "[SST][INIT-SST-0003][CR-SST-0101] Define sst-extension CredentialedWebSource producer contract",
+    "status": "Listo",
+    "statusCategory": "Listo",
+    "resolution": "Listo",
+    "assignee": "Fuentes Sandferand",
+    "updated": "2026-07-18T15:58:04.275-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0101",
+      "credentialed-web-source",
+      "init-sst-0003",
+      "sst-extension"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10071\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10071\",\"key\":\"SST-33\",\"fields\":{\"summary\":\"[SST][INIT-SST-0003][CR-SST-0101] Define sst-extension CredentialedWebSource producer contract\",\"assignee\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]\",\"accountId\": \"[accountId-redacted]\",\"emailAddress\":\"[email-redacted]\",\"avatarUrls\":{\"48x48\":\"https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/48\",\"24x24\":\"https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/24\",\"16x16\":\"https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/16\",\"32x32\":\"https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/32\"},\"displayName\":\"Fuentes Sandferand\",\"active\":true,\"timeZone\":\"America/Buenos_Aires\",\"accountType\":\"atlassian\"},\"resolution\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/resolution/10000\",\"id\":\"10000\",\"description\":\"Se ha terminado el trabajo relacionado con esta incidencia.\",\"name\":\"Listo\"},\"updated\":\"2026-07-18T15:58:04.275-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10008\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"Finalizada\",\"id\":\"10008\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/3\",\"id\":3,\"key\":\"done\",\"colorName\":\"green\",\"name\":\"Listo\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-sst-0101\",\"credentialed-web-source\",\"init-sst-0003\",\"sst-extension\"]}}"
+  },
+  "commentResult": {
+    "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10071/comment/10221",
+    "id": "10221",
+    "author": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/48",
+        "24x24": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/24",
+        "16x16": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/16",
+        "32x32": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/32"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "body": "Decision funcional posterior a SST-33; no reabre ni amplia el CR cerrado.\n\nSST-33 queda como captura manual desde una sesion de navegador ya abierta, sin  \nsecretos en el cliente y sin importacion automatica a LearningWorkspace o IA.\n\nSiguientes limites de producto:\n\n* LearningWorkspace: solo preview y aceptacion explicita por usuario; CR-SST-0102.\n* IA: solo contexto previamente aceptado, acotado por cuenta/usuario y auditable.\n* Inicio de sesion autonomo: requiere un CR separado con SecretRef, destinos  \n  permitidos, auditoria y aislamiento; nunca plaintext en extension o IA.\n* Guardar/revelar contrasenas: sigue siendo responsabilidad auditada de  \n  DictionarySecret; no se convierte en contenido de captura.\n* HTML completo: requiere contrato separado de sanitizacion, limites y retencion.\n* Procesar una pagina privada sin accion del usuario: no esta aprobado; requiere  \n  consentimiento, programacion, permisos, revocacion y controles antiabuso.\n\nEl QA manual de extension queda en CR-SST-0103 / SST-35 con fixtures ficticios.  \nLa indisponibilidad del puente DevTools de Codex es una limitacion de herramienta,  \nno un resultado funcional de sst-extension.\n\nARDS/SDD mantiene el detalle en:\n\n* evidence/requests/CR-SST-0101/future-growth-functional-decision-2026-07-18.md\n* evidence/requests/CR-SST-0103/manual-qa-execution-strategy-2026-07-18.md\n\n",
+    "updateAuthor": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/48",
+        "24x24": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/24",
+        "16x16": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/16",
+        "32x32": "https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/32"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "created": "2026-07-18T15:58:04.275-0300",
+    "updated": "2026-07-18T15:58:04.275-0300",
+    "jsdPublic": true
+  },
+  "commentBody": "Decision funcional posterior a SST-33; no reabre ni amplia el CR cerrado.\n\nSST-33 queda como captura manual desde una sesion de navegador ya abierta, sin\nsecretos en el cliente y sin importacion automatica a LearningWorkspace o IA.\n\nSiguientes limites de producto:\n\n- LearningWorkspace: solo preview y aceptacion explicita por usuario; CR-SST-0102.\n- IA: solo contexto previamente aceptado, acotado por cuenta/usuario y auditable.\n- Inicio de sesion autonomo: requiere un CR separado con SecretRef, destinos\n  permitidos, auditoria y aislamiento; nunca plaintext en extension o IA.\n- Guardar/revelar contrasenas: sigue siendo responsabilidad auditada de\n  DictionarySecret; no se convierte en contenido de captura.\n- HTML completo: requiere contrato separado de sanitizacion, limites y retencion.\n- Procesar una pagina privada sin accion del usuario: no esta aprobado; requiere\n  consentimiento, programacion, permisos, revocacion y controles antiabuso.\n\nEl QA manual de extension queda en CR-SST-0103 / SST-35 con fixtures ficticios.\nLa indisponibilidad del puente DevTools de Codex es una limitacion de herramienta,\nno un resultado funcional de sst-extension.\n\nARDS/SDD mantiene el detalle en:\n- evidence/requests/CR-SST-0101/future-growth-functional-decision-2026-07-18.md\n- evidence/requests/CR-SST-0103/manual-qa-execution-strategy-2026-07-18.md\n",
+  "externalWrite": true
+}

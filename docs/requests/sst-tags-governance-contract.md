@@ -21,9 +21,16 @@ futuros y no bloquean este cierre contractual.
 
 - Feature state: `state/features/sst-tags-governance.current.yaml`
 - Jira issue: `SST-4`
-- Subtask Jira de este CR: `SST-19`
+- Subtask backend cerrado: `SST-21` (`CR-SST-0073`)
 - Orden operativo: `evidence/requests/CR-SST-0063/sst-tags-governance-execution-order.md`
 - Request gobernante inicial: `CR-SST-0071`
+
+Estado operativo actual:
+
+- `CR-SST-0071`: decision del modelo global cerrada.
+- `CR-SST-0072`: persistencia global y dual-write cerrados.
+- `CR-SST-0073`: API backend producer-side cerrada con `SST-21` en `Finalizada`.
+- `CR-SST-0074..0076`: continuan la fachada BFF, adopcion frontend y cierre de Diccionario.
 
 ## Modelo persistido objetivo
 
@@ -153,6 +160,33 @@ Durante la transicion:
 
 La compatibilidad temporal se mantiene hasta que `CR-SST-0072..0076` cierren
 el circuito de persistencia, API, BFF y frontend.
+
+## Mapa de rutas y errores
+
+Superficie backend productora en `sst-bend`:
+
+- `GET /4uentes/v1/tags/definitions`
+- `GET /4uentes/v1/tags/values`
+- `POST /4uentes/v1/tags/values`
+- `PUT /4uentes/v1/tags/resources/:resourceType/:resourceId`
+
+Superficie BFF/facade en `4uentes-auth`:
+
+- `GET /api/tags/definitions`
+- `GET /api/tags/values`
+- `POST /api/tags/values`
+- `PUT /api/tags/resources/:resourceType/:resourceId`
+
+Semantica contractual de errores:
+
+- `401 Unauthorized`: falta bearer, el bearer es invalido, o no se puede
+  resolver identidad/autenticacion. En BFF puede ocurrir antes del proxy; en
+  `sst-bend` ocurre en la ruta protegida productora.
+- `403 Forbidden`: el JWT es valido pero el contexto de cuenta o el rol no
+  autoriza la operacion. Para tags governance esto aplica especialmente a
+  mutaciones owner-scoped o a `x-active-account-id` ajeno/inconsistente.
+- `409 Conflict`: `POST /tags/values` intenta crear un `TagValue` ya existente
+  bajo la unicidad `accountId + definitionKey + slug`.
 
 ## Endpoints objetivo de fase
 

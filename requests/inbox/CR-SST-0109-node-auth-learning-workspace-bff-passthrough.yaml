@@ -1,0 +1,33 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0109"
+title: "Expose LearningWorkspace through node-auth BFF"
+status: inbox
+created_at: "2026-07-04"
+requester: "4uentes"
+
+summary: >
+  Connect the SST LearningWorkspace API to the frontend through node-auth as a
+  protected BFF pass-through so the Learning Sheet can be validated end to end.
+
+source:
+  initiative_id: "INIT-SST-0001"
+  parent_request_id: "CR-SST-0107"
+  jira_epic_key: "SST-27"
+  active_jira_issue_key: "SST-6"
+  reason: >
+    CR-SST-0107 implemented the frontend Learning Sheet and left the stable
+    node-auth outbound reference as a documented gap. This request closes the
+    BFF connection gap before Chrome DevTools E2E validation.
+
+scope:
+  solution: "sst"
+  services:
+    - "node-auth"
+    - "sst-fend"
+    - "4uentes-orchestor"
+  excludes:
+    - "sst-bend parser/import expansion"
+    - "direct frontend calls to sst-bend"
+    - "TagDefinition CRUD or automatic creation"
+

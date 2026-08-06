@@ -1,0 +1,23 @@
+schema_version: "1.0"
+kind: "feature_state"
+id: "portfolio-experience-impact-narrative"
+title: "Portfolio Experience Impact Narrative"
+status: "validated-local"
+updated_at: "2026-07-04"
+solution_id: "4uentes"
+affected_services:
+  - 4uentes-portfolio
+request_ids:
+  - CR-4UENTES-0020
+capability_refs:
+  - "portfolio-experience-impact-narrative"
+spec_refs:
+  - "requests/planned/CR-4UENTES-0020-portfolio-experience-impact-narrative.yaml"
+  - "initiatives/INIT-PORTFOLIO-0001-portfolio-publication-readiness.yaml"
+evidence_refs:
+  - "evidence/requests/CR-4UENTES-0020/experience-current-analysis.md"
+  - "evidence/requests/CR-4UENTES-0020/changed-files-summary.md"
+  - "evidence/requests/CR-4UENTES-0020/validation-results.md"
+open_gaps:
+  - "Validate revised experience copy against the sanitized CV draft before restoring CV download."
+  - "Review whether a future visual/card redesign is needed after copy stabilization."

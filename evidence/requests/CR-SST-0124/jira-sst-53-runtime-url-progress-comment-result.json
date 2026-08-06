@@ -1,0 +1,83 @@
+{
+  "issueKey": "SST-53",
+  "before": {
+    "summary": "[SST][CR-SST-0124] Native SST article runtime URL",
+    "status": "En curso",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-07-07T14:08:45.436-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0124",
+      "frontend",
+      "init-sst-0001",
+      "learning-content-tags",
+      "runtime-url",
+      "sst-fend",
+      "subtask"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10101\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10101\",\"key\":\"SST-53\",\"fields\":{\"summary\":\"[SST][CR-SST-0124] Native SST article runtime URL\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-07-07T14:08:45.436-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10006\",\"description\":\"La persona asignada está trabajando actualmente en esta actividad.\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En curso\",\"id\":\"10006\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-sst-0124\",\"frontend\",\"init-sst-0001\",\"learning-content-tags\",\"runtime-url\",\"sst-fend\",\"subtask\"]}}"
+  },
+  "after": {
+    "summary": "[SST][CR-SST-0124] Native SST article runtime URL",
+    "status": "En curso",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-07-07T14:21:33.865-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0124",
+      "frontend",
+      "init-sst-0001",
+      "learning-content-tags",
+      "runtime-url",
+      "sst-fend",
+      "subtask"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10101\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10101\",\"key\":\"SST-53\",\"fields\":{\"summary\":\"[SST][CR-SST-0124] Native SST article runtime URL\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-07-07T14:21:33.865-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10006\",\"description\":\"La persona asignada está trabajando actualmente en esta actividad.\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En curso\",\"id\":\"10006\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-sst-0124\",\"frontend\",\"init-sst-0001\",\"learning-content-tags\",\"runtime-url\",\"sst-fend\",\"subtask\"]}}"
+  },
+  "commentResult": {
+    "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10101/comment/10112",
+    "id": "10112",
+    "author": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "body": "CR-SST-0124 runtime implementation update.\n\nStatus: implemented locally, validation passed, browser QA pending.\n\nImplemented in sst-fend:\n\n* Native text articles now render a runtime/app URL after creation.\n* Runtime URL is derived from current SPA origin plus `/leafArticulo/:id`.\n* Runtime URL is navigation-only and is not persisted as `url` or `payload.data.sourceUrl`.\n* Web articles continue to use their external source URL semantics.\n* Owner ARDS/SDD docs/specs were updated.\n\nValidation:\n\n* `npm.cmd test -- ArticleCreateFlow.test.tsx --runInBand`: PASS.\n* `npm.cmd run css:types:check`: PASS.\n* `npm.cmd run check` in sst-fend: PASS, 27 suites / 163 tests.\n* `npm.cmd run check` in 4uentes-orchestor: PASS.\n\nEvidence:\n\n* `evidence/requests/CR-SST-0124/changed-files-summary.md`\n* `evidence/requests/CR-SST-0124/owner-documentation-summary.md`\n* `evidence/requests/CR-SST-0124/validation-results.md`\n\n",
+    "updateAuthor": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "created": "2026-07-07T14:21:33.865-0300",
+    "updated": "2026-07-07T14:21:33.865-0300",
+    "jsdPublic": true
+  },
+  "commentBody": "CR-SST-0124 runtime implementation update.\n\nStatus: implemented locally, validation passed, browser QA pending.\n\nImplemented in sst-fend:\n\n- Native text articles now render a runtime/app URL after creation.\n- Runtime URL is derived from current SPA origin plus `/leafArticulo/:id`.\n- Runtime URL is navigation-only and is not persisted as `url` or `payload.data.sourceUrl`.\n- Web articles continue to use their external source URL semantics.\n- Owner ARDS/SDD docs/specs were updated.\n\nValidation:\n\n- `npm.cmd test -- ArticleCreateFlow.test.tsx --runInBand`: PASS.\n- `npm.cmd run css:types:check`: PASS.\n- `npm.cmd run check` in sst-fend: PASS, 27 suites / 163 tests.\n- `npm.cmd run check` in 4uentes-orchestor: PASS.\n\nEvidence:\n\n- `evidence/requests/CR-SST-0124/changed-files-summary.md`\n- `evidence/requests/CR-SST-0124/owner-documentation-summary.md`\n- `evidence/requests/CR-SST-0124/validation-results.md`\n",
+  "externalWrite": true
+}

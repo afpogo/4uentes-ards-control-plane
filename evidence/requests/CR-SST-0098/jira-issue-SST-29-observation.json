@@ -1,0 +1,45 @@
+{
+  "issueKey": "SST-29",
+  "issue": {
+    "summary": "[SST][INIT-SST-0003] SST Extension Construction",
+    "status": "En curso",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "Fuentes Sandferand",
+    "updated": "2026-07-03T02:29:48.867-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "init-sst-0003",
+      "sst-extension"
+    ],
+    "description": "Initiative/Epic mirror for INIT-SST-0003.\n\nPurpose:\n\n* Govern construction of sst-extension as a first-class SST browser extension surface.\n* Group future CRs for authenticated tab capture, session PDF/HTML artifacts, Dictionary adjacency, LearningWorkspace handoff, and browser QA.\n* Keep private page content, cookies, JWTs, and secret plaintext out of Jira and ARDS/SDD evidence.\n\nControl-plane source:\n\n* initiatives/INIT-SST-0003-sst-extension-construction.yaml\n* requests/planned/CR-SST-0094-sst-extension-construction-initiative.yaml\n* evidence/requests/CR-SST-0093/session-pdf-capture-gap-analysis.md\n* evidence/requests/CR-SST-0093/credentialed-web-source-boundary.md\n\nBoundary:\n\n* Jira is an operational mirror.\n* ARDS/SDD remains the source of truth.\n* This epic does not authorize direct child-repo mutation.\n\n",
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10067\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10067\",\"key\":\"SST-29\",\"fields\":{\"summary\":\"[SST][INIT-SST-0003] SST Extension Construction\",\"description\":\"Initiative/Epic mirror for INIT-SST-0003.\\n\\nPurpose:\\n\\n* Govern construction of sst-extension as a first-class SST browser extension surface.\\n* Group future CRs for authenticated tab capture, session PDF/HTML artifacts, Dictionary adjacency, LearningWorkspace handoff, and browser QA.\\n* Keep private page content, cookies, JWTs, and secret plaintext out of Jira and ARDS/SDD evidence.\\n\\nControl-plane source:\\n\\n* initiatives/INIT-SST-0003-sst-extension-construction.yaml\\n* requests/planned/CR-SST-0094-sst-extension-construction-initiative.yaml\\n* evidence/requests/CR-SST-0093/session-pdf-capture-gap-analysis.md\\n* evidence/requests/CR-SST-0093/credentialed-web-source-boundary.md\\n\\nBoundary:\\n\\n* Jira is an operational mirror.\\n* ARDS/SDD remains the source of truth.\\n* This epic does not authorize direct child-repo mutation.\\n\\n\",\"assignee\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]\",\"accountId\": \"[accountId-redacted]\",\"emailAddress\":\"[email-redacted]\",\"avatarUrls\":{\"48x48\":\"[avatar-url-redacted]\",\"24x24\":\"[avatar-url-redacted]\",\"16x16\":\"[avatar-url-redacted]\",\"32x32\":\"[avatar-url-redacted]\"},\"displayName\":\"Fuentes Sandferand\",\"active\":true,\"timeZone\":\"America/Buenos_Aires\",\"accountType\":\"atlassian\"},\"resolution\":null,\"updated\":\"2026-07-03T02:29:48.867-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10006\",\"description\":\"La persona asignada está trabajando actualmente en esta actividad.\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En curso\",\"id\":\"10006\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"init-sst-0003\",\"sst-extension\"]}}"
+  },
+  "transitions": [
+    {
+      "id": "11",
+      "name": "Por hacer",
+      "toStatus": "Tareas por hacer",
+      "toStatusCategory": "Por hacer"
+    },
+    {
+      "id": "21",
+      "name": "En curso",
+      "toStatus": "En curso",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "31",
+      "name": "In Review",
+      "toStatus": "En revisión",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "41",
+      "name": "Listo",
+      "toStatus": "Finalizada",
+      "toStatusCategory": "Listo"
+    }
+  ]
+}

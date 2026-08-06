@@ -1,0 +1,33 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0118"
+title: "Validate annotable text entry end-to-end"
+status: inbox
+created_at: "2026-07-04"
+requester: "4uentes"
+
+summary: >
+  Validate the full product flow from article text entry through selection,
+  contextual tagging, preview, acceptance, persistence, rendered output, and
+  query/read behavior.
+
+source:
+  initiative_id: "INIT-SST-0001"
+  parent_request_id: "CR-SST-0117"
+  jira_epic_key: "SST-27"
+  active_jira_issue_key: "SST-6"
+  jira_subtask_key: "SST-48"
+  reason: >
+    The feature should close only when the full value proposition is testable
+    as a user workflow, not only as isolated components.
+
+scope:
+  solution: "sst"
+  services:
+    - "sst-fend"
+    - "node-auth"
+    - "sst-bend"
+    - "4uentes-orchestor"
+  excludes:
+    - "New feature implementation"
+    - "Production rollout"

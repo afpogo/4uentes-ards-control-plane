@@ -1,0 +1,196 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0097"
+title: "Remediate sst-bend LearningWorkspace owner ARDS/SDD documentation"
+status: done
+source_request: "requests/inbox/CR-SST-0097-sst-bend-learning-workspace-owner-docs-remediation.yaml"
+created_at: "2026-07-02"
+requester: "4uentes"
+
+summary: >
+  Complete the sst-bend owner ARDS/SDD documentation for LearningWorkspace after
+  CR-SST-0092. This request updates specs, docs, feature mapping, outbound
+  capability publication and validation evidence without changing runtime
+  behavior.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - "sst-bend"
+    - "4uentes-orchestor"
+  include_optional_services: false
+
+control_plane_context:
+  initiative_id: "INIT-SST-0001"
+  initiative_file: "initiatives/INIT-SST-0001-tags-governance-continuity.yaml"
+  governing_request: "CR-SST-0097"
+  parent_request: "CR-SST-0092"
+  policy_ref: "docs/policies/owner-documentation-authority-policy.md"
+  jira_epic_key: "SST-27"
+  related_jira_issue_key: "SST-28"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  preceding_requests:
+    - "CR-SST-0088"
+    - "CR-SST-0089"
+    - "CR-SST-0090"
+    - "CR-SST-0091"
+    - "CR-SST-0092"
+    - "CR-SST-0096"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "sst-bend"
+      via: "owner ARDS/SDD documentation, API specs, feature map, outbound capability and protected coverage registry"
+      service_kind: "api"
+      ards_kind: "backend-api"
+      status: "active"
+    - service_id: "4uentes-orchestor"
+      via: "request lifecycle, initiative tracking and remediation evidence"
+      service_kind: "control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+  affected_ards:
+    - backend-api
+    - child-repo-owner-documentation
+    - request-lifecycle
+    - evidence
+    - learning-content-tags
+    - chatbot-context-read-contract
+  capabilities:
+    - "learning-workspace-context"
+    - "learning-content-tags"
+  risks:
+    - id: OWNER_DOCS_STALE_AFTER_RUNTIME_CHANGE
+      severity: high
+    - id: CENTRAL_EVIDENCE_REPLACES_OWNER_DOCS
+      severity: high
+    - id: CONSUMER_SCOPE_CREEP
+      severity: medium
+
+required_context:
+  - "AGENTS.md"
+  - "docs/policies/owner-documentation-authority-policy.md"
+  - "docs/policies/agent-delegation-policy.md"
+  - "requests/planned/CR-SST-0092-sst-bend-learning-workspace-first-runtime-slice.yaml"
+  - "evidence/requests/CR-SST-0092/implementation-summary.md"
+  - "evidence/requests/CR-SST-0092/changed-files-summary.md"
+  - "evidence/requests/CR-SST-0096/current-gap-review.md"
+  - "sst-bend/AGENTS.md"
+  - "sst-bend/specs/00-index.yaml"
+  - "sst-bend/docs/00-overview.md"
+
+required_checks:
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check:initiatives"
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check"
+  - service_id: "sst-bend"
+    command: "npm.cmd run test:learning-workspace"
+  - service_id: "sst-bend"
+    command: "npm.cmd run test:tag-engine"
+  - service_id: "sst-bend"
+    command: "npm.cmd run build"
+  - service_id: "sst-bend"
+    command: "npm.cmd run check"
+
+risk:
+  level: high
+  score: 7
+  drivers:
+    - OWNER_DOCS_STALE_AFTER_RUNTIME_CHANGE
+    - CENTRAL_EVIDENCE_REPLACES_OWNER_DOCS
+    - CONSUMER_SCOPE_CREEP
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "The request remediates a governance gap after child repo runtime mutation."
+    - "The child repo owner documentation must match deployed code without redefining the runtime."
+    - "Consumer repos must not be mutated until adoption CRs exist."
+
+subagent_deployment_plan:
+  required: true
+  parallelizable: true
+  roles:
+    - id: "sst-bend-owner-docs"
+      objective: "Draft or update sst-bend owner API/spec/capability documentation for LearningWorkspace."
+      risk: medium
+      write_scope: "sst-bend docs/specs/capabilities/features only"
+      validation: "Main agent reviews generated content against runtime code and CR-SST-0092 evidence."
+    - id: "historical-gap-audit"
+      objective: "Record historical owner-doc gaps as backlog evidence without mutating child repos."
+      risk: low
+      write_scope: "control-plane evidence only"
+      validation: "Main agent verifies the table against request/evidence refs."
+  fallback: "If subagents cannot edit, main agent integrates their read-only output and records fallback evidence."
+  evidence_required: true
+
+execution:
+  requires_human_approval: false
+  allowed_window: manual
+  branch_strategy: "one-branch-per-repo"
+  implementation_boundary: >
+    This CR may modify sst-bend owner documentation/specs/capabilities and
+    control-plane evidence. It must not change LearningWorkspace runtime
+    behavior, must not mutate sst-chatbot, sst-fend, 4uentes-auth,
+    sst-extension, infrastructure repos or 4uentes-ards-core, and must not
+    create TagDefinition automatically.
+  child_repo_mutation_allowed: true
+  child_repo_mutation_target:
+    service_id: "sst-bend"
+    local_path_ref: "environments/local/bindings.local.yaml#sst-bend"
+  owner_documentation:
+    required: true
+    status: "satisfied"
+    owner_refs:
+      - repo: "sst-bend"
+        paths:
+          - "specs/api/learning-workspaces.yaml"
+          - "docs/api/26-learning-workspaces.md"
+          - "specs/capabilities/outbound/learning-workspace-context.yaml"
+          - "docs/capabilities/outbound/learning-workspace-context.md"
+          - "specs/api/routing.yaml"
+          - "docs/api/03-routing.md"
+    evidence_refs:
+      - "evidence/requests/CR-SST-0097/changed-files-summary.md"
+      - "evidence/requests/CR-SST-0097/validation-results.md"
+  consumer_repo_mutation_allowed: false
+  jira_read_executed: false
+  jira_write_executed: false
+  jira_write_target:
+    desired_artifact: "None unless explicitly requested later"
+    desired_initial_status: "not requested"
+  jira_reconciliation:
+    related_issue_key: "SST-28"
+    current_jira_status_observed: "Listo"
+    jira_observation_ref: "evidence/requests/CR-SST-0092/jira-issue-SST-28-observation.md"
+    close_ref: "evidence/requests/CR-SST-0092/jira-sst-28-close-transition-summary.md"
+    source_of_truth: false
+
+validation:
+  required_checks:
+    - "Control-plane validation passes."
+    - "sst-bend focused LearningWorkspace tests pass."
+    - "sst-bend tag engine tests still pass."
+    - "sst-bend build/check are attempted and results recorded."
+    - "Owner doc paths are listed in control-plane evidence."
+    - "Consumer repos are explicitly recorded as not mutated."
+  evidence_required:
+    - "execution_summary"
+    - "subagent_delegation"
+    - "consumer_scope_decision"
+    - "historical_gap_backlog"
+    - "changed_files_summary"
+    - "validation_results"
+
+decision:
+  status: "closed-local"
+  approver: "4uentes"
+  completed_at: "2026-07-03"
+  note: >
+    Closed locally after owner documentation remediation, follow-up mapping and
+    validation evidence. Jira SST-28 was updated and transitioned to Listo as an
+    operational mirror on 2026-07-03.

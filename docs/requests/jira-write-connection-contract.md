@@ -25,6 +25,24 @@ El agente no debe escribir directamente en Jira si el runtime bloquea el
 destino. El writer/gateway debe ser el componente autorizado para publicar los
 payloads aprobados.
 
+## Orden De Conexion Operativa
+
+Para cualquier lectura o escritura Jira desde el control-plane, el orden
+operativo es:
+
+1. MCP Jira como primera intencion, usando las tools Atlassian disponibles en el
+   runtime del agente cuando el recurso cloud esta resuelto y la accion queda
+   acotada.
+2. Scripts `scripts/jira-mcp/*` como fallback preferente. Estos scripts siguen
+   usando MCP, resuelven `cloudId` dinamicamente, aplican sanitizacion, y escriben
+   evidencia local no secreta.
+3. Jira REST API o writer externo solo como ultimo fallback, cuando MCP no este
+   disponible o no pueda ejecutar la accion requerida. Este camino requiere
+   credenciales externas, aprobacion explicita y evidencia de bloqueo MCP.
+
+No se debe saltar directamente a Jira REST API si MCP o los scripts MCP estan
+operativos.
+
 ## Roles
 
 ### Control-Plane

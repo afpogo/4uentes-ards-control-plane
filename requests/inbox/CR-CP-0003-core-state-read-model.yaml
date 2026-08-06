@@ -1,0 +1,19 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-CP-0003"
+title: "Promote feature and bugfix state read-model to core"
+status: "inbox"
+created_at: "2026-07-07"
+requester: "4uentes"
+
+business_context: >
+  The feature_state and bugfix_state read-model is now validated locally and can
+  become a common ARDS/SDD shape.
+
+requested_change: >
+  Promote reusable state shape, canonical statuses, and template expectations
+  to core without moving local state records.
+
+expected_outcome: >
+  Core provides reusable state templates and rules; each orchestrator keeps its
+  own living state files.

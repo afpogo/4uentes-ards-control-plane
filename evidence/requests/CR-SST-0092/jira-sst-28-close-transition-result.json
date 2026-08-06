@@ -1,0 +1,227 @@
+{
+  "requestId": "CR-SST-0092",
+  "issueKey": "SST-28",
+  "approved": true,
+  "action": "updated-and-transitioned",
+  "before": {
+    "summary": "[SST][CR-SST-0092] Implement sst-bend LearningWorkspace first runtime slice",
+    "status": "En curso",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "Fuentes Sandferand",
+    "updated": "2026-07-03T02:48:51.737-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0092",
+      "init-sst-0001",
+      "learning-content-tags",
+      "sst-bend"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10066\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10066\",\"key\":\"SST-28\",\"fields\":{\"summary\":\"[SST][CR-SST-0092] Implement sst-bend LearningWorkspace first runtime slice\",\"description\":\"Execution task for CR-SST-0092 under INIT-SST-0001 / SST-27.\\n\\nPurpose:\\n\\n* Implement the first sst-bend LearningWorkspace runtime slice.\\n* Preserve preview-only behavior until explicit source acceptance.\\n* Return LearningWorkspaceContext with accepted scoped content only.\\n* Keep TagDefinition creation manual/governed.\\n\\nControl-plane source:\\n\\n* requests/planned/CR-SST-0092-sst-bend-learning-workspace-first-runtime-slice.yaml\\n* evidence/requests/CR-SST-0091/sst-bend-file-plan.md\\n* evidence/requests/CR-SST-0090/workspace-boundary.md\\n* evidence/requests/CR-SST-0090/chatbot-read-contract.md\\n\\nBoundary:\\n\\n* Jira is an operational mirror.\\n* ARDS/SDD remains the source of truth.\\n* This task may mutate only sst-bend plus control-plane execution evidence.\\n\\n\",\"assignee\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]\",\"accountId\": \"[accountId-redacted]\",\"emailAddress\":\"[email-redacted]\",\"avatarUrls\":{\"48x48\":\"[avatar-url-redacted]\",\"24x24\":\"[avatar-url-redacted]\",\"16x16\":\"[avatar-url-redacted]\",\"32x32\":\"[avatar-url-redacted]\"},\"displayName\":\"Fuentes Sandferand\",\"active\":true,\"timeZone\":\"America/Buenos_Aires\",\"accountType\":\"atlassian\"},\"resolution\":null,\"updated\":\"2026-07-03T02:48:51.737-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10006\",\"description\":\"La persona asignada está trabajando actualmente en esta actividad.\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En curso\",\"id\":\"10006\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-sst-0092\",\"init-sst-0001\",\"learning-content-tags\",\"sst-bend\"]}}"
+  },
+  "after": {
+    "summary": "[SST][CR-SST-0092] Implement sst-bend LearningWorkspace first runtime slice",
+    "status": "Listo",
+    "statusCategory": "Listo",
+    "resolution": "Listo",
+    "assignee": "Fuentes Sandferand",
+    "updated": "2026-07-03T12:46:30.467-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0092",
+      "done",
+      "init-sst-0001",
+      "learning-content-tags",
+      "sst-bend",
+      "validated-live"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10066\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10066\",\"key\":\"SST-28\",\"fields\":{\"summary\":\"[SST][CR-SST-0092] Implement sst-bend LearningWorkspace first runtime slice\",\"description\":\"SST-28 mirrors CR-SST-0092 under INIT-SST-0001 / SST-27.\\n\\nLocal control-plane result:\\n\\n* CR-SST-0092 is closed-local as validated-local.\\n* CR-SST-0097 is closed-local as validated-local and remediates the owner documentation gap discovered after CR-SST-0092.\\n* Owner-documentation enforcement passed for CR-SST-0092 and CR-SST-0097.\\n* sst-bend LearningWorkspace tests passed 9/9.\\n* sst-bend tag engine tests passed 7/7.\\n* sst-bend npm check exited 0 after local services were started; protected smoke coverage remains partial without SMOKE_JWT/SMOKE_JWT_OWNER.\\n* 4uentes-orchestor npm check passed with 0 FAIL.\\n\\nControl-plane evidence:\\n\\n* requests/done/CR-SST-0092-sst-bend-learning-workspace-first-runtime-slice.yaml\\n* requests/done/CR-SST-0097-sst-bend-learning-workspace-owner-docs-remediation.yaml\\n* evidence/requests/CR-SST-0092/local-closure-2026-07-03.md\\n* evidence/requests/CR-SST-0097/local-closure-2026-07-03.md\\n* evidence/initiatives/INIT-SST-0001/local-lifecycle-normalization-2026-07-03.md\\n\\nBoundary:\\n\\n* Jira is an operational mirror.\\n* ARDS/SDD remains the source of truth.\\n* This closure applies to the completed backend/owner-documentation slice only.\\n* SST-6 and INIT-SST-0001 remain active for the broader learning-content-tags track.\\n\\n\",\"assignee\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]\",\"accountId\": \"[accountId-redacted]\",\"emailAddress\":\"[email-redacted]\",\"avatarUrls\":{\"48x48\":\"[avatar-url-redacted]\",\"24x24\":\"[avatar-url-redacted]\",\"16x16\":\"[avatar-url-redacted]\",\"32x32\":\"[avatar-url-redacted]\"},\"displayName\":\"Fuentes Sandferand\",\"active\":true,\"timeZone\":\"America/Buenos_Aires\",\"accountType\":\"atlassian\"},\"resolution\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/resolution/10000\",\"id\":\"10000\",\"description\":\"Se ha terminado el trabajo relacionado con esta incidencia.\",\"name\":\"Listo\"},\"updated\":\"2026-07-03T12:46:30.467-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10008\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"Finalizada\",\"id\":\"10008\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/3\",\"id\":3,\"key\":\"done\",\"colorName\":\"green\",\"name\":\"Listo\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-sst-0092\",\"done\",\"init-sst-0001\",\"learning-content-tags\",\"sst-bend\",\"validated-live\"]}}"
+  },
+  "selectedTransition": {
+    "id": "41",
+    "name": "Listo",
+    "toStatus": "Finalizada",
+    "toStatusCategory": "Listo"
+  },
+  "transitions": [
+    {
+      "id": "11",
+      "name": "Por hacer",
+      "toStatus": "Tareas por hacer",
+      "toStatusCategory": "Por hacer"
+    },
+    {
+      "id": "21",
+      "name": "En curso",
+      "toStatus": "En curso",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "31",
+      "name": "In Review",
+      "toStatus": "En revisión",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "41",
+      "name": "Listo",
+      "toStatus": "Finalizada",
+      "toStatusCategory": "Listo"
+    }
+  ],
+  "plannedLabels": [
+    "ards-sdd",
+    "control-plane",
+    "cr-sst-0092",
+    "done",
+    "init-sst-0001",
+    "learning-content-tags",
+    "sst-bend",
+    "validated-live"
+  ],
+  "plannedDescription": "SST-28 mirrors CR-SST-0092 under INIT-SST-0001 / SST-27.\n\nLocal control-plane result:\n\n* CR-SST-0092 is closed-local as validated-local.\n* CR-SST-0097 is closed-local as validated-local and remediates the owner documentation gap discovered after CR-SST-0092.\n* Owner-documentation enforcement passed for CR-SST-0092 and CR-SST-0097.\n* sst-bend LearningWorkspace tests passed 9/9.\n* sst-bend tag engine tests passed 7/7.\n* sst-bend npm check exited 0 after local services were started; protected smoke coverage remains partial without SMOKE_JWT/SMOKE_JWT_OWNER.\n* 4uentes-orchestor npm check passed with 0 FAIL.\n\nControl-plane evidence:\n\n* requests/done/CR-SST-0092-sst-bend-learning-workspace-first-runtime-slice.yaml\n* requests/done/CR-SST-0097-sst-bend-learning-workspace-owner-docs-remediation.yaml\n* evidence/requests/CR-SST-0092/local-closure-2026-07-03.md\n* evidence/requests/CR-SST-0097/local-closure-2026-07-03.md\n* evidence/initiatives/INIT-SST-0001/local-lifecycle-normalization-2026-07-03.md\n\nBoundary:\n\n* Jira is an operational mirror.\n* ARDS/SDD remains the source of truth.\n* This closure applies to the completed backend/owner-documentation slice only.\n* SST-6 and INIT-SST-0001 remain active for the broader learning-content-tags track.\n",
+  "plannedComment": "SST-28 closure mirror for CR-SST-0092.\n\nThe control-plane now records CR-SST-0092 and CR-SST-0097 as closed-local / validated-local.\n\nValidation summary:\n\n* sst-bend `npm.cmd run test:learning-workspace`: PASS, 9/9.\n* sst-bend `npm.cmd run test:tag-engine`: PASS, 7/7.\n* sst-bend `npm.cmd run check`: PASS with accepted protected-smoke warning because SMOKE_JWT/SMOKE_JWT_OWNER were not present.\n* control-plane `npm.cmd run check:owner-docs`: PASS, 8 OK, 0 WARN, 0 FAIL.\n* control-plane `npm.cmd run check`: PASS, 0 FAIL.\n\nOwner documentation:\n\n* Producer owner repo: sst-bend.\n* Owner docs/capability refs were updated for `learning-workspace-context`.\n* Control-plane owner-documentation gate validates CR-SST-0092 and CR-SST-0097.\n\nBoundary:\n\n* This closes the SST-28 backend/documentation slice.\n* SST-6 remains active for the remaining learning-content-tags frontend/rendering and parser/import follow-up work.\n",
+  "editResult": {
+    "expand": "renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations",
+    "id": "10066",
+    "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10066",
+    "key": "SST-28",
+    "fields": {
+      "summary": "[SST][CR-SST-0092] Implement sst-bend LearningWorkspace first runtime slice",
+      "issuetype": {
+        "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issuetype/10008",
+        "id": "10008",
+        "description": "Un trabajo pequeño e independiente.",
+        "iconUrl": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/2/universal_avatar/view/type/issuetype/avatar/10318?size=medium",
+        "name": "Tarea",
+        "subtask": false,
+        "avatarId": 10318,
+        "entityId": "[cloudId-redacted]",
+        "hierarchyLevel": 0
+      },
+      "components": [],
+      "created": "2026-06-29T22:43:36.153-0300",
+      "description": "SST-28 mirrors CR-SST-0092 under INIT-SST-0001 / SST-27.\n\nLocal control-plane result:\n\n* CR-SST-0092 is closed-local as validated-local.\n* CR-SST-0097 is closed-local as validated-local and remediates the owner documentation gap discovered after CR-SST-0092.\n* Owner-documentation enforcement passed for CR-SST-0092 and CR-SST-0097.\n* sst-bend LearningWorkspace tests passed 9/9.\n* sst-bend tag engine tests passed 7/7.\n* sst-bend npm check exited 0 after local services were started; protected smoke coverage remains partial without SMOKE_JWT/SMOKE_JWT_OWNER.\n* 4uentes-orchestor npm check passed with 0 FAIL.\n\nControl-plane evidence:\n\n* requests/done/CR-SST-0092-sst-bend-learning-workspace-first-runtime-slice.yaml\n* requests/done/CR-SST-0097-sst-bend-learning-workspace-owner-docs-remediation.yaml\n* evidence/requests/CR-SST-0092/local-closure-2026-07-03.md\n* evidence/requests/CR-SST-0097/local-closure-2026-07-03.md\n* evidence/initiatives/INIT-SST-0001/local-lifecycle-normalization-2026-07-03.md\n\nBoundary:\n\n* Jira is an operational mirror.\n* ARDS/SDD remains the source of truth.\n* This closure applies to the completed backend/owner-documentation slice only.\n* SST-6 and INIT-SST-0001 remain active for the broader learning-content-tags track.\n\n",
+      "project": {
+        "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/project/10001",
+        "id": "10001",
+        "key": "SST",
+        "name": "SST-Team",
+        "projectTypeKey": "software",
+        "simplified": true,
+        "avatarUrls": {
+          "48x48": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/universal_avatar/view/type/project/avatar/10416",
+          "24x24": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/universal_avatar/view/type/project/avatar/10416?size=small",
+          "16x16": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/universal_avatar/view/type/project/avatar/10416?size=xsmall",
+          "32x32": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/universal_avatar/view/type/project/avatar/10416?size=medium"
+        }
+      },
+      "reporter": {
+        "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+        "accountId": "[accountId-redacted]",
+        "emailAddress": "[email-redacted]",
+        "avatarUrls": {
+          "48x48": "[avatar-url-redacted]",
+          "24x24": "[avatar-url-redacted]",
+          "16x16": "[avatar-url-redacted]",
+          "32x32": "[avatar-url-redacted]"
+        },
+        "displayName": "Fuentes Sandferand",
+        "active": true,
+        "timeZone": "America/Buenos_Aires",
+        "accountType": "atlassian"
+      },
+      "priority": {
+        "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/priority/3",
+        "iconUrl": "[jira-site-redacted]",
+        "name": "Medium",
+        "id": "3"
+      },
+      "resolution": null,
+      "labels": [
+        "ards-sdd",
+        "control-plane",
+        "cr-sst-0092",
+        "done",
+        "init-sst-0001",
+        "learning-content-tags",
+        "sst-bend",
+        "validated-live"
+      ],
+      "assignee": {
+        "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+        "accountId": "[accountId-redacted]",
+        "emailAddress": "[email-redacted]",
+        "avatarUrls": {
+          "48x48": "[avatar-url-redacted]",
+          "24x24": "[avatar-url-redacted]",
+          "16x16": "[avatar-url-redacted]",
+          "32x32": "[avatar-url-redacted]"
+        },
+        "displayName": "Fuentes Sandferand",
+        "active": true,
+        "timeZone": "America/Buenos_Aires",
+        "accountType": "atlassian"
+      },
+      "updated": "2026-07-03T12:46:28.149-0300",
+      "status": {
+        "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10006",
+        "description": "La persona asignada está trabajando actualmente en esta actividad.",
+        "iconUrl": "[jira-site-redacted]",
+        "name": "En curso",
+        "id": "10006",
+        "statusCategory": {
+          "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4",
+          "id": 4,
+          "key": "indeterminate",
+          "colorName": "yellow",
+          "name": "En curso"
+        }
+      }
+    }
+  },
+  "transitionResult": {
+    "success": true
+  },
+  "commentResult": {
+    "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10066/comment/10064",
+    "id": "10064",
+    "author": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "body": "SST-28 closure mirror for CR-SST-0092.\n\nThe control-plane now records CR-SST-0092 and CR-SST-0097 as closed-local / validated-local.\n\nValidation summary:\n\n* sst-bend `npm.cmd run test:learning-workspace`: PASS, 9/9.\n* sst-bend `npm.cmd run test:tag-engine`: PASS, 7/7.\n* sst-bend `npm.cmd run check`: PASS with accepted protected-smoke warning because SMOKE_JWT/SMOKE_JWT_OWNER were not present.\n* control-plane `npm.cmd run check:owner-docs`: PASS, 8 OK, 0 WARN, 0 FAIL.\n* control-plane `npm.cmd run check`: PASS, 0 FAIL.\n\nOwner documentation:\n\n* Producer owner repo: sst-bend.\n* Owner docs/capability refs were updated for `learning-workspace-context`.\n* Control-plane owner-documentation gate validates CR-SST-0092 and CR-SST-0097.\n\nBoundary:\n\n* This closes the SST-28 backend/documentation slice.\n* SST-6 remains active for the remaining learning-content-tags frontend/rendering and parser/import follow-up work.\n\n",
+    "updateAuthor": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "created": "2026-07-03T12:46:30.467-0300",
+    "updated": "2026-07-03T12:46:30.467-0300",
+    "jsdPublic": true
+  },
+  "externalWrite": true
+}

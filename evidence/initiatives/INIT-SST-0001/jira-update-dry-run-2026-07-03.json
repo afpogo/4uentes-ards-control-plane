@@ -1,0 +1,33 @@
+{
+  "request_id": "INIT-SST-0001",
+  "date": "2026-07-03",
+  "mode": "local-dry-run",
+  "external_write": false,
+  "approval_required_before_write": true,
+  "actions": [
+    {
+      "issue_key": "SST-27",
+      "action": "update-description-or-add-comment",
+      "desired_status": "En curso",
+      "source_of_truth": false
+    },
+    {
+      "issue_key": "SST-6",
+      "action": "update-description-or-add-comment",
+      "desired_status": "En curso",
+      "source_of_truth": false
+    },
+    {
+      "issue_key": "SST-28",
+      "action": "update-description-or-add-comment-and-transition-if-review-ready-exists",
+      "desired_status": "review-ready",
+      "source_of_truth": false
+    }
+  ],
+  "evidence_refs": [
+    "evidence/initiatives/INIT-SST-0001/local-lifecycle-normalization-2026-07-03.md",
+    "evidence/initiatives/INIT-SST-0001/jira-live-comparison-2026-07-03.md",
+    "evidence/requests/CR-SST-0092/local-closure-2026-07-03.md",
+    "evidence/requests/CR-SST-0097/local-closure-2026-07-03.md"
+  ]
+}

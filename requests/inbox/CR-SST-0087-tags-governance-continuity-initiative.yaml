@@ -1,0 +1,35 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0087"
+title: "Start SST tags governance continuity Initiative"
+status: inbox
+created_at: "2026-06-28"
+requester: "4uentes"
+
+summary: >
+  Start a local Initiative for the next SST tags governance track after the
+  SST-4 closure. The request reviews Jira-linked evidence for tags tickets and
+  records SST-6 / learning-content-tags as the next active path before any
+  child repository mutation.
+
+initial_scope:
+  solution: "sst"
+  services: []
+  include_optional_services: false
+
+control_plane_context:
+  initiative_id: "INIT-SST-0001"
+  initiative_file: "initiatives/INIT-SST-0001-tags-governance-continuity.yaml"
+  parent_jira_issue_key: "SST-4"
+  active_jira_issue_key: "SST-6"
+  active_feature_state: "learning-content-tags"
+  active_feature_state_file: "state/features/learning-content-tags.current.yaml"
+  related_feature_state: "sst-tags-governance"
+  related_feature_state_file: "state/features/sst-tags-governance.current.yaml"
+  jira_write_expected: false
+
+notes:
+  - "SST-4 is treated as closed for dictionary and article tags based on local evidence."
+  - "SST-6 remains the active Jira mirror for learning-content-tags."
+  - "The request does not create or update Jira issues."
+  - "The request does not mutate child repositories."

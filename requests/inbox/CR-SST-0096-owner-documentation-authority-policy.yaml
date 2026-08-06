@@ -1,0 +1,25 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0096"
+title: "Adopt owner documentation authority policy"
+status: inbox
+created_at: "2026-07-02"
+requester: "4uentes"
+
+business_context: >
+  Recent control-plane-driven child repository work produced central request
+  evidence but exposed a governance gap: the ARDS/SDD documentation owned by the
+  modified child repository may remain stale after runtime implementation.
+  Control-plane evidence cannot replace owner repository documentation.
+
+requested_change: >
+  Create a local control-plane policy that defines documentation ownership for
+  child repositories, cross-repo capabilities, technical contracts, and general
+  orchestration evidence. The policy must require child repo owner docs to be
+  updated when a CR mutates that repo, or require an explicit documented
+  exception before closure.
+
+expected_outcome: >
+  Future CRs that modify child repositories have a clear close gate: update the
+  owner repo ARDS/SDD documentation, specs, and capability contracts where
+  applicable, and keep control-plane evidence as orchestration evidence only.

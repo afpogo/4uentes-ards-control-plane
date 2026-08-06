@@ -1,0 +1,128 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0109"
+title: "Expose LearningWorkspace through node-auth BFF"
+status: planned
+source_request: "requests/inbox/CR-SST-0109-node-auth-learning-workspace-bff-passthrough.yaml"
+created_at: "2026-07-04"
+requester: "4uentes"
+
+summary: >
+  Implement a protected node-auth BFF pass-through for SST LearningWorkspace
+  routes and update sst-fend's inbound adoption from draft/TODO to the concrete
+  node-auth outbound capability.
+
+control_plane_context:
+  initiative_id: "INIT-SST-0001"
+  initiative_file: "initiatives/INIT-SST-0001-tags-governance-continuity.yaml"
+  active_feature_state: "learning-content-tags"
+  active_feature_state_file: "state/features/learning-content-tags.current.yaml"
+  parent_request_id: "CR-SST-0107"
+  jira_epic_key: "SST-27"
+  active_jira_issue_key: "SST-6"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "node-auth"
+      via: "BFF pass-through routes, inbound/outbound capabilities, docs/specs and build/check"
+      service_kind: "auth-bff"
+      ards_kind: "backend-for-frontend"
+      status: "active"
+    - service_id: "sst-fend"
+      via: "Update LearningWorkspace inbound capability from TODO to ready upstream reference"
+      service_kind: "frontend-spa"
+      ards_kind: "frontend-web"
+      status: "active"
+    - service_id: "4uentes-orchestor"
+      via: "request lifecycle, evidence, initiative tracking and owner enforcement"
+      service_kind: "control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+  affected_ards:
+    - backend-for-frontend
+    - frontend-web
+    - control-plane
+    - request-lifecycle
+    - evidence
+    - child-repo-owner-documentation
+    - learning-content-tags
+    - learning-workspace-context
+  risks:
+    - id: BFF_AUTH_FORWARDING_DRIFT
+      severity: high
+    - id: PREVIEW_ONLY_GATE_BYPASS
+      severity: high
+    - id: OWNER_DOCS_STALE_AFTER_BFF_PUBLICATION
+      severity: high
+    - id: FRONTEND_DIRECT_SST_CALL
+      severity: high
+
+execution:
+  requires_human_approval: false
+  allowed_window: manual
+  branch_strategy: "one-branch-per-repo"
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets:
+    - service_id: "node-auth"
+      local_path_ref: "environments/local/bindings.local.yaml#4uentes-auth"
+    - service_id: "sst-fend"
+      local_path_ref: "environments/local/bindings.local.yaml#sst-fend"
+  excluded_child_repo_mutation:
+    - service_id: "sst-bend"
+      reason: "LearningWorkspace API already exists; parser/import expansion remains separate."
+  implementation_boundary: >
+    This CR may modify node-auth and sst-fend owner docs/specs plus node-auth
+    runtime BFF pass-through code. It must not modify sst-bend runtime or parser
+    behavior. It must preserve preview-only semantics and forward auth/account
+    context without moving SST domain ownership into node-auth.
+  owner_documentation:
+    required: true
+    status: planned
+    owner_refs:
+      - repo: "node-auth"
+        paths:
+          - "specs/capabilities/inbound/sst-bend--learning-workspace-context.yaml"
+          - "docs/capabilities/inbound/sst-bend--learning-workspace-context.md"
+          - "specs/capabilities/outbound/learning-workspace-context.yaml"
+          - "docs/capabilities/outbound/learning-workspace-context.md"
+          - "specs/integrations-api.yaml"
+          - "docs/bf/03-routing.md"
+          - "docs/bf/06-integrations-api.md"
+      - repo: "sst-fend"
+        paths:
+          - "specs/capabilities/inbound/node-auth--learning-workspace-context.yaml"
+          - "docs/capabilities/inbound/node-auth--learning-workspace-context.md"
+    evidence_refs:
+      - "evidence/requests/CR-SST-0109/implementation-plan.md"
+      - "evidence/requests/CR-SST-0109/changed-files-summary.md"
+      - "evidence/requests/CR-SST-0109/validation-results.md"
+
+required_checks:
+  - service_id: "node-auth"
+    command: "npm.cmd run check"
+  - service_id: "node-auth"
+    command: "npm.cmd run build"
+  - service_id: "sst-fend"
+    command: "npm.cmd run check"
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check"
+
+validation:
+  required_checks:
+    - "node-auth exposes /api/learning-workspaces routes behind AuthMiddleware.validateJwt."
+    - "node-auth forwards Authorization and account context headers to SST."
+    - "node-auth keeps preview/accept/reject/context as pass-through, without domain persistence."
+    - "sst-fend inbound capability references node-auth outbound readiness."
+    - "No sst-bend runtime/parser files are modified."
+    - "Control-plane owner documentation gate passes."
+  evidence_required:
+    - "implementation_plan"
+    - "changed_files_summary"
+    - "validation_results"
+
+decision:
+  status: implemented-local-pending-validation
+  approver: TODO

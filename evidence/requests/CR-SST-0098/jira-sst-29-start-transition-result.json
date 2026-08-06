@@ -1,0 +1,108 @@
+{
+  "issueKey": "SST-29",
+  "before": {
+    "summary": "[SST][INIT-SST-0003] SST Extension Construction",
+    "status": "Tareas por hacer",
+    "statusCategory": "Por hacer",
+    "resolution": "no-detectado",
+    "assignee": "Fuentes Sandferand",
+    "updated": "2026-06-30T19:13:54.668-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "init-sst-0003",
+      "sst-extension"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10067\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10067\",\"key\":\"SST-29\",\"fields\":{\"summary\":\"[SST][INIT-SST-0003] SST Extension Construction\",\"description\":\"Initiative/Epic mirror for INIT-SST-0003.\\n\\nPurpose:\\n\\n* Govern construction of sst-extension as a first-class SST browser extension surface.\\n* Group future CRs for authenticated tab capture, session PDF/HTML artifacts, Dictionary adjacency, LearningWorkspace handoff, and browser QA.\\n* Keep private page content, cookies, JWTs, and secret plaintext out of Jira and ARDS/SDD evidence.\\n\\nControl-plane source:\\n\\n* initiatives/INIT-SST-0003-sst-extension-construction.yaml\\n* requests/planned/CR-SST-0094-sst-extension-construction-initiative.yaml\\n* evidence/requests/CR-SST-0093/session-pdf-capture-gap-analysis.md\\n* evidence/requests/CR-SST-0093/credentialed-web-source-boundary.md\\n\\nBoundary:\\n\\n* Jira is an operational mirror.\\n* ARDS/SDD remains the source of truth.\\n* This epic does not authorize direct child-repo mutation.\\n\\n\",\"assignee\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]\",\"accountId\": \"[accountId-redacted]\",\"emailAddress\":\"[email-redacted]\",\"avatarUrls\":{\"48x48\":\"[avatar-url-redacted]\",\"24x24\":\"[avatar-url-redacted]\",\"16x16\":\"[avatar-url-redacted]\",\"32x32\":\"[avatar-url-redacted]\"},\"displayName\":\"Fuentes Sandferand\",\"active\":true,\"timeZone\":\"America/Buenos_Aires\",\"accountType\":\"atlassian\"},\"resolution\":null,\"updated\":\"2026-06-30T19:13:54.668-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10005\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"Tareas por hacer\",\"id\":\"10005\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/2\",\"id\":2,\"key\":\"new\",\"colorName\":\"blue-gray\",\"name\":\"Por hacer\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"init-sst-0003\",\"sst-extension\"]}}"
+  },
+  "after": {
+    "summary": "[SST][INIT-SST-0003] SST Extension Construction",
+    "status": "En curso",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "Fuentes Sandferand",
+    "updated": "2026-07-03T01:56:13.956-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "init-sst-0003",
+      "sst-extension"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10067\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10067\",\"key\":\"SST-29\",\"fields\":{\"summary\":\"[SST][INIT-SST-0003] SST Extension Construction\",\"description\":\"Initiative/Epic mirror for INIT-SST-0003.\\n\\nPurpose:\\n\\n* Govern construction of sst-extension as a first-class SST browser extension surface.\\n* Group future CRs for authenticated tab capture, session PDF/HTML artifacts, Dictionary adjacency, LearningWorkspace handoff, and browser QA.\\n* Keep private page content, cookies, JWTs, and secret plaintext out of Jira and ARDS/SDD evidence.\\n\\nControl-plane source:\\n\\n* initiatives/INIT-SST-0003-sst-extension-construction.yaml\\n* requests/planned/CR-SST-0094-sst-extension-construction-initiative.yaml\\n* evidence/requests/CR-SST-0093/session-pdf-capture-gap-analysis.md\\n* evidence/requests/CR-SST-0093/credentialed-web-source-boundary.md\\n\\nBoundary:\\n\\n* Jira is an operational mirror.\\n* ARDS/SDD remains the source of truth.\\n* This epic does not authorize direct child-repo mutation.\\n\\n\",\"assignee\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]\",\"accountId\": \"[accountId-redacted]\",\"emailAddress\":\"[email-redacted]\",\"avatarUrls\":{\"48x48\":\"[avatar-url-redacted]\",\"24x24\":\"[avatar-url-redacted]\",\"16x16\":\"[avatar-url-redacted]\",\"32x32\":\"[avatar-url-redacted]\"},\"displayName\":\"Fuentes Sandferand\",\"active\":true,\"timeZone\":\"America/Buenos_Aires\",\"accountType\":\"atlassian\"},\"resolution\":null,\"updated\":\"2026-07-03T01:56:13.956-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10006\",\"description\":\"La persona asignada está trabajando actualmente en esta actividad.\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En curso\",\"id\":\"10006\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"init-sst-0003\",\"sst-extension\"]}}"
+  },
+  "transitions": [
+    {
+      "id": "11",
+      "name": "Por hacer",
+      "toStatus": "Tareas por hacer",
+      "toStatusCategory": "Por hacer"
+    },
+    {
+      "id": "21",
+      "name": "En curso",
+      "toStatus": "En curso",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "31",
+      "name": "In Review",
+      "toStatus": "En revisión",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "41",
+      "name": "Listo",
+      "toStatus": "Finalizada",
+      "toStatusCategory": "Listo"
+    }
+  ],
+  "selectedTransition": {
+    "id": "21",
+    "name": "En curso",
+    "toStatus": "En curso",
+    "toStatusCategory": "En curso"
+  },
+  "transitionResult": {
+    "success": true
+  },
+  "commentResult": {
+    "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10067/comment/10052",
+    "id": "10052",
+    "author": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "body": "INIT-SST-0003 start.\n\n`SST-29` is being moved to active work as the Jira mirror for SST Extension Construction.\n\nIntent:\n\n* Stabilize `sst-extension` as a first-class SST browser extension surface.\n* Start with `SST-30` / `CR-SST-0098`: robust tab-by-tab visual PDF capture for session items.\n* Keep future work grouped here for session capture outcomes, UI progress, CredentialedWebSource boundaries, LearningWorkspace handoff, and QA hardening.\n\nExecution boundary:\n\n* ARDS/SDD remains the source of truth; Jira is an operational mirror.\n* This epic transition does not by itself authorize broad child-repo mutation.\n* Each CR must keep owner specs/docs updated in the implementing repo or record an explicit owner-documentation exception.\n* No private page content, cookies, JWTs, plaintext secrets, real PDFs from private pages, or sensitive screenshots will be stored in Jira or evidence.\n\nCurrent first issue:\n\n* `SST-30` will begin with preliminary analysis and an atomized plan using bounded subagent discovery.\n* Architecture, security, auth and cross-repo contract decisions stay with the main governance flow.\n\nEvidence:\n\n* `evidence/requests/CR-SST-0098/preliminary-analysis.md`\n* `evidence/requests/CR-SST-0098/subagent-atomized-plan.md`\n\n",
+    "updateAuthor": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "created": "2026-07-03T01:56:13.956-0300",
+    "updated": "2026-07-03T01:56:13.956-0300",
+    "jsdPublic": true
+  },
+  "commentBody": "INIT-SST-0003 start.\n\n`SST-29` is being moved to active work as the Jira mirror for SST Extension Construction.\n\nIntent:\n- Stabilize `sst-extension` as a first-class SST browser extension surface.\n- Start with `SST-30` / `CR-SST-0098`: robust tab-by-tab visual PDF capture for session items.\n- Keep future work grouped here for session capture outcomes, UI progress, CredentialedWebSource boundaries, LearningWorkspace handoff, and QA hardening.\n\nExecution boundary:\n- ARDS/SDD remains the source of truth; Jira is an operational mirror.\n- This epic transition does not by itself authorize broad child-repo mutation.\n- Each CR must keep owner specs/docs updated in the implementing repo or record an explicit owner-documentation exception.\n- No private page content, cookies, JWTs, plaintext secrets, real PDFs from private pages, or sensitive screenshots will be stored in Jira or evidence.\n\nCurrent first issue:\n- `SST-30` will begin with preliminary analysis and an atomized plan using bounded subagent discovery.\n- Architecture, security, auth and cross-repo contract decisions stay with the main governance flow.\n\nEvidence:\n- `evidence/requests/CR-SST-0098/preliminary-analysis.md`\n- `evidence/requests/CR-SST-0098/subagent-atomized-plan.md`\n",
+  "externalWrite": true
+}

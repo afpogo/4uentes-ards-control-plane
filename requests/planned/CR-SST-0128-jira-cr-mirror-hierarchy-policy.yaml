@@ -1,0 +1,61 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0128"
+title: "Formalize Jira CR mirror hierarchy and open article kind initiative"
+status: planned
+source_request: "requests/inbox/CR-SST-0128-jira-cr-mirror-hierarchy-policy.yaml"
+created_at: "2026-07-11"
+requester: "4uentes"
+summary: >
+  Formalize the operational Initiative-to-Epic and CR-to-Task/Subtask mirror
+  hierarchy, then establish INIT-SST-0005 and its Jira containers.
+initial_scope:
+  solution: "sst"
+  services: ["4uentes-orchestor"]
+  include_optional_services: false
+control_plane_context:
+  initiative_id: "INIT-SST-0005"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  adjacent_initiatives: ["INIT-SST-0001", "INIT-SST-0003"]
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "4uentes-orchestor"
+      via: "policy registry, initiative, request lifecycle and Jira evidence"
+      service_kind: "control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+  affected_ards: ["request-lifecycle", "initiative", "jira-mirror"]
+  risks:
+    - id: "JIRA_EXTERNAL_WRITE"
+      severity: medium
+    - id: "MIRROR_SOURCE_OF_TRUTH_INVERSION"
+      severity: high
+execution:
+  requires_human_approval: true
+  approval_source: "User explicitly requested policy adoption and Jira read/write creation on 2026-07-11."
+  child_repo_mutation_allowed: false
+  implementation_boundary: >
+    Control-plane policy, initiative, request and sanitized Jira evidence only.
+    No functional repository mutation is authorized by this request.
+required_checks:
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check"
+validation:
+  required_checks:
+    - "The policy states that Jira is a mirror and every selected execution issue correlates to one CR."
+    - "INIT-SST-0005 is indexed and linked to one Jira Epic."
+    - "CR-SST-0128 is mirrored by the Jira parent Task."
+  evidence_required: ["jira_readonly_preflight", "jira_write_summary", "validation_results"]
+decision:
+  status: approved
+  approver: "4uentes"
+  decided_at: "2026-07-11"
+jira_sync:
+  status: created
+  desired_issue_type: "Tarea"
+  desired_initial_status: "Tareas por hacer"
+  epic_key: "SST-57"
+  issue_key: "SST-58"
+  status_observed: "Listo"

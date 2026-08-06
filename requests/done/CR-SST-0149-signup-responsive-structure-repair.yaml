@@ -1,0 +1,68 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0149"
+title: "Repair signup responsive structure"
+status: done
+source_request: "requests/inbox/CR-SST-0149-signup-responsive-structure-repair.yaml"
+planned_request: "requests/planned/CR-SST-0149-signup-responsive-structure-repair.yaml"
+completed_at: "2026-08-04"
+requester: "4uentes"
+summary: >
+  Signup now adapts its columns to the available auth-container width without
+  implicit grid tracks, field overlap, horizontal overflow or nested scrolling.
+scope:
+  solution: "sst"
+  services_modified: ["sst-fend", "4uentes-orchestor"]
+  functional_repositories_modified: true
+  runtime_code_modified: true
+implementation:
+  initiative_id: "INIT-SST-0006"
+  jira_epic_key: "SST-72"
+  jira_issue_key: "SST-74"
+  jira_source_of_truth: false
+  completed_slice: "Responsive signup structure repair and owner adoption only; visual rebranding remains CR-SST-0150."
+owner_documentation:
+  status: "satisfied"
+  owner_repos: ["sst-fend"]
+  evidence_refs:
+    - "evidence/requests/CR-SST-0149/implementation-and-validation.md"
+    - "sst-fend:docs/tasks/2026-08-04-cr-sst-0149-signup-responsive-structure-repair.md"
+validation:
+  status: "validated-local"
+  passed:
+    - "Requester-approved manual QA."
+    - "Focused signup layout regression: 1 suite and 3 tests."
+    - "sst-fend full check: build, 31 suites and 204 tests."
+    - "Chrome DevTools: seven viewports, EN/ES and 200% reflow equivalent without overlap, overflow or nested scroll."
+    - "Control-plane full check and owner-documentation validation."
+  warnings:
+    - "Existing frontend hook and deprecation warnings remain non-blocking."
+evidence_refs:
+  - "evidence/requests/CR-SST-0149/implementation-and-validation.md"
+  - "evidence/requests/CR-SST-0149/closure-authorization-and-preflight.md"
+  - "evidence/requests/CR-SST-0149/jira-closure.md"
+decision:
+  status: "closed-local"
+  approver: "4uentes"
+  decided_at: "2026-08-04"
+  note: "Manual QA accepted. No release or CR-SST-0150 rebranding work is implied."
+jira_sync:
+  status: "synchronized"
+  issue_key: "SST-74"
+  parent_issue_key: "SST-72"
+  issue_type_observed: "Error"
+  status_observed: "Finalizada"
+  status_category_observed: "Listo"
+  resolution_observed: "Listo"
+  transition_id: "41"
+  closure_comment_id: "10308"
+  summary_observed: "[CR-SST-0149][AUTH][Mobile] Corregir superposición de campos en signup"
+  former_blocker: "Summary lacked CR-SST-0149; the user authorized and the batch reconciled it before closure."
+  authorized_operations: ["edit-summary-to-include-cr-id", "add-closure-comment", "transition-to-done"]
+  evidence_ref: "evidence/requests/CR-SST-0149/jira-closure.md"
+agent_execution:
+  subagents_used:
+    - "signup_css_test_design"
+    - "signup_owner_adoption"
+    - "sst74_comment_gap"
+  role_summary: "Root retained architecture, Jira writes and lifecycle decisions; subagents audited layout, owner adoption and closure policy."

@@ -1,0 +1,67 @@
+{
+  "requestId": "CR-CP-0002",
+  "sourceReconciliation": "evidence/requests/CR-SST-0062/jira-reconciliation-results.json",
+  "externalWrite": false,
+  "summary": {
+    "proposedUpdates": 0,
+    "proposedCreates": 0,
+    "noAction": 9,
+    "blocked": 0
+  },
+  "actions": [
+    {
+      "stateId": "sst-tags-governance",
+      "issueKey": "SST-4",
+      "action": "no-action",
+      "reason": "The selected issue does not need a description correction."
+    },
+    {
+      "stateId": "robots",
+      "issueKey": "SST-5",
+      "action": "no-action",
+      "reason": "The selected issue does not need a description correction."
+    },
+    {
+      "stateId": "learning-content-tags",
+      "issueKey": "SST-6",
+      "action": "no-action",
+      "reason": "The selected issue does not need a description correction."
+    },
+    {
+      "stateId": "sst-tag-prefix-engine",
+      "issueKey": "SST-12",
+      "action": "no-action",
+      "reason": "The selected issue does not need a description correction."
+    },
+    {
+      "stateId": "sst-chatbot",
+      "issueKey": "SST-7",
+      "action": "no-action",
+      "reason": "The selected issue does not need a description correction."
+    },
+    {
+      "stateId": "ards-sdd-policy-unification",
+      "issueKey": "SST-9",
+      "action": "no-action",
+      "reason": "The selected issue does not need a description correction."
+    },
+    {
+      "stateId": "dictionary-tags",
+      "issueKey": "SST-10",
+      "action": "no-action",
+      "reason": "The selected issue does not need a description correction."
+    },
+    {
+      "stateId": "cluster-publication-ngrok-domain",
+      "issueKey": "SST-11",
+      "action": "no-action",
+      "reason": "The selected issue does not need a description correction."
+    },
+    {
+      "stateId": "document-agent",
+      "issueKey": "SST-8",
+      "action": "no-action",
+      "reason": "The selected issue does not need a description correction."
+    }
+  ]
+}

@@ -1,0 +1,150 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0096"
+title: "Adopt owner documentation authority policy"
+status: planned
+source_request: "requests/inbox/CR-SST-0096-owner-documentation-authority-policy.yaml"
+created_at: "2026-07-02"
+requester: "4uentes"
+
+summary: >
+  Define and adopt a control-plane policy for ARDS/SDD documentation ownership
+  across child repositories and orchestration evidence. The policy closes the
+  gap where a child repo implementation can be completed with central evidence
+  but without updating the child repo's owner documentation.
+
+initial_scope:
+  solution: "control-plane"
+  services:
+    - "4uentes-orchestor"
+  include_optional_services: false
+
+control_plane_context:
+  initiative_id: "INIT-CP-0001"
+  initiative_file: "initiatives/INIT-CP-0001-control-plane-lifecycle-enforcement.yaml"
+  governing_request: "CR-SST-0096"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  preceding_requests:
+    - "CR-SST-0077"
+    - "CR-SST-0081"
+    - "CR-SST-0092"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "4uentes-orchestor"
+      via: "policy registry, human policy documentation, request lifecycle, and evidence"
+      service_kind: "control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+  affected_ards:
+    - control-plane
+    - request-lifecycle
+    - evidence
+    - policy-governance
+    - child-repo-ards-sdd
+    - cross-repo-capability-contracts
+  capabilities:
+    - "ards-sdd-governance"
+    - "request-lifecycle-governance"
+  risks:
+    - id: CHILD_REPO_OWNER_DOCS_STALE
+      severity: high
+    - id: CENTRAL_EVIDENCE_REPLACES_OWNER_DOCS
+      severity: high
+    - id: CROSS_REPO_CAPABILITY_OWNER_AMBIGUITY
+      severity: medium
+
+required_context:
+  - "AGENTS.md"
+  - "docs/policies/README.md"
+  - "specs/integration/policies.yaml"
+  - "docs/policies/agent-architecture-boundary-policy.md"
+  - "initiatives/INIT-CP-0001-control-plane-lifecycle-enforcement.yaml"
+  - "requests/planned/CR-SST-0092-sst-bend-learning-workspace-first-runtime-slice.yaml"
+  - "evidence/requests/CR-SST-0092/implementation-summary.md"
+  - "evidence/requests/CR-SST-0092/validation-results.md"
+
+required_checks:
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check:initiatives"
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check"
+
+risk:
+  level: high
+  score: 7
+  drivers:
+    - CHILD_REPO_OWNER_DOCS_STALE
+    - CENTRAL_EVIDENCE_REPLACES_OWNER_DOCS
+    - CROSS_REPO_CAPABILITY_OWNER_AMBIGUITY
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "The policy changes close gates for future cross-repo implementation CRs."
+    - "It defines authority boundaries between child repo ARDS/SDD and control-plane evidence."
+    - "It records a documentation gap in a recent child repo implementation."
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-high-reasoning-profile"
+  reason: >
+    The task changes governance boundaries and close criteria for future child
+    repository mutations.
+
+subagent_deployment_plan:
+  required: false
+  parallelizable: false
+  roles: []
+  fallback: "Main agent updates the local policy registry, human documentation, request lifecycle, and evidence directly."
+  evidence_required: true
+
+execution:
+  requires_human_approval: false
+  allowed_window: manual
+  branch_strategy: "control-plane-only"
+  implementation_boundary: >
+    This CR may modify only the control-plane policy registry, human policy
+    documentation, initiative tracking, request lifecycle, and evidence. It does
+    not mutate child repositories and does not remediate any child repo owner
+    documentation gap directly.
+  child_repo_mutation_allowed: false
+  jira_read_executed: false
+  jira_write_executed: false
+  jira_write_target:
+    desired_artifact: "None for this policy adoption unless explicitly requested later"
+    desired_initial_status: "not requested"
+
+policy_contract:
+  policy_id: "owner-documentation-authority-policy"
+  human_doc: "docs/policies/owner-documentation-authority-policy.md"
+  required_rules:
+    - "Control-plane evidence does not replace owner repo ARDS/SDD documentation."
+    - "A CR that mutates a child repo must update that repo's owner docs/specs/capabilities or record an explicit exception."
+    - "Cross-repo capability documentation must identify producer, consumer, and orchestration owners."
+    - "Jira is a mirror and cannot be treated as the documentation authority."
+    - "Closure evidence must list owner doc paths or the exception reference."
+
+validation:
+  required_checks:
+    - "Control-plane initiative validation passes."
+    - "Control-plane general check is attempted and results are recorded."
+    - "Policy registry references the new human policy document."
+    - "CR-SST-0092 documentation gap is recorded as evidence, not silently ignored."
+  evidence_required:
+    - "policy_summary"
+    - "current_gap_review"
+    - "changed_files_summary"
+    - "validation_results"
+
+decision:
+  status: pending
+  approver: TODO
+
+planner_notes:
+  - "A follow-up CR should remediate sst-bend owner documentation for LearningWorkspace."
+  - "A later validator can enforce owner documentation evidence before request closure."

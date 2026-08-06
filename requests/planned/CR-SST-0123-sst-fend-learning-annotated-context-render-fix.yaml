@@ -1,0 +1,220 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0123"
+title: "Fix sst-fend LearningWorkspace annotated context render"
+status: planned
+source_request: "requests/inbox/CR-SST-0123-sst-fend-learning-annotated-context-render-fix.yaml"
+created_at: "2026-07-05"
+requester: "4uentes"
+
+summary: >
+  Fix the residual CR-SST-0118 / SST-48 E2E gap where /learning can generate
+  and accept a preview after CR-SST-0122, but the visible accepted context still
+  shows no annotations or contentBlocks.
+
+control_plane_context:
+  initiative_id: "INIT-SST-0001"
+  active_feature_state: "learning-content-tags"
+  parent_request_id: "CR-SST-0118"
+  blocking_evidence_ref: "evidence/requests/CR-SST-0118/e2e-revalidation-after-cr-sst-0122-2026-07-05.md"
+  jira_epic_key: "SST-27"
+  active_jira_issue_key: "SST-6"
+  blocked_jira_issue_key: "SST-48"
+  jira_subtask_key: "SST-52"
+  current_jira_status_observed: "Finalizada"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "sst-fend"
+      via: "/learning preview, accept and render workflow"
+      service_kind: "frontend-spa"
+      ards_kind: "frontend-web"
+      status: "active"
+    - service_id: "node-auth"
+      via: "BFF contract verification only unless analysis proves payload passthrough drift"
+      service_kind: "bff"
+      ards_kind: "backend-service"
+      status: "active"
+    - service_id: "sst-bend"
+      via: "API contract verification only unless analysis proves backend persistence gap"
+      service_kind: "api"
+      ards_kind: "backend-service"
+      status: "active"
+    - service_id: "4uentes-orchestor"
+      via: "request lifecycle, Jira mirror and owner enforcement"
+      service_kind: "control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+  affected_ards:
+    - learning-content-tags
+    - frontend-web
+    - bff-contract
+    - backend-service
+    - child-repo-owner-documentation
+    - evidence
+  risks:
+    - id: FRONTEND_ACCEPTS_EMPTY_CONTEXT
+      severity: high
+    - id: PAYLOAD_CONTRACT_DRIFT
+      severity: high
+    - id: E2E_FALSE_POSITIVE
+      severity: medium
+
+execution:
+  requires_human_approval: false
+  allowed_window: manual
+  branch_strategy: "one-branch-per-repo"
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets:
+    - service_id: "sst-fend"
+      local_path_ref: "environments/local/bindings.local.yaml#sst-fend"
+  implementation_boundary: >
+    This CR may analyze node-auth and sst-bend contracts, but planned mutation
+    is limited to sst-fend unless evidence proves a different owner boundary.
+    It must not redesign the learning sheet UX, change auth/RBAC, alter
+    backend persistence schemas, or close CR-SST-0118/SST-48 without a passing
+    E2E validation.
+  boundary_update:
+    observed_at: "2026-07-06"
+    status: "sst-bend-mutation-justified"
+    evidence_ref: "evidence/requests/CR-SST-0123/text-article-native-url-and-origin-context-analysis.md"
+    reason: >
+      QA manual proved that text article creation still required an invented
+      URL because sst-bend schema/factory required url/sourceUrl for
+      payload.kind=text. The intended frontend behavior cannot be completed
+      safely without aligning the owner backend contract.
+  owner_documentation:
+    required: true
+    status: satisfied
+    owner_refs:
+      - repo: "sst-fend"
+        paths:
+          - "docs/38-learning-workspace-frontend.md"
+          - "specs/38-learning-workspace-frontend.yml"
+      - repo: "sst-bend"
+        paths:
+          - "docs/capabilities/outbound/learning-workspace-context.md"
+          - "specs/capabilities/outbound/learning-workspace-context.yaml"
+      - repo: "node-auth"
+        paths:
+          - "docs/capabilities/inbound/sst-bend--learning-workspace-context.md"
+          - "specs/capabilities/inbound/sst-bend--learning-workspace-context.yaml"
+    evidence_refs:
+      - "evidence/requests/CR-SST-0123/policy-and-owner-enforcement-start.md"
+      - "evidence/requests/CR-SST-0123/jira-cr-sst-0123-create-start-summary.md"
+      - "evidence/requests/CR-SST-0123/learning-context-article-separation-capability.md"
+      - "evidence/requests/CR-SST-0123/chrome-authenticated-e2e-pass-2026-07-10.md"
+
+required_checks:
+  - service_id: "sst-fend"
+    command: "npm.cmd test -- LearningWorkspace.test.tsx ArticleCreateFlow.test.tsx --runInBand"
+  - service_id: "sst-fend"
+    command: "npm.cmd run check"
+  - service_id: "node-auth"
+    command: "npm.cmd run check"
+  - service_id: "sst-bend"
+    command: "npm.cmd run check"
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check"
+
+validation:
+  required_checks:
+    - "/learning preview sends or derives non-empty annotated content payload."
+    - "Accepting a preview produces accepted annotations and contentBlocks in visible context."
+    - "Template render shows accepted annotated text, not only an empty document shell."
+    - "Network path remains 200/201 and does not regress CR-SST-0122."
+    - "Chrome DevTools MCP evidence exists before CR-SST-0118/SST-48 closure."
+  evidence_required:
+    - "policy_and_owner_enforcement_start"
+    - "implementation_analysis"
+    - "changed_files_summary"
+    - "owner_documentation_summary"
+    - "validation_results"
+    - "jira_sync_summary"
+
+decision:
+  status: completed-authenticated-e2e-pass
+  approver: "4uentes"
+  note: >
+    Opened as the next technical step after CR-SST-0122. The CR starts with
+    analysis because the observed symptom can come from frontend payload
+    construction, BFF passthrough, backend persistence shape, or frontend
+    context rendering.
+
+jira_sync:
+  status: final-commented-and-listo
+  issue_key: "SST-52"
+  status_observed: "Finalizada"
+  resolution_observed: "Listo"
+  evidence_ref: "evidence/requests/CR-SST-0123/jira-cr-sst-0123-create-start-summary.md"
+  progress_comment_ref: "evidence/requests/CR-SST-0123/jira-sst-52-implementation-progress-comment.md"
+  boundary_comment_ref: "evidence/requests/CR-SST-0123/jira-sst-52-learning-context-boundary-comment-summary.md"
+  final_close_comment_ref: "evidence/requests/CR-SST-0123/jira-sst-52-final-close-comment.md"
+  final_close_transition_ref: "evidence/requests/CR-SST-0123/jira-sst-52-final-close-transition.md"
+  final_close_comment_id: "10138"
+  final_e2e_ref: "evidence/requests/CR-SST-0123/chrome-authenticated-e2e-pass-2026-07-10.md"
+
+analysis_update:
+  observed_at: "2026-07-05"
+  status: frontend-gap-identified
+  evidence_ref: "evidence/requests/CR-SST-0123/implementation-analysis.md"
+  summary: >
+    Standalone /learning sends sourceAnnotations from props only. In the
+    standalone route this is empty, so preview receives no local annotation
+    derived from the selected granularity. Article Text tab builds annotations
+    from manual selections, but /learning does not. The next implementation
+    should synthesize a local annotation in LearningWorkspaceSheet before
+    preview when source.annotations is empty.
+
+implementation_update:
+  observed_at: "2026-07-05"
+  status: implemented-local-validation-pending-browser-auth
+  evidence_refs:
+    - "evidence/requests/CR-SST-0123/changed-files-summary.md"
+    - "evidence/requests/CR-SST-0123/owner-documentation-summary.md"
+    - "evidence/requests/CR-SST-0123/validation-results.md"
+  summary: >
+    sst-fend now synthesizes a local draft annotation from /learning selected
+    granularity when no parent annotations are provided. Targeted tests and
+    full sst-fend check pass. Chrome validation on port 4091 is blocked by
+    unauthenticated session redirecting /learning to the public cover.
+    Jira progress comment is prepared locally but not published because the
+    outbound sync was blocked by policy.
+
+text_article_update:
+  observed_at: "2026-07-06"
+  status: implemented-local-validation-pending-authenticated-e2e
+  evidence_ref: "evidence/requests/CR-SST-0123/text-article-native-url-and-origin-context-analysis.md"
+  summary: >
+    Text article creation now treats URL/sourceUrl as optional for native text.
+    sst-fend no longer sends an empty URL, preserves local learning annotations
+    in the create draft, and exposes a post-create LearningWorkspace panel bound
+    to originArticleId. sst-bend now accepts payload.kind=text with data:{}.
+
+learning_context_boundary_update:
+  observed_at: "2026-07-07"
+  status: "producer-and-bff-capabilities-clarified-and-jira-commented"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0123/learning-context-article-separation-capability.md"
+    - "evidence/requests/CR-SST-0123/jira-sst-52-learning-context-boundary-comment-summary.md"
+  summary: >
+    sst-bend outbound and node-auth inbound LearningWorkspace capabilities now
+    explicitly separate LearningContext from live Article resources. Frontend
+    SST-52 UX testing can target the real content-generation sheet as a
+    LearningContext surface without requiring Article creation or external URL.
+
+authenticated_e2e_update:
+  observed_at: "2026-07-10"
+  status: "authenticated-e2e-pass"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0123/chrome-authenticated-e2e-pass-2026-07-10.md"
+    - "evidence/requests/CR-SST-0123/chrome-learning-authenticated-e2e-pass-2026-07-10.png"
+  summary: >
+    Chrome DevTools MCP QA on http://localhost:4090/learning passed with an
+    authenticated owner session. Preview sent non-empty annotations, accept
+    returned 201, context returned 200, the template rendered the accepted
+    annotation, and accepted context contained non-empty annotations and
+    contentBlocks. No JavaScript errors were observed.

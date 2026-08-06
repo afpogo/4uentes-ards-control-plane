@@ -1,0 +1,89 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-SST-0073"
+title: "SST Tags - Search and resource binding API"
+status: "done"
+source_request: "requests/inbox/CR-SST-0073-sst-tags-search-and-resource-binding-api.yaml"
+planned_request: "requests/planned/CR-SST-0073-sst-tags-search-and-resource-binding-api.yaml"
+created_at: "2026-06-13"
+completed_at: "2026-06-20"
+requester: "4uentes"
+
+summary: >
+  Implemented the first producer-side governed tags API in `sst-bend` with
+  definitions listing, values search, explicit value creation and
+  resource-bound occurrence replacement on top of the global persistence model
+  introduced in CR-SST-0072.
+
+scope:
+  solution: "sst"
+  repository: "4uentes-orchestor"
+  functional_repositories_modified: true
+  modified_repositories:
+    - "sst-bend"
+  jira_read_executed: true
+  jira_write_executed: true
+  local_state_transitions_executed: false
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "public backend API contract"
+    - "search and duplicate semantics"
+    - "resource binding attach/detach semantics"
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-reasoning-profile"
+  reason: "This CR introduced a governed backend API boundary with migration dependencies and downstream BFF/frontend adoption."
+
+subagent_deployment_plan:
+  required: true
+  roles:
+    - "backend-contract-reviewer"
+    - "ards-sdd-validator"
+    - "security-contract-reviewer"
+  fallback: "The local runtime did not expose subagent deployment, so implementation and review were executed sequentially in the main agent."
+  evidence_ref: "evidence/requests/CR-SST-0073/technical-closure-review.md"
+
+results:
+  runtime_outputs:
+    - "Added `GET /4uentes/v1/tags/definitions`."
+    - "Added `GET /4uentes/v1/tags/values`."
+    - "Added `POST /4uentes/v1/tags/values` with explicit create and duplicate conflict semantics."
+    - "Added `PUT /4uentes/v1/tags/resources/:resourceType/:resourceId` with replace and clear semantics."
+  compatibility:
+    - "Legacy dictionary and article readers remain unchanged in this CR."
+    - "Binding requires existing `TagValue` and does not create values implicitly."
+    - "Initial bindable resource types were narrowed to `articulo` and `diccionario`."
+  qa_outputs:
+    - "A reproducible `.http` collection was added in CR-SST-0079 and later hardened to reuse create-response values in the duplicate request path."
+
+evidence:
+  required:
+    - "evidence/requests/CR-SST-0073/implementation-notes.md"
+    - "evidence/requests/CR-SST-0073/changed-files-summary.md"
+    - "evidence/requests/CR-SST-0073/validation-results.md"
+    - "evidence/requests/CR-SST-0073/technical-closure-review.md"
+    - "evidence/requests/CR-SST-0073/closure-runtime-qa-notes.md"
+    - "evidence/requests/CR-SST-0073/jira-sst-21-start-transition-summary.md"
+    - "evidence/requests/CR-SST-0073/jira-sst-21-review-transition-summary.md"
+    - "evidence/requests/CR-SST-0073/jira-sst-21-close-transition-summary.md"
+
+validation:
+  required_checks:
+    - "sst-bend: node scripts/test-tags-governance.js"
+    - "sst-bend: npm.cmd run test:tag-engine"
+    - "sst-bend: npm.cmd run check"
+    - "4uentes-orchestor: npm.cmd run check"
+  status: "pass-with-existing-warnings"
+  notes:
+    - "The runtime gate is healthy with local services up; authenticated end-to-end duplicate verification depends on operator execution of the corrected `.http` flow."
+    - "Jira subtask `SST-21` was transitioned to `Finalizada` on 2026-06-20 via direct Atlassian MCP and recorded in local evidence."
+
+decision:
+  status: "approved-done"
+  approver: "4uentes"
+  note: "CR-SST-0073 closes the backend governed tags API slice. BFF, frontend and dictionary adoption remain open in CR-SST-0074..0076."

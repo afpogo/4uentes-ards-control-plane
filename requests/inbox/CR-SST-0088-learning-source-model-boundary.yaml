@@ -1,0 +1,24 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0088"
+title: "Define learning-content source and document model boundary"
+status: inbox
+created_at: "2026-06-28"
+requester: "4uentes"
+
+business_context: >
+  SST-6 remains the active learning-content tags track after the SST-4
+  dictionary/article governance closure. The control-plane needs a first
+  local ARDS/SDD model that separates learning sources from processable
+  documents before any child repository runtime work starts.
+
+requested_change: >
+  Define the first design boundary for LearningSource, CourseSource,
+  WebArticleSource, KnowledgeDocument, and ContentBlock. Record
+  TranscriptionSource only as future extensibility and keep runtime import,
+  persistence, Jira writes, and child repository changes out of this request.
+
+expected_outcome: >
+  The control-plane can use CR-SST-0088 as the local canonical design evidence
+  for SST-6 learning-content sources, with CR-SST-0089 reserved for the later
+  sst-bend preview/import runtime boundary.

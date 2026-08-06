@@ -1,0 +1,19 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-CP-0005"
+title: "Review orchestrator adoption of core living resources"
+status: "inbox"
+created_at: "2026-07-07"
+requester: "4uentes"
+
+business_context: >
+  After core promotion, the orchestrator must consume the canonical resources
+  instead of continuing to behave as their source.
+
+requested_change: >
+  Review and update local orchestrator adoption refs, policy links, and docs
+  after core canon exists.
+
+expected_outcome: >
+  The orchestrator remains a consumer/adopter of core living resources, with
+  child rollout deferred to separate request-driven adoption.

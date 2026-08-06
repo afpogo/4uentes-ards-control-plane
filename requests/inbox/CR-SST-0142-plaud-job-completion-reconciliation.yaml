@@ -1,0 +1,18 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0142"
+title: "Reconcile Plaud job completion after aggregate commit"
+status: inbox
+created_at: "2026-07-12"
+requester: "4uentes"
+business_context: >
+  Plaud article/payload/filter can commit atomically before the ingestion job is
+  marked completed. A crash or completion-write failure can leave committed
+  content with a processing or failed job and no stale lease recovery.
+requested_change: >
+  Design and implement idempotent job completion reconciliation or an outbox
+  boundary, including stale-processing recovery and replay tests.
+expected_outcome: >
+  Committed Plaud content and ingestion-job state converge deterministically
+  after crashes without duplicating or cross-account mutating articles.
+ordering_deviation: null

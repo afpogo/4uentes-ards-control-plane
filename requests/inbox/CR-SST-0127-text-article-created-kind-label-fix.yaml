@@ -1,0 +1,30 @@
+id: "CR-SST-0127"
+title: "Fix text article created kind label"
+created_at: "2026-07-10"
+requester: "4uentes"
+summary: >
+  Fix the authenticated-QA defect found by CR-SST-0126 where a successfully
+  created text article is labeled Web in the creation result when the backend
+  response omits payload.kind.
+
+context:
+  initiative_id: "INIT-SST-0001"
+  parent_request_id: "CR-SST-0126"
+  parent_jira_issue_key: "SST-6"
+  jira_epic_key: "SST-27"
+  affected_repository: "sst-fend"
+  defect_location: "src/pages/Articles/components/ArticleCreateFlow/ArticleCreateFlow.tsx"
+  observed_behavior: >
+    The Text article is persisted and listed as Text, but the step 3 creation
+    result renders Web because created?.payload?.kind falls back to web.
+
+requested_outcome:
+  - "Use the submitted article kind when the create response omits payload.kind."
+  - "Add focused regression coverage for the text creation result."
+  - "Repeat authenticated desktop/mobile QA before closing CR-SST-0126."
+
+boundaries:
+  - "Do not change SstSheetWorkspace layout or responsibilities."
+  - "Do not change backend DTOs, persistence or LearningWorkspace behavior."
+  - "Do not mix this code fix into the documentation-only CR-SST-0126."
+  - "Do not publish or include unrelated changes from the dirty sst-fend worktree."

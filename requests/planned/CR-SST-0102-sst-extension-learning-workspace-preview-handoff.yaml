@@ -1,0 +1,93 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0102"
+title: "Prepare LearningWorkspace preview handoff for extension session artifacts"
+status: planned
+source_request: "requests/inbox/CR-SST-0102-sst-extension-learning-workspace-preview-handoff.yaml"
+created_at: "2026-07-02"
+requester: "4uentes"
+
+summary: >
+  Define or prepare preview-only handoff from extension session artifacts to
+  LearningWorkspace, preserving user acceptance and account/user scoping.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - "sst-extension"
+    - "sst-bend"
+    - "4uentes-orchestor"
+  include_optional_services: false
+
+control_plane_context:
+  initiative_id: "INIT-SST-0003"
+  jira_epic_key: "SST-29"
+  jira_issue_key: "SST-34"
+  policy_ref: "docs/policies/owner-documentation-authority-policy.md"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "sst-extension"
+      via: "producer contract and artifact handoff"
+      service_kind: "browser-extension"
+      ards_kind: "frontend-extension"
+      status: "optional-active"
+    - service_id: "sst-bend"
+      via: "potential LearningWorkspace preview consumer contract"
+      service_kind: "api"
+      ards_kind: "backend-api"
+      status: "active"
+    - service_id: "4uentes-orchestor"
+      via: "cross-repo request lifecycle and evidence"
+      service_kind: "control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+  affected_ards:
+    - frontend-extension
+    - backend-api
+    - learning-content-preview-import
+    - child-repo-owner-documentation
+  risks:
+    - id: PREVIEW_ONLY_GATE_BYPASS
+      severity: high
+    - id: CROSS_REPO_OWNER_DOCS_STALE
+      severity: high
+
+required_checks:
+  - service_id: "sst-extension"
+    command: "pnpm check"
+  - service_id: "sst-bend"
+    command: "npm.cmd run check"
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check"
+
+execution:
+  child_repo_mutation_allowed: true
+  child_repo_mutation_target:
+    service_id: "sst-extension"
+  possible_additional_child_repo:
+    service_id: "sst-bend"
+    condition: "only if the approved implementation requires consumer contract changes"
+  owner_documentation_required: true
+  jira_write_executed: true
+  jira_write_ref: "evidence/initiatives/INIT-SST-0003/jira-extension-backlog-sync-summary.md"
+
+owner_documentation:
+  required: true
+  status: planned
+  owner_repo: "sst-extension"
+  planned_owner_docs:
+    - "specs/features/credentialed-web-source.yaml"
+    - "specs/integration/node-auth-extension-session-ingestion.yaml"
+    - "docs/integration/learning-workspace-preview-handoff.md"
+
+validation:
+  required_checks:
+    - "Preview-only gate is explicit."
+    - "Producer, consumer and control-plane roles are identified."
+    - "Every mutated repo has owner docs updated or an exception."
+
+decision:
+  status: pending
+  approver: TODO

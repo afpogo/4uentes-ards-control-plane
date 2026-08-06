@@ -1,0 +1,40 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0130"
+title: "Align native text article request builders"
+status: done
+source_request: "requests/inbox/CR-SST-0130-native-text-article-request-consistency.yaml"
+created_at: "2026-07-11"
+requester: "4uentes"
+summary: "Align native Text request construction and response handling without changing Web semantics."
+control_plane_context: {initiative_id: "INIT-SST-0005", parent_request_id: "CR-SST-0128", predecessor_requests: ["CR-SST-0127", "CR-SST-0129"], jira_epic_key: "SST-57", jira_parent_issue_key: "SST-58", jira_role: "mirror", jira_source_of_truth: false}
+impact_analysis:
+  required: true
+  affected_services:
+    - {service_id: "sst-fend", via: "Text create request builder and result state", service_kind: "frontend-spa", ards_kind: "frontend-web", status: "active"}
+    - {service_id: "node-auth", via: "Text create BFF adapter", service_kind: "backend-bff", ards_kind: "backend-bff", status: "active"}
+    - {service_id: "4uentes-orchestor", via: "lifecycle and evidence", service_kind: "control-plane", ards_kind: "control-plane", status: "active"}
+  affected_ards: ["article-text-ingestion", "articles-frontend"]
+  risks: [{id: "TEXT_WEB_KIND_REGRESSION", severity: high}]
+execution:
+  requires_human_approval: false
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets: ["sst-fend", "node-auth"]
+  implementation_boundary: "Native Text builder/adapter, tests and owner docs only."
+owner_documentation:
+  required: true
+  status: satisfied
+  owner_repos: ["sst-fend", "node-auth"]
+  planned_owner_docs:
+    - "specs/33-articles-frontend.yml"
+    - "docs/33-articles-frontend.md"
+    - "specs/integrations-api.yaml"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0130/owner-documentation-summary.md"
+required_checks:
+  - {service_id: "sst-fend", command: "npm.cmd test -- ArticleCreateFlow.test.tsx --runInBand"}
+  - {service_id: "sst-fend", command: "npm.cmd run check"}
+  - {service_id: "node-auth", command: "npm.cmd run check"}
+  - {service_id: "4uentes-orchestor", command: "npm.cmd run check"}
+decision: {status: closed-local, approver: "4uentes", decided_at: "2026-07-12", note: "Owner gates and restored HTTP runtime passed."}
+jira_sync: {status: synchronized, desired_issue_type: "Subtask", parent_issue_key: "SST-58", issue_key: "SST-60", status_observed: "Listo"}

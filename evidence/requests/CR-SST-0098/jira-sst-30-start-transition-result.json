@@ -1,0 +1,112 @@
+{
+  "issueKey": "SST-30",
+  "before": {
+    "summary": "[SST][INIT-SST-0003][CR-SST-0098] Fix sst-extension session tab-by-tab visual PDF capture",
+    "status": "Tareas por hacer",
+    "statusCategory": "Por hacer",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-07-02T18:17:58.577-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0098",
+      "init-sst-0003",
+      "session-capture",
+      "sst-extension"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10068\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10068\",\"key\":\"SST-30\",\"fields\":{\"summary\":\"[SST][INIT-SST-0003][CR-SST-0098] Fix sst-extension session tab-by-tab visual PDF capture\",\"description\":\"CR: CR-SST-0098  \\nInitiative: INIT-SST-0003  \\nEpic: SST-29\\n\\nPurpose:\\n\\nFix robust visual PDF capture for each session tab, including tab focus, ready/settle wait, partial failure handling, and original active tab restoration.\\n\\nSubtasks / checklist:\\n\\n- [ ] Actualizar spec sessions con carga, settle y restauracion de foco.\\n- [ ] Actualizar docs owner de sst-extension afectadas por el cambio.\\n- [ ] Capturar y restaurar tab activa original.\\n- [ ] Agregar wait strategy por tab: tabs.onUpdated, document.readyState, settle y timeout.\\n- [ ] Preservar scroll inicial por tab cuando sea posible.\\n- [ ] Mantener fallo parcial sin abortar todo el lote.\\n- [ ] Agregar unit tests de tab activation, timeout y restore original.\\n- [ ] Ejecutar pnpm test, pnpm build y pnpm check.\\n\\nDefinition of Done:\\n\\n- [ ] La tab original queda activa al terminar.\\n- [ ] Tabs lentas no se capturan antes de ready/settle o producen warning.\\n- [ ] Una tab fallida no invalida necesariamente toda la sesion.\\n- [ ] No se introducen content scripts persistentes sin spec.\\n- [ ] Evidencia central lista rutas owner actualizadas en sst-extension.\\n\\nOwner documentation gate:\\n\\n* sst-extension owner ARDS/SDD specs/docs must be updated for any mutated behavior, or an explicit owner-documentation exception must be recorded before closure.\\n\\nControl-plane source:\\n\\n* requests/planned/cr-sst-0098-TODO.yaml\\n* initiatives/INIT-SST-0003-sst-extension-construction.yaml\\n* evidence/requests/CR-SST-0095/jira-cr-backlog-candidates.md\\n\\nBoundary:\\n\\n* Jira is an operational mirror; ARDS/SDD remains the source of truth.\\n* Do not store private page content, cookies, JWTs or plaintext secrets in Jira or evidence.\\n\\n\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-07-02T18:17:58.577-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10005\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"Tareas por hacer\",\"id\":\"10005\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/2\",\"id\":2,\"key\":\"new\",\"colorName\":\"blue-gray\",\"name\":\"Por hacer\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-sst-0098\",\"init-sst-0003\",\"session-capture\",\"sst-extension\"]}}"
+  },
+  "after": {
+    "summary": "[SST][INIT-SST-0003][CR-SST-0098] Fix sst-extension session tab-by-tab visual PDF capture",
+    "status": "En curso",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-07-03T01:55:26.406-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0098",
+      "init-sst-0003",
+      "session-capture",
+      "sst-extension"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10068\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10068\",\"key\":\"SST-30\",\"fields\":{\"summary\":\"[SST][INIT-SST-0003][CR-SST-0098] Fix sst-extension session tab-by-tab visual PDF capture\",\"description\":\"CR: CR-SST-0098  \\nInitiative: INIT-SST-0003  \\nEpic: SST-29\\n\\nPurpose:\\n\\nFix robust visual PDF capture for each session tab, including tab focus, ready/settle wait, partial failure handling, and original active tab restoration.\\n\\nSubtasks / checklist:\\n\\n- [ ] Actualizar spec sessions con carga, settle y restauracion de foco.\\n- [ ] Actualizar docs owner de sst-extension afectadas por el cambio.\\n- [ ] Capturar y restaurar tab activa original.\\n- [ ] Agregar wait strategy por tab: tabs.onUpdated, document.readyState, settle y timeout.\\n- [ ] Preservar scroll inicial por tab cuando sea posible.\\n- [ ] Mantener fallo parcial sin abortar todo el lote.\\n- [ ] Agregar unit tests de tab activation, timeout y restore original.\\n- [ ] Ejecutar pnpm test, pnpm build y pnpm check.\\n\\nDefinition of Done:\\n\\n- [ ] La tab original queda activa al terminar.\\n- [ ] Tabs lentas no se capturan antes de ready/settle o producen warning.\\n- [ ] Una tab fallida no invalida necesariamente toda la sesion.\\n- [ ] No se introducen content scripts persistentes sin spec.\\n- [ ] Evidencia central lista rutas owner actualizadas en sst-extension.\\n\\nOwner documentation gate:\\n\\n* sst-extension owner ARDS/SDD specs/docs must be updated for any mutated behavior, or an explicit owner-documentation exception must be recorded before closure.\\n\\nControl-plane source:\\n\\n* requests/planned/cr-sst-0098-TODO.yaml\\n* initiatives/INIT-SST-0003-sst-extension-construction.yaml\\n* evidence/requests/CR-SST-0095/jira-cr-backlog-candidates.md\\n\\nBoundary:\\n\\n* Jira is an operational mirror; ARDS/SDD remains the source of truth.\\n* Do not store private page content, cookies, JWTs or plaintext secrets in Jira or evidence.\\n\\n\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-07-03T01:55:26.406-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10006\",\"description\":\"La persona asignada está trabajando actualmente en esta actividad.\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En curso\",\"id\":\"10006\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-sst-0098\",\"init-sst-0003\",\"session-capture\",\"sst-extension\"]}}"
+  },
+  "transitions": [
+    {
+      "id": "11",
+      "name": "Por hacer",
+      "toStatus": "Tareas por hacer",
+      "toStatusCategory": "Por hacer"
+    },
+    {
+      "id": "21",
+      "name": "En curso",
+      "toStatus": "En curso",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "31",
+      "name": "In Review",
+      "toStatus": "En revisión",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "41",
+      "name": "Listo",
+      "toStatus": "Finalizada",
+      "toStatusCategory": "Listo"
+    }
+  ],
+  "selectedTransition": {
+    "id": "21",
+    "name": "En curso",
+    "toStatus": "En curso",
+    "toStatusCategory": "En curso"
+  },
+  "transitionResult": {
+    "success": true
+  },
+  "commentResult": {
+    "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10068/comment/10051",
+    "id": "10051",
+    "author": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "body": "CR-SST-0098 / SST-30 start.\n\nThis issue is moving into active analysis/planning for the first implementation slice under `INIT-SST-0003`.\n\nPreliminary finding:\n\n* Current session capture already iterates tabs and attempts visual PDF with text fallback.\n* The risky gap is robustness: original tab focus is not explicitly restored after a multi-tab capture, readiness uses a fixed short paint wait, scroll restoration is not guaranteed, and some partial/degraded outcomes are not yet explicit enough.\n\nPlanned approach:\n\n* Update `sst-extension` owner specs/docs first, especially session capture behavior and QA evidence.\n* Implement original active-tab restoration for capture batches.\n* Add governed per-tab wait strategy: activation, ready/settle check and timeout.\n* Preserve initial scroll best-effort where browser APIs allow it.\n* Keep partial failure handling explicit without storing private page content in Jira/evidence.\n* Add focused tests for focus restoration, timeout/ready behavior and degraded capture paths.\n* Validate with `pnpm test`, `pnpm build`, `pnpm check`, and control-plane `npm.cmd run check`.\n\nSubagent policy:\n\n* Bounded subagents were used only for read-only discovery of code paths and owner docs.\n* Architecture, auth, security and cross-repo contract decisions remain with the main governance flow.\n\nEvidence:\n\n* `evidence/requests/CR-SST-0098/preliminary-analysis.md`\n* `evidence/requests/CR-SST-0098/subagent-atomized-plan.md`\n\n",
+    "updateAuthor": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "created": "2026-07-03T01:55:26.406-0300",
+    "updated": "2026-07-03T01:55:26.406-0300",
+    "jsdPublic": true
+  },
+  "commentBody": "CR-SST-0098 / SST-30 start.\n\nThis issue is moving into active analysis/planning for the first implementation slice under `INIT-SST-0003`.\n\nPreliminary finding:\n- Current session capture already iterates tabs and attempts visual PDF with text fallback.\n- The risky gap is robustness: original tab focus is not explicitly restored after a multi-tab capture, readiness uses a fixed short paint wait, scroll restoration is not guaranteed, and some partial/degraded outcomes are not yet explicit enough.\n\nPlanned approach:\n- Update `sst-extension` owner specs/docs first, especially session capture behavior and QA evidence.\n- Implement original active-tab restoration for capture batches.\n- Add governed per-tab wait strategy: activation, ready/settle check and timeout.\n- Preserve initial scroll best-effort where browser APIs allow it.\n- Keep partial failure handling explicit without storing private page content in Jira/evidence.\n- Add focused tests for focus restoration, timeout/ready behavior and degraded capture paths.\n- Validate with `pnpm test`, `pnpm build`, `pnpm check`, and control-plane `npm.cmd run check`.\n\nSubagent policy:\n- Bounded subagents were used only for read-only discovery of code paths and owner docs.\n- Architecture, auth, security and cross-repo contract decisions remain with the main governance flow.\n\nEvidence:\n- `evidence/requests/CR-SST-0098/preliminary-analysis.md`\n- `evidence/requests/CR-SST-0098/subagent-atomized-plan.md`\n",
+  "externalWrite": true
+}

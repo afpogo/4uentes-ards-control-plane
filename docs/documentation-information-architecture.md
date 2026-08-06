@@ -9,12 +9,13 @@ El objetivo es orden, no solo almacenamiento.
 
 ## Secciones Principales
 
-La documentacion debe organizarse en cuatro secciones principales:
+La documentacion debe organizarse en cinco secciones principales:
 
 1. `apps/`
 2. `platform/`
 3. `requests/`
 4. `cross-repo/`
+5. `projects/`
 
 La politica de idioma para Markdown humano esta en
 [idioma-markdown.md](idioma-markdown.md).
@@ -125,6 +126,40 @@ No poner aqui:
 
 - docs repo-locales que mencionan otro repo una sola vez
 
+## 5. `projects/`
+
+Usar `projects/` como vista de navegacion por negocio, producto o proyecto.
+
+Esta seccion puede enlazar documentos canonicos que viven en `apps/`,
+`cross-repo/`, `requests/`, `platform/`, `policies/`, `initiatives/` o
+`evidence/`.
+
+Ejemplos:
+
+- `projects/4uentes/`
+- `projects/sst/`
+- `projects/control-plane/`
+- `projects/shared/`
+
+Poner aqui:
+
+- indices por negocio/proyecto
+- mapas de documentos relacionados
+- links a initiatives, requests y evidence relevantes
+- boundaries de scope entre productos
+
+No poner aqui:
+
+- copias duplicadas de docs canonicos
+- owner docs de repos hijos
+- specs normativas que deban vivir en `specs/`
+
+Regla:
+
+- primero crear vista por proyecto enlazando documentos existentes
+- mover archivos canonicos solo en un request separado con actualizacion de
+  referencias y validacion completa
+
 ## Regla De Decision De Seccion
 
 Al crear un doc nuevo, preguntar:
@@ -185,6 +220,7 @@ Almacenamiento canonico:
 Ubicacion canonica actual:
 
 - `docs/apps/service-catalog.md`
+- `docs/projects/README.md`
 - `docs/cross-repo/solutions-model.md`
 - `docs/requests/execution-model.md`
 - `docs/cross-repo/sst-cluster-dependency-map.md`
@@ -201,6 +237,8 @@ Los docs nuevos no necesitan mover inmediatamente todos los archivos viejos.
 Desde ahora:
 
 - los docs nuevos deben clasificarse por seccion
+- cuando aplique a negocio/proyecto, tambien deben aparecer en
+  `docs/projects/<scope>/README.md`
 - los indices de seccion deben apuntar a docs canonicos
 - docs antiguos en la raiz pueden permanecer hasta que un request controlado de
   limpieza los mueva

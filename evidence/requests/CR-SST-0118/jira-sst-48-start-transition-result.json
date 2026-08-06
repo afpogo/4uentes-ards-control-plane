@@ -1,0 +1,116 @@
+{
+  "issueKey": "SST-48",
+  "before": {
+    "summary": "[SST][CR-SST-0118] Validate annotable text entry end-to-end",
+    "status": "Tareas por hacer",
+    "statusCategory": "Por hacer",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-07-04T15:23:13.233-0300",
+    "labels": [
+      "ards-sdd",
+      "chrome-devtools",
+      "control-plane",
+      "cr-sst-0118",
+      "e2e-validation",
+      "init-sst-0001",
+      "learning-content-tags",
+      "subtask"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10086\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10086\",\"key\":\"SST-48\",\"fields\":{\"summary\":\"[SST][CR-SST-0118] Validate annotable text entry end-to-end\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-07-04T15:23:13.233-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10005\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"Tareas por hacer\",\"id\":\"10005\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/2\",\"id\":2,\"key\":\"new\",\"colorName\":\"blue-gray\",\"name\":\"Por hacer\"}},\"labels\":[\"ards-sdd\",\"chrome-devtools\",\"control-plane\",\"cr-sst-0118\",\"e2e-validation\",\"init-sst-0001\",\"learning-content-tags\",\"subtask\"]}}"
+  },
+  "after": {
+    "summary": "[SST][CR-SST-0118] Validate annotable text entry end-to-end",
+    "status": "En curso",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-07-04T23:11:38.586-0300",
+    "labels": [
+      "ards-sdd",
+      "chrome-devtools",
+      "control-plane",
+      "cr-sst-0118",
+      "e2e-validation",
+      "init-sst-0001",
+      "learning-content-tags",
+      "subtask"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10086\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10086\",\"key\":\"SST-48\",\"fields\":{\"summary\":\"[SST][CR-SST-0118] Validate annotable text entry end-to-end\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-07-04T23:11:38.586-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10006\",\"description\":\"La persona asignada está trabajando actualmente en esta actividad.\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En curso\",\"id\":\"10006\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"ards-sdd\",\"chrome-devtools\",\"control-plane\",\"cr-sst-0118\",\"e2e-validation\",\"init-sst-0001\",\"learning-content-tags\",\"subtask\"]}}"
+  },
+  "transitions": [
+    {
+      "id": "11",
+      "name": "Por hacer",
+      "toStatus": "Tareas por hacer",
+      "toStatusCategory": "Por hacer"
+    },
+    {
+      "id": "21",
+      "name": "En curso",
+      "toStatus": "En curso",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "31",
+      "name": "In Review",
+      "toStatus": "En revisión",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "41",
+      "name": "Listo",
+      "toStatus": "Finalizada",
+      "toStatusCategory": "Listo"
+    }
+  ],
+  "selectedTransition": {
+    "id": "21",
+    "name": "En curso",
+    "toStatus": "En curso",
+    "toStatusCategory": "En curso"
+  },
+  "transitionResult": {
+    "success": true
+  },
+  "commentResult": {
+    "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10086/comment/10097",
+    "id": "10097",
+    "author": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "body": "CR-SST-0118 start checkpoint.\n\nSST-48 can move to `En curso`.\n\nScope:\n\n* Validate the annotable text-entry value proposition end-to-end.\n* Cover editor/text entry, local annotation, preview, accept, persistence, render/template, and read/query evidence.\n* Treat this as validation-first with no planned child repo mutation.\n\nPolicies:\n\n* Owner documentation authority policy reviewed.\n* Because `child_repo_mutation_allowed=false`, owner docs are not required unless validation reveals implementation changes.\n* Control-plane `npm.cmd run check` remains mandatory before local closure.\n\nEvidence:\n\n* `evidence/requests/CR-SST-0118/intent-summary.md`\n* `evidence/requests/CR-SST-0118/policy-and-owner-enforcement-start.md`\n\nBoundary:\n\n* Defects found during validation should become a follow-up implementation CR unless they are trivial test/evidence corrections within the validation boundary.\n\n",
+    "updateAuthor": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "created": "2026-07-04T23:11:38.586-0300",
+    "updated": "2026-07-04T23:11:38.586-0300",
+    "jsdPublic": true
+  },
+  "commentBody": "CR-SST-0118 start checkpoint.\n\nSST-48 can move to `En curso`.\n\nScope:\n- Validate the annotable text-entry value proposition end-to-end.\n- Cover editor/text entry, local annotation, preview, accept, persistence, render/template, and read/query evidence.\n- Treat this as validation-first with no planned child repo mutation.\n\nPolicies:\n- Owner documentation authority policy reviewed.\n- Because `child_repo_mutation_allowed=false`, owner docs are not required unless validation reveals implementation changes.\n- Control-plane `npm.cmd run check` remains mandatory before local closure.\n\nEvidence:\n- `evidence/requests/CR-SST-0118/intent-summary.md`\n- `evidence/requests/CR-SST-0118/policy-and-owner-enforcement-start.md`\n\nBoundary:\n- Defects found during validation should become a follow-up implementation CR unless they are trivial test/evidence corrections within the validation boundary.\n",
+  "externalWrite": true
+}

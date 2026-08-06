@@ -1,0 +1,143 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-HPT-0001"
+title: "Finanzas personales control-plane onboarding"
+status: "planned"
+source_request: "requests/inbox/CR-HPT-0001-finanzas-personales-control-plane-onboarding.yaml"
+created_at: "2026-07-12"
+requester: "4uentes"
+
+summary: >
+  Onboard the observed finanzas-personales monorepo as an independent logical
+  solution with frontend-web and backend-api services, local binding evidence,
+  governed state and Jira HPT mirrors.
+
+initial_scope:
+  solution: "finanzas-personales"
+  services:
+    - "finanzas-personales-frontend"
+    - "finanzas-personales-backend"
+  include_optional_services: false
+
+control_plane_context:
+  initiative_id: "INIT-HPT-0001"
+  feature_id: "finanzas-personales-control-plane-onboarding"
+  child_repo: "finanzas-personales"
+  work_origin: "manual-reconciliation"
+  correlation_id: "hpt-governance-adoption-2026-07-12"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "finanzas-personales-frontend"
+      via: "catalog, solution map, local binding and inventory evidence"
+      service_kind: "frontend-spa"
+      ards_kind: "frontend-web"
+      status: "draft"
+    - service_id: "finanzas-personales-backend"
+      via: "catalog, solution map, local binding and inventory evidence"
+      service_kind: "api"
+      ards_kind: "backend-api"
+      status: "draft"
+  affected_ards:
+    - "catalog"
+    - "solutions"
+    - "request-lifecycle"
+    - "state-read-model"
+    - "jira-mirror"
+  capabilities:
+    - "finanzas-personales-governance-onboarding"
+  risks:
+    - id: "MONOREPO_SERVICE_IDENTITY_COLLAPSE"
+      severity: "medium"
+    - id: "DRAFT_RUNTIME_PROMOTED_AS_ACTIVE"
+      severity: "medium"
+
+required_context:
+  - "AGENTS.md"
+  - "docs/cross-repo/child-repo-onboarding.md"
+  - "docs/cross-repo/control-plane-scope-partition.md"
+  - "docs/policies/jira-cr-mirror-hierarchy-policy.md"
+  - "docs/policies/work-tracker-control-plane-authority-policy.md"
+  - "docs/policies/owner-documentation-authority-policy.md"
+
+risk:
+  level: "medium"
+  score: 5
+  drivers:
+    - "new solution and service identities"
+    - "monorepo with two ARDS service roots"
+    - "external Jira mirror creation"
+
+task_weight:
+  classification: "long-context-task"
+  risk_level: "medium"
+  drivers:
+    - "cross-repo discovery"
+    - "solution scope partition"
+    - "Jira hierarchy and duplicate checks"
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "high"
+  fallback_profile: "gpt-5.4-fast-high"
+  reason: "Long-context governance onboarding with architecture boundaries."
+
+subagent_deployment_plan:
+  required: false
+  parallelizable: false
+  roles: []
+  fallback: "Keep integration and identity decisions in the main agent."
+  evidence_required: true
+
+execution:
+  requires_human_approval: false
+  allowed_window: "manual"
+  branch_strategy: "control-plane-only"
+  child_repo_mutation_allowed: false
+  owner_documentation_required: false
+  implementation_boundary: >
+    Modify only control-plane catalog, solution, bindings, state, requests,
+    initiative and evidence. Do not mutate finanzas-personales or core.
+
+owner_documentation:
+  required: false
+  status: not-applicable
+  owner_repo: "finanzas-personales"
+  reason: "This CR observes and catalogs the child repo without mutating it."
+
+jira:
+  role: "mirror"
+  source_of_truth: false
+  project_key: "HPT"
+  project_name_observed: "home-phinance-ticket"
+  epic_key: "HPT-1"
+  issue_key: "HPT-2"
+  issue_type: "Tarea"
+  expected_parent: "INIT-HPT-0001 primary Epic"
+  current_status_observed: "Por hacer"
+  write_batch_ref: "evidence/initiatives/INIT-HPT-0001/jira-write-batch.md"
+
+validation:
+  required_checks:
+    - "4uentes-orchestor: npm.cmd run check"
+  evidence_required:
+    - "intake_analysis"
+    - "jira_preflight"
+    - "changed_files_summary"
+    - "validation_results"
+  evidence_refs:
+    - "evidence/initiatives/INIT-HPT-0001/intake-analysis.md"
+    - "evidence/initiatives/INIT-HPT-0001/jira-preflight.md"
+    - "evidence/initiatives/INIT-HPT-0001/jira-epic-and-task-sync-summary.md"
+    - "evidence/requests/CR-HPT-0001/changed-files-summary.md"
+    - "evidence/requests/CR-HPT-0001/validation-results.md"
+
+decision:
+  status: "approved-for-local-execution"
+  approver: "4uentes"
+  blocker: "none"

@@ -1,0 +1,18 @@
+{
+  "requestId": "CR-SST-0125",
+  "initiativeId": "INIT-SST-0001",
+  "projectKey": "SST",
+  "parentIssueKey": "SST-6",
+  "issueKey": "SST-55",
+  "issueType": "Subtask",
+  "relatedIssueKey": "SST-53",
+  "beforeStatus": "Tareas por hacer",
+  "transition": {
+    "id": "21",
+    "name": "En curso"
+  },
+  "afterStatus": "En curso",
+  "commentId": "10171",
+  "externalWrite": true,
+  "completedAt": "2026-07-10"
+}

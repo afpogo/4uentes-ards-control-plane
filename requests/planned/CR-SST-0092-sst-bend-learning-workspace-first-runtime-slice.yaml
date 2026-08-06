@@ -1,0 +1,231 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0092"
+title: "Implement sst-bend LearningWorkspace first runtime slice"
+status: done
+source_request: "requests/inbox/CR-SST-0092-sst-bend-learning-workspace-first-runtime-slice.yaml"
+created_at: "2026-06-30"
+requester: "4uentes"
+
+summary: >
+  Execute the first sst-bend runtime implementation for LearningWorkspace using
+  the file plan from CR-SST-0091. The slice adds backend persistence and
+  authenticated routes for lazy workspace creation, source preview, source
+  accept/reject, and scoped LearningWorkspaceContext reads while preserving the
+  preview-only gate and forbidding automatic TagDefinition creation.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - "sst-bend"
+  include_optional_services: false
+
+control_plane_context:
+  initiative_id: "INIT-SST-0001"
+  initiative_file: "initiatives/INIT-SST-0001-tags-governance-continuity.yaml"
+  governing_request: "CR-SST-0092"
+  jira_epic_key: "SST-27"
+  active_jira_issue_key: "SST-28"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  active_feature_state: "learning-content-tags"
+  active_feature_state_file: "state/features/learning-content-tags.current.yaml"
+  preceding_requests:
+    - "CR-SST-0030"
+    - "CR-SST-0031"
+    - "CR-SST-0088"
+    - "CR-SST-0089"
+    - "CR-SST-0090"
+    - "CR-SST-0091"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "sst-bend"
+      via: "runtime model, migrations, routes, controllers, usecases, repository, tests"
+      service_kind: "api"
+      ards_kind: "backend-api"
+      status: "active"
+    - service_id: "4uentes-orchestor"
+      via: "control-plane request and execution evidence"
+      service_kind: "control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+  affected_ards:
+    - backend-api
+    - control-plane
+    - request-lifecycle
+    - evidence
+    - sst-user-internal-memory
+    - learning-content-preview-import
+    - chatbot-context-read-contract
+  capabilities:
+    - "learning-content-tags"
+    - "user-activity-ards-memory"
+    - "application-context-connector"
+    - "prompt-catalog-and-versioning"
+  risks:
+    - id: CROSS_SCOPE_CONTEXT_LEAK
+      severity: high
+    - id: PREVIEW_ONLY_GATE_BYPASS
+      severity: high
+    - id: CHATBOT_DIRECT_PERSISTENCE_BYPASS
+      severity: high
+    - id: MIGRATION_ROLLBACK_GAP
+      severity: high
+    - id: IDEMPOTENCY_DUPLICATE_IMPORTS
+      severity: high
+    - id: EXISTING_CHILD_WORKTREE_DIRTY
+      severity: medium
+
+required_context:
+  - "AGENTS.md"
+  - "specs/integration/policies.yaml"
+  - "docs/policies/"
+  - "initiatives/INIT-SST-0001-tags-governance-continuity.yaml"
+  - "requests/planned/CR-SST-0091-sst-bend-learning-workspace-implementation-readiness.yaml"
+  - "evidence/requests/CR-SST-0091/sst-bend-read-only-discovery.md"
+  - "evidence/requests/CR-SST-0091/sst-bend-file-plan.md"
+  - "evidence/requests/CR-SST-0090/workspace-boundary.md"
+  - "evidence/requests/CR-SST-0090/chatbot-read-contract.md"
+  - "evidence/requests/CR-SST-0089/runtime-contract.md"
+  - "sst-bend/AGENTS.md"
+
+required_checks:
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check:initiatives"
+  - service_id: "sst-bend"
+    command: "npm.cmd run test:learning-workspace"
+  - service_id: "sst-bend"
+    command: "npm.cmd run test:tag-engine"
+  - service_id: "sst-bend"
+    command: "npm.cmd run build"
+  - service_id: "sst-bend"
+    command: "npm.cmd run check"
+
+risk:
+  level: high
+  score: 8
+  drivers:
+    - CROSS_SCOPE_CONTEXT_LEAK
+    - PREVIEW_ONLY_GATE_BYPASS
+    - CHATBOT_DIRECT_PERSISTENCE_BYPASS
+    - MIGRATION_ROLLBACK_GAP
+    - IDEMPOTENCY_DUPLICATE_IMPORTS
+    - EXISTING_CHILD_WORKTREE_DIRTY
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "Mutates sst-bend runtime API and persistence."
+    - "Adds private account/user-scoped learning context."
+    - "Must preserve preview-only behavior and idempotency."
+    - "Must work around existing dirty worktree without reverting unrelated changes."
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.5"
+  fallback_profile: "highest-available-high-reasoning-profile"
+  reason: >
+    This execution mutates backend persistence, authorization-sensitive context
+    reads, migrations, and API boundaries for private learning memory.
+
+subagent_deployment_plan:
+  required: false
+  parallelizable: false
+  roles: []
+  fallback: "Main agent performs implementation and verification directly because child repo mutation must be integrated carefully against the dirty worktree."
+  evidence_required: true
+
+execution:
+  requires_human_approval: false
+  allowed_window: manual
+  branch_strategy: "one-branch-per-repo"
+  implementation_boundary: >
+    This CR may modify only sst-bend and the control-plane evidence required to
+    record execution. It must not modify sst-chatbot, sst-fend, 4uentes-auth,
+    infrastructure repositories, or 4uentes-ards-core. It must not create
+    TagDefinition automatically, must not expose cross-account/user context, and
+    must not allow preview-only content into durable recall before acceptance.
+  child_repo_mutation_allowed: true
+  child_repo_mutation_target:
+    service_id: "sst-bend"
+    local_path_ref: "environments/local/bindings.local.yaml#sst-bend"
+    file_plan_ref: "evidence/requests/CR-SST-0091/sst-bend-file-plan.md"
+  owner_documentation:
+    required: true
+    status: "satisfied"
+    owner_refs:
+      - repo: "sst-bend"
+        paths:
+          - "specs/api/learning-workspaces.yaml"
+          - "docs/api/26-learning-workspaces.md"
+          - "specs/capabilities/outbound/learning-workspace-context.yaml"
+          - "docs/capabilities/outbound/learning-workspace-context.md"
+    evidence_refs:
+      - "evidence/requests/CR-SST-0092/owner-doc-remediation-follow-up.md"
+      - "evidence/requests/CR-SST-0097/changed-files-summary.md"
+  jira_read_executed: true
+  jira_write_executed: true
+  jira_write_target:
+    desired_artifact: "Create or update CR-SST-0092 task under SST-27"
+    desired_initial_status: "En curso"
+    actual_issue_key: "SST-28"
+    evidence_ref: "evidence/requests/CR-SST-0092/jira-task-sync-summary.md"
+  jira_reconciliation:
+    current_jira_status_observed: "Listo"
+    jira_observation_ref: "evidence/requests/CR-SST-0092/jira-issue-SST-28-observation.md"
+    desired_next_jira_status: "closed"
+    close_ref: "evidence/requests/CR-SST-0092/jira-sst-28-close-transition-summary.md"
+    source_of_truth: false
+
+implementation_scope:
+  must_implement:
+    - "Lazy LearningWorkspace get-or-create using req.accountContext."
+    - "Preview endpoint wrapping the existing tag prefix preview engine."
+    - "Accept endpoint that creates accepted workspace refs only after explicit approval."
+    - "Reject endpoint that records rejection without durable recall content."
+    - "Context endpoint that returns accepted scoped content only."
+    - "Idempotency for repeated accepts."
+    - "Migration with rollback."
+    - "Focused script-based tests."
+  must_not_implement:
+    - "sst-chatbot integration"
+    - "sst-fend UI"
+    - "automatic TagDefinition creation"
+    - "recursive crawler"
+    - "direct chatbot durable persistence"
+    - "user ARDS/SDD clone"
+
+validation:
+  required_checks:
+    - "Control-plane initiative validation passes."
+    - "sst-bend focused learning workspace tests pass."
+    - "Existing tag engine tests still pass."
+    - "sst-bend build/check are attempted and results recorded."
+    - "Migration rollback strategy is documented."
+    - "No unrelated dirty worktree changes are reverted."
+    - "Preview-only output is not returned by context before acceptance."
+    - "Repeated accept does not duplicate accepted refs."
+    - "TagDefinition creation remains absent from the implementation."
+  evidence_required:
+    - "execution_start"
+    - "child_repo_changed_files"
+    - "implementation_summary"
+    - "validation_results"
+    - "rollback_notes"
+
+decision:
+  status: "closed-local"
+  approver: "4uentes"
+  completed_at: "2026-07-03"
+  note: >
+    Closed locally after CR-SST-0092 implementation and validation evidence.
+    Jira SST-28 was updated and transitioned to Listo as an operational mirror
+    on 2026-07-03.
+
+planner_notes:
+  - "The first slice may use tenant_id as TODO/legacy when sst-bend has account/user but no explicit tenant model; document the mapping."
+  - "If user_memory_event/fact/intention tables do not exist, record LearningWorkspace provenance/warnings first and leave memory links as TODO for a later CR."
+  - "Reuse existing preview tag prefix engine instead of duplicating parser behavior."

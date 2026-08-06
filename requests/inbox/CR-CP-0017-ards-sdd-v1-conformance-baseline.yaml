@@ -1,0 +1,109 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-CP-0017"
+title: "Define ARDS/SDD v1 conformance baseline"
+status: "inbox"
+created_at: "2026-07-19"
+requester: "4uentes"
+
+business_context: >
+  The ARDS-SDD/standar corpus is an intent source that feeds the canonical
+  4uentes-ards-core standard. Its v1 architecture is the current target for
+  validation and enforcement, while v2 remains the future standard direction.
+
+requested_change: >
+  Define a bounded, evidence-backed ARDS/SDD v1 conformance baseline before
+  starting INIT-CP-0003 runtime enforcement. Extract verifiable v1 obligations,
+  map them to current Core and Control Plane artifacts and checks, and record
+  explicit gaps without changing Core, runtime, GitHub, or child repositories.
+
+expected_outcome: >
+  INIT-CP-0003 receives a stable normative input that distinguishes verified
+  v1 compliance, implemented-but-unverified behavior, genuine gaps, and future
+  v2 concerns.
+
+initial_scope:
+  solution: ""
+  services:
+    - "4uentes-orchestor"
+    - "4uentes-ards-core"
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "4uentes-orchestor"
+      via: "conformance analysis, request lifecycle, and evidence"
+    - service_id: "4uentes-ards-core"
+      via: "read-only comparison against the canonical v1 implementation"
+  affected_ards:
+    - "ards-sdd-v1"
+    - "core-standard"
+    - "control-plane-adoption"
+    - "runtime-enforcement-input"
+  capabilities: []
+  risks:
+    - "treating draft narrative as enforceable without classifying normative rules"
+    - "mixing future v2 concerns into the current v1 baseline"
+    - "claiming semantic compliance from structural checks alone"
+
+required_context:
+  - "ARDS-SDD/standar control_plane-core v1 architecture document"
+  - "4uentes-ards-core standard and source validation model"
+  - "initiatives/INIT-CP-0002-core-living-resource-standardization.yaml"
+  - "initiatives/INIT-CP-0003-ards-sdd-runtime-enforcement.yaml"
+
+required_checks:
+  - "4uentes-ards-core: npm.cmd run check"
+  - "4uentes-orchestor: npm.cmd run check"
+
+risk:
+  level: "medium"
+  score: 6
+  drivers:
+    - "defines normative input for future runtime enforcement"
+    - "cross-repo authority must remain read-only in this CR"
+
+task_weight:
+  classification: "long-context-task"
+  risk_level: "medium"
+  drivers:
+    - "requires semantic comparison of intent corpus, Core, and Control Plane"
+
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "high"
+  fallback_profile: "gpt-5.4-fast-high"
+  reason: "Long-context governance analysis under normal resources."
+
+subagent_deployment_plan:
+  required: false
+  roles: []
+  parallelizable: false
+  fallback: "Keep architecture and ownership decisions in the main agent."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "single-control-plane-branch"
+  child_repo_mutation_allowed: false
+  core_repo_mutation_allowed: false
+
+validation:
+  required_checks:
+    - "4uentes-ards-core: npm.cmd run check"
+    - "4uentes-orchestor: npm.cmd run check"
+  evidence_required:
+    - "v1_conformance_intake"
+    - "v1_normative_rule_matrix"
+    - "validator_coverage_analysis"
+    - "validation_results"
+
+decision:
+  status: "approved"
+  approver: "4uentes"

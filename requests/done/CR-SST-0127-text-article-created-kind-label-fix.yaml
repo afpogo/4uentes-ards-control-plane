@@ -1,0 +1,57 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0127"
+title: "Fix text article created kind label"
+status: done
+source_request: "requests/inbox/CR-SST-0127-text-article-created-kind-label-fix.yaml"
+planned_request: "requests/planned/CR-SST-0127-text-article-created-kind-label-fix.yaml"
+completed_at: "2026-07-11"
+requester: "4uentes"
+summary: >
+  Normalized direct/enveloped create responses, rejected empty results and
+  resolved the result kind from validated response data or the submitted draft.
+scope:
+  solution: "sst"
+  services_modified: ["sst-fend", "4uentes-orchestor"]
+  functional_repositories_modified: true
+  runtime_code_modified: true
+implementation:
+  initiative_id: "INIT-SST-0001"
+  related_initiative_id: "INIT-SST-0005"
+  jira_epic_key: "SST-27"
+  jira_issue_key: "SST-56"
+  jira_status_observed: "Listo"
+  jira_source_of_truth: false
+  completed_slice: >
+    createArticuloAction accepts direct or data-enveloped created articles,
+    requires a valid id, and ArticleCreateFlow falls back to the submitted Text
+    or Transcript kind rather than silently reporting Web.
+owner_documentation:
+  status: "satisfied"
+  owner_refs:
+    - repo: "sst-fend"
+      paths:
+        - "specs/33-articles-frontend.yml"
+        - "docs/33-articles-frontend.md"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0127/owner-documentation-summary.md"
+validation:
+  status: "validated-local-and-authenticated"
+  passed:
+    - "articulo.action direct/envelope/empty regressions"
+    - "ArticleCreateFlow Text/Transcript fallback regressions"
+    - "sst-fend npm.cmd run check: 29 suites and 176 tests"
+    - "Authenticated create/detail QA at 1440x900 and 390x844"
+    - "No horizontal overflow or new HTTP routes"
+  warnings:
+    - "22 historical lint warnings; zero lint errors."
+    - "React Router future flag and AntD findDOMNode console warnings preexist."
+evidence_refs:
+  - "evidence/requests/CR-SST-0127/implementation-start.md"
+  - "evidence/requests/CR-SST-0127/validation-results.md"
+  - "evidence/requests/CR-SST-0127/owner-documentation-summary.md"
+  - "evidence/requests/CR-SST-0127/authenticated-qa-2026-07-11.md"
+decision:
+  status: "closed-local"
+  approver: "4uentes"
+  note: "Validated locally and through authenticated QA; no release or publication is implied."

@@ -1,0 +1,79 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0122"
+title: "Fix sst-bend LearningWorkspace accept by annotationIds"
+status: done
+source_request: "requests/inbox/CR-SST-0122-sst-bend-learning-annotation-ids-accept-fix.yaml"
+planned_request: "requests/planned/CR-SST-0122-sst-bend-learning-annotation-ids-accept-fix.yaml"
+completed_at: "2026-07-05"
+requester: "4uentes"
+
+summary: >
+  Closed the sst-bend runtime fix for LearningWorkspace accept/reject
+  annotationIds. The implementation prevents serverAnnotationId hashes from
+  being compared against the UUID id column while preserving UUID-based
+  annotation selection.
+
+scope:
+  solution: "sst"
+  services_modified:
+    - "sst-bend"
+    - "4uentes-orchestor"
+  functional_repositories_modified: true
+  runtime_code_modified: true
+
+implementation:
+  initiative_id: "INIT-SST-0001"
+  active_feature_state: "learning-content-tags"
+  jira_epic_key: "SST-27"
+  jira_issue_key: "SST-6"
+  jira_subtask_key: "SST-51"
+  jira_related_issue_key: "SST-48"
+  jira_status_observed: "Listo"
+  jira_source_of_truth: false
+  completed_slice: >
+    sst-bend now builds annotation id filters by comparing all selected values
+    against serverAnnotationId and only UUID-shaped values against id. The same
+    helper is used by accept and reject.
+  not_closed:
+    - "CR-SST-0118 / SST-48 remains open until the complete E2E validation is rerun."
+    - "Frontend UX refinements remain outside this bugfix."
+
+owner_documentation:
+  status: "satisfied"
+  owner_refs:
+    - repo: "sst-bend"
+      paths:
+        - "docs/api/26-learning-workspaces.md"
+        - "specs/api/learning-workspaces.yaml"
+        - "docs/capabilities/outbound/learning-workspace-context.md"
+        - "specs/capabilities/outbound/learning-workspace-context.yaml"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0122/owner-documentation-summary.md"
+
+validation:
+  status: "validated-local"
+  passed:
+    - "sst-bend npm.cmd run test:learning-workspace"
+    - "BF/API smoke preview -> accept by serverAnnotationId -> context"
+    - "sst-bend npm.cmd run check"
+    - "node-auth npm.cmd run check"
+    - "4uentes-orchestor npm.cmd run check"
+  notes:
+    - "sst-bend check passed with the existing protected-smoke coverage warning because SMOKE_JWT was not provided."
+    - "Jira SST-51 was created under SST-6, linked to SST-48, commented and transitioned to Listo through the MCP fallback script."
+
+evidence_refs:
+  - "evidence/requests/CR-SST-0122/implementation-start.md"
+  - "evidence/requests/CR-SST-0122/implementation-summary.md"
+  - "evidence/requests/CR-SST-0122/changed-files-summary.md"
+  - "evidence/requests/CR-SST-0122/owner-documentation-summary.md"
+  - "evidence/requests/CR-SST-0122/validation-results.md"
+  - "evidence/requests/CR-SST-0122/jira-cr-sst-0122-create-close-summary.md"
+
+decision:
+  status: "closed-local"
+  approver: "4uentes"
+  note: >
+    CR-SST-0122 closes locally as the governed sst-bend bugfix discovered by
+    CR-SST-0118. The next step is to rerun CR-SST-0118 / SST-48 E2E validation.

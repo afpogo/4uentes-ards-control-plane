@@ -17,4 +17,5 @@ plataforma.
 
 - [argocd-self-heal-tutorial.md](argocd-self-heal-tutorial.md)
 - [argocd-prune-vs-self-heal.md](argocd-prune-vs-self-heal.md)
+- [sst-development-infra-write-token-runbook.md](sst-development-infra-write-token-runbook.md)
 - [documentation-information-architecture.md](../documentation-information-architecture.md)

@@ -1,0 +1,10 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0131"
+title: "Preserve semantic article kind in extension sessions"
+status: inbox
+created_at: "2026-07-11"
+requester: "4uentes"
+business_context: "Session transport artifact format currently determines article kind, so visual PDFs are persisted as Text."
+requested_change: "Carry explicit semantic kind from sst-extension through node-auth to sst-bend, retaining legacy fallbacks for old clients."
+expected_outcome: "Visual page captures can remain Web even when transported as PDF, while standalone text PDFs remain Text."

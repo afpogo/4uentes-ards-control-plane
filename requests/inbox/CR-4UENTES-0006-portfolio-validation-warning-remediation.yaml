@@ -1,0 +1,81 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-4UENTES-0006"
+title: "Portfolio validation warning remediation"
+status: "inbox"
+created_at: "2026-07-04"
+requester: "4uentes"
+
+business_context: >
+  4uentes-portfolio now has local check, preview route fallback, and HTTP smoke
+  evidence. Remaining stabilization noise comes from Git remote observation
+  warnings in the control-plane and a Vite chunk-size warning in the portfolio
+  build.
+
+requested_change: >
+  Reduce validation noise by making local binding remote checks compatible with
+  safe.directory worktrees and by splitting portfolio route screens into lazy
+  chunks.
+
+expected_outcome: >
+  Control-plane checks observe local remotes without warning where possible, and
+  the portfolio build no longer emits the main chunk size warning.
+
+initial_scope:
+  solution: "4uentes"
+  services:
+    - "4uentes-portfolio"
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services:
+    - "4uentes-portfolio"
+    - "4uentes-orchestor"
+  affected_ards:
+    - "local-validation"
+    - "browser-smoke"
+    - "control-plane-bindings"
+  capabilities:
+    - "portfolio-validation-warning-remediation"
+
+required_checks:
+  - "4uentes-portfolio: npm.cmd run check"
+  - "4uentes-orchestor: npm.cmd run check"
+
+risk:
+  level: "medium"
+  score: 5
+  drivers:
+    - "child repo route loading mutation"
+    - "control-plane validator mutation"
+    - "must not hide warnings without improving signal"
+
+execution:
+  requires_human_approval: false
+  allowed_window: "manual"
+  branch_strategy: "one-branch-per-repo"
+  child_repo_mutation_allowed: true
+
+owner_documentation:
+  required: true
+  status: planned
+  owner_repo: "4uentes-portfolio"
+  planned_owner_docs:
+    - "docs/architecture/README.md"
+    - "docs/qa/stabilization-checklist.md"
+  control_plane_evidence_refs:
+    - "evidence/requests/CR-4UENTES-0006/warning-remediation.md"
+
+validation:
+  required_checks:
+    - "4uentes-portfolio: npm.cmd run check"
+    - "4uentes-orchestor: npm.cmd run check"
+  evidence_required:
+    - "warning_remediation"
+    - "changed_files_summary"
+    - "validation_results"
+
+decision:
+  status: "pending"
+  approver: "TODO"

@@ -1,0 +1,74 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0092"
+title: "Implement sst-bend LearningWorkspace first runtime slice"
+status: done
+source_request: "requests/inbox/CR-SST-0092-sst-bend-learning-workspace-first-runtime-slice.yaml"
+planned_request: "requests/planned/CR-SST-0092-sst-bend-learning-workspace-first-runtime-slice.yaml"
+completed_at: "2026-07-03"
+requester: "4uentes"
+
+summary: >
+  Closed the first sst-bend LearningWorkspace runtime slice locally after
+  implementation, owner documentation follow-up and validation evidence.
+  The broader learning-content-tags track remains active through SST-6.
+
+scope:
+  solution: "sst"
+  services_modified:
+    - "sst-bend"
+    - "4uentes-orchestor"
+  functional_repositories_modified: true
+  runtime_code_modified: true
+
+implementation:
+  initiative_id: "INIT-SST-0001"
+  active_feature_state: "learning-content-tags"
+  jira_epic_key: "SST-27"
+  jira_issue_key: "SST-28"
+  jira_source_of_truth: false
+  completed_slice: >
+    sst-bend runtime model, routes, controller/usecase/repository flow and
+    focused tests for the first LearningWorkspace backend slice.
+  not_closed:
+    - "SST-6 remains active for frontend rendering and remaining parser flows."
+    - "INIT-SST-0001 remains active as the initiative-level governance track."
+
+validation:
+  status: "validated-local"
+  passed:
+    - "npm.cmd run test:learning-workspace"
+    - "npm.cmd run test:tag-engine"
+    - "npm.cmd run build"
+    - "npm.cmd run check"
+    - "npm.cmd run check:owner-docs"
+    - "npm.cmd run check:initiatives"
+  accepted_warnings:
+    - "sst-bend protected smoke coverage is partial without SMOKE_JWT/SMOKE_JWT_OWNER."
+
+jira_mirror:
+  epic_key: "SST-27"
+  issue_key: "SST-28"
+  status_observed: "Listo"
+  resolution_observed: "Listo"
+  observation_ref: "evidence/requests/CR-SST-0092/jira-issue-SST-28-observation.md"
+  close_ref: "evidence/requests/CR-SST-0092/jira-sst-28-close-transition-summary.md"
+  desired_next_status: "closed"
+  update_dry_run_ref: "evidence/initiatives/INIT-SST-0001/jira-update-dry-run-2026-07-03.md"
+
+evidence_refs:
+  - "evidence/requests/CR-SST-0092/execution-start.md"
+  - "evidence/requests/CR-SST-0092/implementation-summary.md"
+  - "evidence/requests/CR-SST-0092/changed-files-summary.md"
+  - "evidence/requests/CR-SST-0092/validation-results.md"
+  - "evidence/requests/CR-SST-0092/owner-doc-remediation-follow-up.md"
+  - "evidence/requests/CR-SST-0092/local-closure-2026-07-03.md"
+  - "evidence/requests/CR-SST-0092/sst-28-closure-validation-2026-07-03.md"
+  - "evidence/requests/CR-SST-0092/jira-sst-28-close-transition-summary.md"
+
+decision:
+  status: "closed-local"
+  approver: "4uentes"
+  note: >
+    CR-SST-0092 closes locally as validated-local. Jira SST-28 was updated and
+    transitioned to Listo on 2026-07-03 as an operational mirror closure.

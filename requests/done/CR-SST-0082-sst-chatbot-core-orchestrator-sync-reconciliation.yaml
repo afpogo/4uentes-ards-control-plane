@@ -1,0 +1,72 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0082"
+title: "Reconcile sst-chatbot core and orchestrator sync state"
+status: done
+source_request: "requests/inbox/CR-SST-0082-sst-chatbot-core-orchestrator-sync-reconciliation.yaml"
+planned_request: "requests/planned/CR-SST-0082-sst-chatbot-core-orchestrator-sync-reconciliation.yaml"
+completed_at: "2026-06-21"
+requester: "4uentes"
+
+summary: >
+  Reconciled `sst-chatbot` with the control-plane by adding the missing
+  `docs/ai/policy.md` artifact in the child repo, updating the orchestrator
+  catalog and docs to mark the child ARDS/SDD policy and `orchestrator_link`
+  adoption as current, and publishing new sync evidence that supersedes the
+  CR-SST-0077 contradiction for this service.
+
+ordering_deviation: >
+  Related ARDS/SDD child repo changes existed before CR-SST-0082 was opened on
+  2026-06-21. This request records a retroactive reconciliation lifecycle and
+  makes the ordering deviation explicit instead of treating the prior child
+  changes as if they were initiated by this request.
+
+scope:
+  solution: "sst"
+  services_modified:
+    - "sst-chatbot"
+    - "4uentes-orchestor"
+  functional_repositories_modified: true
+  core_repository_modified: false
+
+sync_result:
+  requested_contract_version: "latest"
+  resolved_contract_version: "ards-core-contract-v0.1"
+  core_revision_decision: "no-core-change-needed"
+  services:
+    - service_id: "sst-chatbot"
+      sync_status: "synced"
+      previous_contradictory_evidence_ref: "evidence/requests/CR-SST-0077/sst-chatbot-child-sync-diff.yaml"
+      evidence_ref: "evidence/requests/CR-SST-0082/sst-chatbot-child-sync-diff.yaml"
+
+validation:
+  status: "passed"
+  passed:
+    - "sst-chatbot: .\\.venv\\Scripts\\python.exe scripts\\ards_check.py"
+    - "sst-chatbot: .\\.venv\\Scripts\\python.exe scripts\\check.py"
+    - "4uentes-orchestor: npm.cmd run check"
+    - "4uentes-orchestor: no absolute local paths found in catalog/, solutions/, or state/"
+  notes:
+    - "sst-chatbot pytest passed 59 tests with one pytest cache permission warning."
+    - "4uentes-orchestor check passed with preexisting warnings for remote observation and old state refs."
+
+evidence_refs:
+  - "evidence/requests/CR-SST-0082/intake-and-reconciliation-notes.md"
+  - "evidence/requests/CR-SST-0082/sst-chatbot-child-sync-diff.yaml"
+  - "evidence/requests/CR-SST-0082/validation-results.md"
+  - "evidence/requests/CR-SST-0082/changed-files-summary.md"
+
+child_repo_artifacts:
+  sst-chatbot:
+    - "docs/ai/policy.md"
+
+accepted_gaps:
+  - "Runtime handoff transport remains undecided; HTTP, queue, and worker are still open options."
+  - "The fake orchestrator adapter remains test infrastructure only."
+  - "The inbound capability remains draft until a real transport is selected and implemented through a future approved request."
+  - "Preexisting dirty working tree entries in both repos were not normalized by this request."
+
+decision:
+  status: "closed"
+  approver: "4uentes"
+  note: "CR-SST-0082 closes the sst-chatbot reconciliation gap without promoting runtime readiness."

@@ -1,0 +1,87 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-4UENTES-0008"
+title: "Portfolio public positioning and evidence taxonomy"
+status: "planned"
+source_request: "requests/inbox/CR-4UENTES-0008-portfolio-positioning-and-evidence-taxonomy.yaml"
+created_at: "2026-07-04"
+requester: "4uentes"
+
+summary: >
+  Establish the baseline public positioning and evidence taxonomy for
+  4uentes-portfolio so future UI/content work can proceed without mixing
+  employment, consulting, SST, 4uentes, and GitHub enrichment claims.
+
+initial_scope:
+  solution: "4uentes"
+  services:
+    - "4uentes-portfolio"
+  include_optional_services: false
+
+control_plane_context:
+  initiative_id: "INIT-PORTFOLIO-0001"
+  feature_id: "portfolio-positioning-and-evidence-taxonomy"
+  child_repo: "4uentes-portfolio"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "4uentes-portfolio"
+      via: "control-plane publication-readiness decision baseline"
+      service_kind: "frontend-spa"
+      ards_kind: "frontend-web"
+      status: "active"
+  affected_ards:
+    - "publication-readiness"
+    - "evidence-taxonomy"
+    - "public-positioning"
+  capabilities:
+    - "portfolio-positioning-and-evidence-taxonomy"
+  risks:
+    - id: "PUBLIC_CLAIM_OVERREACH"
+      severity: "high"
+    - id: "SST_RELATIONSHIP_CONFUSION"
+      severity: "medium"
+    - id: "GITHUB_EVIDENCE_OVERINFERENCE"
+      severity: "medium"
+
+required_context:
+  - "4uentes-portfolio: docs/portfolio-intent.md"
+  - "4uentes-portfolio: docs/evidence/README.md"
+  - "4uentes-portfolio: docs/integration/github-profile-enrichment.md"
+  - "4uentes-portfolio: specs/features/00-index.yaml"
+  - "initiatives/INIT-PORTFOLIO-0001-portfolio-publication-readiness.yaml"
+
+required_checks:
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check"
+
+risk:
+  level: "medium"
+  score: 5
+  drivers:
+    - "public professional claims require owner-reviewed evidence"
+    - "content decisions guide future UI mutations"
+    - "SST and 4uentes must remain clearly scoped"
+
+execution:
+  requires_human_approval: false
+  allowed_window: "manual"
+  branch_strategy: "control-plane-only"
+  child_repo_mutation_allowed: false
+  implementation_boundary: >
+    Control-plane decision and evidence only. Do not mutate 4uentes-portfolio
+    UI, docs, specs, or runtime in this CR.
+
+validation:
+  required_checks:
+    - "4uentes-orchestor: npm.cmd run check"
+  evidence_required:
+    - "positioning_decision"
+    - "changed_files_summary"
+    - "validation_results"
+
+decision:
+  status: "approved-for-local-execution"
+  approver: "4uentes"
+  blocker: "none"

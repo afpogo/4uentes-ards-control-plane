@@ -1,0 +1,44 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0145"
+title: "Correct semantic payload-kind filtering"
+status: done
+source_request: "requests/inbox/CR-SST-0145-semantic-payload-kind-filter-correction.yaml"
+planned_request: "requests/planned/CR-SST-0145-semantic-payload-kind-filter-correction.yaml"
+completed_at: "2026-07-19"
+requester: "4uentes"
+summary: "Catalog Type now filters persisted article payload kind through frontend, BF and SST without conflating legacy filterType."
+scope:
+  solution: "sst"
+  services_modified: ["sst-fend", "node-auth", "sst-bend", "4uentes-orchestor"]
+  functional_repositories_modified: true
+  runtime_code_modified: true
+implementation:
+  initiative_id: "INIT-SST-0005"
+  jira_epic_key: "SST-57"
+  jira_issue_key: "SST-85"
+  jira_status_observed: "Listo"
+  jira_source_of_truth: false
+  completed_slice: "Separate payloadKind list-query path with canonical persisted payload join."
+owner_documentation:
+  status: "satisfied"
+  owner_repos: ["sst-fend", "node-auth", "sst-bend"]
+  evidence_refs:
+    - "evidence/requests/CR-SST-0145/implementation-validation.md"
+validation:
+  status: "validated-local"
+  passed:
+    - "Focused frontend query/selector regression tests"
+    - "Full frontend check: 30 suites, 187 tests"
+    - "Node-auth check and TypeScript build"
+    - "SST article-kind query contract and full check"
+    - "Authenticated desktop/mobile Chrome QA for Text and Web filters"
+  warnings:
+    - "Existing frontend hook/deprecation warnings remain non-blocking."
+    - "Backend protected smoke coverage remains partial without SMOKE_JWT."
+evidence_refs:
+  - "evidence/requests/CR-SST-0145/implementation-validation.md"
+decision:
+  status: "closed-local"
+  approver: "4uentes"
+  note: "No release, publication or historical reclassification is implied."

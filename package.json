@@ -4,8 +4,10 @@
   "private": true,
   "description": "Logical ARDS/SDD control plane for 4uentes services and solutions.",
   "scripts": {
-    "check": "node scripts/verify-catalog.js && node scripts/verify-local-bindings.js --optional && node scripts/verify-state-model.js",
+    "check": "node scripts/verify-catalog.js && node scripts/verify-local-bindings.js --optional && node scripts/verify-state-model.js && node scripts/verify-initiatives.js && node scripts/verify-owner-documentation.js",
     "check:state": "node scripts/verify-state-model.js",
+    "check:initiatives": "node scripts/verify-initiatives.js",
+    "check:owner-docs": "node scripts/verify-owner-documentation.js",
     "jira:mcp:dry-run": "node scripts/jira-mcp/generate-dry-run.js",
     "jira:mcp:policy-check": "node scripts/jira-mcp/policy-check.js",
     "jira:mcp:verify": "node scripts/jira-mcp/verify-project.js",
@@ -20,11 +22,14 @@
     "jira:mcp:backlog-create": "node scripts/jira-mcp/backlog-create.js",
     "jira:mcp:backlog-observe": "node scripts/jira-mcp/backlog-observe.js",
     "jira:mcp:active-dependency-review": "node scripts/jira-mcp/active-dependency-review.js",
+    "jira:mcp:observe-parent": "node scripts/jira-mcp/observe-parent-subtasks.js",
     "jira:mcp:update-existing": "node scripts/jira-mcp/update-existing-issues.js",
     "jira:mcp:sync-machine": "node scripts/jira-mcp/sync-machine-runner.js",
     "jira:mcp:doctor": "node scripts/jira-mcp/doctor.js",
     "jira:mcp:create": "node scripts/jira-mcp/create-issues.js",
     "jira:writer:apply": "node scripts/jira-writer/apply-correction-plan.js",
+    "mcp:auth:list": "node scripts/mcp-auth/bootstrap-remotes.js --list",
+    "mcp:auth:connect": "node scripts/mcp-auth/bootstrap-remotes.js --connect --continue-on-error",
     "plan:change": "node scripts/plan-change.js"
   },
   "license": "UNLICENSED"

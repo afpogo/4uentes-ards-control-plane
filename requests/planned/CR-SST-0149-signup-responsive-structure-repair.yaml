@@ -1,0 +1,177 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0149"
+title: "Repair signup responsive structure"
+status: done
+source_request: "requests/inbox/CR-SST-0149-signup-responsive-structure-repair.yaml"
+created_at: "2026-08-04"
+requester: "4uentes"
+summary: "Correct mobile grid placement, breakpoint geometry and natural page scrolling before visual rebranding."
+required_context:
+  - "catalog/services/sst-fend.yaml"
+  - "solutions/sst.yaml"
+  - "specs/integration/policies.yaml"
+  - "initiatives/INIT-SST-0006-auth-access-ui-resilience-and-rebranding.yaml"
+  - "state/features/auth-frontend-access-ui.current.yaml"
+control_plane_context: {initiative_id: "INIT-SST-0006", jira_epic_key: "SST-72", jira_issue_key: "SST-74", jira_role: "mirror", jira_source_of_truth: false}
+impact_analysis:
+  required: true
+  affected_services:
+    - {service_id: "sst-fend", via: "Signup AuthLayout and Register form grid", service_kind: "frontend-web", ards_kind: "frontend-web", status: "active"}
+  affected_ards: ["auth-frontend-access-ui", "responsive-layout"]
+  risks:
+    - {id: "FORM_FIELD_OVERLAP", severity: critical}
+    - {id: "CLIPPED_CONTENT", severity: high}
+risk:
+  level: "high"
+  rationale: "Authentication UI is user-facing and the reproduced overlap makes required signup fields unusable on mobile."
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "Authentication-facing UI and responsive layout invariants."
+    - "Owner ARDS/SDD continuity and Jira synchronization are mandatory."
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  selected_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback: "Do not silently downgrade; atomize or block if the sensitive boundary cannot be retained."
+subagent_deployment_plan:
+  required: true
+  executed: true
+  roles:
+    - "Read-only lifecycle and owner-documentation audit."
+    - "Read-only ARDS/SDD, UI and Jira preflight discovery inherited from INIT-SST-0006."
+  main_agent_boundary: "Architecture, security, Jira writes and lifecycle decisions remain in the main agent."
+execution:
+  requires_human_approval: false
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets: ["sst-fend"]
+  allowed_window: "current CR-SST-0149 implementation lifecycle"
+  branch_strategy: "Preserve the active child-repo branch; do not publish or merge from this control-plane step."
+  implementation_boundary: "CSS/layout and focused regression tests; preserve RegisterForm, schema, AuthActor, /signup and return route."
+owner_documentation:
+  required: true
+  status: satisfied
+  owner_repos: ["sst-fend"]
+  planned_owner_docs:
+    - "specs/31-auth-frontend.yml"
+    - "docs/31-auth-frontend.md"
+    - "specs/15-ui-framework.yml"
+    - "specs/capabilities/inbound/node-auth--auth-frontend-access-ui.yaml"
+    - "docs/capabilities/inbound/node-auth--auth-frontend-access-ui.md"
+    - "docs/tasks/2026-08-04-cr-sst-0149-signup-responsive-structure-repair.md"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0149/implementation-and-validation.md"
+    - "evidence/requests/CR-SST-0149/closure-authorization-and-preflight.md"
+required_checks:
+  - {service_id: "sst-fend", command: "npm.cmd run check"}
+  - {service_id: "4uentes-orchestor", command: "npm.cmd run check"}
+acceptance:
+  - "Five fields occupy five distinct non-overlapping rectangles at all required viewports."
+  - "Narrow layouts use one column; two columns activate only when each control retains usable width."
+  - "No horizontal overflow, fixed content height or nested page scroll is introduced."
+validation:
+  evidence_required: true
+  evidence_refs:
+    - "evidence/initiatives/INIT-SST-0006/chrome-devtools-visual-audit-2026-08-04.md"
+    - "evidence/requests/CR-SST-0149/execution-start-and-jira-preflight.md"
+    - "evidence/requests/CR-SST-0149/jira-start-sync-results.md"
+decision: {status: closed-local, approver: "4uentes", decided_at: "2026-08-04", note: "Manual QA accepted; implementation, owner documentation and local validation are complete."}
+jira_sync:
+  status: "closed-synchronized"
+  desired_issue_type: "Task"
+  parent_issue_key: "SST-72"
+  issue_key: "SST-74"
+  current_issue_type_observed: "Error"
+  compatibility_disposition: >
+    Preserve the existing Error identity and Epic parent for this authorized
+    batch. Do not duplicate or convert the issue type without a separate
+    explicit reconciliation authorization.
+  write_authorization:
+    authorized_by: "4uentes"
+    authorized_at: "2026-08-04"
+    authorization_source: "current user turn"
+    provider: "jira"
+    project_key: "SST"
+    request_id: "CR-SST-0149"
+    issue_keys: ["SST-74"]
+    permitted_operations: ["edit-description", "assign-connected-user", "transition-to-in-progress"]
+    expected_parent_issue_key: "SST-72"
+    expected_issue_type: "Error"
+    expected_initial_status: "Tareas por hacer"
+    expected_target_status: "En curso"
+    execution_window: "current SST-74 lifecycle start turn"
+  comment_write_authorization:
+    authorized_by: "4uentes"
+    authorized_at: "2026-08-04"
+    authorization_source: "current user turn"
+    provider: "jira"
+    project_key: "SST"
+    request_id: "CR-SST-0149"
+    issue_keys: ["SST-74"]
+    permitted_operations: ["add-initial-plan-comment"]
+    expected_parent_issue_key: "SST-72"
+    expected_issue_type: "Error"
+    expected_status: "En curso"
+    execution_window: "current SST-74 initial-plan-comment correction turn"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0149/execution-start-and-jira-preflight.md"
+    - "evidence/requests/CR-SST-0149/jira-start-sync-results.md"
+    - "evidence/requests/CR-SST-0149/jira-initial-plan-comment-gap-analysis.md"
+    - "evidence/requests/CR-SST-0149/jira-initial-plan-comment-result.md"
+  write_result:
+    description_updated: true
+    assignee_status: "assigned-connected-user"
+    transition_status: "En curso"
+    issue_type_preserved: "Error"
+    parent_preserved: "SST-72"
+    status_observed: "En curso"
+    initial_plan_comment_status: "synchronized"
+    initial_comment_id: "10307"
+  closure_write_authorization:
+    authorized_by: "4uentes"
+    authorized_at: "2026-08-04"
+    authorization_source: "current user turn"
+    provider: "jira"
+    project_key: "SST"
+    request_id: "CR-SST-0149"
+    issue_keys: ["SST-74"]
+    permitted_operations: ["edit-summary-to-include-cr-id", "add-closure-comment", "transition-to-done"]
+    expected_parent_issue_key: "SST-72"
+    expected_issue_type: "Error"
+    expected_initial_status: "En curso"
+    expected_target_status: "Finalizada"
+    expected_transition_id: "41"
+    execution_window: "current SST-74 closure lifecycle"
+  closure_identity_gap:
+    status: "reconciled"
+    observation: "The Jira summary does not include CR-SST-0149 as required by jira-cr-mirror-hierarchy-policy."
+    required_operation: "edit-summary-to-include-cr-id"
+    authorized: true
+    authorized_at: "2026-08-04"
+    authorization_source: "user follow-up in the current closure lifecycle"
+    target_summary: "[CR-SST-0149][AUTH][Mobile] Corregir superposición de campos en signup"
+    disposition: "Reconcile the summary before adding the closure comment and applying transition 41."
+  closure_decision:
+    status: "closed-local-jira-synchronized"
+    approver: "4uentes"
+    decided_at: "2026-08-04"
+    basis: "Manual QA accepted; automated, visual and owner-documentation gates passed."
+  closure_evidence_refs:
+    - "evidence/requests/CR-SST-0149/implementation-and-validation.md"
+    - "evidence/requests/CR-SST-0149/closure-authorization-and-preflight.md"
+    - "evidence/requests/CR-SST-0149/jira-closure.md"
+  closure_write_result:
+    summary_updated: true
+    closure_comment_status: "synchronized"
+    closure_comment_id: "10308"
+    transition_id: "41"
+    status_observed: "Finalizada"
+    status_category_observed: "Listo"
+    resolution_observed: "Listo"
+    issue_type_preserved: "Error"
+    parent_preserved: "SST-72"

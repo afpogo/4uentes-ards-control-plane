@@ -7,6 +7,7 @@ const SOLUTION_DIR = path.join(ROOT, 'solutions');
 const INBOX_DIR = path.join(ROOT, 'requests', 'inbox');
 const PLANNED_DIR = path.join(ROOT, 'requests', 'planned');
 const ALLOWED_STATUSES = new Set(['inbox']);
+const ALLOWED_RESOURCE_LEVELS = new Set(['very-low', 'low', 'normal', 'high']);
 
 const results = [];
 
@@ -97,7 +98,16 @@ const requiredContext = buildRequiredContext(request, solution, affectedServices
 const requiredChecks = buildRequiredChecks(affectedServices);
 const risk = classifyRisk(affectedServices, requiredChecks);
 const taskWeight = classifyTaskWeight(request, affectedServices, risk);
-const modelSelection = buildModelSelection(taskWeight);
+const resourceLevel = request.modelSelection.resourceLevel || 'normal';
+if (!ALLOWED_RESOURCE_LEVELS.has(resourceLevel)) {
+  report('FAIL', `Unsupported model_selection.resource_level: ${resourceLevel}`);
+  finish();
+}
+const modelSelection = buildModelSelection(taskWeight, resourceLevel, request.modelSelection.resourceLevel ? 'manual' : 'default');
+if (modelSelection.blocked) {
+  report('FAIL', modelSelection.reason);
+  finish();
+}
 const subagentDeploymentPlan = buildSubagentDeploymentPlan(taskWeight);
 const planned = renderPlannedRequest({
   sourceRequest: path.relative(ROOT, requestPath).replace(/\\/g, '/'),
@@ -171,6 +181,9 @@ function parseRequest(text) {
       solution: nested(text, 'initial_scope', 'solution') || nested(text, 'initial_scope', 'solution_id'),
       services: listNested(text, 'initial_scope', 'services') || listNested(text, 'initial_scope', 'service_ids'),
       includeOptionalServices: parseBoolean(nested(text, 'initial_scope', 'include_optional_services')),
+    },
+    modelSelection: {
+      resourceLevel: nested(text, 'model_selection', 'resource_level'),
     },
   };
 }
@@ -315,30 +328,72 @@ function classifyTaskWeight(request, affectedServices, risk) {
   };
 }
 
-function buildModelSelection(taskWeight) {
+function legacyModelSelection(taskWeight) {
   if (taskWeight.classification === 'complex-high-risk-task') {
     return {
-      policyRef: 'docs/ai/model-selection-policy.md',
       primaryProfile: 'gpt-5.5',
       fallbackProfile: 'highest-available-reasoning-profile',
-      reason: 'High-risk or security/contract-sensitive task.',
     };
   }
 
   if (taskWeight.classification === 'long-context-task') {
     return {
-      policyRef: 'docs/ai/model-selection-policy.md',
       primaryProfile: 'gpt-5.4-fast-high',
       fallbackProfile: 'highest-available-fast-high-context-profile',
-      reason: 'Long-context or multi-service task.',
     };
   }
 
   return {
-    policyRef: 'docs/ai/model-selection-policy.md',
     primaryProfile: 'gpt-5.3-spark',
     fallbackProfile: 'default-available-coding-profile',
-    reason: 'Short, bounded, low-risk task.',
+  };
+}
+
+function buildModelSelection(taskWeight, resourceLevel, resourceSource) {
+  const legacy = legacyModelSelection(taskWeight);
+  const base = {
+    policyRef: 'docs/ai/model-selection-policy.md',
+    provider: 'codex',
+    resourceLevel,
+    resourceSource,
+    blocked: false,
+  };
+
+  if (resourceLevel === 'very-low') {
+    if (taskWeight.classification !== 'short-defined-task' || taskWeight.riskLevel !== 'low') {
+      return {
+        ...base,
+        blocked: true,
+        reason: 'Very-low resources allow only short, bounded, low-risk work. Atomize or reduce scope before planning; block sensitive work.',
+      };
+    }
+    return {
+      ...base,
+      primaryProfile: 'gpt-5.3-spark',
+      reasoningEffort: 'low',
+      fallbackProfile: 'default-available-coding-profile',
+      reason: 'Very-low resources permit Spark only for short, bounded, low-risk work.',
+    };
+  }
+
+  if (resourceLevel === 'low') {
+    return {
+      ...base,
+      ...legacy,
+      reasoningEffort: taskWeight.classification === 'complex-high-risk-task' ? 'high' : taskWeight.classification === 'long-context-task' ? 'high' : 'low',
+      reason: 'Low resources reuse the previous Codex routing matrix for this task classification.',
+    };
+  }
+
+  const highRisk = taskWeight.classification === 'complex-high-risk-task';
+  const longContext = taskWeight.classification === 'long-context-task';
+  const reasoningEffort = highRisk ? 'max' : resourceLevel === 'high' || longContext ? 'high' : 'low';
+  return {
+    ...base,
+    primaryProfile: 'gpt-5.6-sol',
+    reasoningEffort,
+    fallbackProfile: legacy.primaryProfile,
+    reason: `${resourceLevel} resources use GPT-5.6 Sol with ${reasoningEffort} reasoning for ${taskWeight.classification}.`,
   };
 }
 
@@ -442,7 +497,11 @@ function renderPlannedRequest(data) {
   lines.push('');
   lines.push('model_selection:');
   lines.push(`  policy_ref: ${quote(data.modelSelection.policyRef)}`);
+  lines.push(`  provider: ${quote(data.modelSelection.provider)}`);
+  lines.push(`  resource_level: ${quote(data.modelSelection.resourceLevel)}`);
+  lines.push(`  resource_source: ${quote(data.modelSelection.resourceSource)}`);
   lines.push(`  primary_profile: ${quote(data.modelSelection.primaryProfile)}`);
+  lines.push(`  reasoning_effort: ${quote(data.modelSelection.reasoningEffort)}`);
   lines.push(`  fallback_profile: ${quote(data.modelSelection.fallbackProfile)}`);
   lines.push(`  reason: ${quote(data.modelSelection.reason)}`);
   lines.push('');

@@ -1,0 +1,91 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-4UENTES-0003"
+title: "Portfolio local stabilization baseline"
+status: "inbox"
+created_at: "2026-07-03"
+requester: "4uentes"
+
+business_context: >
+  4uentes-portfolio has been onboarded as a non-SST child repository and its
+  owner docs now reference the control-plane scope partition. The next step is
+  to make local validation and stabilization expectations explicit before any
+  larger product or visual work continues.
+
+requested_change: >
+  Add a minimal local stabilization baseline to 4uentes-portfolio: standard
+  validation scripts and owner documentation that define what must pass before
+  further public-positioning or UI work advances.
+
+expected_outcome: >
+  The repo has a reproducible check command, a focused stabilization checklist,
+  and control-plane evidence proving the baseline passes.
+
+initial_scope:
+  solution: "4uentes"
+  services:
+    - "4uentes-portfolio"
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services:
+    - "4uentes-portfolio"
+  affected_ards:
+    - "child-repo-owner-docs"
+    - "local-validation"
+    - "qa-baseline"
+  capabilities:
+    - "portfolio-local-stabilization-baseline"
+  risks:
+    - "Large existing worktree makes broad stabilization unsafe."
+    - "Future UI work proceeds without a stable local check command."
+
+required_context:
+  - "4uentes-portfolio: AGENTS.md"
+  - "4uentes-portfolio: package.json"
+  - "4uentes-portfolio: docs/00-overview.md"
+  - "4uentes-portfolio: docs/qa/visual-checklist.md"
+  - "state/features/multi-solution-scope-partition.current.yaml"
+
+required_checks:
+  - "4uentes-portfolio: npm.cmd run check"
+  - "4uentes-orchestor: npm.cmd run check"
+
+risk:
+  level: "medium"
+  score: 5
+  drivers:
+    - "child repo mutation"
+    - "dirty worktree with existing migration changes"
+    - "frontend public portfolio quality gate"
+
+execution:
+  requires_human_approval: false
+  allowed_window: "manual"
+  branch_strategy: "one-branch-per-repo"
+  child_repo_mutation_allowed: true
+
+owner_documentation:
+  required: true
+  status: planned
+  owner_repo: "4uentes-portfolio"
+  planned_owner_docs:
+    - "docs/00-overview.md"
+    - "docs/qa/stabilization-checklist.md"
+    - "specs/00-index.yaml"
+  control_plane_evidence_refs:
+    - "evidence/requests/CR-4UENTES-0003/stabilization-baseline.md"
+
+validation:
+  required_checks:
+    - "4uentes-portfolio: npm.cmd run check"
+    - "4uentes-orchestor: npm.cmd run check"
+  evidence_required:
+    - "stabilization_baseline"
+    - "changed_files_summary"
+    - "validation_results"
+
+decision:
+  status: "pending"
+  approver: "TODO"

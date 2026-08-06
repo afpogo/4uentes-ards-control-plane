@@ -1,0 +1,57 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0137"
+title: "Add canonical article preview resolution in sst-bend"
+status: "in-progress"
+source_request: "requests/inbox/CR-SST-0137-sst-bend-canonical-article-preview-resolution.yaml"
+created_at: "2026-07-11"
+requester: "4uentes"
+summary: >
+  Introduce ArticlePreviewResolution v1 as canonical backend state, with an
+  explicit strategy resolver, optional previewCandidate ingestion, DB-first
+  assets, governed provenance, and failure isolation from article creation.
+control_plane_context:
+  initiative_id: "INIT-SST-0003"
+  predecessor_request: "CR-SST-0120"
+  related_requests: ["CR-SST-0101", "CR-SST-0121", "CR-SST-0103"]
+  jira_epic_key: "SST-29"
+  jira_issue_key: "SST-67"
+  jira_issue_type: "Subtask"
+  jira_parent_issue_key: "SST-50"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+impact_analysis:
+  required: true
+  affected_services:
+    - {service_id: "sst-bend", via: "canonical preview contract, resolver, persistence and API", status: "active"}
+  risks: [{id: "PRIVATE_PREVIEW_PERSISTENCE", severity: "high"}, {id: "DATABASE_MIGRATION", severity: "high"}]
+task_weight: {classification: "complex-high-risk-task", risk_level: "high", drivers: ["PRIVATE_DATA", "API_CONTRACT", "MIGRATION"]}
+model_selection: {policy_ref: "docs/policies/agent-model-selection-policy.md", primary_profile: "gpt-5.5", fallback_profile: "highest-available-reasoning-profile"}
+subagent_deployment_plan:
+  required: true
+  roles: ["read-only backend discovery", "migration-test review", "QA review"]
+  prohibited_delegation: ["privacy decision", "contract ownership", "migration approval"]
+execution:
+  child_repo_mutation_allowed: true
+  child_repo_mutation_target: {service_id: "sst-bend"}
+  owner_documentation_required: true
+  implementation_boundary: "sst-bend only"
+  duplicate_search_ref: "evidence/initiatives/INIT-SST-0003/preview-owner-slices-duplicate-search-2026-07-11.md"
+owner_documentation:
+  required: true
+  status: "satisfied"
+  owner_repo: "sst-bend"
+  updated_owner_docs:
+    - "specs/features/article-preview-resolution.yaml"
+    - "docs/features/article-preview-resolution.md"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0137/implementation-and-validation-2026-07-12.md"
+validation:
+  required_checks: ["migration up/down", "resolver strategy tests", "MIME and magic-byte validation", "hash and size recalculation", "replacement and account isolation", "multi-tab session behavior", "authenticated binary endpoint", "sst-bend full check", "control-plane npm.cmd run check"]
+decision: {status: "approved-in-progress", approver: "4uentes", note: "Runtime, migration, owner docs and capability are implemented locally. Closure remains pending authenticated HTTP coverage and final control-plane reconciliation."}
+jira_sync:
+  status: "created"
+  desired_issue_type: "Subtask"
+  parent_issue_key: "SST-50"
+  epic_key: "SST-29"
+  issue_key: "SST-67"

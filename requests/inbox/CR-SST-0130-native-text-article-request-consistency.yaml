@@ -1,0 +1,10 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0130"
+title: "Align native text article request builders"
+status: inbox
+created_at: "2026-07-11"
+requester: "4uentes"
+business_context: "Native Text creation uses inconsistent request and response shapes across sst-fend and node-auth."
+requested_change: "Normalize Text create payloads, direct/envelope responses, empty URL behavior and safe created-kind fallback."
+expected_outcome: "A Text draft persists and renders as Text without relying on a web default or response-shape accident."

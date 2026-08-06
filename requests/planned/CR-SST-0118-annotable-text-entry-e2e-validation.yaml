@@ -1,0 +1,143 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0118"
+title: "Validate annotable text entry end-to-end"
+status: planned
+source_request: "requests/inbox/CR-SST-0118-annotable-text-entry-e2e-validation.yaml"
+created_at: "2026-07-04"
+requester: "4uentes"
+
+summary: >
+  Validate the complete annotable text-entry value proposition across editor,
+  tagging, preview, accept, persistence, render, and read/query behavior.
+
+control_plane_context:
+  initiative_id: "INIT-SST-0001"
+  active_feature_state: "learning-content-tags"
+  parent_request_id: "CR-SST-0117"
+  jira_epic_key: "SST-27"
+  active_jira_issue_key: "SST-6"
+  jira_subtask_key: "SST-48"
+  current_jira_status_observed: "Finalizada"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "sst-fend"
+      via: "Browser E2E workflow"
+      service_kind: "frontend-spa"
+      ards_kind: "frontend-web"
+      status: "active"
+    - service_id: "node-auth"
+      via: "BFF E2E workflow"
+      service_kind: "bff"
+      ards_kind: "backend-service"
+      status: "active"
+    - service_id: "sst-bend"
+      via: "Persistence and read/query E2E workflow"
+      service_kind: "api"
+      ards_kind: "backend-service"
+      status: "active"
+    - service_id: "4uentes-orchestor"
+      via: "validation evidence and closure gates"
+      service_kind: "control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+  affected_ards:
+    - learning-content-tags
+    - frontend-web
+    - backend-service
+    - bff-contract
+    - evidence
+  risks:
+    - id: FEATURE_COMPONENTS_PASS_BUT_USER_FLOW_FAILS
+      severity: high
+
+execution:
+  requires_human_approval: false
+  allowed_window: manual
+  branch_strategy: "validation-first"
+  child_repo_mutation_allowed: false
+  implementation_boundary: >
+    This CR validates the finished workflow. New implementation belongs to the
+    preceding CRs unless validation exposes defects requiring follow-up.
+  owner_documentation:
+    required: false
+    status: not-required-validation-only
+    owner_refs: []
+    evidence_refs:
+      - "evidence/requests/CR-SST-0118/intent-summary.md"
+      - "evidence/requests/CR-SST-0118/jira-sync-summary.md"
+      - "evidence/requests/CR-SST-0118/policy-and-owner-enforcement-start.md"
+      - "evidence/requests/CR-SST-0118/jira-sst-48-start-transition-summary.md"
+      - "evidence/requests/CR-SST-0118/e2e-validation-results-2026-07-05.md"
+      - "evidence/requests/CR-SST-0118/jira-sst-48-validation-blocker-comment-summary.md"
+      - "evidence/requests/CR-SST-0118/e2e-revalidation-after-cr-sst-0122-2026-07-05.md"
+      - "evidence/requests/CR-SST-0118/final-e2e-closure-after-cr-sst-0123-2026-07-10.md"
+
+required_checks:
+  - service_id: "sst-fend"
+    command: "npm.cmd run check"
+  - service_id: "node-auth"
+    command: "npm.cmd run check"
+  - service_id: "sst-bend"
+    command: "npm.cmd run check"
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check"
+
+validation:
+  required_checks:
+    - "User can create, annotate, preview, accept, render and read/query a text entry."
+    - "Chrome DevTools MCP or equivalent browser evidence exists."
+  evidence_required:
+    - "intent_summary"
+    - "jira_sync_summary"
+
+decision:
+  status: completed-authenticated-e2e-pass
+  approver: "4uentes"
+  note: >
+    CR-SST-0118 is the next validation-first slice for SST-48. Owner
+    enforcement policy was reviewed before start; child repo mutation remains
+    disabled unless validation exposes a defect requiring a follow-up
+    implementation CR. Jira mirror SST-48 was synchronized to En curso through
+    the MCP fallback script.
+
+validation_update:
+  observed_at: "2026-07-05"
+  status: blocked-by-residual-frontend-context-gap
+  evidence_ref: "evidence/requests/CR-SST-0118/e2e-revalidation-after-cr-sst-0122-2026-07-05.md"
+  summary: >
+    CR-SST-0122 fixed the backend UUID/hash failure. Browser revalidation now
+    reaches /learning, preview returns 200, accept returns 201 and context
+    returns 200, but the accepted context visible in the UI contains no
+    annotations or contentBlocks. SST-48 remains En curso until the annotated
+    content E2E path is valid.
+  jira_comment_ref: "evidence/requests/CR-SST-0118/jira-sst-48-post-cr-sst-0122-blocker-comment-summary.md"
+
+final_validation_update:
+  observed_at: "2026-07-10"
+  status: "authenticated-e2e-pass"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0118/final-e2e-closure-after-cr-sst-0123-2026-07-10.md"
+    - "evidence/requests/CR-SST-0123/chrome-authenticated-e2e-pass-2026-07-10.md"
+    - "evidence/requests/CR-SST-0123/chrome-learning-authenticated-e2e-pass-2026-07-10.png"
+  jira_close_comment_ref: "evidence/requests/CR-SST-0118/jira-sst-48-final-close-comment.md"
+  jira_close_transition_ref: "evidence/requests/CR-SST-0118/jira-sst-48-final-close-transition.md"
+  jira_close_comment_id: "10139"
+  summary: >
+    After CR-SST-0122 and CR-SST-0123, authenticated browser QA confirms the
+    complete annotable text-entry flow: preview, accept, rendered template and
+    accepted context with non-empty annotations and contentBlocks. SST-48 can
+    be synchronized to Listo.
+
+jira_sync:
+  status: "final-commented-and-listo"
+  issue_key: "SST-48"
+  status_observed: "Finalizada"
+  resolution_observed: "Listo"
+  final_close_comment_ref: "evidence/requests/CR-SST-0118/jira-sst-48-final-close-comment.md"
+  final_close_transition_ref: "evidence/requests/CR-SST-0118/jira-sst-48-final-close-transition.md"
+  final_close_comment_id: "10139"

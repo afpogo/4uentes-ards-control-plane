@@ -15,6 +15,7 @@ un repositorio canonico.
 ## Duenos Tipicos
 
 - `4uentes-ards-core` cuando se documenta como fuente estandar consumida
+- `4uentes-portfolio`
 - `sst-bend`
 - `4uentes-auth`
 - `sst-fend`
@@ -25,6 +26,8 @@ un repositorio canonico.
 
 - [4uentes-ards-core.md](4uentes-ards-core.md)
 - [4uentes-auth.md](4uentes-auth.md)
+- [4uentes-portfolio.md](4uentes-portfolio.md)
+- [finanzas-personales.md](finanzas-personales.md)
 - [sst-bend.md](sst-bend.md)
 - [sst-chatbot.md](sst-chatbot.md)
 - [sst-extension.md](sst-extension.md)

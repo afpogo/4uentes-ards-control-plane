@@ -1,0 +1,26 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-4UENTES-0026"
+title: "Portfolio mobile publication QA readiness"
+status: "intake"
+created_at: "2026-07-04"
+requester: "4uentes"
+
+summary: >
+  Analyze mobile publication readiness for the Portfolio product and define the
+  Jira Epic linkage before implementing mobile fixes.
+
+scope:
+  solution: "4uentes"
+  services:
+    - "4uentes-portfolio"
+  include_optional_services: false
+
+intent:
+  - "Confirm current mobile blocker and publication risk."
+  - "Define the Jira Epic/task model under project 4uentes-portfolio/PORT."
+  - "Prepare the next child-repo implementation cut for mobile usability."
+
+validation:
+  required_checks:
+    - "4uentes-orchestor: npm.cmd run check"

@@ -1,0 +1,23 @@
+schema_version: "1.0"
+kind: "feature_state"
+id: "portfolio-experience-initiatives-i18n"
+title: "Portfolio Experience Initiatives I18N"
+status: "implemented-local"
+updated_at: "2026-07-05"
+solution_id: "4uentes"
+affected_services:
+  - 4uentes-portfolio
+request_ids:
+  - CR-4UENTES-0023
+capability_refs:
+  - "portfolio-experience-initiatives-i18n"
+spec_refs:
+  - "requests/planned/CR-4UENTES-0023-portfolio-experience-initiatives-i18n-migration.yaml"
+  - "initiatives/INIT-FUENTES-0001-portfolio-product-i18n-and-jira-foundation.yaml"
+  - "initiatives/INIT-PORTFOLIO-0001-portfolio-publication-readiness.yaml"
+evidence_refs:
+  - "evidence/requests/CR-4UENTES-0023/implementation-summary.md"
+  - "evidence/requests/CR-4UENTES-0023/changed-files-summary.md"
+  - "evidence/requests/CR-4UENTES-0023/validation-results.md"
+open_gaps:
+  - "Run bilingual QA in CR-4UENTES-0024 after this migration is reviewed."

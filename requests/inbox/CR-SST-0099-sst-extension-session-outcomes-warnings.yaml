@@ -1,0 +1,19 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0099"
+title: "Add session snapshot outcomes and warnings"
+status: inbox
+created_at: "2026-07-02"
+requester: "4uentes"
+
+business_context: >
+  Session artifacts currently do not distinguish visual PDF success from
+  textual fallback or per-tab capture degradation.
+
+requested_change: >
+  Add explicit session snapshot outcome and warning metadata for visual capture,
+  textual fallback, unsupported URLs, permissions, timeouts and failures.
+
+expected_outcome: >
+  Consumers and UI can show accurate per-tab capture quality without exposing
+  private page content.

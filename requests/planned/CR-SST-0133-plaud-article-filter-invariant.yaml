@@ -1,0 +1,37 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0133"
+title: "Enforce Plaud article and filter persistence invariant"
+status: done
+source_request: "requests/inbox/CR-SST-0133-plaud-article-filter-invariant.yaml"
+created_at: "2026-07-11"
+requester: "4uentes"
+summary: "Enforce the Plaud article/payload/filter persistence invariant in sst-bend."
+control_plane_context: {initiative_id: "INIT-SST-0005", parent_request_id: "CR-SST-0128", predecessor_requests: ["CR-SST-0129"], jira_epic_key: "SST-57", jira_parent_issue_key: "SST-58", jira_role: "mirror", jira_source_of_truth: false}
+impact_analysis:
+  required: true
+  affected_services:
+    - {service_id: "sst-bend", via: "Plaud article writer and transaction boundary", service_kind: "backend-api", ards_kind: "backend-api", status: "active"}
+    - {service_id: "4uentes-orchestor", via: "lifecycle and evidence", service_kind: "control-plane", ards_kind: "control-plane", status: "active"}
+  affected_ards: ["plaud-article-ingestion", "article-persisted-filters"]
+  risks: [{id: "PARTIAL_PERSISTENCE", severity: high}]
+execution:
+  requires_human_approval: false
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets: ["sst-bend"]
+  implementation_boundary: "Plaud writer transaction/invariant, tests and owner docs only."
+owner_documentation:
+  required: true
+  status: satisfied
+  owner_repos: ["sst-bend"]
+  planned_owner_docs:
+    - "specs/api/integrations-api.yaml"
+    - "specs/api/document-processing.yaml"
+    - "docs/api/plaud-ingestion.md"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0133/owner-documentation-summary.md"
+required_checks:
+  - {service_id: "sst-bend", command: "npm.cmd run check"}
+  - {service_id: "4uentes-orchestor", command: "npm.cmd run check"}
+decision: {status: closed-local, approver: "4uentes", decided_at: "2026-07-12", note: "Aggregate invariant validated; job convergence is separated into CR-SST-0142."}
+jira_sync: {status: synchronized, desired_issue_type: "Subtask", parent_issue_key: "SST-58", issue_key: "SST-63", status_observed: "Listo"}

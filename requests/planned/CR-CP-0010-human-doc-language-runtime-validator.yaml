@@ -1,0 +1,63 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-CP-0010"
+title: "Implement human documentation language runtime validator"
+status: "planned"
+created_at: "2026-07-10"
+requester: "4uentes"
+summary: >
+  Implement the first concrete policy runtime validator for
+  human-doc-language so human-facing Markdown is checked automatically.
+control_plane_context:
+  initiative_id: "INIT-CP-0003"
+  parent_initiative_id: "INIT-CP-0001"
+  target_jira_epic_key: "ARDS-1"
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "4uentes-orchestor"
+      via: "human documentation policy enforcement"
+      service_kind: "control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+  affected_ards:
+    - "human-doc-language"
+    - "policy-enforcement"
+    - "markdown-evidence"
+required_context:
+  - "docs/policies/human-doc-language-policy.md"
+  - "docs/idioma-markdown.md"
+  - "specs/integration/policies.yaml"
+risk:
+  level: "medium"
+  score: 5
+  drivers:
+    - "language detection must preserve technical identifiers and external payloads"
+    - "false positives must support explicit exceptions"
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "single-control-plane-branch"
+  child_repo_mutation_allowed: false
+  core_repo_mutation_allowed: false
+  implementation_boundary: >
+    Implement validator for local control-plane docs/evidence first. Broader
+    repo rollout requires later adoption.
+jira:
+  role: "mirror"
+  source_of_truth: false
+  project_key: "ARDS"
+  epic_key: "ARDS-13"
+  related_epic_key: "ARDS-1"
+  issue_key: "ARDS-9"
+validation:
+  required_checks:
+    - "4uentes-orchestor: npm.cmd run check:human-doc-language"
+    - "4uentes-orchestor: npm.cmd run check"
+  evidence_required:
+    - "validator_design"
+    - "false_positive_policy"
+    - "validation_results"
+decision:
+  status: "pending"
+  approver: "TODO"

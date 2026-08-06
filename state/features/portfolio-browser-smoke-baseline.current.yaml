@@ -1,0 +1,28 @@
+schema_version: "1.0"
+kind: "feature_state"
+id: "portfolio-browser-smoke-baseline"
+title: "Portfolio Browser Smoke Baseline"
+status: "validated-local"
+updated_at: "2026-07-04"
+solution_id: "4uentes"
+affected_services:
+  - 4uentes-portfolio
+request_ids:
+  - CR-4UENTES-0004
+  - CR-4UENTES-0005
+capability_refs:
+  - "portfolio-browser-smoke-baseline"
+spec_refs:
+  - "docs/apps/4uentes-portfolio.md"
+  - "catalog/services/4uentes-portfolio.yaml"
+  - "solutions/4uentes.yaml"
+evidence_refs:
+  - "evidence/requests/CR-4UENTES-0004/browser-smoke-results.md"
+  - "evidence/requests/CR-4UENTES-0004/changed-files-summary.md"
+  - "evidence/requests/CR-4UENTES-0004/validation-results.md"
+  - "evidence/requests/CR-4UENTES-0005/spa-preview-fallback.md"
+  - "evidence/requests/CR-4UENTES-0005/validation-results.md"
+open_gaps:
+  - "In-app browser automation was unavailable in this run; HTTP route smoke was used as fallback."
+  - "Add screenshot or Lighthouse evidence before public promotion if publication risk increases."
+  - "Confirm production/static-hosting SPA fallback behavior after deploy target selection."

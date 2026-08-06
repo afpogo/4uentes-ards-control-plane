@@ -3,7 +3,7 @@ kind: "bugfix_state"
 id: "login-504-proxy-timeout"
 title: "Login proxy 504 caused by node-auth watcher failure"
 status: "validated-local"
-updated_at: "2026-05-24"
+updated_at: "2026-07-02"
 markers:
   - reproduced
   - root-caused
@@ -12,11 +12,13 @@ markers:
 affected_services:
   - sst-fend
   - 4uentes-auth
-request_ids: []
+request_ids:
+  - CR-SST-0106
 symptom: "Login POST returned 504 through frontend dev proxy."
 root_cause_status: "confirmed"
 validation_refs: []
-evidence_refs: []
+evidence_refs:
+  - "evidence/requests/CR-SST-0106/bugfix-state-reconciliation.md"
+  - "evidence/requests/CR-SST-0106/validation-results.md"
 open_gaps:
-  - "Create formal request/evidence if this bugfix must be governed historically."
-
+  - "Original bugfix implementation predates this reconciliation; CR-SST-0106 provides read-model governance evidence only."

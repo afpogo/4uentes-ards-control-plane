@@ -1,0 +1,126 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-4UENTES-0039"
+title: "Portfolio publication base reconciliation"
+status: "planned"
+source_request: "requests/inbox/CR-4UENTES-0039-portfolio-publication-base-reconciliation.yaml"
+created_at: "2026-07-10"
+requester: "4uentes"
+
+summary: >
+  Reconcile the Portfolio child repository publication base before attempting
+  small feature PRs. Clean branch execution showed that CR-4UENTES-0036 cannot
+  be published alone against origin/develop because it depends on accumulated
+  Vite/Sass/runtime base work.
+
+initial_scope:
+  solution: "4uentes"
+  services:
+    - "4uentes-portfolio"
+  include_optional_services: false
+
+control_plane_context:
+  initiative_id: "INIT-PORTFOLIO-0003"
+  parent_request_id: "CR-4UENTES-0036"
+  feature_id: "portfolio-publication-base-reconciliation"
+  child_repo: "4uentes-portfolio"
+  work_origin: "orchestrator-request"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "4uentes-portfolio"
+      via: "publication base, build tooling, Sass compatibility, owner docs and validation"
+      service_kind: "frontend-spa"
+      ards_kind: "frontend-web"
+      status: "active"
+  affected_ards:
+    - "frontend-web"
+    - "publication-readiness"
+    - "owner-documentation"
+    - "visual-qa"
+  capabilities:
+    - "portfolio-publication-base-reconciliation"
+
+required_context:
+  - "requests/done/CR-4UENTES-0036-portfolio-experience-readable-impact.yaml"
+  - "evidence/requests/CR-4UENTES-0036/github-publication-readiness.md"
+  - "initiatives/INIT-PORTFOLIO-0003-portfolio-professionalization.yaml"
+  - "state/features/portfolio-experience-readable-impact.current.yaml"
+  - "4uentes-portfolio: package.json"
+  - "4uentes-portfolio: vite.config.mts"
+  - "4uentes-portfolio: src/assets/sass/"
+  - "4uentes-portfolio: docs/portfolio-intent.md"
+  - "4uentes-portfolio: docs/qa/visual-checklist.md"
+  - "4uentes-portfolio: specs/features/00-index.yaml"
+
+risk:
+  level: "high"
+  score: 7
+  drivers:
+    - "publication branch touches build tooling and global Sass behavior"
+    - "isolated Experience PR fails against origin/develop"
+    - "worktree contains multiple accumulated Portfolio changes that need explicit grouping"
+
+execution:
+  requires_human_approval: false
+  allowed_window: "manual"
+  branch_strategy: "portfolio-publication-base-cut"
+  child_repo_mutation_allowed: true
+  child_repo_mutation_target:
+    service_id: "4uentes-portfolio"
+  owner_documentation_required: true
+  implementation_boundary: >
+    Stabilize the Portfolio publication base required by current local work:
+    build tooling, Sass module compatibility, owner docs/specs, and validation
+    evidence. Do not add backend/BFF/auth, activate CV download, or broaden into
+    SST/control-plane reconciliation unrelated to Portfolio publication.
+
+owner_documentation:
+  required: true
+  status: planned
+  owner_repo: "4uentes-portfolio"
+  planned_owner_docs:
+    - "docs/portfolio-intent.md"
+    - "docs/architecture/README.md"
+    - "docs/qa/visual-checklist.md"
+    - "specs/features/00-index.yaml"
+  owner_refs:
+    - repo: "4uentes-portfolio"
+      paths:
+        - "docs/portfolio-intent.md"
+        - "docs/architecture/README.md"
+        - "docs/qa/visual-checklist.md"
+        - "specs/features/00-index.yaml"
+  evidence_refs:
+    - "evidence/requests/CR-4UENTES-0039/implementation-plan.md"
+
+jira:
+  role: "mirror"
+  source_of_truth: false
+  project_key: "PORT"
+  epic_key: "PORT-9"
+  issue_key: "PORT-20"
+  issue_type: "Tarea"
+  current_status_observed: "En curso"
+  connection_policy_ref: "docs/requests/jira-write-connection-contract.md"
+  fallback_policy_ref: "docs/requests/mcp-auth-bootstrap-playbook.md"
+  transition_refs:
+    creation_ref: "evidence/requests/CR-4UENTES-0039/jira-port-20-start-transition-summary.md"
+    start_transition_ref: "evidence/requests/CR-4UENTES-0039/jira-port-20-start-transition-summary.md"
+
+validation:
+  required_checks:
+    - "4uentes-portfolio: npm.cmd run build"
+    - "4uentes-orchestor: npm.cmd run check"
+  evidence_required:
+    - "implementation_plan"
+    - "changed_files_summary"
+    - "child_validation_results"
+    - "control_plane_validation_results"
+    - "visual_qa_results"
+
+decision:
+  status: "approved-for-local-execution"
+  approver: "4uentes"
+  blocker: "none"

@@ -1,0 +1,58 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0120"
+title: "Define preview image contract for session-derived articles"
+status: inbox
+created_at: "2026-07-04"
+requester: "4uentes"
+
+summary: >
+  Define how articles generated from sst-extension session capture should carry
+  or derive preview images when the captured artifact is textual PDF fallback,
+  including a generic preview resolver for URL-based or user-provided images.
+
+source_context:
+  initiative_id: "INIT-SST-0003"
+  parent_epic_key: "SST-29"
+  discovered_from: "CR-SST-0100 manual QA"
+  source_issue_key: "SST-32"
+
+initial_scope:
+  solution: "sst"
+  services:
+    - "sst-extension"
+    - "node-auth"
+    - "sst-fend"
+    - "4uentes-orchestor"
+  include_optional_services: true
+
+problem_statement: >
+  Session capture can generate valid text-only PDF artifacts and create SST
+  articles, but SST shows preview image as unavailable for text-only captures.
+  Users need to distinguish text-only PDFs from visual captures and understand
+  whether a preview image is expected, generated, or intentionally unavailable.
+  The same issue appears when creating a text article/PDF from a web URL: SST
+  usually has the URL or an optional image candidate, so preview generation
+  should be governed by a shared reusable pattern instead of one-off UI logic.
+
+candidate_options:
+  - id: "article-preview-resolver"
+    description: "Define a reusable resolver that chooses preview from provided image, producer thumbnail, URL metadata, generated screenshot, placeholder, or explicit unavailable reason."
+  - id: "store-visual-thumbnail"
+    description: "Generate a lightweight preview image during extension capture when visual capture is available."
+  - id: "derive-thumbnail-server-side"
+    description: "Derive a preview image from the stored PDF or article artifact downstream."
+  - id: "explicit-preview-unavailable"
+    description: "Persist an explicit preview unavailable reason for text-only articles."
+
+owner_documentation:
+  required: true
+  status: planned
+  owner_repo: "4uentes-orchestor"
+  planned_owner_docs:
+    - "TBD after owner boundary selection"
+
+guardrails:
+  - "No private page screenshots in ARDS/SDD evidence."
+  - "No cookies, JWTs, secrets, raw PDFs, or private page text in Jira/evidence."
+  - "Any cross-repo mutation must update owner docs in every mutated repo."

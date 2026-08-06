@@ -1,0 +1,26 @@
+schema_version: "1.0"
+kind: "feature_state"
+id: "portfolio-professionalization-intake"
+title: "Portfolio Professionalization Intake"
+status: "done"
+updated_at: "2026-07-07"
+solution_id: "4uentes"
+affected_services:
+  - 4uentes-portfolio
+request_ids:
+  - CR-4UENTES-0033
+capability_refs:
+  - "portfolio-professionalization-intake"
+spec_refs:
+  - "requests/planned/CR-4UENTES-0033-portfolio-professionalization-intake-reconciliation.yaml"
+  - "initiatives/INIT-PORTFOLIO-0003-portfolio-professionalization.yaml"
+evidence_refs:
+  - "evidence/requests/CR-4UENTES-0033/intake-reconciliation.md"
+  - "evidence/requests/CR-4UENTES-0033/jira-mcp-connection-review.md"
+  - "evidence/requests/CR-4UENTES-0033/jira-epic-and-task-sync-summary.md"
+  - "evidence/requests/CR-4UENTES-0033/jira-port-10-close-transition-summary.md"
+  - "evidence/requests/CR-4UENTES-0033/changed-files-summary.md"
+  - "evidence/requests/CR-4UENTES-0033/validation-results.md"
+open_gaps:
+  - "Create future implementation CRs for Home, Projects Evidence, Experience Impact, Skills/Certs, and mobile coordination."
+  - "Do not duplicate mobile remediation already tracked by INIT-PORTFOLIO-0002."

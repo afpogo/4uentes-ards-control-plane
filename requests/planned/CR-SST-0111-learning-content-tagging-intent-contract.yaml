@@ -1,0 +1,101 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0111"
+title: "Define ArticleTag and LearningContentTag intent contract"
+status: closed-local
+source_request: "requests/inbox/CR-SST-0111-learning-content-tagging-intent-contract.yaml"
+created_at: "2026-07-04"
+requester: "4uentes"
+
+summary: >
+  Record the intended product model for article-level tags versus
+  learning-content granular tags before implementing the next UX/runtime cut.
+
+control_plane_context:
+  initiative_id: "INIT-SST-0001"
+  initiative_file: "initiatives/INIT-SST-0001-tags-governance-continuity.yaml"
+  active_feature_state: "learning-content-tags"
+  active_feature_state_file: "state/features/learning-content-tags.current.yaml"
+  parent_request_id: "CR-SST-0110"
+  jira_epic_key: "SST-27"
+  active_jira_issue_key: "SST-6"
+  jira_subtask_key: "SST-41"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "sst-fend"
+      via: "Future text sheet UX and article creation flow"
+      service_kind: "frontend-spa"
+      ards_kind: "frontend-web"
+      status: "active"
+    - service_id: "sst-bend"
+      via: "Future LearningWorkspace parser/import and query/read model"
+      service_kind: "api"
+      ards_kind: "backend-service"
+      status: "active"
+    - service_id: "4uentes-orchestor"
+      via: "request lifecycle, intent contract and evidence"
+      service_kind: "control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+  affected_ards:
+    - learning-content-tags
+    - article-tags
+    - learning-workspace-context
+    - article-creation
+    - request-lifecycle
+    - evidence
+  risks:
+    - id: ARTICLE_TAG_AND_LEARNING_TAG_CONFLATION
+      severity: high
+    - id: FINAL_UX_IMPLEMENTED_WITHOUT_CONTRACT
+      severity: high
+    - id: BACKEND_QUERY_MODEL_DRIFT
+      severity: medium
+
+execution:
+  requires_human_approval: false
+  allowed_window: manual
+  branch_strategy: "control-plane-first"
+  child_repo_mutation_allowed: false
+  implementation_boundary: >
+    This CR is a control-plane intent/contract step. It must document the
+    intended ArticleTag versus LearningContentTag model and prepare the next
+    implementation CR. Runtime changes in sst-fend or sst-bend require a later
+    request.
+  owner_documentation:
+    required: false
+    status: not-required-control-plane-only
+    owner_refs: []
+    evidence_refs:
+      - "evidence/requests/CR-SST-0111/tagging-intent-contract.md"
+      - "evidence/requests/CR-SST-0111/jira-sync-summary.md"
+      - "evidence/requests/CR-SST-0111/implementation-boundary.md"
+      - "evidence/requests/CR-SST-0111/validation-results.md"
+
+required_checks:
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check"
+
+validation:
+  required_checks:
+    - "ArticleTag and LearningContentTag are described as separate levels."
+    - "The current CR-SST-0110 UI is explicitly not the final UX."
+    - "Next implementation boundaries are identified."
+    - "Next child-repo implementation is gated by owner documentation enforcement."
+  evidence_required:
+    - "tagging_intent_contract"
+    - "implementation_boundary"
+    - "validation_results"
+
+decision:
+  status: closed-local
+  approver: "4uentes"
+  note: >
+    Closed locally as a control-plane intent contract. No child repositories
+    were modified. The next implementation CR must enable child repo mutation,
+    owner documentation enforcement, repo-local validation, and the full
+    control-plane check before closure.

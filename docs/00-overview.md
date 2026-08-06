@@ -16,7 +16,8 @@ bindings host-locales.
 - `scripts/`: scripts de validacion determinista.
 - `inventory/`: evidencia observada y decisiones de fase.
 - `requests/`: lifecycle de requests cross-ARDS/SDD.
-- `templates/`: templates reutilizables de requests.
+- `templates/`: templates reutilizables de requests y manifests de adopcion o
+  excepcion.
 - `docs/`: modelo operativo legible por humanos.
 - `specs/`: indice del control-plane y specs futuras.
 
@@ -36,7 +37,11 @@ La regla de clasificacion esta definida en:
 
 - [documentation-information-architecture.md](documentation-information-architecture.md)
 
-La politica de idioma para Markdown humano esta definida en:
+La policy activa de idioma para Markdown humano esta definida en:
+
+- [policies/human-doc-language-policy.md](policies/human-doc-language-policy.md)
+
+La guia detallada de idioma y migracion esta definida en:
 
 - [idioma-markdown.md](idioma-markdown.md)
 

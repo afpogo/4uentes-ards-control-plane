@@ -1,12 +1,12 @@
 schema_version: "1.0"
 kind: "ards_sdd_agent_policy_registry"
 status: "active"
-updated_at: "2026-06-13"
+updated_at: "2026-07-11"
 purpose: >
-  Machine-readable registry for living ARDS/SDD agent operating policies. These
-  policies govern agent execution, resource use, delegation, context handling,
-  atomization, and architecture boundaries without replacing functional
-  contracts, capabilities, requests, handoffs, or repo ownership.
+  Machine-readable registry for living ARDS/SDD policies adopted by the
+  control-plane. It records local agent operating policies plus scoped
+  core-owned policy adoptions without replacing functional contracts,
+  capabilities, requests, handoffs, or repo ownership.
 
 standard_source:
   repo: "4uentes-ards-core"
@@ -16,17 +16,48 @@ standard_source:
     records local adoption plus scoped rollout evidence for SST child repos.
 
 provider_model:
-  provider_agnostic: true
+  provider_agnostic: false
+  provider_scope: "codex"
   model_names_are_aliases: true
   alias_resolution: "environment-configured"
+  resource_signal:
+    allowed_levels:
+      - "very-low"
+      - "low"
+      - "normal"
+      - "high"
+    default_level: "normal"
+    allowed_sources:
+      - "default"
+      - "manual"
+      - "runtime"
+    runtime_source_status: "planned-under-INIT-CP-0003-ARDS-13"
   fallback_rule: >
-    If an exact model alias is unavailable, use the nearest available profile
-    with equivalent speed, context, or reasoning characteristics and record the
-    fallback when the work is planned.
+    Treat unavailable GPT-5.6 Sol capacity as resource degradation, record the
+    effective resource level, and apply the corresponding routing row. Never
+    silently downgrade sensitive work.
   aliases:
+    normal_and_high_resources: "gpt-5.6-sol"
     fast_verifiable_task: "gpt-5.3-spark"
     long_context_task: "gpt-5.4-fast-high"
     high_reasoning_task: "gpt-5.5"
+  selection_matrix:
+    high:
+      short_defined_task: {model: "gpt-5.6-sol", reasoning_effort: "high"}
+      long_context_task: {model: "gpt-5.6-sol", reasoning_effort: "high"}
+      complex_high_risk_task: {model: "gpt-5.6-sol", reasoning_effort: "max"}
+    normal:
+      short_defined_task: {model: "gpt-5.6-sol", reasoning_effort: "low"}
+      long_context_task: {model: "gpt-5.6-sol", reasoning_effort: "high"}
+      complex_high_risk_task: {model: "gpt-5.6-sol", reasoning_effort: "max"}
+    low:
+      short_defined_task: {model: "gpt-5.3-spark", reasoning_effort: "low"}
+      long_context_task: {model: "gpt-5.4-fast-high", reasoning_effort: "high"}
+      complex_high_risk_task: {model: "gpt-5.5", reasoning_effort: "high"}
+    very-low:
+      short_defined_task: {model: "gpt-5.3-spark", reasoning_effort: "low"}
+      long_context_task: {action: "atomize-reduce-or-block"}
+      complex_high_risk_task: {action: "block"}
 
 adoption_defaults:
   owner: "4uentes-ards-control-plane"
@@ -52,11 +83,50 @@ adoption_defaults:
       status: "sst-rollout-complete"
       intent: "The SST child repos were synchronized in CR-SST-0077; broader rollout remains request-driven."
 
+adoption_governance:
+  canonical_source: "4uentes-ards-core"
+  local_registry_role: >
+    The orchestrator records local adoption and rollout state for the policies
+    it consumes. It does not redefine the canonical core policy text.
+  child_repo_rollout:
+    mode: "request-driven"
+    policy_scope_rule: >
+      Policies are not assumed global only because they are core-owned.
+      Adoption must follow each policy's class, applicability, profile
+      requirements, and local exception path.
+    historical_sst_rollout:
+      request_id: "CR-SST-0077"
+      status: "closed"
+    future_non_sst_rollout:
+      request_id: "CR-SST-0081"
+      status: "planned"
+    required_artifacts:
+      - "policy_adoption_manifest"
+      - "policy_exception_manifest"
+    required_templates:
+      - "templates/policy-adoption-manifest.template.yaml"
+      - "templates/policy-exception-manifest.template.yaml"
+    rule: >
+      A child repo rollout may modify only the scoped child repo after an
+      approved request and plan. Each rollout must publish either an adoption
+      manifest or an exception manifest.
+
 policies:
   - id: "agent-model-selection-policy"
     name: "Agent Model Selection Policy"
     type: "agent-operating-policy"
+    policy_class: "core-general"
+    origin_repo: "4uentes-ards-core"
+    canonical_owner: "4uentes-ards-core"
+    applicability: "ARDS/SDD repos that use Codex for agentic execution"
+    adoption_mode: "inherited-or-manifest"
+    required_for_profiles:
+      - "all"
+    optional_for_profiles: []
+    template_binding: null
+    local_aliases: []
     status: "active"
+    revision: "2026-07-11-codex-gpt-5.6-resource-extension"
     scope:
       - "model-selection"
       - "subagent-planning"
@@ -66,10 +136,11 @@ policies:
     related_docs:
       - "docs/ai/model-selection-policy.md"
     enforcement:
-      expected: "Classify tasks before planning or execution; record task_weight, model_selection, and subagent_deployment_plan for planned work."
+      expected: "For Codex work, classify tasks and resource availability before planning or execution; record provider, resource level/source, model, reasoning effort, fallback, task_weight, and subagent_deployment_plan."
       mode: "operational-review"
       failure_behavior: "record-gap-or-fallback"
     aliases:
+      normal_and_high_resources: "gpt-5.6-sol"
       short_defined_task: "gpt-5.3-spark"
       long_context_task: "gpt-5.4-fast-high"
       complex_high_risk_task: "gpt-5.5"
@@ -78,6 +149,8 @@ policies:
       - "specs/integration/policies.yaml"
       - "docs/policies/agent-model-selection-policy.md"
     gaps:
+      - "Automatic resource signal resolution remains planned under INIT-CP-0003 / ARDS-13; normal/default is used until then."
+      - "Canonical core promotion is tracked by CR-CP-0016 before child rollout."
       - "Broader child-repo rollout outside the SST solution remains request-driven."
     relates_to:
       - "agent-resource-degradation-policy"
@@ -88,6 +161,16 @@ policies:
   - id: "agent-resource-degradation-policy"
     name: "Agent Resource Degradation Policy"
     type: "agent-operating-policy"
+    policy_class: "core-general"
+    origin_repo: "4uentes-ards-core"
+    canonical_owner: "4uentes-ards-core"
+    applicability: "all ARDS/SDD repos that use agentic execution"
+    adoption_mode: "inherited-or-manifest"
+    required_for_profiles:
+      - "all"
+    optional_for_profiles: []
+    template_binding: null
+    local_aliases: []
     status: "active"
     scope:
       - "resource-degradation"
@@ -112,6 +195,16 @@ policies:
   - id: "agent-task-atomization-policy"
     name: "Agent Task Atomization Policy"
     type: "agent-operating-policy"
+    policy_class: "core-general"
+    origin_repo: "4uentes-ards-core"
+    canonical_owner: "4uentes-ards-core"
+    applicability: "all ARDS/SDD repos that use agentic execution"
+    adoption_mode: "inherited-or-manifest"
+    required_for_profiles:
+      - "all"
+    optional_for_profiles: []
+    template_binding: null
+    local_aliases: []
     status: "active"
     scope:
       - "task-breakdown"
@@ -135,6 +228,16 @@ policies:
   - id: "agent-delegation-policy"
     name: "Agent Delegation Policy"
     type: "agent-operating-policy"
+    policy_class: "core-general"
+    origin_repo: "4uentes-ards-core"
+    canonical_owner: "4uentes-ards-core"
+    applicability: "all ARDS/SDD repos that use agentic execution"
+    adoption_mode: "inherited-or-manifest"
+    required_for_profiles:
+      - "all"
+    optional_for_profiles: []
+    template_binding: null
+    local_aliases: []
     status: "active"
     scope:
       - "subagent-delegation"
@@ -159,6 +262,16 @@ policies:
   - id: "agent-context-management-policy"
     name: "Agent Context Management Policy"
     type: "agent-operating-policy"
+    policy_class: "core-general"
+    origin_repo: "4uentes-ards-core"
+    canonical_owner: "4uentes-ards-core"
+    applicability: "all ARDS/SDD repos that use agentic execution"
+    adoption_mode: "inherited-or-manifest"
+    required_for_profiles:
+      - "all"
+    optional_for_profiles: []
+    template_binding: null
+    local_aliases: []
     status: "active"
     scope:
       - "context-management"
@@ -183,6 +296,16 @@ policies:
   - id: "agent-architecture-boundary-policy"
     name: "Agent Architecture Boundary Policy"
     type: "agent-operating-policy"
+    policy_class: "core-general"
+    origin_repo: "4uentes-ards-core"
+    canonical_owner: "4uentes-ards-core"
+    applicability: "all ARDS/SDD repos that use agentic execution or ARDS/SDD governance"
+    adoption_mode: "inherited-or-manifest"
+    required_for_profiles:
+      - "all"
+    optional_for_profiles: []
+    template_binding: null
+    local_aliases: []
     status: "active"
     scope:
       - "architecture-boundary"
@@ -204,13 +327,300 @@ policies:
       - "agent-model-selection-policy"
       - "agent-resource-degradation-policy"
 
+  - id: "human-doc-language"
+    name: "Human Documentation Language Policy"
+    type: "agent-operating-policy"
+    policy_class: "core-general"
+    origin_repo: "4uentes-ards-core"
+    canonical_owner: "4uentes-ards-core"
+    applicability: "all ARDS/SDD repos that publish human-facing documentation"
+    adoption_mode: "inherited-or-manifest"
+    required_for_profiles:
+      - "all"
+    optional_for_profiles: []
+    template_binding: "templates/human-doc-language-policy.template.md"
+    local_aliases: []
+    status: "active"
+    scope:
+      - "human-documentation-language"
+      - "markdown-authoring"
+      - "cross-repo-adoption"
+    owner: "4uentes-ards-control-plane"
+    human_doc: "docs/policies/human-doc-language-policy.md"
+    related_docs:
+      - "docs/idioma-markdown.md"
+      - "templates/human-doc-language-policy.template.md"
+    enforcement:
+      expected: "Write human-facing Markdown in Spanish, keep agent-facing Markdown in controlled technical English when operational stability requires it, and keep normative specs and YAML in English without translating stable technical identifiers."
+      mode: "operational-review"
+      failure_behavior: "record-gap-or-exception"
+    evidence:
+      - "docs/policies/human-doc-language-policy.md"
+      - "docs/idioma-markdown.md"
+      - "state/policy-links.yaml"
+      - "specs/integration/policies.yaml"
+    gaps:
+      - "Reusable handoff to 4uentes-ards-core remains pending even though the orchestrator registry now carries the active local policy."
+    relates_to:
+      - "agent-context-management-policy"
+      - "agent-architecture-boundary-policy"
+
+  - id: "owner-documentation-authority-policy"
+    name: "Owner Documentation Authority Policy"
+    type: "ards-sdd-governance-policy"
+    policy_class: "core-general"
+    origin_repo: "4uentes-ards-core"
+    canonical_owner: "4uentes-ards-core"
+    applicability: "repos participating in cross-repo ownership, capability, or child-repo mutation workflows"
+    adoption_mode: "conditional-enforcement"
+    required_for_profiles:
+      - "control-plane"
+      - "child-repo-with-owner-mutation"
+    optional_for_profiles:
+      - "single-repo-local-only"
+    template_binding: null
+    local_aliases: []
+    status: "active"
+    scope:
+      - "child-repo-owner-documentation"
+      - "cross-repo-capability-ownership"
+      - "control-plane-evidence-boundary"
+      - "request-closure-gates"
+    owner: "4uentes-ards-control-plane"
+    human_doc: "docs/policies/owner-documentation-authority-policy.md"
+    enforcement:
+      expected: "A CR that mutates a child repo must update that repo's owner ARDS/SDD documentation or record an explicit exception before closure; control-plane evidence cannot replace owner docs; `npm.cmd run check` must execute the owner documentation validator before local closure."
+      mode: "mandatory-operational-boundary"
+      validator: "scripts/verify-owner-documentation.js"
+      package_gate: "npm.cmd run check"
+      focused_gate: "npm.cmd run check:owner-docs"
+      failure_behavior: "block-closure-or-create-approved-follow-up"
+    evidence:
+      - "docs/policies/owner-documentation-authority-policy.md"
+      - "requests/planned/CR-SST-0096-owner-documentation-authority-policy.yaml"
+      - "requests/done/CR-SST-0104-owner-documentation-close-gate-validator.yaml"
+      - "evidence/requests/CR-SST-0096/current-gap-review.md"
+      - "evidence/requests/CR-SST-0104/validation-results.md"
+    gaps:
+      - "Broader historical owner documentation remediation remains backlog-driven."
+    relates_to:
+      - "agent-architecture-boundary-policy"
+      - "agent-context-management-policy"
+      - "human-doc-language"
+
+core_owned_adoptions:
+  - id: "http-qa-harness-policy"
+    name: "HTTP QA Harness Policy"
+    type: "qa-governance-policy"
+    policy_class: "core-profile-scoped"
+    origin_repo: "4uentes-ards-core"
+    canonical_owner: "4uentes-ards-core"
+    applicability: "repos that own or expose HTTP contracts"
+    adoption_mode: "required-by-profile-or-exception"
+    required_for_profiles:
+      - "http-owner"
+      - "backend-api"
+      - "backend-bff"
+    optional_for_profiles:
+      - "frontend-web"
+      - "frontend-extension"
+      - "infra-gitops"
+      - "control-plane"
+    template_binding: null
+    local_aliases: []
+    status: "active"
+    owner: "4uentes-ards-core"
+    standard_source_ref: "docs/policies/http-qa-harness-policy.md"
+    scope:
+      - "http-qa-harness"
+      - "manual-api-validation"
+      - "reproducible-request-collections"
+    local_adoption:
+      repo: "4uentes-ards-control-plane"
+      status: "adopted"
+      discovery:
+        agents_entrypoint: "AGENTS.md"
+        registry: "specs/integration/policies.yaml"
+        human_docs: "docs/policies/README.md"
+    child_propagation:
+      mode: "request-driven"
+      required_artifacts:
+        - "policy_adoption_manifest"
+        - "policy_exception_manifest"
+      required_templates:
+        - "templates/policy-adoption-manifest.template.yaml"
+        - "templates/policy-exception-manifest.template.yaml"
+      historical_sst_rollout:
+        status: "closed"
+        request_id: "CR-SST-0077"
+      future_non_sst_rollout:
+        status: "planned"
+        request_id: "CR-SST-0081"
+    evidence:
+      - "AGENTS.md"
+      - "docs/policies/README.md"
+      - "state/policy-links.yaml"
+    gaps:
+      - "Non-SST child repo rollout remains pending execution under CR-SST-0081."
+
+  - id: "jira-cr-mirror-hierarchy-policy"
+    name: "Jira CR Mirror Hierarchy Policy"
+    type: "ards-sdd-governance-policy"
+    policy_class: "control-plane-local"
+    origin_repo: "4uentes-orchestor"
+    canonical_owner: "4uentes-orchestor"
+    applicability: "control-plane Jira mirrors"
+    adoption_mode: "local-required"
+    required_for_profiles:
+      - "control-plane"
+    optional_for_profiles: []
+    template_binding: null
+    local_aliases: []
+    status: "active"
+    scope:
+      - "jira-mirror"
+      - "initiative-epic-correlation"
+      - "cr-issue-correlation"
+      - "task-subtask-hierarchy"
+    owner: "4uentes-ards-control-plane"
+    human_doc: "docs/policies/jira-cr-mirror-hierarchy-policy.md"
+    enforcement:
+      expected: "Create and plan the CR before Jira write; correlate one Initiative to one Epic and each selected CR to one primary Task or Subtask."
+      mode: "operational-review"
+      failure_behavior: "block-jira-write-or-record-explicit-reconciliation"
+    evidence:
+      - "requests/planned/CR-SST-0128-jira-cr-mirror-hierarchy-policy.yaml"
+      - "docs/policies/jira-cr-mirror-hierarchy-policy.md"
+      - "evidence/initiatives/INIT-SST-0005/jira-readonly-preflight.md"
+    gaps:
+      - "Automated validation of Jira hierarchy remains future work; current enforcement is operational review plus request evidence."
+    relates_to:
+      - "owner-documentation-authority-policy"
+      - "control-plane-link-policy"
+
+  - id: "work-tracker-control-plane-authority-policy"
+    name: "Work Tracker Control Plane Authority Policy"
+    type: "ards-sdd-governance-policy"
+    policy_class: "origin-repo-policy"
+    origin_repo: "4uentes-orchestor"
+    canonical_owner: "4uentes-ards-control-plane"
+    applicability: "control planes that integrate an external work tracker"
+    adoption_mode: "local-conditional"
+    required_for_profiles:
+      - "control-plane-with-work-tracker"
+    optional_for_profiles:
+      - "control-plane-without-work-tracker"
+      - "functional-repo"
+      - "child-repo"
+    template_binding: null
+    local_aliases: []
+    status: "active"
+    scope:
+      - "work-tracker-authority"
+      - "external-write-gating"
+      - "tracker-reconciliation"
+      - "evidence-sanitization"
+    owner: "4uentes-ards-control-plane"
+    human_doc: "docs/policies/work-tracker-control-plane-authority-policy.md"
+    provider_profiles:
+      jira:
+        operational_capability: "jira-work-read-write"
+        structured_search: "jql"
+        semantic_search: "rovo-optional"
+        semantic_search_failure_behavior: "degrade-semantic-search-without-blocking-jira-work"
+        routing_source: "approved-request"
+        hierarchy_contract: "jira-cr-mirror-hierarchy-policy"
+        hierarchy_required: true
+        initiative_epic_cardinality: "one-primary-epic-per-active-initiative-using-jira"
+        cr_issue_cardinality: "one-primary-task-or-subtask-per-selected-cr"
+        task_rule: "independent, cross-repo, or container CR under the initiative Epic"
+        subtask_rule: "bounded executable CR under a Task that belongs to the same initiative Epic"
+        hierarchy_failure_behavior: "block-write-and-reconcile"
+    enforcement:
+      expected: "Keep ARDS/SDD authoritative; require an explicit enumerated batch authorization; enforce one Initiative-to-primary-Epic and one selected-CR-to-primary-Task-or-Subtask under that hierarchy; reject duplicates, inconsistent hierarchy, and protected evidence; and treat tracker changes as read-only intake signals."
+      mode: "operational-review"
+      failure_behavior: "reject-unauthorized-write-or-record-read-only-intake"
+    evidence:
+      - "requests/planned/CR-CP-0007-jira-control-plane-authority-policy.yaml"
+      - "docs/policies/work-tracker-control-plane-authority-policy.md"
+      - "evidence/requests/CR-CP-0007/policy-definition-and-adoption.md"
+      - "evidence/requests/CR-CP-0007/security-review.md"
+      - "evidence/requests/CR-CP-0007/runtime-separation-review.md"
+    gaps:
+      - "Executable enforcement remains future work under INIT-CP-0003 / ARDS-13."
+      - "Promotion to 4uentes-ards-core requires a separate future request and handoff."
+    relates_to:
+      - "jira-cr-mirror-hierarchy-policy"
+      - "agent-architecture-boundary-policy"
+      - "owner-documentation-authority-policy"
+    requires_policies:
+      - "jira-cr-mirror-hierarchy-policy"
+
+  - id: "control-plane-link-policy"
+    name: "Control Plane Link Policy"
+    type: "ards-sdd-governance-policy"
+    policy_class: "core-profile-scoped"
+    origin_repo: "4uentes-orchestor"
+    canonical_owner: "4uentes-ards-core"
+    standard_source_ref: "docs/policies/control-plane-link-policy.md"
+    template_binding: "templates/specs/integration/control-plane-link.template.yaml"
+    applicability: "control-plane repos and child repos that adopt control-plane reconciliation metadata"
+    adoption_mode: "required-by-profile-or-request-driven-child-adoption"
+    required_for_profiles:
+      - "control-plane"
+    optional_for_profiles:
+      - "child-repo"
+      - "http-owner"
+      - "frontend-web"
+      - "frontend-extension"
+      - "infra-gitops"
+    local_aliases:
+      - local_alias: "orchestrator_link"
+        maps_to: "control_plane_link"
+        repo: "4uentes-orchestor"
+        status: "active-local-alias"
+    scope:
+      - "child-repo-reconciliation"
+      - "control-plane-adoption"
+      - "capability-state-linkage"
+      - "request-evidence-correlation"
+    local_adoption:
+      repo: "4uentes-ards-control-plane"
+      status: "adopted-with-local-alias"
+      discovery:
+        agents_entrypoint: "AGENTS.md"
+        registry: "specs/integration/policies.yaml"
+        state_links: "state/policy-links.yaml"
+    child_propagation:
+      mode: "request-driven"
+      required_artifacts:
+        - "policy_adoption_manifest"
+        - "policy_exception_manifest"
+      required_templates:
+        - "templates/policy-adoption-manifest.template.yaml"
+        - "templates/policy-exception-manifest.template.yaml"
+      rule: >
+        Child repos must not treat control_plane_link as globally required
+        unless their profile or approved request adopts it. Rollout requires
+        an adoption or exception manifest.
+    evidence:
+      - "evidence/requests/CR-CP-0002/core-reconciliation-link-policy-summary.md"
+      - "evidence/requests/CR-CP-0002/template-alias-decision.md"
+      - "state/policy-links.yaml"
+    gaps:
+      - "Core canonical registry still needs the policy classification fields applied in 4uentes-ards-core."
+
 gaps:
   - id: "core-adoption-complete"
     description: "The core now owns the canonical policy registry and policy documentation."
     status: "closed"
   - id: "child-repo-propagation-future"
-    description: "The SST child rollout is complete; future non-SST rollout still requires approved requests/plans."
+    description: "The SST child rollout is complete; future non-SST rollout still requires approved requests/plans plus policy_adoption_manifest or policy_exception_manifest."
     status: "open"
   - id: "automated-policy-validation-pending"
     description: "Current enforcement is operational-review; no dedicated validator checks this registry yet."
     status: "open"
+  - id: "owner-documentation-validation-pending"
+    description: "Request closure now has a control-plane validator proving that child repo owner docs were updated or an exception was recorded for CRs declaring child_repo_mutation_allowed."
+    status: "closed"
+    closure_request: "CR-SST-0104"

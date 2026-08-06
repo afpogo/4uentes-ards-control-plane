@@ -1,0 +1,32 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0117"
+title: "Render Markdown/template view from annotated text"
+status: inbox
+created_at: "2026-07-04"
+requester: "4uentes"
+
+summary: >
+  Convert accepted annotated text intention into a stable Markdown-like or
+  themed rendered view while preserving the semantic selection model for later
+  query and learning use.
+
+source:
+  initiative_id: "INIT-SST-0001"
+  parent_request_id: "CR-SST-0116"
+  jira_epic_key: "SST-27"
+  active_jira_issue_key: "SST-6"
+  jira_subtask_key: "SST-47"
+  reason: >
+    Users need a polished readable result after accepting annotations, without
+    losing the structured intent captured during editing.
+
+scope:
+  solution: "sst"
+  services:
+    - "sst-fend"
+    - "sst-bend"
+    - "4uentes-orchestor"
+  excludes:
+    - "New editor core"
+    - "Unversioned template behavior"

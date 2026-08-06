@@ -1,0 +1,79 @@
+{
+  "issueKey": "SST-49",
+  "before": {
+    "summary": "[SST][INIT-SST-0003][CR-SST-0119] Add configurable sst-extension session capture mode",
+    "status": "En curso",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-07-04T20:44:42.328-0300",
+    "labels": [
+      "ards-sdd",
+      "capture-mode",
+      "control-plane",
+      "cr-sst-0119",
+      "init-sst-0003",
+      "session-capture",
+      "sst-extension"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10094\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10094\",\"key\":\"SST-49\",\"fields\":{\"summary\":\"[SST][INIT-SST-0003][CR-SST-0119] Add configurable sst-extension session capture mode\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-07-04T20:44:42.328-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10006\",\"description\":\"La persona asignada está trabajando actualmente en esta actividad.\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En curso\",\"id\":\"10006\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"ards-sdd\",\"capture-mode\",\"control-plane\",\"cr-sst-0119\",\"init-sst-0003\",\"session-capture\",\"sst-extension\"]}}"
+  },
+  "after": {
+    "summary": "[SST][INIT-SST-0003][CR-SST-0119] Add configurable sst-extension session capture mode",
+    "status": "En curso",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-07-04T21:04:51.573-0300",
+    "labels": [
+      "ards-sdd",
+      "capture-mode",
+      "control-plane",
+      "cr-sst-0119",
+      "init-sst-0003",
+      "session-capture",
+      "sst-extension"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10094\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10094\",\"key\":\"SST-49\",\"fields\":{\"summary\":\"[SST][INIT-SST-0003][CR-SST-0119] Add configurable sst-extension session capture mode\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-07-04T21:04:51.573-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10006\",\"description\":\"La persona asignada está trabajando actualmente en esta actividad.\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En curso\",\"id\":\"10006\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"ards-sdd\",\"capture-mode\",\"control-plane\",\"cr-sst-0119\",\"init-sst-0003\",\"session-capture\",\"sst-extension\"]}}"
+  },
+  "commentResult": {
+    "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10094/comment/10095",
+    "id": "10095",
+    "author": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "body": "CR-SST-0119 / SST-49 - avance de implementacion\n\nResultado local:\n\n* Implementado modo configurable de captura de sesion en `sst-extension`.\n* Modos cubiertos: `auto`, `visual-only`, `text-only`, `prefer-text`.\n* `auto` conserva visual-first con fallback textual.\n* `visual-only` no genera PDF textual silencioso cuando falla la captura visual; deja outcome/warnings sanitizados.\n* `text-only` y `prefer-text` usan camino textual intencional.\n* La preferencia queda en storage local de extension y no cambia el payload de `POST /api/extension/sessions`.\n\nOwner docs / ARDS-SDD:\n\n* `sst-extension/specs/features/sessions.yaml`\n* `sst-extension/docs/00-overview.md`\n* `sst-extension/docs/qa/session-capture-validation.md`\n* Evidencia control-plane:\n\n    * `evidence/requests/CR-SST-0119/implementation-summary.md`\n    * `evidence/requests/CR-SST-0119/validation-results.md`\n    * `evidence/requests/CR-SST-0119/owner-documentation-enforcement.md`\n    \n\nValidacion:\n\n* `sst-extension pnpm.cmd vitest run ...`: PASS, 24 tests.\n* `sst-extension pnpm.cmd check`: PASS, 104 tests + build WXT.\n* `4uentes-orchestor npm.cmd run check`: PASS, owner documentation gate valido para CR-SST-0119.\n\nPendiente antes de cierre Jira:\n\n* QA manual en Chrome de selector y comportamiento runtime de los cuatro modos.\n* Confirmar si se transiciona SST-49 a estado de revision/cierre despues del QA manual.\n\nBoundary:\n\n* No hubo cambios en `node-auth`, `sst-fend` ni `sst-bend`.\n* `CR-SST-0120` / `SST-50` mantiene el contrato de preview image.\n* No se registro contenido privado, raw PDFs, screenshots sensibles, cookies, JWTs ni secretos en Jira/evidencia.\n\n",
+    "updateAuthor": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "created": "2026-07-04T21:04:51.573-0300",
+    "updated": "2026-07-04T21:04:51.573-0300",
+    "jsdPublic": true
+  },
+  "commentBody": "CR-SST-0119 / SST-49 - avance de implementacion\n\nResultado local:\n\n- Implementado modo configurable de captura de sesion en `sst-extension`.\n- Modos cubiertos: `auto`, `visual-only`, `text-only`, `prefer-text`.\n- `auto` conserva visual-first con fallback textual.\n- `visual-only` no genera PDF textual silencioso cuando falla la captura visual; deja outcome/warnings sanitizados.\n- `text-only` y `prefer-text` usan camino textual intencional.\n- La preferencia queda en storage local de extension y no cambia el payload de `POST /api/extension/sessions`.\n\nOwner docs / ARDS-SDD:\n\n- `sst-extension/specs/features/sessions.yaml`\n- `sst-extension/docs/00-overview.md`\n- `sst-extension/docs/qa/session-capture-validation.md`\n- Evidencia control-plane:\n  - `evidence/requests/CR-SST-0119/implementation-summary.md`\n  - `evidence/requests/CR-SST-0119/validation-results.md`\n  - `evidence/requests/CR-SST-0119/owner-documentation-enforcement.md`\n\nValidacion:\n\n- `sst-extension pnpm.cmd vitest run ...`: PASS, 24 tests.\n- `sst-extension pnpm.cmd check`: PASS, 104 tests + build WXT.\n- `4uentes-orchestor npm.cmd run check`: PASS, owner documentation gate valido para CR-SST-0119.\n\nPendiente antes de cierre Jira:\n\n- QA manual en Chrome de selector y comportamiento runtime de los cuatro modos.\n- Confirmar si se transiciona SST-49 a estado de revision/cierre despues del QA manual.\n\nBoundary:\n\n- No hubo cambios en `node-auth`, `sst-fend` ni `sst-bend`.\n- `CR-SST-0120` / `SST-50` mantiene el contrato de preview image.\n- No se registro contenido privado, raw PDFs, screenshots sensibles, cookies, JWTs ni secretos en Jira/evidencia.\n\n",
+  "externalWrite": true
+}

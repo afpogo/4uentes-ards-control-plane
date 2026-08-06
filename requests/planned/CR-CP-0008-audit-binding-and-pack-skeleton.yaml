@@ -1,0 +1,66 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-CP-0008"
+title: "Define local ARDS audit binding and policy enforcement audit pack skeleton"
+status: "planned"
+created_at: "2026-07-10"
+requester: "4uentes"
+summary: >
+  Create the local audit binding and first policy enforcement audit pack
+  skeleton for the ARDS/SDD runtime enforcement MVP.
+control_plane_context:
+  initiative_id: "INIT-CP-0003"
+  parent_initiative_id: "INIT-CP-0001"
+  target_jira_epic_key: "ARDS-1"
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "4uentes-orchestor"
+      via: "local audit binding and pack skeleton"
+      service_kind: "control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+    - service_id: "4uentes-ards-core"
+      via: "future core promotion candidate"
+      service_kind: "ards-standard-source"
+      ards_kind: "control-plane"
+      status: "active"
+  affected_ards:
+    - "audit-runtime"
+    - "policy-enforcement"
+    - "audit-binding"
+required_context:
+  - "evidence/requests/CR-CP-0003/audit-runtime-policy-enforcement-review.md"
+  - "specs/integration/policies.yaml"
+risk:
+  level: "medium"
+  score: 6
+  drivers:
+    - "introduces runtime governance structure"
+    - "must remain read-only/advisory before gates are proven"
+execution:
+  requires_human_approval: true
+  allowed_window: "manual"
+  branch_strategy: "single-control-plane-branch"
+  child_repo_mutation_allowed: false
+  core_repo_mutation_allowed: false
+  implementation_boundary: >
+    Define local binding and skeleton only. Do not promote to core or mutate
+    child repos in this CR.
+jira:
+  role: "mirror"
+  source_of_truth: false
+  project_key: "ARDS"
+  epic_key: "ARDS-13"
+  related_epic_key: "ARDS-1"
+  issue_key: "ARDS-7"
+validation:
+  required_checks:
+    - "4uentes-orchestor: npm.cmd run check"
+  evidence_required:
+    - "audit_binding_summary"
+    - "audit_pack_skeleton_summary"
+    - "validation_results"
+decision:
+  status: "pending"
+  approver: "TODO"

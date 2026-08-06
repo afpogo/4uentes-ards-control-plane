@@ -1,0 +1,73 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-4UENTES-0010"
+title: "Human documentation language remediation"
+status: "inbox"
+created_at: "2026-07-04"
+requester: "4uentes"
+
+business_context: >
+  Human-facing Markdown created during the portfolio publication-readiness track
+  was written partly in English even though the control-plane has an active
+  human documentation language policy requiring Spanish for human Markdown.
+
+requested_change: >
+  Remediate recent human-facing Markdown to Spanish and make the language policy
+  visible from the project documentation views.
+
+expected_outcome: >
+  Recent portfolio/control-plane human docs comply with the active local policy,
+  while YAML, stable identifiers, commands, file names, and technical IDs remain
+  unchanged.
+
+initial_scope:
+  solution: "4uentes"
+  services:
+    - "4uentes-portfolio"
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services:
+    - "4uentes-orchestor"
+  affected_ards:
+    - "human-documentation-language"
+    - "project-doc-views"
+    - "portfolio-publication-readiness"
+  capabilities:
+    - "human-doc-language-remediation"
+
+required_context:
+  - "docs/policies/human-doc-language-policy.md"
+  - "docs/idioma-markdown.md"
+  - "state/policy-links.yaml"
+  - "docs/projects/README.md"
+  - "evidence/requests/CR-4UENTES-0008/positioning-decision.md"
+
+required_checks:
+  - "4uentes-orchestor: npm.cmd run check"
+
+risk:
+  level: "low"
+  score: 3
+  drivers:
+    - "documentation-only remediation"
+    - "stable identifiers must not be translated"
+
+execution:
+  requires_human_approval: false
+  allowed_window: "manual"
+  branch_strategy: "control-plane-only"
+  child_repo_mutation_allowed: false
+
+validation:
+  required_checks:
+    - "4uentes-orchestor: npm.cmd run check"
+  evidence_required:
+    - "language_remediation"
+    - "changed_files_summary"
+    - "validation_results"
+
+decision:
+  status: "pending"
+  approver: "TODO"

@@ -1,0 +1,93 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-4UENTES-0004"
+title: "Portfolio browser smoke baseline"
+status: "planned"
+source_request: "requests/inbox/CR-4UENTES-0004-portfolio-browser-smoke-baseline.yaml"
+created_at: "2026-07-04"
+requester: "4uentes"
+
+summary: >
+  Validate 4uentes-portfolio in a browser using the local preview server and
+  the primary route set documented in the repo owner visual QA checklist.
+
+initial_scope:
+  solution: "4uentes"
+  services:
+    - "4uentes-portfolio"
+  include_optional_services: false
+
+control_plane_context:
+  parent_stabilization_request: "CR-4UENTES-0003"
+  feature_id: "portfolio-browser-smoke-baseline"
+  child_repo: "4uentes-portfolio"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "4uentes-portfolio"
+      via: "browser smoke evidence only"
+      service_kind: "frontend-spa"
+      ards_kind: "frontend-web"
+      status: "active"
+  affected_ards:
+    - "browser-smoke"
+    - "visual-qa"
+    - "publication-readiness"
+  capabilities:
+    - "portfolio-browser-smoke-baseline"
+  risks:
+    - id: "BLANK_OR_BROKEN_ROUTE"
+      severity: "high"
+    - id: "STATIC_ASSET_LOAD_FAILURE"
+      severity: "medium"
+    - id: "PUBLICATION_QA_GAP"
+      severity: "medium"
+
+required_context:
+  - "4uentes-portfolio: docs/qa/visual-checklist.md"
+  - "4uentes-portfolio: docs/qa/stabilization-checklist.md"
+  - "4uentes-portfolio: package.json"
+  - "state/features/portfolio-local-stabilization-baseline.current.yaml"
+
+required_checks:
+  - service_id: "4uentes-portfolio"
+    command: "npm.cmd run check"
+  - service_id: "4uentes-portfolio"
+    command: "npm.cmd run preview"
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check"
+
+risk:
+  level: "medium"
+  score: 5
+  drivers:
+    - "browser QA can reveal route or asset failures"
+    - "publication-readiness evidence"
+    - "no code mutation planned unless smoke reveals a blocker"
+
+execution:
+  requires_human_approval: false
+  allowed_window: "manual"
+  branch_strategy: "control-plane-evidence-only"
+  child_repo_mutation_allowed: false
+  implementation_boundary: >
+    Evidence-only browser smoke. Do not change portfolio code, styling, assets,
+    routing, dependencies, or owner docs in this CR unless a blocking defect is
+    found and a follow-up mutation request is opened.
+
+validation:
+  required_checks:
+    - "4uentes-portfolio: npm.cmd run check"
+    - "Browser smoke routes from docs/qa/visual-checklist.md"
+    - "4uentes-orchestor: npm.cmd run check"
+  evidence_required:
+    - "browser_smoke_results"
+    - "changed_files_summary"
+    - "validation_results"
+
+decision:
+  status: "validated-local"
+  approver: "4uentes"
+  blocker: "none"
+  note: "Initial smoke found direct-route 404s; CR-4UENTES-0005 corrected the local SPA preview fallback and route smoke then passed."

@@ -1,0 +1,20 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0103"
+title: "Add QA harness for private authenticated page capture"
+status: inbox
+created_at: "2026-07-02"
+requester: "4uentes"
+
+business_context: >
+  sst-extension needs reproducible QA for private authenticated page capture
+  without storing real private content, cookies, JWTs or secret plaintext.
+
+requested_change: >
+  Add QA harness and owner documentation for private-page capture scenarios:
+  authenticated fixture, slow page, long scroll, denied permission, unsupported
+  URL and partial failure.
+
+expected_outcome: >
+  Future extension capture regressions can be validated reproducibly with
+  sanitized evidence.

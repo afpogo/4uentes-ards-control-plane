@@ -1,0 +1,78 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0114"
+title: "Implement contextual tagging over text selection"
+status: done
+source_request: "requests/inbox/CR-SST-0114-sst-fend-contextual-text-selection-tagging.yaml"
+planned_request: "requests/planned/CR-SST-0114-sst-fend-contextual-text-selection-tagging.yaml"
+completed_at: "2026-07-04"
+requester: "4uentes"
+
+summary: >
+  Closed the first local runtime cut for contextual tagging over selected text.
+  The Article creation Text tab can now capture a selected text fragment, apply
+  a local LearningContentTag-style content tag and relevance value, and show the
+  annotation as a separate preview from article-level tags.
+
+scope:
+  solution: "sst"
+  services_modified:
+    - "sst-fend"
+    - "4uentes-orchestor"
+  functional_repositories_modified: true
+  runtime_code_modified: true
+
+implementation:
+  initiative_id: "INIT-SST-0001"
+  active_feature_state: "learning-content-tags"
+  jira_epic_key: "SST-27"
+  jira_issue_key: "SST-6"
+  jira_subtask_key: "SST-44"
+  jira_status_observed: "Listo"
+  jira_source_of_truth: false
+  completed_slice: >
+    The Text tab now has local selection annotation controls that keep article
+    tags separate from content-level annotations. The implementation is a local
+    preview and does not persist annotated ranges.
+  not_closed:
+    - "BFF/API annotated selection contract remains in CR-SST-0115."
+    - "Persistence of accepted annotated text context remains in CR-SST-0116."
+    - "Markdown/template rendering remains in CR-SST-0117."
+    - "End-to-end validation remains in CR-SST-0118."
+    - "The richer editor surface/highlight model remains a follow-up UX improvement."
+
+owner_documentation:
+  status: "satisfied"
+  owner_repo: "sst-fend"
+  owner_refs:
+    - "docs/38-learning-workspace-frontend.md"
+    - "specs/38-learning-workspace-frontend.yml"
+    - "docs/tasks/2026-07-04-cr-sst-0114-contextual-text-selection-tagging.md"
+
+validation:
+  status: "validated-local"
+  passed:
+    - "sst-fend npm.cmd test -- ArticleCreateFlow.test.tsx --runInBand"
+    - "sst-fend npm.cmd run check"
+    - "4uentes-orchestor npm.cmd run check"
+  notes:
+    - "sst-fend check passed with existing warnings only."
+    - "Control-plane owner documentation enforcement passed for CR-SST-0114."
+    - "Jira SST-44 was transitioned to Listo through the MCP fallback script."
+
+evidence_refs:
+  - "evidence/requests/CR-SST-0114/intent-summary.md"
+  - "evidence/requests/CR-SST-0114/jira-sync-summary.md"
+  - "evidence/requests/CR-SST-0114/subagent-delegation.md"
+  - "evidence/requests/CR-SST-0114/implementation-summary.md"
+  - "evidence/requests/CR-SST-0114/owner-documentation-summary.md"
+  - "evidence/requests/CR-SST-0114/validation-results.md"
+  - "evidence/requests/CR-SST-0114/jira-sst-44-close-transition-summary.md"
+
+decision:
+  status: "closed-local"
+  approver: "4uentes"
+  note: >
+    CR-SST-0114 closes locally as the first contextual tagging runtime
+    implementation for SST-44. Jira mirror was synchronized to Listo through
+    the MCP fallback script.

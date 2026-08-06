@@ -1,0 +1,114 @@
+{
+  "issueKey": "SST-49",
+  "before": {
+    "summary": "[SST][INIT-SST-0003][CR-SST-0119] Add configurable sst-extension session capture mode",
+    "status": "En curso",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "no-asignado",
+    "updated": "2026-07-04T21:04:51.573-0300",
+    "labels": [
+      "ards-sdd",
+      "capture-mode",
+      "control-plane",
+      "cr-sst-0119",
+      "init-sst-0003",
+      "session-capture",
+      "sst-extension"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10094\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10094\",\"key\":\"SST-49\",\"fields\":{\"summary\":\"[SST][INIT-SST-0003][CR-SST-0119] Add configurable sst-extension session capture mode\",\"assignee\":null,\"resolution\":null,\"updated\":\"2026-07-04T21:04:51.573-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10006\",\"description\":\"La persona asignada está trabajando actualmente en esta actividad.\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En curso\",\"id\":\"10006\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"ards-sdd\",\"capture-mode\",\"control-plane\",\"cr-sst-0119\",\"init-sst-0003\",\"session-capture\",\"sst-extension\"]}}"
+  },
+  "after": {
+    "summary": "[SST][INIT-SST-0003][CR-SST-0119] Add configurable sst-extension session capture mode",
+    "status": "Listo",
+    "statusCategory": "Listo",
+    "resolution": "Listo",
+    "assignee": "no-asignado",
+    "updated": "2026-07-05T10:14:42.927-0300",
+    "labels": [
+      "ards-sdd",
+      "capture-mode",
+      "control-plane",
+      "cr-sst-0119",
+      "init-sst-0003",
+      "session-capture",
+      "sst-extension"
+    ],
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10094\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10094\",\"key\":\"SST-49\",\"fields\":{\"summary\":\"[SST][INIT-SST-0003][CR-SST-0119] Add configurable sst-extension session capture mode\",\"assignee\":null,\"resolution\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/resolution/10000\",\"id\":\"10000\",\"description\":\"Se ha terminado el trabajo relacionado con esta incidencia.\",\"name\":\"Listo\"},\"updated\":\"2026-07-05T10:14:42.927-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10008\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"Finalizada\",\"id\":\"10008\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/3\",\"id\":3,\"key\":\"done\",\"colorName\":\"green\",\"name\":\"Listo\"}},\"labels\":[\"ards-sdd\",\"capture-mode\",\"control-plane\",\"cr-sst-0119\",\"init-sst-0003\",\"session-capture\",\"sst-extension\"]}}"
+  },
+  "transitions": [
+    {
+      "id": "11",
+      "name": "Por hacer",
+      "toStatus": "Tareas por hacer",
+      "toStatusCategory": "Por hacer"
+    },
+    {
+      "id": "21",
+      "name": "En curso",
+      "toStatus": "En curso",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "31",
+      "name": "In Review",
+      "toStatus": "En revisión",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "41",
+      "name": "Listo",
+      "toStatus": "Finalizada",
+      "toStatusCategory": "Listo"
+    }
+  ],
+  "selectedTransition": {
+    "id": "41",
+    "name": "Listo",
+    "toStatus": "Finalizada",
+    "toStatusCategory": "Listo"
+  },
+  "transitionResult": {
+    "success": true
+  },
+  "commentResult": {
+    "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10094/comment/10101",
+    "id": "10101",
+    "author": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "body": "CR-SST-0119 / SST-49 - cierre de alcance\n\nResultado:\n\n* QA manual del usuario confirmado: el selector de modo de captura funciona de forma fluida.\n* SST-49 cumple su objetivo: agregar modo configurable en `sst-extension`.\n* Modos cubiertos: `auto`, `visual-only`, `text-only`, `prefer-text`.\n* Owner docs actualizadas y enforcement ejecutado.\n\nValidacion:\n\n* `sst-extension pnpm.cmd check`: PASS.\n* `4uentes-orchestor npm.cmd run check`: PASS.\n* Owner documentation gate valido para `CR-SST-0119`.\n\nDecision tecnica:\n\n* Los riesgos detectados en revision no se incorporan silenciosamente a SST-49.\n* Se reserva follow-up separado `CR-SST-0121` para hardening de reliability/privacy/limits.\n* `CR-SST-0120` / `SST-50` sigue separado y enfocado en preview image contract.\n\nEvidencia:\n\n* `evidence/requests/CR-SST-0119/closure-decision.md`\n* `evidence/requests/CR-SST-0119/code-review-risk-assessment.md`\n* `requests/planned/CR-SST-0121-sst-extension-session-capture-hardening.yaml`\n\nBoundary:\n\n* Jira es mirror operativo; ARDS/SDD permanece como fuente de verdad.\n* No se incluye contenido privado, raw PDFs, screenshots sensibles, cookies, JWTs ni secretos.\n\n",
+    "updateAuthor": {
+      "self": "https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]",
+      "accountId": "[accountId-redacted]",
+      "emailAddress": "[email-redacted]",
+      "avatarUrls": {
+        "48x48": "[avatar-url-redacted]",
+        "24x24": "[avatar-url-redacted]",
+        "16x16": "[avatar-url-redacted]",
+        "32x32": "[avatar-url-redacted]"
+      },
+      "displayName": "Fuentes Sandferand",
+      "active": true,
+      "timeZone": "America/Buenos_Aires",
+      "accountType": "atlassian"
+    },
+    "created": "2026-07-05T10:14:42.927-0300",
+    "updated": "2026-07-05T10:14:42.927-0300",
+    "jsdPublic": true
+  },
+  "commentBody": "CR-SST-0119 / SST-49 - cierre de alcance\n\nResultado:\n\n- QA manual del usuario confirmado: el selector de modo de captura funciona de forma fluida.\n- SST-49 cumple su objetivo: agregar modo configurable en `sst-extension`.\n- Modos cubiertos: `auto`, `visual-only`, `text-only`, `prefer-text`.\n- Owner docs actualizadas y enforcement ejecutado.\n\nValidacion:\n\n- `sst-extension pnpm.cmd check`: PASS.\n- `4uentes-orchestor npm.cmd run check`: PASS.\n- Owner documentation gate valido para `CR-SST-0119`.\n\nDecision tecnica:\n\n- Los riesgos detectados en revision no se incorporan silenciosamente a SST-49.\n- Se reserva follow-up separado `CR-SST-0121` para hardening de reliability/privacy/limits.\n- `CR-SST-0120` / `SST-50` sigue separado y enfocado en preview image contract.\n\nEvidencia:\n\n- `evidence/requests/CR-SST-0119/closure-decision.md`\n- `evidence/requests/CR-SST-0119/code-review-risk-assessment.md`\n- `requests/planned/CR-SST-0121-sst-extension-session-capture-hardening.yaml`\n\nBoundary:\n\n- Jira es mirror operativo; ARDS/SDD permanece como fuente de verdad.\n- No se incluye contenido privado, raw PDFs, screenshots sensibles, cookies, JWTs ni secretos.\n\n",
+  "externalWrite": true
+}

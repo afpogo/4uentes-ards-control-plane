@@ -1,0 +1,51 @@
+{
+  "initiativeId": "INIT-SST-0003",
+  "parentIssueKey": "SST-50",
+  "results": [
+    {
+      "cr": "CR-SST-0137",
+      "existing": false,
+      "issue": {
+        "key": "SST-67",
+        "summary": "[SST][INIT-SST-0003][CR-SST-0137] Add canonical article preview resolution in sst-bend",
+        "parentKey": "SST-50",
+        "issueType": "Subtask",
+        "source": "created"
+      }
+    },
+    {
+      "cr": "CR-SST-0138",
+      "existing": false,
+      "issue": {
+        "key": "SST-68",
+        "summary": "[SST][INIT-SST-0003][CR-SST-0138] Adopt article preview contract passthrough in node-auth",
+        "parentKey": "SST-50",
+        "issueType": "Subtask",
+        "source": "created"
+      }
+    },
+    {
+      "cr": "CR-SST-0139",
+      "existing": false,
+      "issue": {
+        "key": "SST-69",
+        "summary": "[SST][INIT-SST-0003][CR-SST-0139] Produce consented private preview candidates in sst-extension",
+        "parentKey": "SST-50",
+        "issueType": "Subtask",
+        "source": "created"
+      }
+    },
+    {
+      "cr": "CR-SST-0140",
+      "existing": false,
+      "issue": {
+        "key": "SST-70",
+        "summary": "[SST][INIT-SST-0003][CR-SST-0140] Complete article preview contract adoption in sst-fend",
+        "parentKey": "SST-50",
+        "issueType": "Subtask",
+        "source": "created"
+      }
+    }
+  ],
+  "externalWrite": true
+}

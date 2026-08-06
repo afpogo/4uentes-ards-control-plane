@@ -1,0 +1,111 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0087"
+title: "Start SST tags governance continuity Initiative"
+status: planned
+source_request: "requests/inbox/CR-SST-0087-tags-governance-continuity-initiative.yaml"
+created_at: "2026-06-28"
+requester: "4uentes"
+
+initial_scope:
+  solution: "sst"
+  services: []
+  include_optional_services: false
+
+control_plane_context:
+  initiative_id: "INIT-SST-0001"
+  initiative_file: "initiatives/INIT-SST-0001-tags-governance-continuity.yaml"
+  governing_request: "CR-SST-0087"
+  parent_jira_issue_key: "SST-4"
+  active_jira_issue_key: "SST-6"
+  active_feature_state: "learning-content-tags"
+  active_feature_state_file: "state/features/learning-content-tags.current.yaml"
+  related_feature_state: "sst-tags-governance"
+  related_feature_state_file: "state/features/sst-tags-governance.current.yaml"
+  jira_review_ref: "evidence/requests/CR-SST-0087/jira-mcp-review.md"
+
+impact_analysis:
+  required: true
+  affected_services: []
+  affected_ards:
+    - control-plane
+    - request-lifecycle
+    - evidence
+    - jira-mirror
+  capabilities:
+    - "sst-tags-governance"
+    - "learning-content-tags"
+  risks:
+    - id: JIRA_MCP_BLOCKED
+      severity: medium
+    - id: LOCAL_CLOSURE_RECONCILIATION_PENDING
+      severity: medium
+    - id: NEXT_RUNTIME_SCOPE_NOT_SELECTED
+      severity: medium
+
+required_context:
+  - "state/features/sst-tags-governance.current.yaml"
+  - "state/features/learning-content-tags.current.yaml"
+  - "docs/requests/sst-tags-governance-contract.md"
+  - "evidence/requests/CR-SST-0076/jira-sst-4-parent-close-transition-summary.md"
+  - "evidence/requests/CR-SST-0076/jira-sst-6-next-track-continuity.md"
+  - "AGENTS.md"
+
+required_checks:
+  - service_id: 4uentes-orchestor
+    command: "npm.cmd run check"
+  - service_id: 4uentes-orchestor
+    command: "npm.cmd run check:initiatives"
+
+risk:
+  level: medium
+  score: 5
+  drivers:
+    - id: JIRA_MCP_BLOCKED
+      severity: medium
+    - id: LOCAL_CLOSURE_RECONCILIATION_PENDING
+      severity: medium
+    - id: NEXT_RUNTIME_SCOPE_NOT_SELECTED
+      severity: medium
+
+task_weight:
+  classification: long-context-task
+  risk_level: medium
+  drivers:
+    - JIRA_MCP_BLOCKED
+    - LOCAL_CLOSURE_RECONCILIATION_PENDING
+    - NEXT_RUNTIME_SCOPE_NOT_SELECTED
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  primary_profile: "gpt-5.4-fast-high"
+  fallback_profile: "highest-available-long-context-profile"
+  reason: "The request reconciles cross-request governance and Jira mirror state without runtime mutation."
+
+subagent_deployment_plan:
+  required: false
+  parallelizable: false
+  roles: []
+  fallback: "Main agent review is sufficient because this request is local to ARDS/SDD evidence and planning."
+  evidence_required: true
+
+execution:
+  requires_human_approval: false
+  allowed_window: manual
+  branch_strategy: control-plane-only
+  implementation_boundary: "Local Initiative and planning evidence only; no child repo mutation, no Jira write, and no runtime implementation."
+  jira_read_executed: true
+  jira_write_executed: false
+  jira_write_target:
+    desired_artifact: "No write in this request"
+    desired_initial_status: "not requested"
+  jira_read_blocked_reason: "Atlassian MCP search returned 403 because the app is not installed on the target instance."
+
+decision:
+  status: pending
+  approver: TODO
+
+planner_notes:
+  - "SST-4 and SST-24 are treated as closed based on local evidence dated 2026-06-24."
+  - "SST-6 remains the active next track for learning-content-tags."
+  - "The next implementation CR should define learning-content runtime import/preview before child repo mutation."

@@ -1,0 +1,47 @@
+{
+  "issueKey": "SST-31",
+  "issue": {
+    "summary": "[SST][INIT-SST-0003][CR-SST-0099] Add session snapshot outcomes and warnings",
+    "status": "Listo",
+    "statusCategory": "Listo",
+    "resolution": "Listo",
+    "assignee": "Fuentes Sandferand",
+    "updated": "2026-07-04T14:34:13.729-0300",
+    "labels": [
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0099",
+      "init-sst-0003",
+      "session-capture",
+      "sst-extension"
+    ],
+    "description": "CR: CR-SST-0099  \nInitiative: INIT-SST-0003  \nEpic: SST-29\n\nPurpose:\n\nAdd explicit session snapshot outcome and warning metadata for visual capture, textual fallback, unsupported URLs, permissions, timeouts and failures.\n\nSubtasks / checklist:\n\n- [ ] Definir snapshot.captureMode o snapshot.outcome.\n- [ ] Definir warnings\\[\\] por tab.\n- [ ] Actualizar specs/docs owner de sst-extension.\n- [ ] Actualizar normalizadores de storage.\n- [ ] Actualizar payload hacia node-auth sin romper compatibilidad.\n- [ ] Agregar tests de migracion/normalizacion.\n\nDefinition of Done:\n\n- [ ] PDF visual y PDF textual fallback son distinguibles.\n- [ ] Warnings son per-tab y sanitizados.\n- [ ] Payload antiguo sigue normalizando de forma compatible.\n- [ ] Evidencia central lista rutas owner actualizadas o excepcion aprobada.\n\nOwner documentation gate:\n\n* sst-extension owner ARDS/SDD specs/docs must be updated for any mutated behavior, or an explicit owner-documentation exception must be recorded before closure.\n\nControl-plane source:\n\n* requests/planned/cr-sst-0099-TODO.yaml\n* initiatives/INIT-SST-0003-sst-extension-construction.yaml\n* evidence/requests/CR-SST-0095/jira-cr-backlog-candidates.md\n\nBoundary:\n\n* Jira is an operational mirror; ARDS/SDD remains the source of truth.\n* Do not store private page content, cookies, JWTs or plaintext secrets in Jira or evidence.\n\n",
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10069\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10069\",\"key\":\"SST-31\",\"fields\":{\"summary\":\"[SST][INIT-SST-0003][CR-SST-0099] Add session snapshot outcomes and warnings\",\"description\":\"CR: CR-SST-0099  \\nInitiative: INIT-SST-0003  \\nEpic: SST-29\\n\\nPurpose:\\n\\nAdd explicit session snapshot outcome and warning metadata for visual capture, textual fallback, unsupported URLs, permissions, timeouts and failures.\\n\\nSubtasks / checklist:\\n\\n- [ ] Definir snapshot.captureMode o snapshot.outcome.\\n- [ ] Definir warnings\\\\[\\\\] por tab.\\n- [ ] Actualizar specs/docs owner de sst-extension.\\n- [ ] Actualizar normalizadores de storage.\\n- [ ] Actualizar payload hacia node-auth sin romper compatibilidad.\\n- [ ] Agregar tests de migracion/normalizacion.\\n\\nDefinition of Done:\\n\\n- [ ] PDF visual y PDF textual fallback son distinguibles.\\n- [ ] Warnings son per-tab y sanitizados.\\n- [ ] Payload antiguo sigue normalizando de forma compatible.\\n- [ ] Evidencia central lista rutas owner actualizadas o excepcion aprobada.\\n\\nOwner documentation gate:\\n\\n* sst-extension owner ARDS/SDD specs/docs must be updated for any mutated behavior, or an explicit owner-documentation exception must be recorded before closure.\\n\\nControl-plane source:\\n\\n* requests/planned/cr-sst-0099-TODO.yaml\\n* initiatives/INIT-SST-0003-sst-extension-construction.yaml\\n* evidence/requests/CR-SST-0095/jira-cr-backlog-candidates.md\\n\\nBoundary:\\n\\n* Jira is an operational mirror; ARDS/SDD remains the source of truth.\\n* Do not store private page content, cookies, JWTs or plaintext secrets in Jira or evidence.\\n\\n\",\"assignee\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]\",\"accountId\": \"[accountId-redacted]\",\"emailAddress\":\"[email-redacted]\",\"avatarUrls\":{\"48x48\":\"[avatar-url-redacted]\",\"24x24\":\"[avatar-url-redacted]\",\"16x16\":\"[avatar-url-redacted]\",\"32x32\":\"[avatar-url-redacted]\"},\"displayName\":\"Fuentes Sandferand\",\"active\":true,\"timeZone\":\"America/Buenos_Aires\",\"accountType\":\"atlassian\"},\"resolution\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/resolution/10000\",\"id\":\"10000\",\"description\":\"Se ha terminado el trabajo relacionado con esta incidencia.\",\"name\":\"Listo\"},\"updated\":\"2026-07-04T14:34:13.729-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10008\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"Finalizada\",\"id\":\"10008\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/3\",\"id\":3,\"key\":\"done\",\"colorName\":\"green\",\"name\":\"Listo\"}},\"labels\":[\"ards-sdd\",\"control-plane\",\"cr-sst-0099\",\"init-sst-0003\",\"session-capture\",\"sst-extension\"]}}"
+  },
+  "transitions": [
+    {
+      "id": "11",
+      "name": "Por hacer",
+      "toStatus": "Tareas por hacer",
+      "toStatusCategory": "Por hacer"
+    },
+    {
+      "id": "21",
+      "name": "En curso",
+      "toStatus": "En curso",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "31",
+      "name": "In Review",
+      "toStatus": "En revisión",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "41",
+      "name": "Listo",
+      "toStatus": "Finalizada",
+      "toStatusCategory": "Listo"
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "issueKey": "SST-21",
+  "issue": {
+    "summary": "[SST-4][CR-SST-0073] Tag search and resource binding API",
+    "status": "En revisión",
+    "statusCategory": "En curso",
+    "resolution": "no-detectado",
+    "assignee": "Fuentes Sandferand",
+    "updated": "2026-06-18T20:58:24.108-0300",
+    "labels": [
+      "active-work",
+      "ards-sdd",
+      "control-plane",
+      "cr-sst-0073",
+      "in-review",
+      "sst-tags-governance",
+      "subtask"
+    ],
+    "description": "Subtask under `SST-4` for the next governed execution slice.\n\n* CR: `CR-SST-0073`\n* Scope: `sst-bend` governed tags search, explicit value creation, and resource binding API.\n* Source request: `requests/planned/CR-SST-0073-sst-tags-search-and-resource-binding-api.yaml`\n* Goal: expose `GET /tags/definitions`, `GET /tags/values`, `POST /tags/values`, and `PUT /tags/resources/:resourceType/:resourceId` on top of the global persistence model delivered in `CR-SST-0072`.\n* Risk: high due to public backend API contract, attach/detach semantics, and future BFF/frontend adoption.\n\nExecution guardrails:\n\n* Keep this CR inside `sst-bend` only.\n* Do not modify `4uentes-auth`, `sst-fend`, or `sst-extension` in this CR.\n* Do not change existing public dictionary/article response shapes unless explicitly required by the contract.\n* Preserve `dictionary-tags` validated-live behavior while introducing governed tag API surfaces.\n\nCanonical control-plane refs:\n\n* docs/requests/sst-tags-governance-contract.md\n* state/features/sst-tags-governance.current.yaml\n* requests/planned/CR-SST-0073-sst-tags-search-and-resource-binding-api.yaml\n\n",
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10029\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10029\",\"key\":\"SST-21\",\"fields\":{\"summary\":\"[SST-4][CR-SST-0073] Tag search and resource binding API\",\"description\":\"Subtask under `SST-4` for the next governed execution slice.\\n\\n* CR: `CR-SST-0073`\\n* Scope: `sst-bend` governed tags search, explicit value creation, and resource binding API.\\n* Source request: `requests/planned/CR-SST-0073-sst-tags-search-and-resource-binding-api.yaml`\\n* Goal: expose `GET /tags/definitions`, `GET /tags/values`, `POST /tags/values`, and `PUT /tags/resources/:resourceType/:resourceId` on top of the global persistence model delivered in `CR-SST-0072`.\\n* Risk: high due to public backend API contract, attach/detach semantics, and future BFF/frontend adoption.\\n\\nExecution guardrails:\\n\\n* Keep this CR inside `sst-bend` only.\\n* Do not modify `4uentes-auth`, `sst-fend`, or `sst-extension` in this CR.\\n* Do not change existing public dictionary/article response shapes unless explicitly required by the contract.\\n* Preserve `dictionary-tags` validated-live behavior while introducing governed tag API surfaces.\\n\\nCanonical control-plane refs:\\n\\n* docs/requests/sst-tags-governance-contract.md\\n* state/features/sst-tags-governance.current.yaml\\n* requests/planned/CR-SST-0073-sst-tags-search-and-resource-binding-api.yaml\\n\\n\",\"assignee\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]\",\"accountId\": \"[accountId-redacted]\",\"emailAddress\":\"[email-redacted]\",\"avatarUrls\":{\"48x48\":\"[avatar-url-redacted]\",\"24x24\":\"[avatar-url-redacted]\",\"16x16\":\"[avatar-url-redacted]\",\"32x32\":\"[avatar-url-redacted]\"},\"displayName\":\"Fuentes Sandferand\",\"active\":true,\"timeZone\":\"America/Buenos_Aires\",\"accountType\":\"atlassian\"},\"resolution\":null,\"updated\":\"2026-06-18T20:58:24.108-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10007\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"En revisión\",\"id\":\"10007\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/4\",\"id\":4,\"key\":\"indeterminate\",\"colorName\":\"yellow\",\"name\":\"En curso\"}},\"labels\":[\"active-work\",\"ards-sdd\",\"control-plane\",\"cr-sst-0073\",\"in-review\",\"sst-tags-governance\",\"subtask\"]}}"
+  },
+  "transitions": [
+    {
+      "id": "11",
+      "name": "Por hacer",
+      "toStatus": "Tareas por hacer",
+      "toStatusCategory": "Por hacer"
+    },
+    {
+      "id": "21",
+      "name": "En curso",
+      "toStatus": "En curso",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "31",
+      "name": "In Review",
+      "toStatus": "En revisión",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "41",
+      "name": "Listo",
+      "toStatus": "Finalizada",
+      "toStatusCategory": "Listo"
+    }
+  ]
+}

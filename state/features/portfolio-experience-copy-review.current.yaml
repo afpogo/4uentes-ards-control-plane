@@ -1,0 +1,24 @@
+schema_version: "1.0"
+kind: "feature_state"
+id: "portfolio-experience-copy-review"
+title: "Portfolio Experience Copy Review"
+status: "ards-documented"
+updated_at: "2026-07-04"
+solution_id: "4uentes"
+affected_services:
+  - 4uentes-portfolio
+request_ids:
+  - CR-4UENTES-0014
+capability_refs:
+  - "portfolio-experience-copy-review"
+spec_refs:
+  - "requests/planned/CR-4UENTES-0014-portfolio-experience-copy-review.yaml"
+  - "initiatives/INIT-PORTFOLIO-0001-portfolio-publication-readiness.yaml"
+evidence_refs:
+  - "evidence/requests/CR-4UENTES-0014/experience-copy-review.md"
+  - "evidence/requests/CR-4UENTES-0014/changed-files-summary.md"
+  - "evidence/requests/CR-4UENTES-0014/validation-results.md"
+open_gaps:
+  - "Define contact exposure policy before changing public contact data."
+  - "Run GitHub evidence review only after an explicit repo allowlist is approved."
+  - "Translate or remediate legacy human-facing Markdown covered by the human-doc-language exception."
