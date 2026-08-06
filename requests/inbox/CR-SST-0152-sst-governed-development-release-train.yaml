@@ -1,0 +1,23 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0152"
+title: "Govern SST development release train"
+status: received
+created_at: "2026-08-06"
+requester: "4uentes"
+summary: >
+  Recompose already governed SST deltas from exact observed sources into clean
+  per-repository draft pull requests based on current origin/develop, then
+  promote them serially through Actions, GHCR, infra develop and Argo CD with a
+  human approval before every merge.
+source:
+  kind: "cross-repository-release-reconciliation"
+  historical_baseline_request_id: "CR-SST-0003"
+  evidence_ref: "evidence/requests/CR-SST-0152/promotion-manifest.yaml"
+control_plane_context:
+  initiative_id: "INIT-SST-0004"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  requested_jira_issue_type: "Task"
+  requested_jira_parent: "INIT-SST-0004 primary Epic"
+  jira_write_authorization_status: "not-granted"

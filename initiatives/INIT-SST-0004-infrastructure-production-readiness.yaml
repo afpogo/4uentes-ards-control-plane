@@ -2,8 +2,8 @@ schema_version: "1.0"
 kind: "initiative"
 id: "INIT-SST-0004"
 title: "SST Infrastructure Production Readiness"
-status: "planned"
-updated_at: "2026-06-30"
+status: "active"
+updated_at: "2026-08-06"
 owner_repository: "4uentes-orchestor"
 objective: >
   Govern the SST infrastructure hardening path from the current local
@@ -22,13 +22,21 @@ source_evidence_refs:
   - "evidence/requests/CR-SST-0003/gitops-ghcr-ci-stabilization-2026-06-28.md"
   - "evidence/requests/CR-SST-0020/orchestrator-infra-reconciliation.md"
   - "requests/planned/CR-SST-0003-backend-deployment-workflows-and-manifests.yaml"
+  - "requests/planned/CR-SST-0152-sst-governed-development-release-train.yaml"
+  - "evidence/requests/CR-SST-0152/promotion-manifest.yaml"
+  - "evidence/requests/CR-SST-0152/recomposition-plan.md"
+  - "evidence/requests/CR-SST-0152/jira-readonly-preflight.md"
 model_refs:
   - "specs/initiatives/initiative-model.yaml"
   - "docs/requests/initiative-model.md"
 known_change_requests:
   - "CR-SST-0003"
   - "CR-SST-0020"
+  - "CR-SST-0152"
 candidate_change_requests:
+  - id: "CR-SST-0152"
+    title: "Govern SST development release train"
+    status: "planned"
   - id: "CR-SST-TODO"
     title: "Fix private GHCR pull path and validate imagePullPolicy Always"
     status: "candidate"
@@ -62,8 +70,10 @@ tracking:
     issue_type: "Epic"
     issue_key: "TODO"
     current_status_observed: "not_created"
-    write_status: "not_requested"
-    read_status: "not_requested"
+    write_status: "blocked-pending-enumerated-batch-authorization"
+    read_status: "available-preflight-complete"
+    duplicate_preflight: "no-compatible-issue-found"
+    preflight_evidence_ref: "evidence/requests/CR-SST-0152/jira-readonly-preflight.md"
     intended_epic_name: "SST Infrastructure Production Readiness"
     intended_scope: >
       Mirror this Initiative as a Jira Epic and associate infrastructure CRs as
@@ -81,3 +91,5 @@ open_gaps:
   - "Observability remains basic Kubernetes/Argo CD inspection; no metrics/logging/alerting stack is defined."
   - "Kubernetes RBAC hardening remains TODO in infra specs."
   - "Production endpoint, TLS, release promotion, and rollback policies remain undefined."
+  - "CR-SST-0152 governs a one-time recomposition and serial promotion of existing SST deltas to development; every repository merge and rollout remains human-gated."
+  - "CR-SST-0003 is historical deployment baseline evidence only and does not authorize the CR-SST-0152 child-repository mutations."
