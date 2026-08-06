@@ -1,0 +1,53 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0123"
+title: "Fix sst-fend LearningWorkspace annotated context render"
+status: done
+source_request: "requests/inbox/CR-SST-0123-sst-fend-learning-annotated-context-render-fix.yaml"
+planned_request: "requests/planned/CR-SST-0123-sst-fend-learning-annotated-context-render-fix.yaml"
+completed_at: "2026-07-10"
+requester: "4uentes"
+summary: >
+  Closed the annotated LearningWorkspace context/render fix after producer and
+  BFF capability clarification, local checks and authenticated E2E validation.
+scope:
+  solution: "sst"
+  services_modified: ["sst-fend", "sst-bend", "node-auth", "4uentes-orchestor"]
+  child_repo_mutation_allowed: true
+  runtime_code_modified: true
+implementation:
+  initiative_id: "INIT-SST-0001"
+  parent_request_id: "CR-SST-0118"
+  jira_issue_key: "SST-52"
+  jira_status_observed: "Listo"
+  jira_source_of_truth: false
+  release_status: "not-published"
+owner_documentation:
+  required: true
+  status: satisfied
+  owner_refs:
+    - repo: "sst-fend"
+      paths:
+        - "docs/38-learning-workspace-frontend.md"
+        - "specs/38-learning-workspace-frontend.yml"
+    - repo: "sst-bend"
+      paths:
+        - "docs/capabilities/outbound/learning-workspace-context.md"
+        - "specs/capabilities/outbound/learning-workspace-context.yaml"
+    - repo: "node-auth"
+      paths:
+        - "docs/capabilities/inbound/sst-bend--learning-workspace-context.md"
+        - "specs/capabilities/inbound/sst-bend--learning-workspace-context.yaml"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0123/owner-documentation-summary.md"
+    - "evidence/requests/CR-SST-0123/chrome-authenticated-e2e-pass-2026-07-10.md"
+validation:
+  status: "validated-local-and-authenticated"
+  required_control_plane_check: "npm.cmd run check"
+  passed:
+    - "targeted and full repository checks"
+    - "authenticated preview, accept, context and rendered-template flow"
+decision:
+  status: "closed-local-and-jira-synchronized"
+  approver: "4uentes"
+  note: "Runtime publication was not part of this closure and remains governed by CR-SST-0152."

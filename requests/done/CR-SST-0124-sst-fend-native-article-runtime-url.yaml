@@ -1,0 +1,57 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0124"
+title: "Expose native SST article runtime URL"
+status: done
+source_request: "requests/inbox/CR-SST-0124-sst-fend-native-article-runtime-url.yaml"
+planned_request: "requests/planned/CR-SST-0124-sst-fend-native-article-runtime-url.yaml"
+completed_at: "2026-07-07"
+requester: "4uentes"
+summary: >
+  Closed native text article runtime URL support after frontend, BFF owner
+  documentation, full checks and authenticated manual QA passed.
+scope:
+  solution: "sst"
+  services_modified: ["sst-fend", "node-auth", "4uentes-orchestor"]
+  child_repo_mutation_allowed: true
+  runtime_code_modified: true
+implementation:
+  initiative_id: "INIT-SST-0001"
+  jira_issue_key: "SST-53"
+  jira_status_observed: "Listo"
+  jira_source_of_truth: false
+  release_status: "not-published"
+owner_documentation:
+  required: true
+  status: satisfied
+  owner_refs:
+    - repo: "sst-fend"
+      paths:
+        - "docs/33-articles-frontend.md"
+        - "specs/33-articles-frontend.yml"
+        - "docs/38-learning-workspace-frontend.md"
+        - "specs/38-learning-workspace-frontend.yml"
+    - repo: "node-auth"
+      paths:
+        - "docs/bf/03-routing.md"
+        - "specs/routing.yaml"
+        - "specs/integrations-api.yaml"
+        - "docs/capabilities/inbound/sst-bend--article-text-ingestion.md"
+        - "specs/capabilities/inbound/sst-bend--article-text-ingestion.yaml"
+        - "docs/capabilities/outbound/article-text-ingestion.md"
+        - "specs/capabilities/outbound/article-text-ingestion.yaml"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0124/owner-documentation-summary.md"
+    - "evidence/requests/CR-SST-0124/manual-authenticated-qa-pass.md"
+    - "evidence/requests/CR-SST-0124/jira-sst-53-final-close-transition.md"
+validation:
+  status: "validated-local-and-authenticated"
+  required_control_plane_check: "npm.cmd run check"
+  passed:
+    - "sst-fend targeted tests and full check"
+    - "node-auth build and check"
+    - "manual authenticated native text creation without external URL"
+decision:
+  status: "closed-local-and-jira-synchronized"
+  approver: "4uentes"
+  note: "Runtime publication was not part of this closure and remains governed by CR-SST-0152."

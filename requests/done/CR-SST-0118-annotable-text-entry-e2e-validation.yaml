@@ -1,0 +1,36 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0118"
+title: "Validate annotable text entry end-to-end"
+status: done
+source_request: "requests/inbox/CR-SST-0118-annotable-text-entry-e2e-validation.yaml"
+planned_request: "requests/planned/CR-SST-0118-annotable-text-entry-e2e-validation.yaml"
+completed_at: "2026-07-10"
+requester: "4uentes"
+summary: >
+  Closed the validation-only annotable text-entry slice after CR-SST-0122 and
+  CR-SST-0123 resolved the observed blockers and authenticated E2E passed.
+scope:
+  solution: "sst"
+  services_validated: ["sst-fend", "node-auth", "sst-bend"]
+  child_repo_mutation_allowed: false
+  runtime_code_modified: false
+implementation:
+  initiative_id: "INIT-SST-0001"
+  jira_issue_key: "SST-48"
+  jira_status_observed: "Listo"
+  jira_source_of_truth: false
+owner_documentation:
+  required: false
+  status: "not-required-validation-only"
+  owner_refs: []
+validation:
+  status: "validated-authenticated-e2e"
+  required_control_plane_check: "npm.cmd run check"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0118/final-e2e-closure-after-cr-sst-0123-2026-07-10.md"
+    - "evidence/requests/CR-SST-0123/chrome-authenticated-e2e-pass-2026-07-10.md"
+    - "evidence/requests/CR-SST-0118/jira-sst-48-final-close-transition.md"
+decision:
+  status: "closed-local-and-jira-synchronized"
+  approver: "4uentes"
