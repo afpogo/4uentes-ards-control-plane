@@ -2,12 +2,13 @@ schema_version: "1.0"
 kind: "feature_state"
 id: "learning-content-tags"
 title: "SST Learning Content Tags"
-status: "implemented-local"
-updated_at: "2026-07-10"
+status: "runtime-partial"
+updated_at: "2026-08-06"
 solution_id: "sst"
 affected_services:
   - sst-bend
   - sst-fend
+  - 4uentes-auth
 request_ids:
   - CR-SST-0015
   - CR-SST-0016
@@ -41,11 +42,13 @@ spec_refs:
   - "evidence/requests/CR-SST-0097/consumer-scope-decision.md"
   - "evidence/requests/CR-SST-0097/changed-files-summary.md"
   - "requests/planned/CR-SST-0107-sst-fend-learning-workspace-sheet-adoption.yaml"
+  - "requests/done/CR-SST-0107-sst-fend-learning-workspace-sheet-adoption.yaml"
   - "evidence/requests/CR-SST-0107/frontend-intent-and-boundary.md"
   - "evidence/requests/CR-SST-0107/implementation-discovery.md"
   - "evidence/requests/CR-SST-0107/sst-fend-file-plan.md"
   - "evidence/requests/CR-SST-0107/validation-results.md"
   - "requests/planned/CR-SST-0109-node-auth-learning-workspace-bff-passthrough.yaml"
+  - "requests/done/CR-SST-0109-node-auth-learning-workspace-bff-passthrough.yaml"
   - "evidence/requests/CR-SST-0109/implementation-plan.md"
   - "evidence/requests/CR-SST-0109/changed-files-summary.md"
   - "requests/planned/CR-SST-0110-sst-fend-learning-workspace-text-article-adoption.yaml"
@@ -65,7 +68,10 @@ spec_refs:
   - "requests/planned/CR-SST-0117-render-annotated-text-markdown-template-view.yaml"
   - "requests/done/CR-SST-0117-render-annotated-text-markdown-template-view.yaml"
   - "requests/planned/CR-SST-0118-annotable-text-entry-e2e-validation.yaml"
+  - "requests/done/CR-SST-0118-annotable-text-entry-e2e-validation.yaml"
+  - "requests/done/CR-SST-0123-sst-fend-learning-annotated-context-render-fix.yaml"
   - "requests/planned/CR-SST-0124-sst-fend-native-article-runtime-url.yaml"
+  - "requests/done/CR-SST-0124-sst-fend-native-article-runtime-url.yaml"
 evidence_refs:
   - "evidence/requests/CR-SST-0015/java-spring-course-structure-analysis.md"
   - "evidence/requests/CR-SST-0015/parser-boundary-recommendation.md"
@@ -123,12 +129,28 @@ evidence_refs:
   - "evidence/requests/CR-SST-0125/implementation-analysis-start.md"
   - "evidence/requests/CR-SST-0125/jira-create-start-blocker.md"
   - "evidence/requests/CR-SST-0125/jira-cr-sst-0125-create-start-summary.md"
+  - "evidence/initiatives/INIT-SST-0001/lifecycle-reconciliation-2026-08-06.md"
+active_work:
+  request_id: "CR-SST-0125"
+  jira_issue_key: "SST-55"
+  jira_parent_issue_key: "SST-6"
+  status: "planned-implementation"
+  implementation_repository: "sst-bend"
+  release_train_request_id: null
+completed_work:
+  - {request_id: "CR-SST-0107", status: "done"}
+  - {request_id: "CR-SST-0109", status: "done"}
+  - {request_id: "CR-SST-0118", jira_issue_key: "SST-48", status: "done"}
+  - {request_id: "CR-SST-0123", jira_issue_key: "SST-52", status: "done"}
+  - {request_id: "CR-SST-0124", jira_issue_key: "SST-53", status: "done"}
+  - {request_id: "CR-SST-0126", jira_issue_key: "SST-54", status: "done"}
+  - {request_id: "CR-SST-0127", jira_issue_key: "SST-56", status: "done"}
 open_gaps:
   - "Promote remaining learning-content parser flows beyond the LearningWorkspace first runtime slice."
   - "Define frontend rendering for clase, nota, recordar, ejemplo, image, docs, and code blocks."
   - "Keep generated lab artifacts excluded from ingestion by default."
-  - "Execute CR-SST-0118 to complete end-to-end validation for the annotable text-entry product value proposition."
+  - "CR-SST-0118 completed end-to-end validation for the annotable text-entry product value proposition."
   - "Keep Article creation independent from LearningWorkspace; LearningWorkspace materializes accepted context only after processing documents, PDFs, HTML/text or agent outputs."
   - "CR-SST-0124 / SST-53 is closed: node-auth accepts payload.kind=text without url/sourceUrl, manual authenticated QA passed, and Jira mirror is Finalizada/Listo."
   - "CR-SST-0125 / SST-55 is the active governed sst-bend parser/import normalization implementation cut; its Jira mirror is En curso under SST-6."
-  - "Keep Jira SST-42 through SST-48 synchronized as operational mirrors while ARDS/SDD remains source of truth."
+  - "Keep completed Jira mirrors synchronized while ARDS/SDD remains source of truth; SST-55 is the only active implementation mirror in this lifecycle."

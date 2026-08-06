@@ -1,0 +1,47 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0107"
+title: "Implement sst-fend LearningWorkspace sheet adoption"
+status: done
+source_request: "requests/inbox/CR-SST-0107-sst-fend-learning-workspace-sheet-adoption.yaml"
+planned_request: "requests/planned/CR-SST-0107-sst-fend-learning-workspace-sheet-adoption.yaml"
+completed_at: "2026-07-03"
+requester: "4uentes"
+summary: >
+  Closed the first sst-fend LearningWorkspace sheet adoption after targeted,
+  full frontend and control-plane owner-documentation validation.
+scope:
+  solution: "sst"
+  services_modified: ["sst-fend", "4uentes-orchestor"]
+  child_repo_mutation_allowed: true
+  runtime_code_modified: true
+implementation:
+  initiative_id: "INIT-SST-0001"
+  parent_jira_issue_key: "SST-6"
+  jira_source_of_truth: false
+  release_status: "not-published"
+owner_documentation:
+  required: true
+  status: satisfied
+  owner_refs:
+    - repo: "sst-fend"
+      paths:
+        - "specs/capabilities/inbound/node-auth--learning-workspace-context.yaml"
+        - "docs/capabilities/inbound/node-auth--learning-workspace-context.md"
+        - "specs/38-learning-workspace-frontend.yml"
+        - "docs/38-learning-workspace-frontend.md"
+        - "docs/tasks/2026-07-03-cr-sst-0107-learning-workspace-sheet-adoption.md"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0107/changed-files-summary.md"
+    - "evidence/requests/CR-SST-0107/validation-results.md"
+validation:
+  status: "validated-local"
+  required_control_plane_check: "npm.cmd run check"
+  passed:
+    - "sst-fend targeted LearningWorkspace tests"
+    - "sst-fend lint, build and full check"
+    - "4uentes-orchestor npm.cmd run check with owner-documentation gate"
+decision:
+  status: "closed-local"
+  approver: "4uentes"
+  note: "Runtime publication was not part of this closure and remains governed by CR-SST-0152."

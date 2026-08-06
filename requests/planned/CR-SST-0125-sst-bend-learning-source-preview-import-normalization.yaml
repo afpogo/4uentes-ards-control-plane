@@ -29,6 +29,40 @@ control_plane_context:
   jira_role: "mirror"
   jira_source_of_truth: false
 
+agent_execution:
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  task_weight: "complex-high-risk-task"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5"
+  fallback_reasoning_effort: "high"
+  fallback_rule: >
+    Use the fallback only when Sol capacity is unavailable and the reduced
+    profile preserves the preview-only, ownership and security gates. Otherwise
+    atomize further or block; do not silently degrade.
+  policy_refs:
+    - "specs/integration/policies.yaml"
+    - "docs/policies/agent-model-selection-policy.md"
+    - "docs/policies/agent-resource-degradation-policy.md"
+    - "docs/policies/agent-task-atomization-policy.md"
+    - "docs/policies/agent-delegation-policy.md"
+    - "docs/policies/agent-context-management-policy.md"
+    - "docs/policies/agent-architecture-boundary-policy.md"
+    - "docs/policies/owner-documentation-authority-policy.md"
+  subagent_deployment_plan:
+    mode: "bounded-read-only-and-validation"
+    allowed_units:
+      - "inventory the existing sst-bend delta against the approved request boundary"
+      - "run or observe deterministic validation commands"
+    retained_by_primary_agent:
+      - "contract and architecture decisions"
+      - "security and sensitive-data review"
+      - "scope approval, merge and rollout decisions"
+    verification: "Primary agent verifies every delegated result against owner docs, diffs and checks."
+  execution_status: "pending-separate-implementation"
+
 impact_analysis:
   required: true
   affected_services:
