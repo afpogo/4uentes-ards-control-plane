@@ -24,6 +24,11 @@ Usar el control-plane en este orden:
    vez de comportamiento runtime de producto.
 5. Solo despues de eso, cambiar los repos funcionales.
 
+Cuando la rama fuente mezcla varios cambios, agregar un manifest de
+recomposicion. La semantica de `path_allowlist`, `hunk_rules` y
+`explicit_exclusions` se explica en
+[Allowlists De Recomposicion Y Release](release-allowlists.md).
+
 ## Para Que Sirve Cada Artefacto
 
 ### `request`
