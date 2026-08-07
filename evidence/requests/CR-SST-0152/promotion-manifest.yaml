@@ -3,7 +3,7 @@ kind: "sst_development_promotion_manifest"
 id: "CR-SST-0152-promotion"
 request_id: "CR-SST-0152"
 initiative_id: "INIT-SST-0004"
-status: "blocked-pending-stable-allowlist-amendment-merge"
+status: "blocked-pending-learning-preview-allowlist-amendment-merge"
 observed_at: "2026-08-07"
 target_environment: "development"
 
@@ -26,6 +26,11 @@ control_plane_history:
     pull_request: "https://github.com/afpogo/4uentes-ards-control-plane/pull/4"
     merge_commit_sha: "37065f3c7e4fb9f8ff104d5aba50410022b62961"
     evidence_ref: "evidence/requests/CR-SST-0152/minimal-train-amendment-2026-08-06.md"
+  stable_allowlist_amendment:
+    status: "merged"
+    pull_request: "https://github.com/afpogo/4uentes-ards-control-plane/pull/5"
+    merge_commit_sha: "0100da1cdebf610a7dc27f6716b348e5eff1e34c"
+    evidence_ref: "evidence/requests/CR-SST-0152/stable-allowlist-gap-2026-08-07.md"
 
 historical_baseline:
   request_id: "CR-SST-0003"
@@ -80,7 +85,7 @@ repositories:
       - "db/models/articulo.js"
       - "db/models/index.js"
       - "src/apps/sst/domain/learning-workspaces/**"
-      - "src/apps/sst/application/learning-workspaces/{accept-learning-source,reject-learning-source}.usecase.js"
+      - "src/apps/sst/application/learning-workspaces/{accept-learning-source,preview-learning-source,reject-learning-source}.usecase.js"
       - "src/apps/sst/infrastructure/db/postgres/learning-workspaces/sequelize-learning-workspace.repository.js"
       - "src/apps/sst/presentation/schemas/learning-workspace.dto.js"
       - "src/apps/sst/application/articulos/{create-articulo,create-extension-article,create-extension-session,create-extension-text-article,get-extension-session-deploy,list-articulos,update-articulo}.usecase.js"
@@ -115,7 +120,8 @@ repositories:
       - {path: "db/migrations/20260712090000-create-article-preview-resolutions.js", reason: "preview migration deferred"}
       - {path: "db/models/article-preview-resolution.js", reason: "preview model deferred"}
       - {path: "src/apps/sst/**/article-preview-resolution*", reason: "preview runtime deferred"}
-      - {path: "src/apps/sst/**/preview-*", reason: "preview runtime deferred"}
+      - {path: "src/apps/sst/application/articulos/preview-*", reason: "article preview runtime deferred; Learning source preview remains allowlisted"}
+      - {path: "src/apps/sst/presentation/schemas/preview-candidate.dto.js", reason: "article preview DTO deferred"}
       - {path: "scripts/test-article-preview-resolution.js", reason: "preview cohort deferred"}
       - {path: ".github/workflows/**", reason: "historical workflows excluded"}
       - {path: "example.png", reason: "unreferenced image excluded"}

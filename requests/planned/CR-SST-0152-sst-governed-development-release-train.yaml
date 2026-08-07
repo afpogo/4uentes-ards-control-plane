@@ -175,10 +175,11 @@ rollback:
     sst-fend: "develop-164c19cfcb88"
 
 decision:
-  status: "blocked-pending-stable-allowlist-amendment-merge"
+  status: "blocked-pending-learning-preview-allowlist-amendment-merge"
   approver: "human-direct-execution-request-2026-08-07"
   approval_evidence: "evidence/requests/CR-SST-0152/execution-start-2026-08-07.md"
   blocker_evidence: "evidence/requests/CR-SST-0152/stable-allowlist-gap-2026-08-07.md"
+  current_blocker_evidence: "evidence/requests/CR-SST-0152/learning-preview-allowlist-gap-2026-08-07.md"
   ordering_deviation: >
     PR #3 merged before this minimal-train correction. The deviation is
     explicit and no child-repository mutation is authorized by that merge for
