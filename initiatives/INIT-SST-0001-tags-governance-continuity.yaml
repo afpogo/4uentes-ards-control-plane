@@ -78,6 +78,7 @@ source_evidence_refs:
   - "evidence/requests/CR-SST-0126/jira-sync-summary.md"
   - "evidence/requests/CR-SST-0126/authenticated-visual-qa-2026-07-10.md"
   - "evidence/initiatives/INIT-SST-0001/lifecycle-reconciliation-2026-08-06.md"
+  - "evidence/requests/CR-SST-0152/minimal-train-amendment-2026-08-06.md"
   - "state/features/sst-tags-governance.current.yaml"
   - "state/features/learning-content-tags.current.yaml"
 model_refs:
@@ -110,6 +111,8 @@ known_change_requests:
   - "CR-SST-0126"
   - "CR-SST-0127"
   - "CR-SST-0136"
+  - "CR-SST-0153"
+  - "CR-SST-0154"
 candidate_change_requests:
   - id: "CR-SST-0088"
     title: "Define learning-content source and document model boundary"
@@ -183,6 +186,12 @@ candidate_change_requests:
   - id: "CR-SST-0136"
     title: "Repair sst-fend article create validation gate drift"
     status: "done"
+  - id: "CR-SST-0153"
+    title: "Separate learning preview from accepted context"
+    status: "planned"
+  - id: "CR-SST-0154"
+    title: "Classify learning source presentation types"
+    status: "planned"
 discovered_change_requests: []
 tracking:
   jira:
@@ -225,6 +234,9 @@ tracking:
     active_preview_import_request_id: "CR-SST-0125"
     active_preview_import_issue_key: "SST-55"
     active_preview_import_status_observed: "En curso"
+    proposed_release_train_subtasks:
+      - {request_id: "CR-SST-0153", parent_issue_key: "SST-6", issue_key: "TODO", write_status: "not-authorized"}
+      - {request_id: "CR-SST-0154", parent_issue_key: "SST-6", issue_key: "TODO", write_status: "not-authorized"}
     associated_issue_keys:
       - "SST-4"
       - "SST-6"
@@ -305,4 +317,5 @@ open_gaps:
   - "CR-SST-0126 / SST-54 completed the retroactive sst-sheet-workspace-ui reconciliation and is Listo after authenticated desktop/mobile QA."
   - "CR-SST-0127 / SST-56 completed the separate created Text kind-label remediation and is Listo."
   - "2026-08-06 lifecycle reconciliation confirms CR-SST-0125 / SST-55 as the only active implementation slice under SST-6; CR-SST-0107, CR-SST-0109, CR-SST-0118, CR-SST-0123 and CR-SST-0124 have terminal local records."
+  - "2026-08-06 CR-SST-0153 and CR-SST-0154 were planned as frontend-only release-train fixes under INIT-SST-0001 / SST-6; Jira creation and child-repo mutation remain blocked pending separate approvals."
   - "INIT-SST-0001 now has Jira epic SST-27; future related tickets should be associated to this epic when Jira hierarchy allows it."

@@ -1,116 +1,128 @@
-# Plan De Recomposicion Y Promocion A Development
+# Plan Del Tren SST Estable Sin Extension Ni Preview
 
 ## Resultado Esperado
 
-`CR-SST-0152` publicara PRs draft pequenos y auditables desde el
-`origin/develop` vigente de cada repo, sin reutilizar las ramas historicas
-SST-26 ni modificar sus worktrees sucios. El merge del PR del control plane
-aprueba solamente el inicio de la recomposicion. Cada merge posterior conserva
-un gate humano independiente.
+`CR-SST-0152` publica un tren minimo `sst-bend -> 4uentes-auth -> sst-fend`.
+Los drafts se pueden preparar en paralelo despues del merge humano de la
+enmienda del control plane, pero se fusionan y despliegan en forma serial.
+`sst-extension`, `CR-SST-0120`, `CR-SST-0137` a `CR-SST-0140` y toda migracion,
+DTO, contrato o UI preview quedan diferidos. `CR-SST-0149` se publica aparte al
+final.
+
+## Desviacion De Orden
+
+El PR #3 ya fue fusionado antes de registrar esta reduccion de alcance. No se
+reescribe historia: la desviacion queda documentada y una nueva enmienda del
+control plane debe recibir merge humano antes de mutar repos hijos. El merge de
+#3 no habilita extension ni preview y no reemplaza las aprobaciones por merge.
 
 ## Gate Cero
 
-1. Merge humano del PR del control plane con `CR-SST-0152`, su manifest y este
-   plan.
-2. Fetch del repo hijo y verificacion de que `origin/develop` coincide con el
-   SHA base del manifest; cualquier cambio exige actualizar evidencia antes de
-   reconstruir.
-3. Creacion de un worktree aislado por repo y rama de release.
-4. Inventario del source exacto y seleccion por archivo/hunk contra el CR owner.
-5. Escaneo de secretos, owner docs y `git diff --check` antes de tests.
+1. Validar y fusionar humanamente la enmienda del tren minimo.
+2. Repetir el preflight Jira y obtener autorizacion para un lote enumerado antes
+   de crear o transicionar issues.
+3. Fetch de cada repo hijo y comparacion de `origin/develop` con el SHA del
+   manifest.
+4. Si una base cambio, crear un worktree nuevo y recomponer; no rebasar
+   worktrees historicos sucios.
+5. Preservar el worktree parcial de extension sin commit, push, borrado ni
+   limpieza.
 
-## Ramas Y Unidades
+## Jira Propuesto
+
+El lote requiere autorizacion explicita y no incluye comentarios, links,
+reparenting, cierres ni transiciones adicionales:
+
+1. Epic de `INIT-SST-0004`.
+2. Tarea de `CR-SST-0152` bajo esa Epic y transicion a `En curso`.
+3. Subtask de `CR-SST-0153` bajo `SST-6` y transicion a `En curso`.
+4. Subtask de `CR-SST-0154` bajo `SST-6` y transicion a `En curso`.
+
+Jira sigue siendo espejo; el control plane es source of truth.
+
+## Ramas Y Commits
 
 ### sst-bend
 
 Rama `release/CR-SST-0152/sst-bend-development-reconciliation`.
 
-Las unidades de commit se separan en annotations de LearningWorkspace,
-semantica/retiro de filtros, convergencia Plaud y cohorte preview. No se hace
-cherry-pick de los commits fuente: mezclan CRs, workflows y artefactos sin
-lifecycle. `CR-SST-0125`, `example.png`, el retiro de workflow sin request, el
-ruido de formato y cualquier hunk no allowlisted quedan fuera.
-
-La cohorte preview `CR-SST-0137` permanece draft hasta completar su cobertura
-HTTP autenticada y probar compatibilidad serial con auth, frontend y extension.
+Los commits separan Learning annotations, semantica/retiro de `/filterArts` y
+convergencia Plaud. Quedan fuera `CR-SST-0125`, preview `CR-SST-0137`, su
+migracion, workflows historicos, `example.png` y ruido de `package.json`.
 
 ### 4uentes-auth
 
 Rama `release/CR-SST-0152/4uentes-auth-development-reconciliation`.
 
-Los commits separan limites de body, passthrough LearningWorkspace, semantica
-de articulos y passthrough de preview. `tmp-bf-dev.err`, `tmp-bf-dev.log`,
-`.env`, keys, logs y evidencia runtime no se leen ni se copian. El workflow
-SST-26 queda fuera salvo que otro lifecycle lo allowliste de forma explicita.
-
-`CR-SST-0138` permanece draft y dependiente de `CR-SST-0137`; requiere QA de
-401/403, account scope, sanitizacion upstream y preview antes de merge.
+Se conserva el commit local seguro de body limits y se agregan unidades de
+Learning passthrough y article semantics. Quedan fuera `CR-SST-0138`, logs,
+env, keys y workflows historicos.
 
 ### sst-fend
 
 Rama `release/CR-SST-0152/sst-fend-development-reconciliation`.
 
-Los commits separan sheet/LearningWorkspace, semantica de articulos, adopcion
-preview y loop de Home. Se bloquean los pilotos y bugfixes con
-`request_id: TODO`, los hunks visuales no gobernados y el delta SST-26. Las
-declaraciones CSS se regeneran desde el arbol recompuesto para evitar archivos
-huérfanos.
+Los commits separan sheet/Learning base, `CR-SST-0153`, `CR-SST-0154`, article
+semantics y Home loop. Los dos task reports de los fixes deben reemplazar
+`request_id: TODO` por su lifecycle real. Quedan fuera preview
+`CR-SST-0120/0140`, `SstInfoPill`, hunks de formato y artefactos sin lifecycle.
 
-`CR-SST-0149 / SST-74` usa la rama independiente
-`fix/SST-74/CR-SST-0149/signup-responsive-structure` y un draft separado con
-sus ocho paths observados. Se rebasa sobre el nuevo `develop` despues del tren
-principal; no se mezcla con `CR-SST-0152`.
+### CR-SST-0149
 
-### sst-extension
+Solo despues del merge del frontend principal se crea
+`fix/SST-74/CR-SST-0149/signup-responsive-structure` desde el nuevo `develop`.
+El draft captura exclusivamente las ocho rutas inventariadas en el manifest.
 
-Draft A usa `reconcile/SST-29/extension-governed-runtime` para captura base,
-kind semantico, Web explicito y owner docs. Draft B se apila en
-`feat/SST-29/private-session-hardening` para permission lease y preview
-privada.
+## Validacion Antes De Cada Draft
 
-Draft B no puede mergearse hasta cerrar `CR-SST-0137`, `CR-SST-0138` y
-`CR-SST-0139`, implementar resize/re-encode y validacion acotada de imagen, y
-aprobar `CR-SST-0103`. La captura PNG no referenciada que contiene una URL
-concreta queda excluida.
-
-### sst-4uentes-infra
-
-El inventario no encontro un delta infra allowlisted para `CR-SST-0152`; no se
-crea un PR manual. Los commits automaticos de tags producidos por los workflows
-de app se registran como evidencia de rollout. Si aparece un delta manual, debe
-tener CR y allowlist propios antes de mutar infra.
-
-## Validacion
-
-- `sst-bend`: suites LearningWorkspace/tags/article-kind/preview/filter/Plaud,
-  scripts contractuales, build, check y migraciones up/down/up en DB efimera.
-- `4uentes-auth`: build, check y los scripts `verify-*` contractuales.
-- `sst-fend`: tests LearningWorkspace/Articles/Home/preview, CSS types y check.
+- `sst-bend`: LearningWorkspace, tag engine, article-kind, retiro de filtros,
+  scripts semanticos de extension, atomicidad/convergencia Plaud, build, check y
+  migraciones up/down/up en DB efimera.
+- `4uentes-auth`: build, check y scripts de Text/Web nativo, semantica de
+  sesiones, quick-save y retiro de legacy filters.
+- `sst-fend`: suites LearningWorkspace, ArticleCreateFlow, Articles y Home,
+  `css:types:check` y check completo.
 - `CR-SST-0149`: `RegisterFormLayout.test.ts` y check completo.
-- `sst-extension`: test, build, check, diff check y QA especifica de permisos,
-  captura, consentimiento, presupuesto y retry.
-- todos: owner docs, secret scan, diff allowlist y comparacion source/candidate.
-- control plane: `npm run check` antes de cualquier cierre local.
+- Todos: owner docs, comparacion source/candidate, `git diff --check`, escaneo
+  de secretos y commits Conventional con footers `Refs` y `CR`.
 
 ## Merge Y Rollout
 
-El orden es backend, auth, frontend, extension A, CR-SST-0149 y finalmente
-extension B cuando sus gates cierren. Antes de cada merge se solicita una nueva
-aprobacion. Tras cada merge se espera workflow exitoso, imagen
-`develop-<sha>`/digest, commit de tag en infra, checks infra, Argo
-`Synced/Healthy`, imagen efectiva y smokes del contrato correspondiente.
+Cada paso requiere aprobacion humana independiente:
 
-No se usa `workflow_dispatch`, mutacion Kubernetes directa, sync forzado de
-Argo ni recreacion del cluster.
+1. `sst-bend`;
+2. `4uentes-auth`;
+3. `sst-fend`;
+4. `CR-SST-0149`.
 
-## Rollback
+Tras cada merge se verifica workflow de push a `develop`, imagen
+`develop-<sha>` y digest, commit automatico de tag en infra, Argo CD
+`Synced/Healthy`, imagen efectiva y smokes aplicables: health, JWKS/401,
+login-refresh-logout, BFF a backend, Learning accept/context, article semantics,
+filtro retirado y UI objetivo.
 
-Una regresion se revierte mediante cambio Git auditado de pins y reconciliacion
-normal de Argo:
+No se crea PR infra manual, no se usa `workflow_dispatch`, no se muta
+Kubernetes directamente y no se fuerza Argo.
+
+## Interfaces
+
+No se disenan APIs nuevas. Se preserva
+`POST /4uentes/v1/learning-workspaces/sources/preview` y la separacion entre
+preview, accept y accepted context. `CR-SST-0153` modifica solo presentacion y
+estado frontend. `CR-SST-0154` usa los tipos existentes `manual_text`,
+`article_draft` y `article`; no cambia DTOs ni endpoints.
+
+## Cierre Y Rollback
+
+`CR-SST-0153`, `CR-SST-0154` y `CR-SST-0152` se cierran solo despues del rollout
+y E2E live. Las transiciones Jira a `Listo` necesitan otro lote aprobado. El PR
+final del control plane registra PRs, SHAs, workflows, imagenes, infra, Argo,
+smokes y rollback.
+
+Los pins auditados son:
 
 - bend `develop-8d36a91832a3`;
 - auth `develop-82f84da4a99f`;
 - frontend `develop-164c19cfcb88`.
 
-Los fallos contractuales, de secretos, migracion o tests detienen el tren. Solo
-se reintentan jobs cuando la evidencia demuestra un fallo transitorio.
+`CR-SST-0125` continua aparte desde el `develop` reconciliado.
