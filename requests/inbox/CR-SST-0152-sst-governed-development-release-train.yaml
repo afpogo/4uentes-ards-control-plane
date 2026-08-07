@@ -1,15 +1,15 @@
 schema_version: "1.0"
 phase: 1
 id: "CR-SST-0152"
-title: "Govern SST development release train"
+title: "Govern minimal SST development release train"
 status: received
 created_at: "2026-08-06"
 requester: "4uentes"
 summary: >
-  Recompose already governed SST deltas from exact observed sources into clean
-  per-repository draft pull requests based on current origin/develop, then
-  promote them serially through Actions, GHCR, infra develop and Argo CD with a
-  human approval before every merge.
+  Recompose the stable sst-bend, 4uentes-auth and sst-fend deltas into clean
+  draft pull requests, then promote them serially with a human approval before
+  every merge. Defer sst-extension and the complete preview cohort; publish
+  CR-SST-0149 separately after the main frontend merge.
 source:
   kind: "cross-repository-release-reconciliation"
   historical_baseline_request_id: "CR-SST-0003"
@@ -21,3 +21,11 @@ control_plane_context:
   requested_jira_issue_type: "Task"
   requested_jira_parent: "INIT-SST-0004 primary Epic"
   jira_write_authorization_status: "not-granted"
+scope_exclusions:
+  - "sst-extension"
+  - "CR-SST-0120"
+  - "CR-SST-0137"
+  - "CR-SST-0138"
+  - "CR-SST-0139"
+  - "CR-SST-0140"
+  - "all preview migrations, DTOs and UI"

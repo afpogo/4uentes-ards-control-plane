@@ -1,0 +1,17 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0154"
+title: "Classify learning source presentation types"
+status: inbox
+created_at: "2026-08-06"
+requester: "4uentes"
+business_context: >
+  The frontend release candidate contains a source-type presentation fix whose
+  previous task artifact had request_id TODO. Manual text, article drafts and
+  persisted articles must be distinguishable without inventing new contracts.
+requested_change: >
+  Govern frontend classification using the existing manual_text,
+  article_draft and article types only.
+expected_outcome: >
+  LearningWorkspace renders and routes each existing source type consistently
+  without DTO, endpoint or persistence changes.

@@ -1,0 +1,18 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0153"
+title: "Separate learning preview from accepted context"
+status: inbox
+created_at: "2026-08-06"
+requester: "4uentes"
+business_context: >
+  The stable release candidate contains a frontend state/presentation fix whose
+  previous task artifact had request_id TODO. Without a governed lifecycle, a
+  preview can appear to feed accepted LearningWorkspace context.
+requested_change: >
+  Govern the frontend-only separation so preview data is never presented or
+  consumed as accepted context. Preserve the existing preview, accept and
+  context APIs and their backend semantics.
+expected_outcome: >
+  Preview remains inspectable, while only explicit accept results can populate
+  accepted LearningWorkspace context.

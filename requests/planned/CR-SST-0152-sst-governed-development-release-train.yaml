@@ -1,16 +1,15 @@
 schema_version: "1.0"
 phase: 2
 id: "CR-SST-0152"
-title: "Govern SST development release train"
+title: "Govern minimal SST development release train"
 status: planned
 source_request: "requests/inbox/CR-SST-0152-sst-governed-development-release-train.yaml"
 created_at: "2026-08-06"
 requester: "4uentes"
 summary: >
-  Govern clean recomposition, validation, human-approved merge and serial
-  development rollout of existing SST deltas in sst-bend, 4uentes-auth,
-  sst-fend and sst-extension. The infra repository is conditional and may be
-  mutated manually only when a separately governed allowlisted delta exists.
+  Recompose, validate and serially promote the minimum stable SST train from
+  sst-bend through 4uentes-auth to sst-fend. Browser extension work and the
+  preview cohort are deferred; CR-SST-0149 remains a separate frontend draft.
 
 control_plane_context:
   initiative_id: "INIT-SST-0004"
@@ -19,6 +18,8 @@ control_plane_context:
   historical_baseline_role: "deployment-workflow-and-gitops-evidence-only"
   promotion_manifest: "evidence/requests/CR-SST-0152/promotion-manifest.yaml"
   recomposition_plan: "evidence/requests/CR-SST-0152/recomposition-plan.md"
+  amendment_evidence: "evidence/requests/CR-SST-0152/minimal-train-amendment-2026-08-06.md"
+  related_frontend_request_ids: ["CR-SST-0153", "CR-SST-0154"]
   jira_role: "mirror"
   jira_source_of_truth: false
   jira_epic_key: "TODO"
@@ -35,9 +36,8 @@ agent_execution:
   fallback_profile: "gpt-5.5"
   fallback_reasoning_effort: "high"
   fallback_rule: >
-    A missing Sol allocation is resource degradation. Preserve all security,
-    ownership, release and evidence gates; atomize or block if the fallback
-    cannot do so safely.
+    Preserve all auth, contract, owner-documentation and release gates; atomize
+    or block if the fallback cannot do so safely.
   policy_refs:
     - "specs/integration/policies.yaml"
     - "docs/policies/agent-model-selection-policy.md"
@@ -50,15 +50,8 @@ agent_execution:
     - "docs/policies/work-tracker-control-plane-authority-policy.md"
     - "docs/policies/jira-cr-mirror-hierarchy-policy.md"
   subagent_deployment_plan:
-    mode: "bounded-by-repository"
-    delegated_units:
-      - "read-only inventory and source-to-base path mapping"
-      - "deterministic repository validation"
-      - "read-only workflow and rollout observation"
-    retained_by_primary_agent:
-      - "architecture, contract, security and sensitive-data decisions"
-      - "lifecycle, Jira writes, merge approval and rollback decisions"
-      - "final verification against manifests, owner docs, diffs and checks"
+    mode: "none"
+    reason: "Current execution policy disables delegation; auth, contracts and ownership remain in the primary agent."
 
 impact_analysis:
   required: true
@@ -66,20 +59,17 @@ impact_analysis:
     - {service_id: "sst-bend", via: "recomposed backend release candidate", service_kind: "backend-api", ards_kind: "backend-service", status: "active"}
     - {service_id: "4uentes-auth", via: "recomposed auth/BFF release candidate", service_kind: "backend-bff", ards_kind: "backend-service", status: "active"}
     - {service_id: "sst-fend", via: "recomposed frontend release candidate", service_kind: "frontend-web", ards_kind: "frontend-web", status: "active"}
-    - {service_id: "sst-extension", via: "two gated extension release candidates", service_kind: "browser-extension", ards_kind: "frontend-extension", status: "optional-active"}
-    - {service_id: "sst-4uentes-infra", via: "conditional allowlisted GitOps prerequisite and automated image-tag evidence", service_kind: "infra-gitops", ards_kind: "infra-gitops", status: "active"}
+    - {service_id: "sst-4uentes-infra", via: "automatic image-tag evidence only", service_kind: "infra-gitops", ards_kind: "infra-gitops", status: "observe-only"}
     - {service_id: "4uentes-orchestor", via: "request lifecycle, release gates and evidence", service_kind: "control-plane", ards_kind: "control-plane", status: "active"}
   affected_ards:
     - "release-promotion"
     - "child-repo-owner-documentation"
     - "learning-workspace-context"
     - "article-persisted-filters"
-    - "article-preview-resolution-v1"
-    - "browser-extension-session-ingestion"
+    - "article-text-ingestion"
     - "gitops-rollout-evidence"
   risks:
     - {id: "MIXED_HISTORICAL_BRANCH_SCOPE", severity: critical}
-    - {id: "PREVIEW_COHORT_SERIAL_INCOMPATIBILITY", severity: critical}
     - {id: "AUTH_OR_SECRET_EXPOSURE", severity: critical}
     - {id: "MIGRATION_OR_ROLLBACK_FAILURE", severity: critical}
     - {id: "UNAPPROVED_RUNTIME_PROMOTION", severity: critical}
@@ -87,30 +77,39 @@ impact_analysis:
 
 execution:
   requires_human_approval: true
-  approval_model: "control-plane-merge-approves-plan; every child merge requires a new human approval"
+  approval_model: "minimal-train control-plane amendment merge approves recomposition; every child merge requires a new approval"
   allowed_window: "manual-gated"
-  branch_strategy: "isolated-worktree-from-current-origin-develop"
+  branch_strategy: "fresh-isolated-worktree-from-revalidated-origin-develop"
   child_repo_mutation_allowed: true
   child_repo_mutation_targets:
     - {service_id: "sst-bend", local_path_ref: "environments/local/bindings.local.yaml#sst-bend"}
     - {service_id: "4uentes-auth", local_path_ref: "environments/local/bindings.local.yaml#4uentes-auth"}
     - {service_id: "sst-fend", local_path_ref: "environments/local/bindings.local.yaml#sst-fend"}
-    - {service_id: "sst-extension", local_path_ref: "environments/local/bindings.local.yaml#sst-extension"}
-    - {service_id: "sst-4uentes-infra", local_path_ref: "environments/local/bindings.local.yaml#sst-4uentes-infra", condition: "separate-governed-allowlisted-delta-only"}
   excluded_repositories:
-    - {service_id: "sst-chatbot", reason: "Not selected, not a cluster workload and no authorized deployable delta exists."}
+    - {service_id: "sst-extension", reason: "Explicitly deferred; preserve its partial worktree without commit, push or deletion."}
+    - {service_id: "sst-4uentes-infra", reason: "No manual PR; consume only automatic image-tag commits from app workflows."}
+    - {service_id: "sst-chatbot", reason: "Not selected and no authorized deployable delta exists."}
     - {service_id: "4uentes-ards-core", reason: "Canonical standard source is outside this lifecycle."}
+  deferred_request_ids: ["CR-SST-0120", "CR-SST-0137", "CR-SST-0138", "CR-SST-0139", "CR-SST-0140"]
   implementation_boundary: >
-    Recompose only allowlisted paths and hunks from the exact source evidence in
-    the promotion manifest. Do not reuse historical SST-26 branches as release
-    branches, do not touch existing dirty worktrees, do not include CR-SST-0125,
-    request_id TODO hunks, logs, local runtime evidence or unreferenced images,
-    and do not mutate Kubernetes directly.
+    Recompose only allowlisted stable-train paths and hunks. Exclude all preview
+    migrations, DTOs, APIs and UI; exclude CR-SST-0125, historical workflows,
+    logs, local evidence, unreferenced images, formatting-only hunks and any
+    artifact without an approved lifecycle.
   prohibited_runtime_actions:
-    - "kubectl apply/delete/restart"
+    - "workflow_dispatch"
+    - "manual infra pull request"
+    - "kubectl mutation"
     - "forced Argo CD sync"
-    - "kind cluster recreation"
     - "manual image mutation outside Actions/GHCR/GitOps"
+
+interfaces:
+  new_apis: false
+  preserved_endpoint: "POST /4uentes/v1/learning-workspaces/sources/preview"
+  preserved_boundary: "preview, accept and accepted context remain separate"
+  frontend_only_requests:
+    - {request_id: "CR-SST-0153", rule: "A preview never feeds accepted context."}
+    - {request_id: "CR-SST-0154", rule: "Use existing manual_text, article_draft and article types without DTO or endpoint changes."}
 
 owner_documentation:
   required: true
@@ -124,8 +123,6 @@ owner_documentation:
         - "docs/capabilities/outbound/learning-workspace-context.md"
         - "specs/capabilities/outbound/article-persisted-filters.yaml"
         - "docs/capabilities/outbound/article-persisted-filters.md"
-        - "specs/capabilities/outbound/article-preview-resolution-v1.yaml"
-        - "docs/capabilities/outbound/article-preview-resolution-v1.md"
     - repo: "4uentes-auth"
       paths:
         - "specs/integrations-api.yaml"
@@ -134,8 +131,6 @@ owner_documentation:
         - "docs/capabilities/outbound/learning-workspace-context.md"
         - "specs/capabilities/outbound/article-persisted-filters.yaml"
         - "docs/capabilities/outbound/article-persisted-filters.md"
-        - "specs/capabilities/outbound/article-preview-resolution-v1.yaml"
-        - "docs/capabilities/outbound/article-preview-resolution-v1.md"
     - repo: "sst-fend"
       paths:
         - "specs/33-articles-frontend.yml"
@@ -144,48 +139,33 @@ owner_documentation:
         - "docs/35-home-frontend.md"
         - "specs/38-learning-workspace-frontend.yml"
         - "docs/38-learning-workspace-frontend.md"
-        - "specs/capabilities/inbound/node-auth--article-preview-resolution-v1.yaml"
-        - "docs/capabilities/inbound/node-auth--article-preview-resolution-v1.md"
-    - repo: "sst-extension"
-      paths:
-        - "specs/features/sessions.yaml"
-        - "docs/qa/session-capture-validation.md"
-        - "specs/features/quick-save.yaml"
-        - "specs/features/private-session-previews.yaml"
-        - "docs/features/private-session-previews.md"
   evidence_refs:
     - "evidence/requests/CR-SST-0152/policy-and-subagent-evidence.md"
     - "evidence/requests/CR-SST-0152/recomposition-plan.md"
-    - "evidence/requests/CR-SST-0152/allowlist-reconciliation-2026-08-06.md"
+    - "evidence/requests/CR-SST-0152/minimal-train-amendment-2026-08-06.md"
 
 required_checks:
-  - {service_id: "sst-bend", command: "npm.cmd run check plus contractual suites and ephemeral DB migration up/down/up"}
-  - {service_id: "4uentes-auth", command: "npm.cmd run build && npm.cmd run check plus standalone verify scripts"}
-  - {service_id: "sst-fend", command: "npm.cmd run css:types:check && npm.cmd run check plus targeted Learning, Articles, Home and preview tests"}
-  - {service_id: "sst-extension", command: "pnpm test && pnpm build && pnpm check && git diff --check"}
-  - {service_id: "sst-4uentes-infra", command: "repository checks and rendered development overlay validation when applicable"}
+  - {service_id: "sst-bend", command: "LearningWorkspace, tag engine, article kind, filter retirement, semantic extension, Plaud atomicity/convergence, build, check and ephemeral migrations up/down/up"}
+  - {service_id: "4uentes-auth", command: "build, check and native Text/Web, session semantics, quick-save and legacy-filter retirement scripts"}
+  - {service_id: "sst-fend", command: "LearningWorkspace, ArticleCreateFlow, Articles and Home suites; css:types:check; full check"}
   - {service_id: "4uentes-orchestor", command: "npm.cmd run check"}
+  - {service_id: "all", command: "owner docs, source/candidate comparison, git diff --check and secret scan"}
 
 promotion:
-  order:
-    - "conditional governed infra prerequisite"
+  draft_preparation: "parallel-allowed"
+  merge_and_rollout_order:
     - "sst-bend"
     - "4uentes-auth"
     - "sst-fend"
-    - "sst-extension draft A"
-    - "CR-SST-0149 after rebase on new sst-fend develop"
-    - "sst-extension draft B after dependency and private QA closure"
+    - "CR-SST-0149 after main frontend merge"
   required_evidence_per_merge:
-    - "successful workflow"
+    - "independent human merge approval"
+    - "successful develop push workflow"
     - "develop-<sha> image tag and digest"
     - "automatic infra image-tag commit"
-    - "infra validation"
     - "Argo CD Synced and Healthy"
-    - "effective image and rollout"
-    - "HTTP/auth/BFF/persistence/feature smoke results"
-  preview_cohort_gate: >
-    CR-SST-0120, CR-SST-0137, CR-SST-0138 and CR-SST-0140 remain draft until
-    serial rollout compatibility and the required private QA are proven.
+    - "effective image and feature smoke results"
+  closure_gate: "CR-SST-0153, CR-SST-0154 and CR-SST-0152 close only after live rollout and E2E evidence; Jira Listo needs a separate approved batch."
 
 rollback:
   mechanism: "audited Git change restoring known image pins; normal Argo reconciliation"
@@ -194,33 +174,20 @@ rollback:
     4uentes-auth: "develop-82f84da4a99f"
     sst-fend: "develop-164c19cfcb88"
 
-validation:
-  evidence_required:
-    - "exact source/base and allowlist manifest"
-    - "source-to-candidate include/exclude comparison"
-    - "owner documentation paths"
-    - "repository checks and secret scan"
-    - "PR and merge approvals"
-    - "workflow, image, infra, Argo, smoke and rollback evidence"
-
 decision:
-  status: "approved-for-child-recomposition"
-  approver: "human-via-control-plane-pr-merge"
-  approved_at: "2026-08-06T22:28:31Z"
-  approval_pr: "https://github.com/afpogo/4uentes-ards-control-plane/pull/2"
-  approval_merge_commit: "fddbb57ee8031499a253b002544f92d40e6f62ec"
-  note: >
-    The merged control-plane pull request approved isolated child-repository
-    recomposition. Discovery then found literal allowlist mismatches, so any
-    path expansion remains blocked until the follow-up manifest amendment is
-    merged. No child merge is approved.
+  status: "blocked-pending-minimal-train-amendment-merge"
+  approver: "pending-human-control-plane-pr-merge"
+  ordering_deviation: >
+    PR #3 merged before this minimal-train correction. The deviation is
+    explicit and no child-repository mutation is authorized by that merge for
+    the newly reduced scope.
 
 jira_sync:
   status: "readonly-preflight-complete-no-write-authorization"
   project_key: "SST"
   epic_issue_key: "TODO"
   task_issue_key: "TODO"
-  issue_type: "Task"
+  related_subtask_issue_keys: {CR-SST-0153: "TODO", CR-SST-0154: "TODO"}
   desired_status: "En curso"
   write_authorization_status: "not-granted"
   preflight_ref: "evidence/requests/CR-SST-0152/jira-readonly-preflight.md"

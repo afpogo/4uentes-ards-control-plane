@@ -33,6 +33,8 @@ request_ids:
   - CR-SST-0123
   - CR-SST-0124
   - CR-SST-0125
+  - CR-SST-0153
+  - CR-SST-0154
 capability_refs:
   - "learning-content-tags"
 spec_refs:
@@ -125,11 +127,14 @@ evidence_refs:
   - "evidence/requests/CR-SST-0124/jira-sst-53-final-close-transition.md"
   - "evidence/initiatives/INIT-SST-0001/sst-53-state-reconciliation-2026-07-10.md"
   - "requests/planned/CR-SST-0125-sst-bend-learning-source-preview-import-normalization.yaml"
+  - "requests/planned/CR-SST-0153-learning-preview-accepted-context-separation.yaml"
+  - "requests/planned/CR-SST-0154-learning-source-presentation-classification.yaml"
   - "evidence/requests/CR-SST-0125/policy-and-owner-enforcement-start.md"
   - "evidence/requests/CR-SST-0125/implementation-analysis-start.md"
   - "evidence/requests/CR-SST-0125/jira-create-start-blocker.md"
   - "evidence/requests/CR-SST-0125/jira-cr-sst-0125-create-start-summary.md"
   - "evidence/initiatives/INIT-SST-0001/lifecycle-reconciliation-2026-08-06.md"
+  - "evidence/requests/CR-SST-0152/minimal-train-amendment-2026-08-06.md"
 active_work:
   request_id: "CR-SST-0125"
   jira_issue_key: "SST-55"
@@ -137,6 +142,9 @@ active_work:
   status: "planned-implementation"
   implementation_repository: "sst-bend"
   release_train_request_id: null
+planned_release_train_work:
+  - {request_id: "CR-SST-0153", jira_parent_issue_key: "SST-6", status: "blocked-pending-approval", implementation_repository: "sst-fend", release_train_request_id: "CR-SST-0152"}
+  - {request_id: "CR-SST-0154", jira_parent_issue_key: "SST-6", status: "blocked-pending-approval", implementation_repository: "sst-fend", release_train_request_id: "CR-SST-0152"}
 completed_work:
   - {request_id: "CR-SST-0107", status: "done"}
   - {request_id: "CR-SST-0109", status: "done"}
@@ -154,3 +162,5 @@ open_gaps:
   - "CR-SST-0124 / SST-53 is closed: node-auth accepts payload.kind=text without url/sourceUrl, manual authenticated QA passed, and Jira mirror is Finalizada/Listo."
   - "CR-SST-0125 / SST-55 is the active governed sst-bend parser/import normalization implementation cut; its Jira mirror is En curso under SST-6."
   - "Keep completed Jira mirrors synchronized while ARDS/SDD remains source of truth; SST-55 is the only active implementation mirror in this lifecycle."
+  - "CR-SST-0153 will ensure preview never feeds accepted context; it changes frontend state/presentation only and preserves preview/accept/context APIs."
+  - "CR-SST-0154 will classify existing manual_text, article_draft and article presentation without new DTOs, endpoints or persistence semantics."

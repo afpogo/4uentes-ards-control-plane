@@ -1,0 +1,82 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0153"
+title: "Separate learning preview from accepted context"
+status: planned
+source_request: "requests/inbox/CR-SST-0153-learning-preview-accepted-context-separation.yaml"
+created_at: "2026-08-06"
+requester: "4uentes"
+summary: >
+  Reconcile sst-fend LearningWorkspace presentation and state so preview output
+  never feeds accepted context. This request does not change DTOs, endpoints or
+  backend persistence and ships only inside the CR-SST-0152 frontend candidate.
+control_plane_context:
+  initiative_id: "INIT-SST-0001"
+  initiative_file: "initiatives/INIT-SST-0001-tags-governance-continuity.yaml"
+  active_feature_state: "learning-content-tags"
+  active_feature_state_file: "state/features/learning-content-tags.current.yaml"
+  release_train_request_id: "CR-SST-0152"
+  parent_jira_issue_key: "SST-6"
+  jira_epic_key: "SST-27"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+agent_execution:
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  task_weight: "complex-high-risk-task"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5"
+  fallback_reasoning_effort: "high"
+  subagent_deployment_plan: {mode: "none", reason: "Current execution policy disables delegation; the context boundary remains in the primary agent."}
+impact_analysis:
+  required: true
+  affected_services:
+    - {service_id: "sst-fend", via: "LearningWorkspace preview and accepted-context state/presentation", service_kind: "frontend-web", ards_kind: "frontend-web", status: "active"}
+    - {service_id: "4uentes-orchestor", via: "request lifecycle, release attribution and evidence", service_kind: "control-plane", ards_kind: "control-plane", status: "active"}
+  affected_ards: ["learning-content-tags", "learning-workspace-context", "child-repo-owner-documentation"]
+  risks:
+    - {id: "PREVIEW_ACCEPTED_CONTEXT_CONFUSION", severity: high}
+    - {id: "API_SCOPE_CREEP", severity: high}
+execution:
+  requires_human_approval: true
+  allowed_window: "CR-SST-0152 minimal-train amendment after human merge"
+  branch_strategy: "commit unit in release/CR-SST-0152/sst-fend-development-reconciliation"
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets: ["sst-fend"]
+  implementation_boundary: >
+    Frontend presentation/state and focused tests only. Preserve POST
+    /4uentes/v1/learning-workspaces/sources/preview and the existing explicit
+    preview/accept/context separation. Do not change DTOs, endpoints, migrations
+    or backend behavior.
+owner_documentation:
+  required: true
+  status: planned
+  owner_repos: ["sst-fend"]
+  planned_owner_docs:
+    - "specs/38-learning-workspace-frontend.yml"
+    - "docs/38-learning-workspace-frontend.md"
+    - "docs/tasks/2026-07-12-learning-preview-accepted-context-separation-fix.md"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0152/minimal-train-amendment-2026-08-06.md"
+required_checks:
+  - {service_id: "sst-fend", command: "LearningWorkspace focused suite"}
+  - {service_id: "sst-fend", command: "npm.cmd run css:types:check && npm.cmd run check"}
+  - {service_id: "4uentes-orchestor", command: "npm.cmd run check"}
+acceptance:
+  - "Preview output is never read as accepted context."
+  - "Only explicit accept results can populate accepted context."
+  - "Existing preview, accept and context requests retain their contracts."
+decision:
+  status: "blocked-pending-cr-sst-0152-amendment-merge"
+  approver: "pending-human-control-plane-pr-merge"
+jira_sync:
+  status: "readonly-preflight-complete-no-write-authorization"
+  desired_issue_type: "Subtask"
+  parent_issue_key: "SST-6"
+  epic_key: "SST-27"
+  issue_key: "TODO"
+  desired_status: "En curso"
+  write_authorization_status: "not-granted"
+  preflight_ref: "evidence/requests/CR-SST-0152/jira-readonly-preflight.md"
