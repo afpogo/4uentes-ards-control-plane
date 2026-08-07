@@ -3,7 +3,7 @@ kind: "sst_development_promotion_manifest"
 id: "CR-SST-0152-promotion"
 request_id: "CR-SST-0152"
 initiative_id: "INIT-SST-0004"
-status: "approved-recomposition-in-progress"
+status: "blocked-pending-stable-allowlist-amendment-merge"
 observed_at: "2026-08-07"
 target_environment: "development"
 
@@ -63,7 +63,7 @@ repositories:
       observed_sha: "8d36a91832a3c55445255c938f0de257312f166b"
       status: "revalidated-unchanged-2026-08-07"
     source:
-      ref: "fix/SST-26/CR-SST-0083/backend-development-hardening"
+      ref: "feat/SST-26/CR-SST-0086/dictionary-secrets-release-readiness"
       sha: "b47ca013abea653d7651da5f71c537ea11f9ed64"
       state: "committed-mixed-source"
     commit_units:
@@ -74,27 +74,43 @@ repositories:
       - name: "plaud-convergence"
         request_ids: ["CR-SST-0133", "CR-SST-0142"]
     path_allowlist:
-      - "db/migrations/*learning-workspace*"
+      - "db/migrations/20260704120000-create-learning-annotation-refs.js"
+      - "db/models/learning-annotation-ref.js"
+      - "db/models/learning-source-ref.js"
       - "db/models/articulo.js"
       - "db/models/index.js"
       - "src/apps/sst/domain/learning-workspaces/**"
       - "src/apps/sst/application/learning-workspaces/{accept-learning-source,reject-learning-source}.usecase.js"
       - "src/apps/sst/infrastructure/db/postgres/learning-workspaces/sequelize-learning-workspace.repository.js"
       - "src/apps/sst/presentation/schemas/learning-workspace.dto.js"
+      - "src/apps/sst/application/articulos/{create-articulo,create-extension-article,create-extension-session,create-extension-text-article,get-extension-session-deploy,list-articulos,update-articulo}.usecase.js"
       - "src/apps/sst/**/articulo.dto.js"
-      - "src/apps/sst/**/list-articulos.usecase.js"
       - "src/apps/sst/**/sequelize-articulos.repository.js"
+      - "src/apps/sst/**/articulos.controller.js"
+      - "src/apps/sst/**/article-payload.factory.js"
       - "src/apps/sst/domain/articulos/article-aggregate.entity.js"
       - "src/apps/sst/domain/filters/filter.repository.js"
       - "src/apps/sst/infrastructure/db/postgres/filters/sequelize-filters.repository.js"
       - "src/apps/sst/domain/integrations/plaud/plaud-ingestion-job.repository.js"
+      - "src/apps/sst/application/integrations/plaud/{plaud-article-upsert.service,plaud-ingestion-worker.service,process-plaud-ingestion-job.usecase}.js"
+      - "src/apps/sst/infrastructure/db/postgres/integrations/plaud/sequelize-plaud-ingestion-jobs.repository.js"
       - "src/apps/sst/presentation/server/plaud.runtime.js"
       - "src/apps/sst/presentation/routes/{index,articulos.routes,extensions.routes}.js"
+      - "src/apps/sst/presentation/schemas/extensions.dto.js"
+      - "scripts/test-learning-workspace.js"
       - "scripts/test-{article-kind-query-contract,filterarts-retired-mount,extension-quick-save-web-kind,extension-session-semantic-kind,plaud-article-filter-atomicity,plaud-job-completion-convergence}.js"
       - "specs/api/learning-workspaces.yaml"
+      - "specs/api/{00-index,document-processing,integrations-api,routing}.yaml"
       - "docs/api/26-learning-workspaces.md"
+      - "docs/api/{03-routing,06-integrations-api,13-endpoint-test-map,19-browser-extension-sessions,article-kind-reconciliation,filter-articles,plaud-ingestion}.md"
+      - "docs/00-overview.md"
+      - "specs/capabilities/outbound/00-index.yaml"
+      - "docs/capabilities/00-overview.md"
       - "specs/capabilities/outbound/{learning-workspace-context,article-persisted-filters,article-text-ingestion,browser-extension-article-ingestion,browser-extension-session-ingestion}.yaml"
       - "docs/capabilities/outbound/{learning-workspace-context,article-persisted-filters,article-text-ingestion,browser-extension-article-ingestion,browser-extension-session-ingestion}.md"
+    hunk_rules:
+      - {paths: ["db/models/index.js", "src/apps/sst/application/articulos/{create-articulo,create-extension-article,create-extension-session,create-extension-text-article,get-extension-session-deploy,update-articulo}.usecase.js", "src/apps/sst/domain/articulos/article-aggregate.entity.js", "src/apps/sst/**/sequelize-articulos.repository.js", "src/apps/sst/**/articulo.dto.js", "src/apps/sst/presentation/schemas/extensions.dto.js", "src/apps/sst/presentation/routes/{articulos.routes,extensions.routes}.js"], rule: "include only learning, article semantics, filter retirement and Plaud hunks; remove every previewCandidate, preview resolution, preview asset and private capture hunk"}
+      - {paths: ["specs/api/00-index.yaml", "specs/api/document-processing.yaml", "docs/api/19-browser-extension-sessions.md", "specs/capabilities/outbound/00-index.yaml", "docs/capabilities/00-overview.md"], rule: "include only stable-train entries and exclude preview capability entries"}
     explicit_exclusions:
       - {path: "db/migrations/20260712090000-create-article-preview-resolutions.js", reason: "preview migration deferred"}
       - {path: "db/models/article-preview-resolution.js", reason: "preview model deferred"}
@@ -125,7 +141,7 @@ repositories:
       observed_sha: "82f84da4a99feb7b9606c5b1244f8f05ac60efaa"
       status: "revalidated-unchanged-2026-08-07"
     source:
-      ref: "fix/SST-26/CR-SST-0085/node-auth-development-hardening"
+      ref: "fix/SST-26/CR-SST-0086/development-image-publish"
       sha: "5d722794e1094100be4fa088d99bcf6c7afb4e09"
       state: "committed-mixed-source"
     preserved_local_commit:
@@ -137,6 +153,8 @@ repositories:
       - {name: "learning-passthrough", request_ids: ["CR-SST-0109", "CR-SST-0115"]}
       - {name: "article-semantics", request_ids: ["CR-SST-0124", "CR-SST-0130", "CR-SST-0131", "CR-SST-0132", "CR-SST-0135"]}
     path_allowlist:
+      - ".env.example"
+      - "src/configs/env.ts"
       - "src/presentation/server.ts"
       - "src/presentation/middlewares/error.handler.ts"
       - "src/domain/constants/{articulo,extension-session,learning-workspaces}.constants.ts"
@@ -145,6 +163,9 @@ repositories:
       - "src/domain/datasources/learning-workspaces.datasource.ts"
       - "src/domain/repositories/learning-workspaces.repository.ts"
       - "src/domain/use-cases/LearningWorkspaces/**"
+      - "src/domain/dtos/articulo/{articulo,extension-web-article,update-articulo}.dto.ts"
+      - "src/domain/dtos/extension-session/create-extension-session.dto.ts"
+      - "src/domain/entities/articulo/index.ts"
       - "src/infrastructure/datasources/{articulo,learning-workspaces}.datasource.impl.ts"
       - "src/infrastructure/mapperers/articulo.mapper.ts"
       - "src/infrastructure/repositories/learning-workspaces.repository.ts"
@@ -152,7 +173,8 @@ repositories:
       - "src/presentation/articulo/controller.ts"
       - "src/presentation/extension/routes.ts"
       - "src/presentation/learning-workspaces/{controller,routes}.ts"
-      - "scripts/verify-{native-text-web-kind,extension-session-semantic-kind,extension-quick-save-web-contract,legacy-filter-retirement}.js"
+      - "src/presentation/routes.ts"
+      - "scripts/verify-{native-text-create-contract,native-web-create-contract,extension-session-semantic-kind,extension-quick-save-web-contract,no-legacy-filterarts-consumer}.js"
       - "specs/integrations-api.yaml"
       - "specs/routing.yaml"
       - "docs/bf/{03-routing,06-integrations-api,07-error-handling,11-endpoints-e2e-map}.md"
@@ -160,11 +182,13 @@ repositories:
       - "docs/capabilities/inbound/sst-bend--{learning-workspace-context,article-persisted-filters,article-text-ingestion,browser-extension-article-ingestion,browser-extension-session-ingestion}.md"
       - "specs/capabilities/outbound/{learning-workspace-context,article-persisted-filters,article-text-ingestion,browser-extension-article-ingestion,browser-extension-session-ingestion}.yaml"
       - "docs/capabilities/outbound/{learning-workspace-context,article-persisted-filters,article-text-ingestion,browser-extension-article-ingestion,browser-extension-session-ingestion}.md"
+      - "specs/capabilities/{inbound,outbound}/00-index.yaml"
+      - "docs/capabilities/00-overview.md"
     explicit_exclusions:
       - {path: "**/*preview*", reason: "CR-SST-0138 and preview cohort deferred"}
       - {path: "tmp-bf-dev.err", reason: "local runtime log"}
       - {path: "tmp-bf-dev.log", reason: "local runtime log"}
-      - {path: ".env*", reason: "local configuration and secrets excluded"}
+      - {path: ".env", reason: "local configuration and secrets excluded; .env.example is allowlisted"}
       - {path: ".github/workflows/**", reason: "historical workflows excluded"}
     checks:
       - "npm.cmd run build"
@@ -192,23 +216,34 @@ repositories:
       - {name: "article-semantics", request_ids: ["CR-SST-0129", "CR-SST-0130", "CR-SST-0134", "CR-SST-0141", "CR-SST-0145"]}
       - {name: "home-loop", request_ids: ["CR-SST-0143"]}
     path_allowlist:
+      - "docs/00-overview.md"
       - "docs/{33-articles-frontend,35-home-frontend,38-learning-workspace-frontend}.md"
-      - "docs/tasks/*learning*"
-      - "docs/tasks/*article*"
-      - "docs/tasks/*home*"
+      - "docs/architecture/articles-modal-sheet.md"
+      - "docs/capabilities/00-overview.md"
+      - "docs/tasks/{2026-07-03-cr-sst-0107-learning-workspace-sheet-adoption,2026-07-04-cr-sst-0113-editable-text-sheet,2026-07-04-cr-sst-0114-contextual-text-selection-tagging,2026-07-04-cr-sst-0117-render-annotated-text-template,2026-07-07-sst-text-article-learning-workspace-visual-separation,2026-07-10-sst-sheet-workspace-ui,2026-07-12-learning-preview-accepted-context-separation-fix,2026-07-12-learning-standalone-manual-text-source-type-fix,2026-07-18-cr-sst-0143-home-empty-catalog-request-loop}.md"
+      - "docs/tasks/README.md"
+      - "specs/00-index.yaml"
       - "specs/{33-articles-frontend,35-home-frontend,38-learning-workspace-frontend}.yml"
+      - "specs/capabilities/inbound/00-index.yaml"
       - "specs/capabilities/inbound/node-auth--{article-persisted-filters,article-text-ingestion,learning-workspace-context}.yaml"
       - "docs/capabilities/inbound/node-auth--{article-persisted-filters,article-text-ingestion,learning-workspace-context}.md"
+      - "specs/features/00-index.yaml"
+      - "src/__tests__/articulo.action.test.ts"
+      - "src/components/Inputs/fields/TextAreaField/**"
+      - "src/components/Routes/index.tsx"
+      - "src/components/SstSheetWorkspace/**"
       - "src/pages/LearningWorkspace/**"
       - "src/pages/Articles/**"
-      - "src/pages/Home/**"
-      - "src/services/{learning-workspace,article}/**"
-      - "src/routes/**"
-      - "src/shared/**"
+      - "src/pages/Dashboard/pages/Home/**"
+      - "src/services/{articleNodeService,articuloService,learningWorkspaceService}.ts"
+      - "src/services/constants/servicePaths.ts"
+      - "src/services/types/{articulo,learningWorkspace}.ts"
+      - "src/store/actions/articulo.action.ts"
     hunk_rules:
       - {paths: ["src/pages/LearningWorkspace/components/LearningWorkspaceSheet.tsx", "src/pages/LearningWorkspace/__tests__/LearningWorkspace.test.tsx"], rule: "attribute the accepted-context fix to CR-SST-0153 and the existing source-type classification fix to CR-SST-0154"}
       - {path: "docs/tasks/2026-07-12-learning-preview-accepted-context-separation-fix.md", rule: "replace request_id TODO with CR-SST-0153"}
-      - {path: "docs/tasks/2026-07-12-learning-workspace-source-type-classification-fix.md", rule: "replace request_id TODO with CR-SST-0154"}
+      - {path: "docs/tasks/2026-07-12-learning-standalone-manual-text-source-type-fix.md", rule: "publish as docs/tasks/2026-07-12-learning-workspace-source-type-classification-fix.md and replace request_id TODO with CR-SST-0154"}
+      - {paths: ["docs/tasks/README.md", "docs/architecture/articles-modal-sheet.md"], rule: "include only governed stable-train entries and SstSheetWorkspace sections; exclude preview and SstInfoPill entries"}
       - {path: "specs/33-articles-frontend.yml", rule: "select only governed semantic hunks; exclude formatting-only and request_id TODO history"}
     explicit_exclusions:
       - {path: "all CR-SST-0120/0140 preview hunks", reason: "preview cohort deferred"}
