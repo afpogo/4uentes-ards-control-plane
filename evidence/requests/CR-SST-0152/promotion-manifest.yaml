@@ -3,8 +3,8 @@ kind: "sst_development_promotion_manifest"
 id: "CR-SST-0152-promotion"
 request_id: "CR-SST-0152"
 initiative_id: "INIT-SST-0004"
-status: "blocked-pending-minimal-train-amendment-merge"
-observed_at: "2026-08-06"
+status: "approved-recomposition-in-progress"
+observed_at: "2026-08-07"
 target_environment: "development"
 
 control_plane_history:
@@ -22,7 +22,9 @@ control_plane_history:
       PR #3 merged before the stable-train reduction was recorded. A new
       control-plane amendment must merge before any child-repository mutation.
   minimal_train_amendment:
-    status: "pending-human-merge"
+    status: "merged"
+    pull_request: "https://github.com/afpogo/4uentes-ards-control-plane/pull/4"
+    merge_commit_sha: "37065f3c7e4fb9f8ff104d5aba50410022b62961"
     evidence_ref: "evidence/requests/CR-SST-0152/minimal-train-amendment-2026-08-06.md"
 
 historical_baseline:
@@ -59,7 +61,7 @@ repositories:
     base:
       ref: "origin/develop"
       observed_sha: "8d36a91832a3c55445255c938f0de257312f166b"
-      status: "must-revalidate-after-amendment-merge"
+      status: "revalidated-unchanged-2026-08-07"
     source:
       ref: "fix/SST-26/CR-SST-0083/backend-development-hardening"
       sha: "b47ca013abea653d7651da5f71c537ea11f9ed64"
@@ -121,7 +123,7 @@ repositories:
     base:
       ref: "origin/develop"
       observed_sha: "82f84da4a99feb7b9606c5b1244f8f05ac60efaa"
-      status: "must-revalidate-after-amendment-merge"
+      status: "revalidated-unchanged-2026-08-07"
     source:
       ref: "fix/SST-26/CR-SST-0085/node-auth-development-hardening"
       sha: "5d722794e1094100be4fa088d99bcf6c7afb4e09"
@@ -178,7 +180,7 @@ repositories:
     base:
       ref: "origin/develop"
       observed_sha: "164c19cfcb88c22048eb5cbf5b6c47aa2fa09776"
-      status: "must-revalidate-after-amendment-merge"
+      status: "revalidated-unchanged-2026-08-07"
     source:
       ref: "fix/SST-26/CR-SST-0086/dictionary-secrets-panel"
       sha: "832b39e3811e887f567fa94550e02841057885cf"
