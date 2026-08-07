@@ -79,6 +79,8 @@ repositories:
       - name: "plaud-convergence"
         request_ids: ["CR-SST-0133", "CR-SST-0142"]
     path_allowlist:
+      - ".env.example"
+      - "config/index.js"
       - "db/migrations/20260704120000-create-learning-annotation-refs.js"
       - "db/models/learning-annotation-ref.js"
       - "db/models/learning-source-ref.js"
