@@ -19,6 +19,7 @@ dos o mas repos o servicios juntos.
 - [sst-analisis-arquitectonico-ards-sdd-2026-06-13.md](sst-analisis-arquitectonico-ards-sdd-2026-06-13.md)
 - [sst-cluster-dependency-map.md](sst-cluster-dependency-map.md)
 - [deployment-request-playbook.md](deployment-request-playbook.md)
+- [Promotion path allowlist para recomposicion y release](release-allowlists.md)
 - [orchestrator-boundary.md](orchestrator-boundary.md)
 - [control-plane-scope-partition.md](control-plane-scope-partition.md)
 - [control-plane-propuesta-valor.md](control-plane-propuesta-valor.md)

@@ -24,6 +24,14 @@ Usar el control-plane en este orden:
    vez de comportamiento runtime de producto.
 5. Solo despues de eso, cambiar los repos funcionales.
 
+Cuando la rama fuente mezcla varios cambios, agregar un manifest de
+recomposicion. `path_allowlist` significa siempre `promotion path allowlist`:
+selecciona paths y hunks para construir el candidato y no representa una
+`runtime network allowlist`, `runtime IP allowlist`, `integration domain
+allowlist` o `deployment artifact allowlist`. La nomenclatura y la semantica de
+`path_allowlist`, `hunk_rules` y `explicit_exclusions` se explican en
+[Promotion Path Allowlist Para Recomposicion Y Release](release-allowlists.md).
+
 ## Para Que Sirve Cada Artefacto
 
 ### `request`

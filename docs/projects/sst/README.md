@@ -19,6 +19,7 @@ Incluye:
 - Service catalog: [../../apps/service-catalog.md](../../apps/service-catalog.md)
 - SST architecture analysis: [../../cross-repo/sst-analisis-arquitectonico-ards-sdd-2026-06-13.md](../../cross-repo/sst-analisis-arquitectonico-ards-sdd-2026-06-13.md)
 - Cluster dependency map: [../../cross-repo/sst-cluster-dependency-map.md](../../cross-repo/sst-cluster-dependency-map.md)
+- Promotion path allowlist: [../../cross-repo/release-allowlists.md](../../cross-repo/release-allowlists.md)
 - Chatbot handoff: [../../cross-repo/sst-chatbot-orchestrator-handoff.md](../../cross-repo/sst-chatbot-orchestrator-handoff.md)
 
 ## Documentos Por App
