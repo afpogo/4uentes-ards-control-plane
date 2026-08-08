@@ -23,7 +23,7 @@ Incluye:
 - Capability state linkage: [../../requests/capability-state-linkage.md](../../requests/capability-state-linkage.md)
 - Orchestrator boundary: [../../cross-repo/orchestrator-boundary.md](../../cross-repo/orchestrator-boundary.md)
 - Child repo onboarding: [../../cross-repo/child-repo-onboarding.md](../../cross-repo/child-repo-onboarding.md)
-- Release allowlists: [../../cross-repo/release-allowlists.md](../../cross-repo/release-allowlists.md)
+- Promotion path allowlist: [../../cross-repo/release-allowlists.md](../../cross-repo/release-allowlists.md)
 
 ## Politicas
 
