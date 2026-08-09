@@ -1,0 +1,20 @@
+schema_version: "1.0"
+kind: "feature_state"
+id: "sst-stakeholder-metrics-rag"
+title: "SST Stakeholder Metrics RAG"
+status: "planned"
+updated_at: "2026-08-09"
+solution_id: "sst"
+affected_services:
+  - "sst-chatbot"
+request_ids:
+  - "CR-SST-0156"
+capability_refs:
+  - "sst-stakeholder-metrics-rag"
+spec_refs:
+  - "requests/planned/CR-SST-0156-sst-stakeholder-metric-rag-adoption.yaml"
+evidence_refs:
+  - "evidence/requests/CR-SST-0156/planning-summary.md"
+open_gaps:
+  - "The sst-chatbot owner capability, safe methodological corpus and grounded metric-answer path are planned but not implemented."
+  - "A real approved analytics data product remains outside this request."

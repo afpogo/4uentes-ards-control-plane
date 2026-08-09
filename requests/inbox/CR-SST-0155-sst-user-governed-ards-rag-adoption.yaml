@@ -1,0 +1,49 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0155"
+title: "Adopt governed RAG over SST user ARDS memory"
+status: inbox
+created_at: "2026-08-09"
+requester: "4uentes"
+
+business_context: >
+  SST already distinguishes project ARDS/SDD from the governed internal memory
+  of an SST user. The chatbot needs a first executable read path over that user
+  memory and its curated workspace artifacts without treating raw folders,
+  conversations or events as automatically retrievable knowledge.
+
+requested_change: >
+  Plan a provider-agnostic, deterministic RAG adoption owned by sst-chatbot for
+  the sst_user audience. Create the separate `sst-user-ards-rag` capability and
+  its control-plane capability link, while preserving backend-owned identity,
+  entitlements, scope and source authorization.
+
+expected_outcome: >
+  An independently executable adoption plan that authorizes before retrieval,
+  retrieves only active and indexable governed records inside the verified
+  tenant, user and application scope, and returns structured grounded answers
+  whose citations and claims are validated before disclosure.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - "sst-chatbot"
+  include_optional_services: false
+
+control_plane_context:
+  feature_state: "sst-user-ards-rag"
+  feature_state_file: "state/features/sst-user-ards-rag.current.yaml"
+  capability_id: "sst-user-ards-rag"
+  owner_repo: "sst-chatbot"
+  related_request_ids:
+    - "CR-SST-0030"
+    - "CR-SST-0031"
+    - "CR-SST-0082"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+
+notes:
+  - "The user knowledge source is the governed SST internal-memory projection plus curated workspace artifacts, not a project ARDS/SDD checkout."
+  - "Raw conversations and normalized activity events are not retrieval sources unless a later governed promotion creates an indexable memory record."
+  - "This read-only capability does not create an orchestrator handoff and does not depend on CR-SST-0083 runtime transport."
+  - "The capability link carries technical maturity only and never user queries, retrieved content, answers or identifiers."

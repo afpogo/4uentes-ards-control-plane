@@ -1,0 +1,48 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0156"
+title: "Adopt grounded stakeholder metric RAG over system ARDS/SDD"
+status: inbox
+created_at: "2026-08-09"
+requester: "4uentes"
+
+business_context: >
+  SST stakeholders need safe explanations of the global metric catalog. System
+  ARDS/SDD can ground definitions and methodology, but it is not an analytical
+  value source and must never expose tenants, people, conversations, contracts
+  or raw records.
+
+requested_change: >
+  Plan a separate `sst-stakeholder-metrics-rag` capability owned by
+  sst-chatbot. Metric values must come only from approved MetricSnapshot data;
+  RAG may retrieve only public or derived_safe system documentation to explain
+  the metric definition and methodology.
+
+expected_outcome: >
+  An independently executable stakeholder adoption plan with a closed KPI
+  catalog, monthly granularity, cohort suppression, provenance checks and
+  structured grounded explanations whose numeric claims are exact snapshot
+  values and whose documentation citations come from an approved safe corpus.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - "sst-chatbot"
+  include_optional_services: false
+
+control_plane_context:
+  feature_state: "sst-stakeholder-metrics-rag"
+  feature_state_file: "state/features/sst-stakeholder-metrics-rag.current.yaml"
+  capability_id: "sst-stakeholder-metrics-rag"
+  owner_repo: "sst-chatbot"
+  related_request_ids:
+    - "CR-SST-0082"
+    - "CR-SST-0155"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+
+notes:
+  - "MetricSnapshot is the only source of KPI values; system ARDS/SDD supplies definitions and methodology only."
+  - "The safe corpus is explicit and classified public or derived_safe; it is not an unrestricted index of internal system documentation."
+  - "This read-only capability does not create an orchestrator handoff and does not depend on CR-SST-0083 runtime transport."
+  - "The capability link carries technical maturity only and never metric values, queries, answers or identifiers."
