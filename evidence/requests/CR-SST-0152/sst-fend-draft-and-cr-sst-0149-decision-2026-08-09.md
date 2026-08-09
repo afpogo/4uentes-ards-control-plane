@@ -90,9 +90,11 @@ funcional de otro cambio ya gobernado.
 La recomposicion se completo desde
 `develop@94a4b4ee0d8b2fcae63b801f9e1d29ce89758de3`. Los ocho archivos del
 candidato coincidieron por SHA-256 con el delta local preservado y no se
-trasladaron otros cambios del checkout historico. El commit resultante es
-`ae1ad2e9a6ae330c46390a9f63a6c3ec4fb5ae3d` y fue publicado como el PR
-borrador [sst-fend#6](https://github.com/afpogo/sst-fend/pull/6).
+trasladaron otros cambios del checkout historico. El commit funcional
+resultante es `ae1ad2e9a6ae330c46390a9f63a6c3ec4fb5ae3d`. La reconciliacion de la
+evidencia agrego `c70c558e3b279be53ce1519fab299b977266bf4c`; ambos fueron publicados
+en [sst-fend#6](https://github.com/afpogo/sst-fend/pull/6), que quedo listo
+para revision luego de completar los gates locales y remotos.
 
 Validacion del candidato:
 
@@ -102,7 +104,12 @@ Validacion del candidato:
 - suite completa: 30 suites y 198 tests aprobados;
 - lint: cero errores y 22 warnings historicos;
 - `git diff --check`: OK;
-- GitHub Actions run `31338685727`: OK; check del repo, build frontend y build
+- QA visual sobre el worktree exacto: `320x568`, `390x844`, `768x1024`,
+  `1366x768` y reflow `640x512` con DPR 2; cinco campos presentes, cero
+  intersecciones, cero overflow horizontal, cero scrollers internos, controles
+  de al menos 46 px y CTA alcanzable por scroll natural;
+- consola: sin errores; solo el warning historico de future flag de React Router;
+- GitHub Actions run `31341099048`: OK; check del repo, build frontend y build
   de imagen completados. Login a GHCR, publicacion y actualizacion de
-  infraestructura fueron omitidos correctamente por tratarse de un PR
-  borrador sin merge.
+  infraestructura fueron omitidos correctamente por tratarse de un PR sin
+  merge.
