@@ -1,0 +1,20 @@
+schema_version: "1.0"
+kind: "feature_state"
+id: "sst-user-ards-rag"
+title: "SST User Governed ARDS RAG"
+status: "planned"
+updated_at: "2026-08-09"
+solution_id: "sst"
+affected_services:
+  - "sst-chatbot"
+request_ids:
+  - "CR-SST-0155"
+capability_refs:
+  - "sst-user-ards-rag"
+spec_refs:
+  - "requests/planned/CR-SST-0155-sst-user-governed-ards-rag-adoption.yaml"
+evidence_refs:
+  - "evidence/requests/CR-SST-0155/planning-summary.md"
+open_gaps:
+  - "The sst-chatbot owner capability and deterministic retrieval implementation are planned but not implemented."
+  - "A real SST backend projection, embeddings and persistent vector storage remain outside this request."

@@ -1,7 +1,7 @@
 schema_version: "1.0"
 kind: "capability_state_links"
 status: "active"
-updated_at: "2026-07-12"
+updated_at: "2026-08-09"
 links:
   - capability_id: "auth-frontend-access-ui"
     producer_service: "sst-fend"
@@ -483,6 +483,34 @@ links:
     work_origin: "orchestrator-request"
     source_ref: "requests/done/CR-SST-0020-cluster-publication-ngrok-domain.yaml"
     child_evidence_ref: "sst-4uentes-infra/specs/states/prepare-public-development-url.yaml"
+
+  - capability_id: "sst-user-ards-rag"
+    producer_service: "sst-chatbot"
+    producer_repo: "sst-chatbot"
+    state_kind: "feature_state"
+    state_id: "sst-user-ards-rag"
+    state_file: "state/features/sst-user-ards-rag.current.yaml"
+    link_status: "pending-child-adoption"
+    work_origin: "orchestrator-request"
+    source_ref: "requests/planned/CR-SST-0155-sst-user-governed-ards-rag-adoption.yaml"
+    planned_child_owner_spec_ref: "sst-chatbot/specs/capabilities/sst-user-ards-rag.yaml"
+    movement_payload: "technical_maturity_only"
+    execution_authority: "none"
+    contains_business_data: false
+
+  - capability_id: "sst-stakeholder-metrics-rag"
+    producer_service: "sst-chatbot"
+    producer_repo: "sst-chatbot"
+    state_kind: "feature_state"
+    state_id: "sst-stakeholder-metrics-rag"
+    state_file: "state/features/sst-stakeholder-metrics-rag.current.yaml"
+    link_status: "pending-child-adoption"
+    work_origin: "orchestrator-request"
+    source_ref: "requests/planned/CR-SST-0156-sst-stakeholder-metric-rag-adoption.yaml"
+    planned_child_owner_spec_ref: "sst-chatbot/specs/capabilities/sst-stakeholder-metrics-rag.yaml"
+    movement_payload: "technical_maturity_only"
+    execution_authority: "none"
+    contains_business_data: false
 
 rules:
   - "Capabilities started in child repos must leave orchestrator_link metadata."

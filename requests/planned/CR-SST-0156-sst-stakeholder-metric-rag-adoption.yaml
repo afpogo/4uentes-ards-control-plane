@@ -1,0 +1,200 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0156"
+title: "Adopt grounded stakeholder metric RAG over system ARDS/SDD"
+status: planned
+source_request: "requests/inbox/CR-SST-0156-sst-stakeholder-metric-rag-adoption.yaml"
+created_at: "2026-08-09"
+requester: "4uentes"
+
+summary: >
+  Introduce `sst-stakeholder-metrics-rag` as a read-only capability that joins
+  approved MetricSnapshot values with an explicitly safe system ARDS/SDD corpus
+  for definitions and methodology. Retrieval cannot calculate, override or
+  substitute a metric snapshot.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - "sst-chatbot"
+  include_optional_services: false
+
+control_plane_context:
+  feature_state: "sst-stakeholder-metrics-rag"
+  feature_state_file: "state/features/sst-stakeholder-metrics-rag.current.yaml"
+  capability_id: "sst-stakeholder-metrics-rag"
+  capability_link_file: "state/capability-links.yaml"
+  owner_repo: "sst-chatbot"
+  predecessor_request_ids:
+    - "CR-SST-0082"
+    - "CR-SST-0155"
+  shared_contract_rule: "CR-SST-0156 may reuse retrieval and citation primitives from CR-SST-0155 but keeps separate capability state, policy, evidence and disclosure tests."
+  jira_role: "mirror"
+  jira_source_of_truth: false
+
+agent_execution:
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  task_weight: "complex-high-risk-task"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5"
+  fallback_reasoning_effort: "high"
+  subagent_deployment_plan:
+    mode: "none"
+    reason: "Delegation was not requested; metric integrity and disclosure boundaries remain in the primary agent."
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "sst-chatbot"
+      via: "owner capability, safe corpus, snapshot routing, disclosure guard and deterministic tests"
+      service_kind: "agent-runtime"
+      ards_kind: "backend-api"
+      status: "active"
+    - service_id: "4uentes-orchestor"
+      via: "request lifecycle, feature state and child capability reconciliation"
+      service_kind: "control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+  affected_ards:
+    - "system-ards-sdd-safe-metric-corpus"
+    - "audience-safe-disclosure"
+    - "stakeholder-metric-snapshots"
+    - "child-capability-evidence"
+  capabilities:
+    - "sst-stakeholder-metrics-rag"
+  risks:
+    - id: "RAG_CALCULATES_OR_OVERRIDES_KPI"
+      severity: "high"
+    - id: "UNSAFE_SYSTEM_DOCUMENT_DISCLOSURE"
+      severity: "high"
+    - id: "SMALL_COHORT_OR_TENANT_DRILLDOWN"
+      severity: "high"
+    - id: "UNSUPPORTED_NUMERIC_CLAIM"
+      severity: "high"
+
+adoption_plan:
+  - unit: "safe-metric-corpus"
+    objective: "Define an allowlisted system ARDS/SDD corpus for metric definitions and methodology."
+    inputs: ["approved metric catalog", "public/derived_safe documents", "classification metadata"]
+    outputs: ["indexable methodological records with provenance"]
+    owner_paths: ["specs/capabilities/sst-stakeholder-metrics-rag.yaml", "docs/architecture/stakeholder-metric-rag.md"]
+    risk: "high"
+    validation: "Internal, private, restricted, secret and unknown documents fail closed before retrieval."
+  - unit: "snapshot-first-routing"
+    objective: "Route an approved MetricQuery through StakeholderMetricsPort before optional documentation retrieval."
+    inputs: ["MetricQuery", "MetricSnapshot", "safe methodological corpus"]
+    outputs: ["bounded grounded metric context"]
+    owner_paths: ["src/app/retrieval/", "src/app/audience_access/"]
+    risk: "high"
+    validation: "Source failure, missing provenance, free filters, non-monthly queries and suppressed cohorts stop before provider invocation."
+  - unit: "grounded-metric-answer"
+    objective: "Define structured explanation, metric claims, snapshot references, citations and insufficient-context status."
+    inputs: ["approved snapshot", "retrieved methodological chunks"]
+    outputs: ["GroundedMetricAnswer"]
+    owner_paths: ["src/app/retrieval/", "src/app/audience_access/"]
+    risk: "high"
+    validation: "Every numeric claim exactly matches an approved snapshot and every citation matches a retrieved safe document."
+  - unit: "stakeholder-disclosure-guard"
+    objective: "Reject personal identifiers, tenant drilldown, raw records, unsupported metrics and documentation-derived values."
+    inputs: ["GroundedMetricAnswer", "MetricSnapshot", "retrieval evidence"]
+    outputs: ["safe stakeholder response or fail-closed denial"]
+    owner_paths: ["src/app/audience_access/", "tests/"]
+    risk: "high"
+    validation: "Deterministic tests cover emails, conversations, contracts, individual records, cohort suppression and unsupported claims."
+  - unit: "owner-evidence-and-reconciliation"
+    objective: "Publish separate owner documentation, tests and technical-only capability movement evidence."
+    inputs: ["validated implementation", "owner specs", "feature state"]
+    outputs: ["separate stakeholder capability link evidence"]
+    owner_paths: ["specs/integration/capability-links.yaml", "specs/integrations/sst-chatbot-core-orchestrator-sync.yaml"]
+    risk: "medium"
+    validation: "The repository gate proves execution_authority none, contains_business_data false and no metric values in outbound evidence."
+
+execution:
+  requires_human_approval: true
+  allowed_window: "after CR-SST-0155 shared retrieval contracts are stable and this control-plane plan is merged"
+  branch_strategy: "one-branch-per-repo"
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets:
+    - "sst-chatbot"
+  implementation_boundary: >
+    Implement only the fake-backed MetricSnapshot and safe-documentation path,
+    owner docs and deterministic tests. Do not call a real analytics API,
+    database, model provider, SST backend or orchestrator. Do not expose the
+    unrestricted system ARDS/SDD corpus.
+
+owner_documentation:
+  required: true
+  status: planned
+  owner_repos:
+    - "sst-chatbot"
+  planned_owner_docs:
+    - "specs/capabilities/sst-stakeholder-metrics-rag.yaml"
+    - "specs/states/sst-stakeholder-metrics-rag-v1.yaml"
+    - "specs/integration/capability-links.yaml"
+    - "specs/integrations/sst-chatbot-core-orchestrator-sync.yaml"
+    - "docs/architecture/stakeholder-metric-rag.md"
+
+required_context:
+  - "catalog/services/sst-chatbot.yaml"
+  - "state/features/sst-chatbot.current.yaml"
+  - "state/features/sst-stakeholder-metrics-rag.current.yaml"
+  - "requests/done/CR-SST-0082-sst-chatbot-core-orchestrator-sync-reconciliation.yaml"
+  - "requests/planned/CR-SST-0155-sst-user-governed-ards-rag-adoption.yaml"
+  - "evidence/requests/CR-SST-0156/planning-summary.md"
+  - "AGENTS.md"
+
+required_checks:
+  - service_id: "sst-chatbot"
+    command: ".\\.venv\\Scripts\\python.exe scripts\\check.py"
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check"
+
+risk:
+  level: "high"
+  score: 8
+  drivers:
+    - "BUSINESS_METRIC_INTEGRITY"
+    - "SAFE_DISCLOSURE"
+    - "SMALL_COHORT_SUPPRESSION"
+    - "CROSS_REPO_CAPABILITY_RECONCILIATION"
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "BUSINESS_METRIC_INTEGRITY"
+    - "ARCHITECTURE_BOUNDARY"
+    - "MULTI_LAYER_IMPLEMENTATION"
+
+acceptance:
+  - "MetricSnapshot remains the only source of KPI values; RAG neither calculates nor overrides metrics."
+  - "The metric catalog remains closed, monthly and limited to the approved dimensions."
+  - "System documents are retrieved only from an allowlisted public or derived_safe corpus with provenance."
+  - "Free filters, SQL, tenant drilldown, user ARDS, raw records and individual data are rejected."
+  - "Cohorts below 10 remain suppressed before retrieval or provider invocation."
+  - "Missing analytical provenance or source failure denies the request."
+  - "Every numeric claim exactly matches an approved snapshot and every documentation citation is retrieved evidence."
+  - "The read path creates no orchestrator handoff and all external dependencies are fakes."
+  - "The `sst-stakeholder-metrics-rag` capability movement contains technical maturity only and no metric values."
+
+non_goals:
+  - "Real analytics adapters, SQL, databases or dashboards."
+  - "LLM-calculated KPIs or documentation-derived metric values."
+  - "Unrestricted access to internal system specifications."
+  - "Tenant drilldowns, arbitrary time series or free-form dimensions."
+  - "Runtime HTTP transport or functional orchestrator handoffs."
+
+decision:
+  status: "pending-human-control-plane-pr-merge"
+  approver: "4uentes"
+
+jira_sync:
+  status: "not-requested"
+  desired_issue_type: "Subtask"
+  parent_issue_key: "SST-7"
+  issue_key: "TODO"
+  write_authorization_status: "not-granted"
+  jira_source_of_truth: false

@@ -1,0 +1,199 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0155"
+title: "Adopt governed RAG over SST user ARDS memory"
+status: planned
+source_request: "requests/inbox/CR-SST-0155-sst-user-governed-ards-rag-adoption.yaml"
+created_at: "2026-08-09"
+requester: "4uentes"
+
+summary: >
+  Introduce the `sst-user-ards-rag` owner capability as a deterministic,
+  read-only retrieval path over the governed SST user-memory projection and
+  curated workspace artifacts. Authorization, minimization and disclosure stay
+  outside LangChain and fail closed.
+
+initial_scope:
+  solution: "sst"
+  services:
+    - "sst-chatbot"
+  include_optional_services: false
+
+control_plane_context:
+  feature_state: "sst-user-ards-rag"
+  feature_state_file: "state/features/sst-user-ards-rag.current.yaml"
+  capability_id: "sst-user-ards-rag"
+  capability_link_file: "state/capability-links.yaml"
+  owner_repo: "sst-chatbot"
+  predecessor_request_ids:
+    - "CR-SST-0030"
+    - "CR-SST-0031"
+    - "CR-SST-0082"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+
+agent_execution:
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  task_weight: "complex-high-risk-task"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5"
+  fallback_reasoning_effort: "high"
+  subagent_deployment_plan:
+    mode: "none"
+    reason: "Delegation was not requested; authorization and sensitive-data boundaries remain in the primary agent."
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "sst-chatbot"
+      via: "owner capability, retrieval contracts, policy integration and deterministic tests"
+      service_kind: "agent-runtime"
+      ards_kind: "backend-api"
+      status: "active"
+    - service_id: "4uentes-orchestor"
+      via: "request lifecycle, feature state and child capability reconciliation"
+      service_kind: "control-plane"
+      ards_kind: "control-plane"
+      status: "active"
+  affected_ards:
+    - "sst-user-internal-memory"
+    - "sst-user-curated-workspace"
+    - "audience-safe-disclosure"
+    - "child-capability-evidence"
+  capabilities:
+    - "sst-user-ards-rag"
+  risks:
+    - id: "CROSS_SCOPE_RETRIEVAL"
+      severity: "high"
+    - id: "RAW_ACTIVITY_OR_CONVERSATION_EXPOSURE"
+      severity: "high"
+    - id: "PROMPT_SCOPE_EXPANSION"
+      severity: "high"
+    - id: "UNSUPPORTED_CITATION_OR_CLAIM"
+      severity: "high"
+
+adoption_plan:
+  - unit: "user-rag-contracts"
+    objective: "Define repo-owned retrieval and grounded-answer contracts."
+    inputs: ["PrincipalContext", "SafeContextEnvelope", "governed user-memory metadata"]
+    outputs: ["RetrievalRequest", "IndexableArdsRecord", "RetrievedChunk", "Citation", "GroundedAnswer", "RetrieverPort"]
+    owner_paths: ["src/app/retrieval/", "specs/capabilities/sst-user-ards-rag.yaml"]
+    risk: "medium"
+    validation: "Contract tests reject incomplete scope, unsupported classifications and unstructured citations."
+  - unit: "governed-user-projection"
+    objective: "Project only eligible user-memory records and curated workspace artifacts."
+    inputs: ["active/indexable memory records", "active/indexable workspace manifest entries"]
+    outputs: ["normalized retrieval documents with provenance and exact scope"]
+    owner_paths: ["src/app/retrieval/", "docs/architecture/governed-user-ards-rag.md"]
+    risk: "high"
+    validation: "Raw conversations, activity events, archived artifacts and cross-scope records are absent before ranking."
+  - unit: "deterministic-retriever"
+    objective: "Implement a fake/local retriever with mandatory pre-ranking filters."
+    inputs: ["authorized retrieval request", "governed projection"]
+    outputs: ["bounded retrieved chunks"]
+    owner_paths: ["src/app/retrieval/"]
+    risk: "high"
+    validation: "Tests cover cross-tenant, cross-user, cross-application, unknown source and prompt-injection denials."
+  - unit: "langchain-two-step-composition"
+    objective: "Compose authorize, retrieve, assemble, provider and output-guard steps without granting LangChain authority."
+    inputs: ["authorized chunks", "private prompt catalog", "fake provider"]
+    outputs: ["structured grounded answer"]
+    owner_paths: ["src/app/retrieval/", "src/app/providers/", "src/app/prompts/"]
+    risk: "high"
+    validation: "All provider tests use fakes and citations remain a subset of retrieved chunks."
+  - unit: "owner-evidence-and-reconciliation"
+    objective: "Publish owner documentation, tests and technical-only capability movement evidence."
+    inputs: ["validated implementation", "owner specs", "feature state"]
+    outputs: ["separate owner capability link evidence"]
+    owner_paths: ["specs/integration/capability-links.yaml", "specs/integrations/sst-chatbot-core-orchestrator-sync.yaml"]
+    risk: "medium"
+    validation: "The repository gate proves execution_authority none and contains_business_data false."
+
+execution:
+  requires_human_approval: true
+  allowed_window: "manual after this control-plane plan is merged"
+  branch_strategy: "one-branch-per-repo"
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets:
+    - "sst-chatbot"
+  implementation_boundary: >
+    Implement only the local fake-backed read path, contracts, owner docs and
+    tests. Do not call SST, a real model provider, a database, a vector service
+    or the orchestrator. Do not create durable memory or functional handoffs.
+
+owner_documentation:
+  required: true
+  status: planned
+  owner_repos:
+    - "sst-chatbot"
+  planned_owner_docs:
+    - "specs/capabilities/sst-user-ards-rag.yaml"
+    - "specs/states/sst-user-ards-rag-v1.yaml"
+    - "specs/integration/capability-links.yaml"
+    - "specs/integrations/sst-chatbot-core-orchestrator-sync.yaml"
+    - "docs/architecture/governed-user-ards-rag.md"
+
+required_context:
+  - "catalog/services/sst-chatbot.yaml"
+  - "state/features/sst-chatbot.current.yaml"
+  - "state/features/sst-user-ards-rag.current.yaml"
+  - "requests/planned/CR-SST-0030-sst-user-internal-memory-boundary.yaml"
+  - "requests/planned/CR-SST-0031-sst-user-internal-memory-first-runtime-slice.yaml"
+  - "requests/done/CR-SST-0082-sst-chatbot-core-orchestrator-sync-reconciliation.yaml"
+  - "evidence/requests/CR-SST-0155/planning-summary.md"
+  - "AGENTS.md"
+
+required_checks:
+  - service_id: "sst-chatbot"
+    command: ".\\.venv\\Scripts\\python.exe scripts\\check.py"
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check"
+
+risk:
+  level: "high"
+  score: 8
+  drivers:
+    - "AUTHORIZATION_BOUNDARY"
+    - "PRIVATE_USER_CONTEXT"
+    - "PROMPT_INJECTION"
+    - "CROSS_REPO_CAPABILITY_RECONCILIATION"
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "PRIVATE_USER_CONTEXT"
+    - "ARCHITECTURE_BOUNDARY"
+    - "MULTI_LAYER_IMPLEMENTATION"
+
+acceptance:
+  - "Authorization and exact tenant, user and application scope are validated before retrieval and provider invocation."
+  - "Only active and indexable governed memory records or curated workspace artifacts can be retrieved."
+  - "Raw chats and activity events never become retrievable merely because they exist."
+  - "Every citation is backed by a retrieved chunk with source provenance."
+  - "Prompt text cannot change audience, entitlements, classification or scope."
+  - "Restricted, secret and credential-like content never reaches provider input, traces or audit projections."
+  - "The read path creates no orchestrator handoff and all external dependencies are fakes."
+  - "The `sst-user-ards-rag` capability movement contains technical maturity only."
+
+non_goals:
+  - "Real embeddings, pgvector, database or SST API integration."
+  - "Automatic ingestion watchers or background synchronization."
+  - "Direct writes to user memory or workspace artifacts."
+  - "Persistent conversational memory, UI work or runtime HTTP transport."
+  - "Automatic promotion of chats or events into governed memory."
+
+decision:
+  status: "pending-human-control-plane-pr-merge"
+  approver: "4uentes"
+
+jira_sync:
+  status: "not-requested"
+  desired_issue_type: "Subtask"
+  parent_issue_key: "SST-7"
+  issue_key: "TODO"
+  write_authorization_status: "not-granted"
+  jira_source_of_truth: false
