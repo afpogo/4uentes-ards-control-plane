@@ -19,6 +19,7 @@ control_plane_context:
   promotion_manifest: "evidence/requests/CR-SST-0152/promotion-manifest.yaml"
   recomposition_plan: "evidence/requests/CR-SST-0152/recomposition-plan.md"
   amendment_evidence: "evidence/requests/CR-SST-0152/minimal-train-amendment-2026-08-06.md"
+  frontend_draft_evidence: "evidence/requests/CR-SST-0152/sst-fend-draft-and-cr-sst-0149-decision-2026-08-09.md"
   related_frontend_request_ids: ["CR-SST-0153", "CR-SST-0154"]
   jira_role: "mirror"
   jira_source_of_truth: false
@@ -143,6 +144,7 @@ owner_documentation:
     - "evidence/requests/CR-SST-0152/policy-and-subagent-evidence.md"
     - "evidence/requests/CR-SST-0152/recomposition-plan.md"
     - "evidence/requests/CR-SST-0152/minimal-train-amendment-2026-08-06.md"
+    - "evidence/requests/CR-SST-0152/sst-fend-draft-and-cr-sst-0149-decision-2026-08-09.md"
 
 required_checks:
   - {service_id: "sst-bend", command: "LearningWorkspace, tag engine, article kind, filter retirement, semantic extension, Plaud atomicity/convergence, build, check and ephemeral migrations up/down/up"}
@@ -175,11 +177,12 @@ rollback:
     sst-fend: "develop-164c19cfcb88"
 
 decision:
-  status: "blocked-pending-learning-preview-allowlist-amendment-merge"
+  status: "sst-fend-ready-pending-human-merge"
   approver: "human-direct-execution-request-2026-08-07"
   approval_evidence: "evidence/requests/CR-SST-0152/execution-start-2026-08-07.md"
   blocker_evidence: "evidence/requests/CR-SST-0152/stable-allowlist-gap-2026-08-07.md"
-  current_blocker_evidence: "evidence/requests/CR-SST-0152/learning-preview-allowlist-gap-2026-08-07.md"
+  resolved_blocker_evidence: "evidence/requests/CR-SST-0152/learning-preview-allowlist-gap-2026-08-07.md"
+  current_execution_evidence: "evidence/requests/CR-SST-0152/sst-fend-draft-and-cr-sst-0149-decision-2026-08-09.md"
   ordering_deviation: >
     PR #3 merged before this minimal-train correction. The deviation is
     explicit and no child-repository mutation is authorized by that merge for
