@@ -80,6 +80,7 @@ source_evidence_refs:
   - "evidence/requests/CR-SST-0152/jira-frontend-closure-summary.md"
   - "evidence/initiatives/INIT-SST-0001/lifecycle-reconciliation-2026-08-06.md"
   - "evidence/requests/CR-SST-0152/minimal-train-amendment-2026-08-06.md"
+  - "evidence/requests/CR-SST-0173/owner-documentation-summary.md"
   - "state/features/sst-tags-governance.current.yaml"
   - "state/features/learning-content-tags.current.yaml"
 model_refs:
@@ -114,6 +115,7 @@ known_change_requests:
   - "CR-SST-0136"
   - "CR-SST-0153"
   - "CR-SST-0154"
+  - "CR-SST-0173"
 candidate_change_requests:
   - id: "CR-SST-0088"
     title: "Define learning-content source and document model boundary"
@@ -193,6 +195,9 @@ candidate_change_requests:
   - id: "CR-SST-0154"
     title: "Classify learning source presentation types"
     status: "done"
+  - id: "CR-SST-0173"
+    title: "Reconcile sst-fend LearningWorkspace owner knowledge after SST-55 closure"
+    status: "validated-local-awaiting-publication"
 discovered_change_requests: []
 tracking:
   jira:

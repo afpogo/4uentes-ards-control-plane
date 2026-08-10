@@ -20,6 +20,7 @@ source_evidence_refs:
   - "evidence/initiatives/INIT-CP-0003/jira-runtime-epic-correction-summary.md"
   - "evidence/requests/CR-CP-0003/policy-enforcement-gap-analysis.md"
   - "evidence/requests/CR-CP-0003/audit-runtime-policy-enforcement-review.md"
+  - "evidence/requests/CR-SST-0174/policy-adoption-summary.md"
 model_refs:
   - "specs/initiatives/initiative-model.yaml"
   - "docs/requests/initiative-model.md"
@@ -33,6 +34,7 @@ known_change_requests:
   - "CR-CP-0011"
   - "CR-CP-0012"
   - "CR-CP-0013"
+  - "CR-SST-0174"
 candidate_change_requests:
   - id: "CR-CP-0014"
     title: "Promote policy audit runtime pack to core canon"

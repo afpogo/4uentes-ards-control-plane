@@ -1,0 +1,15 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0173"
+title: "Reconcile sst-fend LearningWorkspace owner knowledge after SST-55 closure"
+status: "running"
+source_request: "requests/inbox/CR-SST-0173-sst-fend-learning-knowledge-reconciliation.yaml"
+planned_request: "requests/planned/CR-SST-0173-sst-fend-learning-knowledge-reconciliation.yaml"
+started_at: "2026-08-10"
+requester: "4uentes"
+control_plane_context: {initiative_id: "INIT-SST-0001", jira_source_of_truth: false, jira_write_allowed: false}
+execution: {branch_strategy: "clean worktree", child_repo_mutation_allowed: true, child_repo_mutation_targets: ["sst-fend"], approval_source: "Current user instruction dated 2026-08-10."}
+owner_documentation: {required: true, status: "satisfied", owner_repos: ["sst-fend"], orchestrator_link_required: true, evidence_ref: "evidence/requests/CR-SST-0173/owner-documentation-summary.md"}
+validation: {status: "passed", required_checks: ["sst-fend full check", "control-plane full check"], child_result: "30 suites / 198 tests passed", control_plane_result: "82 owner documentation gates / 0 failures"}
+execution_refs: {child_branch: "agent/cr-sst-0173-learning-knowledge", child_base: "origin/develop@b5742eb"}
+decision: {status: "validated-local-awaiting-publication", approver: "4uentes", decided_at: "2026-08-10"}

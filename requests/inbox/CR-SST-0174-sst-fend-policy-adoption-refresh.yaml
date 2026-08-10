@@ -1,0 +1,17 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0174"
+title: "Refresh and validate sst-fend child policy adoption"
+status: inbox
+created_at: "2026-08-10"
+requester: "4uentes"
+business_context: >
+  The sst-fend policy artifacts still match CR-SST-0077, but they are pinned to
+  an older core revision and the local check does not validate policy manifests.
+requested_change: >
+  Refresh the scoped child adoption against the current core registry, publish
+  per-policy adoption or exception manifests, and make the local ARDS gate
+  validate their discovery and required fields.
+expected_outcome: >
+  Policy adoption becomes explicit, request-linked and mechanically guarded
+  without redefining core canon or changing frontend product runtime.
