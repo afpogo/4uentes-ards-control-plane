@@ -210,9 +210,9 @@ tracking:
     sync_result_ref: "evidence/initiatives/INIT-SST-0001/jira-epic-sync-result.json"
     parent_issue_key: "SST-4"
     active_issue_key: "SST-6"
-    active_subtask_issue_key: "SST-55"
-    active_subtask_request_id: "CR-SST-0125"
-    active_subtask_status_observed: "En curso"
+    active_subtask_issue_key: null
+    active_subtask_request_id: null
+    active_subtask_status_observed: null
     completed_subtasks:
       - request_id: "CR-SST-0118"
         issue_key: "SST-48"
@@ -238,9 +238,12 @@ tracking:
       - request_id: "CR-SST-0154"
         issue_key: "SST-100"
         status_observed: "Listo"
-    active_preview_import_request_id: "CR-SST-0125"
-    active_preview_import_issue_key: "SST-55"
-    active_preview_import_status_observed: "En curso"
+      - request_id: "CR-SST-0125"
+        issue_key: "SST-55"
+        status_observed: "Listo"
+    active_preview_import_request_id: null
+    active_preview_import_issue_key: null
+    active_preview_import_status_observed: null
     proposed_release_train_subtasks: []
     associated_issue_keys:
       - "SST-4"
@@ -326,5 +329,6 @@ open_gaps:
   - "2026-08-06 lifecycle reconciliation confirms CR-SST-0125 / SST-55 as the only active implementation slice under SST-6; CR-SST-0107, CR-SST-0109, CR-SST-0118, CR-SST-0123 and CR-SST-0124 have terminal local records."
   - "2026-08-10 CR-SST-0125 is implemented in sst-bend PR #8, ready for review, rebased onto current develop without conflicts, and validated locally plus GitHub Actions; merge, post-merge reconciliation and explicit SST-55 closure authorization remain pending."
   - "2026-08-10 CR-SST-0125 closed locally after sst-bend PR #8 and control-plane PR #12 were merged and post-merge checks passed. Jira SST-55 remains En curso pending the explicitly enumerated closure batch; SST-6 is outside that authorization."
+  - "2026-08-10 the explicitly authorized Jira batch added closure comment 10316 to SST-55 and executed transition 41. SST-55 was verified as Finalizada/Listo; SST-6 was not modified."
   - "2026-08-06 CR-SST-0153 and CR-SST-0154 were planned as frontend-only release-train fixes under INIT-SST-0001 / SST-6; Jira creation and child-repo mutation remain blocked pending separate approvals."
   - "INIT-SST-0001 now has Jira epic SST-27; future related tickets should be associated to this epic when Jira hierarchy allows it."

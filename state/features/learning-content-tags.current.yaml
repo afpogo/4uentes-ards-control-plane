@@ -139,13 +139,14 @@ evidence_refs:
   - "evidence/requests/CR-SST-0125/validation-results.md"
   - "requests/done/CR-SST-0125-sst-bend-learning-source-preview-import-normalization.yaml"
   - "evidence/requests/CR-SST-0125/post-merge-closure-2026-08-10.md"
+  - "evidence/requests/CR-SST-0125/jira-sst-55-close-summary.md"
   - "evidence/initiatives/INIT-SST-0001/lifecycle-reconciliation-2026-08-06.md"
   - "evidence/requests/CR-SST-0152/minimal-train-amendment-2026-08-06.md"
 active_work:
   request_id: null
-  jira_issue_key: "SST-55"
+  jira_issue_key: null
   jira_parent_issue_key: "SST-6"
-  status: "no-active-local-implementation-jira-closure-pending"
+  status: "no-active-local-implementation-jira-synchronized"
   implementation_repository: null
   release_train_request_id: null
 planned_release_train_work: []
@@ -157,7 +158,7 @@ completed_work:
   - {request_id: "CR-SST-0124", jira_issue_key: "SST-53", status: "done"}
   - {request_id: "CR-SST-0126", jira_issue_key: "SST-54", status: "done"}
   - {request_id: "CR-SST-0127", jira_issue_key: "SST-56", status: "done"}
-  - {request_id: "CR-SST-0125", jira_issue_key: "SST-55", jira_status_observed: "En curso", jira_sync_status: "pending-explicit-authorization", status: "done"}
+  - {request_id: "CR-SST-0125", jira_issue_key: "SST-55", jira_status_observed: "Listo", jira_sync_status: "completed", status: "done"}
   - {request_id: "CR-SST-0153", jira_issue_key: "SST-99", jira_parent_issue_key: "SST-6", jira_status_observed: "Listo", status: "done", release_train_request_id: "CR-SST-0152"}
   - {request_id: "CR-SST-0154", jira_issue_key: "SST-100", jira_parent_issue_key: "SST-6", jira_status_observed: "Listo", status: "done", release_train_request_id: "CR-SST-0152"}
 open_gaps:
@@ -168,6 +169,6 @@ open_gaps:
   - "Keep Article creation independent from LearningWorkspace; LearningWorkspace materializes accepted context only after processing documents, PDFs, HTML/text or agent outputs."
   - "CR-SST-0124 / SST-53 is closed: node-auth accepts payload.kind=text without url/sourceUrl, manual authenticated QA passed, and Jira mirror is Finalizada/Listo."
   - "CR-SST-0125 is done locally: sst-bend PR #8 and control-plane PR #12 are merged, owner docs are aligned, and post-merge checks pass."
-  - "Jira SST-55 remains En curso only as a pending mirror synchronization; comment and transition require explicit batch authorization."
+  - "Jira SST-55 was synchronized through the authorized bounded batch and verified as Finalizada/Listo; SST-6 was not modified."
   - "CR-SST-0153 is validated-live: preview does not feed accepted context and preview/accept/context APIs remain unchanged."
   - "CR-SST-0154 is validated-live: manual_text, article_draft and article presentation uses existing types without new DTOs, endpoints or persistence semantics."
