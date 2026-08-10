@@ -177,7 +177,7 @@ rollback:
     sst-fend: "develop-164c19cfcb88"
 
 decision:
-  status: "sst-fend-ready-pending-human-merge"
+  status: "cr-sst-0149-draft-ci-passed-pending-human-review"
   approver: "human-direct-execution-request-2026-08-07"
   approval_evidence: "evidence/requests/CR-SST-0152/execution-start-2026-08-07.md"
   blocker_evidence: "evidence/requests/CR-SST-0152/stable-allowlist-gap-2026-08-07.md"
