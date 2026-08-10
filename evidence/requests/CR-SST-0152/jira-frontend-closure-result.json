@@ -1,0 +1,193 @@
+{
+  "requestId": "CR-SST-0152",
+  "projectKey": "SST",
+  "status": "complete",
+  "phase": "complete",
+  "externalWrite": true,
+  "authorizedWriteCount": 10,
+  "observedWriteCount": 10,
+  "operations": [
+    {
+      "sequence": 1,
+      "tool": "createJiraIssue",
+      "candidateId": "INIT-SST-0004",
+      "issueKey": "SST-97",
+      "reconciled": false
+    },
+    {
+      "sequence": 2,
+      "tool": "createJiraIssue",
+      "candidateId": "CR-SST-0152",
+      "issueKey": "SST-98",
+      "reconciled": false
+    },
+    {
+      "sequence": 3,
+      "tool": "createJiraIssue",
+      "candidateId": "CR-SST-0153",
+      "issueKey": "SST-99",
+      "reconciled": false
+    },
+    {
+      "sequence": 4,
+      "tool": "createJiraIssue",
+      "candidateId": "CR-SST-0154",
+      "issueKey": "SST-100",
+      "reconciled": false
+    },
+    {
+      "sequence": 5,
+      "tool": "addCommentToJiraIssue",
+      "candidateId": "CR-SST-0152",
+      "issueKey": "SST-98",
+      "reconciled": false
+    },
+    {
+      "sequence": 6,
+      "tool": "transitionJiraIssue",
+      "candidateId": "CR-SST-0152",
+      "issueKey": "SST-98",
+      "transitionId": "41",
+      "targetStatus": "Finalizada",
+      "reconciled": false
+    },
+    {
+      "sequence": 7,
+      "tool": "addCommentToJiraIssue",
+      "candidateId": "CR-SST-0153",
+      "issueKey": "SST-99",
+      "reconciled": false
+    },
+    {
+      "sequence": 8,
+      "tool": "transitionJiraIssue",
+      "candidateId": "CR-SST-0153",
+      "issueKey": "SST-99",
+      "transitionId": "41",
+      "targetStatus": "Finalizada",
+      "reconciled": false
+    },
+    {
+      "sequence": 9,
+      "tool": "addCommentToJiraIssue",
+      "candidateId": "CR-SST-0154",
+      "issueKey": "SST-100",
+      "reconciled": false
+    },
+    {
+      "sequence": 10,
+      "tool": "transitionJiraIssue",
+      "candidateId": "CR-SST-0154",
+      "issueKey": "SST-100",
+      "transitionId": "41",
+      "targetStatus": "Finalizada",
+      "reconciled": false
+    }
+  ],
+  "issues": {
+    "INIT-SST-0004": {
+      "key": "SST-97",
+      "projectKey": "SST",
+      "summary": "[SST][INIT-SST-0004] SST Infrastructure Production Readiness",
+      "status": "Tareas por hacer",
+      "statusCategory": "Por hacer",
+      "issueType": "Epic",
+      "parentKey": null,
+      "labels": [
+        "ards-sdd",
+        "control-plane",
+        "infrastructure-production-readiness",
+        "init-sst-0004"
+      ],
+      "commentCount": 0,
+      "commentSha256": []
+    },
+    "CR-SST-0152": {
+      "key": "SST-98",
+      "projectKey": "SST",
+      "summary": "[SST][CR-SST-0152] Govern minimal SST development release train",
+      "status": "Finalizada",
+      "statusCategory": "Listo",
+      "issueType": "Tarea",
+      "parentKey": "SST-97",
+      "labels": [
+        "ards-sdd",
+        "control-plane",
+        "cr-sst-0152",
+        "init-sst-0004",
+        "release-train",
+        "sst-fend"
+      ],
+      "commentCount": 1,
+      "commentSha256": [
+        "4c6593177299c92ccef60034dcb7529e2813ecaaec743967c5af06b174a6f77f"
+      ]
+    },
+    "CR-SST-0153": {
+      "key": "SST-99",
+      "projectKey": "SST",
+      "summary": "[SST][CR-SST-0153] Separate learning preview from accepted context",
+      "status": "Finalizada",
+      "statusCategory": "Listo",
+      "issueType": "Subtask",
+      "parentKey": "SST-6",
+      "labels": [
+        "ards-sdd",
+        "control-plane",
+        "cr-sst-0153",
+        "init-sst-0001",
+        "learning-content-tags",
+        "sst-fend"
+      ],
+      "commentCount": 1,
+      "commentSha256": [
+        "b598327330fa8f1ffc4695b494d95f99a85b4cd1ea12a017403cbf823d9c799d"
+      ]
+    },
+    "CR-SST-0154": {
+      "key": "SST-100",
+      "projectKey": "SST",
+      "summary": "[SST][CR-SST-0154] Classify learning source presentation types",
+      "status": "Finalizada",
+      "statusCategory": "Listo",
+      "issueType": "Subtask",
+      "parentKey": "SST-6",
+      "labels": [
+        "ards-sdd",
+        "control-plane",
+        "cr-sst-0154",
+        "init-sst-0001",
+        "learning-content-tags",
+        "sst-fend"
+      ],
+      "commentCount": 1,
+      "commentSha256": [
+        "ffc1b796dad4f4956bce3e5d9e18db4645e9236549e2d1d2f02b21b337286ac7"
+      ]
+    }
+  },
+  "sst74": {
+    "key": "SST-74",
+    "projectKey": "SST",
+    "summary": "[CR-SST-0149][AUTH][Mobile] Corregir superposición de campos en signup",
+    "status": "Finalizada",
+    "statusCategory": "Listo",
+    "issueType": "Error",
+    "parentKey": "SST-72",
+    "labels": [
+      "ards-sdd",
+      "auth",
+      "auth-frontend-access-ui",
+      "mobile",
+      "orchestrator-reconciliation-pending",
+      "responsive",
+      "signup",
+      "sst-fend",
+      "visual-regression"
+    ],
+    "commentCount": 0,
+    "commentSha256": []
+  },
+  "error": null,
+  "generatedAt": "2026-08-10T03:36:40.776Z"
+}

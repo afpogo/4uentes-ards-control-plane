@@ -29,6 +29,7 @@ source_evidence_refs:
   - "evidence/requests/CR-SST-0152/jira-write-batch.md"
   - "evidence/requests/CR-SST-0152/minimal-train-amendment-2026-08-06.md"
   - "evidence/requests/CR-SST-0152/closure-and-rollout-2026-08-10.md"
+  - "evidence/requests/CR-SST-0152/jira-frontend-closure-summary.md"
 model_refs:
   - "specs/initiatives/initiative-model.yaml"
   - "docs/requests/initiative-model.md"
@@ -71,13 +72,16 @@ tracking:
     source_of_truth: false
     project_key: "SST"
     issue_type: "Epic"
-    issue_key: "TODO"
-    current_status_observed: "not_created"
-    write_status: "blocked-pending-enumerated-batch-authorization"
-    read_status: "available-post-pr4-preflight-complete"
+    issue_key: "SST-97"
+    current_status_observed: "Tareas por hacer"
+    write_status: "created"
+    read_status: "available-and-verified"
     duplicate_preflight: "no-compatible-issue-found"
     preflight_evidence_ref: "evidence/requests/CR-SST-0152/jira-readonly-preflight.md"
     proposed_batch_ref: "evidence/requests/CR-SST-0152/jira-write-batch.md"
+    execution_evidence_ref: "evidence/requests/CR-SST-0152/jira-frontend-closure-summary.md"
+    completed_request_mirrors:
+      - {request_id: "CR-SST-0152", issue_key: "SST-98", status_observed: "Finalizada", status_category_observed: "Listo"}
     intended_epic_name: "SST Infrastructure Production Readiness"
     intended_scope: >
       Mirror this Initiative as a Jira Epic and associate infrastructure CRs as
@@ -87,7 +91,7 @@ boundaries:
   promotes_runtime: false
   changes_core_canon: false
 open_gaps:
-  - "Jira Epic mirror is not created yet; this Initiative is the ARDS/SDD source of truth until the Epic exists."
+  - "Jira Epic mirror SST-97 exists and remains open because INIT-SST-0004 is active; ARDS/SDD remains the source of truth."
   - "GHCR private image pull is currently blocked by 403 Forbidden from the observed pull probe."
   - "Secrets remain manual local Kubernetes/GitHub secrets without approved rotation or external secret management."
   - "Postgres and Mongo have local-path PVCs but no production-grade backup/restore validation."

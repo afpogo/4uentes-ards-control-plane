@@ -153,8 +153,8 @@ completed_work:
   - {request_id: "CR-SST-0124", jira_issue_key: "SST-53", status: "done"}
   - {request_id: "CR-SST-0126", jira_issue_key: "SST-54", status: "done"}
   - {request_id: "CR-SST-0127", jira_issue_key: "SST-56", status: "done"}
-  - {request_id: "CR-SST-0153", jira_issue_key: "TODO", jira_parent_issue_key: "SST-6", status: "done", release_train_request_id: "CR-SST-0152"}
-  - {request_id: "CR-SST-0154", jira_issue_key: "TODO", jira_parent_issue_key: "SST-6", status: "done", release_train_request_id: "CR-SST-0152"}
+  - {request_id: "CR-SST-0153", jira_issue_key: "SST-99", jira_parent_issue_key: "SST-6", jira_status_observed: "Listo", status: "done", release_train_request_id: "CR-SST-0152"}
+  - {request_id: "CR-SST-0154", jira_issue_key: "SST-100", jira_parent_issue_key: "SST-6", jira_status_observed: "Listo", status: "done", release_train_request_id: "CR-SST-0152"}
 open_gaps:
   - "Promote remaining learning-content parser flows beyond the LearningWorkspace first runtime slice."
   - "Define frontend rendering for clase, nota, recordar, ejemplo, image, docs, and code blocks."

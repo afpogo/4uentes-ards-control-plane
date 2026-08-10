@@ -41,12 +41,14 @@ validation:
     - "Frontend root, signup, learning and bundle smokes returned 200."
     - "Control-plane full check passed."
 jira_sync:
-  status: "pending-retroactive-enumerated-batch"
+  status: "synchronized-closed"
   jira_source_of_truth: false
-  epic_issue_key: "TODO"
-  task_issue_key: "TODO"
-  write_performed: false
-  evidence_ref: "evidence/requests/CR-SST-0152/closure-and-rollout-2026-08-10.md"
+  epic_issue_key: "SST-97"
+  task_issue_key: "SST-98"
+  task_status_observed: "Finalizada"
+  task_status_category_observed: "Listo"
+  write_performed: true
+  evidence_ref: "evidence/requests/CR-SST-0152/jira-frontend-closure-summary.md"
 evidence_refs:
   - "evidence/requests/CR-SST-0152/promotion-manifest.yaml"
   - "evidence/requests/CR-SST-0152/sst-fend-draft-and-cr-sst-0149-decision-2026-08-09.md"
@@ -57,6 +59,5 @@ decision:
   decided_at: "2026-08-10"
   ordering_deviation: >
     The Jira mirrors and running lifecycle snapshots were not created before
-    child execution. Closure records the deviation and requires a separate
-    enumerated retroactive Jira reconciliation batch.
-
+    child execution. Closure records the deviation; the separately authorized
+    enumerated retroactive batch created and closed the mirrors after rollout.

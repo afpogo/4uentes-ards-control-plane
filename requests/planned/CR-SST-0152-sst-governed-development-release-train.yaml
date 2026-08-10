@@ -177,8 +177,9 @@ rollback:
     sst-fend: "develop-164c19cfcb88"
 
 decision:
-  status: "cr-sst-0149-draft-ci-passed-pending-human-review"
-  approver: "human-direct-execution-request-2026-08-07"
+  status: "closed-validated-live"
+  approver: "4uentes"
+  decided_at: "2026-08-10"
   approval_evidence: "evidence/requests/CR-SST-0152/execution-start-2026-08-07.md"
   blocker_evidence: "evidence/requests/CR-SST-0152/stable-allowlist-gap-2026-08-07.md"
   resolved_blocker_evidence: "evidence/requests/CR-SST-0152/learning-preview-allowlist-gap-2026-08-07.md"
@@ -189,12 +190,14 @@ decision:
     the newly reduced scope.
 
 jira_sync:
-  status: "readonly-preflight-complete-no-write-authorization"
+  status: "synchronized-closed"
   project_key: "SST"
-  epic_issue_key: "TODO"
-  task_issue_key: "TODO"
-  related_subtask_issue_keys: {CR-SST-0153: "TODO", CR-SST-0154: "TODO"}
-  desired_status: "En curso"
-  write_authorization_status: "not-granted"
+  epic_issue_key: "SST-97"
+  task_issue_key: "SST-98"
+  related_subtask_issue_keys: {CR-SST-0153: "SST-99", CR-SST-0154: "SST-100"}
+  status_observed: "Finalizada"
+  status_category_observed: "Listo"
+  write_authorization_status: "consumed-complete"
   preflight_ref: "evidence/requests/CR-SST-0152/jira-readonly-preflight.md"
   proposed_batch_ref: "evidence/requests/CR-SST-0152/jira-write-batch.md"
+  execution_ref: "evidence/requests/CR-SST-0152/jira-frontend-closure-summary.md"

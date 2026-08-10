@@ -1,0 +1,16 @@
+{
+  "requestId": "CR-SST-0152",
+  "result": "PASS",
+  "blocked": 0,
+  "authorizationCurrent": true,
+  "authorizationEnumerated": true,
+  "localLifecycleClosed": true,
+  "duplicateSearchRequired": true,
+  "hierarchyReadbackRequired": true,
+  "liveDoctorRequired": true,
+  "correctionPlanPass": true,
+  "commentHashPass": true,
+  "finalReadbackRequired": true,
+  "sanitizedEvidenceRequired": true,
+  "sst74ReadOnly": true
+}

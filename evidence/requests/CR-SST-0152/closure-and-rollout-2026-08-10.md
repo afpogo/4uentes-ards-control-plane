@@ -50,9 +50,15 @@ Argo CD ejecutaron la publicacion.
 
 ## Jira
 
-`CR-SST-0149` conserva el mirror `SST-74`, observado nuevamente en `Listo`.
-Los mirrors de `CR-SST-0152`, `CR-SST-0153` y `CR-SST-0154` no fueron creados
-antes de la ejecucion. Su reconciliacion retroactiva requiere un lote enumerado
-que cree exactamente una Epic, una Tarea y dos Subtasks, publique comentarios
-de cierre fijados y aplique solamente las transiciones terminales autorizadas.
+`CR-SST-0149` conserva el mirror `SST-74`, observado nuevamente como
+`Finalizada/Listo`, sin escrituras adicionales. El lote retroactivo enumerado
+y autorizado se completo con diez escrituras exactas:
 
+- `INIT-SST-0004` -> Epic `SST-97`, abierta porque la iniciativa sigue activa.
+- `CR-SST-0152` -> Tarea `SST-98` bajo `SST-97`, `Finalizada/Listo`.
+- `CR-SST-0153` -> Subtask `SST-99` bajo `SST-6`, `Finalizada/Listo`.
+- `CR-SST-0154` -> Subtask `SST-100` bajo `SST-6`, `Finalizada/Listo`.
+
+Cada mirror de CR recibio exactamente un comentario fijo verificado por hash.
+La evidencia sanitizada esta en
+`evidence/requests/CR-SST-0152/jira-frontend-closure-summary.md`.
