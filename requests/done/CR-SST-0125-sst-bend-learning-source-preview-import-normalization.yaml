@@ -11,8 +11,8 @@ requester: "4uentes"
 summary: >
   Closed the governed sst-bend LearningWorkspace bounded-source normalization
   slice after merge to develop, owner documentation alignment, local and CI
-  validation, and post-merge reconciliation. Jira remains an external mirror
-  pending an explicitly authorized closure batch.
+  validation, post-merge reconciliation, and the explicitly authorized Jira
+  mirror closure.
 
 scope:
   solution: "sst"
@@ -30,7 +30,7 @@ implementation:
   jira_epic_key: "SST-27"
   jira_parent_issue_key: "SST-6"
   jira_subtask_key: "SST-55"
-  jira_status_observed: "En curso"
+  jira_status_observed: "Finalizada"
   jira_source_of_truth: false
   repository: "sst-bend"
   pull_request: "afpogo/sst-bend#8"
@@ -43,7 +43,6 @@ implementation:
     emits warning-first exclusions, and does not crawl, publish or persist
     accepted context during preview.
   not_closed:
-    - "Jira SST-55 comment and transition remain pending explicit batch authorization."
     - "Closing Jira parent SST-6 is a separate decision and is not authorized by this CR closure."
 
 owner_documentation:
@@ -73,13 +72,15 @@ validation:
     - "Protected smoke coverage remained partial because SMOKE_JWT was not provided; the required check exited 0."
 
 jira_sync:
-  status: "pending-explicit-batch-authorization"
+  status: "completed"
   issue_key: "SST-55"
-  status_observed: "En curso"
-  proposed_transition_id: "41"
-  expected_status: "Finalizada"
-  expected_status_category: "Listo"
+  status_observed: "Finalizada"
+  status_category_observed: "Listo"
+  resolution_observed: "Listo"
+  comment_id: "10316"
+  transition_id: "41"
   batch_ref: "evidence/requests/CR-SST-0125/jira-sst-55-closure-batch.md"
+  result_ref: "evidence/requests/CR-SST-0125/jira-sst-55-close-summary.md"
 
 evidence_refs:
   - "evidence/requests/CR-SST-0125/implementation-summary-2026-08-10.md"
@@ -88,11 +89,12 @@ evidence_refs:
   - "evidence/requests/CR-SST-0125/validation-results.md"
   - "evidence/requests/CR-SST-0125/post-merge-closure-2026-08-10.md"
   - "evidence/requests/CR-SST-0125/jira-sst-55-closure-batch.md"
+  - "evidence/requests/CR-SST-0125/jira-sst-55-close-summary.md"
 
 decision:
   status: "closed-local"
   approver: "4uentes"
   note: >
     The user confirmed the implementation branch was merged. Runtime, owner
-    documentation, CI and control-plane gates are satisfied. Jira sync remains
-    a bounded external write requiring separate explicit authorization.
+    documentation, CI and control-plane gates are satisfied. The authorized
+    Jira mirror batch completed and SST-55 was verified as Finalizada/Listo.

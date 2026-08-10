@@ -10,6 +10,9 @@
 - Issue type verificado: `Subtask`
 - Estado observado: `En curso`
 - Ventana: una ejecucion posterior a autorizacion explicita en esta conversacion
+- Resultado: ejecutado y consumido
+- Comment id: `10316`
+- Estado final verificado: `Finalizada` / `Listo`
 
 ## Operaciones Propuestas
 
@@ -46,6 +49,9 @@ ARDS/SDD remains the source of truth; Jira is the operational mirror.
 
 ## Autorizacion Requerida
 
-La ejecucion debe esperar una confirmacion explicita equivalente a:
+La ejecucion recibio una confirmacion explicita equivalente a:
 
 `Autorizo el lote Jira SST-55 enumerado.`
+
+La autorizacion quedo consumida. Cualquier escritura Jira adicional requiere
+un lote nuevo.
