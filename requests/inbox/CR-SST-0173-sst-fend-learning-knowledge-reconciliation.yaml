@@ -1,0 +1,18 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0173"
+title: "Reconcile sst-fend LearningWorkspace owner knowledge after SST-55 closure"
+status: inbox
+created_at: "2026-08-10"
+requester: "4uentes"
+business_context: >
+  CR-SST-0125 and Jira SST-55 are closed, but the sst-fend owner capability and
+  LearningWorkspace documentation still describe their producer evidence as an
+  external pending gate.
+requested_change: >
+  Reconcile only sst-fend ARDS/SDD owner documentation with the merged producer
+  closure, preserving node-auth as the frontend BFF and keeping integrated E2E
+  evidence separate from producer completion.
+expected_outcome: >
+  The frontend owner docs distinguish completed CR-SST-0125/SST-55 producer
+  normalization from any still-open consumer or integrated runtime validation.

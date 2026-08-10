@@ -21,6 +21,7 @@ request_ids:
   - CR-SST-0104
   - CR-SST-0105
   - CR-SST-0106
+  - CR-SST-0174
 spec_refs:
   - "specs/policies/00-index.yaml"
   - "specs/policies/ards-sdd-policy-component-model.yaml"
@@ -70,9 +71,13 @@ evidence_refs:
   - "evidence/requests/CR-SST-0105/validation-results.md"
   - "evidence/requests/CR-SST-0106/bugfix-state-reconciliation.md"
   - "evidence/requests/CR-SST-0106/validation-results.md"
+  - "evidence/requests/CR-SST-0174/policy-adoption-summary.md"
+  - "evidence/requests/CR-SST-0174/validation-results.md"
 open_gaps:
   - "Handoff `human-doc-language` to 4uentes-ards-core as a reusable policy template while preserving the now-active orchestrator registry entry and local source docs."
   - "Resolve canonical identity for 4uentes-core versus 4uentes-ards-core."
   - "Execute future non-SST child repo rollout through `CR-SST-0081` or follow-up approved requests using `policy_adoption_manifest` or `policy_exception_manifest`."
   - "Investigate repo-level check failures captured in CR-SST-0077 validation evidence."
   - "Continue broader lifecycle promotion gates beyond owner documentation and state evidence reconciliation."
+  - "CR-SST-0174 refreshes sst-fend through request-driven manifests and local enforcement; publication remains pending."
+  - "sst-fend keeps a time-bounded http-qa-harness-policy exception until a versioned .http harness is added."

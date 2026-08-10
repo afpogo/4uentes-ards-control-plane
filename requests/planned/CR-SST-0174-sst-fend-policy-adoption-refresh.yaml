@@ -1,0 +1,95 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0174"
+title: "Refresh and validate sst-fend child policy adoption"
+status: running
+source_request: "requests/inbox/CR-SST-0174-sst-fend-policy-adoption-refresh.yaml"
+created_at: "2026-08-10"
+requester: "4uentes"
+summary: >
+  Replace the aggregate historical-only policy assertion with discoverable,
+  request-driven manifests and a focused local validator.
+control_plane_context:
+  initiative_id: "INIT-CP-0003"
+  feature_id: "ards-sdd-policy-unification"
+  jira_source_of_truth: false
+  jira_write_authorized: false
+scope:
+  services: ["sst-fend", "4uentes-orchestor"]
+  includes:
+    - "policy adoption manifests for applicable core policies"
+    - "explicit exception manifest for any temporary enforcement gap"
+    - "policy registry, indexes, human docs and AGENTS discovery"
+    - "local policy-manifest validation wired into npm run check"
+  excludes:
+    - "changes to 4uentes-ards-core canon"
+    - "frontend product runtime behavior"
+    - "Jira writes"
+risk:
+  level: "medium"
+  drivers: ["core canon drift", "false-positive child adoption", "validator compatibility"]
+task_weight:
+  classification: "long-context-task"
+  risk_level: "medium"
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "high"
+  fallback_profile: "gpt-5.4-fast-high"
+  reason: "Cross-repo policy adoption needs core comparison, manifests and deterministic validation."
+execution:
+  requires_human_approval: true
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets: ["sst-fend"]
+  branch_strategy: "clean worktree"
+  implementation_boundary: "Governance artifacts and validation only; no React or API behavior changes."
+  approval_source: "Current user instruction dated 2026-08-10."
+owner_documentation:
+  required: true
+  status: satisfied
+  owner_repos: ["sst-fend"]
+  orchestrator_link_required: true
+  planned_owner_docs:
+    - "AGENTS.md"
+    - "docs/policies/README.md"
+    - "specs/00-index.yaml"
+    - "specs/ards/contract-binding.yaml"
+    - "specs/integration/policies.yaml"
+    - "specs/policies/00-index.yaml"
+    - "specs/policies/adoptions/*.yaml"
+    - "specs/policies/exceptions/*.yaml"
+  updated_owner_docs:
+    - "AGENTS.md"
+    - "docs/00-overview.md"
+    - "docs/policies/README.md"
+    - "specs/00-index.yaml"
+    - "specs/ards/contract-binding.yaml"
+    - "specs/integration/policies.yaml"
+    - "specs/policies/00-index.yaml"
+    - "specs/policies/adoptions/*.yaml"
+    - "specs/policies/exceptions/http-qa-harness-policy.yaml"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0174/policy-adoption-summary.md"
+    - "evidence/requests/CR-SST-0174/changed-files-summary.md"
+    - "evidence/requests/CR-SST-0174/validation-results.md"
+validation:
+  required_checks:
+    - "sst-fend focused policy manifest validator"
+    - "sst-fend npm.cmd run check"
+    - "4uentes-orchestor npm.cmd run check"
+  evidence_required:
+    - "policy adoption summary"
+    - "changed files summary"
+    - "validation results"
+acceptance:
+  - "Every locally declared adopted policy has a request-linked manifest."
+  - "Temporary gaps use policy_exception_manifest rather than adopted claims."
+  - "npm run check fails on missing or malformed policy manifests."
+  - "Local aliases map to canonical policy keys without redefining core canon."
+decision:
+  status: "validated-local-awaiting-publication"
+  approver: "4uentes"
+  decided_at: "2026-08-10"
