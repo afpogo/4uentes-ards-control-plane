@@ -1,0 +1,98 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0125"
+title: "Implement sst-bend LearningWorkspace source preview/import normalization"
+status: done
+source_request: "requests/inbox/CR-SST-0125-sst-bend-learning-source-preview-import-normalization.yaml"
+planned_request: "requests/planned/CR-SST-0125-sst-bend-learning-source-preview-import-normalization.yaml"
+completed_at: "2026-08-10"
+requester: "4uentes"
+
+summary: >
+  Closed the governed sst-bend LearningWorkspace bounded-source normalization
+  slice after merge to develop, owner documentation alignment, local and CI
+  validation, and post-merge reconciliation. Jira remains an external mirror
+  pending an explicitly authorized closure batch.
+
+scope:
+  solution: "sst"
+  services_modified:
+    - "sst-bend"
+    - "4uentes-orchestor"
+  services_verified_read_only:
+    - "4uentes-auth"
+  functional_repositories_modified: true
+  runtime_code_modified: true
+
+implementation:
+  initiative_id: "INIT-SST-0001"
+  active_feature_state: "learning-content-tags"
+  jira_epic_key: "SST-27"
+  jira_parent_issue_key: "SST-6"
+  jira_subtask_key: "SST-55"
+  jira_status_observed: "En curso"
+  jira_source_of_truth: false
+  repository: "sst-bend"
+  pull_request: "afpogo/sst-bend#8"
+  merge_commit: "46c88f9ba667b0c5903a4e2cf64b445019ea9019"
+  control_plane_pull_request: "afpogo/4uentes-ards-control-plane#12"
+  control_plane_merge_commit: "d178349bb0cc3bb04df97abe7f45a06a4d855547"
+  completed_slice: >
+    The existing preview endpoint now accepts bounded supplied text, HTML and
+    document/asset manifests, preserves sourceText and annotation behavior,
+    emits warning-first exclusions, and does not crawl, publish or persist
+    accepted context during preview.
+  not_closed:
+    - "Jira SST-55 comment and transition remain pending explicit batch authorization."
+    - "Closing Jira parent SST-6 is a separate decision and is not authorized by this CR closure."
+
+owner_documentation:
+  status: "satisfied"
+  owner_refs:
+    - repo: "sst-bend"
+      paths:
+        - "specs/api/learning-workspaces.yaml"
+        - "docs/api/26-learning-workspaces.md"
+        - "specs/capabilities/outbound/learning-workspace-context.yaml"
+        - "docs/capabilities/outbound/learning-workspace-context.md"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0125/owner-documentation-summary.md"
+
+validation:
+  status: "validated-post-merge"
+  passed:
+    - "sst-bend npm.cmd run test:learning-workspace"
+    - "sst-bend npm.cmd run test:tag-engine"
+    - "sst-bend npm.cmd run check"
+    - "GitHub Actions Node.js CI on Node 18.x"
+    - "GitHub Actions Node.js CI on Node 20.x"
+    - "GitHub Actions build-publish-update"
+    - "4uentes-orchestor npm.cmd run check"
+  notes:
+    - "The merged develop tree matched the validated feature commit tree."
+    - "Protected smoke coverage remained partial because SMOKE_JWT was not provided; the required check exited 0."
+
+jira_sync:
+  status: "pending-explicit-batch-authorization"
+  issue_key: "SST-55"
+  status_observed: "En curso"
+  proposed_transition_id: "41"
+  expected_status: "Finalizada"
+  expected_status_category: "Listo"
+  batch_ref: "evidence/requests/CR-SST-0125/jira-sst-55-closure-batch.md"
+
+evidence_refs:
+  - "evidence/requests/CR-SST-0125/implementation-summary-2026-08-10.md"
+  - "evidence/requests/CR-SST-0125/changed-files-summary.md"
+  - "evidence/requests/CR-SST-0125/owner-documentation-summary.md"
+  - "evidence/requests/CR-SST-0125/validation-results.md"
+  - "evidence/requests/CR-SST-0125/post-merge-closure-2026-08-10.md"
+  - "evidence/requests/CR-SST-0125/jira-sst-55-closure-batch.md"
+
+decision:
+  status: "closed-local"
+  approver: "4uentes"
+  note: >
+    The user confirmed the implementation branch was merged. Runtime, owner
+    documentation, CI and control-plane gates are satisfied. Jira sync remains
+    a bounded external write requiring separate explicit authorization.
