@@ -1,0 +1,88 @@
+{
+  "requestId": "CR-SST-0152",
+  "projectKey": "SST",
+  "mode": "live-preflight",
+  "localGateResult": "PASS",
+  "result": "PASS",
+  "externalWrite": false,
+  "expectedCreates": 4,
+  "expectedComments": 3,
+  "expectedTransitions": 3,
+  "blocked": 0,
+  "lastPreflightAt": "2026-08-10T03:36:26.264Z",
+  "observed": {
+    "issueTypes": [
+      "Epic",
+      "Subtask",
+      "Feature",
+      "Tarea",
+      "Historia",
+      "Error",
+      "Recurso"
+    ],
+    "duplicateMatches": {
+      "INIT-SST-0004": [],
+      "CR-SST-0152": [],
+      "CR-SST-0153": [],
+      "CR-SST-0154": []
+    },
+    "sst6": {
+      "key": "SST-6",
+      "projectKey": "SST",
+      "summary": "[SST][feature-state] Completar ruta runtime de SST Learning Content Tags",
+      "status": "En curso",
+      "statusCategory": "En curso",
+      "issueType": "Tarea",
+      "parentKey": "SST-27",
+      "labels": [
+        "ards-sdd",
+        "control-plane",
+        "feature-state",
+        "implemented-local",
+        "not-done"
+      ],
+      "commentCount": 0,
+      "commentSha256": []
+    },
+    "sst27": {
+      "key": "SST-27",
+      "projectKey": "SST",
+      "summary": "[SST][INIT-SST-0001] SST Tags Governance Continuity",
+      "status": "En curso",
+      "statusCategory": "En curso",
+      "issueType": "Epic",
+      "parentKey": null,
+      "labels": [
+        "ards-sdd",
+        "control-plane",
+        "init-sst-0001",
+        "learning-content-tags",
+        "sst-tags-governance"
+      ],
+      "commentCount": 0,
+      "commentSha256": []
+    },
+    "sst74": {
+      "key": "SST-74",
+      "projectKey": "SST",
+      "summary": "[CR-SST-0149][AUTH][Mobile] Corregir superposición de campos en signup",
+      "status": "Finalizada",
+      "statusCategory": "Listo",
+      "issueType": "Error",
+      "parentKey": "SST-72",
+      "labels": [
+        "ards-sdd",
+        "auth",
+        "auth-frontend-access-ui",
+        "mobile",
+        "orchestrator-reconciliation-pending",
+        "responsive",
+        "signup",
+        "sst-fend",
+        "visual-regression"
+      ],
+      "commentCount": 0,
+      "commentSha256": []
+    }
+  }
+}

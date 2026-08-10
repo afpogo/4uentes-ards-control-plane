@@ -1,0 +1,17 @@
+{
+  "algorithm": "sha256-exact-utf8-file-bytes",
+  "comments": {
+    "CR-SST-0152": {
+      "path": "evidence/requests/CR-SST-0152/jira-cr-sst-0152-closure-comment.md",
+      "sha256": "4c6593177299c92ccef60034dcb7529e2813ecaaec743967c5af06b174a6f77f"
+    },
+    "CR-SST-0153": {
+      "path": "evidence/requests/CR-SST-0152/jira-cr-sst-0153-closure-comment.md",
+      "sha256": "b598327330fa8f1ffc4695b494d95f99a85b4cd1ea12a017403cbf823d9c799d"
+    },
+    "CR-SST-0154": {
+      "path": "evidence/requests/CR-SST-0152/jira-cr-sst-0154-closure-comment.md",
+      "sha256": "ffc1b796dad4f4956bce3e5d9e18db4645e9236549e2d1d2f02b21b337286ac7"
+    }
+  }
+}

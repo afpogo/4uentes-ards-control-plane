@@ -3,7 +3,7 @@ kind: "initiative"
 id: "INIT-SST-0001"
 title: "SST Tags Governance Continuity"
 status: "active"
-updated_at: "2026-08-06"
+updated_at: "2026-08-10"
 owner_repository: "4uentes-orchestor"
 objective: >
   Continue SST tags governance after the closed SST-4 cut by separating
@@ -77,6 +77,7 @@ source_evidence_refs:
   - "evidence/requests/CR-SST-0126/reconciliation-start.md"
   - "evidence/requests/CR-SST-0126/jira-sync-summary.md"
   - "evidence/requests/CR-SST-0126/authenticated-visual-qa-2026-07-10.md"
+  - "evidence/requests/CR-SST-0152/jira-frontend-closure-summary.md"
   - "evidence/initiatives/INIT-SST-0001/lifecycle-reconciliation-2026-08-06.md"
   - "evidence/requests/CR-SST-0152/minimal-train-amendment-2026-08-06.md"
   - "state/features/sst-tags-governance.current.yaml"
@@ -188,10 +189,10 @@ candidate_change_requests:
     status: "done"
   - id: "CR-SST-0153"
     title: "Separate learning preview from accepted context"
-    status: "planned"
+    status: "done"
   - id: "CR-SST-0154"
     title: "Classify learning source presentation types"
-    status: "planned"
+    status: "done"
 discovered_change_requests: []
 tracking:
   jira:
@@ -231,12 +232,16 @@ tracking:
       - request_id: "CR-SST-0127"
         issue_key: "SST-56"
         status_observed: "Listo"
+      - request_id: "CR-SST-0153"
+        issue_key: "SST-99"
+        status_observed: "Listo"
+      - request_id: "CR-SST-0154"
+        issue_key: "SST-100"
+        status_observed: "Listo"
     active_preview_import_request_id: "CR-SST-0125"
     active_preview_import_issue_key: "SST-55"
     active_preview_import_status_observed: "En curso"
-    proposed_release_train_subtasks:
-      - {request_id: "CR-SST-0153", parent_issue_key: "SST-6", issue_key: "TODO", write_status: "not-authorized"}
-      - {request_id: "CR-SST-0154", parent_issue_key: "SST-6", issue_key: "TODO", write_status: "not-authorized"}
+    proposed_release_train_subtasks: []
     associated_issue_keys:
       - "SST-4"
       - "SST-6"
@@ -255,6 +260,8 @@ tracking:
       - "SST-54"
       - "SST-55"
       - "SST-56"
+      - "SST-99"
+      - "SST-100"
     active_issue_status_observed: "En curso"
     previous_read_blocker_ref: "evidence/requests/CR-SST-0087/jira-mcp-review.md"
 boundaries:

@@ -129,6 +129,8 @@ evidence_refs:
   - "requests/planned/CR-SST-0125-sst-bend-learning-source-preview-import-normalization.yaml"
   - "requests/planned/CR-SST-0153-learning-preview-accepted-context-separation.yaml"
   - "requests/planned/CR-SST-0154-learning-source-presentation-classification.yaml"
+  - "requests/done/CR-SST-0153-learning-preview-accepted-context-separation.yaml"
+  - "requests/done/CR-SST-0154-learning-source-presentation-classification.yaml"
   - "evidence/requests/CR-SST-0125/policy-and-owner-enforcement-start.md"
   - "evidence/requests/CR-SST-0125/implementation-analysis-start.md"
   - "evidence/requests/CR-SST-0125/jira-create-start-blocker.md"
@@ -142,9 +144,7 @@ active_work:
   status: "planned-implementation"
   implementation_repository: "sst-bend"
   release_train_request_id: null
-planned_release_train_work:
-  - {request_id: "CR-SST-0153", jira_parent_issue_key: "SST-6", status: "blocked-pending-approval", implementation_repository: "sst-fend", release_train_request_id: "CR-SST-0152"}
-  - {request_id: "CR-SST-0154", jira_parent_issue_key: "SST-6", status: "blocked-pending-approval", implementation_repository: "sst-fend", release_train_request_id: "CR-SST-0152"}
+planned_release_train_work: []
 completed_work:
   - {request_id: "CR-SST-0107", status: "done"}
   - {request_id: "CR-SST-0109", status: "done"}
@@ -153,6 +153,8 @@ completed_work:
   - {request_id: "CR-SST-0124", jira_issue_key: "SST-53", status: "done"}
   - {request_id: "CR-SST-0126", jira_issue_key: "SST-54", status: "done"}
   - {request_id: "CR-SST-0127", jira_issue_key: "SST-56", status: "done"}
+  - {request_id: "CR-SST-0153", jira_issue_key: "SST-99", jira_parent_issue_key: "SST-6", jira_status_observed: "Listo", status: "done", release_train_request_id: "CR-SST-0152"}
+  - {request_id: "CR-SST-0154", jira_issue_key: "SST-100", jira_parent_issue_key: "SST-6", jira_status_observed: "Listo", status: "done", release_train_request_id: "CR-SST-0152"}
 open_gaps:
   - "Promote remaining learning-content parser flows beyond the LearningWorkspace first runtime slice."
   - "Define frontend rendering for clase, nota, recordar, ejemplo, image, docs, and code blocks."
@@ -162,5 +164,5 @@ open_gaps:
   - "CR-SST-0124 / SST-53 is closed: node-auth accepts payload.kind=text without url/sourceUrl, manual authenticated QA passed, and Jira mirror is Finalizada/Listo."
   - "CR-SST-0125 / SST-55 is the active governed sst-bend parser/import normalization implementation cut; its Jira mirror is En curso under SST-6."
   - "Keep completed Jira mirrors synchronized while ARDS/SDD remains source of truth; SST-55 is the only active implementation mirror in this lifecycle."
-  - "CR-SST-0153 will ensure preview never feeds accepted context; it changes frontend state/presentation only and preserves preview/accept/context APIs."
-  - "CR-SST-0154 will classify existing manual_text, article_draft and article presentation without new DTOs, endpoints or persistence semantics."
+  - "CR-SST-0153 is validated-live: preview does not feed accepted context and preview/accept/context APIs remain unchanged."
+  - "CR-SST-0154 is validated-live: manual_text, article_draft and article presentation uses existing types without new DTOs, endpoints or persistence semantics."

@@ -1,0 +1,108 @@
+{
+  "requestId": "CR-SST-0152",
+  "provider": "Jira",
+  "projectKey": "SST",
+  "approvalStatus": "approved",
+  "approvedBy": "4uentes",
+  "approvalStatement": "Autorizo el lote Jira enumerado",
+  "approvedAt": "2026-08-10T03:28:27Z",
+  "executionWindow": "current-authorized-session-2026-08-10T03:28:27Z-2026-08-10T05:00:00Z",
+  "expiresAt": "2026-08-10T05:00:00Z",
+  "consumed": true,
+  "allowedWriteCount": 10,
+  "allowedWrites": [
+    {
+      "sequence": 1,
+      "tool": "createJiraIssue",
+      "candidateId": "INIT-SST-0004",
+      "issueType": "Epic",
+      "parent": null,
+      "summary": "[SST][INIT-SST-0004] SST Infrastructure Production Readiness"
+    },
+    {
+      "sequence": 2,
+      "tool": "createJiraIssue",
+      "candidateId": "CR-SST-0152",
+      "issueType": "Tarea",
+      "parent": "$INIT-SST-0004",
+      "summary": "[SST][CR-SST-0152] Govern minimal SST development release train"
+    },
+    {
+      "sequence": 3,
+      "tool": "createJiraIssue",
+      "candidateId": "CR-SST-0153",
+      "issueType": "Subtask",
+      "parent": "SST-6",
+      "summary": "[SST][CR-SST-0153] Separate learning preview from accepted context"
+    },
+    {
+      "sequence": 4,
+      "tool": "createJiraIssue",
+      "candidateId": "CR-SST-0154",
+      "issueType": "Subtask",
+      "parent": "SST-6",
+      "summary": "[SST][CR-SST-0154] Classify learning source presentation types"
+    },
+    {
+      "sequence": 5,
+      "tool": "addCommentToJiraIssue",
+      "candidateId": "CR-SST-0152",
+      "commentSha256": "4c6593177299c92ccef60034dcb7529e2813ecaaec743967c5af06b174a6f77f"
+    },
+    {
+      "sequence": 6,
+      "tool": "transitionJiraIssue",
+      "candidateId": "CR-SST-0152",
+      "targetStatus": "Listo"
+    },
+    {
+      "sequence": 7,
+      "tool": "addCommentToJiraIssue",
+      "candidateId": "CR-SST-0153",
+      "commentSha256": "b598327330fa8f1ffc4695b494d95f99a85b4cd1ea12a017403cbf823d9c799d"
+    },
+    {
+      "sequence": 8,
+      "tool": "transitionJiraIssue",
+      "candidateId": "CR-SST-0153",
+      "targetStatus": "Listo"
+    },
+    {
+      "sequence": 9,
+      "tool": "addCommentToJiraIssue",
+      "candidateId": "CR-SST-0154",
+      "commentSha256": "ffc1b796dad4f4956bce3e5d9e18db4645e9236549e2d1d2f02b21b337286ac7"
+    },
+    {
+      "sequence": 10,
+      "tool": "transitionJiraIssue",
+      "candidateId": "CR-SST-0154",
+      "targetStatus": "Listo"
+    }
+  ],
+  "readOnlyVerification": [
+    "SST-6",
+    "SST-27",
+    "SST-74"
+  ],
+  "forbiddenWrites": [
+    "delete",
+    "edit",
+    "reparent",
+    "assign",
+    "link",
+    "wildcard",
+    "epic-transition",
+    "sst-74-write"
+  ],
+  "consumptionStatus": "complete",
+  "firstWriteAttemptAt": "2026-08-10T03:36:26.270Z",
+  "consumedAt": "2026-08-10T03:36:40.775Z",
+  "createdIssueKeys": {
+    "INIT-SST-0004": "SST-97",
+    "CR-SST-0152": "SST-98",
+    "CR-SST-0153": "SST-99",
+    "CR-SST-0154": "SST-100"
+  },
+  "resultRef": "evidence/requests/CR-SST-0152/jira-frontend-closure-result.json"
+}

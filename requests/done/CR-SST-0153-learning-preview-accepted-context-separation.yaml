@@ -1,0 +1,53 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0153"
+title: "Separate learning preview from accepted context"
+status: "done"
+source_request: "requests/inbox/CR-SST-0153-learning-preview-accepted-context-separation.yaml"
+planned_request: "requests/planned/CR-SST-0153-learning-preview-accepted-context-separation.yaml"
+created_at: "2026-08-06"
+completed_at: "2026-08-10"
+requester: "4uentes"
+summary: >
+  LearningWorkspace keeps preview output separate from accepted context and
+  populates accepted context only from explicit accept results.
+scope:
+  solution: "sst"
+  services_modified: ["sst-fend", "4uentes-orchestor"]
+  functional_repositories_modified: true
+  runtime_code_modified: true
+implementation:
+  initiative_id: "INIT-SST-0001"
+  release_train_request_id: "CR-SST-0152"
+  implementation_commit: "33c93c9b86552ef9771d5161941cf2b8ee15aa8a"
+  pull_request: "https://github.com/afpogo/sst-fend/pull/5"
+  merge_commit: "94a4b4ee0d8b2fcae63b801f9e1d29ce89758de3"
+  preserved_boundary: "Preview, accept and accepted-context API contracts remain unchanged."
+owner_documentation:
+  required: true
+  status: "satisfied"
+  owner_repos: ["sst-fend"]
+validation:
+  status: "validated-live"
+  passed:
+    - "LearningWorkspace focused coverage and full sst-fend check."
+    - "PR #5 merge workflow, immutable image publication and GitOps rollout."
+    - "Argo CD Synced/Healthy and /learning smoke returned 200."
+jira_sync:
+  status: "synchronized-closed"
+  jira_source_of_truth: false
+  desired_issue_type: "Subtask"
+  parent_issue_key: "SST-6"
+  issue_key: "SST-99"
+  status_observed: "Finalizada"
+  status_category_observed: "Listo"
+  write_performed: true
+  evidence_ref: "evidence/requests/CR-SST-0152/jira-frontend-closure-summary.md"
+evidence_refs:
+  - "evidence/requests/CR-SST-0152/sst-fend-draft-and-cr-sst-0149-decision-2026-08-09.md"
+  - "evidence/requests/CR-SST-0152/closure-and-rollout-2026-08-10.md"
+decision:
+  status: "closed-validated-live"
+  approver: "4uentes"
+  decided_at: "2026-08-10"
+  ordering_deviation: "The Jira mirror and running snapshot were not created before implementation; the authorized retroactive lifecycle reconciliation created and closed SST-99 after rollout."
