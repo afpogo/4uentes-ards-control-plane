@@ -36,5 +36,14 @@ campos, por lo que el nuevo DTO compatible no queda bloqueado.
 
 ## Pendiente
 
-- Fusionar a `develop`.
-- Ejecutar reconciliacion post-merge antes del cierre local/Jira.
+- Sincronizar el comentario y la transicion de `SST-55` solamente despues de
+  recibir autorizacion explicita para el lote Jira enumerado.
+
+## Revalidacion Post-Merge
+
+- PR funcional `sst-bend #8`: `MERGED` a `develop`.
+- Merge commit: `46c88f9ba667b0c5903a4e2cf64b445019ea9019`.
+- El arbol fusionado coincide con el arbol del commit funcional validado.
+- `npm.cmd run test:learning-workspace`: PASS.
+- `npm.cmd run test:tag-engine`: PASS, 7/7.
+- `npm.cmd run check`: PASS, exit code 0.
