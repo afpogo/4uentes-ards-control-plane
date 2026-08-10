@@ -3,7 +3,7 @@ kind: "feature_state"
 id: "learning-content-tags"
 title: "SST Learning Content Tags"
 status: "runtime-partial"
-updated_at: "2026-08-06"
+updated_at: "2026-08-10"
 solution_id: "sst"
 affected_services:
   - sst-bend
@@ -135,13 +135,15 @@ evidence_refs:
   - "evidence/requests/CR-SST-0125/implementation-analysis-start.md"
   - "evidence/requests/CR-SST-0125/jira-create-start-blocker.md"
   - "evidence/requests/CR-SST-0125/jira-cr-sst-0125-create-start-summary.md"
+  - "evidence/requests/CR-SST-0125/implementation-summary-2026-08-10.md"
+  - "evidence/requests/CR-SST-0125/validation-results.md"
   - "evidence/initiatives/INIT-SST-0001/lifecycle-reconciliation-2026-08-06.md"
   - "evidence/requests/CR-SST-0152/minimal-train-amendment-2026-08-06.md"
 active_work:
   request_id: "CR-SST-0125"
   jira_issue_key: "SST-55"
   jira_parent_issue_key: "SST-6"
-  status: "planned-implementation"
+  status: "implemented-local-pr-ready-ci-passed"
   implementation_repository: "sst-bend"
   release_train_request_id: null
 planned_release_train_work: []
@@ -163,6 +165,7 @@ open_gaps:
   - "Keep Article creation independent from LearningWorkspace; LearningWorkspace materializes accepted context only after processing documents, PDFs, HTML/text or agent outputs."
   - "CR-SST-0124 / SST-53 is closed: node-auth accepts payload.kind=text without url/sourceUrl, manual authenticated QA passed, and Jira mirror is Finalizada/Listo."
   - "CR-SST-0125 / SST-55 is the active governed sst-bend parser/import normalization implementation cut; its Jira mirror is En curso under SST-6."
+  - "CR-SST-0125 is implemented locally in sst-bend PR #8, is ready for review, and passed targeted/full local checks plus GitHub Actions after rebasing onto current develop; merge and Jira closure remain pending."
   - "Keep completed Jira mirrors synchronized while ARDS/SDD remains source of truth; SST-55 is the only active implementation mirror in this lifecycle."
   - "CR-SST-0153 is validated-live: preview does not feed accepted context and preview/accept/context APIs remain unchanged."
   - "CR-SST-0154 is validated-live: manual_text, article_draft and article presentation uses existing types without new DTOs, endpoints or persistence semantics."
