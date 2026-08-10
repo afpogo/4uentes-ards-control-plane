@@ -1,0 +1,64 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0125"
+title: "Implement sst-bend LearningWorkspace source preview/import normalization"
+status: running
+source_request: "requests/inbox/CR-SST-0125-sst-bend-learning-source-preview-import-normalization.yaml"
+planned_request: "requests/planned/CR-SST-0125-sst-bend-learning-source-preview-import-normalization.yaml"
+started_at: "2026-08-10"
+requester: "4uentes"
+
+execution:
+  repository: "sst-bend"
+  base_branch: "develop"
+  branch: "feat/SST-55/CR-SST-0125-learning-source-normalization"
+  commit: "5fca1b03a1712b6a38b96fa944be2892feb763dc"
+  pull_request: "https://github.com/afpogo/sst-bend/pull/8"
+  pull_request_state: "open-ready-for-review-ci-passed"
+  mergeable_observed: true
+  jira_issue_key: "SST-55"
+  jira_status_observed: "En curso"
+
+implementation:
+  completed_local:
+    - "Bounded text, HTML and supplied document-manifest normalization."
+    - "Warning-first generated-path, selector and asset handling."
+    - "Compatibility with sourceText and annotated preview/accept runtime from current develop."
+    - "Owner specs, docs and outbound capability aligned in sst-bend."
+  pending:
+    - "Human merge into develop."
+    - "Post-merge reconciliation and explicit Jira closure authorization."
+
+validation:
+  status: "validated-local-and-ci"
+  passed:
+    - "sst-bend npm.cmd run test:learning-workspace"
+    - "sst-bend npm.cmd run test:tag-engine"
+    - "sst-bend npm.cmd run check"
+    - "sst-bend git diff --check"
+    - "GitHub Actions Node.js CI on Node 18.x"
+    - "GitHub Actions Node.js CI on Node 20.x"
+    - "GitHub Actions build-publish-update"
+  notes:
+    - "Protected smoke coverage remains partial because SMOKE_JWT was not provided; npm.cmd run check exited 0."
+
+owner_documentation:
+  status: "satisfied"
+  owner_refs:
+    - repo: "sst-bend"
+      paths:
+        - "specs/api/learning-workspaces.yaml"
+        - "docs/api/26-learning-workspaces.md"
+        - "specs/capabilities/outbound/learning-workspace-context.yaml"
+        - "docs/capabilities/outbound/learning-workspace-context.md"
+
+evidence_refs:
+  - "evidence/requests/CR-SST-0125/implementation-summary-2026-08-10.md"
+  - "evidence/requests/CR-SST-0125/changed-files-summary.md"
+  - "evidence/requests/CR-SST-0125/owner-documentation-summary.md"
+  - "evidence/requests/CR-SST-0125/validation-results.md"
+  - "evidence/requests/CR-SST-0125/jira-sst-55-status-2026-08-10.md"
+
+decision:
+  status: "pending-merge-and-jira-closure"
+  approver: "TODO"
