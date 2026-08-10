@@ -28,21 +28,26 @@ owner_documentation:
     - "evidence/requests/CR-SST-0149/implementation-and-validation.md"
     - "sst-fend:docs/tasks/2026-08-04-cr-sst-0149-signup-responsive-structure-repair.md"
 validation:
-  status: "validated-local"
+  status: "validated-live"
   passed:
     - "Requester-approved manual QA."
     - "Focused signup layout regression: 1 suite and 3 tests."
     - "sst-fend full check: build, 31 suites and 204 tests."
     - "Chrome DevTools: seven viewports, EN/ES and 200% reflow equivalent without overlap, overflow or nested scroll."
     - "Control-plane full check and owner-documentation validation."
+    - "PR #6 merged as b5742eb709d555dd5c9bbc5d58a6bfdd90c47b8b and workflow 31350289665 succeeded."
+    - "Image develop-b5742eb709d5 deployed by GitOps commit c54d36cf1e95300406ba3c89b0d59b18d65ce8d9; Argo CD remained Synced/Healthy."
+    - "Effective pod ready with zero restarts and matching digest; root, signup, learning and bundle smokes returned 200."
   warnings:
     - "Existing frontend hook and deprecation warnings remain non-blocking."
 evidence_refs:
   - "evidence/requests/CR-SST-0149/implementation-and-validation.md"
   - "evidence/requests/CR-SST-0149/closure-authorization-and-preflight.md"
   - "evidence/requests/CR-SST-0149/jira-closure.md"
+  - "evidence/requests/CR-SST-0149/jira-issue-SST-74-observation.md"
+  - "evidence/requests/CR-SST-0152/closure-and-rollout-2026-08-10.md"
 decision:
-  status: "closed-local"
+  status: "closed-validated-live"
   approver: "4uentes"
   decided_at: "2026-08-04"
   note: "Manual QA accepted. No release or CR-SST-0150 rebranding work is implied."

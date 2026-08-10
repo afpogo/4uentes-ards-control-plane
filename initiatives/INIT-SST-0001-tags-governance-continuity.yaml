@@ -3,7 +3,7 @@ kind: "initiative"
 id: "INIT-SST-0001"
 title: "SST Tags Governance Continuity"
 status: "active"
-updated_at: "2026-08-06"
+updated_at: "2026-08-10"
 owner_repository: "4uentes-orchestor"
 objective: >
   Continue SST tags governance after the closed SST-4 cut by separating
@@ -188,10 +188,10 @@ candidate_change_requests:
     status: "done"
   - id: "CR-SST-0153"
     title: "Separate learning preview from accepted context"
-    status: "planned"
+    status: "done"
   - id: "CR-SST-0154"
     title: "Classify learning source presentation types"
-    status: "planned"
+    status: "done"
 discovered_change_requests: []
 tracking:
   jira:
@@ -235,8 +235,8 @@ tracking:
     active_preview_import_issue_key: "SST-55"
     active_preview_import_status_observed: "En curso"
     proposed_release_train_subtasks:
-      - {request_id: "CR-SST-0153", parent_issue_key: "SST-6", issue_key: "TODO", write_status: "not-authorized"}
-      - {request_id: "CR-SST-0154", parent_issue_key: "SST-6", issue_key: "TODO", write_status: "not-authorized"}
+      - {request_id: "CR-SST-0153", parent_issue_key: "SST-6", issue_key: "TODO", write_status: "pending-retroactive-enumerated-batch"}
+      - {request_id: "CR-SST-0154", parent_issue_key: "SST-6", issue_key: "TODO", write_status: "pending-retroactive-enumerated-batch"}
     associated_issue_keys:
       - "SST-4"
       - "SST-6"

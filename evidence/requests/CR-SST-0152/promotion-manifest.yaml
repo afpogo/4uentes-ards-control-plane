@@ -3,8 +3,8 @@ kind: "sst_development_promotion_manifest"
 id: "CR-SST-0152-promotion"
 request_id: "CR-SST-0152"
 initiative_id: "INIT-SST-0004"
-status: "blocked-pending-learning-preview-allowlist-amendment-merge"
-observed_at: "2026-08-07"
+status: "completed-validated-live"
+observed_at: "2026-08-10"
 target_environment: "development"
 
 control_plane_history:
@@ -293,7 +293,7 @@ separate_follow_ups:
   - request_id: "CR-SST-0149"
     repository: "sst-fend"
     branch: "fix/SST-74/CR-SST-0149/signup-responsive-structure"
-    status: "separate-draft-after-main-frontend-merge"
+    status: "merged-and-validated-live"
     source_paths:
       - "docs/31-auth-frontend.md"
       - "docs/capabilities/inbound/node-auth--auth-frontend-access-ui.md"
@@ -317,6 +317,14 @@ excluded_services:
     reason: "Not selected and no authorized deployable delta exists."
 
 rollout_evidence:
+  final_frontend_rollout:
+    merge_commit: "b5742eb709d555dd5c9bbc5d58a6bfdd90c47b8b"
+    workflow_run: "31350289665"
+    image: "ghcr.io/afpogo/sst-fend:develop-b5742eb709d5"
+    digest: "sha256:0553e81211589d1582fa4907c8ef71d4cff1a92a75b05d5c321a1c934a06fe3a"
+    gitops_commit: "c54d36cf1e95300406ba3c89b0d59b18d65ce8d9"
+    argo: {sync: "Synced", health: "Healthy", revision: "c54d36cf1e95300406ba3c89b0d59b18d65ce8d9"}
+    effective_runtime: {ready: true, restarts: 0, smokes: ["/:200", "/signup:200", "/learning:200", "bundle:200"]}
   required_per_service:
     - "develop push workflow"
     - "develop-<sha> image and digest"

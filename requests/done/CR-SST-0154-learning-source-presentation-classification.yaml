@@ -1,0 +1,52 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0154"
+title: "Classify learning source presentation types"
+status: "done"
+source_request: "requests/inbox/CR-SST-0154-learning-source-presentation-classification.yaml"
+planned_request: "requests/planned/CR-SST-0154-learning-source-presentation-classification.yaml"
+created_at: "2026-08-06"
+completed_at: "2026-08-10"
+requester: "4uentes"
+summary: >
+  LearningWorkspace presents and routes the existing manual_text,
+  article_draft and article source types without inventing DTOs, endpoints or
+  persistence behavior.
+scope:
+  solution: "sst"
+  services_modified: ["sst-fend", "4uentes-orchestor"]
+  functional_repositories_modified: true
+  runtime_code_modified: true
+implementation:
+  initiative_id: "INIT-SST-0001"
+  release_train_request_id: "CR-SST-0152"
+  implementation_commit: "8edff561ffb5043e736bb9dd510a68483841eddb"
+  pull_request: "https://github.com/afpogo/sst-fend/pull/5"
+  merge_commit: "94a4b4ee0d8b2fcae63b801f9e1d29ce89758de3"
+  preserved_boundary: "Existing source types and API contracts remain unchanged."
+owner_documentation:
+  required: true
+  status: "satisfied"
+  owner_repos: ["sst-fend"]
+validation:
+  status: "validated-live"
+  passed:
+    - "LearningWorkspace and ArticleCreateFlow coverage plus full sst-fend check."
+    - "PR #5 merge workflow, immutable image publication and GitOps rollout."
+    - "Argo CD Synced/Healthy and /learning smoke returned 200."
+jira_sync:
+  status: "pending-retroactive-enumerated-batch"
+  jira_source_of_truth: false
+  desired_issue_type: "Subtask"
+  parent_issue_key: "SST-6"
+  issue_key: "TODO"
+  write_performed: false
+evidence_refs:
+  - "evidence/requests/CR-SST-0152/sst-fend-draft-and-cr-sst-0149-decision-2026-08-09.md"
+  - "evidence/requests/CR-SST-0152/closure-and-rollout-2026-08-10.md"
+decision:
+  status: "closed-validated-live"
+  approver: "4uentes"
+  decided_at: "2026-08-10"
+  ordering_deviation: "The Jira mirror and running snapshot were not created before implementation; closure records the retroactive lifecycle reconciliation."
+

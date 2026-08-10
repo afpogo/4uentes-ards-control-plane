@@ -3,7 +3,7 @@ kind: "initiative"
 id: "INIT-SST-0004"
 title: "SST Infrastructure Production Readiness"
 status: "active"
-updated_at: "2026-08-07"
+updated_at: "2026-08-10"
 owner_repository: "4uentes-orchestor"
 objective: >
   Govern the SST infrastructure hardening path from the current local
@@ -28,6 +28,7 @@ source_evidence_refs:
   - "evidence/requests/CR-SST-0152/jira-readonly-preflight.md"
   - "evidence/requests/CR-SST-0152/jira-write-batch.md"
   - "evidence/requests/CR-SST-0152/minimal-train-amendment-2026-08-06.md"
+  - "evidence/requests/CR-SST-0152/closure-and-rollout-2026-08-10.md"
 model_refs:
   - "specs/initiatives/initiative-model.yaml"
   - "docs/requests/initiative-model.md"
@@ -38,7 +39,7 @@ known_change_requests:
 candidate_change_requests:
   - id: "CR-SST-0152"
     title: "Govern minimal SST development release train"
-    status: "running"
+    status: "done"
   - id: "CR-SST-TODO"
     title: "Fix private GHCR pull path and validate imagePullPolicy Always"
     status: "candidate"
@@ -94,6 +95,6 @@ open_gaps:
   - "Observability remains basic Kubernetes/Argo CD inspection; no metrics/logging/alerting stack is defined."
   - "Kubernetes RBAC hardening remains TODO in infra specs."
   - "Production endpoint, TLS, release promotion, and rollback policies remain undefined."
-  - "CR-SST-0152 governs the minimum sst-bend -> 4uentes-auth -> sst-fend train; sst-extension and preview are deferred, and every repository merge and rollout remains human-gated."
+  - "CR-SST-0152 completed the minimum sst-bend -> 4uentes-auth -> sst-fend train with validated-live rollout; sst-extension and preview remain deferred."
   - "PR #3 merged before the minimum-train correction; PR #4 later merged the correction and authorized isolated recomposition while child merges remain independently human-gated."
   - "CR-SST-0003 is historical deployment baseline evidence only and does not authorize the CR-SST-0152 child-repository mutations."

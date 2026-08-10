@@ -1,0 +1,50 @@
+{
+  "issueKey": "SST-74",
+  "issue": {
+    "summary": "[CR-SST-0149][AUTH][Mobile] Corregir superposición de campos en signup",
+    "status": "Listo",
+    "statusCategory": "Listo",
+    "resolution": "Listo",
+    "assignee": "Fuentes Sandferand",
+    "updated": "2026-08-04T22:22:58.660-0300",
+    "labels": [
+      "ards-sdd",
+      "auth",
+      "auth-frontend-access-ui",
+      "mobile",
+      "orchestrator-reconciliation-pending",
+      "responsive",
+      "signup",
+      "sst-fend",
+      "visual-regression"
+    ],
+    "description": "## Autoridad y trazabilidad\n\n* **Change Request:** CR-SST-0149\n* **Initiative ARDS/SDD:** INIT-SST-0006\n* **Epic Jira:** SST-72\n* **Repositorio owner:** sst-fend\n* **Autoridad:** el control-plane ARDS/SDD es source of truth; Jira es el mirror operativo.\n\n## Problema reproducido\n\nEn signup móvil, los cinco campos pueden ocupar la misma posición y quedar superpuestos. La auditoría con Chrome DevTools reprodujo el defecto en 390x700 y 390x844: las clases `grid-area` están activas antes de que exista el `grid-template-areas` del breakpoint tablet.\n\nEn 768x1024 el shell también activa simultáneamente el aside fijo y el formulario de dos columnas, reduciendo el ancho útil de los campos de contraseña.\n\n## Alcance autorizado\n\n* Restaurar una columna estable en viewports estrechos.\n* Activar dos columnas sólo cuando el ancho real permita controles utilizables.\n* Mantener cinco campos en rectángulos distintos y sin superposición.\n* Permitir scroll natural de página, sin clipping ni nested scroll.\n* Agregar regresiones de layout y evidencia visual responsive.\n\n## Límites\n\n* Preservar RegisterForm, schema, AuthActor y contratos HTTP/session.\n* Preservar `/signup` y el retorno a `/?auth=login`.\n* No cambiar términos, privacidad, payloads, RBAC ni autenticación.\n* El rebranding visual completo continúa separado en CR-SST-0150.\n\n## Owner ARDS/SDD y continuidad\n\nLa implementación debe mantener actualizados en sst-fend:\n\n* `specs/31-auth-frontend.yml`\n* `docs/31-auth-frontend.md`\n* `specs/15-ui-framework.yml`\n* evidencia owner de implementación y QA\n\n## Criterios de aceptación\n\n1. Los cinco campos no se superponen en 320x568, 360x800, 390x844, 412x915, 768x1024, 1366x768 y 1440x900.\n2. `documentElement.scrollWidth <= clientWidth`.\n3. El orden visual coincide con el orden de teclado.\n4. No se introducen alturas fijas, clipping global ni subscroll de formulario.\n5. Pasan los checks de sst-fend y el `npm run check` completo del control-plane.\n6. El cierre requiere evidencia nueva de Chrome DevTools; la evidencia histórica no alcanza.\n\n",
+    "raw": "{\"expand\":\"renderedFields,names,schema,operations,editmeta,changelog,versionedRepresentations\",\"id\":\"10146\",\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/issue/10146\",\"key\":\"SST-74\",\"fields\":{\"summary\":\"[CR-SST-0149][AUTH][Mobile] Corregir superposición de campos en signup\",\"description\":\"## Autoridad y trazabilidad\\n\\n* **Change Request:** CR-SST-0149\\n* **Initiative ARDS/SDD:** INIT-SST-0006\\n* **Epic Jira:** SST-72\\n* **Repositorio owner:** sst-fend\\n* **Autoridad:** el control-plane ARDS/SDD es source of truth; Jira es el mirror operativo.\\n\\n## Problema reproducido\\n\\nEn signup móvil, los cinco campos pueden ocupar la misma posición y quedar superpuestos. La auditoría con Chrome DevTools reprodujo el defecto en 390x700 y 390x844: las clases `grid-area` están activas antes de que exista el `grid-template-areas` del breakpoint tablet.\\n\\nEn 768x1024 el shell también activa simultáneamente el aside fijo y el formulario de dos columnas, reduciendo el ancho útil de los campos de contraseña.\\n\\n## Alcance autorizado\\n\\n* Restaurar una columna estable en viewports estrechos.\\n* Activar dos columnas sólo cuando el ancho real permita controles utilizables.\\n* Mantener cinco campos en rectángulos distintos y sin superposición.\\n* Permitir scroll natural de página, sin clipping ni nested scroll.\\n* Agregar regresiones de layout y evidencia visual responsive.\\n\\n## Límites\\n\\n* Preservar RegisterForm, schema, AuthActor y contratos HTTP/session.\\n* Preservar `/signup` y el retorno a `/?auth=login`.\\n* No cambiar términos, privacidad, payloads, RBAC ni autenticación.\\n* El rebranding visual completo continúa separado en CR-SST-0150.\\n\\n## Owner ARDS/SDD y continuidad\\n\\nLa implementación debe mantener actualizados en sst-fend:\\n\\n* `specs/31-auth-frontend.yml`\\n* `docs/31-auth-frontend.md`\\n* `specs/15-ui-framework.yml`\\n* evidencia owner de implementación y QA\\n\\n## Criterios de aceptación\\n\\n1. Los cinco campos no se superponen en 320x568, 360x800, 390x844, 412x915, 768x1024, 1366x768 y 1440x900.\\n2. `documentElement.scrollWidth <= clientWidth`.\\n3. El orden visual coincide con el orden de teclado.\\n4. No se introducen alturas fijas, clipping global ni subscroll de formulario.\\n5. Pasan los checks de sst-fend y el `npm run check` completo del control-plane.\\n6. El cierre requiere evidencia nueva de Chrome DevTools; la evidencia histórica no alcanza.\\n\\n\",\"assignee\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/user?accountId=[accountId-redacted]\",\"accountId\": \"[accountId-redacted]\",\"emailAddress\":\"[email-redacted]\",\"avatarUrls\":{\"48x48\":\"https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/48\",\"24x24\":\"https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/24\",\"16x16\":\"https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/16\",\"32x32\":\"https://avatar-management--avatars.us-west-2.prod.public.atl-paas.net/[accountId-redacted]/[cloudId-redacted]/32\"},\"displayName\":\"Fuentes Sandferand\",\"active\":true,\"timeZone\":\"America/Buenos_Aires\",\"accountType\":\"atlassian\"},\"resolution\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/resolution/10000\",\"id\":\"10000\",\"description\":\"Se ha terminado el trabajo relacionado con esta incidencia.\",\"name\":\"Listo\"},\"updated\":\"2026-08-04T22:22:58.660-0300\",\"status\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/status/10008\",\"description\":\"\",\"iconUrl\":\"[jira-site-redacted]\",\"name\":\"Finalizada\",\"id\":\"10008\",\"statusCategory\":{\"self\":\"https://api.atlassian.com/ex/jira/[cloudId-redacted]/rest/api/3/statuscategory/3\",\"id\":3,\"key\":\"done\",\"colorName\":\"green\",\"name\":\"Listo\"}},\"labels\":[\"ards-sdd\",\"auth\",\"auth-frontend-access-ui\",\"mobile\",\"orchestrator-reconciliation-pending\",\"responsive\",\"signup\",\"sst-fend\",\"visual-regression\"]}}"
+  },
+  "transitions": [
+    {
+      "id": "11",
+      "name": "Por hacer",
+      "toStatus": "Tareas por hacer",
+      "toStatusCategory": "Por hacer"
+    },
+    {
+      "id": "21",
+      "name": "En curso",
+      "toStatus": "En curso",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "31",
+      "name": "In Review",
+      "toStatus": "En revisión",
+      "toStatusCategory": "En curso"
+    },
+    {
+      "id": "41",
+      "name": "Listo",
+      "toStatus": "Finalizada",
+      "toStatusCategory": "Listo"
+    }
+  ]
+}
