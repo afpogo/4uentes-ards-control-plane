@@ -197,7 +197,7 @@ candidate_change_requests:
     status: "done"
   - id: "CR-SST-0173"
     title: "Reconcile sst-fend LearningWorkspace owner knowledge after SST-55 closure"
-    status: "validated-local-awaiting-publication"
+    status: "done"
 discovered_change_requests: []
 tracking:
   jira:

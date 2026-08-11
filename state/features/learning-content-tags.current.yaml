@@ -143,6 +143,7 @@ evidence_refs:
   - "evidence/requests/CR-SST-0125/jira-sst-55-close-summary.md"
   - "evidence/requests/CR-SST-0173/owner-documentation-summary.md"
   - "evidence/requests/CR-SST-0173/validation-results.md"
+  - "evidence/requests/CR-SST-0173/post-merge-closure-2026-08-10.md"
   - "evidence/initiatives/INIT-SST-0001/lifecycle-reconciliation-2026-08-06.md"
   - "evidence/requests/CR-SST-0152/minimal-train-amendment-2026-08-06.md"
 active_work:
@@ -164,7 +165,7 @@ completed_work:
   - {request_id: "CR-SST-0125", jira_issue_key: "SST-55", jira_status_observed: "Listo", jira_sync_status: "completed", status: "done"}
   - {request_id: "CR-SST-0153", jira_issue_key: "SST-99", jira_parent_issue_key: "SST-6", jira_status_observed: "Listo", status: "done", release_train_request_id: "CR-SST-0152"}
   - {request_id: "CR-SST-0154", jira_issue_key: "SST-100", jira_parent_issue_key: "SST-6", jira_status_observed: "Listo", status: "done", release_train_request_id: "CR-SST-0152"}
-  - {request_id: "CR-SST-0173", status: "validated-local-awaiting-publication"}
+  - {request_id: "CR-SST-0173", status: "done"}
 open_gaps:
   - "Promote remaining learning-content parser flows beyond the LearningWorkspace first runtime slice."
   - "Define frontend rendering for clase, nota, recordar, ejemplo, image, docs, and code blocks."
@@ -176,4 +177,4 @@ open_gaps:
   - "Jira SST-55 was synchronized through the authorized bounded batch and verified as Finalizada/Listo; SST-6 was not modified."
   - "CR-SST-0153 is validated-live: preview does not feed accepted context and preview/accept/context APIs remain unchanged."
   - "CR-SST-0154 is validated-live: manual_text, article_draft and article presentation uses existing types without new DTOs, endpoints or persistence semantics."
-  - "CR-SST-0173 reconciles sst-fend owner knowledge so SST-55 is closed as producer work while optional-input E2E remains a separate consumer follow-up."
+  - "CR-SST-0173 is done: sst-fend owner knowledge represents SST-55 as closed producer work while optional-input E2E remains a separate consumer follow-up."
