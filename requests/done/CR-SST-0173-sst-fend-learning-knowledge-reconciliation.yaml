@@ -57,20 +57,27 @@ validation:
     - "4uentes-orchestor npm.cmd run check"
 
 jira_sync:
-  status: "not-applicable"
+  status: "container-synchronized-closed"
   jira_source_of_truth: false
   container_issue_key: "SST-6"
-  write_performed: false
+  status_observed: "Finalizada"
+  status_category_observed: "Listo"
+  resolution_observed: "Listo"
+  comment_id: "10317"
+  transition_id: "41"
+  write_performed: true
+  evidence_ref: "evidence/initiatives/INIT-SST-0001/jira-sst-6-close-summary.md"
   note: >
-    CR-SST-0173 has no independent Jira mirror write. Closing the SST-6
-    container remains a separate bounded mirror operation after this local
-    closure is merged.
+    CR-SST-0173 has no independent Jira issue. After its canonical closure was
+    merged, the explicitly authorized bounded batch closed the related SST-6
+    container without modifying the SST-27 Epic.
 
 evidence_refs:
   - "evidence/requests/CR-SST-0173/owner-documentation-summary.md"
   - "evidence/requests/CR-SST-0173/changed-files-summary.md"
   - "evidence/requests/CR-SST-0173/validation-results.md"
   - "evidence/requests/CR-SST-0173/post-merge-closure-2026-08-10.md"
+  - "evidence/initiatives/INIT-SST-0001/jira-sst-6-close-summary.md"
 
 decision:
   status: "closed-validated-post-merge"
@@ -78,4 +85,6 @@ decision:
   decided_at: "2026-08-10"
   note: >
     The user confirmed PR #8 was merged. Owner documentation, child validation,
-    CI publication and the control-plane closure gate are satisfied.
+    CI publication and the control-plane closure gate are satisfied. The later
+    authorized Jira batch closed the SST-6 container as Finalizada/Listo while
+    keeping SST-27 unchanged.
