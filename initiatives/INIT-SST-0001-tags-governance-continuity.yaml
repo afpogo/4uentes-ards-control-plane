@@ -214,7 +214,10 @@ tracking:
     start_transition_evidence_ref: "evidence/initiatives/INIT-SST-0001/jira-sst-27-start-transition-summary.md"
     sync_result_ref: "evidence/initiatives/INIT-SST-0001/jira-epic-sync-result.json"
     parent_issue_key: "SST-4"
-    active_issue_key: "SST-6"
+    active_issue_key: null
+    completed_container_issue_key: "SST-6"
+    completed_container_status_observed: "Listo"
+    completed_container_evidence_ref: "evidence/initiatives/INIT-SST-0001/jira-sst-6-close-summary.md"
     active_subtask_issue_key: null
     active_subtask_request_id: null
     active_subtask_status_observed: null
@@ -270,7 +273,7 @@ tracking:
       - "SST-56"
       - "SST-99"
       - "SST-100"
-    active_issue_status_observed: "En curso"
+    active_issue_status_observed: null
     previous_read_blocker_ref: "evidence/requests/CR-SST-0087/jira-mcp-review.md"
 boundaries:
   mutates_child_repositories: false
@@ -278,7 +281,7 @@ boundaries:
   changes_core_canon: false
 open_gaps:
   - "CR-SST-0076 has Jira close evidence but remains represented as planned/in_progress locally; a later normalization may move or close the local request artifact."
-  - "SST-6 remains active for learning-content-tags; CR-SST-0088 defines the local source/document model before child repo mutation."
+  - "SST-6 is closed as Finalizada/Listo; learning-content-tags remains runtime-partial and its functional gaps continue as explicit follow-ups."
   - "CR-SST-0089 defines the sst-bend preview/import runtime boundary; child repo mutation remains blocked until a later accepted implementation step."
   - "CR-SST-0090 defines LearningWorkspace as the governed runtime container for accepted learning context; child repo mutation remains blocked until later approved implementation steps."
   - "CR-SST-0091 prepares the sst-bend implementation gate; child repo mutation remains blocked until exact file plan, tests, rollback, and scope checks are recorded."
