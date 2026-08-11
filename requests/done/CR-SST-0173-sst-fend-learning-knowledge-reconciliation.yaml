@@ -1,0 +1,81 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0173"
+title: "Reconcile sst-fend LearningWorkspace owner knowledge after SST-55 closure"
+status: "done"
+source_request: "requests/inbox/CR-SST-0173-sst-fend-learning-knowledge-reconciliation.yaml"
+planned_request: "requests/planned/CR-SST-0173-sst-fend-learning-knowledge-reconciliation.yaml"
+created_at: "2026-08-10"
+completed_at: "2026-08-10"
+requester: "4uentes"
+
+summary: >
+  Reconciled the sst-fend owner documentation after the SST-55 producer
+  closure, preserving the optional-input consumer E2E work as an explicit
+  follow-up instead of a stale producer gate.
+
+scope:
+  solution: "sst"
+  services_modified: ["sst-fend", "4uentes-orchestor"]
+  functional_repositories_modified: true
+  runtime_code_modified: false
+
+implementation:
+  initiative_id: "INIT-SST-0001"
+  active_feature_state: "learning-content-tags"
+  jira_container_key: "SST-6"
+  related_closed_issue_key: "SST-55"
+  jira_source_of_truth: false
+  repository: "sst-fend"
+  pull_request: "afpogo/sst-fend#8"
+  merge_commit: "a71d0b1ae9a51943101f118075eba9cba522b239"
+  control_plane_lifecycle_pull_request: "afpogo/4uentes-ards-control-plane#15"
+  control_plane_lifecycle_merge_commit: "0e367c94fd684045e04e6daece41b7aeff4f7841"
+  completed_slice: >
+    The sst-fend inbound capability and LearningWorkspace owner documentation
+    now represent CR-SST-0125/SST-55 as closed producer work while keeping the
+    optional rawText, html, documents and assets E2E validation as separate
+    consumer follow-up work.
+
+owner_documentation:
+  required: true
+  status: "satisfied"
+  owner_repos: ["sst-fend"]
+  owner_refs:
+    - "specs/capabilities/inbound/node-auth--learning-workspace-context.yaml"
+    - "docs/capabilities/inbound/node-auth--learning-workspace-context.md"
+    - "specs/38-learning-workspace-frontend.yml"
+    - "docs/38-learning-workspace-frontend.md"
+  evidence_ref: "evidence/requests/CR-SST-0173/owner-documentation-summary.md"
+
+validation:
+  status: "validated-post-merge"
+  passed:
+    - "sst-fend npm.cmd run check: 30 suites / 198 tests passed"
+    - "sst-fend PR #8 build-publish-update: SUCCESS"
+    - "sst-fend PR #8 merged to develop"
+    - "4uentes-orchestor npm.cmd run check"
+
+jira_sync:
+  status: "not-applicable"
+  jira_source_of_truth: false
+  container_issue_key: "SST-6"
+  write_performed: false
+  note: >
+    CR-SST-0173 has no independent Jira mirror write. Closing the SST-6
+    container remains a separate bounded mirror operation after this local
+    closure is merged.
+
+evidence_refs:
+  - "evidence/requests/CR-SST-0173/owner-documentation-summary.md"
+  - "evidence/requests/CR-SST-0173/changed-files-summary.md"
+  - "evidence/requests/CR-SST-0173/validation-results.md"
+  - "evidence/requests/CR-SST-0173/post-merge-closure-2026-08-10.md"
+
+decision:
+  status: "closed-validated-post-merge"
+  approver: "4uentes"
+  decided_at: "2026-08-10"
+  note: >
+    The user confirmed PR #8 was merged. Owner documentation, child validation,
+    CI publication and the control-plane closure gate are satisfied.
