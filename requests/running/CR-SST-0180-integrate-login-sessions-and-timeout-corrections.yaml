@@ -79,7 +79,7 @@ publication_status:
     infra: "81f90114cee028e11a6030747de32629d0697b29"
   auth_image: "ghcr.io/afpogo/4uentes-auth:develop-78b0eec5b3c7"
   auth_gitops_commit: "53dea2cdacbbd11adaa92e682255b8f918832bd6"
-  deployed_gitops_revision: "c35a40309a303b17557afffb2cbbdf3167d228f0"
+  deployed_gitops_revision: "68c9c7ceb97d4c554699b8590cfe3075a639a1c7"
   remaining_order:
     - "restore the already-designed chat runtime wiring through an explicitly scoped request"
     - "observe two consecutive 15-minute windows"
@@ -88,6 +88,8 @@ publication_status:
 rollout_observation:
   argo: "synced"
   auth_image: "ready-one-replica-zero-restarts"
+  frontend_image: "ready-ghcr.io/afpogo/sst-fend:develop-d4bed266c76c"
+  backend_image: "ready-ghcr.io/afpogo/sst-bend:develop-57cf7ce67fcf"
   auth_config: "observe-proxy-hops-1-telemetry-60000"
   deployed_auth_smoke: "pass-jwks-refresh-cas-logout-21-valid-logins"
   aggregate_telemetry: "would-block-detected-zero-storage-error-max-verifier-208ms"

@@ -57,10 +57,11 @@ resultados de rollout antes de su merge final.
 
 ## Rollout development y QA desplegado
 
-Argo sincronizó la revisión GitOps
-`c35a40309a303b17557afffb2cbbdf3167d228f0`. `node-auth` quedó con una réplica
-ready, cero reinicios, la imagen inmutable esperada y configuración efectiva
-`observe/1/60000`.
+Argo sincronizó la revisión GitOps final
+`68c9c7ceb97d4c554699b8590cfe3075a639a1c7`. Auth, Bend y Fend completaron sus
+rollouts con las imágenes `develop-78b0eec5b3c7`, `develop-57cf7ce67fcf` y
+`develop-d4bed266c76c`, respectivamente. `node-auth` quedó con una réplica
+ready, cero reinicios y configuración efectiva `observe/1/60000`.
 
 El smoke sintético desplegado verificó:
 
