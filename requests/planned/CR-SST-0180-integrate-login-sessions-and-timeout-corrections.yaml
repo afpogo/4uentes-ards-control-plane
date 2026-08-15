@@ -1,0 +1,147 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0180"
+title: "Integrate login, session and timeout corrections"
+status: planned
+source_request: "requests/inbox/CR-SST-0180-integrate-login-sessions-and-timeout-corrections.yaml"
+created_at: "2026-08-15"
+requester: "4uentes"
+
+summary: >
+  Integrate previously validated authentication controls, converge on one
+  active sid family per account, add bounded client and harness requests, and
+  stage aggregate security telemetry through the GitOps development flow.
+
+control_plane_context:
+  initiative_id: "INIT-SST-0008"
+  related_requests: ["CR-SST-0159", "CR-SST-0178", "CR-SST-0179"]
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  jira_write_authorized: false
+
+architecture_decision:
+  session_policy: "one-active-session-family-per-account"
+  stable_identity: "sid"
+  login_rule: "A successful login atomically replaces the previous family for that account."
+  refresh_rule: "CAS the current generation while preserving sid; exactly one concurrent refresh wins."
+  logout_rule: "Revoke userId+sid terminally so no concurrent descendant can resurrect the family."
+  legacy_rule: "A valid no-sid token may migrate exactly once through CAS."
+  chat_contract: "Access and refresh tokens carry token_use; chat:connect and session:introspect are explicit scopes."
+  timeout_rule: "Cancel after 15000 ms by default and settle client state without retrying credentials or downgrading protocol."
+
+scope:
+  child_repo_mutation_targets: ["4uentes-auth", "sst-fend", "sst-extension", "sst-bend", "sst-4uentes-infra"]
+  control_plane_repository: "4uentes-orchestor"
+  production_data_allowed: false
+  production_rollout_allowed: false
+  jira_write_allowed: false
+
+risk:
+  level: "high"
+  score: 9
+  drivers: ["AUTH_SECURITY", "SESSION_CONCURRENCY", "CROSS_REPO_RUNTIME", "DEVELOPMENT_GITOPS"]
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5"
+  fallback_reasoning_effort: "high"
+  reason: "Authentication security, concurrency and GitOps rollout are complex high-risk work."
+
+subagent_deployment_plan:
+  required: false
+  allowed_roles: ["inventory", "gitops-render", "qa-coverage", "rollout-observer"]
+  authority_retained_by_main_agent: ["authentication", "sessions", "security", "all integration decisions"]
+  fallback: "Execute sequentially in the primary agent when no bounded role is necessary."
+
+workspace_isolation:
+  refresh_remote_before_branching: true
+  child_base_ref: "origin/develop"
+  control_plane_base_ref: "origin/main"
+  control_plane_base_deviation: "origin/develop does not exist in 4uentes-orchestor as observed on 2026-08-15."
+  branch_name: "feat/CR-SST-0180/integrated-auth-session-timeouts"
+  rule: "Create one new worktree per repo and do not alter dirty canonical checkouts."
+
+task_atomization:
+  - id: "T1-lifecycle-and-baselines"
+    objective: "Create the approved lifecycle and record immutable clean bases."
+    output: "Request artifacts and worktree evidence."
+    risk: "medium"
+    validation: "Every worktree is clean and points at the refreshed canonical base."
+  - id: "T2-auth-integration"
+    objective: "Integrate anti-abuse, atomic single-family sessions, chat contracts and aggregate telemetry."
+    output: "4uentes-auth code, tests and owner docs."
+    risk: "high"
+    validation: "Focused guard, race, JWT, introspection and telemetry gates pass."
+  - id: "T3-client-timeouts"
+    objective: "Bound all auth traffic and coordinate refresh in web and extension runtimes."
+    output: "Cancellation, terminal state handling, localized errors and single-flight tests."
+    risk: "high"
+    validation: "401, 429, timeout and network failure issue one credential request and never erase a winning refresh."
+  - id: "T4-harness-and-gitops"
+    objective: "Bound backend smokes and configure only node-auth local/development guard surfaces."
+    output: "Stage-specific smoke failures and render-valid local/development configuration."
+    risk: "high"
+    validation: "Harness, kustomize render and infra owner check pass."
+  - id: "T5-integrated-qa-and-evidence"
+    objective: "Run synthetic local and development gates and publish secret-safe evidence."
+    output: "Reproducible checks, rollout decision and rollback record."
+    risk: "high"
+    validation: "All owner checks and full control-plane npm run check pass."
+
+execution:
+  requires_human_approval: true
+  approval_source: "User instruction dated 2026-08-15 to implement the supplied CR-SST-0180 plan."
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets: ["4uentes-auth", "sst-fend", "sst-extension", "sst-bend", "sst-4uentes-infra"]
+  deployment_allowed: true
+  deployment_scope: "development through Git and Argo only"
+  production_data_allowed: false
+  jira_write_allowed: false
+
+owner_documentation:
+  required: true
+  status: planned
+  owner_repos: ["4uentes-auth", "sst-fend", "sst-extension", "sst-bend", "sst-4uentes-infra"]
+  planned_owner_docs:
+    - "specs/auth.yaml"
+    - "docs/authentication.md"
+    - "specs/31-auth-frontend.yml"
+    - "docs/architecture/authentication.md"
+    - "specs/integration/node-auth-extension-session.yaml"
+    - "docs/integration/node-auth-extension-session.md"
+    - "specs/api/logging-observability.yaml"
+    - "docs/api/08-observability.md"
+    - "specs/infra/environments/development.yaml"
+    - "docs/runbooks/argocd-kind-development.md"
+
+required_checks:
+  - "4uentes-auth npm run check"
+  - "sst-fend npm run check"
+  - "sst-extension pnpm run check"
+  - "sst-bend npm run check"
+  - "sst-4uentes-infra npm run check"
+  - "4uentes-orchestor npm run check"
+  - "git diff --check in every mutated repo"
+  - "secret-safe scan and reproducible HTTP QA"
+
+rollout:
+  local_guard_mode: "enforce"
+  development_initial_guard_mode: "observe"
+  promotion_gate: "Two consecutive 15-minute windows satisfying the approved false-positive, storage-error, success-rate, latency and secret-safety thresholds."
+  publish: "Merge Auth to develop, wait for immutable develop-<sha> image and automatic infra overlay reconciliation."
+  rollback: "Use Git/Argo to restore the last approved immutable tag and set the guard to off or observe; do not delete buckets or verifiers first."
+
+decision:
+  status: "approved-for-execution"
+  approver: "4uentes"
+  decided_at: "2026-08-15"
+

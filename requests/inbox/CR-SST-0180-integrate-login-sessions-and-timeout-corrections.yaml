@@ -1,0 +1,41 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0180"
+title: "Integrate login, session and timeout corrections"
+status: "inbox"
+created_at: "2026-08-15"
+requester: "4uentes"
+
+business_context: >
+  The validated anti-abuse correction from CR-SST-0159, the chat-compatible
+  authentication contracts exercised by CR-SST-0178 and the atomic session
+  reconciliation explored by CR-SST-0179 are not yet integrated on a single
+  refreshed develop baseline. Clients and HTTP QA also lack a bounded timeout,
+  allowing authentication and chat flows to remain pending indefinitely.
+
+requested_change: >
+  Integrate the safe slices on clean worktrees, adopt one active session family
+  per account with sid-preserving CAS refresh and terminal logout, publish the
+  chat token and introspection contracts without the historical delete-create
+  refresh flow, and add explicit 15-second cancellation to clients and the
+  backend HTTP harness.
+
+expected_outcome:
+  - "Valid shared-IP logins do not consume the failure budget and blocked credentials are rejected before the KDF."
+  - "Exactly one account session family remains active and concurrent refresh has one winner without resurrection."
+  - "Web, extension and backend HTTP flows leave pending state on timeout with a stage-specific error."
+  - "Development can observe aggregate secret-safe security telemetry before Git promotion to enforce."
+
+constraints:
+  - "Use clean worktrees from refreshed origin/develop; use origin/main for the control plane because it has no develop branch."
+  - "Do not alter existing dirty checkouts or reuse their runtime state."
+  - "Use synthetic data only; do not write Jira."
+  - "Rollout and rollback are Git/Argo operations; kubectl set image is not persistent state."
+  - "Do not import the CR-SST-0178 delete-create refresh implementation."
+
+source_refs:
+  - "INIT-SST-0008"
+  - "CR-SST-0159"
+  - "CR-SST-0178"
+  - "CR-SST-0179"
+
