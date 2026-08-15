@@ -46,11 +46,11 @@ owner_documentation:
 execution_status:
   lifecycle_and_plan: "complete"
   isolated_worktrees: "complete"
-  auth_integration: "complete-local"
+  auth_integration: "deployed-development-observe"
   client_timeouts: "complete-local"
   harness_timeout: "complete-local"
-  gitops_configuration: "complete-local-render"
-  integrated_qa: "partial-awaiting-published-images-and-rollout"
+  gitops_configuration: "deployed-development"
+  integrated_qa: "partial-chat-runtime-disabled-and-observation-gates-open"
 
 validation_status:
   auth_check: "pass"
@@ -59,19 +59,40 @@ validation_status:
   backend_check: "pass-with-protected-smoke-coverage-skipped-without-jwt"
   infra_check_and_render: "pass"
   control_plane_check: "pass-including-owner-documentation"
-  development_observe_gate: "pending-published-auth-image-and-two-observation-windows"
+  development_observe_gate: "partial-synthetic-cut-pass-awaiting-two-qualified-windows"
 
 publication_status:
-  state: "blocked-invalid-github-cli-credential"
+  state: "published-awaiting-rollout-gates"
   observed_at: "2026-08-15"
-  remediation: "Run gh auth login -h github.com, then resume the reviewed publish flow."
-  required_order:
-    - "publish reviewed child-repository branches"
-    - "merge Auth to develop"
-    - "wait for immutable develop-<sha> image"
-    - "accept the Git-generated Infra overlay update"
+  pull_requests:
+    control_plane: "https://github.com/afpogo/4uentes-ards-control-plane/pull/18"
+    auth: "https://github.com/afpogo/4uentes-auth/pull/6"
+    frontend: "https://github.com/afpogo/sst-fend/pull/11"
+    extension: "https://github.com/afpogo/sst-extension/pull/1"
+    backend: "https://github.com/afpogo/sst-bend/pull/13"
+    infra: "https://github.com/afpogo/sst-4uentes-infra/pull/4"
+  merged:
+    auth: "78b0eec5b3c7065e1d3f85cdbe7ab853fe847187"
+    frontend: "d4bed266c76cef58d65ae8936cf9d9547a984a09"
+    extension: "3732673474913caefcbce7d8ae7676053e5d77b7"
+    backend: "57cf7ce67fcfa19327d56800df7a1bbd3ed5955b"
+    infra: "81f90114cee028e11a6030747de32629d0697b29"
+  auth_image: "ghcr.io/afpogo/4uentes-auth:develop-78b0eec5b3c7"
+  auth_gitops_commit: "53dea2cdacbbd11adaa92e682255b8f918832bd6"
+  deployed_gitops_revision: "c35a40309a303b17557afffb2cbbdf3167d228f0"
+  remaining_order:
+    - "restore the already-designed chat runtime wiring through an explicitly scoped request"
     - "observe two consecutive 15-minute windows"
     - "promote guard mode through Git only if all gates pass"
+
+rollout_observation:
+  argo: "synced"
+  auth_image: "ready-one-replica-zero-restarts"
+  auth_config: "observe-proxy-hops-1-telemetry-60000"
+  deployed_auth_smoke: "pass-jwks-refresh-cas-logout-21-valid-logins"
+  aggregate_telemetry: "would-block-detected-zero-storage-error-max-verifier-208ms"
+  isolated_browser: "pass-no-cookie-token-or-refresh-material"
+  chat_integration: "blocked-sst-bend-chat-runtime-not-configured-in-development"
 
 decision:
   status: "approved-running"
