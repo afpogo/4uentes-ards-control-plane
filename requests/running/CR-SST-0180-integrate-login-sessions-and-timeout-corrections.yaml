@@ -1,0 +1,102 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-SST-0180"
+title: "Integrate login, session and timeout corrections"
+status: "running"
+source_request: "requests/inbox/CR-SST-0180-integrate-login-sessions-and-timeout-corrections.yaml"
+planned_request: "requests/planned/CR-SST-0180-integrate-login-sessions-and-timeout-corrections.yaml"
+created_at: "2026-08-15"
+started_at: "2026-08-15"
+requester: "4uentes"
+
+control_plane_context:
+  initiative_id: "INIT-SST-0008"
+  related_requests: ["CR-SST-0159", "CR-SST-0178", "CR-SST-0179"]
+  jira_write_allowed: false
+
+execution:
+  requires_human_approval: true
+  approval_source: "User instruction dated 2026-08-15 to implement the supplied CR-SST-0180 plan."
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets: ["4uentes-auth", "sst-fend", "sst-extension", "sst-bend", "sst-4uentes-infra"]
+  production_data_allowed: false
+  jira_write_allowed: false
+
+architecture_decision:
+  session_policy: "one-active-session-family-per-account"
+  refresh: "sid-preserving exact-generation CAS"
+  logout: "terminal revocation of userId+sid"
+  legacy: "one-time no-sid CAS migration"
+  historical_refresh_excluded: "CR-SST-0178 validate-delete-create"
+  client: "one refresh coordinator per runtime with no credential retry or protocol downgrade"
+
+model_selection:
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5"
+
+owner_documentation:
+  required: true
+  status: "complete"
+  owner_repos: ["4uentes-auth", "sst-fend", "sst-extension", "sst-bend", "sst-4uentes-infra"]
+
+execution_status:
+  lifecycle_and_plan: "complete"
+  isolated_worktrees: "complete"
+  auth_integration: "deployed-development-observe"
+  client_timeouts: "complete-local"
+  harness_timeout: "complete-local"
+  gitops_configuration: "deployed-development"
+  integrated_qa: "partial-chat-runtime-disabled-and-observation-gates-open"
+
+validation_status:
+  auth_check: "pass"
+  frontend_check: "pass-with-preexisting-eslint-warnings"
+  extension_check: "pass"
+  backend_check: "pass-with-protected-smoke-coverage-skipped-without-jwt"
+  infra_check_and_render: "pass"
+  control_plane_check: "pass-including-owner-documentation"
+  development_observe_gate: "partial-synthetic-cut-pass-awaiting-two-qualified-windows"
+
+publication_status:
+  state: "published-awaiting-rollout-gates"
+  observed_at: "2026-08-15"
+  pull_requests:
+    control_plane: "https://github.com/afpogo/4uentes-ards-control-plane/pull/18"
+    auth: "https://github.com/afpogo/4uentes-auth/pull/6"
+    frontend: "https://github.com/afpogo/sst-fend/pull/11"
+    extension: "https://github.com/afpogo/sst-extension/pull/1"
+    backend: "https://github.com/afpogo/sst-bend/pull/13"
+    infra: "https://github.com/afpogo/sst-4uentes-infra/pull/4"
+  merged:
+    auth: "78b0eec5b3c7065e1d3f85cdbe7ab853fe847187"
+    frontend: "d4bed266c76cef58d65ae8936cf9d9547a984a09"
+    extension: "3732673474913caefcbce7d8ae7676053e5d77b7"
+    backend: "57cf7ce67fcfa19327d56800df7a1bbd3ed5955b"
+    infra: "81f90114cee028e11a6030747de32629d0697b29"
+  auth_image: "ghcr.io/afpogo/4uentes-auth:develop-78b0eec5b3c7"
+  auth_gitops_commit: "53dea2cdacbbd11adaa92e682255b8f918832bd6"
+  deployed_gitops_revision: "68c9c7ceb97d4c554699b8590cfe3075a639a1c7"
+  remaining_order:
+    - "restore the already-designed chat runtime wiring through an explicitly scoped request"
+    - "observe two consecutive 15-minute windows"
+    - "promote guard mode through Git only if all gates pass"
+
+rollout_observation:
+  argo: "synced"
+  auth_image: "ready-one-replica-zero-restarts"
+  frontend_image: "ready-ghcr.io/afpogo/sst-fend:develop-d4bed266c76c"
+  backend_image: "ready-ghcr.io/afpogo/sst-bend:develop-57cf7ce67fcf"
+  auth_config: "observe-proxy-hops-1-telemetry-60000"
+  deployed_auth_smoke: "pass-jwks-refresh-cas-logout-21-valid-logins"
+  aggregate_telemetry: "would-block-detected-zero-storage-error-max-verifier-208ms"
+  isolated_browser: "pass-no-cookie-token-or-refresh-material"
+  chat_integration: "blocked-sst-bend-chat-runtime-not-configured-in-development"
+
+decision:
+  status: "approved-running"
+  approver: "4uentes"
+  decided_at: "2026-08-15"
