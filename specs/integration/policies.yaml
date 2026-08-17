@@ -411,9 +411,9 @@ policies:
   - id: "visual-documentation-as-code-policy"
     name: "Visual Documentation as Code Policy"
     type: "documentation-governance-policy"
-    policy_class: "origin-repo-policy"
+    policy_class: "core-profile-scoped"
     origin_repo: "4uentes-orchestor"
-    canonical_owner: "4uentes-ards-control-plane"
+    canonical_owner: "4uentes-ards-core"
     applicability: "normative dependency, lifecycle, sequence and logical-data maps in human-facing ARDS/SDD documentation"
     adoption_mode: "required-by-profile-or-request-driven-child-adoption"
     required_for_profiles:
@@ -427,13 +427,13 @@ policies:
       - "infra-gitops"
     template_binding: "templates/visual-documentation/"
     local_aliases: []
-    status: "adopted-from-validated-core-commit-pending-publication"
+    status: "active-local-adoption-from-canonical-core"
     scope:
       - "human-documentation-legibility"
       - "visual-map-traceability"
       - "accessible-non-color-semantics"
       - "rag-safe-textual-fallback"
-    owner: "4uentes-ards-control-plane"
+    owner: "4uentes-ards-core"
     human_doc: "docs/policies/visual-documentation-as-code-policy.md"
     profile_ref: "specs/integration/visual-documentation-as-code-profile.yaml"
     enforcement:
@@ -447,7 +447,8 @@ policies:
       target_policy_class: "core-profile-scoped"
       target_canonical_owner: "4uentes-ards-core"
       core_commit: "3764d34"
-      status: "validated-isolated-branch-pending-publication"
+      core_merge_commit: "b00c4eb4d5cd73d3964d9378ae1ae2900b53b2a0"
+      status: "complete-canonical-readback"
     child_propagation:
       coordinator_request_id: "CR-CP-0006"
       mode: "request-driven"
@@ -461,7 +462,7 @@ policies:
       - "evidence/requests/CR-CP-0020/validation-results.md"
       - "state/features/visual-documentation-as-code-adoption.current.yaml"
     gaps:
-      - "Core commit 3764d34 must be published before child manifests reference canonical branch status."
+      - "Each child repo still requires an approved lifecycle and local adoption or exception manifest."
 
 core_owned_adoptions:
   - id: "http-qa-harness-policy"

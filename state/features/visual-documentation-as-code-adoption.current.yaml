@@ -2,8 +2,8 @@ schema_version: "1.0"
 kind: "feature_state"
 id: "visual-documentation-as-code-adoption"
 title: "Visual documentation as code adoption"
-status: "validated-local"
-updated_at: "2026-08-16"
+status: "implementation-pending"
+updated_at: "2026-08-17"
 solution_id: "sst"
 affected_services:
   - 4uentes-auth
@@ -39,10 +39,11 @@ evidence_refs:
   - "evidence/requests/CR-CP-0019/changed-files-summary.md"
   - "evidence/requests/CR-CP-0020/validation-results.md"
   - "evidence/requests/CR-CP-0020/changed-files-summary.md"
+  - "evidence/requests/CR-CP-0020/canonical-publication-readback.md"
   - "evidence/requests/CR-CP-0006/control-plane-promotion-readiness.md"
 tracking:
   flag: "visual_documentation_adoption_required"
-  current_gate: "core-promotion"
+  current_gate: "child-owner-adoption"
   gates:
     - id: "cp-profile"
       owner_request: "CR-CP-0018"
@@ -58,10 +59,9 @@ tracking:
       status: "approved-planned"
     - id: "core-promotion"
       owner_request: "CR-CP-0020"
-      status: "draft-pr-open-pending-merge"
+      status: "complete-canonical-readback"
     - id: "child-owner-adoption"
       owner_request: "CR-CP-0006"
-      status: "blocked-by-core-publication"
+      status: "ready-request-driven"
 open_gaps:
-  - "CR-CP-0020 commit 3764d34 is published in draft PR #3 but must still merge into the canonical Core branch."
   - "Each child owner remains pending until it publishes an adoption or exception manifest under its own CR."

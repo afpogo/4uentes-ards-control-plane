@@ -38,4 +38,4 @@ owner_documentation:
 manifest_contract: {policy_id: "visual-documentation-as-code-policy", allowed_outcomes: ["adopted", "exception"], source_repo: "4uentes-ards-core", manifests_required: 2}
 validation:
   required_checks: ["finanzas-personales frontend owner validation", "finanzas-personales backend owner validation", "4uentes-orchestor: npm.cmd run check", "git diff --check and secret-safe scan"]
-decision: {status: "approved-planned", approver: "4uentes", blocker: "CR-CP-0020 and CR-HPT-0002"}
+decision: {status: "approved-planned", approver: "4uentes", blocker: "CR-HPT-0002", core_gate: "satisfied-2026-08-17"}

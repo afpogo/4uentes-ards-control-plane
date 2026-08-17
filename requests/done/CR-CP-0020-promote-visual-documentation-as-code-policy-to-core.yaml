@@ -1,10 +1,11 @@
 schema_version: "1.0"
-phase: 3
+phase: 4
 id: "CR-CP-0020"
 title: "Promote visual documentation as code policy to ARDS Core"
-status: "running"
+status: "done"
 source_request: "requests/planned/CR-CP-0020-promote-visual-documentation-as-code-policy-to-core.yaml"
 started_at: "2026-08-16"
+completed_at: "2026-08-17"
 requester: "4uentes"
 
 control_plane_context:
@@ -19,14 +20,21 @@ execution:
   worktree_strategy: "isolated-core-worktree-from-origin-develop"
   branch: "agent/cr-cp-0020-visual-doc-policy"
   baseline: "origin/develop@162c482acf2ff386237bd6c45297c33fd73ba1bb"
-  validated_commit: "3764d34"
-  publication_status: "pushed-draft-pr-open-pending-merge"
+  validated_commit: "3764d341dfaa1b10bb78115778c0d6fc469f11e0"
+
+publication_result:
+  status: "merged-and-read-back"
   github_pr: "https://github.com/afpogo/4uentes-ards-core/pull/3"
+  merged_at: "2026-08-17T16:24:14Z"
+  merge_commit: "b00c4eb4d5cd73d3964d9378ae1ae2900b53b2a0"
+  canonical_branch: "develop"
+  ancestry_check: "PASS: policy commit is an ancestor of origin/develop"
 
 implementation_result:
-  status: "validated-on-isolated-branch"
+  status: "canonical-in-core"
   canonical_policy_id: "visual-documentation-as-code-policy"
   policy_class: "core-profile-scoped"
+  canonical_owner: "4uentes-ards-core"
   artifacts:
     - "4uentes-ards-core: docs/policies/visual-documentation-as-code-policy.md"
     - "4uentes-ards-core: specs/integration/visual-documentation-as-code-profile.yaml"
@@ -38,12 +46,15 @@ validation:
   core_check: "PASS: 0 errors, 0 warnings"
   core_diff_check: "PASS"
   core_secret_scan: "PASS"
+  canonical_readback: "PASS"
   control_plane_check: "PASS"
-  evidence_ref: "evidence/requests/CR-CP-0020/validation-results.md"
+  evidence_refs:
+    - "evidence/requests/CR-CP-0020/validation-results.md"
+    - "evidence/requests/CR-CP-0020/canonical-publication-readback.md"
 
-close_gate:
-  status: "pending-merge-and-canonical-readback"
-  requirements:
-    - "Review and publish commit 3764d34 into the canonical core branch."
-    - "Read back the canonical source and reconcile the orchestrator adoption."
-    - "Only then unblock CR-CP-0006 child rollout units."
+closure:
+  status: "complete"
+  child_rollout_effect: "Core gate satisfied; child adoption remains request-driven under CR-CP-0006."
+  limits:
+    - "No child repo was mutated by this CR."
+    - "No Jira write or runtime change was performed."

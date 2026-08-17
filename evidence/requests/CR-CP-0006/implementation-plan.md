@@ -34,7 +34,7 @@ visual_map:
     - "requests/planned/CR-SST-0191-adopt-visual-documentation-policy-in-sst-infra.yaml"
     - "requests/planned/CR-4UENTES-0040-adopt-visual-documentation-policy-in-portfolio.yaml"
     - "requests/planned/CR-HPT-0004-adopt-visual-documentation-policy-in-finanzas-personales.yaml"
-  observed_at: "2026-08-16"
+  observed_at: "2026-08-17"
   authority_boundary: "Vista derivada; los YAML de lifecycle y los manifests owner conservan autoridad."
   request_ids: ["CR-CP-0020", "CR-CP-0006", "CR-SST-0186", "CR-SST-0187", "CR-SST-0188", "CR-SST-0189", "CR-SST-0190", "CR-SST-0191", "CR-4UENTES-0040", "CR-HPT-0004"]
   textual_fallback_required: true
@@ -43,8 +43,8 @@ visual_map:
 ```mermaid
 flowchart TD
     LOCAL["Perfil + validator local [validated]"]
-    CORE["CR-CP-0020<br/>Canon Core [planned]"]
-    COORD["CR-CP-0006<br/>Coordinación [planned]"]
+    CORE["CR-CP-0020<br/>Canon Core [validated]"]
+    COORD["CR-CP-0006<br/>Coordinación [running]"]
     AUTH["CR-SST-0186<br/>4uentes-auth [planned]"]
     FEND["CR-SST-0187<br/>sst-fend [planned]"]
     BEND["CR-SST-0188<br/>sst-bend [planned]"]
@@ -78,7 +78,8 @@ flowchart TD
     classDef planned fill:#e0f2fe,stroke:#0284c7,color:#082f49
     classDef coordinator fill:#dbeafe,stroke:#2563eb,color:#172554
     class LOCAL validated
-    class CORE,AUTH,FEND,BEND,EXT,BOT,INFRA,PORT,HPT planned
+    class CORE validated
+    class AUTH,FEND,BEND,EXT,BOT,INFRA,PORT,HPT planned
     class COORD,CLOSE coordinator
 ```
 
@@ -86,8 +87,8 @@ flowchart TD
 
 ```text
 Perfil y validator local validados
-  -> CR-CP-0020 promueve policy y templates a Core
-  -> CR-CP-0006 habilita lifecycles owner independientes
+  -> CR-CP-0020 publicó policy y templates en Core [done]
+  -> CR-CP-0006 habilita lifecycles owner independientes [running]
      -> CR-SST-0186  4uentes-auth
      -> CR-SST-0187  sst-fend
      -> CR-SST-0188  sst-bend
