@@ -1,0 +1,41 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-HPT-0004"
+title: "Adopt visual documentation policy in finanzas-personales"
+status: "planned"
+source_request: "requests/inbox/CR-HPT-0004-adopt-visual-documentation-policy-in-finanzas-personales.yaml"
+created_at: "2026-08-16"
+requester: "4uentes"
+control_plane_context: {initiative_id: "INIT-HPT-0001", coordinated_by_request_id: "CR-CP-0006", predecessor_request_ids: ["CR-CP-0020", "CR-HPT-0002"]}
+initial_scope: {solution: "finanzas-personales", services: ["finanzas-personales-frontend", "finanzas-personales-backend"], include_optional_services: false}
+execution:
+  requires_human_approval: true
+  approval_source: "User requested child propagation on 2026-08-16."
+  child_repo_mutation_allowed: true
+  child_repo_mutation_target: {service_id: "finanzas-personales-frontend", physical_repo: "finanzas-personales"}
+  branch_strategy: "isolated-worktree-from-origin-main"
+  jira_write_allowed: false
+  implementation_boundary: "Documentation governance only; preserve independent frontend and backend owner manifests inside the monorepo."
+owner_documentation:
+  required: true
+  status: planned
+  owner_repo: "finanzas-personales"
+  planned_owner_docs:
+    - "specs/integration/policies.yaml in each logical owner root"
+    - "specs/policies/adoptions/visual-documentation-as-code-policy.yaml in each logical owner root"
+    - "docs/policies/README.md in each logical owner root"
+  owner_refs:
+    - repo: "finanzas-personales/frontend"
+      paths:
+        - "specs/integration/policies.yaml"
+        - "specs/policies/adoptions/visual-documentation-as-code-policy.yaml"
+        - "docs/policies/README.md"
+    - repo: "finanzas-personales/backend"
+      paths:
+        - "specs/integration/policies.yaml"
+        - "specs/policies/adoptions/visual-documentation-as-code-policy.yaml"
+        - "docs/policies/README.md"
+manifest_contract: {policy_id: "visual-documentation-as-code-policy", allowed_outcomes: ["adopted", "exception"], source_repo: "4uentes-ards-core", manifests_required: 2}
+validation:
+  required_checks: ["finanzas-personales frontend owner validation", "finanzas-personales backend owner validation", "4uentes-orchestor: npm.cmd run check", "git diff --check and secret-safe scan"]
+decision: {status: "approved-planned", approver: "4uentes", blocker: "CR-CP-0020 and CR-HPT-0002"}

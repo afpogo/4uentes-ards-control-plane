@@ -70,6 +70,7 @@ Locally documented policies:
 - `agent-context-management-policy`
 - `agent-architecture-boundary-policy`
 - `owner-documentation-authority-policy`
+- `visual-documentation-as-code-policy`
 
 Core-owned policy adoptions tracked locally:
 
@@ -106,6 +107,7 @@ This runs:
 - `node scripts/verify-state-model.js`
 - `node scripts/verify-initiatives.js`
 - `node scripts/verify-owner-documentation.js`
+- `node scripts/verify-visual-documentation.js`
 
 For any control-plane workflow that allows or performs child repository
 mutation, `npm run check` is mandatory before local closure. The owner

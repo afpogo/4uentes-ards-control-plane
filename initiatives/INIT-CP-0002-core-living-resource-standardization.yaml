@@ -3,7 +3,7 @@ kind: "initiative"
 id: "INIT-CP-0002"
 title: "Core Living Resource Standardization"
 status: "active"
-updated_at: "2026-07-19"
+updated_at: "2026-08-16"
 owner_repository: "4uentes-orchestor"
 objective: >
   Promote stable living ARDS/SDD control-plane resources into reusable
@@ -43,11 +43,16 @@ known_change_requests:
   - "CR-CP-0005"
   - "CR-CP-0007"
   - "CR-CP-0017"
-candidate_change_requests:
-  - id: "CR-CP-0006"
-    title: "Request-driven child adoption rollout for core living resources"
-    status: "candidate"
-    execution_order: "after-core-and-orchestrator-adoption"
+  - "CR-CP-0018"
+  - "CR-CP-0020"
+  - "CR-CP-0006"
+  - "CR-SST-0186"
+  - "CR-SST-0187"
+  - "CR-SST-0188"
+  - "CR-SST-0189"
+  - "CR-SST-0190"
+  - "CR-SST-0191"
+candidate_change_requests: []
 discovered_change_requests: []
 tracking:
   jira:
@@ -111,3 +116,4 @@ policy_application:
 open_gaps:
   - "Resolve canonical naming between 4uentes-core and 4uentes-ards-core before freezing core refs."
   - "Promote work-tracker-control-plane-authority-policy to 4uentes-ards-core through a separate approved request."
+  - "Publish Core commit 3764d34 and reconcile CR-CP-0020 before executing CR-CP-0006 child adoption units."

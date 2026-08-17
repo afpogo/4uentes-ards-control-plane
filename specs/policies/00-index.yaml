@@ -1,7 +1,7 @@
 schema_version: "1.0"
 kind: "policy_specs_index"
 status: "active"
-updated_at: "2026-06-02"
+updated_at: "2026-08-16"
 purpose: >
   Policies are first-class ARDS/SDD governance components. They define
   constraints, obligations, inheritance, adoption, enforcement, exceptions, and
@@ -12,6 +12,9 @@ specs:
     status: "active"
   - id: "agent-operating-policy-registry"
     path: "specs/integration/policies.yaml"
+    status: "active"
+  - id: "visual-documentation-as-code-policy-adoption"
+    path: "specs/policies/adoptions/visual-documentation-as-code-policy.yaml"
     status: "active"
 policy_read_model:
   root: "specs/policies/"

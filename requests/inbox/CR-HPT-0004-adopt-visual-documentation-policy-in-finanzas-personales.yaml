@@ -1,0 +1,13 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-HPT-0004"
+title: "Adopt visual documentation policy in finanzas-personales"
+status: "inbox"
+created_at: "2026-08-16"
+requester: "4uentes"
+requested_change: >
+  Adopt or explicitly except the core visual-documentation policy in both
+  frontend and backend ARDS/SDD owner roots of the finanzas-personales monorepo.
+expected_outcome: >
+  Both logical owners publish independent adoption decisions while sharing one
+  physical repository lifecycle.

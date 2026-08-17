@@ -1,0 +1,61 @@
+schema_version: "1.0"
+phase: 4
+id: "CR-CP-0019"
+title: "Implement visual documentation quality gate"
+status: "done"
+source_request: "requests/inbox/CR-CP-0019-implement-visual-documentation-quality-gate.yaml"
+planned_request: "requests/planned/CR-CP-0019-implement-visual-documentation-quality-gate.yaml"
+closed_at: "2026-08-15"
+requester: "4uentes"
+
+summary: >
+  Added an offline structural and semantic visual-documentation validator to
+  the canonical check, negative fixtures, identity and dependency resolution,
+  accessibility checks and an isolated pinned SVG render mode.
+
+control_plane_context:
+  initiative_id: "INIT-CP-0003"
+  predecessor_request_id: "CR-CP-0018"
+  jira_epic_key: "ARDS-13"
+  jira_issue_key: "ARDS-18"
+  jira_status_observed: "Por hacer"
+  jira_sync_status: "pending-new-authorized-batch"
+  jira_write_allowed: false
+  tracking_state: "state/features/visual-documentation-as-code-adoption.current.yaml"
+
+execution:
+  requires_human_approval: true
+  approver: "4uentes"
+  child_repo_mutation_allowed: false
+  core_repo_mutation_allowed: false
+  jira_write_performed: false
+
+delivered_scope:
+  profile_ref: "specs/integration/visual-documentation-as-code-profile.yaml"
+  validator_ref: "scripts/verify-visual-documentation.js"
+  fixture_root: "scripts/fixtures/visual-documentation/"
+  package_gate: "npm.cmd run check"
+  focused_commands:
+    - "npm.cmd run check:visual-docs"
+    - "npm.cmd run check:visual-docs:self-test"
+
+validation:
+  result: "passed"
+  evidence_refs:
+    - "evidence/requests/CR-CP-0019/validation-results.md"
+    - "evidence/requests/CR-CP-0019/changed-files-summary.md"
+  checks:
+    - "node --check scripts/verify-visual-documentation.js"
+    - "9 positive and negative fixtures"
+    - "5 documents and 5 maps in structural/semantic mode"
+    - "5 maps rendered to SVG with mermaid 11.12.0 and jsdom 26.1.0"
+    - "missing renderer and missing argument fail closed"
+    - "npm.cmd run check"
+    - "git diff --check"
+    - "secret-value scan"
+
+decision:
+  status: "closed-local"
+  approver: "4uentes"
+  blocker: "none"
+  next_gate: "reusable-rollout"

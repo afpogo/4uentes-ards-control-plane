@@ -1,0 +1,13 @@
+{
+  "cases": [
+    {"file": "valid-dependency.md", "result": "pass"},
+    {"file": "missing-field.md", "result": "fail", "errorIncludes": "missing required metadata field: question"},
+    {"file": "missing-source.md", "result": "fail", "errorIncludes": "source_ref does not exist"},
+    {"file": "unknown-request.md", "result": "fail", "errorIncludes": "unknown request id"},
+    {"file": "unlabeled-edge.md", "result": "fail", "errorIncludes": "governance edge must have a text label"},
+    {"file": "dependency-drift.md", "result": "fail", "errorIncludes": "is not declared as predecessor"},
+    {"file": "color-only-status.md", "result": "fail", "errorIncludes": "needs a non-color status cue"},
+    {"file": "missing-fallback.md", "result": "fail", "errorIncludes": "textual fallback heading is required"},
+    {"file": "unbalanced-markers.md", "result": "fail", "errorIncludes": "unbalanced visual-map markers"}
+  ]
+}

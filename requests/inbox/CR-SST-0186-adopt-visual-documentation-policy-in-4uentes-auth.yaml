@@ -1,0 +1,9 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0186"
+title: "Adopt visual documentation policy in 4uentes-auth"
+status: "inbox"
+created_at: "2026-08-16"
+requester: "4uentes"
+requested_change: "Adopt or explicitly except the core visual-documentation policy in the 4uentes-auth owner repository."
+expected_outcome: "4uentes-auth publishes an owner manifest, discovery link and reproducible validation evidence."

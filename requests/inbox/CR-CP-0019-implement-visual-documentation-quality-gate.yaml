@@ -1,0 +1,19 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-CP-0019"
+title: "Implement visual documentation quality gate"
+status: "inbox"
+created_at: "2026-08-15"
+requester: "4uentes"
+
+business_context: >
+  A reusable visual profile needs deterministic checks so diagrams cannot
+  reference missing CRs, drift from lifecycle dependencies or fail rendering.
+
+requested_change: >
+  Implement a local validator for diagram metadata, source refs, CR identities,
+  dependency consistency, accessibility fallback and Mermaid syntax/rendering.
+
+expected_outcome: >
+  Visual-documentation drift becomes a reproducible control-plane quality gate
+  instead of relying only on manual review.

@@ -1,0 +1,48 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-CP-0020"
+title: "Promote visual documentation as code policy to ARDS Core"
+status: "running"
+source_request: "requests/planned/CR-CP-0020-promote-visual-documentation-as-code-policy-to-core.yaml"
+started_at: "2026-08-16"
+requester: "4uentes"
+
+control_plane_context:
+  initiative_id: "INIT-CP-0002"
+  tracking_state: "state/features/visual-documentation-as-code-adoption.current.yaml"
+
+execution:
+  approval_source: "User requested core promotion and child propagation on 2026-08-16."
+  core_repo_mutation_allowed: true
+  child_repo_mutation_allowed: false
+  jira_write_allowed: false
+  worktree_strategy: "isolated-core-worktree-from-origin-develop"
+  branch: "agent/cr-cp-0020-visual-doc-policy"
+  baseline: "origin/develop@162c482acf2ff386237bd6c45297c33fd73ba1bb"
+  validated_commit: "3764d34"
+  publication_status: "not-merged-not-pushed"
+
+implementation_result:
+  status: "validated-on-isolated-branch"
+  canonical_policy_id: "visual-documentation-as-code-policy"
+  policy_class: "core-profile-scoped"
+  artifacts:
+    - "4uentes-ards-core: docs/policies/visual-documentation-as-code-policy.md"
+    - "4uentes-ards-core: specs/integration/visual-documentation-as-code-profile.yaml"
+    - "4uentes-ards-core: specs/integration/policies.yaml"
+    - "4uentes-ards-core: templates/visual-documentation/"
+    - "4uentes-ards-core: docs/reference-sources.md"
+
+validation:
+  core_check: "PASS: 0 errors, 0 warnings"
+  core_diff_check: "PASS"
+  core_secret_scan: "PASS"
+  control_plane_check: "PASS"
+  evidence_ref: "evidence/requests/CR-CP-0020/validation-results.md"
+
+close_gate:
+  status: "pending-publication"
+  requirements:
+    - "Review and publish commit 3764d34 into the canonical core branch."
+    - "Read back the canonical source and reconcile the orchestrator adoption."
+    - "Only then unblock CR-CP-0006 child rollout units."

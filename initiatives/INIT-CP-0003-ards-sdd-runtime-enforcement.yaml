@@ -28,6 +28,7 @@ parent_initiative_refs:
   - "INIT-CP-0001"
   - "INIT-CP-0002"
 known_change_requests:
+  - "CR-CP-0019"
   - "CR-CP-0008"
   - "CR-CP-0009"
   - "CR-CP-0010"

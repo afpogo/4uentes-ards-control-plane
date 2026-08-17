@@ -1,0 +1,84 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-CP-0019"
+title: "Implement visual documentation quality gate"
+status: "planned"
+source_request: "requests/inbox/CR-CP-0019-implement-visual-documentation-quality-gate.yaml"
+created_at: "2026-08-15"
+requester: "4uentes"
+
+control_plane_context:
+  initiative_id: "INIT-CP-0003"
+  jira_epic_key: "ARDS-13"
+  predecessor_request_id: "CR-CP-0018"
+  tracking_state: "state/features/visual-documentation-as-code-adoption.current.yaml"
+
+scope:
+  deliverables:
+    - "Validator for required diagram metadata and existing source refs."
+    - "CR and Initiative identity resolution from Mermaid labels."
+    - "Dependency comparison against planned lifecycle predecessors."
+    - "Textual fallback and non-color accessibility checks."
+    - "Pinned Mermaid syntax/render check with deterministic failure behavior."
+    - "Integration into the canonical control-plane npm run check."
+  non_goals:
+    - "Automatic publication or Jira mutation."
+    - "Semantic approval of security or architecture decisions."
+    - "Core promotion and child-repo enforcement."
+
+execution:
+  requires_human_approval: true
+  approval_source: "User approved the visual-documentation adoption and CP split on 2026-08-15."
+  child_repo_mutation_allowed: false
+  core_repo_mutation_allowed: false
+  jira_write_allowed: false
+  jira_write_status: "historical-observation-not-replayed-in-clean-promotion"
+
+visual_documentation_tracking:
+  flag: "visual_documentation_adoption_required"
+  state_ref: "state/features/visual-documentation-as-code-adoption.current.yaml"
+  current_gate: "cp-validator"
+  predecessor_gate: "cp-profile"
+  update_required_before_advance: true
+
+risk:
+  level: "medium"
+  score: 7
+  drivers: ["PIPELINE_ENFORCEMENT", "FALSE_POSITIVE_GATE", "DOCUMENT_DRIFT"]
+
+model_selection:
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "manual"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "high"
+  fallback_profile: "gpt-5.5"
+
+owner_documentation:
+  required: false
+  authority: "This request changes control-plane validators and documentation only."
+
+jira:
+  role: "mirror"
+  source_of_truth: false
+  project_key: "ARDS"
+  epic_key: "ARDS-13"
+  issue_type: "Tarea"
+  issue_key: "ARDS-18"
+  status_observed: "Por hacer"
+  dependency_relation:
+    type: "Blocks"
+    blocker_request_id: "CR-CP-0018"
+    blocker_issue_key: "ARDS-17"
+  clean_promotion_note: "The clean origin/main promotion performs no Jira write."
+
+validation:
+  required_checks:
+    - "focused visual-documentation validator fixtures"
+    - "4uentes-orchestor npm.cmd run check"
+    - "git diff --check and secret-safe scan"
+
+decision:
+  status: "approved-planned"
+  approver: "4uentes"
+  decided_at: "2026-08-15"

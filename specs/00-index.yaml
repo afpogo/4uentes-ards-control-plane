@@ -60,6 +60,11 @@ policies:
   model: "specs/policies/ards-sdd-policy-component-model.yaml"
   policy_links: "state/policy-links.yaml"
   integration_registry: "specs/integration/policies.yaml"
+visual_documentation:
+  profile: "specs/integration/visual-documentation-as-code-profile.yaml"
+  templates: "templates/visual-documentation/"
+  validator: "scripts/verify-visual-documentation.js"
+  validator_status: "active-local"
 capabilities:
   index: "specs/capabilities/00-index.yaml"
   inbound_index: "specs/capabilities/inbound/00-index.yaml"

@@ -1,0 +1,9 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0191"
+title: "Adopt visual documentation policy in sst-4uentes-infra"
+status: "inbox"
+created_at: "2026-08-16"
+requester: "4uentes"
+requested_change: "Adopt or explicitly except the core visual-documentation policy in the sst-4uentes-infra owner repository."
+expected_outcome: "sst-4uentes-infra publishes an owner manifest, discovery link and reproducible validation evidence."

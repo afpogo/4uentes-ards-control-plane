@@ -1,0 +1,89 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-CP-0020"
+title: "Promote visual documentation as code policy to ARDS Core"
+status: "planned"
+source_request: "requests/inbox/CR-CP-0020-promote-visual-documentation-as-code-policy-to-core.yaml"
+created_at: "2026-08-16"
+requester: "4uentes"
+
+control_plane_context:
+  initiative_id: "INIT-CP-0002"
+  predecessor_request_ids: ["CR-CP-0018", "CR-CP-0019"]
+  tracking_state: "state/features/visual-documentation-as-code-adoption.current.yaml"
+
+requested_change: >
+  Promote the locally validated visual-documentation profile, map templates and
+  quality contract into reusable 4uentes-ards-core canon. Register the owner's
+  explicit decision as a validated source and classify the policy as
+  core-profile-scoped.
+
+policy_contract:
+  policy_id: "visual-documentation-as-code-policy"
+  policy_class: "core-profile-scoped"
+  origin_repo: "4uentes-orchestor"
+  canonical_owner: "4uentes-ards-core"
+  applicability: >
+    Human-facing ARDS/SDD documentation that uses a normative dependency,
+    lifecycle, sequence or logical-data map.
+  adoption_mode: "required-by-profile-or-request-driven-child-adoption"
+  mandatory_rule: >
+    The policy does not require a map in every document. When an applicable
+    governed map is created or materially changed, it must use source refs,
+    authority metadata, non-color semantics and adjacent textual fallback, or
+    the owner must publish a scoped exception.
+  required_for_profiles: ["control-plane"]
+  optional_for_profiles:
+    - "backend-api"
+    - "backend-bff"
+    - "frontend-web"
+    - "frontend-extension"
+    - "infra-gitops"
+    - "child-repo"
+
+execution:
+  requires_human_approval: true
+  approval_source: "User requested core promotion and child propagation on 2026-08-16."
+  core_repo_mutation_allowed: true
+  child_repo_mutation_allowed: false
+  branch_strategy: "isolated-core-worktree-from-origin-develop"
+  jira_write_allowed: false
+  implementation_boundary: >
+    Modify only documentation-governance, source-validation, templates and
+    validation surfaces in 4uentes-ards-core. Do not copy control-plane IDs,
+    Jira keys, local paths or instance state into canon.
+  expected_core_artifacts:
+    - "docs/policies/visual-documentation-as-code-policy.md"
+    - "specs/integration/policies.yaml"
+    - "docs/reference-sources.md"
+    - "docs/policies/README.md"
+    - "templates/visual-documentation/"
+
+risk:
+  level: "high"
+  score: 7
+  drivers: ["CORE_CANON", "CROSS_REPO_APPLICABILITY", "DOCUMENT_AUTHORITY"]
+
+model_selection:
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "manual"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5"
+
+validation:
+  required_checks:
+    - "4uentes-ards-core: npm.cmd run check"
+    - "4uentes-orchestor: npm.cmd run check"
+    - "git diff --check and secret-safe scan in both repos"
+  acceptance:
+    - "Core source validation records the explicit owner decision."
+    - "The core policy and templates contain no control-plane instance identifiers."
+    - "The orchestrator can consume the core source without redefining it."
+
+decision:
+  status: "approved-planned"
+  approver: "4uentes"
+  decided_at: "2026-08-16"
+  blocker: "Execute in a dedicated clean core worktree before child rollout."

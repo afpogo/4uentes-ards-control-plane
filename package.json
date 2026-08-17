@@ -4,10 +4,12 @@
   "private": true,
   "description": "Logical ARDS/SDD control plane for 4uentes services and solutions.",
   "scripts": {
-    "check": "node scripts/verify-catalog.js && node scripts/verify-local-bindings.js --optional && node scripts/verify-state-model.js && node scripts/verify-initiatives.js && node scripts/verify-owner-documentation.js",
+    "check": "node scripts/verify-catalog.js && node scripts/verify-local-bindings.js --optional && node scripts/verify-state-model.js && node scripts/verify-initiatives.js && node scripts/verify-owner-documentation.js && node scripts/verify-visual-documentation.js",
     "check:state": "node scripts/verify-state-model.js",
     "check:initiatives": "node scripts/verify-initiatives.js",
     "check:owner-docs": "node scripts/verify-owner-documentation.js",
+    "check:visual-docs": "node scripts/verify-visual-documentation.js",
+    "check:visual-docs:self-test": "node scripts/verify-visual-documentation.js --self-test",
     "jira:mcp:dry-run": "node scripts/jira-mcp/generate-dry-run.js",
     "jira:mcp:policy-check": "node scripts/jira-mcp/policy-check.js",
     "jira:mcp:verify": "node scripts/jira-mcp/verify-project.js",

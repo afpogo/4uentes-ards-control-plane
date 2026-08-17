@@ -1,0 +1,19 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-CP-0018"
+title: "Define visual documentation as code profile"
+status: "inbox"
+created_at: "2026-08-15"
+requester: "4uentes"
+
+business_context: >
+  The control-plane rollout needs a reusable ARDS/SDD profile that makes visual
+  maps versioned, accessible, RAG-safe and subordinate to owner contracts.
+
+requested_change: >
+  Define the local visual-documentation profile, Mermaid template, semantic
+  styles, source-reference metadata and human-review boundary.
+
+expected_outcome: >
+  Control-plane documents can add maintainable maps without creating a second
+  source of truth or silently changing architecture and ownership.

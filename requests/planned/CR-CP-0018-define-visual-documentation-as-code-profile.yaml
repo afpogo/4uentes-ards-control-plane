@@ -1,0 +1,79 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-CP-0018"
+title: "Define visual documentation as code profile"
+status: "planned"
+source_request: "requests/inbox/CR-CP-0018-define-visual-documentation-as-code-profile.yaml"
+created_at: "2026-08-15"
+requester: "4uentes"
+
+control_plane_context:
+  initiative_id: "INIT-CP-0002"
+  jira_epic_key: "ARDS-1"
+  pilot_request_id: "CR-CP-0006"
+  tracking_state: "state/features/visual-documentation-as-code-adoption.current.yaml"
+
+scope:
+  deliverables:
+    - "Local ARDS/SDD visual-documentation profile."
+    - "Mermaid templates for dependency, lifecycle, sequence and data maps."
+    - "Required question, abstraction, source refs, observed date and authority boundary."
+    - "Semantic styles that remain understandable without color."
+    - "RAG-safe textual fallback adjacent to every normative map."
+  non_goals:
+    - "Executable validator implementation."
+    - "Core canon mutation or child-repo rollout."
+    - "Automatic architecture decisions from generated diagrams."
+
+execution:
+  requires_human_approval: true
+  approval_source: "User approved the visual-documentation adoption and CP split on 2026-08-15."
+  child_repo_mutation_allowed: false
+  core_repo_mutation_allowed: false
+  jira_write_allowed: false
+  jira_write_status: "historical-observation-not-replayed-in-clean-promotion"
+
+visual_documentation_tracking:
+  flag: "visual_documentation_adoption_required"
+  state_ref: "state/features/visual-documentation-as-code-adoption.current.yaml"
+  current_gate: "cp-profile"
+  next_gate: "cp-validator"
+  update_required_before_advance: true
+
+risk:
+  level: "medium"
+  score: 6
+  drivers: ["DOCUMENT_AUTHORITY", "RAG_CONTEXT", "CROSS_REPO_REUSE"]
+
+model_selection:
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "manual"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "high"
+  fallback_profile: "gpt-5.4-fast-high"
+
+owner_documentation:
+  required: false
+  authority: "This request changes control-plane documentation only."
+
+jira:
+  role: "mirror"
+  source_of_truth: false
+  project_key: "ARDS"
+  epic_key: "ARDS-1"
+  issue_type: "Tarea"
+  issue_key: "ARDS-17"
+  status_observed: "Por hacer"
+  clean_promotion_note: "The clean origin/main promotion performs no Jira write and carries no cross-project relation claim."
+
+validation:
+  required_checks:
+    - "4uentes-orchestor npm.cmd run check"
+    - "Mermaid pilot renders and retains textual fallback"
+    - "git diff --check and secret-safe scan"
+
+decision:
+  status: "approved-planned"
+  approver: "4uentes"
+  decided_at: "2026-08-15"

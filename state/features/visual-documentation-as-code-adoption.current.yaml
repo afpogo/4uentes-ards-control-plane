@@ -1,0 +1,67 @@
+schema_version: "1.0"
+kind: "feature_state"
+id: "visual-documentation-as-code-adoption"
+title: "Visual documentation as code adoption"
+status: "validated-local"
+updated_at: "2026-08-16"
+solution_id: "sst"
+affected_services:
+  - 4uentes-auth
+  - sst-fend
+  - sst-bend
+  - sst-extension
+  - sst-chatbot
+  - sst-4uentes-infra
+  - 4uentes-portfolio
+  - finanzas-personales-frontend
+  - finanzas-personales-backend
+request_ids:
+  - CR-CP-0018
+  - CR-CP-0019
+  - CR-CP-0020
+  - CR-CP-0006
+  - CR-SST-0186
+  - CR-SST-0187
+  - CR-SST-0188
+  - CR-SST-0189
+  - CR-SST-0190
+  - CR-SST-0191
+  - CR-4UENTES-0040
+  - CR-HPT-0004
+spec_refs:
+  - "evidence/requests/CR-CP-0006/implementation-plan.md"
+  - "specs/integration/visual-documentation-as-code-profile.yaml"
+  - "docs/cross-repo/sst-cluster-dependency-map.md"
+evidence_refs:
+  - "evidence/requests/CR-CP-0018/validation-results.md"
+  - "evidence/requests/CR-CP-0018/changed-files-summary.md"
+  - "evidence/requests/CR-CP-0019/validation-results.md"
+  - "evidence/requests/CR-CP-0019/changed-files-summary.md"
+  - "evidence/requests/CR-CP-0020/validation-results.md"
+  - "evidence/requests/CR-CP-0020/changed-files-summary.md"
+  - "evidence/requests/CR-CP-0006/control-plane-promotion-readiness.md"
+tracking:
+  flag: "visual_documentation_adoption_required"
+  current_gate: "core-promotion"
+  gates:
+    - id: "cp-profile"
+      owner_request: "CR-CP-0018"
+      status: "validated-local"
+    - id: "cp-validator"
+      owner_request: "CR-CP-0019"
+      status: "validated-local"
+    - id: "clean-main-promotion"
+      owner_request: "CR-CP-0006"
+      status: "validated-isolated-worktree"
+    - id: "reusable-rollout"
+      owner_request: "CR-CP-0019"
+      status: "approved-planned"
+    - id: "core-promotion"
+      owner_request: "CR-CP-0020"
+      status: "validated-isolated-branch-pending-publication"
+    - id: "child-owner-adoption"
+      owner_request: "CR-CP-0006"
+      status: "blocked-by-core-publication"
+open_gaps:
+  - "CR-CP-0020 commit 3764d34 is validated locally but must be published to the canonical Core branch."
+  - "Each child owner remains pending until it publishes an adoption or exception manifest under its own CR."

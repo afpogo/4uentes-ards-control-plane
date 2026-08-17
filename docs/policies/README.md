@@ -44,6 +44,7 @@ El registry machine-readable esta en:
 - [agent-architecture-boundary-policy.md](agent-architecture-boundary-policy.md)
 - [owner-documentation-authority-policy.md](owner-documentation-authority-policy.md)
 - [work-tracker-control-plane-authority-policy.md](work-tracker-control-plane-authority-policy.md)
+- [visual-documentation-as-code-policy.md](visual-documentation-as-code-policy.md)
 
 ## Propagacion A Repos Hijos
 
@@ -57,6 +58,9 @@ El registry machine-readable esta en:
 - Cada adopcion en child repos debe publicar `policy_adoption_manifest` o
   `policy_exception_manifest`, segun corresponda, dentro de un lifecycle
   aprobado antes de modificar el repo hijo.
+- La policy de documentacion visual se promueve desde el commit Core `3764d34`
+  mediante `CR-CP-0020`. Su rollout se coordina con `CR-CP-0006`; publicar el
+  canon no marca automaticamente a ningun child repo como adoptante.
 - Para `control-plane-link-policy`, un repo hijo solo queda obligado cuando su
   profile, request aprobado o manifest local adopta la policy; en caso
   contrario debe quedar como no aplicable o pendiente de rollout, no como
