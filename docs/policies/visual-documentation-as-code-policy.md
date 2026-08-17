@@ -9,15 +9,16 @@ trazables, sin convertir el diagrama en una fuente de verdad paralela.
 
 - Estado local: adoptada por el control-plane bajo `CR-CP-0018` y
   `CR-CP-0019`.
-- Promoción canónica: implementada y validada en el branch aislado de
-  `CR-CP-0020`; publicación todavía pendiente.
-- Owner canónico después de la promoción: `4uentes-ards-core`.
+- Promoción canónica: completada mediante el PR
+  <https://github.com/afpogo/4uentes-ards-core/pull/3> y verificada en
+  `origin/develop@b00c4eb4d5cd73d3964d9378ae1ae2900b53b2a0`.
+- Owner canónico: `4uentes-ards-core`.
 - Rollout a repos hijos: coordinado por `CR-CP-0006` y ejecutado mediante un CR
   independiente por owner.
 
-Mientras `CR-CP-0020` no cierre, el perfil local continúa siendo la autoridad
-operativa del control-plane y ningún child repo se considera adoptante del
-canon futuro.
+El perfil local es la implementación de enforcement del control-plane. Ningún
+child repo se considera adoptante del canon hasta publicar su propio manifest
+de adopción o excepción dentro de un lifecycle aprobado.
 
 ## Regla obligatoria
 

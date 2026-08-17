@@ -23,8 +23,9 @@ local_adoption:
   profile_ref: "specs/integration/visual-documentation-as-code-profile.yaml"
   validator_ref: "scripts/verify-visual-documentation.js"
   core_source_commit: "3764d34"
-  core_publication_status: "draft-pr-open-pending-merge"
+  core_publication_status: "merged-and-read-back"
   core_github_pr: "https://github.com/afpogo/4uentes-ards-core/pull/3"
+  core_merge_commit: "b00c4eb4d5cd73d3964d9378ae1ae2900b53b2a0"
 
 execution:
   requires_human_approval: true
@@ -42,7 +43,8 @@ validation:
   evidence_ref: "evidence/requests/CR-CP-0006/control-plane-promotion-readiness.md"
 
 next_gate:
-  id: "core-canonical-publication"
-  status: "blocked"
-  blocker: "Core PR #3 is draft and commit 3764d34 is not yet an ancestor of origin/develop."
-  child_rollout_rule: "Do not start any child worktree until canonical Core publication is read back."
+  id: "child-owner-adoption"
+  status: "ready"
+  blocker: null
+  first_ready_request: "CR-SST-0186"
+  child_rollout_rule: "Start one isolated owner worktree per approved child CR; publish an adoption or exception manifest and validate owner docs before closure."
