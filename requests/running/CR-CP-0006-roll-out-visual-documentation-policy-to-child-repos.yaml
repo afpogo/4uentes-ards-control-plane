@@ -1,0 +1,48 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-CP-0006"
+title: "Coordinate request-driven visual documentation policy rollout"
+status: "running"
+source_request: "requests/planned/CR-CP-0006-roll-out-visual-documentation-policy-to-child-repos.yaml"
+started_at: "2026-08-16"
+requester: "4uentes"
+
+control_plane_execution:
+  baseline_requested: "develop"
+  baseline_observation: "No local or remote develop branch exists for 4uentes-ards-control-plane."
+  baseline_selected: "origin/main@200518b8bbf4e747fb3add4e89962888704aa39d"
+  selection_reason: "origin/main is the only published canonical baseline; no branch semantics were invented."
+  branch: "agent/cr-cp-0006-visual-doc-rollout"
+  worktree: "isolated"
+  dirty_checkout_reused: false
+
+local_adoption:
+  status: "validated-local"
+  manifest_ref: "specs/policies/adoptions/visual-documentation-as-code-policy.yaml"
+  policy_ref: "docs/policies/visual-documentation-as-code-policy.md"
+  profile_ref: "specs/integration/visual-documentation-as-code-profile.yaml"
+  validator_ref: "scripts/verify-visual-documentation.js"
+  core_source_commit: "3764d34"
+  core_publication_status: "draft-pr-open-pending-merge"
+  core_github_pr: "https://github.com/afpogo/4uentes-ards-core/pull/3"
+
+execution:
+  requires_human_approval: true
+  approval_source: "User requested isolated control-plane adoption before child rollout on 2026-08-16."
+  child_repo_mutation_allowed: false
+  core_repo_mutation_allowed: false
+  jira_write_allowed: false
+
+validation:
+  control_plane_check: "PASS"
+  visual_fixture_self_test: "PASS: 9/9"
+  visual_document_scan: "PASS: 5 documents, 5 maps"
+  core_check: "PASS: 0 errors, 0 warnings"
+  diff_check: "PASS"
+  evidence_ref: "evidence/requests/CR-CP-0006/control-plane-promotion-readiness.md"
+
+next_gate:
+  id: "core-canonical-publication"
+  status: "blocked"
+  blocker: "Core PR #3 is draft and commit 3764d34 is not yet an ancestor of origin/develop."
+  child_rollout_rule: "Do not start any child worktree until canonical Core publication is read back."

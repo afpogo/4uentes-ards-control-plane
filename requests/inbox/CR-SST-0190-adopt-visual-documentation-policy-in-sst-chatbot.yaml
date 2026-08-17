@@ -1,0 +1,9 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0190"
+title: "Adopt visual documentation policy in sst-chatbot"
+status: "inbox"
+created_at: "2026-08-16"
+requester: "4uentes"
+requested_change: "Adopt or explicitly except the core visual-documentation policy in the sst-chatbot owner repository."
+expected_outcome: "sst-chatbot publishes an owner manifest, discovery link and reproducible validation evidence."

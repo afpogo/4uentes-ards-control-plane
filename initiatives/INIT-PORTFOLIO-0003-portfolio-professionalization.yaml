@@ -65,6 +65,7 @@ known_change_requests:
   - "CR-4UENTES-0035"
   - "CR-4UENTES-0036"
   - "CR-4UENTES-0039"
+  - "CR-4UENTES-0040"
 candidate_change_requests:
   - id: "CR-4UENTES-0034"
     title: "Portfolio home hero positioning and CTA clarity"

@@ -408,6 +408,61 @@ policies:
       - "agent-context-management-policy"
       - "human-doc-language"
 
+  - id: "visual-documentation-as-code-policy"
+    name: "Visual Documentation as Code Policy"
+    type: "documentation-governance-policy"
+    policy_class: "origin-repo-policy"
+    origin_repo: "4uentes-orchestor"
+    canonical_owner: "4uentes-ards-control-plane"
+    applicability: "normative dependency, lifecycle, sequence and logical-data maps in human-facing ARDS/SDD documentation"
+    adoption_mode: "required-by-profile-or-request-driven-child-adoption"
+    required_for_profiles:
+      - "control-plane"
+    optional_for_profiles:
+      - "child-repo"
+      - "backend-api"
+      - "backend-bff"
+      - "frontend-web"
+      - "frontend-extension"
+      - "infra-gitops"
+    template_binding: "templates/visual-documentation/"
+    local_aliases: []
+    status: "adopted-from-validated-core-commit-pending-publication"
+    scope:
+      - "human-documentation-legibility"
+      - "visual-map-traceability"
+      - "accessible-non-color-semantics"
+      - "rag-safe-textual-fallback"
+    owner: "4uentes-ards-control-plane"
+    human_doc: "docs/policies/visual-documentation-as-code-policy.md"
+    profile_ref: "specs/integration/visual-documentation-as-code-profile.yaml"
+    enforcement:
+      expected: "Applicable normative maps declare source and authority metadata, remain readable without color, include adjacent textual fallback and pass the local visual-documentation validator; otherwise the owner records a scoped exception."
+      mode: "mandatory-for-applicable-maps"
+      validator: "scripts/verify-visual-documentation.js"
+      package_gate: "npm.cmd run check"
+      failure_behavior: "block-map-acceptance-or-record-owner-exception"
+    handoff:
+      core_promotion_request_id: "CR-CP-0020"
+      target_policy_class: "core-profile-scoped"
+      target_canonical_owner: "4uentes-ards-core"
+      core_commit: "3764d34"
+      status: "validated-isolated-branch-pending-publication"
+    child_propagation:
+      coordinator_request_id: "CR-CP-0006"
+      mode: "request-driven"
+      required_artifacts:
+        - "policy_adoption_manifest"
+        - "policy_exception_manifest"
+      rule: "Core publication alone never proves local child adoption."
+    evidence:
+      - "evidence/requests/CR-CP-0018/validation-results.md"
+      - "evidence/requests/CR-CP-0019/validation-results.md"
+      - "evidence/requests/CR-CP-0020/validation-results.md"
+      - "state/features/visual-documentation-as-code-adoption.current.yaml"
+    gaps:
+      - "Core commit 3764d34 must be published before child manifests reference canonical branch status."
+
 core_owned_adoptions:
   - id: "http-qa-harness-policy"
     name: "HTTP QA Harness Policy"

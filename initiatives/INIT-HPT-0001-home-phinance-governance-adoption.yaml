@@ -29,6 +29,7 @@ known_change_requests:
   - "CR-HPT-0001"
   - "CR-HPT-0002"
   - "CR-HPT-0003"
+  - "CR-HPT-0004"
 candidate_change_requests:
   - id: "CR-HPT-0001"
     title: "Finanzas personales control-plane onboarding"

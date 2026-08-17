@@ -1,0 +1,41 @@
+schema_version: "1.0"
+kind: "policy_adoption_manifest"
+status: "active"
+adopting_repo: "4uentes-ards-control-plane"
+adoption_status: "adopted"
+policy_id: "visual-documentation-as-code-policy"
+policy_class: "core-profile-scoped"
+source_repo: "4uentes-ards-core"
+source_ref: "docs/policies/visual-documentation-as-code-policy.md"
+source_version: "3764d34"
+source_status: "validated-core-draft-pr-open-pending-canonical-merge"
+origin_repo: "4uentes-orchestor"
+canonical_owner: "4uentes-ards-core"
+applicability: >
+  Normative dependency, lifecycle, sequence and logical-data maps in
+  human-facing ARDS/SDD documentation maintained by this control-plane.
+adoption_mode: "required-by-profile"
+required_for_profiles:
+  - "control-plane"
+optional_for_profiles: []
+template_binding: "templates/visual-documentation/"
+local_alias: null
+maps_to: null
+local_implementation_path: "docs/policies/visual-documentation-as-code-policy.md"
+implementation_refs:
+  - "specs/integration/visual-documentation-as-code-profile.yaml"
+  - "templates/visual-documentation/"
+  - "scripts/verify-visual-documentation.js"
+validation_ref: "npm.cmd run check"
+request_id: "CR-CP-0020"
+rollout_coordinator_request_id: "CR-CP-0006"
+owner: "4uentes-ards-control-plane"
+observed_at: "2026-08-16"
+evidence_ref: "evidence/requests/CR-CP-0020/validation-results.md"
+canonical_publication:
+  status: "draft-pr-open-pending-merge"
+  github_pr: "https://github.com/afpogo/4uentes-ards-core/pull/3"
+  blocking_effect: "Child repo adoption remains blocked; local control-plane enforcement is active."
+notes:
+  - "This manifest adopts the validated policy locally without claiming that commit 3764d34 is already merged into the canonical Core branch."
+  - "Core publication alone will not mark any child repo adopted."

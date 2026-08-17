@@ -1,0 +1,20 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-CP-0006"
+title: "Coordinate request-driven visual documentation policy rollout"
+status: "inbox"
+created_at: "2026-08-16"
+requester: "4uentes"
+
+business_context: >
+  The reusable child adoption slot reserved by INIT-CP-0002 can now coordinate
+  propagation of the visual-documentation policy after its core promotion.
+
+requested_change: >
+  Coordinate one bounded adoption lifecycle per child owner, requiring either
+  a policy_adoption_manifest or policy_exception_manifest and preserving each
+  repository's documentation authority.
+
+expected_outcome: >
+  Every registered child owner has an auditable adoption decision without
+  treating core publication alone as proof of local enforcement.

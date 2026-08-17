@@ -26,3 +26,4 @@ dos o mas repos o servicios juntos.
 - [child-repo-onboarding.md](child-repo-onboarding.md)
 - [child-repo-orchestrator-link-rule.md](child-repo-orchestrator-link-rule.md)
 - [documentation-information-architecture.md](../documentation-information-architecture.md)
+- [visual-documentation-as-code-profile.md](visual-documentation-as-code-profile.md)

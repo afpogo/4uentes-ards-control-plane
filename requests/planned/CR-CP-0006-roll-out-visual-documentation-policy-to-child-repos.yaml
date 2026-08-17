@@ -1,0 +1,63 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-CP-0006"
+title: "Coordinate request-driven visual documentation policy rollout"
+status: "planned"
+source_request: "requests/inbox/CR-CP-0006-roll-out-visual-documentation-policy-to-child-repos.yaml"
+created_at: "2026-08-16"
+requester: "4uentes"
+
+control_plane_context:
+  initiative_id: "INIT-CP-0002"
+  predecessor_request_ids: ["CR-CP-0020", "CR-SST-0081"]
+  tracking_state: "state/features/visual-documentation-as-code-adoption.current.yaml"
+
+requested_change: >
+  Coordinate bounded, request-driven adoption of the core visual-documentation
+  policy across every registered child owner. Each child retains authority over
+  its docs and independently chooses adoption or an explicit scoped exception.
+
+execution:
+  requires_human_approval: true
+  approval_source: "User requested core and child propagation on 2026-08-16."
+  child_repo_mutation_allowed: false
+  core_repo_mutation_allowed: false
+  jira_write_allowed: false
+  control_plane_only: true
+  branch_strategy: "one-isolated-worktree-per-child-request-from-owner-default-baseline"
+  ordering:
+    - "CR-CP-0020 must validate core canon first."
+    - "Each child CR may then execute independently."
+    - "Coordinator closes only after every owner is adopted, excepted or explicitly deferred."
+
+rollout_units:
+  - {request_id: "CR-SST-0186", owner: "4uentes-auth", status: "planned"}
+  - {request_id: "CR-SST-0187", owner: "sst-fend", status: "planned"}
+  - {request_id: "CR-SST-0188", owner: "sst-bend", status: "planned"}
+  - {request_id: "CR-SST-0189", owner: "sst-extension", status: "planned"}
+  - {request_id: "CR-SST-0190", owner: "sst-chatbot", status: "planned"}
+  - {request_id: "CR-SST-0191", owner: "sst-4uentes-infra", status: "planned"}
+  - {request_id: "CR-4UENTES-0040", owner: "4uentes-portfolio", status: "planned"}
+  - {request_id: "CR-HPT-0004", owner: "finanzas-personales", status: "planned"}
+
+manifest_gate:
+  allowed_outcomes: ["policy_adoption_manifest", "policy_exception_manifest"]
+  adoption_claim_rule: "No child is adopted until its owner artifact and validation evidence exist."
+  migration_rule: "Existing diagrams are not bulk-rewritten; adoption is prospective plus owner-selected pilots."
+
+risk:
+  level: "high"
+  score: 8
+  drivers: ["MULTI_REPO_ROLLOUT", "DIRTY_WORKTREES", "OWNER_AUTHORITY"]
+
+validation:
+  required_checks:
+    - "Every child request runs its owner validation route."
+    - "4uentes-orchestor: npm.cmd run check after every child mutation and at coordinator closure."
+    - "No manifest claims adoption without an existing validation_ref and evidence_ref."
+
+decision:
+  status: "approved-planned"
+  approver: "4uentes"
+  decided_at: "2026-08-16"
+  blocker: "CR-CP-0020 core promotion must complete first."

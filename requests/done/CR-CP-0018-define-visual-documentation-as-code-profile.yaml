@@ -1,0 +1,55 @@
+schema_version: "1.0"
+phase: 4
+id: "CR-CP-0018"
+title: "Define visual documentation as code profile"
+status: "done"
+source_request: "requests/inbox/CR-CP-0018-define-visual-documentation-as-code-profile.yaml"
+planned_request: "requests/planned/CR-CP-0018-define-visual-documentation-as-code-profile.yaml"
+closed_at: "2026-08-15"
+requester: "4uentes"
+
+summary: >
+  Adopted a local ARDS/SDD visual-documentation-as-code profile, four Mermaid
+  map templates, an accessible textual fallback contract and a conforming
+  control-plane rollout map.
+
+control_plane_context:
+  initiative_id: "INIT-CP-0002"
+  jira_epic_key: "ARDS-1"
+  jira_issue_key: "ARDS-17"
+  jira_status_observed: "Por hacer"
+  jira_sync_status: "pending-new-authorized-batch"
+  jira_write_allowed: false
+  next_request_id: "CR-CP-0019"
+
+execution:
+  requires_human_approval: true
+  approver: "4uentes"
+  child_repo_mutation_allowed: false
+  core_repo_mutation_allowed: false
+  jira_write_performed: false
+
+delivered_scope:
+  profile_ref: "specs/integration/visual-documentation-as-code-profile.yaml"
+  human_doc_ref: "docs/cross-repo/visual-documentation-as-code-profile.md"
+  template_root: "templates/visual-documentation/"
+  pilot_ref: "evidence/requests/CR-CP-0006/implementation-plan.md"
+  profile_status: "active-local"
+
+validation:
+  result: "passed"
+  evidence_refs:
+    - "evidence/requests/CR-CP-0018/source-methodology-review.md"
+    - "evidence/requests/CR-CP-0018/validation-results.md"
+    - "evidence/requests/CR-CP-0018/changed-files-summary.md"
+  checks:
+    - "Mermaid 11.12.0 parse for four templates and the SST pilot"
+    - "npm.cmd run check"
+    - "git diff --check"
+    - "secret-value scan"
+
+decision:
+  status: "closed-local"
+  approver: "4uentes"
+  blocker: "none"
+  next_gate: "cp-validator"

@@ -1,0 +1,148 @@
+schema_version: "1.0"
+kind: "visual_documentation_profile"
+id: "visual-documentation-as-code"
+status: "active-local"
+revision: "2026-08-15"
+owner: "4uentes-ards-control-plane"
+source_request_id: "CR-CP-0018"
+standard_source:
+  repo: "4uentes-ards-core"
+  mutation_status: "not-modified"
+  note: >
+    This is a local control-plane profile. Promotion to the shared core canon
+    requires a separate approved request and handoff.
+
+purpose: >
+  Define versionable, reviewable and RAG-safe visual maps whose claims remain
+  traceable to authoritative ARDS/SDD sources.
+
+applicability:
+  required_for:
+    - "control-plane cross-repo maps created under an approved request"
+    - "normative lifecycle maps that affect execution order"
+  optional_for:
+    - "local explanatory diagrams with no governance claim"
+  excluded:
+    - "generated charts whose source data is already machine-readable and linked"
+    - "screenshots and raster illustrations"
+
+authority:
+  source_of_truth: "referenced ARDS/SDD artifacts"
+  diagram_role: "derived human-readable view"
+  jira_role: "operational mirror only"
+  conflict_rule: "The referenced source artifact wins over Mermaid and fallback text."
+
+format:
+  language: "Mermaid"
+  container: "Markdown"
+  block_order:
+    - "visual-map start marker"
+    - "visual_map YAML metadata block"
+    - "Mermaid code block"
+    - "textual fallback heading and fenced text block"
+    - "visual-map end marker"
+  start_marker: "<!-- visual-map:start -->"
+  end_marker: "<!-- visual-map:end -->"
+
+renderer_contract:
+  engine: "mermaid"
+  version: "11.12.0"
+  dom_environment: "jsdom"
+  dom_version: "26.1.0"
+  normal_gate: "structural and semantic validation without network access"
+  focused_gate: "render validation with an explicitly supplied isolated module root"
+  failure_behavior: "fail when modules are absent, versions drift or any render fails"
+
+metadata_contract:
+  root_key: "visual_map"
+  required_fields:
+    - "schema_version"
+    - "id"
+    - "type"
+    - "question"
+    - "abstraction_level"
+    - "source_refs"
+    - "observed_at"
+    - "authority_boundary"
+    - "textual_fallback_required"
+  field_rules:
+    schema_version: "exactly 1.0"
+    id: "stable kebab-case identifier unique within the document"
+    type: "one of dependency, lifecycle, sequence, data"
+    question: "one explicit question answered by the map"
+    abstraction_level: "one level only; lower-level details are excluded"
+    source_refs: "non-empty repo-relative paths that exist"
+    observed_at: "ISO 8601 calendar date"
+    authority_boundary: "must state that the map is derived and name the authority"
+    textual_fallback_required: "must be true"
+  optional_fields:
+    - "request_ids"
+    - "initiative_ids"
+    - "status_vocabulary"
+    - "notes"
+
+map_types:
+  dependency:
+    question_pattern: "What depends on what, and in which direction?"
+    allowed_abstraction_examples: ["service", "repository", "request"]
+    template: "templates/visual-documentation/dependency-map.template.md"
+  lifecycle:
+    question_pattern: "Which governed state or gate comes next?"
+    allowed_abstraction_examples: ["request lifecycle", "adoption gate"]
+    template: "templates/visual-documentation/lifecycle-map.template.md"
+  sequence:
+    question_pattern: "In which order do bounded participants exchange actions?"
+    allowed_abstraction_examples: ["cross-repo handoff", "request execution"]
+    template: "templates/visual-documentation/sequence-map.template.md"
+  data:
+    question_pattern: "Which records or logical entities relate, without exposing values?"
+    allowed_abstraction_examples: ["logical entity", "contract field group"]
+    template: "templates/visual-documentation/data-map.template.md"
+
+semantic_style_contract:
+  color_dependency: "optional-enhancement-only"
+  required_non_color_cues:
+    - "Every edge that carries governance meaning has a textual label."
+    - "Lifecycle nodes include their state or gate name in text."
+    - "Proposed, blocked, deprecated and authoritative elements are textually marked."
+    - "The fallback reproduces direction, branching and blocking semantics."
+  recommended_palette:
+    authoritative: {fill: "#dbeafe", stroke: "#2563eb", text: "#172554"}
+    running: {fill: "#fef3c7", stroke: "#d97706", text: "#451a03"}
+    planned: {fill: "#e0f2fe", stroke: "#0284c7", text: "#082f49"}
+    validated: {fill: "#dcfce7", stroke: "#16a34a", text: "#052e16"}
+    blocked: {fill: "#fee2e2", stroke: "#dc2626", text: "#450a0a"}
+
+rag_contract:
+  adjacency: "Metadata, Mermaid and fallback stay in the same section."
+  self_containment: "The section names actors and claims without relying on a previous section."
+  strong_heading: "The heading names the map subject and map type."
+  fallback: "Required even when the renderer supports Mermaid."
+  unresolved_information: "Use TODO; never invent missing nodes, links, owners or states."
+
+security_contract:
+  prohibited_content:
+    - "secrets, credentials, tokens, cookies or authentication headers"
+    - "private connection identifiers or private URLs"
+    - "personal data or raw production values"
+    - "unnecessary internal topology below the declared abstraction level"
+  minimum_privilege_rule: "Use only the source artifacts required by the map question."
+
+review_contract:
+  human_review_required_for:
+    - "architecture, security or ownership claims"
+    - "cross-repo dependency direction"
+    - "lifecycle ordering or blocking semantics"
+  update_trigger:
+    - "a referenced source changes the represented relationship"
+    - "a request advances to a state shown by the map"
+    - "a node, edge, owner or authority boundary changes"
+  executable_validation:
+    status: "planned"
+    request_id: "CR-CP-0019"
+
+acceptance_examples:
+  pilot:
+    request_id: "CR-CP-0006"
+    document: "evidence/requests/CR-CP-0006/implementation-plan.md"
+    map_type: "dependency"

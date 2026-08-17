@@ -1,0 +1,9 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0187"
+title: "Adopt visual documentation policy in sst-fend"
+status: "inbox"
+created_at: "2026-08-16"
+requester: "4uentes"
+requested_change: "Adopt or explicitly except the core visual-documentation policy in the sst-fend owner repository."
+expected_outcome: "sst-fend publishes an owner manifest, discovery link and reproducible validation evidence."

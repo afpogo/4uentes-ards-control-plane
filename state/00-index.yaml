@@ -5,6 +5,7 @@ updated_at: "2026-08-09"
 machine: "state/state-machine.yaml"
 capability_links: "state/capability-links.yaml"
 features:
+  - "state/features/visual-documentation-as-code-adoption.current.yaml"
   - "state/features/ards-sdd-policy-unification.current.yaml"
   - "state/features/agentic-model-deployment-policy.current.yaml"
   - "state/features/cluster-publication-ngrok-domain.current.yaml"

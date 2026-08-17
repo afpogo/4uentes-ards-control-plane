@@ -1,0 +1,29 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-4UENTES-0040"
+title: "Adopt visual documentation policy in 4uentes-portfolio"
+status: "planned"
+source_request: "requests/inbox/CR-4UENTES-0040-adopt-visual-documentation-policy-in-portfolio.yaml"
+created_at: "2026-08-16"
+requester: "4uentes"
+control_plane_context: {initiative_id: "INIT-PORTFOLIO-0003", coordinated_by_request_id: "CR-CP-0006", predecessor_request_id: "CR-CP-0020"}
+initial_scope: {solution: "4uentes", services: ["4uentes-portfolio"], include_optional_services: false}
+execution:
+  requires_human_approval: true
+  approval_source: "User requested child propagation on 2026-08-16."
+  child_repo_mutation_allowed: true
+  child_repo_mutation_target: {service_id: "4uentes-portfolio"}
+  branch_strategy: "isolated-worktree-from-origin-develop"
+  jira_write_allowed: false
+  implementation_boundary: "Documentation governance only; do not modify portfolio UI, build or publication behavior."
+owner_documentation:
+  required: true
+  status: planned
+  owner_repo: "4uentes-portfolio"
+  planned_owner_docs:
+    - "specs/policies/adoptions/visual-documentation-as-code-policy.yaml"
+    - "docs/policies/README.md"
+manifest_contract: {policy_id: "visual-documentation-as-code-policy", allowed_outcomes: ["adopted", "exception"], source_repo: "4uentes-ards-core"}
+validation:
+  required_checks: ["4uentes-portfolio: npm.cmd run check", "4uentes-orchestor: npm.cmd run check", "git diff --check and secret-safe scan"]
+decision: {status: "approved-planned", approver: "4uentes", blocker: "CR-CP-0020"}

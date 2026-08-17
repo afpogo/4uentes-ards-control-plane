@@ -1,0 +1,30 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0187"
+title: "Adopt visual documentation policy in sst-fend"
+status: "planned"
+source_request: "requests/inbox/CR-SST-0187-adopt-visual-documentation-policy-in-sst-fend.yaml"
+created_at: "2026-08-16"
+requester: "4uentes"
+control_plane_context: {initiative_id: "INIT-CP-0002", coordinated_by_request_id: "CR-CP-0006", predecessor_request_id: "CR-CP-0020"}
+initial_scope: {solution: "sst", services: ["sst-fend"], include_optional_services: false}
+execution:
+  requires_human_approval: true
+  approval_source: "User requested child propagation on 2026-08-16."
+  child_repo_mutation_allowed: true
+  child_repo_mutation_target: {service_id: "sst-fend"}
+  branch_strategy: "isolated-worktree-from-origin-develop"
+  jira_write_allowed: false
+  implementation_boundary: "Documentation governance only; do not modify frontend runtime or product behavior."
+owner_documentation:
+  required: true
+  status: planned
+  owner_repo: "sst-fend"
+  planned_owner_docs:
+    - "specs/integration/policies.yaml"
+    - "specs/policies/adoptions/visual-documentation-as-code-policy.yaml"
+    - "docs/policies/README.md"
+manifest_contract: {policy_id: "visual-documentation-as-code-policy", allowed_outcomes: ["adopted", "exception"], source_repo: "4uentes-ards-core"}
+validation:
+  required_checks: ["sst-fend: npm.cmd run check", "4uentes-orchestor: npm.cmd run check", "git diff --check and secret-safe scan"]
+decision: {status: "approved-planned", approver: "4uentes", blocker: "CR-CP-0020"}
