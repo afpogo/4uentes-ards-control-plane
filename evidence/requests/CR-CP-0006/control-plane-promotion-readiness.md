@@ -39,13 +39,14 @@ cuando se crea o modifica un mapa normativo aplicable.
 ## Gate de Core
 
 El commit `3764d34` contiene la policy canónica validada en el branch aislado
-`agent/cr-cp-0020-visual-doc-policy`, pero todavía no es ancestro de
+`agent/cr-cp-0020-visual-doc-policy` y fue publicado en el PR draft
+<https://github.com/afpogo/4uentes-ards-core/pull/3>. Todavía no es ancestro de
 `origin/develop` de Core.
 
 Por eso:
 
 - la enforcement local del control-plane puede quedar activa y revisarse;
-- `CR-CP-0020` continúa running hasta publicación/readback;
+- `CR-CP-0020` continúa running hasta merge/readback canónico;
 - `CR-CP-0006` no habilita aún mutaciones en repos hijos;
 - ningún child manifest puede afirmar que consume la rama canónica de Core.
 

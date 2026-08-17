@@ -8,7 +8,7 @@ policy_class: "core-profile-scoped"
 source_repo: "4uentes-ards-core"
 source_ref: "docs/policies/visual-documentation-as-code-policy.md"
 source_version: "3764d34"
-source_status: "validated-isolated-core-commit-pending-canonical-publication"
+source_status: "validated-core-draft-pr-open-pending-canonical-merge"
 origin_repo: "4uentes-orchestor"
 canonical_owner: "4uentes-ards-core"
 applicability: >
@@ -33,7 +33,8 @@ owner: "4uentes-ards-control-plane"
 observed_at: "2026-08-16"
 evidence_ref: "evidence/requests/CR-CP-0020/validation-results.md"
 canonical_publication:
-  status: "pending"
+  status: "draft-pr-open-pending-merge"
+  github_pr: "https://github.com/afpogo/4uentes-ards-core/pull/3"
   blocking_effect: "Child repo adoption remains blocked; local control-plane enforcement is active."
 notes:
   - "This manifest adopts the validated policy locally without claiming that commit 3764d34 is already merged into the canonical Core branch."

@@ -58,10 +58,10 @@ tracking:
       status: "approved-planned"
     - id: "core-promotion"
       owner_request: "CR-CP-0020"
-      status: "validated-isolated-branch-pending-publication"
+      status: "draft-pr-open-pending-merge"
     - id: "child-owner-adoption"
       owner_request: "CR-CP-0006"
       status: "blocked-by-core-publication"
 open_gaps:
-  - "CR-CP-0020 commit 3764d34 is validated locally but must be published to the canonical Core branch."
+  - "CR-CP-0020 commit 3764d34 is published in draft PR #3 but must still merge into the canonical Core branch."
   - "Each child owner remains pending until it publishes an adoption or exception manifest under its own CR."

@@ -20,7 +20,8 @@ execution:
   branch: "agent/cr-cp-0020-visual-doc-policy"
   baseline: "origin/develop@162c482acf2ff386237bd6c45297c33fd73ba1bb"
   validated_commit: "3764d34"
-  publication_status: "not-merged-not-pushed"
+  publication_status: "pushed-draft-pr-open-pending-merge"
+  github_pr: "https://github.com/afpogo/4uentes-ards-core/pull/3"
 
 implementation_result:
   status: "validated-on-isolated-branch"
@@ -41,7 +42,7 @@ validation:
   evidence_ref: "evidence/requests/CR-CP-0020/validation-results.md"
 
 close_gate:
-  status: "pending-publication"
+  status: "pending-merge-and-canonical-readback"
   requirements:
     - "Review and publish commit 3764d34 into the canonical core branch."
     - "Read back the canonical source and reconcile the orchestrator adoption."

@@ -23,7 +23,8 @@ local_adoption:
   profile_ref: "specs/integration/visual-documentation-as-code-profile.yaml"
   validator_ref: "scripts/verify-visual-documentation.js"
   core_source_commit: "3764d34"
-  core_publication_status: "pending"
+  core_publication_status: "draft-pr-open-pending-merge"
+  core_github_pr: "https://github.com/afpogo/4uentes-ards-core/pull/3"
 
 execution:
   requires_human_approval: true
@@ -43,5 +44,5 @@ validation:
 next_gate:
   id: "core-canonical-publication"
   status: "blocked"
-  blocker: "Core commit 3764d34 is not an ancestor of origin/develop."
+  blocker: "Core PR #3 is draft and commit 3764d34 is not yet an ancestor of origin/develop."
   child_rollout_rule: "Do not start any child worktree until canonical Core publication is read back."
