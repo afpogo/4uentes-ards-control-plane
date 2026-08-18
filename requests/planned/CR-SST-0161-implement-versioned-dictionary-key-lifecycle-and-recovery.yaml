@@ -1,0 +1,297 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0161"
+title: "Implement versioned Dictionary key lifecycle and recovery"
+status: planned
+source_request: "requests/inbox/CR-SST-0161-implement-versioned-dictionary-key-lifecycle-and-recovery.yaml"
+created_at: "2026-08-09"
+updated_at: "2026-08-15"
+requester: "4uentes"
+
+summary: >
+  Replace the single active Dictionary master-key assumption with versioned,
+  recoverable and auditable key lifecycle controls.
+control_plane_context:
+  initiative_id: "INIT-SST-0002"
+  related_initiative_ids: ["INIT-SST-0008", "INIT-SST-0004"]
+  related_request_ids: ["CR-SST-0086", "CR-SST-0160", "CR-SST-0163"]
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  jira_epic_key: "SST-25"
+  jira_issue_key: "SST-94"
+  desired_issue_type: "Tarea"
+  jira_write_authorized: false
+  jira_write_was_authorized: true
+  jira_write_completed: true
+  jira_write_authorization_consumed: true
+  jira_write_evidence_ref: "evidence/requests/CR-SST-0157/jira-write-summary.md"
+dependencies:
+  blocked_by: []
+  satisfied: ["CR-SST-0160"]
+  scoped_satisfied:
+    - request_id: "CR-SST-0163"
+      scope: "development manual-local-k8s-secrets custody baseline only"
+      evidence_ref: "evidence/requests/CR-SST-0163/development-baseline-reconciliation-2026-08-13.md"
+  related: ["CR-SST-0086"]
+
+initial_scope:
+  solution: "sst"
+  services:
+    - sst-bend
+    - sst-4uentes-infra
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: sst-bend
+      via: initial_scope.services
+      service_kind: api
+      ards_kind: backend-api
+      status: active
+    - service_id: sst-4uentes-infra
+      via: initial_scope.services
+      service_kind: gitops-infrastructure
+      ards_kind: infra-gitops
+      status: active
+  affected_ards:
+    - backend-api
+    - infra-gitops
+  capabilities: []
+  risks:
+    - id: TWO_SERVICE_SCOPE
+      severity: medium
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: sst-bend
+      severity: medium
+    - id: INFRA_GITOPS_SCOPE
+      service_id: sst-4uentes-infra
+      severity: high
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: sst-4uentes-infra
+      severity: medium
+    - id: VERSIONED_KEY_RESOLUTION
+      service_id: sst-bend
+      severity: high
+    - id: LEGACY_KEY_CUSTODY
+      service_id: sst-4uentes-infra
+      severity: high
+    - id: LIVE_REENCRYPTION
+      service_id: sst-bend
+      severity: high
+
+required_context:
+  - catalog/services/sst-bend.yaml
+  - inventory/evidence/git/sst-bend.md
+  - catalog/services/sst-4uentes-infra.yaml
+  - inventory/evidence/git/sst-4uentes-infra.md
+  - solutions/sst.yaml
+  - inventory/phase-0.md
+  - inventory/phase-0-decision.md
+  - AGENTS.md
+  - evidence/requests/CR-SST-0161/governed-preflight-2026-08-13.md
+  - evidence/requests/CR-SST-0163/development-baseline-reconciliation-2026-08-13.md
+  - evidence/requests/CR-SST-0086/dictionary-secret-legacy-key-rotation-2026-07-03.md
+  - sst-bend/specs/api/dictionary-secret-management.yaml
+  - sst-bend/src/apps/sst/application/diccionario/dictionary-secret-crypto.service.js
+  - sst-bend/src/apps/sst/infrastructure/db/postgres/diccionario/sequelize-dictionary-secret.repository.js
+  - sst-4uentes-infra/specs/infra/security/secrets-provider.yaml
+  - sst-4uentes-infra/specs/infra/deployment-contracts/sst-bend.yaml
+
+required_checks:
+  - service_id: sst-bend
+    command: "npm run test:diccionario:secrets"
+  - service_id: sst-bend
+    command: "npm run test:diccionario:keyring"
+  - service_id: sst-bend
+    command: "npm run build"
+  - service_id: sst-bend
+    command: "npm run test:diccionario:stage3"
+  - service_id: sst-bend
+    command: "npm run check"
+  - service_id: sst-4uentes-infra
+    command: "npm run check"
+  - service_id: 4uentes-orchestor
+    command: "npm.cmd run check"
+
+risk:
+  level: high
+  score: 8
+  drivers:
+    - id: TWO_SERVICE_SCOPE
+      severity: medium
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: sst-bend
+      severity: medium
+    - id: INFRA_GITOPS_SCOPE
+      service_id: sst-4uentes-infra
+      severity: high
+    - id: DIRTY_WORKING_TREE_OBSERVED
+      service_id: sst-4uentes-infra
+      severity: medium
+    - id: VERSIONED_KEY_RESOLUTION
+      service_id: sst-bend
+      severity: high
+    - id: LEGACY_KEY_CUSTODY
+      service_id: sst-4uentes-infra
+      severity: high
+    - id: LIVE_REENCRYPTION
+      service_id: sst-bend
+      severity: high
+
+task_weight:
+  classification: complex-high-risk-task
+  risk_level: high
+  drivers:
+    - TWO_SERVICE_SCOPE
+    - DIRTY_WORKING_TREE_OBSERVED
+    - INFRA_GITOPS_SCOPE
+    - VERSIONED_KEY_RESOLUTION
+    - LEGACY_KEY_CUSTODY
+    - LIVE_REENCRYPTION
+
+model_selection:
+  policy_ref: "docs/ai/model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5"
+  reason: "normal resources use GPT-5.6 Sol with max reasoning for complex-high-risk-task."
+
+subagent_deployment_plan:
+  required: true
+  parallelizable: true
+  roles:
+    - architecture-reviewer
+    - security-contract-reviewer
+    - cross-repo-impact-reviewer
+    - validation-reviewer
+  fallback: "If subagents or exact model aliases are unavailable, record the limitation and run the same review steps sequentially with the highest available reasoning profile."
+  current_session_status: "not-deployed-runtime-policy-disallows-proactive-delegation"
+  fallback_applied: "Architecture, security-contract, cross-repo-impact and validation planning reviews were performed sequentially by the primary agent."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  approval_status: "granted"
+  approval_source: >
+    User instruction dated 2026-08-15 approving CR-SST-0161 implementation in
+    sst-bend and sst-4uentes-infra, limited to development and excluding
+    Kubernetes apply, database use, live rotation/re-encryption,
+    production/KMS/TLS and Jira writes.
+  approval_consumed_for: "Bounded child-repository implementation in sst-bend and sst-4uentes-infra."
+  allowed_window: manual
+  branch_strategy: one-branch-per-repo
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets: ["sst-bend", "sst-4uentes-infra"]
+  implementation_boundary: >
+    Development-only implementation may add keyring resolution, startup
+    validation, dry-run inventory, owner documentation and tests. No live key
+    rotation, re-encryption, Kubernetes apply, production/KMS/TLS claim or
+    plaintext key handling may run until a separately approved execution gate
+    proves backup, rollback, old-key resolution and secret-safe evidence.
+
+implementation_plan:
+  status: "decision-ready"
+  evidence_ref: "evidence/requests/CR-SST-0161/governed-preflight-2026-08-13.md"
+  dependency_reconciliation_ref: "evidence/requests/CR-SST-0163/development-baseline-reconciliation-2026-08-13.md"
+  target_environment: "development"
+  proposed_provider: "manual-local-k8s-secrets"
+  compatibility_contract:
+    persisted_selector: "ProtectedSecretValue.keyRef"
+    active_selector: "SST_DICTIONARY_SECRETS_KEY_REF"
+    configured_key_refs: "SST_DICTIONARY_SECRETS_KEY_REFS"
+    legacy_key_ref: "env:SST_DICTIONARY_SECRETS_MASTER_KEY"
+    rule: >
+      Encryption uses only the configured active keyRef. Decryption resolves
+      the exact persisted keyRef from an explicit allowlist and fails closed
+      when the reference or material is absent. Existing records keep their
+      persisted keyRef and do not require a schema migration.
+  execution_units:
+    - id: SST94-01
+      objective: "Update backend and infrastructure owner contracts before runtime code."
+      output: "Versioned key resolution, custody, failure and rollback rules are normative."
+      risk: high
+      validation: "Owner specs and docs agree on environment variables and exclusions."
+    - id: SST94-02
+      objective: "Introduce an allowlisted key-provider abstraction with backward-compatible single-key defaults."
+      output: "New writes use the active keyRef; reads resolve record.keyRef; unknown refs fail closed."
+      risk: high
+      validation: "Unit tests cover active, old, missing, malformed and tampered key refs without logging key material."
+    - id: SST94-03
+      objective: "Add startup configuration validation and secret-safe keyRef inventory/dry-run tooling."
+      output: "Startup rejects invalid active configuration and inventory reports only keyRef/count/status metadata."
+      risk: medium
+      validation: "No keys, plaintext, ciphertext, nonce or authentication tag appears in output."
+    - id: SST94-04
+      objective: "Adopt versioned development Secret and ConfigMap contracts without applying manifests."
+      output: "The current legacy key remains mounted while a new versioned key can be staged and selected."
+      risk: high
+      validation: "Infra kustomize and client dry-run checks pass."
+    - id: SST94-05
+      objective: "Prove local compatibility using synthetic keys and in-memory fixtures only."
+      output: "Old ciphertext stays readable, new ciphertext uses the active keyRef and rollback to the old active selector is demonstrated."
+      risk: high
+      validation: "Backend checks and negative-security tests pass without database, seeders or live secrets."
+    - id: SST94-06
+      objective: "Prepare a separately gated development rotation and re-encryption runbook."
+      output: "Backup, preflight, dry-run, apply, verification and rollback steps are explicit."
+      risk: high
+      validation: "No live rotation or re-encryption is executed in the implementation PRs."
+  acceptance_criteria:
+    - "A record encrypted with an old configured keyRef remains readable after the active keyRef changes."
+    - "New records and secret-value rotations persist only the active keyRef."
+    - "Unknown, missing or disallowed keyRef values fail closed with sanitized errors and audit outcomes."
+    - "Single-key development configuration remains backward compatible during adoption."
+    - "Startup validates the active keyRef and all declared key materials without printing material."
+    - "Inventory and dry-run outputs contain only sanitized keyRef/count/result metadata."
+    - "No additional protected_secret_values schema migration is introduced unless implementation proves it necessary and the plan is re-approved."
+    - "Backend, infrastructure and control-plane checks pass before adoption."
+  definition_of_done:
+    - "Backend and infrastructure owner docs are updated in their owner repositories."
+    - "Synthetic no-database compatibility, rollback and negative-security tests pass."
+    - "No live Kubernetes mutation, live-key rotation or production claim was performed."
+    - "A separate operator approval remains required for any development rotation or re-encryption run."
+    - "Jira SST-94 is synchronized only through a new enumerated Jira authorization batch."
+  excluded:
+    - "Production provider selection, KMS, envelope encryption or external secret operator adoption"
+    - "Production TLS, certificate custody or etcd-at-rest claims"
+    - "Live database mutation, bulk re-encryption or live key rotation"
+    - "Changes to sst-fend, node-auth, sst-extension or unrelated infrastructure"
+    - "Jira transition, comment or field update"
+
+owner_documentation:
+  required: true
+  status: planned
+  owner_repos: ["sst-bend", "sst-4uentes-infra"]
+  planned_owner_docs:
+    - "specs/api/dictionary-secret-management.yaml"
+    - "docs/api/25-dictionary-secret-management.md"
+    - "specs/capabilities/outbound/dictionary-secret-management-v1.yaml"
+    - "docs/capabilities/outbound/dictionary-secret-management-v1.md"
+    - "specs/infra/security/secrets-provider.yaml"
+    - "specs/infra/deployment-contracts/sst-bend.yaml"
+  planned_runtime_paths:
+    - repo: "sst-4uentes-infra"
+      path: "k8s-manifests/base/sst-bend/dictionary-secrets-secret.example.yml"
+    - repo: "sst-4uentes-infra"
+      path: "k8s-manifests/base/sst-bend/deployment.yml"
+
+decision:
+  status: "approved-for-bounded-implementation"
+  approver: "4uentes"
+  decided_at: "2026-08-15"
+  proposed_decision: >
+    Approve a development-only, environment-backed versioned keyring using the
+    already approved manual-local-k8s-secrets provider. Exclude production,
+    KMS, TLS, live rotation and live re-encryption from the implementation PRs.
+  note: "Child-repository implementation is authorized within the enumerated boundary; Jira writes and every live rotation/deployment operation remain unauthorized."
+
+planner_notes:
+  - Functional repositories were not modified.
+  - Functional repository checks were not executed.
+  - Read-only discovery found both child repositories dirty; implementation must use isolated branches/worktrees and preserve unrelated changes.
+  - The current table already persists key_ref, so no database migration is planned for the first implementation slice.
+  - The Jira connector readback failed because its OAuth refresh token is invalid; no Jira write was attempted.

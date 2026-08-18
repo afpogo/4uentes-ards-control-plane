@@ -1,0 +1,45 @@
+{
+  "requestId": "CR-SST-0086",
+  "provider": "Jira",
+  "projectKey": "SST",
+  "approvalStatus": "approved",
+  "approvedBy": "4uentes",
+  "approvalStatementReceived": "Confirmo CR-SST-0086",
+  "approvalInterpretation": "Confirmation of the exact enumerated batch presented immediately before the user response.",
+  "proposedApprovalStatement": "Confirmo CR-SST-0086: una unica transicion Jira de SST-26, En curso a Finalizada, mediante transicion 41 Listo, sin comentarios ni cambios en otros tickets, durante esta sesion.",
+  "approvedAt": "2026-08-13T20:26:22-03:00",
+  "preparedAt": "2026-08-13T20:24:57-03:00",
+  "executionWindow": "current-session-after-exact-confirmation",
+  "allowedWriteCount": 1,
+  "allowedWrites": [
+    {
+      "sequence": 1,
+      "tool": "transitionJiraIssue",
+      "issueKey": "SST-26",
+      "issueType": "Tarea",
+      "parentKey": "SST-25",
+      "sourceStatusId": "10006",
+      "sourceStatus": "En curso",
+      "transitionId": "41",
+      "transitionName": "Listo",
+      "targetStatusId": "10008",
+      "targetStatus": "Finalizada"
+    }
+  ],
+  "commentWriteAllowed": false,
+  "forbiddenWrites": [
+    "comment",
+    "delete",
+    "edit",
+    "reparent",
+    "assign",
+    "link",
+    "wildcard",
+    "epic-transition",
+    "other-issue-transition"
+  ],
+  "consumed": true,
+  "consumedAt": "2026-08-13T20:26:39-03:00",
+  "consumptionStatus": "complete",
+  "resultRef": "evidence/requests/CR-SST-0086/jira-sst-26-close-result.json"
+}

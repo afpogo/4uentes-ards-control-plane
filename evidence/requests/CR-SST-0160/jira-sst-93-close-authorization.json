@@ -1,0 +1,43 @@
+{
+  "requestId": "CR-SST-0160",
+  "provider": "Jira",
+  "projectKey": "SST",
+  "approvalStatus": "approved",
+  "approvedBy": "4uentes",
+  "approvalStatement": "Confirmo CR-SST-0160: una unica transicion Jira de SST-93, Tareas por hacer a Finalizada, mediante transicion 41 Listo, sin comentarios ni cambios en otros tickets, durante esta sesion.",
+  "approvedAt": "2026-08-13T18:08:10-03:00",
+  "preparedAt": "2026-08-13T18:01:42-03:00",
+  "executionWindow": "current-authorized-session-2026-08-13",
+  "allowedWriteCount": 1,
+  "allowedWrites": [
+    {
+      "sequence": 1,
+      "tool": "transitionJiraIssue",
+      "issueKey": "SST-93",
+      "issueType": "Tarea",
+      "parentKey": "SST-25",
+      "sourceStatusId": "10005",
+      "sourceStatus": "Tareas por hacer",
+      "transitionId": "41",
+      "transitionName": "Listo",
+      "targetStatusId": "10008",
+      "targetStatus": "Finalizada"
+    }
+  ],
+  "commentWriteAllowed": false,
+  "forbiddenWrites": [
+    "comment",
+    "delete",
+    "edit",
+    "reparent",
+    "assign",
+    "link",
+    "wildcard",
+    "epic-transition",
+    "other-issue-transition"
+  ],
+  "consumed": true,
+  "consumedAt": "2026-08-13T18:08:37-03:00",
+  "consumptionStatus": "complete",
+  "resultRef": "evidence/requests/CR-SST-0160/jira-sst-93-close-result.json"
+}

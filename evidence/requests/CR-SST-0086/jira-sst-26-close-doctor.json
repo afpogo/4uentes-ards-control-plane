@@ -1,0 +1,32 @@
+{
+  "requestId": "CR-SST-0086",
+  "projectKey": "SST",
+  "mode": "live-preflight",
+  "result": "PASS",
+  "externalWrite": false,
+  "expectedTransitions": 1,
+  "blockedByRemoteState": 0,
+  "observedAt": "2026-08-13T20:24:57-03:00",
+  "observed": {
+    "issue": {
+      "key": "SST-26",
+      "projectKey": "SST",
+      "summary": "[SST][CR-SST-0086] Dictionary Secrets release readiness",
+      "statusId": "10006",
+      "status": "En curso",
+      "statusCategory": "En curso",
+      "issueType": "Tarea",
+      "parentKey": "SST-25",
+      "resolution": null
+    },
+    "terminalTransition": {
+      "id": "41",
+      "name": "Listo",
+      "targetStatusId": "10008",
+      "targetStatus": "Finalizada",
+      "targetStatusCategory": "Listo",
+      "available": true
+    }
+  },
+  "sensitiveIdentifiersStored": false
+}

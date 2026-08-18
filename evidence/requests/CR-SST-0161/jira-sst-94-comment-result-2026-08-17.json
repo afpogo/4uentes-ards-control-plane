@@ -1,0 +1,20 @@
+{
+  "request_id": "CR-SST-0161",
+  "issue_key": "SST-94",
+  "operation": "add-comment",
+  "write_count": 1,
+  "comment_body_sha256_utf8": "9125afb6df4bf4ef56fe06d360fa32a4611272146f52892034c30973ea596134",
+  "preflight_comment_count": 0,
+  "readback_comment_count": 1,
+  "exact_authorized_body_matches": 1,
+  "status": "Finalizada",
+  "status_category": "Listo",
+  "resolution": "Listo",
+  "issue_type": "Tarea",
+  "parent_key": "SST-25",
+  "readback": "passed",
+  "transition_performed": false,
+  "field_edit_performed": false,
+  "other_issues_modified": false,
+  "completed_at": "2026-08-17"
+}
