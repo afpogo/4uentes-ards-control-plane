@@ -1,0 +1,19 @@
+{
+  "requestId": "CR-SST-0086",
+  "result": "PASS",
+  "blocked": 0,
+  "authorizationCurrent": true,
+  "authorizationEnumerated": true,
+  "authorizationExactConfirmation": true,
+  "localLifecycleClosed": true,
+  "issueIdentityPass": true,
+  "hierarchyReadbackPass": true,
+  "liveDoctorPass": true,
+  "correctionPlanPass": true,
+  "transitionAvailable": true,
+  "commentOperationAuthorized": false,
+  "commentHashApplicable": false,
+  "finalReadbackRequired": true,
+  "sanitizedEvidenceRequired": true,
+  "blocker": null
+}

@@ -1,0 +1,32 @@
+{
+  "requestId": "CR-SST-0160",
+  "projectKey": "SST",
+  "mode": "live-preflight",
+  "result": "PASS",
+  "externalWrite": false,
+  "expectedTransitions": 1,
+  "blockedByRemoteState": 0,
+  "observedAt": "2026-08-13T18:01:42-03:00",
+  "observed": {
+    "issue": {
+      "key": "SST-93",
+      "projectKey": "SST",
+      "summary": "[SST][INIT-SST-0002][CR-SST-0160] Contain Dictionary secret plaintext leakage and bind ciphertext context",
+      "statusId": "10005",
+      "status": "Tareas por hacer",
+      "statusCategory": "Por hacer",
+      "issueType": "Tarea",
+      "parentKey": "SST-25",
+      "resolution": null
+    },
+    "terminalTransition": {
+      "id": "41",
+      "name": "Listo",
+      "targetStatusId": "10008",
+      "targetStatus": "Finalizada",
+      "targetStatusCategory": "Listo",
+      "available": true
+    }
+  },
+  "sensitiveIdentifiersStored": false
+}

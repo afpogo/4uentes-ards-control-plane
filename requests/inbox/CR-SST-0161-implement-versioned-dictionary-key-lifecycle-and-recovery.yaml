@@ -1,0 +1,23 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0161"
+title: "Implement versioned Dictionary key lifecycle and recovery"
+status: "inbox"
+created_at: "2026-08-09"
+requester: "4uentes"
+business_context: >
+  Dictionary keyRef is persisted but ignored during decryption; rotating the
+  single active master key has already made older records unreadable.
+requested_change: >
+  Define and implement a versioned keyring or approved KMS/envelope model,
+  rewrap and recovery procedures, startup validation, rollback and rotation
+  evidence without exposing key material.
+expected_outcome: >
+  Master-key rotation is recoverable, old ciphertext remains intentionally
+  readable during migration, and key identifiers resolve to governed key versions.
+initial_scope:
+  solution: "sst"
+  services:
+    - "sst-bend"
+    - "sst-4uentes-infra"
+  include_optional_services: false

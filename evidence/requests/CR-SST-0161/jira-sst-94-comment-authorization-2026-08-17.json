@@ -1,0 +1,24 @@
+{
+  "request_id": "CR-SST-0161",
+  "provider": "jira",
+  "project_key": "SST",
+  "issue_keys": [
+    "SST-94"
+  ],
+  "operation": "addCommentToJiraIssue",
+  "expected_issue_type": "Tarea",
+  "expected_parent": "SST-25",
+  "expected_status": "Finalizada",
+  "expected_resolution": "Listo",
+  "maximum_write_count": 1,
+  "comment_body": "CR-SST-0161 cerrada y adoptada para desarrollo. El keyring versionado fue integrado en sst-bend y sst-4uentes-infra, con CI, QA manual sin base de datos y smoke post-adopción aprobados. Alcance preservado: sin apply Kubernetes, sin rotación/re-encryption real y sin producción, KMS o TLS. La evidencia gobernada quedó registrada en 4uentes-orchestor.",
+  "comment_body_sha256_utf8": "9125afb6df4bf4ef56fe06d360fa32a4611272146f52892034c30973ea596134",
+  "authorization_source": "User confirmation in the active conversation",
+  "execution_window": "active turn of 2026-08-17",
+  "prohibited_operations": [
+    "transitions",
+    "field edits",
+    "comments on any other issue",
+    "additional comments on SST-94"
+  ]
+}

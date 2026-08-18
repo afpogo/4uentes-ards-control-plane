@@ -1,0 +1,148 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0161"
+title: "Implement versioned Dictionary key lifecycle and recovery"
+status: "done"
+source_request: "requests/inbox/CR-SST-0161-implement-versioned-dictionary-key-lifecycle-and-recovery.yaml"
+planned_request: "requests/planned/CR-SST-0161-implement-versioned-dictionary-key-lifecycle-and-recovery.yaml"
+running_request: "requests/running/CR-SST-0161-implement-versioned-dictionary-key-lifecycle-and-recovery.yaml"
+created_at: "2026-08-09"
+started_at: "2026-08-15"
+completed_at: "2026-08-15"
+requester: "4uentes"
+
+summary: >
+  The development-only versioned Dictionary keyring, owner contracts and
+  sanitized no-database QA were adopted in backend and infrastructure develop.
+
+scope:
+  solution: "sst"
+  services_modified: ["sst-bend", "sst-4uentes-infra", "4uentes-orchestor"]
+  functional_repositories_modified: true
+  runtime_code_modified: true
+  target_environment: "development"
+
+implementation:
+  initiative_id: "INIT-SST-0002"
+  related_initiative_ids: ["INIT-SST-0008", "INIT-SST-0004"]
+  jira_epic_key: "SST-25"
+  jira_issue_key: "SST-94"
+  jira_source_of_truth: false
+  completed_slice: >
+    Allowlisted env-backed keyring with exact persisted keyRef resolution,
+    active-key-only writes, startup validation, single-key compatibility,
+    synthetic rollback/recovery QA and development custody contracts.
+  adoption:
+    sst_bend:
+      pull_request: "https://github.com/afpogo/sst-bend/pull/14"
+      source_commit: "bb2312ab1b5dd8c82e5a169bcd53959b04347963"
+      merge_commit: "a91e42c4440b4597986f7888913cc33810e0c127"
+      image: "ghcr.io/afpogo/sst-bend:develop-a91e42c4440b"
+    sst_4uentes_infra:
+      pull_request: "https://github.com/afpogo/sst-4uentes-infra/pull/5"
+      source_commit: "a64670f71541b73d42be79eee634c5bacfa33a58"
+      merge_commit: "6abe408ca897288daf79dd97c6e4bdea92a6645d"
+    status: "merged-ci-and-post-adoption-smoke-passed"
+    live_cluster_applied: false
+  preserved_boundaries:
+    - "No database access, migration, seeder or live data mutation"
+    - "No Kubernetes apply or live manifest mutation"
+    - "No live key rotation or re-encryption"
+    - "No production, KMS, TLS or external provider claim"
+    - "No Jira write beyond the separately authorized SST-94 close transition"
+
+owner_documentation:
+  required: true
+  status: "satisfied"
+  owner_repos: ["sst-bend", "sst-4uentes-infra"]
+  updated_owner_docs:
+    - "sst-bend/specs/api/dictionary-secret-management.yaml"
+    - "sst-bend/docs/api/25-dictionary-secret-management.md"
+    - "sst-bend/specs/capabilities/outbound/dictionary-secret-management-v1.yaml"
+    - "sst-bend/docs/capabilities/outbound/dictionary-secret-management-v1.md"
+    - "sst-4uentes-infra/specs/infra/security/secrets-provider.yaml"
+    - "sst-4uentes-infra/specs/infra/deployment-contracts/sst-bend.yaml"
+    - "sst-4uentes-infra/specs/states/provision-development-secrets.yaml"
+    - "sst-4uentes-infra/docs/runbooks/dictionary-secret-keyring-development.md"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0161/implementation-summary-2026-08-15.md"
+    - "evidence/requests/CR-SST-0161/changed-files-summary-2026-08-15.md"
+
+validation:
+  status: "validated-adopted-development"
+  passed:
+    - "sst-bend manual keyring QA: 8/8"
+    - "sst-bend synthetic keyring tests"
+    - "sst-bend Dictionary Secrets security tests"
+    - "sst-bend stage3 tests: 11/11"
+    - "sst-bend TypeScript build"
+    - "sst-bend and sst-4uentes-infra pull-request CI"
+    - "sst-bend post-merge Node.js 18 and 20 CI"
+    - "sst-bend post-merge image build and infra update"
+    - "sst-4uentes-infra post-merge CI/CD and manifest validation: 4/4"
+    - "post-adoption smoke from exact backend and infra merge commits"
+    - "secret-safe review"
+    - "4uentes-orchestor npm.cmd run check including owner documentation"
+  warnings:
+    - "No live HTTP/cluster smoke was executed because DB, JWT and Kubernetes apply remain outside the approved boundary."
+    - "GitHub Actions reported a non-blocking Node.js 20 runner deprecation annotation."
+
+jira_sync:
+  status: "finalized-readback-passed"
+  issue_key: "SST-94"
+  jira_source_of_truth: false
+  jira_write_performed: true
+  authorized_write_count: 1
+  observed_write_count: 1
+  transition_id: "41"
+  transition_name: "Listo"
+  source_status: "Tareas por hacer"
+  target_status: "Finalizada"
+  observed_status: "Finalizada"
+  observed_status_category: "Listo"
+  observed_resolution: "Listo"
+  observed_parent: "SST-25"
+  completed_at: "2026-08-16"
+  evidence_ref: "evidence/requests/CR-SST-0161/jira-sst-94-close-summary-2026-08-16.md"
+  result_ref: "evidence/requests/CR-SST-0161/jira-sst-94-close-result-2026-08-16.json"
+  comment_sync:
+    status: "posted-readback-passed"
+    authorized_write_count: 1
+    observed_write_count: 1
+    preflight_comment_count: 0
+    observed_comment_count: 1
+    exact_authorized_body_matches: 1
+    comment_body_sha256_utf8: "9125afb6df4bf4ef56fe06d360fa32a4611272146f52892034c30973ea596134"
+    completed_at: "2026-08-17"
+    authorization_ref: "evidence/requests/CR-SST-0161/jira-sst-94-comment-authorization-2026-08-17.json"
+    evidence_ref: "evidence/requests/CR-SST-0161/jira-sst-94-comment-summary-2026-08-17.md"
+    result_ref: "evidence/requests/CR-SST-0161/jira-sst-94-comment-result-2026-08-17.json"
+
+evidence_refs:
+  - "evidence/requests/CR-SST-0161/governed-preflight-2026-08-13.md"
+  - "evidence/requests/CR-SST-0161/execution-start-2026-08-15.md"
+  - "evidence/requests/CR-SST-0161/implementation-summary-2026-08-15.md"
+  - "evidence/requests/CR-SST-0161/changed-files-summary-2026-08-15.md"
+  - "evidence/requests/CR-SST-0161/validation-results-2026-08-15.md"
+  - "evidence/requests/CR-SST-0161/secret-safe-review-2026-08-15.md"
+  - "evidence/requests/CR-SST-0161/manual-qa-2026-08-15.md"
+  - "evidence/requests/CR-SST-0161/github-adoption-prs-2026-08-15.md"
+  - "evidence/requests/CR-SST-0161/post-adoption-smoke-2026-08-15.md"
+  - "evidence/requests/CR-SST-0161/jira-readonly-close-preflight-2026-08-15.md"
+  - "evidence/requests/CR-SST-0161/governed-close-readiness-2026-08-15.md"
+  - "evidence/requests/CR-SST-0161/jira-sst-94-close-summary-2026-08-16.md"
+  - "evidence/requests/CR-SST-0161/jira-sst-94-close-result-2026-08-16.json"
+  - "evidence/requests/CR-SST-0161/jira-sst-94-comment-authorization-2026-08-17.json"
+  - "evidence/requests/CR-SST-0161/jira-sst-94-comment-summary-2026-08-17.md"
+  - "evidence/requests/CR-SST-0161/jira-sst-94-comment-result-2026-08-17.json"
+
+decision:
+  status: "closed-adopted-development-and-jira-synced"
+  approver: "4uentes"
+  decided_at: "2026-08-16"
+  note: >
+    The bounded development adoption is merged, CI-validated and smoke-validated
+    without DB or live infrastructure mutation. The separately authorized Jira
+    close batch finalized SST-94 with resolution Listo, and a later independent
+    one-comment batch published the sanitized closure trace with readback; no
+    production or live rotation claim is implied.

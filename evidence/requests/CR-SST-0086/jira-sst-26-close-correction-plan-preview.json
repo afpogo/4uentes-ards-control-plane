@@ -1,0 +1,18 @@
+{
+  "requestId": "CR-SST-0086",
+  "projectKey": "SST",
+  "externalWrite": false,
+  "result": "PASS",
+  "summary": {
+    "proposedTransitions": 1,
+    "proposedComments": 0,
+    "proposedCreates": 0,
+    "proposedUpdates": 0,
+    "proposedMoves": 0,
+    "proposedLinks": 0,
+    "proposedDeletes": 0,
+    "blockedByRemoteState": 0
+  },
+  "actionsRef": "evidence/requests/CR-SST-0086/jira-sst-26-close-authorization.json",
+  "retryRule": "Any write attempt consumes the authorization. Reconcile by readback and require a new exact authorization before retrying."
+}

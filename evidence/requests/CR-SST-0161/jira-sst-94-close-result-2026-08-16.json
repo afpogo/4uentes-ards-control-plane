@@ -1,0 +1,18 @@
+{
+  "request_id": "CR-SST-0161",
+  "issue_key": "SST-94",
+  "operation": "transition",
+  "write_count": 1,
+  "transition_id": "41",
+  "transition_name": "Listo",
+  "source_status": "Tareas por hacer",
+  "target_status": "Finalizada",
+  "status_category": "Listo",
+  "resolution": "Listo",
+  "issue_type": "Tarea",
+  "parent_key": "SST-25",
+  "readback": "passed",
+  "comment_written": false,
+  "other_issues_modified": false,
+  "completed_at": "2026-08-16"
+}

@@ -1,0 +1,34 @@
+{
+  "requestId": "CR-SST-0086",
+  "projectKey": "SST",
+  "status": "complete",
+  "externalWrite": true,
+  "authorizedWriteCount": 1,
+  "observedWriteCount": 1,
+  "operation": {
+    "sequence": 1,
+    "tool": "transitionJiraIssue",
+    "issueKey": "SST-26",
+    "transitionId": "41",
+    "transitionName": "Listo",
+    "sourceStatusId": "10006",
+    "sourceStatus": "En curso",
+    "targetStatusId": "10008",
+    "targetStatus": "Finalizada",
+    "commentWritten": false
+  },
+  "readback": {
+    "result": "PASS",
+    "issueKey": "SST-26",
+    "projectKey": "SST",
+    "issueType": "Tarea",
+    "parentKey": "SST-25",
+    "statusId": "10008",
+    "status": "Finalizada",
+    "statusCategory": "Listo",
+    "resolution": "Listo"
+  },
+  "generatedAt": "2026-08-13T20:26:39-03:00",
+  "sensitiveIdentifiersStored": false,
+  "error": null
+}
