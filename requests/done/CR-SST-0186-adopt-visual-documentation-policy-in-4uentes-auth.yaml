@@ -1,0 +1,67 @@
+schema_version: "1.0"
+phase: 4
+id: "CR-SST-0186"
+title: "Adopt visual documentation policy in 4uentes-auth"
+status: "done"
+source_request: "requests/inbox/CR-SST-0186-adopt-visual-documentation-policy-in-4uentes-auth.yaml"
+planned_request: "requests/planned/CR-SST-0186-adopt-visual-documentation-policy-in-4uentes-auth.yaml"
+started_at: "2026-08-17"
+completed_at: "2026-08-18"
+requester: "4uentes"
+
+control_plane_context:
+  initiative_id: "INIT-CP-0002"
+  coordinated_by_request_id: "CR-CP-0006"
+  predecessor_request_id: "CR-CP-0020"
+
+execution:
+  approval_source: "User requested child propagation on 2026-08-16 and confirmed continuation on 2026-08-18."
+  child_repo_mutation_allowed: true
+  child_repo_mutation_target:
+    service_id: "4uentes-auth"
+  branch_strategy: "isolated-worktree-from-origin-develop"
+  jira_write_allowed: false
+  implementation_boundary: "Documentation governance only; no auth runtime, session, password or security behavior changed."
+
+publication_result:
+  status: "merged-and-read-back"
+  canonical_branch: "develop"
+  adoption_pr: "https://github.com/afpogo/4uentes-auth/pull/7"
+  adoption_commit: "7c45605d903d6fd92eace8f6c5d6dac9cc2f5f47"
+  adoption_merge_commit: "9746e3138290e7d73b579e3cdcd55796e9c52169"
+  remediation_pr: "https://github.com/afpogo/4uentes-auth/pull/8"
+  remediation_commit: "60dcc61bd48646422e4df6c77d8f3610e949c1ac"
+  canonical_readback_commit: "4249ba3bd949c902e943c2b826df10bae6809c1b"
+
+owner_documentation:
+  required: true
+  status: satisfied
+  owner_repo: "4uentes-auth"
+  updated_owner_docs:
+    - "specs/integration/policies.yaml"
+    - "specs/policies/00-index.yaml"
+    - "specs/policies/adoptions/visual-documentation-as-code-policy.yaml"
+    - "docs/policies/README.md"
+    - "AGENTS.md"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0186/canonical-adoption-readback-2026-08-18.md"
+  manifest_outcome: "policy_adoption_manifest"
+  adoption_status: "adopted"
+
+validation:
+  owner_check: "PASS: npm.cmd run check"
+  adoption_pr_check: "PASS: build-publish-update"
+  remediation_pr_check: "PASS: build-publish-update"
+  control_character_scan: "PASS"
+  diff_check: "PASS"
+  secret_safe_scan: "PASS"
+  control_plane_check: "PASS"
+  evidence_ref: "evidence/requests/CR-SST-0186/canonical-adoption-readback-2026-08-18.md"
+
+closure:
+  status: "complete"
+  next_request_id: "CR-SST-0187"
+  limits:
+    - "No auth runtime or security behavior was modified."
+    - "No database, seeder, Kubernetes, secret or Jira operation was performed."
+    - "Adoption is prospective and does not bulk-migrate existing diagrams."
