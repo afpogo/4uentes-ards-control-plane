@@ -1,0 +1,25 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0168"
+title: "Promote sst-chatbot to an HTTP streaming runtime"
+status: "done"
+source_request: "requests/inbox/CR-SST-0168-sst-chatbot-http-streaming-runtime.yaml"
+planned_request: "requests/planned/CR-SST-0168-sst-chatbot-http-streaming-runtime.yaml"
+started_at: "2026-08-09"
+completed_at: "2026-08-11"
+requester: "4uentes"
+summary: "The internal M2M HTTP runtime streams NDJSON through a transport-independent port and safely reports partial failures."
+scope: {initiative_id: "INIT-SST-0007", child_repositories_modified: ["sst-chatbot"]}
+owner_documentation: {required: true, status: "satisfied", owner_repos: ["sst-chatbot"], orchestrator_link_required: true, http_qa_harness_required: true}
+validation:
+  status: "validated-local"
+  passed: ["118/118 tests", "HTTP NDJSON runtime", "Partial delta then safe error", "OpenAI-compatible simulated provider smoke"]
+evidence_refs: ["evidence/initiatives/INIT-SST-0007/operational-validation-2026-08-10.md", "evidence/requests/CR-SST-0172/post-merge-closure-2026-08-11.md"]
+canonical_reconciliation:
+  published_at: "2026-08-18"
+  ordering_deviation: "child implementation preceded canonical lifecycle publication"
+  evidence_scope: "historical local validation; no current runtime readback"
+  new_mutation_authorized: false
+  reconciliation_ref: "evidence/initiatives/INIT-SST-0007/canonical-reconciliation-2026-08-18.md"
+
+decision: {status: "closed-validated-local", approver: "4uentes", decided_at: "2026-08-11"}

@@ -1,0 +1,10 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0168"
+title: "Promote sst-chatbot to an HTTP streaming runtime"
+status: inbox
+created_at: "2026-08-09"
+requester: "4uentes"
+business_context: "sst-bend needs a transport-neutral agent runtime that can stream a turn and be cancelled."
+requested_change: "Expose M2M POST /internal/v1/chat/turns as NDJSON over a ChatRuntimePort.process_turn boundary."
+expected_outcome: "sst-chatbot streams delta/completed/error records without authenticating end users or owning canonical conversation persistence."

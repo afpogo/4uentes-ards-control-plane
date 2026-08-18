@@ -1,0 +1,25 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0167"
+title: "Establish SST chat service identities"
+status: "done"
+source_request: "requests/inbox/CR-SST-0167-sst-chat-service-identities.yaml"
+planned_request: "requests/planned/CR-SST-0167-sst-chat-service-identities.yaml"
+started_at: "2026-08-09"
+completed_at: "2026-08-11"
+requester: "4uentes"
+summary: "Scoped client-credentials identities for bend, chatbot and auth introspection are implemented without committed credentials."
+scope: {initiative_id: "INIT-SST-0007", child_repositories_modified: ["4uentes-auth", "sst-bend", "sst-chatbot"]}
+owner_documentation: {required: true, status: "satisfied", owner_repos: ["4uentes-auth", "sst-bend", "sst-chatbot"], orchestrator_link_required: true}
+validation:
+  status: "validated-local"
+  passed: ["Audience and scope checks", "Service token exchange", "Secret-safe deployment", "Durable handoff E2E"]
+evidence_refs: ["evidence/initiatives/INIT-SST-0007/operational-validation-2026-08-10.md", "evidence/requests/CR-SST-0172/post-merge-closure-2026-08-11.md"]
+canonical_reconciliation:
+  published_at: "2026-08-18"
+  ordering_deviation: "child implementation preceded canonical lifecycle publication"
+  evidence_scope: "historical local validation; no current runtime readback"
+  new_mutation_authorized: false
+  reconciliation_ref: "evidence/initiatives/INIT-SST-0007/canonical-reconciliation-2026-08-18.md"
+
+decision: {status: "closed-validated-local", approver: "4uentes", decided_at: "2026-08-11"}

@@ -125,3 +125,11 @@ planner_notes:
   - "Direct child-to-queue transport is intentionally not the default because it front-loads auth, replay, audit, and retry coupling into the cross-repo boundary."
   - "Worker-only execution is insufficient as the external contract because it does not create a clear transport boundary from child to orchestrator."
   - "The active feature-state Jira issue is SST-7; CR-SST-0083 is prepared as a child subtask but the remote write is currently blocked."
+
+canonical_reconciliation:
+  published_at: "2026-08-18"
+  historical_snapshot: true
+  later_done_snapshot: "requests/done/CR-SST-0083-select-runtime-transport-for-sst-chatbot-handoff.yaml"
+  previous_authorization_status: "consumed-by-historical-decision"
+  new_mutation_authorized: false
+  jira_write_authorized: false

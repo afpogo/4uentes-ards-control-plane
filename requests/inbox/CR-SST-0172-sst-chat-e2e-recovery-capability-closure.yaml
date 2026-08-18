@@ -1,0 +1,10 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0172"
+title: "Validate SST chat E2E recovery and capability closure"
+status: inbox
+created_at: "2026-08-09"
+requester: "4uentes"
+business_context: "The draft capability cannot be promoted from component checks alone."
+requested_change: "Validate login, realtime streaming, persistence, reconnect/replay, cancellation and governed handoff across the four owner repositories."
+expected_outcome: "A single-instance local/dev E2E proves the V1 boundary or records a blocker; only passing evidence may close the capability."

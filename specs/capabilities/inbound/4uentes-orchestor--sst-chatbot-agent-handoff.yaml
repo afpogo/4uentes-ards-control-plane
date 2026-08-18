@@ -26,12 +26,14 @@ producer_refs:
   docs:
     - "docs/cross-repo/sst-chatbot-orchestrator-handoff.md"
 local_adoption:
-  implementation_status: "control-plane-cataloged"
+  implementation_status: "control-plane-cataloged-related-handoff-slice-validated-local"
   code_anchors:
     - path: "catalog/services/sst-chatbot.yaml"
       note: "logical service identity and child repo ARDS/SDD status"
     - path: "state/features/sst-chatbot.current.yaml"
       note: "control-plane feature state for chatbot adoption"
+    - path: "evidence/initiatives/INIT-SST-0007/canonical-reconciliation-2026-08-18.md"
+      note: "canonical qualification of the historical connected runtime"
 expected_behaviors:
   - "Only structured operation_intent payloads are accepted."
   - "Agent output is treated as proposal data until orchestrator validation accepts it."
@@ -48,8 +50,16 @@ validation:
 architecture_exceptions:
   direct_backend_api_to_frontend: false
 open_questions:
-  - "Which transport will be used first: HTTP, queue, or worker handoff?"
-  - "Which operation intent type should be promoted first beyond Plaud derivations?"
+  - "Which approved request will implement the actual orchestrator-owned acceptance runtime for operation intents?"
+  - "When will CR-SST-0178 persist the development GitOps wiring and close isolated browser validation?"
+  - "Which operation intent type should be promoted next beyond the historically validated durable receipt slice?"
+runtime_qualification:
+  observed_scope: "related sst-bend and sst-chatbot handoff slice only"
+  orchestrator_acceptance_runtime_implemented: false
+  persistent_development_deployment: false
+  current_cluster_readback_performed: false
+  session_contract_authority: "CR-SST-0180"
+  production_release_authorized: false
 
 schema:
   operation_intent:

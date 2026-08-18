@@ -1,0 +1,10 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0170"
+title: "Implement durable agent handoff receipts"
+status: inbox
+created_at: "2026-08-09"
+requester: "4uentes"
+business_context: "Governed operation intents require durable acceptance semantics that are separate from ephemeral chat deltas."
+requested_change: "Implement an idempotent agent-handoff endpoint, receipts, status events and an auditable proposal-only OrchestratorPort path."
+expected_outcome: "Duplicate handoffs reconcile to one receipt and no autonomous retry or execution is introduced."

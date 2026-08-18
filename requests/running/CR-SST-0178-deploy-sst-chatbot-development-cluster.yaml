@@ -1,0 +1,81 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-SST-0178"
+title: "Deploy sst-chatbot into the SST development cluster"
+status: "running"
+source_request: "requests/inbox/CR-SST-0178-deploy-sst-chatbot-development-cluster.yaml"
+planned_request: "requests/planned/CR-SST-0178-deploy-sst-chatbot-development-cluster.yaml"
+started_at: "2026-08-13"
+requester: "4uentes"
+
+scope:
+  initiative_id: "INIT-SST-0007"
+  target_environment: "development"
+  mutated_child_repositories: ["sst-chatbot", "sst-4uentes-infra", "4uentes-auth"]
+  reviewed_without_mutation: ["sst-bend"]
+  newly_authorized_child_repositories: ["4uentes-auth"]
+
+execution_status:
+  lifecycle_and_plan: "complete"
+  isolated_worktrees: "complete"
+  chatbot_packaging: "implemented-validated-local"
+  infra_manifests: "implemented-validated-local"
+  cluster_workload: "running-ready"
+  internal_health: "validated"
+  auth_reconciliation: "implemented-validated-local"
+  authenticated_ndjson: "validated-cluster"
+  socket_io_internal_e2e: "validated-cluster-websocket"
+  socket_io_browser_e2e: "blocked-isolated-browser-profile"
+
+blocking_discovery:
+  id: "AUTH-DEVELOP-M2M-GAP"
+  observed_at: "2026-08-13"
+  detail: >
+    4uentes-auth origin/develop at 88ba82d does not contain the session
+    introspection, client_credentials or scoped service identities already
+    validated under CR-SST-0166/0167 on separate branches/PRs. The live cluster
+    uses that same develop revision, so enabling CHAT_REALTIME_ENABLED would
+    create a known-broken and potentially unsafe path.
+  required_decision: "approved by 4uentes on 2026-08-13"
+  approved_action: >
+    Create a new isolated 4uentes-auth worktree from refreshed origin/develop
+    and reconcile only the already validated auth/chat commits, owner docs and
+    deployment contract before provisioning non-versioned M2M credentials.
+
+owner_documentation:
+  required: true
+  status: "in-progress"
+  owner_repos: ["sst-chatbot", "sst-4uentes-infra", "4uentes-auth"]
+  updated_paths:
+    - "specs/integrations/sst-realtime-chat-runtime.yaml"
+    - "specs/states/agent-runtime-core-v1.yaml"
+    - "docs/architecture/http-chat-runtime.md"
+    - "specs/infra/deployment-contracts/sst-chatbot.yaml"
+    - "specs/infra/environments/development.yaml"
+    - "docs/runbooks/sst-chatbot-development.md"
+    - "4uentes-auth/specs/auth.yaml"
+    - "4uentes-auth/specs/integrations-api.yaml"
+    - "4uentes-auth/docs/chat-sessions.md"
+    - "4uentes-auth/docs/security/service-token-lifecycle.md"
+
+evidence_refs:
+  - "evidence/requests/CR-SST-0178/planning-summary.md"
+  - "evidence/requests/CR-SST-0178/worktree-and-base-evidence.md"
+  - "evidence/requests/CR-SST-0178/cluster-validation.md"
+  - "evidence/requests/CR-SST-0178/current-status-reconciliation-2026-08-18.md"
+
+decision:
+  status: "running-auth-scope-approved"
+  approver: "4uentes"
+  decided_at: "2026-08-13"
+
+canonical_reconciliation:
+  reconciled_at: "2026-08-18"
+  ordering_deviation: "child implementation preceded canonical lifecycle publication"
+  previous_authorization_status: "consumed-by-historical-execution"
+  child_repo_mutation_allowed_now: false
+  cluster_mutation_allowed_now: false
+  jira_write_allowed_now: false
+  continuation_requires: "new human approval, current owner branches and runtime readback"
+  session_contract_authority: "CR-SST-0180"
+  evidence_ref: "evidence/requests/CR-SST-0178/current-status-reconciliation-2026-08-18.md"

@@ -3,7 +3,7 @@ kind: "feature_state"
 id: "sst-chatbot"
 title: "SST Chatbot Capability Trace"
 status: "validated-local"
-updated_at: "2026-08-09"
+updated_at: "2026-08-18"
 solution_id: "sst"
 affected_services:
   - sst-chatbot
@@ -22,6 +22,15 @@ request_ids:
   - CR-SST-0083
   - CR-SST-0155
   - CR-SST-0156
+  - CR-SST-0165
+  - CR-SST-0166
+  - CR-SST-0167
+  - CR-SST-0168
+  - CR-SST-0169
+  - CR-SST-0170
+  - CR-SST-0171
+  - CR-SST-0172
+  - CR-SST-0178
 capability_refs:
   - "capability.inbound.sst-chatbot-agent-handoff"
 spec_refs:
@@ -49,12 +58,28 @@ evidence_refs:
   - "evidence/requests/CR-SST-0083/changed-files-summary.md"
   - "evidence/requests/CR-SST-0155/planning-summary.md"
   - "evidence/requests/CR-SST-0156/planning-summary.md"
+  - "evidence/initiatives/INIT-SST-0007/canonical-reconciliation-2026-08-18.md"
+  - "evidence/initiatives/INIT-SST-0007/operational-validation-2026-08-10.md"
+  - "evidence/requests/CR-SST-0172/post-merge-closure-2026-08-11.md"
+  - "evidence/requests/CR-SST-0178/current-status-reconciliation-2026-08-18.md"
 validation_refs:
   - "evidence/requests/CR-SST-0016/validation-results.md"
   - "evidence/requests/CR-SST-0021/validation-results.md"
   - "evidence/requests/CR-SST-0022/validation-results.md"
   - "evidence/requests/CR-SST-0082/validation-results.md"
   - "evidence/requests/CR-SST-0083/validation-results.md"
+  - "evidence/requests/CR-SST-0172/closure-readiness-2026-08-10.md"
+  - "evidence/requests/CR-SST-0178/cluster-validation.md"
+runtime_read_model:
+  hybrid_chat_contract: "implemented-and-historically-validated-local"
+  internal_transport: "sst-bend-to-sst-chatbot-http-ndjson"
+  browser_transport: "sst-fend-to-sst-bend-socket-io"
+  durable_conversation_owner: "sst-bend"
+  development_cluster_observation: "historical-transient-only"
+  persistent_gitops_chat_runtime: "pending-under-CR-SST-0178"
+  current_session_contract: "CR-SST-0180"
 open_gaps:
-  - "Transport for runtime orchestrator handoff is not selected yet; CR-SST-0083 recommends HTTP ingress into orchestrator acceptance while CR-SST-0022 and CR-SST-0082 keep the local/fake adapter as test infrastructure only."
-  - "CR-SST-0155 and CR-SST-0156 plan separate user and stakeholder RAG capabilities; neither child capability is implemented or reconciled yet."
+  - "CR-SST-0178 remains running: persistent development GitOps wiring and isolated browser closure are not proven."
+  - "The 2026-08-13 cluster evidence is historical and was not refreshed in the 2026-08-18 documentation gate."
+  - "CR-SST-0166 is a historical functional baseline; CR-SST-0180 is the current authority for atomic session rotation and logout semantics."
+  - "User RAG, stakeholder RAG, multi-session adoption and personal memory remain separate lifecycles."

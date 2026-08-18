@@ -1,0 +1,238 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0178"
+title: "Deploy sst-chatbot into the SST development cluster"
+status: "planned"
+source_request: "requests/inbox/CR-SST-0178-deploy-sst-chatbot-development-cluster.yaml"
+created_at: "2026-08-13"
+requester: "4uentes"
+
+summary: >
+  Add canonical container packaging and a development GitOps workload for
+  sst-chatbot, configure the existing sst-bend bridge to use cluster DNS and
+  prove the browser-to-Socket.IO-to-NDJSON path in an isolated QA session.
+
+control_plane_context:
+  initiative_id: "INIT-SST-0007"
+  predecessor_requests: ["CR-SST-0083", "CR-SST-0168", "CR-SST-0169", "CR-SST-0172"]
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  jira_epic_key: "SST-86"
+  jira_issue_key: "TODO"
+  jira_write_authorized: false
+
+architecture_boundary:
+  browser_realtime: "sst-fend -> Socket.IO -> sst-bend"
+  internal_agent_runtime: "sst-bend -> HTTP NDJSON -> sst-chatbot"
+  direct_chatbot_ingress: "forbidden"
+  canonical_conversation_owner: "sst-bend"
+  agent_turn_processing_owner: "sst-chatbot"
+  deployment_owner: "sst-4uentes-infra"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "sst-chatbot"
+      via: "container packaging, runtime configuration and owner deployment documentation"
+    - service_id: "sst-4uentes-infra"
+      via: "development Deployment, Service, configuration and GitOps documentation"
+    - service_id: "sst-bend"
+      via: "cluster-internal chatbot URL configuration; code mutation only if configuration is not already supported"
+  validation_only_services: ["sst-fend"]
+  risks:
+    - "A non-production-ready container entrypoint can pass unit tests but fail Kubernetes probes or streaming."
+    - "M2M credentials or provider credentials can leak through manifests, logs or evidence."
+    - "A wrong service URL can leave Socket.IO healthy while every chatbot turn fails downstream."
+    - "Mutable development image tags can hide the effective revision."
+    - "Browser state reuse can produce a false-positive auth or realtime result."
+    - "Observed after planning: 4uentes-auth develop lacks the validated CR-SST-0166/0167 session and M2M runtime required by the bridge."
+
+risk:
+  level: "high"
+  score: 8
+  drivers: ["CROSS_REPO_RUNTIME", "KUBERNETES_DEPLOYMENT", "M2M_AUTH", "REALTIME_E2E"]
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers: ["ARCHITECTURE_BOUNDARY", "SECRET_ADJACENT_CONFIG", "LIVE_DEVELOPMENT_CLUSTER"]
+
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5"
+  fallback_reasoning_effort: "high"
+  reason: "Cross-repo Kubernetes, service authentication and realtime E2E work requires the high-risk profile."
+
+subagent_deployment_plan:
+  required: true
+  roles: ["packaging-reviewer", "gitops-reviewer", "realtime-e2e-reviewer"]
+  parallelizable: false
+  fallback: >
+    Execute sequentially in the primary agent because the active runtime
+    instruction prohibits subagent deployment unless the user explicitly asks
+    for delegation.
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  approval_source: >
+    User instruction dated 2026-08-13 to start the task, continue execution,
+    use worktrees from develop and use a new isolated Chrome DevTools MCP session.
+  approval_consumed_for: >
+    Planning, develop-based worktree creation, scoped child-repo mutation,
+    development cluster rollout and isolated browser QA under CR-SST-0178.
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets: ["sst-chatbot", "sst-4uentes-infra", "sst-bend", "4uentes-auth"]
+  conditional_target_rule: >
+    Do not mutate sst-bend when origin/develop already supports an environment
+    configured internal chatbot URL and the required owner docs are current.
+  auth_scope_gate: >
+    4uentes-auth mutation was added by explicit user approval dated
+    2026-08-13. Reconcile only the already validated CR-SST-0166/0167 session,
+    introspection, service identity, owner documentation and deployment
+    surfaces from a new refreshed develop-based worktree.
+  cluster_mutation_allowed: true
+  cluster_mutation_scope: "kind-sst-cluster-dev namespace 4uentes-sst through the approved development deployment flow"
+
+workspace_isolation:
+  required: true
+  base_ref: "origin/develop"
+  refresh_remote_before_branching: true
+  branch_name: "feat/CR-SST-0178/sst-chatbot-development-cluster"
+  worktree_rule: "One new clean worktree per mutated child repository; do not use or alter the existing dirty working copies."
+  browser_session:
+    tool: "Chrome DevTools MCP"
+    mode: "new-isolated-session"
+    reuse_existing_tabs: false
+    reuse_existing_cookies_or_storage: false
+
+task_atomization:
+  - id: "T1-current-contract-and-packaging-audit"
+    objective: "Audit origin/develop packaging, runtime port, health surface, required variables and existing sst-bend URL configuration."
+    inputs: ["sst-chatbot origin/develop", "sst-bend origin/develop", "CR-SST-0168", "CR-SST-0169"]
+    output: "A secret-safe implementation matrix and exact mutation decision per repo."
+    files_or_domains: ["sst-chatbot Docker/runtime files", "sst-bend chat runtime config", "owner specs/docs"]
+    risk: "medium"
+    profile: "gpt-5.6-sol low"
+    validation: "Every required runtime variable, port and endpoint is traced to code or marked TODO."
+  - id: "T2-chatbot-container"
+    objective: "Create a deterministic development container for the HTTP NDJSON runtime."
+    inputs: ["T1 matrix", "sst-chatbot owner contracts"]
+    output: "Container definition, non-secret configuration contract, health behavior and owner docs."
+    files_or_domains: ["sst-chatbot"]
+    risk: "high"
+    profile: "gpt-5.6-sol max"
+    validation: "Owner check, image build and local health/NDJSON smoke pass."
+  - id: "T3-development-gitops-workload"
+    objective: "Add an internal single-replica sst-chatbot Deployment and ClusterIP Service to the development overlay."
+    inputs: ["T2 image contract", "development overlay", "secret custody rules"]
+    output: "Render-valid manifests, probes, resources, config and owner deployment docs."
+    files_or_domains: ["sst-4uentes-infra k8s-manifests", "infra specs/docs"]
+    risk: "high"
+    profile: "gpt-5.6-sol max"
+    validation: "Kustomize render, server-side/client dry-run where available and infra check pass without secret values."
+  - id: "T4-cluster-rollout-and-connectivity"
+    objective: "Roll out the effective image and prove Kubernetes and internal HTTP connectivity."
+    inputs: ["T2 image", "T3 manifests", "kind-sst-cluster-dev"]
+    output: "Ready workload, effective immutable image reference and sst-bend-to-chatbot connectivity evidence."
+    files_or_domains: ["development cluster", "Argo/GitOps observation"]
+    risk: "high"
+    profile: "gpt-5.6-sol max"
+    validation: "Pod ready, Service endpoints populated, DNS resolves, health and NDJSON smoke succeed from inside the namespace."
+  - id: "T5-isolated-browser-e2e"
+    objective: "Prove Socket.IO and the downstream chatbot turn from a fresh browser identity surface."
+    inputs: ["healthy cluster", "approved development URL", "non-persisted QA credentials supplied through existing safe custody"]
+    output: "Sanitized Chrome DevTools evidence for login, Socket.IO handshake, send, deltas and completion or an exact blocker."
+    files_or_domains: ["new isolated Chrome DevTools MCP session", "browser network/console", "service logs sanitized"]
+    risk: "high"
+    profile: "gpt-5.6-sol max"
+    validation: "No reused browser state; Socket.IO owner and backend-to-chatbot hop are independently demonstrated."
+  - id: "T6-owner-and-control-plane-closure"
+    objective: "Reconcile owner docs, central evidence and all mandatory checks."
+    inputs: ["T1-T5 results"]
+    output: "Changed-files summary, validation results, rollback evidence and lifecycle decision."
+    files_or_domains: ["three owner repos", "4uentes-orchestor"]
+    risk: "high"
+    profile: "gpt-5.6-sol max"
+    validation: "Owner checks and full control-plane npm run check pass before closure."
+
+owner_documentation:
+  required: true
+  status: "planned"
+  owner_repos: ["sst-chatbot", "sst-4uentes-infra", "4uentes-auth"]
+  conditional_owner_repo: "sst-bend"
+  planned_surfaces:
+    - "specs/states/agent-runtime-core-v1.yaml"
+    - "docs/architecture/agent-runtime-product-intent.md"
+    - "specs/infra/deployment-contracts/sst-chatbot.yaml"
+    - "specs/infra/environments/development.yaml"
+    - "docs/runbooks/argocd-kind-development.md"
+    - "specs/api/sst-chat-realtime-v1.yaml"
+    - "docs/api/sst-chat-realtime-v1.md"
+    - "specs/auth.yaml"
+    - "docs/auth.md"
+    - "specs/capabilities/outbound/auth-chat-session-v1.yaml"
+  conditional_surface_rule: >
+    The sst-bend paths are required only if its runtime configuration contract
+    changes; otherwise record that they were reviewed and remained current.
+
+acceptance:
+  - "All mutated child repositories use clean worktrees based on refreshed origin/develop."
+  - "sst-chatbot has a deterministic image whose effective revision can be identified."
+  - "A single ready sst-chatbot pod and populated ClusterIP Service endpoints exist in 4uentes-sst."
+  - "sst-chatbot is not exposed by public Ingress."
+  - "sst-bend reaches the chatbot by Kubernetes DNS and receives a valid NDJSON stream."
+  - "A new isolated Chrome DevTools MCP session proves Socket.IO connect, message acceptance, agent deltas and completion."
+  - "Socket.IO and backend-to-chatbot failures can be distinguished in evidence."
+  - "No secret, JWT, cookie, password or credential value appears in commits, command output retained as evidence or screenshots."
+  - "All owner checks and the mandatory control-plane npm run check pass."
+
+rollback:
+  mechanism: "Restore the previous reviewed Git image/config pins and let the normal development reconciliation path converge."
+  direct_cluster_cleanup: "Only allowed for ephemeral validation resources explicitly created by this CR and recorded in evidence."
+
+out_of_scope:
+  - "Direct Socket.IO support in sst-chatbot."
+  - "Public Ingress routing to sst-chatbot."
+  - "Production, test/demo or multi-node deployment."
+  - "Redis Streams, sticky sessions or horizontal scaling."
+  - "External provider credential provisioning or rotation."
+  - "Unrelated changes in the existing dirty working copies."
+
+required_checks:
+  - service_id: "sst-chatbot"
+    command: ".\\.venv\\Scripts\\python.exe scripts\\check.py"
+  - service_id: "sst-4uentes-infra"
+    command: "npm run check"
+  - service_id: "sst-bend"
+    command: "npm run check"
+    condition: "required when mutated; focused connectivity tests remain required otherwise"
+  - service_id: "4uentes-orchestor"
+    command: "npm run check"
+
+evidence_required:
+  - "evidence/requests/CR-SST-0178/planning-summary.md"
+  - "evidence/requests/CR-SST-0178/worktree-and-base-evidence.md"
+  - "evidence/requests/CR-SST-0178/implementation-summary.md"
+  - "evidence/requests/CR-SST-0178/cluster-validation.md"
+  - "evidence/requests/CR-SST-0178/isolated-browser-e2e.md"
+  - "evidence/requests/CR-SST-0178/validation-results.md"
+  - "evidence/requests/CR-SST-0178/changed-files-summary.md"
+
+decision:
+  status: "approved-for-execution"
+  approver: "4uentes"
+  decided_at: "2026-08-13"
+
+canonical_reconciliation:
+  published_at: "2026-08-18"
+  historical_snapshot: true
+  previous_authorization_status: "consumed-by-historical-execution"
+  new_child_repo_mutation_allowed: false
+  new_cluster_mutation_allowed: false
+  jira_write_allowed: false

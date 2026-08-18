@@ -1,0 +1,39 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0083"
+title: "Select runtime transport for sst-chatbot orchestrator handoff"
+status: "done"
+source_request: "requests/inbox/CR-SST-0083-select-runtime-transport-for-sst-chatbot-handoff.yaml"
+planned_request: "requests/planned/CR-SST-0083-select-runtime-transport-for-sst-chatbot-handoff.yaml"
+completed_at: "2026-08-09"
+requester: "4uentes"
+summary: >
+  The transport decision evolved from the initial HTTP-ingress recommendation
+  into the validated hybrid boundary: Socket.IO at sst-bend and internal HTTP
+  NDJSON between sst-bend and sst-chatbot.
+scope:
+  initiative_id: "INIT-SST-0007"
+  functional_repositories_modified: false
+  runtime_code_modified: false
+implementation:
+  selected_transport: "HTTP durable + Socket.IO realtime"
+  identity_owner: "4uentes-auth"
+  realtime_and_conversation_owner: "sst-bend"
+  agent_processing_owner: "sst-chatbot"
+  browser_client: "sst-fend"
+validation:
+  status: "validated-control-plane-and-subsequent-local-runtime"
+  qualification: "Runtime proof belongs to CR-SST-0165 through CR-SST-0172, not to this decision request alone."
+evidence_refs:
+  - "evidence/requests/CR-SST-0083/transport-selection-reconciliation-2026-08-18.md"
+  - "evidence/initiatives/INIT-SST-0007/hybrid-realtime-plan.md"
+  - "evidence/requests/CR-SST-0172/post-merge-closure-2026-08-11.md"
+canonical_reconciliation:
+  published_at: "2026-08-18"
+  ordering_deviation: "final decision and runtime implementation preceded canonical done publication"
+  new_mutation_authorized: false
+  jira_write_authorized: false
+decision:
+  status: "closed-local"
+  approver: "4uentes"
+  decided_at: "2026-08-09"

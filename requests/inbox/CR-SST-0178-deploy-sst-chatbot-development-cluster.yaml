@@ -1,0 +1,57 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0178"
+title: "Deploy sst-chatbot into the SST development cluster"
+status: "inbox"
+created_at: "2026-08-13"
+requester: "4uentes"
+
+summary: >
+  Package and deploy sst-chatbot as an internal service in the SST development
+  Kubernetes cluster, connect sst-bend to its HTTP NDJSON runtime and validate
+  the complete chat path, including Socket.IO at the sst-bend boundary.
+
+desired_outcome:
+  - "sst-chatbot runs as a healthy single-instance workload in namespace 4uentes-sst."
+  - "sst-bend resolves and reaches sst-chatbot through the cluster-internal Service."
+  - "The browser reaches Socket.IO on sst-bend and a chat turn reaches sst-chatbot through internal HTTP streaming."
+  - "Deployment and QA evidence are reproducible without exposing sst-chatbot directly through Ingress."
+
+constraints:
+  - "Preserve the selected HTTP durable plus Socket.IO realtime architecture from CR-SST-0083."
+  - "Socket.IO terminates at sst-bend; sst-chatbot does not implement or expose Socket.IO."
+  - "Use new isolated worktrees based on an updated origin/develop for every mutated child repository."
+  - "Run browser QA in a new isolated Chrome DevTools MCP session with no reused tabs, cookies or storage."
+  - "Do not commit secrets or record token values in evidence."
+  - "Use the approved development GitOps/image flow; do not create an ad hoc public chatbot endpoint."
+
+requested_scope:
+  initiative_id: "INIT-SST-0007"
+  target_environment: "development"
+  primary_services: ["sst-chatbot", "sst-bend", "sst-4uentes-infra"]
+  validation_consumers: ["sst-fend", "4uentes-auth"]
+  target_cluster: "kind-sst-cluster-dev"
+  target_namespace: "4uentes-sst"
+
+source_refs:
+  - "requests/done/CR-SST-0083-select-runtime-transport-for-sst-chatbot-handoff.yaml"
+  - "requests/done/CR-SST-0168-sst-chatbot-http-streaming-runtime.yaml"
+  - "requests/done/CR-SST-0169-sst-bend-realtime-persistence-bridge.yaml"
+  - "requests/done/CR-SST-0172-sst-chat-e2e-recovery-capability-closure.yaml"
+  - "evidence/initiatives/INIT-SST-0007/hybrid-realtime-plan.md"
+  - "state/features/sst-chatbot.current.yaml"
+  - "docs/cross-repo/sst-cluster-dependency-map.md"
+
+initial_observation:
+  observed_at: "2026-08-13"
+  cluster_context: "kind-sst-cluster-dev"
+  namespace: "4uentes-sst"
+  chatbot_workload_present: false
+  chatbot_service_present: false
+  existing_realtime_owner: "sst-bend"
+  note: >
+    Existing node-auth, sst-bend, sst-fend, Postgres, Mongo and scrapper
+    workloads were observed healthy enough for planning. No sst-chatbot
+    Deployment or Service was present.
+
+requested_next_step: "Approve the planned lifecycle and execute it in isolated develop-based worktrees."
