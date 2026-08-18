@@ -46,6 +46,7 @@ source_evidence_refs:
   - "evidence/requests/CR-SST-0161/jira-sst-94-close-result-2026-08-16.json"
   - "evidence/requests/CR-SST-0161/jira-sst-94-comment-summary-2026-08-17.md"
   - "evidence/requests/CR-SST-0161/jira-sst-94-comment-result-2026-08-17.json"
+  - "evidence/initiatives/INIT-SST-0002/dictionary-secret-child-repo-adoption-2026-08-17.md"
 model_refs:
   - "specs/initiatives/initiative-model.yaml"
   - "docs/requests/initiative-model.md"
@@ -124,3 +125,4 @@ open_gaps:
   - "CR-SST-0160 and CR-SST-0161 are closed and adopted for their bounded development scopes; SST-93 and SST-94 are Finalizada with resolution Listo and readback evidence."
   - "The satisfied CR-SST-0161 dependency on CR-SST-0160 is recorded locally but is not mirrored as a Jira issue link."
   - "Future Dictionary runtime changes must continue through scoped CRs; this Initiative does not authorize direct child-repo mutation."
+  - "Child-repo adoption is complete for the approved v1 scope across sst-bend, sst-fend, 4uentes-auth and sst-4uentes-infra; sst-extension and legacy ciphertext recovery remain separate work."
