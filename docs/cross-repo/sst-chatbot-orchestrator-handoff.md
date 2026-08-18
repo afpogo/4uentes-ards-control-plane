@@ -9,15 +9,21 @@ queda gobernado por `4uentes-orchestor`.
 operation intents validados y payloads de resultados agenticos. El orchestrator
 decide si acepta, encola, reintenta, agenda, rechaza o reconcilia ese trabajo.
 
-## Flujo Actual
+## Flujo Conectado Validado Históricamente
 
 ```text
-sst-bend event or SST request
-  -> 4uentes-orchestor schedules agent work
-  -> sst-chatbot produces structured validated output
-  -> 4uentes-orchestor validates and records outcome
-  -> SST-owned service consumes accepted result
+sst-fend
+  -> Socket.IO autenticado hacia sst-bend
+  -> sst-bend persiste la conversación canónica
+  -> HTTP NDJSON interno hacia sst-chatbot
+  -> sst-chatbot produce deltas y resultados estructurados
+  -> sst-bend persiste y emite el resultado
+  -> el handoff gobernado conserva receipt durable y estado de revisión
 ```
+
+Este flujo fue validado en local/dev de una sola instancia. El control-plane
+conserva la autoridad sobre lifecycle, aceptación gobernada y evidencia, pero
+no sustituye los contratos owner de `sst-bend` ni `sst-chatbot`.
 
 ## Contrato Inbound Requerido
 
@@ -51,24 +57,20 @@ La evidencia vigente esta en:
 - `evidence/requests/CR-SST-0082/sst-chatbot-child-sync-diff.yaml`
 - `evidence/requests/CR-SST-0082/validation-results.md`
 
-## Gap Abierto
+## Estado Y Gap Abierto
 
-El transporte real del handoff sigue sin seleccion. HTTP, queue y worker siguen
-como opciones abiertas. La capability inbound permanece en `draft` hasta que un
-request aprobado seleccione e implemente un transporte runtime real.
+El feature conectado queda `validated-local`, no `released`. La evidencia
+histórica cubre HTTP NDJSON, Socket.IO, persistencia, replay y receipts en el
+corte local/dev. La capability inbound específica del control-plane permanece
+`draft`: este repositorio no contiene un runtime de aceptación de operation
+intents y no puede atribuirse la implementación owner de `sst-bend`.
 
-## Recomendacion De Siguiente Corte
+`CR-SST-0178` permanece `running` porque faltan el wiring GitOps persistente y
+el cierre con un navegador aislado. Además, cualquier reanudación debe consumir
+el contrato de sesión vigente de `CR-SST-0180`; la garantía histórica de
+refresh/logout de `CR-SST-0166` quedó superada.
 
-La recomendacion vigente del control-plane es abrir el primer boundary runtime
-con `HTTP ingress` hacia `4uentes-orchestor`, dejando queueing, retries y
-scheduling como concerns internos del orchestrator despues de la aceptacion.
+La reconciliación canónica y sus límites están en:
 
-Motivo:
-
-- preserva mejor la frontera proposal-only de `sst-chatbot`;
-- concentra auth, idempotency, audit y rechazo temprano en el punto de
-  aceptacion del orchestrator;
-- evita exponer una queue directa como si fuera el contrato externo primario.
-
-Esta recomendacion queda registrada en `CR-SST-0083`. No promueve la capability
-fuera de `draft` ni autoriza implementacion runtime por si sola.
+- `evidence/initiatives/INIT-SST-0007/canonical-reconciliation-2026-08-18.md`
+- `evidence/requests/CR-SST-0178/current-status-reconciliation-2026-08-18.md`

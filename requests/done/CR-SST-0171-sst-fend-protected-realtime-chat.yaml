@@ -1,0 +1,25 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0171"
+title: "Add protected realtime chat to sst-fend"
+status: "done"
+source_request: "requests/inbox/CR-SST-0171-sst-fend-protected-realtime-chat.yaml"
+planned_request: "requests/planned/CR-SST-0171-sst-fend-protected-realtime-chat.yaml"
+started_at: "2026-08-09"
+completed_at: "2026-08-11"
+requester: "4uentes"
+summary: "The protected chat route, singleton realtime lifecycle, coordinated refresh, explicit 403 logout and offline recovery are implemented."
+scope: {initiative_id: "INIT-SST-0007", child_repositories_modified: ["sst-fend"]}
+owner_documentation: {required: true, status: "satisfied", owner_repos: ["sst-fend"], orchestrator_link_required: true}
+validation:
+  status: "validated-local"
+  passed: ["31/31 suites and 199/199 tests", "Production build", "Realtime 401/403 lifecycle", "Owner manual QA and facade smoke"]
+evidence_refs: ["evidence/requests/CR-SST-0172/closure-readiness-2026-08-10.md", "evidence/requests/CR-SST-0172/post-merge-closure-2026-08-11.md"]
+canonical_reconciliation:
+  published_at: "2026-08-18"
+  ordering_deviation: "child implementation preceded canonical lifecycle publication"
+  evidence_scope: "historical local validation; no current runtime readback"
+  new_mutation_authorized: false
+  reconciliation_ref: "evidence/initiatives/INIT-SST-0007/canonical-reconciliation-2026-08-18.md"
+
+decision: {status: "closed-validated-local", approver: "4uentes", decided_at: "2026-08-11"}

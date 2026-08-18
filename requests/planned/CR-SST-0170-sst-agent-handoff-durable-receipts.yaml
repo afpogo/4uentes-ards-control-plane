@@ -1,0 +1,45 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0170"
+title: "Implement durable agent handoff receipts"
+status: running
+source_request: "requests/inbox/CR-SST-0170-sst-agent-handoff-durable-receipts.yaml"
+created_at: "2026-08-09"
+requester: "4uentes"
+summary: "Keep governed agent intents durable and idempotent while realtime deltas remain ephemeral."
+control_plane_context: {initiative_id: "INIT-SST-0007", jira_epic_key: "SST-86", jira_container_key: "SST-7", desired_issue_type: "Subtask", jira_source_of_truth: false, jira_write_authorized: false}
+scope:
+  services: ["sst-bend", "sst-chatbot"]
+  endpoint: "POST /4uentes/v1/agent-handoffs"
+  guarantees: ["idempotent receipt", "durable status", "correlation trace", "proposal-only intent"]
+dependencies: ["CR-SST-0165", "CR-SST-0167", "CR-SST-0168", "CR-SST-0169"]
+risk: {level: "high", drivers: ["CROSS_REPO_HANDOFF", "DUPLICATE_EXECUTION", "AUDITABILITY"]}
+task_weight: {classification: "complex-high-risk-task", risk_level: "high"}
+model_selection: {policy_ref: "docs/policies/agent-model-selection-policy.md", provider: "codex", resource_level: "normal", resource_source: "default", primary_profile: "gpt-5.6-sol", reasoning_effort: "max", fallback_profile: "gpt-5.5", reason: "Durable cross-repo acceptance and duplicate prevention are high-risk boundaries."}
+execution:
+  requires_human_approval: true
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets: ["sst-bend", "sst-chatbot"]
+  approval_source: "Current user instruction dated 2026-08-09."
+owner_documentation:
+  required: true
+  status: planned
+  owner_repos: ["sst-bend", "sst-chatbot"]
+  planned_owner_docs:
+    - "specs/capabilities/agent-handoff-receipts.yaml"
+    - "docs/cross-repo/agent-handoff-receipts.md"
+required_checks:
+  - {service_id: "sst-bend", command: "npm run check"}
+  - {service_id: "sst-chatbot", command: ".\\.venv\\Scripts\\python.exe scripts\\check.py"}
+  - {service_id: "4uentes-orchestor", command: "npm run check"}
+acceptance:
+  - "Repeated idempotency keys return the same receipt without duplicate intent execution."
+  - "Accepted, rejected and needs_review states are durable and mapped to chat:handoff:status."
+  - "No automatic retry, scheduling or privileged mutation is delegated to sst-chatbot."
+decision: {status: "approved-running", approver: "4uentes", decided_at: "2026-08-09"}
+canonical_reconciliation:
+  published_at: "2026-08-18"
+  historical_snapshot: true
+  previous_authorization_status: "consumed-by-completed-execution"
+  new_child_repo_mutation_allowed: false
+  jira_write_allowed: false

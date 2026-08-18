@@ -41,6 +41,7 @@ orchestrator_link_contract:
   capability_state_map: "state/capability-links.yaml"
 deployment_targets_observed:
   - local
+  - development-kubernetes-transient
 capabilities_observed:
   - provider-abstraction
   - ards-structure-generation
@@ -56,4 +57,6 @@ capabilities_observed:
 notes:
   - Repo owns provider-agnostic agent contracts, private prompts, retrieval, ARDS workspace generation, and orchestrator handoff payloads.
   - Modeled as backend-api ARDS because it publishes runtime/cross-repo capabilities consumed by SST and the orchestrator.
-  - Child ARDS/SDD policy and orchestrator_link documentation were reconciled under CR-SST-0082; runtime handoff transport remains undecided.
+  - Child ARDS/SDD policy and orchestrator_link documentation were reconciled under CR-SST-0082.
+  - HTTP NDJSON processing behind the sst-bend Socket.IO boundary was historically validated locally under INIT-SST-0007.
+  - A transient development-cluster validation exists, but persistent GitOps adoption remains open under CR-SST-0178.

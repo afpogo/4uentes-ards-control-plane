@@ -1,0 +1,70 @@
+schema_version: "1.0"
+kind: "initiative"
+id: "INIT-SST-0007"
+title: "SST Chatbot First Connected Version"
+status: "active"
+updated_at: "2026-08-18"
+owner_repository: "4uentes-orchestor"
+objective: >
+  Deliver a governed SST chatbot with revocable identity, durable conversation
+  ownership in sst-bend, internal HTTP streaming to sst-chatbot, protected web
+  adoption and reproducible recovery evidence.
+initial_hypothesis: >
+  A hybrid boundary keeps identity in 4uentes-auth, canonical conversation
+  state in sst-bend and agent processing in sst-chatbot while combining a
+  realtime user experience with application-owned persistence and replay.
+source_evidence_refs:
+  - "evidence/initiatives/INIT-SST-0007/canonical-reconciliation-2026-08-18.md"
+  - "evidence/initiatives/INIT-SST-0007/hybrid-realtime-plan.md"
+  - "evidence/initiatives/INIT-SST-0007/operational-validation-2026-08-10.md"
+  - "evidence/requests/CR-SST-0172/post-merge-closure-2026-08-11.md"
+  - "evidence/requests/CR-SST-0178/current-status-reconciliation-2026-08-18.md"
+  - "evidence/initiatives/INIT-SST-0007/validation-results-2026-08-18.md"
+  - "evidence/initiatives/INIT-SST-0007/changed-files-summary-2026-08-18.md"
+model_refs:
+  - "specs/initiatives/initiative-model.yaml"
+  - "docs/requests/initiative-model.md"
+known_change_requests:
+  - "CR-SST-0083"
+  - "CR-SST-0165"
+  - "CR-SST-0166"
+  - "CR-SST-0167"
+  - "CR-SST-0168"
+  - "CR-SST-0169"
+  - "CR-SST-0170"
+  - "CR-SST-0171"
+  - "CR-SST-0172"
+  - "CR-SST-0178"
+tracking:
+  jira:
+    role: "mirror"
+    source_of_truth: false
+    project_key: "SST"
+    issue_type: "Epic"
+    issue_key: "SST-86"
+    status_observation: "historical-only-not-refreshed-in-this-gate"
+    last_historical_observation_at: "2026-08-13"
+    write_authorized: false
+boundaries:
+  control_plane_role: "lifecycle, coordination and evidence only"
+  owner_documentation_authority: "functional child repositories"
+  child_repo_mutation_allowed_in_reconciliation: false
+  cluster_mutation_allowed_in_reconciliation: false
+  jira_write_allowed_in_reconciliation: false
+  production_release_authorized: false
+current_read_model:
+  local_hybrid_slice: "historically-validated-local"
+  development_cluster_slice: "historical-transient-validation-only"
+  persistent_gitops_chat_runtime: "pending"
+  active_execution_request: "CR-SST-0178"
+  current_session_contract_ref: "requests/running/CR-SST-0180-integrate-login-sessions-and-timeout-corrections.yaml"
+security_qualification:
+  historical_request: "CR-SST-0166"
+  qualification: >
+    The 2026-08-11 evidence proves a functional sid/introspection baseline but
+    is not current authority for refresh/logout concurrency safety.
+  superseding_current_contract: "CR-SST-0180"
+gaps:
+  - "CR-SST-0178 remains running because the persistent development GitOps wiring and isolated browser closure were not completed."
+  - "The current development runtime state was not read from the cluster during this documentation-only reconciliation."
+  - "User RAG, stakeholder RAG, multi-session adoption and personal memory remain separate lifecycles and are not absorbed here."

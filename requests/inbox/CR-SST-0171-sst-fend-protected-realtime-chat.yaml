@@ -1,0 +1,10 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0171"
+title: "Add protected realtime chat to sst-fend"
+status: inbox
+created_at: "2026-08-09"
+requester: "4uentes"
+business_context: "Authenticated SST users need a protected chat page with controlled refresh, reconnect and offline behavior."
+requested_change: "Add /chat, a singleton Socket.IO client and an auth-scoped provider without persisting tokens, deltas or conversation content."
+expected_outcome: "The frontend connects only after authentication, revalidates after refresh and logs out on revocation."

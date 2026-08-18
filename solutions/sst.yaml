@@ -46,5 +46,6 @@ observed_deployment_targets:
 notes:
   - The solution is modeled logically; no sst-solution repo is required for Phase 0.
   - sst-extension is a real optional runtime and remains separate from the web frontend.
-  - sst-chatbot is a logical agent runtime participant and remains transport-agnostic until a runtime handoff is implemented.
+  - sst-chatbot is a logical agent runtime participant; the first connected slice uses internal HTTP NDJSON behind the sst-bend Socket.IO boundary.
+  - The connected slice is historically validated for local/single-instance use; persistent development GitOps remains open under CR-SST-0178.
   - Local paths are evidence only and must not define canonical identity.

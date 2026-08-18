@@ -1,0 +1,10 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0165"
+title: "Define SST chat realtime boundary contract"
+status: inbox
+created_at: "2026-08-09"
+requester: "4uentes"
+business_context: "SST-7 needs a governed boundary that combines durable HTTP behavior with authenticated realtime chat."
+requested_change: "Define V1 ownership, events, REST surfaces, feature flags and the narrowly scoped sst-fend-to-sst-bend realtime exception."
+expected_outcome: "All producers and consumers share one versioned contract before any functional repository is modified."

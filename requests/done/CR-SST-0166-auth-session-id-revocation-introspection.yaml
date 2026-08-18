@@ -1,0 +1,25 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0166"
+title: "Add auth session identity revocation and introspection"
+status: "done"
+source_request: "requests/inbox/CR-SST-0166-auth-session-id-revocation-introspection.yaml"
+planned_request: "requests/planned/CR-SST-0166-auth-session-id-revocation-introspection.yaml"
+started_at: "2026-08-09"
+completed_at: "2026-08-11"
+requester: "4uentes"
+summary: "Stable sid, refresh continuity, logout revocation, introspection and realtime lease revalidation are operational in local/dev."
+scope: {initiative_id: "INIT-SST-0007", child_repositories_modified: ["4uentes-auth", "sst-bend"]}
+owner_documentation: {required: true, status: "satisfied", owner_repos: ["4uentes-auth", "sst-bend"], orchestrator_link_required: true}
+validation:
+  status: "validated-local"
+  passed: ["Login and refresh session identity", "Logout and revocation", "Introspection and lease", "Post-merge E2E"]
+evidence_refs: ["evidence/initiatives/INIT-SST-0007/operational-validation-2026-08-10.md", "evidence/requests/CR-SST-0172/post-merge-closure-2026-08-11.md"]
+canonical_reconciliation:
+  published_at: "2026-08-18"
+  ordering_deviation: "child implementation preceded canonical lifecycle publication"
+  evidence_scope: "historical local validation; no current runtime readback"
+  new_mutation_authorized: false
+  reconciliation_ref: "evidence/initiatives/INIT-SST-0007/canonical-reconciliation-2026-08-18.md"
+  security_qualification: "functional baseline only; concurrency guarantees superseded by CR-SST-0180"\n+  current_session_contract: "requests/running/CR-SST-0180-integrate-login-sessions-and-timeout-corrections.yaml"\n+
+decision: {status: "closed-validated-local", approver: "4uentes", decided_at: "2026-08-11"}

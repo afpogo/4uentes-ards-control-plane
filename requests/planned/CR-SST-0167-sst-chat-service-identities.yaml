@@ -1,0 +1,48 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0167"
+title: "Establish SST chat service identities"
+status: running
+source_request: "requests/inbox/CR-SST-0167-sst-chat-service-identities.yaml"
+created_at: "2026-08-09"
+requester: "4uentes"
+summary: "Create least-privilege M2M identities for chat processing, handoff submission and session introspection."
+control_plane_context: {initiative_id: "INIT-SST-0007", jira_epic_key: "SST-86", jira_container_key: "SST-7", desired_issue_type: "Subtask", jira_source_of_truth: false, jira_write_authorized: false}
+scope:
+  services: ["4uentes-auth", "sst-bend", "sst-chatbot"]
+  credentials:
+    - {caller: "sst-bend", audience: "sst-chatbot", scope: "chat:process"}
+    - {caller: "sst-chatbot", audience: "sst-api", scope: "agent-handoff:submit"}
+    - {caller: "sst-bend", audience: "4uentes-auth", scope: "session:introspect"}
+dependencies: ["CR-SST-0165"]
+risk: {level: "high", drivers: ["SERVICE_CREDENTIALS", "TOKEN_AUDIENCE", "SECRET_LIFECYCLE"]}
+task_weight: {classification: "complex-high-risk-task", risk_level: "high"}
+model_selection: {policy_ref: "docs/policies/agent-model-selection-policy.md", provider: "codex", resource_level: "normal", resource_source: "default", primary_profile: "gpt-5.6-sol", reasoning_effort: "max", fallback_profile: "gpt-5.5", reason: "Service credentials, scopes and audiences are sensitive security contracts."}
+execution:
+  requires_human_approval: true
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets: ["4uentes-auth", "sst-bend", "sst-chatbot"]
+  approval_source: "Current user instruction dated 2026-08-09; runtime secret injection only."
+owner_documentation:
+  required: true
+  status: planned
+  owner_repos: ["4uentes-auth", "sst-bend", "sst-chatbot"]
+  planned_owner_docs:
+    - "specs/integrations/sst-chat-service-identities.yaml"
+    - "docs/security/service-token-lifecycle.md"
+required_checks:
+  - {service_id: "4uentes-auth", command: "npm run check"}
+  - {service_id: "sst-bend", command: "npm run check"}
+  - {service_id: "sst-chatbot", command: ".\\.venv\\Scripts\\python.exe scripts\\check.py"}
+  - {service_id: "4uentes-orchestor", command: "npm run check"}
+acceptance:
+  - "Every token is rejected outside its exact audience and scope."
+  - "Rotation and expiry behavior are documented and tested."
+  - "No credential, JWT or authorization header appears in logs or evidence."
+decision: {status: "approved-running", approver: "4uentes", decided_at: "2026-08-09"}
+canonical_reconciliation:
+  published_at: "2026-08-18"
+  historical_snapshot: true
+  previous_authorization_status: "consumed-by-completed-execution"
+  new_child_repo_mutation_allowed: false
+  jira_write_allowed: false

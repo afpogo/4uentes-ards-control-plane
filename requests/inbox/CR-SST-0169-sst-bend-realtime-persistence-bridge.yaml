@@ -1,0 +1,10 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0169"
+title: "Implement sst-bend realtime persistence bridge"
+status: inbox
+created_at: "2026-08-09"
+requester: "4uentes"
+business_context: "SST needs ordered realtime chat with application-owned durability, idempotency and replay."
+requested_change: "Mount Socket.IO on an explicit HTTP server and add conversation, message and sequenced event persistence plus the internal streaming bridge."
+expected_outcome: "sst-bend is the canonical chat owner and can recover missed durable events from Postgres."

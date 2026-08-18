@@ -1,0 +1,10 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0167"
+title: "Establish SST chat service identities"
+status: inbox
+created_at: "2026-08-09"
+requester: "4uentes"
+business_context: "Internal streaming, handoff submission and session introspection need independent least-privilege service identities."
+requested_change: "Define client credentials, audiences and scopes for sst-bend, sst-chatbot and 4uentes-auth interactions."
+expected_outcome: "Each internal call is authenticated for one audience and purpose, with rotation and negative-test expectations."
