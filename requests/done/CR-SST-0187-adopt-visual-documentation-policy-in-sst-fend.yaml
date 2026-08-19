@@ -1,0 +1,68 @@
+schema_version: "1.0"
+phase: 4
+id: "CR-SST-0187"
+title: "Adopt visual documentation policy in sst-fend"
+status: "done"
+source_request: "requests/inbox/CR-SST-0187-adopt-visual-documentation-policy-in-sst-fend.yaml"
+planned_request: "requests/planned/CR-SST-0187-adopt-visual-documentation-policy-in-sst-fend.yaml"
+started_at: "2026-08-17"
+completed_at: "2026-08-18"
+requester: "4uentes"
+
+control_plane_context:
+  initiative_id: "INIT-CP-0002"
+  coordinated_by_request_id: "CR-CP-0006"
+  predecessor_request_id: "CR-CP-0020"
+
+execution:
+  approval_source: "User requested child propagation on 2026-08-16 and confirmed continuation on 2026-08-18."
+  child_repo_mutation_allowed: true
+  child_repo_mutation_target:
+    service_id: "sst-fend"
+  branch_strategy: "isolated-worktree-from-origin-develop"
+  jira_write_allowed: false
+  implementation_boundary: "Documentation governance only; no frontend runtime or product behavior changed."
+
+publication_result:
+  status: "merged-and-read-back"
+  canonical_branch: "develop"
+  adoption_pr: "https://github.com/afpogo/sst-fend/pull/13"
+  adoption_commit: "9e47f5c2074302d1f14ed0d73214686ab4b4ef56"
+  canonical_readback_commit: "4e32823ca3c1ef2e83a7bee6db006e798f945150"
+
+owner_documentation:
+  required: true
+  status: satisfied
+  owner_repo: "sst-fend"
+  updated_owner_docs:
+    - "AGENTS.md"
+    - "docs/policies/README.md"
+    - "scripts/check-policy-adoption.js"
+    - "specs/integration/policies.yaml"
+    - "specs/policies/00-index.yaml"
+    - "specs/policies/adoptions/visual-documentation-as-code-policy.yaml"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0187/policy-adoption-summary.md"
+  manifest_outcome: "policy_adoption_manifest"
+  adoption_status: "adopted"
+
+validation:
+  owner_check: "PASS: npm.cmd run check"
+  policy_gate: "PASS: 10 adoptions and 1 explicit exception"
+  lint: "PASS: 0 errors, 22 pre-existing warnings"
+  build: "PASS"
+  tests: "PASS: 33 suites, 215 tests"
+  owner_pr_check: "PASS: build-publish-update"
+  control_character_scan: "PASS"
+  diff_check: "PASS"
+  secret_safe_scan: "PASS"
+  control_plane_check: "PASS"
+  evidence_ref: "evidence/requests/CR-SST-0187/policy-adoption-summary.md"
+
+closure:
+  status: "complete"
+  next_request_id: "CR-SST-0188"
+  limits:
+    - "No frontend runtime or product behavior was modified."
+    - "No database, seeder, Kubernetes, secret or Jira operation was performed."
+    - "Adoption is prospective and does not bulk-migrate existing diagrams."

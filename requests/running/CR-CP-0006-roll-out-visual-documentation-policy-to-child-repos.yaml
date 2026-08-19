@@ -43,7 +43,7 @@ validation:
   evidence_ref: "evidence/requests/CR-CP-0006/control-plane-promotion-readiness.md"
 
 rollout_progress:
-  completed: 1
+  completed: 2
   total: 8
   owners:
     - request_id: "CR-SST-0186"
@@ -52,7 +52,12 @@ rollout_progress:
       manifest_outcome: "policy_adoption_manifest"
       canonical_commit: "4249ba3bd949c902e943c2b826df10bae6809c1b"
       evidence_ref: "evidence/requests/CR-SST-0186/canonical-adoption-readback-2026-08-18.md"
-    - {request_id: "CR-SST-0187", owner: "sst-fend", status: "planned"}
+    - request_id: "CR-SST-0187"
+      owner: "sst-fend"
+      status: "adopted"
+      manifest_outcome: "policy_adoption_manifest"
+      canonical_commit: "4e32823ca3c1ef2e83a7bee6db006e798f945150"
+      evidence_ref: "evidence/requests/CR-SST-0187/policy-adoption-summary.md"
     - {request_id: "CR-SST-0188", owner: "sst-bend", status: "planned"}
     - {request_id: "CR-SST-0189", owner: "sst-extension", status: "planned"}
     - {request_id: "CR-SST-0190", owner: "sst-chatbot", status: "planned"}
@@ -64,5 +69,5 @@ next_gate:
   id: "child-owner-adoption"
   status: "ready"
   blocker: null
-  first_ready_request: "CR-SST-0187"
+  first_ready_request: "CR-SST-0188"
   child_rollout_rule: "Start one isolated owner worktree per approved child CR; publish an adoption or exception manifest and validate owner docs before closure."
