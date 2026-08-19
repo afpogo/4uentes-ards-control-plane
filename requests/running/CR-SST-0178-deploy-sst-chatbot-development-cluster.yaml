@@ -25,7 +25,7 @@ execution_status:
   auth_reconciliation: "implemented-validated-local"
   authenticated_ndjson: "validated-post-gitops"
   socket_io_internal_e2e: "validated-cluster-websocket"
-  socket_io_browser_e2e: "pending-mcp-restart-after-isolation-fix"
+  socket_io_browser_e2e: "failed-ingress-route-missing"
 
 blocking_discovery:
   id: "AUTH-DEVELOP-M2M-GAP"
@@ -64,6 +64,7 @@ evidence_refs:
   - "evidence/requests/CR-SST-0178/cluster-validation.md"
   - "evidence/requests/CR-SST-0178/current-status-reconciliation-2026-08-18.md"
   - "evidence/requests/CR-SST-0178/post-merge-runtime-readback-2026-08-18.md"
+  - "evidence/requests/CR-SST-0178/isolated-browser-qa-2026-08-19.md"
 
 decision:
   status: "running-auth-scope-approved"
@@ -119,7 +120,7 @@ continuation_model_selection:
   fallback_profile: "gpt-5.5"
 
 continuation_execution:
-  status: "post-merge-runtime-pass-browser-gate-pending"
+  status: "post-merge-runtime-pass-browser-gate-failed"
   started_at: "2026-08-18"
   control_plane_branch: "agent/cr-sst-0178-development-gitops-continuation"
   owner_baselines:
@@ -166,10 +167,17 @@ continuation_execution:
     authenticated_ndjson_turn: "PASS"
     public_chatbot_ingress_present: false
   browser_gate:
-    status: "pending-mcp-restart"
+    status: "FAIL"
     local_configuration_fix: "dedicated Chrome DevTools MCP now uses --isolated=true without a persistent userDataDir"
-    reason: "the already-running MCP process retains the previous locked profile until the Codex session restarts"
+    isolated_runtime_verified: true
+    tested_at: "2026-08-19"
+    browser_origin: "http://localhost:8088"
+    authentication_refresh: "PASS"
+    chat_route_render: "PASS"
+    socket_io_connection: "FAIL"
+    reason: "the live Ingress sends /4uentes/realtime/socket.io to the sst-fend catch-all and returns HTML instead of Engine.IO"
+    correction_requires: "new approved sst-4uentes-infra owner batch plus GitOps rollout and browser retest"
   further_child_repo_mutation_allowed: false
   further_cluster_mutation_allowed: false
   jira_write_allowed: false
-  evidence_ref: "evidence/requests/CR-SST-0178/post-merge-runtime-readback-2026-08-18.md"
+  evidence_ref: "evidence/requests/CR-SST-0178/isolated-browser-qa-2026-08-19.md"
