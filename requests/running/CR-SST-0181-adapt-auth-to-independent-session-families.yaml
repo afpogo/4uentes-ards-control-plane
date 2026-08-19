@@ -57,7 +57,7 @@ implementation_readback:
     sst_bend_contract_readback: "compatible"
     sst_bend_focused_checks: ["test:service-token", "test:chat-guards", "test:chat-security"]
   remaining:
-    - "Review and publish the Auth draft PR."
+    - "Human review of the published Auth draft PR #9; GitHub owner check is green."
     - "Keep index reconciliation and any rollout outside this non-deployment CR."
     - "Keep GitHub secret creation blocked until the Infra custody/transport gate is published."
 

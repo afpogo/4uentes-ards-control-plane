@@ -33,9 +33,9 @@ coordination:
   superseded_target_decision: "one-active-session-family-per-account"
   approved_target_decision: "multiple-independent-session-families-per-account"
   child_requests: ["CR-SST-0181", "CR-SST-0182", "CR-SST-0183", "CR-SST-0184", "CR-SST-0185"]
-  active_child_request: "CR-SST-0181"
+  active_child_requests: ["CR-SST-0181", "CR-SST-0182", "CR-SST-0183"]
   active_child_status: "running-validated-local-owner-and-consumer"
-  next_gate: "Publish the Auth draft PR without deployment; keep index reconciliation and secret creation in later gates."
+  next_gate: "Implement the SPA and extension coordination PRs without deployment; keep Auth draft, index reconciliation and secret creation blocked for later gates."
 owner_documentation:
   required: false
   authority: "Delegated to CR-SST-0181 through CR-SST-0185."

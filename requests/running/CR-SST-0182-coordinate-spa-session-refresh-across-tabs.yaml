@@ -1,0 +1,56 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-SST-0182"
+title: "Coordinate SPA session refresh across tabs"
+status: "running"
+source_request: "requests/inbox/CR-SST-0182-coordinate-spa-session-refresh-across-tabs.yaml"
+planned_request: "requests/planned/CR-SST-0182-coordinate-spa-session-refresh-across-tabs.yaml"
+created_at: "2026-08-15"
+started_at: "2026-08-19"
+updated_at: "2026-08-19"
+requester: "4uentes"
+
+control_plane_context:
+  initiative_id: "INIT-SST-0008"
+  coordinated_by_request_id: "CR-SST-0179"
+  predecessors: ["CR-SST-0180", "CR-SST-0181"]
+  predecessor_readback: >
+    CR-SST-0181 has a frozen, locally validated Auth contract in draft PR #9.
+    Its merge and deployment remain blocked and are not prerequisites for this
+    source-only client implementation.
+  jira_write_allowed: false
+
+execution:
+  requires_human_approval: true
+  approval_source: "Approved planned lifecycle dated 2026-08-15; user requested continuation after the prerequisite control-plane merge on 2026-08-19."
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets: ["sst-fend"]
+  production_data_allowed: false
+  deployment_allowed: false
+  jira_write_allowed: false
+  workspace:
+    branch: "agent/cr-sst-0182-spa-refresh-coordination"
+    base: "sst-fend origin/develop refreshed at execution start"
+    isolation: "clean-worktree"
+
+implementation_plan:
+  - "Inventory Axios, auth actor and realtime refresh entry points without mutating the dirty checkout."
+  - "Introduce one runtime coordinator with generation-aware winner preservation."
+  - "Add cross-tab lease and result notification with fail-closed fallback."
+  - "Preserve the 15-second timeout and distinguish local sign-out from unconfirmed remote revocation."
+  - "Update owner ARDS/SDD and validate isolated multi-context behavior."
+
+owner_documentation:
+  required: true
+  status: "running"
+  surfaces:
+    - "specs/31-auth-frontend.yml"
+    - "docs/architecture/authentication.md"
+
+evidence:
+  start_ref: "evidence/requests/CR-SST-0182/execution-start-2026-08-19.md"
+
+decision:
+  status: "approved-running"
+  approver: "4uentes"
+  decided_at: "2026-08-19"
