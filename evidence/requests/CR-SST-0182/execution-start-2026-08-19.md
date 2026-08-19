@@ -22,3 +22,12 @@ validarse contra ese contrato sin fusionar ni desplegar Auth.
 - Timeout de 15 segundos y preservación del estado ganador.
 - Sin reintento automático de credenciales tras un resultado ambiguo.
 - Owner docs, check completo, `git diff --check` y scan secret-safe antes del PR.
+
+## Readback de implementación
+
+- Commit owner: `sst-fend@6e11ed3`.
+- PR draft: <https://github.com/afpogo/sst-fend/pull/14>.
+- Resultado: 35 suites y 231 tests, lint sin errores y build productivo.
+- Seguridad: el lease persiste sólo metadata; el token ganador circula por un
+  canal efímero y se correlaciona con el `operationId` activo.
+- Gate abierto: QA browser aislado con dos pestañas y revisión humana.

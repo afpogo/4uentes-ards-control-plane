@@ -23,3 +23,15 @@ desplegar Auth.
 - Fallback seguro ante ausencia o rechazo de `browser.storage.session`.
 - Flujo de permisos opcionales existente, sin ampliar permisos ni UI.
 - Owner docs, check completo, build MV3, `git diff --check` y scan secret-safe antes del PR.
+
+## Readback de implementación
+
+- Commit owner: `sst-extension@e1c45e8`.
+- PR draft: <https://github.com/afpogo/sst-extension/pull/3>.
+- Resultado: baseline, 22 suites y 96 tests, y build Chrome MV3.
+- Seguridad: logout bloquea nuevos refresh, una respuesta tardía no puede
+  resucitar la sesión y el fallback permanece sólo en memoria del background.
+- Frontera: no se agregaron permisos, UI ni persistencia de secretos en
+  `storage.local`.
+- Gate abierto: QA de extensión desempaquetada con perfil limpio y revisión
+  humana.
