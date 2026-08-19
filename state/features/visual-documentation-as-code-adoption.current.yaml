@@ -3,7 +3,7 @@ kind: "feature_state"
 id: "visual-documentation-as-code-adoption"
 title: "Visual documentation as code adoption"
 status: "implementation-pending"
-updated_at: "2026-08-18"
+updated_at: "2026-08-19"
 solution_id: "sst"
 affected_services:
   - 4uentes-auth
@@ -43,6 +43,7 @@ evidence_refs:
   - "evidence/requests/CR-CP-0006/control-plane-promotion-readiness.md"
   - "evidence/requests/CR-SST-0186/canonical-adoption-readback-2026-08-18.md"
   - "evidence/requests/CR-SST-0187/policy-adoption-summary.md"
+  - "evidence/requests/CR-SST-0188/canonical-adoption-readback-2026-08-19.md"
   - "evidence/requests/CR-CP-0006/sst-owner-adoption-readback-2026-08-18.md"
 tracking:
   flag: "visual_documentation_adoption_required"

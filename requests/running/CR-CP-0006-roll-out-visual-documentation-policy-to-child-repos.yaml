@@ -58,7 +58,7 @@ rollout_progress:
       manifest_outcome: "policy_adoption_manifest"
       canonical_commit: "4e32823ca3c1ef2e83a7bee6db006e798f945150"
       evidence_ref: "evidence/requests/CR-SST-0187/policy-adoption-summary.md"
-    - {request_id: "CR-SST-0188", owner: "sst-bend", status: "adopted", manifest_outcome: "policy_adoption_manifest", canonical_commit: "a73acedbd13e9187f6ef54285084b4a3c212abc7"}
+    - {request_id: "CR-SST-0188", owner: "sst-bend", status: "adopted", manifest_outcome: "policy_adoption_manifest", canonical_commit: "8fe60f4a60e525fa189cae690cd36820c0f3385a", evidence_ref: "evidence/requests/CR-SST-0188/canonical-adoption-readback-2026-08-19.md"}
     - {request_id: "CR-SST-0189", owner: "sst-extension", status: "adopted", manifest_outcome: "policy_adoption_manifest", canonical_commit: "fa6a79d83feb6812cff8abd1659db128612f5102"}
     - {request_id: "CR-SST-0190", owner: "sst-chatbot", status: "adopted", manifest_outcome: "policy_adoption_manifest", canonical_commit: "976837af3c066feefc4c64ef194fa7fdb3f600bb"}
     - {request_id: "CR-SST-0191", owner: "sst-4uentes-infra", status: "adopted", manifest_outcome: "policy_adoption_manifest", canonical_commit: "86d244de73777988696b65528cedbc7bb3b137dc"}
