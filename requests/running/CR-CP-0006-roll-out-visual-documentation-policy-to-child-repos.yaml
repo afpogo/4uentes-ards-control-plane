@@ -43,7 +43,7 @@ validation:
   evidence_ref: "evidence/requests/CR-CP-0006/control-plane-promotion-readiness.md"
 
 rollout_progress:
-  completed: 2
+  completed: 6
   total: 8
   owners:
     - request_id: "CR-SST-0186"
@@ -58,10 +58,10 @@ rollout_progress:
       manifest_outcome: "policy_adoption_manifest"
       canonical_commit: "4e32823ca3c1ef2e83a7bee6db006e798f945150"
       evidence_ref: "evidence/requests/CR-SST-0187/policy-adoption-summary.md"
-    - {request_id: "CR-SST-0188", owner: "sst-bend", status: "planned"}
-    - {request_id: "CR-SST-0189", owner: "sst-extension", status: "planned"}
-    - {request_id: "CR-SST-0190", owner: "sst-chatbot", status: "planned"}
-    - {request_id: "CR-SST-0191", owner: "sst-4uentes-infra", status: "planned"}
+    - {request_id: "CR-SST-0188", owner: "sst-bend", status: "adopted", manifest_outcome: "policy_adoption_manifest", canonical_commit: "a73acedbd13e9187f6ef54285084b4a3c212abc7"}
+    - {request_id: "CR-SST-0189", owner: "sst-extension", status: "adopted", manifest_outcome: "policy_adoption_manifest", canonical_commit: "fa6a79d83feb6812cff8abd1659db128612f5102"}
+    - {request_id: "CR-SST-0190", owner: "sst-chatbot", status: "adopted", manifest_outcome: "policy_adoption_manifest", canonical_commit: "976837af3c066feefc4c64ef194fa7fdb3f600bb"}
+    - {request_id: "CR-SST-0191", owner: "sst-4uentes-infra", status: "adopted", manifest_outcome: "policy_adoption_manifest", canonical_commit: "86d244de73777988696b65528cedbc7bb3b137dc"}
     - {request_id: "CR-4UENTES-0040", owner: "4uentes-portfolio", status: "planned"}
     - {request_id: "CR-HPT-0004", owner: "finanzas-personales", status: "planned"}
 
@@ -69,5 +69,8 @@ next_gate:
   id: "child-owner-adoption"
   status: "ready"
   blocker: null
-  first_ready_request: "CR-SST-0188"
+  first_ready_request: "CR-4UENTES-0040"
   child_rollout_rule: "Start one isolated owner worktree per approved child CR; publish an adoption or exception manifest and validate owner docs before closure."
+  sst_segment_status: "complete-6-of-6"
+  remaining_owner_units: ["CR-4UENTES-0040", "CR-HPT-0004"]
+  evidence_ref: "evidence/requests/CR-CP-0006/sst-owner-adoption-readback-2026-08-18.md"

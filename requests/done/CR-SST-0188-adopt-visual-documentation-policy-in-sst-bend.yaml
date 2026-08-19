@@ -1,0 +1,62 @@
+schema_version: "1.0"
+phase: 4
+id: "CR-SST-0188"
+title: "Adopt visual documentation policy in sst-bend"
+status: "done"
+source_request: "requests/inbox/CR-SST-0188-adopt-visual-documentation-policy-in-sst-bend.yaml"
+planned_request: "requests/planned/CR-SST-0188-adopt-visual-documentation-policy-in-sst-bend.yaml"
+started_at: "2026-08-17"
+completed_at: "2026-08-18"
+requester: "4uentes"
+
+control_plane_context:
+  initiative_id: "INIT-CP-0002"
+  coordinated_by_request_id: "CR-CP-0006"
+  predecessor_request_id: "CR-CP-0020"
+
+execution:
+  approval_source: "User requested child propagation on 2026-08-16 and confirmed continuation on 2026-08-18."
+  child_repo_mutation_allowed: true
+  child_repo_mutation_target: {service_id: "sst-bend"}
+  branch_strategy: "isolated-worktree-from-origin-develop"
+  jira_write_allowed: false
+  implementation_boundary: "Documentation governance only; no API, database or runtime behavior changed."
+
+publication_result:
+  status: "merged-and-read-back"
+  canonical_branch: "develop"
+  adoption_pr: "https://github.com/afpogo/sst-bend/pull/15"
+  adoption_commit: "7211bc1dc960a3d7ebfe7aa7dadc2866714db2b0"
+  adoption_merge_commit: "a73acedbd13e9187f6ef54285084b4a3c212abc7"
+  canonical_readback_commit: "a73acedbd13e9187f6ef54285084b4a3c212abc7"
+
+owner_documentation:
+  required: true
+  status: satisfied
+  owner_repo: "sst-bend"
+  updated_owner_docs:
+    - "specs/integration/policies.yaml"
+    - "specs/policies/00-index.yaml"
+    - "specs/policies/adoptions/visual-documentation-as-code-policy.yaml"
+    - "docs/policies/README.md"
+    - "AGENTS.md"
+  evidence_refs:
+    - "evidence/requests/CR-CP-0006/sst-owner-adoption-readback-2026-08-18.md"
+  manifest_outcome: "policy_adoption_manifest"
+  adoption_status: "adopted"
+
+validation:
+  owner_check: "PASS: npm.cmd run check"
+  control_plane_check: "PASS: npm.cmd run check"
+  remote_checks: "PASS: build-publish-update and Node.js CI 18.x/20.x"
+  ancestry_check: "PASS"
+  control_character_scan: "PASS"
+  diff_check: "PASS"
+  secret_safe_scan: "PASS"
+
+closure:
+  status: "complete"
+  next_request_id: "CR-SST-0189"
+  limits:
+    - "No API, database or runtime behavior was modified."
+    - "No Kubernetes, secret or Jira operation was performed."
