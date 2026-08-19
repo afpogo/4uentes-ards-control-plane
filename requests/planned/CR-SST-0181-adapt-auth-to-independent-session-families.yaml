@@ -1,0 +1,65 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0181"
+title: "Adapt Auth to independent session families"
+status: "planned"
+source_request: "requests/inbox/CR-SST-0181-adapt-auth-to-independent-session-families.yaml"
+created_at: "2026-08-15"
+requester: "4uentes"
+control_plane_context:
+  initiative_id: "INIT-SST-0008"
+  coordinated_by_request_id: "CR-SST-0179"
+  predecessors: ["CR-SST-0180"]
+  jira_write_allowed: false
+scope:
+  owner_repo: "4uentes-auth"
+  validation_consumer: "sst-bend"
+  deliverables:
+    - "Replace the unique active-user constraint with one family record per unique sid."
+    - "Create an independent family on login without revoking other clients."
+    - "Preserve sid and client binding through exact-generation refresh CAS."
+    - "Revoke only userId+sid on normal logout; keep logout-all separate."
+    - "Migrate a valid legacy no-sid generation exactly once."
+    - "Harden M2M introspection and add idle and absolute expiry semantics."
+  excluded: ["Client coordination", "Reuse enforcement", "Production migration or deployment"]
+execution:
+  requires_human_approval: true
+  approval_source: "User approved the secure multi-session MVP on 2026-08-15."
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets: ["4uentes-auth"]
+  validation_only_repos: ["sst-bend"]
+  production_data_allowed: false
+  deployment_allowed: false
+  jira_write_allowed: false
+risk:
+  level: "high"
+  score: 10
+  drivers: ["SESSION_CONCURRENCY", "REVOCATION", "LEGACY_COMPATIBILITY", "M2M_AUTHORIZATION"]
+model_selection:
+  provider: "codex"
+  resource_level: "normal"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+owner_documentation:
+  required: true
+  status: "planned"
+  planned_surfaces:
+    - "specs/auth.yaml"
+    - "specs/data-mongodb.yaml"
+    - "docs/authentication.md"
+    - "docs/chat-sessions.md"
+validation:
+  required_checks:
+    - "4uentes-auth npm run check"
+    - "deterministic barriers plus repeated two-process Mongo races"
+    - "sst-bend introspection contract checks"
+    - "4uentes-orchestor npm run check"
+  acceptance:
+    - "web and extension families remain active simultaneously"
+    - "N refresh requests yield exactly one winner per generation"
+    - "refresh versus logout cannot resurrect the logged-out sid"
+    - "cross-user and cross-sid operations fail closed"
+    - "invalid introspection identifiers never produce 500"
+decision:
+  status: "approved-planned"
+  decided_at: "2026-08-15"

@@ -1,0 +1,53 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0183"
+title: "Complete extension background session coordination"
+status: "planned"
+source_request: "requests/inbox/CR-SST-0183-complete-extension-background-session-coordination.yaml"
+created_at: "2026-08-15"
+requester: "4uentes"
+control_plane_context:
+  initiative_id: "INIT-SST-0008"
+  coordinated_by_request_id: "CR-SST-0179"
+  predecessors: ["CR-SST-0180", "CR-SST-0181"]
+  jira_write_allowed: false
+scope:
+  owner_repo: "sst-extension"
+  deliverables:
+    - "Background-owned refresh shared by every extension surface."
+    - "Generation-aware writes so a losing request cannot clear newer secrets."
+    - "Logout barrier that blocks or cancels refresh before clearing local state."
+    - "Safe handling when browser.storage.session is absent or rejects."
+    - "Runtime validation through the source MV3 optional-permission flow."
+  excluded: ["New host permissions or UI features", "Backend session changes", "Production publication"]
+execution:
+  requires_human_approval: true
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets: ["sst-extension"]
+  production_data_allowed: false
+  deployment_allowed: false
+  jira_write_allowed: false
+risk:
+  level: "high"
+  score: 9
+  drivers: ["MV3_RUNTIME", "SECRET_STATE_RACE", "LOGOUT_SEMANTICS"]
+model_selection:
+  provider: "codex"
+  resource_level: "normal"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+owner_documentation:
+  required: true
+  status: "planned"
+  planned_surfaces:
+    - "specs/integration/node-auth-extension-session.yaml"
+    - "docs/integration/node-auth-extension-session.md"
+validation:
+  required_checks: ["sst-extension pnpm run check and MV3 build", "isolated unpacked-extension runtime", "4uentes-orchestor npm run check"]
+  acceptance:
+    - "popup, sidepanel and quick-save share one HTTP refresh"
+    - "the final stored secret belongs to the winner"
+    - "logout leaves no refresh, secret or pending credential state"
+decision:
+  status: "approved-planned"
+  decided_at: "2026-08-15"

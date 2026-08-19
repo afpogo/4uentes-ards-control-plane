@@ -1,0 +1,47 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-SST-0179"
+title: "Reconcile atomic revocable auth session families on develop"
+status: "running"
+source_request: "requests/inbox/CR-SST-0179-reconcile-atomic-revocable-auth-session-families.yaml"
+planned_request: "requests/planned/CR-SST-0179-reconcile-atomic-revocable-auth-session-families.yaml"
+created_at: "2026-08-13"
+started_at: "2026-08-15"
+updated_at: "2026-08-18"
+requester: "4uentes"
+control_plane_context:
+  initiative_id: "INIT-SST-0008"
+  predecessor: "CR-SST-0180"
+  jira_write_allowed: false
+execution:
+  requires_human_approval: true
+  approval_source: "Explicit user approval dated 2026-08-15 for the secure multi-session MVP and implementation plan."
+  child_repo_mutation_allowed: false
+  production_data_allowed: false
+  deployment_allowed: false
+  execution_rule: "Technical mutations require the lifecycle and approval of the coordinated technical CR."
+architecture_decision:
+  session_policy: "multiple-independent-session-families-per-account"
+  refresh: "sid-preserving exact-generation CAS"
+  logout: "terminal revocation of current userId+sid only; logout-all remains separate"
+  legacy: "one-time no-sid CAS migration"
+  client: "one refresh coordinator per runtime; ambiguous refresh requires re-login"
+  reuse_detection: "observe before enforce; enforcement requires a separate decision"
+coordination:
+  baseline_request: "CR-SST-0180"
+  baseline_status: "deployed-development-observe"
+  superseded_target_decision: "one-active-session-family-per-account"
+  approved_target_decision: "multiple-independent-session-families-per-account"
+  child_requests: ["CR-SST-0181", "CR-SST-0182", "CR-SST-0183", "CR-SST-0184", "CR-SST-0185"]
+  next_gate: "Merge this control-plane lifecycle, then start CR-SST-0181 in a clean Auth worktree."
+owner_documentation:
+  required: false
+  authority: "Delegated to CR-SST-0181 through CR-SST-0185."
+visual_documentation_tracking:
+  flag: "visual_documentation_adoption_required"
+  state_ref: "state/features/visual-documentation-as-code-adoption.current.yaml"
+  map_ref: "evidence/requests/CR-SST-0179/implementation-plan.md"
+decision:
+  status: "approved-running-plan-fixed"
+  approver: "4uentes"
+  decided_at: "2026-08-15"

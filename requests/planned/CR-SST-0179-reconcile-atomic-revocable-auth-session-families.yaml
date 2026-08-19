@@ -1,0 +1,79 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0179"
+title: "Reconcile atomic revocable auth session families on develop"
+status: "planned"
+source_request: "requests/inbox/CR-SST-0179-reconcile-atomic-revocable-auth-session-families.yaml"
+created_at: "2026-08-13"
+requester: "4uentes"
+summary: >
+  Coordinate the approved multi-session family architecture, reconcile the
+  deployed CR-SST-0180 baseline and sequence the remaining atomic CRs.
+control_plane_context:
+  initiative_id: "INIT-SST-0008"
+  predecessors: ["CR-SST-0180"]
+  related_delivery_requests: ["CR-SST-0178", "CR-SST-0180"]
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  jira_write_authorized: false
+architecture_decision:
+  session_policy: "multiple-independent-session-families-per-account"
+  stable_identity: "sid"
+  active_store: "one mutable refresh-family record per sid"
+  refresh_rule: "CAS the exact current generation and preserve sid; exactly one concurrent refresh may win."
+  logout_rule: "Normal logout revokes only userId+sid; logout-all remains a separate operation."
+  legacy_rule: "A valid refresh without sid may migrate exactly once through exact-generation CAS."
+  ambiguous_write_rule: "Fail closed and require re-login; never retry an old refresh automatically."
+  reuse_rule: "Observe before enforce; enforcement requires completed client-coordination gates and separate approval."
+scope:
+  role: "control-plane-only-coordinator"
+  coordinated_requests: ["CR-SST-0180", "CR-SST-0181", "CR-SST-0182", "CR-SST-0183", "CR-SST-0184", "CR-SST-0185"]
+  deliverables:
+    - "Owner-scoped lifecycle for Auth, SPA, extension, reuse observation and integrated validation."
+    - "Documented dependency order and rollback-compatible session invariants."
+    - "Explicit reconciliation of the deployed single-family baseline with the approved multi-family target."
+  non_goals:
+    - "Child-repository mutation in this coordinator."
+    - "Production deployment or production data migration."
+    - "Secret creation, secret-value documentation or Jira writes."
+execution:
+  requires_human_approval: true
+  approval_source: "Explicit user approval dated 2026-08-15 for the secure multi-session MVP plan."
+  child_repo_mutation_allowed: false
+  production_data_allowed: false
+  deployment_allowed: false
+  jira_write_allowed: false
+risk:
+  level: "high"
+  score: 9
+  drivers: ["AUTH_SESSION_CONCURRENCY", "REVOCATION", "CROSS_REPO_CONTRACT", "ROLLBACK_COMPATIBILITY"]
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "manual"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5"
+  fallback_reasoning_effort: "high"
+workspace_isolation:
+  mode: "one-isolated-worktree-per-technical-cr"
+  production_data_allowed: false
+  deployment_allowed: false
+task_atomization:
+  - {id: "CR-SST-0181", objective: "Adapt Auth to independent sid families and harden introspection."}
+  - {id: "CR-SST-0182", objective: "Coordinate SPA refresh across consumers and tabs."}
+  - {id: "CR-SST-0183", objective: "Complete background-owned extension refresh and logout coordination."}
+  - {id: "CR-SST-0184", objective: "Measure refresh reuse safely before any enforcement decision."}
+  - {id: "CR-SST-0185", objective: "Validate the complete multi-session adoption in isolated runtime."}
+owner_documentation:
+  required: false
+  authority: "Each technical CR updates and validates documentation in its owner repository."
+validation:
+  required_checks:
+    - "4uentes-orchestor npm run check"
+    - "Each technical CR records its owner check, diff check and secret-safe scan."
+decision:
+  status: "approved-planned"
+  approver: "4uentes"
+  decided_at: "2026-08-15"

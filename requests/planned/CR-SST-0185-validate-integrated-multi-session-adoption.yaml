@@ -1,0 +1,64 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0185"
+title: "Validate integrated multi-session adoption"
+status: "planned"
+source_request: "requests/inbox/CR-SST-0185-validate-integrated-multi-session-adoption.yaml"
+created_at: "2026-08-15"
+requester: "4uentes"
+control_plane_context:
+  initiative_id: "INIT-SST-0008"
+  coordinated_by_request_id: "CR-SST-0179"
+  predecessors: ["CR-SST-0181", "CR-SST-0182", "CR-SST-0183", "CR-SST-0184"]
+  validates_baseline: "CR-SST-0180"
+  jira_write_allowed: false
+scope:
+  validation_repos: ["4uentes-auth", "sst-fend", "sst-extension", "sst-bend", "sst-4uentes-infra"]
+  deliverables:
+    - "Manifest-bound loopback Mongo and two-Auth-process race harness."
+    - "M2M introspection and JWT negative matrix."
+    - "SPA two-tab and source MV3 extension runtime validation."
+    - "Legacy/new client compatibility, timeout and rollback checks."
+    - "Verified cleanup of DB, containers, processes, ports and temporary data."
+  excluded: ["Production data or traffic", "Merge, image publication or Argo sync", "Jira writes"]
+execution:
+  requires_human_approval: true
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets: ["4uentes-auth", "sst-fend", "sst-extension", "sst-bend", "sst-4uentes-infra"]
+  mutation_limit: "test harnesses, owner documentation and defects found by this gate"
+  production_data_allowed: false
+  deployment_allowed: false
+  jira_write_allowed: false
+risk:
+  level: "high"
+  score: 10
+  drivers: ["INTEGRATED_AUTH", "MULTI_PROCESS_RACE", "BROWSER_STATE", "CLEANUP_SAFETY"]
+model_selection:
+  provider: "codex"
+  resource_level: "normal"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+owner_documentation:
+  required: true
+  status: "planned"
+  planned_surfaces:
+    - "docs/authentication.md"
+    - "docs/architecture/authentication.md"
+    - "docs/integration/node-auth-extension-session.md"
+    - "docs/api/08-observability.md"
+    - "specs/infra/environments/development.yaml"
+validation:
+  required_checks:
+    - "all five owner repository checks"
+    - "25 to 50 repeated race rounds per critical ordering"
+    - "git diff --check and secret-safe scan in every worktree"
+    - "4uentes-orchestor npm run check"
+  acceptance:
+    - "independent web and extension sessions coexist and revoke separately"
+    - "one refresh winner per generation under two Auth processes"
+    - "introspection changes active true to false within its declared lease"
+    - "clients issue one refresh per coordinated scope and keep winner state"
+    - "cleanup fails closed unless worktree, branch, loopback and manifest identity match"
+decision:
+  status: "approved-planned"
+  decided_at: "2026-08-15"
