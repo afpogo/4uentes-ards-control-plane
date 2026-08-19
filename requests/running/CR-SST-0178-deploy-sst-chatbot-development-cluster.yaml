@@ -18,14 +18,14 @@ scope:
 execution_status:
   lifecycle_and_plan: "complete"
   isolated_worktrees: "complete"
-  chatbot_packaging: "implemented-validated-local"
-  infra_manifests: "implemented-validated-local"
-  cluster_workload: "running-ready"
-  internal_health: "validated"
+  chatbot_packaging: "published-merged"
+  infra_manifests: "merged-gitops-synced"
+  cluster_workload: "running-ready-immutable-image"
+  internal_health: "validated-post-gitops"
   auth_reconciliation: "implemented-validated-local"
-  authenticated_ndjson: "validated-cluster"
+  authenticated_ndjson: "validated-post-gitops"
   socket_io_internal_e2e: "validated-cluster-websocket"
-  socket_io_browser_e2e: "blocked-isolated-browser-profile"
+  socket_io_browser_e2e: "pending-mcp-restart-after-isolation-fix"
 
 blocking_discovery:
   id: "AUTH-DEVELOP-M2M-GAP"
@@ -44,7 +44,7 @@ blocking_discovery:
 
 owner_documentation:
   required: true
-  status: "in-progress"
+  status: "complete-in-merged-owner-prs"
   owner_repos: ["sst-chatbot", "sst-4uentes-infra", "4uentes-auth"]
   updated_paths:
     - "specs/integrations/sst-realtime-chat-runtime.yaml"
@@ -63,6 +63,7 @@ evidence_refs:
   - "evidence/requests/CR-SST-0178/worktree-and-base-evidence.md"
   - "evidence/requests/CR-SST-0178/cluster-validation.md"
   - "evidence/requests/CR-SST-0178/current-status-reconciliation-2026-08-18.md"
+  - "evidence/requests/CR-SST-0178/post-merge-runtime-readback-2026-08-18.md"
 
 decision:
   status: "running-auth-scope-approved"
@@ -118,7 +119,7 @@ continuation_model_selection:
   fallback_profile: "gpt-5.5"
 
 continuation_execution:
-  status: "owner-prs-green-awaiting-chatbot-merge"
+  status: "post-merge-runtime-pass-browser-gate-pending"
   started_at: "2026-08-18"
   control_plane_branch: "agent/cr-sst-0178-development-gitops-continuation"
   owner_baselines:
@@ -135,9 +136,10 @@ continuation_execution:
   gitops_render_completed: true
   container_smoke_completed: true
   owner_pull_requests:
-    sst_chatbot: "https://github.com/afpogo/sst-chatbot/pull/9"
-    sst_infra: "https://github.com/afpogo/sst-4uentes-infra/pull/7"
-    control_plane: "https://github.com/afpogo/4uentes-ards-control-plane/pull/24"
+    sst_chatbot: "https://github.com/afpogo/sst-chatbot/pull/9 (merged)"
+    sst_infra_initial: "https://github.com/afpogo/sst-4uentes-infra/pull/7 (merged)"
+    sst_infra_immutable_pin: "https://github.com/afpogo/sst-4uentes-infra/pull/8 (merged)"
+    control_plane: "https://github.com/afpogo/4uentes-ards-control-plane/pull/24 (merged)"
   remote_checks:
     sst_chatbot: "PASS (repository check and image build without publish on PR)"
     sst_infra: "PASS (four GitOps validation jobs)"
@@ -149,5 +151,25 @@ continuation_execution:
     historical_chatbot_health_status: 404
     historical_bend_realtime_config_present: false
     m2m_secret_required_keys_present: true
-  runtime_readback_completed: false
-  evidence_ref: "evidence/requests/CR-SST-0178/continuation-start-2026-08-18.md"
+  runtime_readback_completed: true
+  immutable_image:
+    tag: "develop-976837af3c06"
+    digest: "sha256:e56167937f03cba366f0100b403fae837a5c5eccc64c8182477002f73b0bbada"
+  post_merge_cluster_readback:
+    context: "kind-sst-cluster-dev"
+    argocd_revision: "ac63160b2f7358528fe9290f4a171c9cd54c6324"
+    argocd_status: "Synced/Healthy"
+    chatbot_ready_replicas: "1/1"
+    chatbot_restart_count: 0
+    internal_health: "PASS"
+    authenticated_m2m_grant: "PASS"
+    authenticated_ndjson_turn: "PASS"
+    public_chatbot_ingress_present: false
+  browser_gate:
+    status: "pending-mcp-restart"
+    local_configuration_fix: "dedicated Chrome DevTools MCP now uses --isolated=true without a persistent userDataDir"
+    reason: "the already-running MCP process retains the previous locked profile until the Codex session restarts"
+  further_child_repo_mutation_allowed: false
+  further_cluster_mutation_allowed: false
+  jira_write_allowed: false
+  evidence_ref: "evidence/requests/CR-SST-0178/post-merge-runtime-readback-2026-08-18.md"
