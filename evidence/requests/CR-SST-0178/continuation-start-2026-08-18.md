@@ -93,9 +93,13 @@ Los worktrees nuevos parten exclusivamente de los refs anteriores.
 - Infra: commit `33aa4c7`, PR draft
   [afpogo/sst-4uentes-infra#7](https://github.com/afpogo/sst-4uentes-infra/pull/7).
 
-Infra pasó sus cuatro checks remotos. Los checks de Chatbot quedaron en curso al
-registrar este snapshot. Ambos PRs apuntan a `develop` y son mergeables; Infra
-permanece draft y no debe fusionarse con el tag mutable.
+Infra pasó sus cuatro checks remotos. Chatbot pasó el repository check y el
+build de imagen de PR; por política el job no publica mientras el evento sea un
+pull request. Ambos PRs apuntan a `develop` y son mergeables; Infra permanece
+draft y no debe fusionarse con el tag mutable.
+
+La continuación del lifecycle se publica en el PR draft
+[afpogo/4uentes-ards-control-plane#24](https://github.com/afpogo/4uentes-ards-control-plane/pull/24).
 
 ## Preflight del cluster development
 

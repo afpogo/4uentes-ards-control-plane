@@ -118,7 +118,7 @@ continuation_model_selection:
   fallback_profile: "gpt-5.5"
 
 continuation_execution:
-  status: "owner-prs-open-awaiting-chatbot-image"
+  status: "owner-prs-green-awaiting-chatbot-merge"
   started_at: "2026-08-18"
   control_plane_branch: "agent/cr-sst-0178-development-gitops-continuation"
   owner_baselines:
@@ -137,6 +137,10 @@ continuation_execution:
   owner_pull_requests:
     sst_chatbot: "https://github.com/afpogo/sst-chatbot/pull/9"
     sst_infra: "https://github.com/afpogo/sst-4uentes-infra/pull/7"
+    control_plane: "https://github.com/afpogo/4uentes-ards-control-plane/pull/24"
+  remote_checks:
+    sst_chatbot: "PASS (repository check and image build without publish on PR)"
+    sst_infra: "PASS (four GitOps validation jobs)"
   cluster_preflight:
     context: "kind-sst-cluster-dev"
     argocd_revision: "7f3b544c6c3ed681cb7eaed4831a60393d9d92dc"
