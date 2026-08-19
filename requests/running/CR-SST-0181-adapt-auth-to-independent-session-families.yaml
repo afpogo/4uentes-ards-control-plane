@@ -1,0 +1,83 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-SST-0181"
+title: "Adapt Auth to independent session families"
+status: "running"
+source_request: "requests/inbox/CR-SST-0181-adapt-auth-to-independent-session-families.yaml"
+planned_request: "requests/planned/CR-SST-0181-adapt-auth-to-independent-session-families.yaml"
+created_at: "2026-08-15"
+started_at: "2026-08-19"
+updated_at: "2026-08-19"
+requester: "4uentes"
+
+control_plane_context:
+  initiative_id: "INIT-SST-0008"
+  coordinated_by_request_id: "CR-SST-0179"
+  predecessor: "CR-SST-0180"
+  jira_write_allowed: false
+
+execution:
+  requires_human_approval: true
+  approval_source: "User approved the secure multi-session MVP on 2026-08-15 and requested continuation after PR #27 merged on 2026-08-19."
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets: ["4uentes-auth"]
+  validation_only_repos: ["sst-bend"]
+  production_data_allowed: false
+  deployment_allowed: false
+  jira_write_allowed: false
+  workspace:
+    branch: "agent/cr-sst-0181-auth-independent-families"
+    base: "4uentes-auth origin/develop@4249ba3"
+    isolation: "clean-worktree"
+
+ordering_reconciliation:
+  planned_lifecycle_merged_before_mutation: true
+  planned_authorization_ref: "requests/planned/CR-SST-0181-adapt-auth-to-independent-session-families.yaml"
+  phase_three_publication_lag: >
+    The local Auth implementation began after the approved planned lifecycle
+    and PR #27 merge, but this running artifact was authored later in the same
+    execution unit. The ordering deviation is explicit and does not expand
+    scope, deployment authority or Jira authority.
+
+implementation_readback:
+  status: "validated-local-owner-and-consumer"
+  implemented:
+    - "Independent sid family insertion without account-wide login revocation."
+    - "Exact-generation CAS with stable sid and terminal userId+sid logout."
+    - "One-time legacy no-sid migration."
+    - "Idle, absolute and retention expiry metadata."
+    - "Exact sst-bend M2M caller/scope validation and identifier shape validation."
+    - "Outbound owner capability for revocable session introspection."
+  validation_observed:
+    owner_check: "pass"
+    deterministic_in_memory_matrix: "pass"
+    mongo_two_process_rounds: 25
+    mongo_cleanup: "verified"
+    sst_bend_ref: "origin/develop@8fe60f4"
+    sst_bend_contract_readback: "compatible"
+    sst_bend_focused_checks: ["test:service-token", "test:chat-guards", "test:chat-security"]
+  remaining:
+    - "Human review of the published Auth draft PR #9; GitHub owner check is green."
+    - "Keep index reconciliation and any rollout outside this non-deployment CR."
+    - "Keep GitHub secret creation blocked until the Infra custody/transport gate is published."
+
+owner_documentation:
+  required: true
+  status: "implemented-local"
+  surfaces:
+    - "specs/auth.yaml"
+    - "specs/data-mongodb.yaml"
+    - "docs/authentication.md"
+    - "docs/chat-sessions.md"
+    - "docs/security/service-token-lifecycle.md"
+    - "specs/capabilities/outbound/revocable-auth-session-introspection.yaml"
+    - "docs/capabilities/outbound/revocable-auth-session-introspection.md"
+    - "docs/tasks/2026-08-19-cr-sst-0181-independent-session-families.md"
+
+evidence:
+  start_ref: "evidence/requests/CR-SST-0181/execution-start-2026-08-19.md"
+
+decision:
+  status: "approved-running"
+  approver: "4uentes"
+  decided_at: "2026-08-19"

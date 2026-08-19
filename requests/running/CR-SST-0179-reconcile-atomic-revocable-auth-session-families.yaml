@@ -7,7 +7,7 @@ source_request: "requests/inbox/CR-SST-0179-reconcile-atomic-revocable-auth-sess
 planned_request: "requests/planned/CR-SST-0179-reconcile-atomic-revocable-auth-session-families.yaml"
 created_at: "2026-08-13"
 started_at: "2026-08-15"
-updated_at: "2026-08-18"
+updated_at: "2026-08-19"
 requester: "4uentes"
 control_plane_context:
   initiative_id: "INIT-SST-0008"
@@ -33,7 +33,9 @@ coordination:
   superseded_target_decision: "one-active-session-family-per-account"
   approved_target_decision: "multiple-independent-session-families-per-account"
   child_requests: ["CR-SST-0181", "CR-SST-0182", "CR-SST-0183", "CR-SST-0184", "CR-SST-0185"]
-  next_gate: "Merge this control-plane lifecycle, then start CR-SST-0181 in a clean Auth worktree."
+  active_child_requests: ["CR-SST-0181", "CR-SST-0182", "CR-SST-0183"]
+  active_child_status: "running-validated-local-owner-and-consumer"
+  next_gate: "Review draft client PRs #14 and #3, execute isolated browser QA, then prepare CR-SST-0184; keep Auth merge, index reconciliation, secret creation and deployment blocked for later gates."
 owner_documentation:
   required: false
   authority: "Delegated to CR-SST-0181 through CR-SST-0185."

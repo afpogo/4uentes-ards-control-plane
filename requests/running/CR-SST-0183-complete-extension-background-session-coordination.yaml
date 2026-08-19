@@ -1,0 +1,75 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-SST-0183"
+title: "Complete extension background session coordination"
+status: "running"
+source_request: "requests/inbox/CR-SST-0183-complete-extension-background-session-coordination.yaml"
+planned_request: "requests/planned/CR-SST-0183-complete-extension-background-session-coordination.yaml"
+created_at: "2026-08-15"
+started_at: "2026-08-19"
+updated_at: "2026-08-19"
+requester: "4uentes"
+
+control_plane_context:
+  initiative_id: "INIT-SST-0008"
+  coordinated_by_request_id: "CR-SST-0179"
+  predecessors: ["CR-SST-0180", "CR-SST-0181"]
+  predecessor_readback: >
+    CR-SST-0181 has a frozen, locally validated Auth contract in draft PR #9.
+    Its merge and deployment remain blocked and are not prerequisites for this
+    source-only client implementation.
+  jira_write_allowed: false
+
+execution:
+  requires_human_approval: true
+  approval_source: "Approved planned lifecycle dated 2026-08-15; user requested continuation after the prerequisite control-plane merge on 2026-08-19."
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets: ["sst-extension"]
+  production_data_allowed: false
+  deployment_allowed: false
+  jira_write_allowed: false
+  workspace:
+    branch: "agent/cr-sst-0183-extension-refresh-coordination"
+    base: "sst-extension origin/develop@fa6a79d"
+    isolation: "clean-worktree"
+
+implementation_readback:
+  status: "validated-published-draft"
+  commit: "e1c45e8"
+  pull_request: "https://github.com/afpogo/sst-extension/pull/3"
+  implemented:
+    - "MV3 background remains the sole refresh owner and shares one in-flight operation."
+    - "Generation-aware serialized writes prevent late refresh resurrection or winner erasure."
+    - "Logout blocks new refresh and completes as the terminal local mutation."
+    - "Rejected browser.storage.session operations fall back to non-durable background memory."
+  validation_observed:
+    owner_check: "pass"
+    tests: "22 suites and 96 tests passed"
+    chrome_mv3_build: "pass"
+    secret_signature_scan: "pass"
+    permission_or_ui_expansion: "none"
+  remaining:
+    - "Unpacked-extension QA with a fresh profile and the existing optional host-permission flow."
+    - "Human review; keep draft and do not merge or publish from this request."
+
+implementation_plan:
+  - "Inventory popup, sidepanel, quick-save and background refresh entry points without mutating the dirty checkout."
+  - "Make the MV3 background the single refresh and logout owner."
+  - "Use generation-aware writes so stale failures cannot erase a newer credential."
+  - "Fail safely when browser.storage.session is absent or rejects."
+  - "Update owner ARDS/SDD and validate the source optional-permission flow without adding permissions or UI."
+
+owner_documentation:
+  required: true
+  status: "implemented-local"
+  surfaces:
+    - "specs/integration/node-auth-extension-session.yaml"
+    - "docs/integration/node-auth-extension-session.md"
+
+evidence:
+  start_ref: "evidence/requests/CR-SST-0183/execution-start-2026-08-19.md"
+
+decision:
+  status: "approved-running"
+  approver: "4uentes"
+  decided_at: "2026-08-19"
