@@ -43,6 +43,7 @@ evidence_refs:
   - "evidence/requests/CR-CP-0006/control-plane-promotion-readiness.md"
   - "evidence/requests/CR-SST-0186/canonical-adoption-readback-2026-08-18.md"
   - "evidence/requests/CR-SST-0187/policy-adoption-summary.md"
+  - "evidence/requests/CR-CP-0006/sst-owner-adoption-readback-2026-08-18.md"
 tracking:
   flag: "visual_documentation_adoption_required"
   current_gate: "child-owner-adoption"
@@ -64,15 +65,15 @@ tracking:
       status: "complete-canonical-readback"
     - id: "child-owner-adoption"
       owner_request: "CR-CP-0006"
-      status: "in-progress-2-of-8"
+      status: "in-progress-6-of-8"
   owner_adoptions:
     - {request_id: "CR-SST-0186", owner: "4uentes-auth", status: "adopted"}
     - {request_id: "CR-SST-0187", owner: "sst-fend", status: "adopted"}
-    - {request_id: "CR-SST-0188", owner: "sst-bend", status: "planned"}
-    - {request_id: "CR-SST-0189", owner: "sst-extension", status: "planned"}
-    - {request_id: "CR-SST-0190", owner: "sst-chatbot", status: "planned"}
-    - {request_id: "CR-SST-0191", owner: "sst-4uentes-infra", status: "planned"}
+    - {request_id: "CR-SST-0188", owner: "sst-bend", status: "adopted"}
+    - {request_id: "CR-SST-0189", owner: "sst-extension", status: "adopted"}
+    - {request_id: "CR-SST-0190", owner: "sst-chatbot", status: "adopted"}
+    - {request_id: "CR-SST-0191", owner: "sst-4uentes-infra", status: "adopted"}
     - {request_id: "CR-4UENTES-0040", owner: "4uentes-portfolio", status: "planned"}
     - {request_id: "CR-HPT-0004", owner: "finanzas-personales", status: "planned"}
 open_gaps:
-  - "4uentes-auth and sst-fend are adopted under CR-SST-0186 and CR-SST-0187; the remaining six owner units still require an adoption or exception manifest under their own CRs."
+  - "The six SST owners are adopted; Portfolio and Finanzas Personales still require their independent adoption or exception lifecycles."

@@ -1,0 +1,62 @@
+schema_version: "1.0"
+phase: 4
+id: "CR-SST-0189"
+title: "Adopt visual documentation policy in sst-extension"
+status: "done"
+source_request: "requests/inbox/CR-SST-0189-adopt-visual-documentation-policy-in-sst-extension.yaml"
+planned_request: "requests/planned/CR-SST-0189-adopt-visual-documentation-policy-in-sst-extension.yaml"
+started_at: "2026-08-17"
+completed_at: "2026-08-18"
+requester: "4uentes"
+
+control_plane_context:
+  initiative_id: "INIT-CP-0002"
+  coordinated_by_request_id: "CR-CP-0006"
+  predecessor_request_id: "CR-CP-0020"
+
+execution:
+  approval_source: "User requested child propagation on 2026-08-16 and confirmed continuation on 2026-08-18."
+  child_repo_mutation_allowed: true
+  child_repo_mutation_target: {service_id: "sst-extension"}
+  branch_strategy: "isolated-worktree-from-origin-develop"
+  jira_write_allowed: false
+  implementation_boundary: "Documentation governance only; no MV3 runtime, permission or browser behavior changed."
+
+publication_result:
+  status: "merged-and-read-back"
+  canonical_branch: "develop"
+  adoption_pr: "https://github.com/afpogo/sst-extension/pull/2"
+  adoption_commit: "b25812636627efdcc1b5b6e934e5119ba9e2e084"
+  adoption_merge_commit: "fa6a79d83feb6812cff8abd1659db128612f5102"
+  canonical_readback_commit: "fa6a79d83feb6812cff8abd1659db128612f5102"
+
+owner_documentation:
+  required: true
+  status: satisfied
+  owner_repo: "sst-extension"
+  updated_owner_docs:
+    - "specs/integration/policies.yaml"
+    - "specs/policies/00-index.yaml"
+    - "specs/policies/adoptions/visual-documentation-as-code-policy.yaml"
+    - "docs/policies/README.md"
+    - "AGENTS.md"
+  evidence_refs:
+    - "evidence/requests/CR-CP-0006/sst-owner-adoption-readback-2026-08-18.md"
+  manifest_outcome: "policy_adoption_manifest"
+  adoption_status: "adopted"
+
+validation:
+  owner_check: "PASS: pnpm.cmd run check; 22 suites, 94 tests and Chrome MV3 build"
+  control_plane_check: "PASS: npm.cmd run check"
+  remote_check: "not-configured"
+  ancestry_check: "PASS"
+  control_character_scan: "PASS"
+  diff_check: "PASS"
+  secret_safe_scan: "PASS"
+
+closure:
+  status: "complete"
+  next_request_id: "CR-SST-0190"
+  limits:
+    - "No MV3 runtime, permission or browser behavior was modified."
+    - "No Kubernetes, secret or Jira operation was performed."

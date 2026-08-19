@@ -1,0 +1,62 @@
+schema_version: "1.0"
+phase: 4
+id: "CR-SST-0191"
+title: "Adopt visual documentation policy in sst-4uentes-infra"
+status: "done"
+source_request: "requests/inbox/CR-SST-0191-adopt-visual-documentation-policy-in-sst-infra.yaml"
+planned_request: "requests/planned/CR-SST-0191-adopt-visual-documentation-policy-in-sst-infra.yaml"
+started_at: "2026-08-17"
+completed_at: "2026-08-18"
+requester: "4uentes"
+
+control_plane_context:
+  initiative_id: "INIT-CP-0002"
+  coordinated_by_request_id: "CR-CP-0006"
+  predecessor_request_id: "CR-CP-0020"
+
+execution:
+  approval_source: "User requested child propagation on 2026-08-16 and confirmed continuation on 2026-08-18."
+  child_repo_mutation_allowed: true
+  child_repo_mutation_target: {service_id: "sst-4uentes-infra"}
+  branch_strategy: "isolated-worktree-from-origin-develop"
+  jira_write_allowed: false
+  implementation_boundary: "Documentation governance only; no cluster, manifest, secret, CI/CD or GitOps behavior changed by this request."
+
+publication_result:
+  status: "merged-and-read-back"
+  canonical_branch: "develop"
+  adoption_pr: "https://github.com/afpogo/sst-4uentes-infra/pull/6"
+  adoption_commit: "6cbfce1492c50a71a9807c3fae999b069698b980"
+  adoption_merge_commit: "d6f69b36b381d184025b8c1225081dff36707d35"
+  canonical_readback_commit: "86d244de73777988696b65528cedbc7bb3b137dc"
+
+owner_documentation:
+  required: true
+  status: satisfied
+  owner_repo: "sst-4uentes-infra"
+  updated_owner_docs:
+    - "specs/integration/policies.yaml"
+    - "specs/policies/00-index.yaml"
+    - "specs/policies/adoptions/visual-documentation-as-code-policy.yaml"
+    - "docs/policies/README.md"
+    - "AGENTS.md"
+  evidence_refs:
+    - "evidence/requests/CR-CP-0006/sst-owner-adoption-readback-2026-08-18.md"
+  manifest_outcome: "policy_adoption_manifest"
+  adoption_status: "adopted"
+
+validation:
+  owner_check: "PASS: npm.cmd run check"
+  control_plane_check: "PASS: npm.cmd run check"
+  remote_check: "PASS: validate-repository"
+  ancestry_check: "PASS after later CR-SST-0178 GitOps merge"
+  control_character_scan: "PASS"
+  diff_check: "PASS"
+  secret_safe_scan: "PASS"
+
+closure:
+  status: "complete"
+  next_request_id: "CR-4UENTES-0040"
+  limits:
+    - "Later CR-SST-0178 GitOps changes are outside this adoption lifecycle."
+    - "No cluster, secret or Jira operation was performed by this request."
