@@ -11,7 +11,7 @@ coordinador porque Portfolio y Finanzas Personales permanecen pendientes.
 | --- | --- | --- | --- | --- | --- |
 | `CR-SST-0186` | `4uentes-auth` | [#7](https://github.com/afpogo/4uentes-auth/pull/7) | `7c45605` | `4249ba3` luego de remediación [#8](https://github.com/afpogo/4uentes-auth/pull/8) | adoptado |
 | `CR-SST-0187` | `sst-fend` | [#13](https://github.com/afpogo/sst-fend/pull/13) | `9e47f5c` | `4e32823` | adoptado |
-| `CR-SST-0188` | `sst-bend` | [#15](https://github.com/afpogo/sst-bend/pull/15) | `7211bc1` | `a73aced` | adoptado |
+| `CR-SST-0188` | `sst-bend` | [#15](https://github.com/afpogo/sst-bend/pull/15), remediación [#16](https://github.com/afpogo/sst-bend/pull/16) | `7211bc1` | `8fe60f4` luego de remediación | adoptado |
 | `CR-SST-0189` | `sst-extension` | [#2](https://github.com/afpogo/sst-extension/pull/2) | `b258126` | `fa6a79d` | adoptado |
 | `CR-SST-0190` | `sst-chatbot` | [#8](https://github.com/afpogo/sst-chatbot/pull/8) | `b20a601` | `976837a` | adoptado |
 | `CR-SST-0191` | `sst-4uentes-infra` | [#6](https://github.com/afpogo/sst-4uentes-infra/pull/6) | `6cbfce1` | `86d244d` | adoptado |
@@ -38,6 +38,10 @@ comprobar la procedencia específica de `CR-SST-0187`.
 
 - Los cinco PR restantes fueron observados como `MERGED` contra `develop`.
 - Los checks remotos configurados pasaron en Fend, Bend, Chatbot e Infra.
+- La remediación #16 de Bend pasó `build-publish-update` y Node.js CI 18.x/20.x.
+- El check local de Bend terminó con código `0`; el smoke público y el caso de
+  timeout pasaron. La cobertura protegida quedó en `1/2` (`50%`) porque no se
+  suministró `SMOKE_JWT`, por lo que no se afirma QA HTTP autenticado completo.
 - Extension no tiene checks remotos configurados; su gate owner previo pasó
   22 suites, 94 tests y build Chrome MV3.
 - Fend pasó previamente 33 suites, 215 tests y Webpack.

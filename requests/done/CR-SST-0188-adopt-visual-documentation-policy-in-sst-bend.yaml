@@ -6,7 +6,7 @@ status: "done"
 source_request: "requests/inbox/CR-SST-0188-adopt-visual-documentation-policy-in-sst-bend.yaml"
 planned_request: "requests/planned/CR-SST-0188-adopt-visual-documentation-policy-in-sst-bend.yaml"
 started_at: "2026-08-17"
-completed_at: "2026-08-18"
+completed_at: "2026-08-19"
 requester: "4uentes"
 
 control_plane_context:
@@ -28,7 +28,9 @@ publication_result:
   adoption_pr: "https://github.com/afpogo/sst-bend/pull/15"
   adoption_commit: "7211bc1dc960a3d7ebfe7aa7dadc2866714db2b0"
   adoption_merge_commit: "a73acedbd13e9187f6ef54285084b4a3c212abc7"
-  canonical_readback_commit: "a73acedbd13e9187f6ef54285084b4a3c212abc7"
+  remediation_pr: "https://github.com/afpogo/sst-bend/pull/16"
+  remediation_commit: "0af7880f5b13108272c80881434d914e8717273d"
+  canonical_readback_commit: "8fe60f4a60e525fa189cae690cd36820c0f3385a"
 
 owner_documentation:
   required: true
@@ -42,13 +44,15 @@ owner_documentation:
     - "AGENTS.md"
   evidence_refs:
     - "evidence/requests/CR-CP-0006/sst-owner-adoption-readback-2026-08-18.md"
+    - "evidence/requests/CR-SST-0188/canonical-adoption-readback-2026-08-19.md"
   manifest_outcome: "policy_adoption_manifest"
   adoption_status: "adopted"
 
 validation:
-  owner_check: "PASS: npm.cmd run check"
+  owner_check: "PASS_WITH_LIMITATION: npm.cmd run check exited 0; protected HTTP smoke remained partial at 1/2 without SMOKE_JWT."
   control_plane_check: "PASS: npm.cmd run check"
-  remote_checks: "PASS: build-publish-update and Node.js CI 18.x/20.x"
+  adoption_pr_checks: "PASS: build-publish-update and Node.js CI 18.x/20.x"
+  remediation_pr_checks: "PASS: build-publish-update and Node.js CI 18.x/20.x"
   ancestry_check: "PASS"
   control_character_scan: "PASS"
   diff_check: "PASS"
@@ -60,3 +64,4 @@ closure:
   limits:
     - "No API, database or runtime behavior was modified."
     - "No Kubernetes, secret or Jira operation was performed."
+    - "No authenticated protected HTTP smoke was claimed because SMOKE_JWT was not supplied."
