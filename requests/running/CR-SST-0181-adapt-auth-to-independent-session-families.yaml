@@ -40,7 +40,7 @@ ordering_reconciliation:
     scope, deployment authority or Jira authority.
 
 implementation_readback:
-  status: "validated-local-owner-pending-consumer"
+  status: "validated-local-owner-and-consumer"
   implemented:
     - "Independent sid family insertion without account-wide login revocation."
     - "Exact-generation CAS with stable sid and terminal userId+sid logout."
@@ -53,10 +53,13 @@ implementation_readback:
     deterministic_in_memory_matrix: "pass"
     mongo_two_process_rounds: 25
     mongo_cleanup: "verified"
+    sst_bend_ref: "origin/develop@8fe60f4"
+    sst_bend_contract_readback: "compatible"
+    sst_bend_focused_checks: ["test:service-token", "test:chat-guards", "test:chat-security"]
   remaining:
-    - "Validate the published introspection capability against the sst-bend consumer contract."
     - "Review and publish the Auth draft PR."
     - "Keep index reconciliation and any rollout outside this non-deployment CR."
+    - "Keep GitHub secret creation blocked until the Infra custody/transport gate is published."
 
 owner_documentation:
   required: true
@@ -66,6 +69,7 @@ owner_documentation:
     - "specs/data-mongodb.yaml"
     - "docs/authentication.md"
     - "docs/chat-sessions.md"
+    - "docs/security/service-token-lifecycle.md"
     - "specs/capabilities/outbound/revocable-auth-session-introspection.yaml"
     - "docs/capabilities/outbound/revocable-auth-session-introspection.md"
     - "docs/tasks/2026-08-19-cr-sst-0181-independent-session-families.md"

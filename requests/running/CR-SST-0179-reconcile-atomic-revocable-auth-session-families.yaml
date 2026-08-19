@@ -34,8 +34,8 @@ coordination:
   approved_target_decision: "multiple-independent-session-families-per-account"
   child_requests: ["CR-SST-0181", "CR-SST-0182", "CR-SST-0183", "CR-SST-0184", "CR-SST-0185"]
   active_child_request: "CR-SST-0181"
-  active_child_status: "running-validated-local-owner-pending-consumer"
-  next_gate: "Validate the Auth introspection capability against sst-bend, then publish the Auth draft PR without deployment."
+  active_child_status: "running-validated-local-owner-and-consumer"
+  next_gate: "Publish the Auth draft PR without deployment; keep index reconciliation and secret creation in later gates."
 owner_documentation:
   required: false
   authority: "Delegated to CR-SST-0181 through CR-SST-0185."
