@@ -42,9 +42,27 @@ validation:
   diff_check: "PASS"
   evidence_ref: "evidence/requests/CR-CP-0006/control-plane-promotion-readiness.md"
 
+rollout_progress:
+  completed: 1
+  total: 8
+  owners:
+    - request_id: "CR-SST-0186"
+      owner: "4uentes-auth"
+      status: "adopted"
+      manifest_outcome: "policy_adoption_manifest"
+      canonical_commit: "4249ba3bd949c902e943c2b826df10bae6809c1b"
+      evidence_ref: "evidence/requests/CR-SST-0186/canonical-adoption-readback-2026-08-18.md"
+    - {request_id: "CR-SST-0187", owner: "sst-fend", status: "planned"}
+    - {request_id: "CR-SST-0188", owner: "sst-bend", status: "planned"}
+    - {request_id: "CR-SST-0189", owner: "sst-extension", status: "planned"}
+    - {request_id: "CR-SST-0190", owner: "sst-chatbot", status: "planned"}
+    - {request_id: "CR-SST-0191", owner: "sst-4uentes-infra", status: "planned"}
+    - {request_id: "CR-4UENTES-0040", owner: "4uentes-portfolio", status: "planned"}
+    - {request_id: "CR-HPT-0004", owner: "finanzas-personales", status: "planned"}
+
 next_gate:
   id: "child-owner-adoption"
   status: "ready"
   blocker: null
-  first_ready_request: "CR-SST-0186"
+  first_ready_request: "CR-SST-0187"
   child_rollout_rule: "Start one isolated owner worktree per approved child CR; publish an adoption or exception manifest and validate owner docs before closure."
