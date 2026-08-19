@@ -79,3 +79,71 @@ canonical_reconciliation:
   continuation_requires: "new human approval, current owner branches and runtime readback"
   session_contract_authority: "CR-SST-0180"
   evidence_ref: "evidence/requests/CR-SST-0178/current-status-reconciliation-2026-08-18.md"
+
+continuation_authorization:
+  approved_at: "2026-08-18"
+  approval_source: "User instruction to advance CR-SST-0178 from current owner branches."
+  authorization_status: "active-for-current-development-continuation"
+  base_rule: "fresh worktrees from refreshed owner remote refs"
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets:
+    - "sst-chatbot"
+    - "sst-4uentes-infra"
+    - "4uentes-auth"
+  conditional_child_repo_mutation_target:
+    repo: "sst-bend"
+    condition: "only if the current owner contract cannot consume cluster-internal chatbot configuration"
+  validation_only_repositories: ["sst-fend"]
+  cluster_mutation_allowed: true
+  cluster_mutation_scope: "development namespace through reviewed GitOps state only"
+  direct_public_chatbot_ingress_allowed: false
+  production_mutation_allowed: false
+  production_data_allowed: false
+  jira_write_allowed: false
+  secret_values_in_git_or_evidence_allowed: false
+  current_session_contract_authority: "CR-SST-0180"
+  closure_requires:
+    - "owner checks and full control-plane npm run check"
+    - "persistent GitOps readback"
+    - "internal health and authenticated NDJSON"
+    - "Socket.IO browser E2E from the isolated Chrome DevTools MCP profile"
+    - "sanitized evidence with no credential values"
+
+continuation_model_selection:
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5"
+
+continuation_execution:
+  status: "owner-prs-open-awaiting-chatbot-image"
+  started_at: "2026-08-18"
+  control_plane_branch: "agent/cr-sst-0178-development-gitops-continuation"
+  owner_baselines:
+    sst_chatbot: "origin/develop@4fdd4165e320"
+    sst_infra: "origin/develop@7f3b544"
+    auth_validation_only: "origin/develop@4249ba3bd949"
+    bend_validation_only: "origin/develop@a73acedbd13e"
+    fend_validation_only: "origin/develop@4e32823ca3c1"
+  child_worktrees_created: true
+  mutated_owners: ["sst-chatbot", "sst-4uentes-infra"]
+  validation_only_owners: ["4uentes-auth", "sst-bend", "sst-fend"]
+  mutated_owner_local_checks_completed: true
+  validation_only_owner_contract_audit_completed: true
+  gitops_render_completed: true
+  container_smoke_completed: true
+  owner_pull_requests:
+    sst_chatbot: "https://github.com/afpogo/sst-chatbot/pull/9"
+    sst_infra: "https://github.com/afpogo/sst-4uentes-infra/pull/7"
+  cluster_preflight:
+    context: "kind-sst-cluster-dev"
+    argocd_revision: "7f3b544c6c3ed681cb7eaed4831a60393d9d92dc"
+    argocd_status: "Synced/Healthy"
+    historical_chatbot_resource_present: true
+    historical_chatbot_health_status: 404
+    historical_bend_realtime_config_present: false
+    m2m_secret_required_keys_present: true
+  runtime_readback_completed: false
+  evidence_ref: "evidence/requests/CR-SST-0178/continuation-start-2026-08-18.md"
