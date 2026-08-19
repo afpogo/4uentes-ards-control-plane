@@ -1,0 +1,55 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0184"
+title: "Observe and gate refresh token reuse"
+status: "planned"
+source_request: "requests/inbox/CR-SST-0184-observe-and-gate-refresh-token-reuse.yaml"
+created_at: "2026-08-15"
+requester: "4uentes"
+control_plane_context:
+  initiative_id: "INIT-SST-0008"
+  coordinated_by_request_id: "CR-SST-0179"
+  predecessors: ["CR-SST-0181", "CR-SST-0182", "CR-SST-0183"]
+  jira_write_allowed: false
+scope:
+  owner_repos: ["4uentes-auth", "sst-4uentes-infra"]
+  deliverables:
+    - "Explicit off, observe and enforce configuration states."
+    - "Closed-cardinality counters for stale generation, CAS loss and ambiguous response."
+    - "No raw token, email, IP, sid or jti in logs, metrics or evidence."
+    - "Synthetic canary observation windows and rollback thresholds."
+    - "Separate approval before enforce; this CR does not silently enable it."
+  excluded: ["Production enforcement", "Global revocation from a family-local signal", "Device management UI"]
+execution:
+  requires_human_approval: true
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets: ["4uentes-auth", "sst-4uentes-infra"]
+  production_data_allowed: false
+  deployment_allowed: false
+  jira_write_allowed: false
+risk:
+  level: "high"
+  score: 9
+  drivers: ["FALSE_POSITIVE_REVOCATION", "SECURITY_TELEMETRY", "ROLLOUT_POLICY"]
+model_selection:
+  provider: "codex"
+  resource_level: "normal"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+owner_documentation:
+  required: true
+  status: "planned"
+  planned_surfaces:
+    - "specs/auth.yaml"
+    - "docs/authentication.md"
+    - "specs/infra/deployment-contracts/node-auth.yaml"
+    - "specs/infra/environments/development.yaml"
+validation:
+  required_checks: ["4uentes-auth npm run check", "sst-4uentes-infra npm run check and overlay render", "secret-safe telemetry scan", "4uentes-orchestor npm run check"]
+  acceptance:
+    - "observe never revokes a family"
+    - "synthetic replay increments only approved aggregate labels"
+    - "enforce remains disabled until a new explicit decision"
+decision:
+  status: "approved-planned"
+  decided_at: "2026-08-15"

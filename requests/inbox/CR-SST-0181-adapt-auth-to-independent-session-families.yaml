@@ -1,0 +1,16 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0181"
+title: "Adapt Auth to independent session families"
+status: "inbox"
+created_at: "2026-08-15"
+requester: "4uentes"
+business_context: >
+  CR-SST-0180 deployed a useful sid/CAS baseline but limits every account to
+  one active family, which prevents concurrent web and extension sessions.
+requested_change: >
+  Preserve the safe CAS, legacy and introspection work while changing storage
+  and login semantics to independently revocable families keyed by sid.
+expected_outcome: >
+  Web and extension sessions coexist, refresh remains single-use per family
+  and normal logout is terminal only for the presented family.

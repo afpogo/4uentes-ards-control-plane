@@ -1,0 +1,16 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0185"
+title: "Validate integrated multi-session adoption"
+status: "inbox"
+created_at: "2026-08-15"
+requester: "4uentes"
+business_context: >
+  Backend, introspection and clients must be tested together before the
+  multi-session contract can replace the CR-SST-0180 single-family baseline.
+requested_change: >
+  Execute reproducible isolated validation over Mongo, two Auth processes,
+  M2M introspection, SPA tabs and the real MV3 extension build.
+expected_outcome: >
+  Sanitized evidence demonstrates compatibility, concurrency, cleanup and
+  rollback readiness without production traffic or deployment.

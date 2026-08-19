@@ -1,0 +1,19 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0179"
+title: "Reconcile atomic revocable auth session families on develop"
+status: "inbox"
+created_at: "2026-08-13"
+requester: "4uentes"
+business_context: >
+  CR-SST-0180 established a deployed sid, atomic refresh and introspection
+  baseline, but its one-family-per-account policy prevents concurrent web,
+  extension and future device sessions.
+requested_change: >
+  Coordinate the transition to independently revocable session families while
+  preserving atomic refresh, terminal logout, legacy compatibility and safe
+  client coordination.
+expected_outcome: >
+  Independent web and extension families per account, at most one refresh
+  winner per generation, logout scoped to the current userId+sid and
+  reproducible cross-repository validation before any promotion.

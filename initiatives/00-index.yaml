@@ -19,5 +19,6 @@ initiatives:
   - "initiatives/INIT-SST-0005-article-kind-integrity.yaml"
   - "initiatives/INIT-SST-0006-auth-access-ui-resilience-and-rebranding.yaml"
   - "initiatives/INIT-SST-0007-sst-chatbot-first-connected-version.yaml"
+  - "initiatives/INIT-SST-0008-cryptographic-security-and-secret-lifecycle-hardening.yaml"
 validation:
   command: "npm.cmd run check:initiatives"

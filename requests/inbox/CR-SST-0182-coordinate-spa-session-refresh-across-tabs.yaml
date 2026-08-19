@@ -1,0 +1,16 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0182"
+title: "Coordinate SPA session refresh across tabs"
+status: "inbox"
+created_at: "2026-08-15"
+requester: "4uentes"
+business_context: >
+  CR-SST-0180 deduplicates refresh inside one JavaScript runtime, but separate
+  tabs can still consume the same rotating cookie concurrently.
+requested_change: >
+  Establish one SPA session coordinator across Axios, actors, realtime and
+  same-origin tabs, with explicit handling of refresh and logout uncertainty.
+expected_outcome: >
+  Concurrent protected requests share one refresh result and a failed remote
+  logout is never presented as confirmed revocation.
