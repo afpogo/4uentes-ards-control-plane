@@ -32,9 +32,9 @@ visual_map:
     - "requests/done/CR-SST-0189-adopt-visual-documentation-policy-in-sst-extension.yaml"
     - "requests/done/CR-SST-0190-adopt-visual-documentation-policy-in-sst-chatbot.yaml"
     - "requests/done/CR-SST-0191-adopt-visual-documentation-policy-in-sst-infra.yaml"
-    - "requests/planned/CR-4UENTES-0040-adopt-visual-documentation-policy-in-portfolio.yaml"
+    - "requests/done/CR-4UENTES-0040-adopt-visual-documentation-policy-in-portfolio.yaml"
     - "requests/planned/CR-HPT-0004-adopt-visual-documentation-policy-in-finanzas-personales.yaml"
-  observed_at: "2026-08-18"
+  observed_at: "2026-08-21"
   authority_boundary: "Vista derivada; los YAML de lifecycle y los manifests owner conservan autoridad."
   request_ids: ["CR-CP-0020", "CR-CP-0006", "CR-SST-0186", "CR-SST-0187", "CR-SST-0188", "CR-SST-0189", "CR-SST-0190", "CR-SST-0191", "CR-4UENTES-0040", "CR-HPT-0004"]
   textual_fallback_required: true
@@ -51,7 +51,7 @@ flowchart TD
     EXT["CR-SST-0189<br/>sst-extension [validated]"]
     BOT["CR-SST-0190<br/>sst-chatbot [validated]"]
     INFRA["CR-SST-0191<br/>sst-infra [validated]"]
-    PORT["CR-4UENTES-0040<br/>portfolio [planned]"]
+    PORT["CR-4UENTES-0040<br/>portfolio [validated]"]
     HPT["CR-HPT-0004<br/>finanzas-personales [planned]"]
     CLOSE["Coordinator closure [planned]<br/>all owners decided"]
 
@@ -79,8 +79,8 @@ flowchart TD
     classDef coordinator fill:#dbeafe,stroke:#2563eb,color:#172554
     class LOCAL validated
     class CORE validated
-    class AUTH,FEND,BEND,EXT,BOT,INFRA validated
-    class PORT,HPT planned
+    class AUTH,FEND,BEND,EXT,BOT,INFRA,PORT validated
+    class HPT planned
     class COORD,CLOSE coordinator
 ```
 
@@ -96,7 +96,7 @@ Perfil y validator local validados
      -> CR-SST-0189  sst-extension [adopted]
      -> CR-SST-0190  sst-chatbot [adopted]
      -> CR-SST-0191  sst-4uentes-infra [adopted]
-     -> CR-4UENTES-0040  4uentes-portfolio [planned]
+     -> CR-4UENTES-0040  4uentes-portfolio [adopted]
      -> CR-HPT-0004  finanzas-personales frontend + backend [planned]
   -> El coordinador cierra sólo cuando cada owner tiene manifest, excepción o defer explícito.
 ```
