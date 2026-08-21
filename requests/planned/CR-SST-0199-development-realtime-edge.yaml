@@ -1,0 +1,74 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0199"
+title: "Expose the protected development realtime edge"
+status: "planned"
+source_request: "requests/inbox/CR-SST-0199-development-realtime-edge.yaml"
+created_at: "2026-08-21"
+requester: "4uentes"
+control_plane_context:
+  initiative_id: "INIT-SST-0007"
+  coordinated_by_request_id: "CR-SST-0178"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  jira_write_authorized: false
+scope:
+  target_environment: "development"
+  child_repo_mutation_targets: ["sst-bend", "sst-4uentes-infra"]
+  cors_allowed_origins:
+    - "configured local shell origin"
+    - "http://localhost:8088"
+    - "http://sst.local"
+    - "current reserved HTTPS ngrok origin"
+  public_ingress_path: "/4uentes/realtime/socket.io"
+  public_backend: "sst-bend-service:3005"
+  forbidden_public_surfaces: ["/4uentes/v1", "general sst-bend APIs", "sst-chatbot"]
+risk: {level: "high", score: 8, drivers: ["CORS", "PUBLIC_EDGE", "WEBSOCKET", "GITOPS"]}
+task_weight: {classification: "complex-high-risk-task", risk_level: "high"}
+model_selection:
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "manual"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5"
+  fallback_reasoning_effort: "high"
+subagent_deployment_plan:
+  mode: "none"
+  reason: "Authentication-adjacent edge and security decisions remain in the primary agent; proactive delegation is disabled."
+execution:
+  requires_human_approval: true
+  approval_source: "User-provided integral adoption plan dated 2026-08-21."
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets: ["sst-bend", "sst-4uentes-infra"]
+  deployment_allowed: true
+  deployment_mode: "Git and Argo CD reconciliation only"
+  production_mutation_allowed: false
+  jira_write_allowed: false
+workspace_isolation:
+  base_ref: "origin/develop"
+  rule: "One new clean worktree per owner; preserve all existing dirty worktrees."
+implementation:
+  - "Replace hardcoded CORS with exact CORS_ALLOWED_ORIGINS parsing and fail-closed matching."
+  - "Route Prefix /4uentes/realtime/socket.io to sst-bend-service:3005."
+  - "Set nginx.org/websocket-services to sst-bend-service and preserve existing routes."
+  - "Update producer/infra owner contracts, capabilities and runbooks."
+owner_documentation:
+  required: true
+  status: "planned"
+  owner_repos: ["sst-bend", "sst-4uentes-infra"]
+  planned_surfaces:
+    - "specs/api/sst-chat-realtime-v1.yaml"
+    - "docs/api/sst-chat-realtime-v1.md"
+    - "specs/infra/environments/development.yaml"
+    - "docs/runbooks/argocd-kind-development.md"
+validation:
+  - "sst-bend npm run check plus allowed/denied CORS and realtime security tests."
+  - "sst-4uentes-infra npm run check, Kustomize render and kubectl dry-run=client."
+  - "4uentes-orchestor npm run check before closure."
+acceptance:
+  - "Approved origins connect; absent, malformed and unapproved origins fail closed."
+  - "Engine.IO reaches Bend at the dedicated path and upgrades to WebSocket."
+  - "No general Bend or Chatbot public route is created."
+rollback: "Restore the previous Git revisions and let Argo CD reconcile; do not patch the cluster manually."
+decision: {status: "approved-planned", approver: "4uentes", decided_at: "2026-08-21"}

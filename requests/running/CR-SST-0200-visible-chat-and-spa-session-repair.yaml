@@ -1,0 +1,29 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-SST-0200"
+title: "Make chat visible and repair SPA session teardown"
+status: "running"
+source_request: "requests/inbox/CR-SST-0200-visible-chat-and-spa-session-repair.yaml"
+planned_request: "requests/planned/CR-SST-0200-visible-chat-and-spa-session-repair.yaml"
+created_at: "2026-08-21"
+started_at: "2026-08-21"
+requester: "4uentes"
+control_plane_context: {initiative_id: "INIT-SST-0007", coordinated_by_request_id: "CR-SST-0178", related_request_id: "CR-SST-0182", jira_write_allowed: false}
+execution:
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets: ["sst-fend"]
+  deployment_allowed: false
+owner_documentation:
+  required: true
+  status: "implemented-local-validated"
+  planned_surfaces:
+    - "specs/auth.yaml"
+    - "specs/integrations/sst-chat-realtime-v1.yaml"
+    - "docs/auth.md"
+    - "docs/chat.md"
+decision: {status: "approved-running", approver: "4uentes", decided_at: "2026-08-21"}
+implementation:
+  status: "local-commit-ready-for-publication"
+  sst_fend_commit: "c160479"
+  validation: ["Fend full check PASS", "36 suites and 235 tests PASS", "production webpack build PASS"]
+  remaining: ["publish and merge owner change", "publish immutable image", "browser session and logout QA"]

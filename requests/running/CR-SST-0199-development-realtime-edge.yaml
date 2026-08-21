@@ -1,0 +1,30 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-SST-0199"
+title: "Expose the protected development realtime edge"
+status: "running"
+source_request: "requests/inbox/CR-SST-0199-development-realtime-edge.yaml"
+planned_request: "requests/planned/CR-SST-0199-development-realtime-edge.yaml"
+created_at: "2026-08-21"
+started_at: "2026-08-21"
+requester: "4uentes"
+control_plane_context: {initiative_id: "INIT-SST-0007", coordinated_by_request_id: "CR-SST-0178", jira_write_allowed: false}
+execution:
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets: ["sst-bend", "sst-4uentes-infra"]
+  cluster_mutation_mode: "Git and Argo CD reconciliation only"
+owner_documentation:
+  required: true
+  status: "implemented-local-validated"
+  planned_surfaces:
+    - "specs/api/sst-chat-realtime-v1.yaml"
+    - "docs/api/sst-chat-realtime-v1.md"
+    - "specs/infra/environments/development.yaml"
+    - "docs/runbooks/argocd-kind-development.md"
+decision: {status: "approved-running", approver: "4uentes", decided_at: "2026-08-21"}
+implementation:
+  status: "local-commits-ready-for-publication"
+  sst_bend_commit: "d9c7f48"
+  sst_infra_commit: "9421525"
+  validation: ["Bend chat security PASS", "Bend TypeScript build PASS", "Infra full check and client dry-run PASS"]
+  remaining: ["publish and merge owner changes", "GitOps reconcile", "localhost and reserved ngrok realtime QA"]

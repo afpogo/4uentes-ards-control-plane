@@ -3,7 +3,7 @@ kind: "feature_state"
 id: "sst-chatbot"
 title: "SST Chatbot Capability Trace"
 status: "validated-local"
-updated_at: "2026-08-18"
+updated_at: "2026-08-21"
 solution_id: "sst"
 affected_services:
   - sst-chatbot
@@ -31,6 +31,9 @@ request_ids:
   - CR-SST-0171
   - CR-SST-0172
   - CR-SST-0178
+  - CR-SST-0199
+  - CR-SST-0200
+  - CR-SST-0201
 capability_refs:
   - "capability.inbound.sst-chatbot-agent-handoff"
 spec_refs:
@@ -62,6 +65,7 @@ evidence_refs:
   - "evidence/initiatives/INIT-SST-0007/operational-validation-2026-08-10.md"
   - "evidence/requests/CR-SST-0172/post-merge-closure-2026-08-11.md"
   - "evidence/requests/CR-SST-0178/current-status-reconciliation-2026-08-18.md"
+  - "evidence/requests/CR-SST-0178/integrated-chat-raw-v2-plan-2026-08-21.md"
 validation_refs:
   - "evidence/requests/CR-SST-0016/validation-results.md"
   - "evidence/requests/CR-SST-0021/validation-results.md"
@@ -83,3 +87,4 @@ open_gaps:
   - "The 2026-08-13 cluster evidence is historical and was not refreshed in the 2026-08-18 documentation gate."
   - "CR-SST-0166 is a historical functional baseline; CR-SST-0180 is the current authority for atomic session rotation and logout semantics."
   - "User RAG, stakeholder RAG, multi-session adoption and personal memory remain separate lifecycles."
+  - "CR-SST-0199, CR-SST-0200 and CR-SST-0201 must pass the integrated localhost and reserved-ngrok gate before CR-SST-0178 can close."

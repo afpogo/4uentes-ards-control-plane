@@ -36,6 +36,8 @@ known_change_requests:
   - "CR-SST-0172"
   - "CR-SST-0178"
   - "CR-SST-0199"
+  - "CR-SST-0200"
+  - "CR-SST-0201"
 tracking:
   jira:
     role: "mirror"
@@ -60,6 +62,7 @@ current_read_model:
   active_execution_request: "CR-SST-0178"
   active_correction_request: "CR-SST-0199"
   current_session_contract_ref: "requests/running/CR-SST-0180-integrate-login-sessions-and-timeout-corrections.yaml"
+  integrated_closure_plan_ref: "evidence/requests/CR-SST-0178/integrated-chat-raw-v2-plan-2026-08-21.md"
 security_qualification:
   historical_request: "CR-SST-0166"
   qualification: >

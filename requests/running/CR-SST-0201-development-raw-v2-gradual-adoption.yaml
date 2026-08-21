@@ -1,0 +1,35 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-SST-0201"
+title: "Adopt raw-v2 gradually in development"
+status: "running"
+source_request: "requests/inbox/CR-SST-0201-development-raw-v2-gradual-adoption.yaml"
+planned_request: "requests/planned/CR-SST-0201-development-raw-v2-gradual-adoption.yaml"
+created_at: "2026-08-21"
+started_at: "2026-08-21"
+requester: "4uentes"
+control_plane_context: {initiative_id: "INIT-SST-0008", coordinated_by_request_id: "CR-SST-0178", depends_on: ["CR-SST-0199", "CR-SST-0200"], jira_write_allowed: false}
+execution:
+  status: "local-implementation-validated-waiting-publication"
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets: ["sst-fend", "sst-4uentes-infra"]
+  validation_only_repositories: ["4uentes-auth"]
+  conditional_auth_mutation_allowed: false
+owner_documentation:
+  required: true
+  status: "implemented-local-validated"
+  planned_surfaces:
+    - "specs/auth.yaml"
+    - "docs/auth.md"
+    - "specs/infra/environments/development.yaml"
+    - "docs/runbooks/argocd-kind-development.md"
+decision: {status: "approved-running-waiting-dependencies", approver: "4uentes", decided_at: "2026-08-21"}
+implementation:
+  auth_validation_commit: "4249ba3"
+  auth_mutated: false
+  auth_validation: "Full check and password-adoption/session/chat matrices PASS"
+  sst_fend_commit: "e5c24a0"
+  sst_infra_commit: "a1645d5"
+  initial_flags: {PASSWORD_RAW_V2_ACCEPT_ENABLED: true, PASSWORD_MIGRATE_ON_LOGIN_ENABLED: false, LOGIN_ATTEMPT_GUARD_MODE: observe}
+  validation: ["Fend raw-v2 full check PASS", "36 suites and 235 tests PASS", "Infra full render and client dry-run PASS"]
+  remaining: ["merge predecessor owner changes", "publish and reconcile initial stage", "two real 15-minute observation windows", "migration promotion and rollback QA"]
