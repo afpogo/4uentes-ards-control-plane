@@ -1,0 +1,65 @@
+schema_version: "1.0"
+phase: 4
+id: "CR-4UENTES-0040"
+title: "Adopt visual documentation policy in 4uentes-portfolio"
+status: "done"
+source_request: "requests/inbox/CR-4UENTES-0040-adopt-visual-documentation-policy-in-portfolio.yaml"
+planned_request: "requests/planned/CR-4UENTES-0040-adopt-visual-documentation-policy-in-portfolio.yaml"
+started_at: "2026-08-20"
+completed_at: "2026-08-21"
+requester: "4uentes"
+
+control_plane_context:
+  initiative_id: "INIT-PORTFOLIO-0003"
+  coordinated_by_request_id: "CR-CP-0006"
+  predecessor_request_id: "CR-CP-0020"
+
+execution:
+  approval_source: "User approved continuation to CR-4UENTES-0040 on 2026-08-20 and confirmed the owner PR merge on 2026-08-21."
+  child_repo_mutation_allowed: true
+  child_repo_mutation_target:
+    service_id: "4uentes-portfolio"
+  branch_strategy: "isolated-worktree-from-origin-develop"
+  jira_write_allowed: false
+  implementation_boundary: "Documentation governance only; no portfolio UI, dependency, runtime, build behavior or publication behavior changed."
+
+publication_result:
+  status: "merged-and-read-back"
+  canonical_branch: "develop"
+  adoption_pr: "https://github.com/afpogo/4uentes-portfolio/pull/1"
+  adoption_commit: "c5cad7dc904dd269c87235f3f3fa4fd13820191d"
+  canonical_readback_commit: "877b528fab491382806ced0de8c3d376226e02f2"
+
+owner_documentation:
+  required: true
+  status: satisfied
+  owner_repo: "4uentes-portfolio"
+  updated_owner_docs:
+    - "docs/policies/README.md"
+    - "specs/policies/adoptions/visual-documentation-as-code-policy.yaml"
+    - "package.json"
+  evidence_refs:
+    - "evidence/requests/CR-4UENTES-0040/canonical-adoption-readback-2026-08-21.md"
+  manifest_outcome: "policy_adoption_manifest"
+  adoption_status: "adopted"
+
+validation:
+  owner_check: "PASS: npm.cmd run check"
+  build: "PASS: Webpack build; Browserslist emitted a pre-existing caniuse-lite age warning."
+  owner_pr_checks: "NOT_CONFIGURED: GitHub reported no remote checks on PR #1."
+  ancestry_check: "PASS"
+  control_character_scan: "PASS"
+  diff_check: "PASS"
+  secret_safe_scan: "PASS"
+  control_plane_check: "PASS: npm.cmd run check"
+  evidence_ref: "evidence/requests/CR-4UENTES-0040/canonical-adoption-readback-2026-08-21.md"
+
+closure:
+  status: "complete"
+  next_request_id: "CR-HPT-0004"
+  limits:
+    - "No portfolio UI, content, dependency, runtime, effective build or publication behavior was modified."
+    - "No database, seeder, Kubernetes, secret or Jira operation was performed."
+    - "The adoption is published on the request-authorized develop branch; GitHub still identifies main as the repository default branch."
+    - "npm ci reported 45 vulnerabilities in the pre-existing lockfile; no dependency remediation was authorized or applied."
+    - "Adoption is prospective and does not bulk-migrate existing diagrams."
