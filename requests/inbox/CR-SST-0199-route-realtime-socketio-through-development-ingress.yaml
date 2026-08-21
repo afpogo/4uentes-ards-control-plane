@@ -1,0 +1,19 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0199"
+title: "Route SST realtime Socket.IO through the development Ingress"
+status: "inbox"
+created_at: "2026-08-21"
+requester: "4uentes"
+business_context: >
+  The isolated browser gate for CR-SST-0178 proved authentication and refresh,
+  but the public development Ingress sends the Socket.IO handshake to the
+  sst-fend catch-all and returns HTML. The internal realtime and chatbot hops
+  are healthy, so the missing owner change is limited to Ingress routing.
+requested_change: >
+  Add an explicit development Ingress route for the existing
+  /4uentes/realtime/socket.io boundary to sst-bend before the frontend
+  catch-all, publish it only through GitOps and rerun isolated browser QA.
+expected_outcome: >
+  A fresh browser session upgrades Socket.IO to WebSocket, reaches sst-bend,
+  completes one synthetic chatbot turn and logs no secret or credential value.
