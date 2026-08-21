@@ -1,0 +1,52 @@
+schema_version: "1.0"
+phase: 4
+id: "CR-SST-0199"
+title: "Route SST realtime Socket.IO through the development Ingress"
+status: "done"
+source_request: "requests/inbox/CR-SST-0199-route-realtime-socketio-through-development-ingress.yaml"
+planned_request: "requests/planned/CR-SST-0199-route-realtime-socketio-through-development-ingress.yaml"
+created_at: "2026-08-21"
+started_at: "2026-08-21"
+completed_at: "2026-08-21"
+requester: "4uentes"
+control_plane_context:
+  initiative_id: "INIT-SST-0007"
+  coordinated_by_request_id: "CR-SST-0178"
+  jira_write_allowed: false
+  lifecycle_reconciliation: >
+    A concurrent integrated lifecycle used a second filename for CR-SST-0199.
+    Closure consolidates both representations into this canonical record and
+    removes the duplicate inbox, planned and running files.
+execution:
+  child_repo_mutation_targets: ["sst-bend", "sst-4uentes-infra"]
+  deployment_mechanism: "Git merge and Argo CD reconciliation only"
+  production_mutation_allowed: false
+  jira_write_allowed: false
+owner_documentation:
+  required: true
+  status: "complete-in-merged-owner-prs"
+  owner_repos: ["sst-bend", "sst-4uentes-infra"]
+implementation:
+  owner_pull_requests:
+    sst_bend_initial: "https://github.com/afpogo/sst-bend/pull/18 (merged)"
+    sst_infra: "https://github.com/afpogo/sst-4uentes-infra/pull/9 (merged)"
+    sst_bend_membership_race_remediation: "https://github.com/afpogo/sst-bend/pull/19 (merged)"
+  live_bend_image: "develop-7e0eb988a2bc"
+validation:
+  status: "validated-live"
+  passed:
+    - "Bend and Infra owner gates PASS."
+    - "Argo CD Synced/Healthy with immutable images."
+    - "localhost Engine.IO protocol and WebSocket upgrade PASS."
+    - "Reserved OAuth-protected ngrok edge reached Socket.IO through the same HTTPS origin."
+    - "Public access logs recorded 27 GET and 9 POST Socket.IO exchanges with status 200."
+    - "Only the protected realtime path is routed to Bend; Chatbot and general Bend endpoints remain unexposed."
+decision:
+  status: "closed-validated-live"
+  approver: "4uentes"
+  decided_at: "2026-08-21"
+  note: "No Jira write was performed."
+evidence_refs:
+  - "evidence/requests/CR-SST-0199/implementation-plan.md"
+  - "evidence/requests/CR-SST-0178/integrated-runtime-validation-2026-08-21.md"
+  - "evidence/requests/CR-SST-0178/public-ngrok-reconciliation-2026-08-21.md"

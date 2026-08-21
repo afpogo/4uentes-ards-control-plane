@@ -15,7 +15,7 @@ visual_map:
   abstraction_level: "request lifecycle"
   source_refs:
     - "requests/running/CR-SST-0178-deploy-sst-chatbot-development-cluster.yaml"
-    - "requests/planned/CR-SST-0199-development-realtime-edge.yaml"
+    - "requests/done/CR-SST-0199-route-realtime-socketio-through-development-ingress.yaml"
     - "requests/planned/CR-SST-0200-visible-chat-and-spa-session-repair.yaml"
     - "requests/planned/CR-SST-0201-development-raw-v2-gradual-adoption.yaml"
   observed_at: "2026-08-21"
@@ -27,10 +27,10 @@ visual_map:
 ```mermaid
 flowchart TD
     C["CR-SST-0178 coordinación [running]"]
-    E["CR-SST-0199 edge realtime [running]"]
+    E["CR-SST-0199 edge realtime [validated]"]
     U["CR-SST-0200 chat y sesión SPA [running]"]
-    R["CR-SST-0201 raw-v2 [running]"]
-    Q["QA localhost + ngrok [gate]"]
+    R["CR-SST-0201 raw-v2 [validated]"]
+    Q["QA logout ngrok follow-up [planned]"]
     X["CR-SST-0178 decisión de cierre [gate]"]
 
     C -->|"coordina"| E
@@ -43,18 +43,18 @@ flowchart TD
 
     classDef running fill:#fef3c7,stroke:#d97706,color:#451a03
     classDef planned fill:#e0f2fe,stroke:#0284c7,color:#082f49
-    class C,E,U running
-    class R,Q,X planned
+    classDef done fill:#dcfce7,stroke:#16a34a,color:#052e16
+    class C,U running
+    class Q,X planned
+    class E,R done
 ```
 
 ## Fallback textual del mapa de lifecycle
 
 ```text
-CR-SST-0178 [running] coordina CR-SST-0199 y CR-SST-0200.
-CR-SST-0199 y CR-SST-0200 deben integrarse antes de iniciar la mutación de CR-SST-0201.
-CR-SST-0201 debe completar rollout y observación antes del QA localhost + ngrok.
-Sólo el PASS de ambos entornos permite cerrar CR-SST-0178.
-Cualquier fallo conserva CR-SST-0178 en running y exige rollback más evidencia exacta.
+CR-SST-0199 y CR-SST-0201 están done tras QA público.
+CR-SST-0200 permanece running por el follow-up del teardown de logout.
+CR-SST-0178 permanece running hasta que el retest público confirme cero requests autenticadas posteriores al logout.
 ```
 
 <!-- visual-map:end -->
