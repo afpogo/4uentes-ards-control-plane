@@ -57,8 +57,8 @@ boundaries:
   production_release_authorized: false
 current_read_model:
   local_hybrid_slice: "historically-validated-local"
-  development_cluster_slice: "historical-transient-validation-only"
-  persistent_gitops_chat_runtime: "internal-runtime-healthy-browser-ingress-blocked"
+  development_cluster_slice: "gitops-reconciled-localhost-integrated-pass"
+  persistent_gitops_chat_runtime: "healthy-localhost-pass-reserved-ngrok-oauth-qa-pending"
   active_execution_request: "CR-SST-0178"
   active_correction_request: "CR-SST-0199"
   current_session_contract_ref: "requests/running/CR-SST-0180-integrate-login-sessions-and-timeout-corrections.yaml"

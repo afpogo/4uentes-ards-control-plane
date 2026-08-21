@@ -183,7 +183,7 @@ continuation_execution:
   evidence_ref: "evidence/requests/CR-SST-0178/isolated-browser-qa-2026-08-19.md"
   correction_batch:
     request_id: "CR-SST-0199"
-    status: "running-lifecycle-publication-gate"
+    status: "merged-deployed-localhost-validated-public-oauth-qa-pending"
     scope: "sst-4uentes-infra development Ingress plus GitOps/browser readback only"
     mutation_authority: "delegated exclusively to CR-SST-0199 after its lifecycle is merged"
     plan_ref: "evidence/requests/CR-SST-0199/implementation-plan.md"
