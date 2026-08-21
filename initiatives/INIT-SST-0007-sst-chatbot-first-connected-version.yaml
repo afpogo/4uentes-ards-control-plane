@@ -3,7 +3,7 @@ kind: "initiative"
 id: "INIT-SST-0007"
 title: "SST Chatbot First Connected Version"
 status: "active"
-updated_at: "2026-08-18"
+updated_at: "2026-08-21"
 owner_repository: "4uentes-orchestor"
 objective: >
   Deliver a governed SST chatbot with revocable identity, durable conversation
@@ -35,6 +35,7 @@ known_change_requests:
   - "CR-SST-0171"
   - "CR-SST-0172"
   - "CR-SST-0178"
+  - "CR-SST-0199"
 tracking:
   jira:
     role: "mirror"
@@ -55,8 +56,9 @@ boundaries:
 current_read_model:
   local_hybrid_slice: "historically-validated-local"
   development_cluster_slice: "historical-transient-validation-only"
-  persistent_gitops_chat_runtime: "pending"
+  persistent_gitops_chat_runtime: "internal-runtime-healthy-browser-ingress-blocked"
   active_execution_request: "CR-SST-0178"
+  active_correction_request: "CR-SST-0199"
   current_session_contract_ref: "requests/running/CR-SST-0180-integrate-login-sessions-and-timeout-corrections.yaml"
 security_qualification:
   historical_request: "CR-SST-0166"
@@ -65,6 +67,6 @@ security_qualification:
     is not current authority for refresh/logout concurrency safety.
   superseding_current_contract: "CR-SST-0180"
 gaps:
-  - "CR-SST-0178 remains running because the persistent development GitOps wiring and isolated browser closure were not completed."
-  - "The current development runtime state was not read from the cluster during this documentation-only reconciliation."
+  - "CR-SST-0178 remains running because browser Socket.IO is captured by the sst-fend Ingress catch-all."
+  - "CR-SST-0199 must publish the scoped Infra lifecycle before its owner mutation and GitOps retest."
   - "User RAG, stakeholder RAG, multi-session adoption and personal memory remain separate lifecycles and are not absorbed here."

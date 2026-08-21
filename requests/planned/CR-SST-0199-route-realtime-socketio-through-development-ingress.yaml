@@ -1,0 +1,139 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0199"
+title: "Route SST realtime Socket.IO through the development Ingress"
+status: "planned"
+source_request: "requests/inbox/CR-SST-0199-route-realtime-socketio-through-development-ingress.yaml"
+created_at: "2026-08-21"
+requester: "4uentes"
+
+control_plane_context:
+  initiative_id: "INIT-SST-0007"
+  coordinated_by_request_id: "CR-SST-0178"
+  predecessor_evidence: "evidence/requests/CR-SST-0178/isolated-browser-qa-2026-08-19.md"
+  jira_write_allowed: false
+
+architecture_boundary:
+  browser_realtime: "sst-fend -> development Ingress -> sst-bend Socket.IO"
+  internal_agent_runtime: "sst-bend -> HTTP NDJSON -> sst-chatbot"
+  direct_chatbot_ingress: "forbidden"
+  ingress_owner: "sst-4uentes-infra"
+  realtime_owner: "sst-bend"
+
+scope:
+  owner_repos: ["sst-4uentes-infra"]
+  validation_only_repos: ["sst-fend", "sst-bend", "sst-chatbot", "4uentes-auth"]
+  deliverables:
+    - "A route for /4uentes/realtime/socket.io to the existing sst-bend Service before the frontend catch-all."
+    - "WebSocket upgrade-compatible Ingress configuration without exposing sst-chatbot."
+    - "Rendered development overlay and owner ARDS/SDD updates."
+    - "Git/Argo rollout with immutable desired-state evidence."
+    - "Fresh isolated browser QA for login, refresh, Socket.IO and one synthetic completed turn."
+  excluded:
+    - "Production or staging changes."
+    - "Direct public Ingress for sst-chatbot."
+    - "New secrets, secret rotation or reading secret values."
+    - "Changes to sst-bend, sst-fend, sst-chatbot or 4uentes-auth runtime code."
+
+risk:
+  level: "high"
+  score: 8
+  drivers: ["PUBLIC_DEVELOPMENT_INGRESS", "WEBSOCKET_ROUTING", "AUTHENTICATED_BROWSER_QA", "GITOPS_ROLLOUT"]
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers: ["ARCHITECTURE_BOUNDARY", "LIVE_DEVELOPMENT_CLUSTER", "SECRET_ADJACENT_QA"]
+
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5"
+  fallback_reasoning_effort: "high"
+  reason: "Ingress routing and authenticated development QA are high-risk architecture-boundary work."
+
+execution:
+  requires_human_approval: true
+  approval_source: "User requested the next gate on 2026-08-21 after all client PRs were merged."
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets: ["sst-4uentes-infra"]
+  development_deployment_allowed: true
+  deployment_mechanism: "Git merge and Argo CD reconciliation only"
+  direct_persistent_cluster_mutation_allowed: false
+  production_data_allowed: false
+  production_mutation_allowed: false
+  jira_write_allowed: false
+  secret_values_in_git_logs_or_evidence_allowed: false
+
+workspace_isolation:
+  required: true
+  base_ref: "origin/develop"
+  refresh_remote_before_branching: true
+  branch_name: "agent/cr-sst-0199-development-socketio-ingress"
+  worktree_rule: "Use a new clean worktree; do not alter existing dirty checkouts."
+  browser_rule: "Use a fresh isolated browser identity surface with no reused cookies or storage."
+
+task_atomization:
+  - id: "T1-owner-inventory"
+    objective: "Read the current Ingress, Service ports and owner docs from refreshed origin/develop."
+    output: "Exact minimal patch or a documented blocker."
+    risk: "medium"
+    validation: "Every backend name, port and path comes from the rendered owner state."
+  - id: "T2-ingress-owner-change"
+    objective: "Add the specific Socket.IO route before the frontend catch-all and update owner ARDS/SDD."
+    output: "Small reviewable Infra diff with no secret values."
+    risk: "high"
+    validation: "Infra check, overlay render and dry-run pass."
+  - id: "T3-gitops-rollout"
+    objective: "Publish through Git, merge only after review and observe Argo convergence."
+    output: "Immutable Git and Synced/Healthy runtime readback."
+    risk: "high"
+    validation: "No kubectl set image or persistent direct mutation is used."
+  - id: "T4-isolated-browser-retest"
+    objective: "Prove the public Socket.IO and downstream chatbot path from a fresh identity surface."
+    output: "Sanitized QA evidence or an exact next blocker."
+    risk: "high"
+    validation: "Engine.IO response, WebSocket upgrade, online state and completed synthetic turn are independently observed."
+
+owner_documentation:
+  required: true
+  status: "planned"
+  owner_repo: "sst-4uentes-infra"
+  planned_surfaces:
+    - "specs/infra/deployment-contracts/node-auth.yaml"
+    - "specs/infra/environments/development.yaml"
+    - "docs/runbooks/argocd-kind-development.md"
+  exact_surfaces_may_be_reconciled_after_owner_inventory: true
+
+validation:
+  required_checks:
+    - "sst-4uentes-infra npm run check"
+    - "development overlay render and client dry-run"
+    - "secret-safe diff and evidence scan"
+    - "isolated browser Socket.IO/chat QA"
+    - "4uentes-orchestor npm run check"
+  acceptance:
+    - "The Socket.IO polling handshake is not served as text/html by sst-fend."
+    - "The browser upgrades to WebSocket and the chat state becomes online."
+    - "One synthetic turn reaches completed through sst-bend and sst-chatbot."
+    - "sst-chatbot remains internal-only."
+    - "No secret, JWT, cookie, password, sid, jti or credential value appears in evidence."
+
+rollback:
+  mechanism: "Revert the reviewed Infra commit and let Argo CD restore the previous desired state."
+  forbidden_initial_actions: ["kubectl set image", "manual persistent Ingress edits", "secret deletion"]
+
+evidence_required:
+  - "evidence/requests/CR-SST-0199/implementation-plan.md"
+  - "evidence/requests/CR-SST-0199/owner-validation.md"
+  - "evidence/requests/CR-SST-0199/gitops-readback.md"
+  - "evidence/requests/CR-SST-0199/isolated-browser-qa.md"
+
+decision:
+  status: "approved-planned"
+  approver: "4uentes"
+  decided_at: "2026-08-21"

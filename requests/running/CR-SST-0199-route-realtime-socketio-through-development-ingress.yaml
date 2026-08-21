@@ -1,0 +1,54 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-SST-0199"
+title: "Route SST realtime Socket.IO through the development Ingress"
+status: "running"
+source_request: "requests/inbox/CR-SST-0199-route-realtime-socketio-through-development-ingress.yaml"
+planned_request: "requests/planned/CR-SST-0199-route-realtime-socketio-through-development-ingress.yaml"
+created_at: "2026-08-21"
+started_at: "2026-08-21"
+updated_at: "2026-08-21"
+requester: "4uentes"
+
+control_plane_context:
+  initiative_id: "INIT-SST-0007"
+  coordinated_by_request_id: "CR-SST-0178"
+  predecessor_evidence: "evidence/requests/CR-SST-0178/isolated-browser-qa-2026-08-19.md"
+  jira_write_allowed: false
+
+execution:
+  requires_human_approval: true
+  approval_source: "User requested the next gate on 2026-08-21 after all client PRs were merged."
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets: ["sst-4uentes-infra"]
+  development_deployment_allowed: true
+  deployment_mechanism: "Git merge and Argo CD reconciliation only"
+  direct_persistent_cluster_mutation_allowed: false
+  production_data_allowed: false
+  production_mutation_allowed: false
+  jira_write_allowed: false
+  workspace:
+    control_plane_branch: "agent/cr-sst-0199-development-socketio-ingress-lifecycle"
+    child_branch: "agent/cr-sst-0199-development-socketio-ingress"
+    base: "refreshed owner origin/develop"
+    isolation: "clean-worktree"
+
+current_gate:
+  status: "lifecycle-publication-before-child-mutation"
+  next_action: "Publish and merge this control-plane lifecycle, then inventory sst-4uentes-infra owner state."
+  child_repo_mutation_started: false
+  cluster_mutation_started: false
+  secret_creation_required: false
+
+owner_documentation:
+  required: true
+  status: "planned-owner-inventory"
+  owner_repo: "sst-4uentes-infra"
+
+evidence:
+  implementation_plan: "evidence/requests/CR-SST-0199/implementation-plan.md"
+
+decision:
+  status: "approved-running-lifecycle-gate"
+  approver: "4uentes"
+  decided_at: "2026-08-21"
