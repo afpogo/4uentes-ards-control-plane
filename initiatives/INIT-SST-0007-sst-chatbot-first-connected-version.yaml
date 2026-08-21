@@ -58,7 +58,7 @@ boundaries:
 current_read_model:
   local_hybrid_slice: "historically-validated-local"
   development_cluster_slice: "gitops-reconciled-localhost-integrated-pass"
-  persistent_gitops_chat_runtime: "healthy-public-core-pass-logout-followup-pending"
+  persistent_gitops_chat_runtime: "healthy-chat-core-pass-spa-session-followups-pending"
   active_execution_request: "CR-SST-0178"
   active_correction_request: "CR-SST-0200"
   current_session_contract_ref: "requests/running/CR-SST-0180-integrate-login-sessions-and-timeout-corrections.yaml"
@@ -70,5 +70,5 @@ security_qualification:
     is not current authority for refresh/logout concurrency safety.
   superseding_current_contract: "CR-SST-0180"
 gaps:
-  - "CR-SST-0178 remains running only for the CR-SST-0200 public logout teardown retest."
+  - "CR-SST-0178 remains running for CR-SST-0200 signup copy, registration continuity and logout teardown retests."
   - "User RAG, stakeholder RAG, multi-session adoption and personal memory remain separate lifecycles and are not absorbed here."

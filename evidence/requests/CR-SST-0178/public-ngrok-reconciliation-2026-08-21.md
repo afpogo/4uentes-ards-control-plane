@@ -22,6 +22,12 @@ El logout publico produjo respuestas `401`; en una secuencia observada fue segui
 
 No se atribuye causa ni se muta `sst-fend` en este corte porque el usuario indico que los errores ya estan siendo atacados. El siguiente gate es repetir por ngrok: logout unico, limpieza local y cero cargas autenticadas posteriores.
 
+El retest manual local posterior con Chrome DevTools agrego dos blockers de
+sesion: registro `200` sin continuidad autenticada y copy de password `8-12`
+incompatible con el contrato `15-128`. Tambien reprodujo el logout `401` y una
+carga autenticada posterior. Ver
+`evidence/requests/CR-SST-0178/manual-chrome-devtools-qa-2026-08-21.md`.
+
 ## Lifecycle
 
 - `CR-SST-0199`: cerrado como edge realtime validado en vivo.

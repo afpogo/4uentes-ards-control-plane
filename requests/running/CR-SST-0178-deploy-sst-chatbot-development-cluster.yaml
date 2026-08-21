@@ -215,7 +215,7 @@ integrated_closure_coordination:
     status: "superseded-by-merged-runtime-validation"
     evidence_ref: "evidence/requests/CR-SST-0178/integrated-local-implementation-2026-08-21.md"
   merged_runtime_validation:
-    status: "localhost-pass-public-core-pass-logout-followup-pending"
+    status: "chat-core-pass-spa-session-followups-pending"
     completed:
       - "all owner changes published and merged"
       - "immutable development images pinned through Git and Argo CD"
@@ -226,12 +226,16 @@ integrated_closure_coordination:
       - "reserved ngrok unauthenticated edge redirects to the configured OAuth gate"
       - "reserved ngrok OAuth-protected raw-v2 login, refresh, chat creation, history and Socket.IO"
     remaining_gate: >
-      Repeat public logout teardown QA after the owner-team correction. The
-      observed public logout returned 401 and was followed by a rejected
-      authenticated load, so the coordinator cannot close yet.
-    evidence_ref: "evidence/requests/CR-SST-0178/public-ngrok-reconciliation-2026-08-21.md"
+      Correct the signup 15-128 copy, restore registration session continuity,
+      and repeat localhost plus public logout teardown QA. Manual Chrome QA
+      observed csrf 404 followed by refresh/logout 401 after registration; a
+      valid login recovered chat and history, but logout returned 401 and was
+      followed by a rejected authenticated load.
+    evidence_refs:
+      - "evidence/requests/CR-SST-0178/public-ngrok-reconciliation-2026-08-21.md"
+      - "evidence/requests/CR-SST-0178/manual-chrome-devtools-qa-2026-08-21.md"
   coordinated_request_status:
     CR-SST-0199: "done"
-    CR-SST-0200: "running-public-logout-followup"
+    CR-SST-0200: "running-signup-registration-logout-followups"
     CR-SST-0201: "done"
-  remaining_gate: "CR-SST-0200 public logout teardown repeat; keep CR-SST-0178 running"
+  remaining_gate: "CR-SST-0200 signup copy, registration continuity and logout teardown retests; keep CR-SST-0178 running"
