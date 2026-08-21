@@ -1,0 +1,22 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0201"
+title: "Adopt raw-v2 gradually in development"
+status: "inbox"
+created_at: "2026-08-21"
+requester: "4uentes"
+summary: >
+  Adopt the versioned raw-v2 web credential protocol in development through a
+  staged Auth preflight, an explicit sst-fend build contract and GitOps rollout.
+requested_scope:
+  initiative_id: "INIT-SST-0008"
+  coordinated_by_request_id: "CR-SST-0178"
+  target_environment: "development"
+  owner_repositories: ["sst-fend", "sst-4uentes-infra"]
+  validation_only_repositories: ["4uentes-auth"]
+constraints:
+  - "Do not mutate 4uentes-auth unless preflight proves a contractual absence and a new request authorizes it."
+  - "Allow insecure credential transport only for exact loopback in the development build."
+  - "Never record password, verifier, token, cookie or CSRF values."
+  - "Keep CR-SST-0159 running for the independent password recovery gap."
+requested_next_step: "Start only after CR-SST-0199 and CR-SST-0200 are integrated."

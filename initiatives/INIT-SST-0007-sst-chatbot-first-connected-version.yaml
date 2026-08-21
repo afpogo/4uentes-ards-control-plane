@@ -36,6 +36,8 @@ known_change_requests:
   - "CR-SST-0172"
   - "CR-SST-0178"
   - "CR-SST-0199"
+  - "CR-SST-0200"
+  - "CR-SST-0201"
 tracking:
   jira:
     role: "mirror"
@@ -55,11 +57,12 @@ boundaries:
   production_release_authorized: false
 current_read_model:
   local_hybrid_slice: "historically-validated-local"
-  development_cluster_slice: "historical-transient-validation-only"
-  persistent_gitops_chat_runtime: "internal-runtime-healthy-browser-ingress-blocked"
+  development_cluster_slice: "gitops-reconciled-localhost-integrated-pass"
+  persistent_gitops_chat_runtime: "healthy-localhost-pass-reserved-ngrok-oauth-qa-pending"
   active_execution_request: "CR-SST-0178"
   active_correction_request: "CR-SST-0199"
   current_session_contract_ref: "requests/running/CR-SST-0180-integrate-login-sessions-and-timeout-corrections.yaml"
+  integrated_closure_plan_ref: "evidence/requests/CR-SST-0178/integrated-chat-raw-v2-plan-2026-08-21.md"
 security_qualification:
   historical_request: "CR-SST-0166"
   qualification: >

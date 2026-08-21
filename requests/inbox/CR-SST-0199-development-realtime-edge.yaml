@@ -1,0 +1,21 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0199"
+title: "Expose the protected development realtime edge"
+status: "inbox"
+created_at: "2026-08-21"
+requester: "4uentes"
+summary: >
+  Add an exact fail-closed CORS allowlist in sst-bend and publish only the
+  protected Socket.IO path through the development Ingress.
+requested_scope:
+  initiative_id: "INIT-SST-0007"
+  coordinated_by_request_id: "CR-SST-0178"
+  target_environment: "development"
+  owner_repositories: ["sst-bend", "sst-4uentes-infra"]
+constraints:
+  - "Do not expose sst-chatbot or general sst-bend API paths."
+  - "Do not use wildcard CORS."
+  - "Reconcile runtime changes through Git and Argo CD only."
+  - "Do not write Jira without a separate enumerated batch authorization."
+requested_next_step: "Plan and execute in clean origin/develop-based owner worktrees."

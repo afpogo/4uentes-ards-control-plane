@@ -1,0 +1,69 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0200"
+title: "Make chat visible and repair SPA session teardown"
+status: "planned"
+source_request: "requests/inbox/CR-SST-0200-visible-chat-and-spa-session-repair.yaml"
+created_at: "2026-08-21"
+requester: "4uentes"
+control_plane_context:
+  initiative_id: "INIT-SST-0007"
+  coordinated_by_request_id: "CR-SST-0178"
+  related_request_ids: ["CR-SST-0182"]
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  jira_write_authorized: false
+scope:
+  target_environment: "development"
+  child_repo_mutation_targets: ["sst-fend"]
+  owned_session_scope: "same-tab login, registration and logout lifecycle"
+  excluded_session_scope: "cross-tab coordination remains CR-SST-0182"
+risk: {level: "high", score: 8, drivers: ["AUTH_SESSION", "SPA_TEARDOWN", "REALTIME", "USER_NAVIGATION"]}
+task_weight: {classification: "complex-high-risk-task", risk_level: "high"}
+model_selection:
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "manual"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5"
+  fallback_reasoning_effort: "high"
+subagent_deployment_plan:
+  mode: "none"
+  reason: "SPA auth teardown remains with the primary agent; proactive delegation is disabled."
+execution:
+  requires_human_approval: true
+  approval_source: "User-provided integral adoption plan dated 2026-08-21."
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets: ["sst-fend"]
+  deployment_allowed: false
+  production_mutation_allowed: false
+  jira_write_allowed: false
+workspace_isolation:
+  base_ref: "origin/develop"
+  rule: "Use a new clean worktree and preserve the existing dirty checkout."
+implementation:
+  - "Add authenticated Chat navigation in the header and a Chat SST dashboard card, both targeting /chat."
+  - "Keep unauthenticated entry points hidden and preserve AuthGuard."
+  - "Associate the message label with id sst-chat-message and name message while preserving aria-label and disabled states."
+  - "Use one allowlisted minimum-profile session establishment path for login and registration."
+  - "Make same-tab logout single-flight: mark terminal first, stop refresh/realtime/authenticated loads, attempt at most one remote logout and always clear locally."
+owner_documentation:
+  required: true
+  status: "planned"
+  owner_repos: ["sst-fend"]
+  planned_surfaces:
+    - "specs/auth.yaml"
+    - "specs/integrations/sst-chat-realtime-v1.yaml"
+    - "docs/auth.md"
+    - "docs/chat.md"
+validation:
+  - "sst-fend npm run check."
+  - "Navigation, registration hard-reload, refresh, logout single-flight and no-post-logout-request regressions."
+  - "4uentes-orchestor npm run check before closure."
+acceptance:
+  - "Authenticated users see both chat entry points; anonymous users see neither."
+  - "Registration survives hard navigation and refresh to /chat."
+  - "Logout emits at most one POST and no authenticated request starts afterward."
+rollback: "Restore the previous immutable frontend build without changing Auth or cross-tab contracts."
+decision: {status: "approved-planned", approver: "4uentes", decided_at: "2026-08-21"}

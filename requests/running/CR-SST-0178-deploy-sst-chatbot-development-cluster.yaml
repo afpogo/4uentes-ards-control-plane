@@ -183,7 +183,50 @@ continuation_execution:
   evidence_ref: "evidence/requests/CR-SST-0178/isolated-browser-qa-2026-08-19.md"
   correction_batch:
     request_id: "CR-SST-0199"
-    status: "running-lifecycle-publication-gate"
+    status: "merged-deployed-localhost-validated-public-oauth-qa-pending"
     scope: "sst-4uentes-infra development Ingress plus GitOps/browser readback only"
     mutation_authority: "delegated exclusively to CR-SST-0199 after its lifecycle is merged"
     plan_ref: "evidence/requests/CR-SST-0199/implementation-plan.md"
+
+integrated_closure_coordination:
+  authorized_at: "2026-08-21"
+  approval_source: "User-provided integral adoption plan for visible chat and raw-v2 in development."
+  status: "running"
+  coordinated_requests: ["CR-SST-0199", "CR-SST-0200", "CR-SST-0201"]
+  dependency_order:
+    parallel_first: ["CR-SST-0199", "CR-SST-0200"]
+    after_integration: ["CR-SST-0201"]
+    final_gate: "isolated localhost and reserved OAuth-protected ngrok QA"
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets: ["sst-bend", "sst-fend", "sst-4uentes-infra"]
+  validation_only_repositories: []
+  conditional_auth_scope:
+    activated: true
+    reason: "Runtime preflight found legacy refresh-token index drift that broke valid post-migration sessions."
+    boundary: "Reconcile only exact legacy session indexes; no credential or hash inspection."
+  cluster_mutation_mode: "Git and Argo CD reconciliation only"
+  production_mutation_allowed: false
+  jira_write_allowed: false
+  closure_rule: >
+    Close CR-SST-0178 only after localhost and reserved ngrok QA pass; any
+    failure keeps it running with exact blocker and rollback evidence.
+  plan_ref: "evidence/requests/CR-SST-0178/integrated-chat-raw-v2-plan-2026-08-21.md"
+  local_implementation:
+    status: "superseded-by-merged-runtime-validation"
+    evidence_ref: "evidence/requests/CR-SST-0178/integrated-local-implementation-2026-08-21.md"
+  merged_runtime_validation:
+    status: "localhost-pass-reserved-ngrok-authenticated-gate-pending"
+    completed:
+      - "all owner changes published and merged"
+      - "immutable development images pinned through Git and Argo CD"
+      - "Argo CD Synced/Healthy"
+      - "two 15-minute raw-v2 observation windows"
+      - "migration promotion and synthetic rollback/no-downgrade QA"
+      - "localhost Engine.IO, WebSocket and full browser E2E"
+      - "reserved ngrok unauthenticated edge redirects to the configured OAuth gate"
+    remaining_gate: >
+      Authenticated browser QA through the reserved ngrok domain using a
+      legitimate GitHub OAuth session. The in-app isolated browser is
+      unavailable and no personal browser profile or OAuth bypass was used.
+    evidence_ref: "evidence/requests/CR-SST-0178/integrated-runtime-validation-2026-08-21.md"
+  remaining_gate: "reserved ngrok authenticated browser QA; keep CR-SST-0178 and CR-SST-0199 through CR-SST-0201 running"

@@ -236,3 +236,16 @@ canonical_reconciliation:
   new_child_repo_mutation_allowed: false
   new_cluster_mutation_allowed: false
   jira_write_allowed: false
+
+integrated_closure_revision:
+  approved_at: "2026-08-21"
+  approval_source: "User-provided integral adoption plan for visible chat and raw-v2 in development."
+  coordinator_role: true
+  coordinated_requests: ["CR-SST-0199", "CR-SST-0200", "CR-SST-0201"]
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets: ["sst-bend", "sst-fend", "sst-4uentes-infra"]
+  validation_only_repositories: ["4uentes-auth"]
+  cluster_mutation_mode: "Git and Argo CD reconciliation only"
+  production_mutation_allowed: false
+  jira_write_allowed: false
+  plan_ref: "evidence/requests/CR-SST-0178/integrated-chat-raw-v2-plan-2026-08-21.md"

@@ -1,0 +1,22 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0200"
+title: "Make chat visible and repair SPA session teardown"
+status: "inbox"
+created_at: "2026-08-21"
+requester: "4uentes"
+summary: >
+  Add authenticated chat entry points, persist the minimum allowlisted profile
+  consistently after login and registration, and make same-tab logout teardown
+  single-flight and terminal.
+requested_scope:
+  initiative_id: "INIT-SST-0007"
+  coordinated_by_request_id: "CR-SST-0178"
+  target_environment: "development"
+  owner_repositories: ["sst-fend"]
+constraints:
+  - "Preserve AuthGuard and hide chat entry points from unauthenticated users."
+  - "Do not implement cross-tab coordination owned by CR-SST-0182."
+  - "Do not persist credentials or non-allowlisted profile fields."
+  - "Do not write Jira without a separate enumerated batch authorization."
+requested_next_step: "Plan and execute in a clean origin/develop-based owner worktree."
