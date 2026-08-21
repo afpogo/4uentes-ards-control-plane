@@ -10,26 +10,40 @@ started_at: "2026-08-21"
 requester: "4uentes"
 control_plane_context: {initiative_id: "INIT-SST-0008", coordinated_by_request_id: "CR-SST-0178", depends_on: ["CR-SST-0199", "CR-SST-0200"], jira_write_allowed: false}
 execution:
-  status: "local-implementation-validated-waiting-publication"
+  status: "merged-deployed-migration-validated"
   child_repo_mutation_allowed: true
-  child_repo_mutation_targets: ["sst-fend", "sst-4uentes-infra"]
-  validation_only_repositories: ["4uentes-auth"]
-  conditional_auth_mutation_allowed: false
+  child_repo_mutation_targets: ["sst-fend", "sst-4uentes-infra", "4uentes-auth"]
+  validation_only_repositories: []
+  conditional_auth_mutation_allowed: true
+  conditional_auth_mutation_reason: "Preflight found legacy refresh-token index drift that broke valid post-migration sessions."
 owner_documentation:
   required: true
-  status: "implemented-local-validated"
+  status: "complete-in-merged-owner-prs"
   planned_surfaces:
     - "specs/auth.yaml"
     - "docs/auth.md"
     - "specs/infra/environments/development.yaml"
     - "docs/runbooks/argocd-kind-development.md"
-decision: {status: "approved-running-waiting-dependencies", approver: "4uentes", decided_at: "2026-08-21"}
+decision: {status: "approved-running-public-qa-pending", approver: "4uentes", decided_at: "2026-08-21"}
 implementation:
-  auth_validation_commit: "4249ba3"
-  auth_mutated: false
-  auth_validation: "Full check and password-adoption/session/chat matrices PASS"
-  sst_fend_commit: "e5c24a0"
-  sst_infra_commit: "a1645d5"
-  initial_flags: {PASSWORD_RAW_V2_ACCEPT_ENABLED: true, PASSWORD_MIGRATE_ON_LOGIN_ENABLED: false, LOGIN_ATTEMPT_GUARD_MODE: observe}
-  validation: ["Fend raw-v2 full check PASS", "36 suites and 235 tests PASS", "Infra full render and client dry-run PASS"]
-  remaining: ["merge predecessor owner changes", "publish and reconcile initial stage", "two real 15-minute observation windows", "migration promotion and rollback QA"]
+  owner_pull_requests:
+    infra_initial_flags: "https://github.com/afpogo/sst-4uentes-infra/pull/10 (merged)"
+    infra_observation_revision: "https://github.com/afpogo/sst-4uentes-infra/pull/11 (merged)"
+    fend_raw_v2: "https://github.com/afpogo/sst-fend/pull/16 (merged)"
+    infra_auth_facade_url: "https://github.com/afpogo/sst-4uentes-infra/pull/12 (merged)"
+    infra_migration_promotion: "https://github.com/afpogo/sst-4uentes-infra/pull/13 (merged)"
+    auth_session_index_reconciliation: "https://github.com/afpogo/4uentes-auth/pull/10 (merged)"
+  merged_commits:
+    sst_fend: "44e1c2a"
+    sst_infra_migration: "1c899ee295b5"
+    auth: "ca5365ad1e70"
+    infra_auth_image_pin: "0f25dcc3d7d9"
+  effective_flags: {PASSWORD_RAW_V2_ACCEPT_ENABLED: true, PASSWORD_MIGRATE_ON_LOGIN_ENABLED: true, LOGIN_ATTEMPT_GUARD_MODE: observe}
+  validation:
+    - "Owner full checks, build, render and client dry-run gates PASS"
+    - "Two consecutive 15-minute synthetic observation windows PASS with zero 5xx, KDF saturation or protocol failures"
+    - "Single raw-v2 login request with no downgrade PASS"
+    - "Legacy opportunistic migration, post-migration raw-v2, legacy rollback and no-downgrade QA PASS"
+    - "No passwords, verifiers, tokens, cookies or hash documents inspected or retained"
+  remaining: ["reserved ngrok raw-v2 login, refresh and Socket.IO QA with a legitimate GitHub OAuth session"]
+  evidence_ref: "evidence/requests/CR-SST-0178/integrated-runtime-validation-2026-08-21.md"

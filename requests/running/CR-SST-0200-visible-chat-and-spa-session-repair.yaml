@@ -12,10 +12,10 @@ control_plane_context: {initiative_id: "INIT-SST-0007", coordinated_by_request_i
 execution:
   child_repo_mutation_allowed: true
   child_repo_mutation_targets: ["sst-fend"]
-  deployment_allowed: false
+  deployment_allowed: true
 owner_documentation:
   required: true
-  status: "implemented-local-validated"
+  status: "complete-in-merged-owner-pr"
   planned_surfaces:
     - "specs/auth.yaml"
     - "specs/integrations/sst-chat-realtime-v1.yaml"
@@ -23,7 +23,13 @@ owner_documentation:
     - "docs/chat.md"
 decision: {status: "approved-running", approver: "4uentes", decided_at: "2026-08-21"}
 implementation:
-  status: "local-commit-ready-for-publication"
-  sst_fend_commit: "c160479"
-  validation: ["Fend full check PASS", "36 suites and 235 tests PASS", "production webpack build PASS"]
-  remaining: ["publish and merge owner change", "publish immutable image", "browser session and logout QA"]
+  status: "merged-deployed-localhost-validated"
+  owner_pull_request: "https://github.com/afpogo/sst-fend/pull/15 (merged)"
+  merged_commit: "95ba7aa"
+  validation:
+    - "Fend full check, navigation, registration, logout and build gates PASS"
+    - "Authenticated Chat access visible in header and dashboard"
+    - "registration, hard reload, refresh, chat completion and history recovery PASS"
+    - "single-flight logout PASS: one logout request and no later authenticated requests"
+  remaining: ["reserved ngrok browser QA with a legitimate GitHub OAuth session"]
+  evidence_ref: "evidence/requests/CR-SST-0178/integrated-runtime-validation-2026-08-21.md"

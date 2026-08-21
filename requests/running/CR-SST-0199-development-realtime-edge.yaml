@@ -15,7 +15,7 @@ execution:
   cluster_mutation_mode: "Git and Argo CD reconciliation only"
 owner_documentation:
   required: true
-  status: "implemented-local-validated"
+  status: "complete-in-merged-owner-prs"
   planned_surfaces:
     - "specs/api/sst-chat-realtime-v1.yaml"
     - "docs/api/sst-chat-realtime-v1.md"
@@ -23,8 +23,21 @@ owner_documentation:
     - "docs/runbooks/argocd-kind-development.md"
 decision: {status: "approved-running", approver: "4uentes", decided_at: "2026-08-21"}
 implementation:
-  status: "local-commits-ready-for-publication"
-  sst_bend_commit: "d9c7f48"
-  sst_infra_commit: "9421525"
-  validation: ["Bend chat security PASS", "Bend TypeScript build PASS", "Infra full check and client dry-run PASS"]
-  remaining: ["publish and merge owner changes", "GitOps reconcile", "localhost and reserved ngrok realtime QA"]
+  status: "merged-deployed-localhost-validated"
+  owner_pull_requests:
+    sst_bend_initial: "https://github.com/afpogo/sst-bend/pull/18 (merged)"
+    sst_infra: "https://github.com/afpogo/sst-4uentes-infra/pull/9 (merged)"
+    sst_bend_membership_race_remediation: "https://github.com/afpogo/sst-bend/pull/19 (merged)"
+  merged_commits:
+    sst_bend_initial: "4674a41142"
+    sst_infra: "50c9367"
+    sst_bend_membership_race_remediation: "7e0eb988a2bc"
+  live_bend_image: "develop-7e0eb988a2bc"
+  validation:
+    - "Bend full check, realtime security and membership-race regression PASS"
+    - "Infra full check, Kustomize render and client dry-run PASS"
+    - "Argo CD Synced/Healthy"
+    - "localhost Engine.IO protocol response PASS; WebSocket upgrade 101 PASS"
+    - "Ingress exposes only the protected realtime path to Bend; Chatbot remains internal"
+  remaining: ["reserved ngrok realtime QA with a legitimate GitHub OAuth session"]
+  evidence_ref: "evidence/requests/CR-SST-0178/integrated-runtime-validation-2026-08-21.md"
