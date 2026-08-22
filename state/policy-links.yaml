@@ -218,7 +218,7 @@ links:
     link_status: "linked-local-adoption"
     handoff_status: "pending-separate-core-promotion-request"
     work_origin: "orchestrator-request"
-    request_id: "CR-SST-0207"
+    request_id: "CR-SST-0208"
     applicability: "control-plane executions using Git branches or worktrees"
     adoption_mode: "local-required"
     enforcement_mode: "request-identity-gate-and-operational-review"

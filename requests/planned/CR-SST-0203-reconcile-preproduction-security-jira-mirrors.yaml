@@ -53,3 +53,4 @@ validation:
   - "Confirm no secret or private connector identifier is persisted in evidence."
   - "Run the full 4uentes-orchestor npm run check gate."
 decision: {status: "approved-planned", approver: "4uentes", decided_at: "2026-08-22"}
+

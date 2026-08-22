@@ -14,3 +14,4 @@
   "forbidden": ["create", "transition", "delete", "reparent", "assign", "change-summary"],
   "payload_ref": "evidence/requests/CR-SST-0203/jira-approved-payloads.md"
 }
+

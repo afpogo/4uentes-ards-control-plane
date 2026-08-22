@@ -1,4 +1,4 @@
-# CR-SST-0207 - Disposición de worktrees
+# CR-SST-0208 - Disposición de worktrees
 
 Fecha: 2026-08-22.
 
@@ -6,7 +6,7 @@ Fecha: 2026-08-22.
 
 | Worktree lógico | Estado | Disposición |
 | --- | --- | --- |
-| `CR-SST-0207-namespace` | Reconciliación activa sobre `origin/main` | Coordinador canónico; único árbol modificado en esta ejecución. |
+| `CR-SST-0207-namespace` | Path físico legado de la reconciliación ahora identificada como `CR-SST-0208` | Coordinador canónico; el path no reserva ni redefine el request ID. |
 | raíz | Muy divergente, con cambios SST/HPT mezclados | Cuarentena; no merge, limpieza ni rebase. |
 | `cr-sst-0178-public-qa-reconciliation` | Limpio, tres commits sobre main | Se portó `0202`; QA/cierre de `0199` queda para integración posterior preservando commits. |
 | `system-feature-studies` | Limpio, dos commits sobre main | Se portó el lifecycle/evidencia `0203`; el feature study se evalúa por separado. |

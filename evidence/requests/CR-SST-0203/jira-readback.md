@@ -14,3 +14,4 @@
 `SST-89` conserva sus seis labels anteriores e incorpora `pre-production-security`, `security-hardening`, `raw-v2` y `password-security`.
 
 Los cuatro issues preservaron identidad, tipo, parent y estado. Sólo `SST-89` cambió prioridad, tal como fue autorizado.
+

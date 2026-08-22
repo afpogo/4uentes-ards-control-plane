@@ -1,4 +1,4 @@
-# CR-SST-0207 - Resultados de validación
+# CR-SST-0208 - Resultados de validación
 
 Fecha: 2026-08-22.
 
@@ -9,16 +9,15 @@ estructuralmente válidos. No se realizó ninguna escritura Jira, mutación de
 repositorios funcionales ni retiro de worktrees.
 
 El resultado corresponde al árbol local integrado sobre `origin/main` en
-`1b5327d`. La primera deriva hasta `17b8451` y la segunda deriva introducida
-por el PR #36 fueron reconciliadas; el gate completo se repitió sobre el
-resultado final del rebase.
+`7837e39`. Las derivas introducidas por los PR #35, #36 y #37 fueron
+reconciliadas; el gate completo se repitió sobre el resultado final.
 
 ## Checks
 
 - `npm.cmd run check:request-ids:self-test`: PASS,
   `6 OK / 0 WARN / 0 FAIL`.
 - `npm.cmd run check:request-ids`: PASS,
-  `622 lifecycle files / 1 WARN / 0 FAIL`.
+  `623 lifecycle files / 1 WARN / 0 FAIL`.
 - `npm.cmd run check:worktree-policy`: PASS, `1 OK / 0 WARN / 0 FAIL`.
 - `node scripts/verify-initiatives.js`: PASS, `18 OK / 0 WARN / 0 FAIL`.
 - scan focalizado de whitespace: PASS.
@@ -32,10 +31,10 @@ El gate completo reportó:
   a worktrees limpios;
 - state model: `56 OK / 0 WARN / 0 FAIL`;
 - initiatives: `18 OK / 0 WARN / 0 FAIL`;
-- request identities: `622` archivos, una excepción histórica congelada y cero fallas;
+- request identities: `623` archivos, una excepción histórica congelada y cero fallas;
 - worktree lifecycle policy: registrada, discoverable y conectada al full gate;
 - owner documentation: `120 OK / 0 WARN / 0 FAIL`;
-- visual documentation: nueve mapas, cero fallas.
+- visual documentation: diez mapas, cero fallas.
 
 El warning de bindings es esperado: `environments/local/bindings.local.yaml` es
 ignorado y no se copia al worktree limpio.
@@ -53,10 +52,10 @@ falla.
 
 ## Estado
 
-- `CR-SST-0207`: running, normalización local completa.
+- `CR-SST-0208`: running, normalización local completa.
 - canonicalización: aplicada en el worktree limpio.
 - publicación: PR #38 listo para actualización; conflictos resueltos localmente
-  sobre `1b5327d` y gate completo repetido.
+  sobre `7837e39` y gate completo repetido.
 - Jira: read-only; sin autorización de escritura.
 - repos funcionales: no modificados.
 - prerequisito de identidad/scope de memoria: `CR-SST-0210` propuesto, todavía

@@ -1,9 +1,9 @@
 schema_version: "1.0"
 phase: 2
-id: "CR-SST-0207"
+id: "CR-SST-0208"
 title: "Reconcile the SST change-request identity namespace"
 status: "planned"
-source_request: "requests/inbox/CR-SST-0207-reconcile-sst-request-identity-namespace.yaml"
+source_request: "requests/inbox/CR-SST-0208-reconcile-sst-request-identity-namespace.yaml"
 created_at: "2026-08-22"
 requester: "4uentes"
 summary: >
@@ -76,6 +76,7 @@ execution:
   production_data_allowed: false
   branch: "agent/cr-sst-0207-request-namespace-reconciliation"
   worktree: "worktrees/CR-SST-0207-namespace"
+  worktree_alias_status: "legacy-physical-path-only-does-not-reserve-request-identity"
   base_ref: "origin/main"
 decision_gates:
   canonicalization_requires_human_approval: true
@@ -89,15 +90,20 @@ required_checks:
   - "git diff --check"
   - "npm.cmd run check"
 evidence_plan:
-  - "evidence/requests/CR-SST-0207/namespace-preflight-2026-08-22.md"
-  - "evidence/requests/CR-SST-0207/canonicalization-proposal-2026-08-22.md"
-  - "evidence/requests/CR-SST-0207/canonicalization-decision-2026-08-22.md"
-  - "evidence/requests/CR-SST-0207/worktree-disposition-2026-08-22.md"
-  - "evidence/requests/CR-SST-0207/worktree-policy-adoption-2026-08-22.md"
-  - "evidence/requests/CR-SST-0207/base-drift-readback-2026-08-22.md"
-  - "evidence/requests/CR-SST-0207/jira-live-readback-2026-08-22.md"
-  - "evidence/requests/CR-SST-0207/validation-results-2026-08-22.md"
+  - "evidence/requests/CR-SST-0208/namespace-preflight-2026-08-22.md"
+  - "evidence/requests/CR-SST-0208/canonicalization-proposal-2026-08-22.md"
+  - "evidence/requests/CR-SST-0208/canonicalization-decision-2026-08-22.md"
+  - "evidence/requests/CR-SST-0208/worktree-disposition-2026-08-22.md"
+  - "evidence/requests/CR-SST-0208/worktree-policy-adoption-2026-08-22.md"
+  - "evidence/requests/CR-SST-0208/base-drift-readback-2026-08-22.md"
+  - "evidence/requests/CR-SST-0208/jira-live-readback-2026-08-22.md"
+  - "evidence/requests/CR-SST-0208/validation-results-2026-08-22.md"
+  - "evidence/requests/CR-SST-0208/post-pr37-canonical-readback-2026-08-22.md"
 decision:
   status: "approved-for-local-control-plane-normalization"
+  approver: "4uentes"
+  decided_at: "2026-08-22"
+post_pr37_decision:
+  status: "approved-preserve-main-and-reassign-unpublished-intents"
   approver: "4uentes"
   decided_at: "2026-08-22"

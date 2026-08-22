@@ -1,10 +1,12 @@
-# CR-SST-0207 - Propuesta De Canonicalización
+# CR-SST-0208 - Propuesta De Canonicalización
 
 Fecha: 2026-08-22.
 
-Estado: propuesta histórica supersedida por
-`canonicalization-decision-2026-08-22.md`. La autorización posterior habilitó
-la normalización local, pero no escrituras Jira.
+Estado: propuesta histórica supersedida primero por
+`canonicalization-decision-2026-08-22.md` y finalmente por
+`post-pr37-canonical-readback-2026-08-22.md`. El PR #37 cambió la ref canónica
+después de esta propuesta; su tabla se conserva sólo como reconstrucción
+histórica y no asigna IDs vigentes.
 
 ## Reglas
 
@@ -24,7 +26,7 @@ la normalización local, pero no escrituras Jira.
 | `CR-SST-0201` raw-v2 | Conservar y aclarar ownership en INIT-SST-0008. | Identidad local publicada y única. |
 | `CR-SST-0202` registro/sesión | Candidato a conservar. | Lifecycle local anterior a los otros usos observados. |
 | `CR-SST-0202` retención de chat (`SST-113`) | Reasignar sólo después de aprobación; no se propone aún número definitivo. | Colisión incompatible y Jira no es source of truth. |
-| `CR-SST-0202` reconciliación de memoria no publicada | Mantener en cuarentena y superseder por CR-SST-0207 para la parte de namespace; cualquier intención residual necesita ID propio. | Nunca fue adoptado como identidad canónica publicada. |
+| `CR-SST-0202` reconciliación de memoria no publicada | Mantener en cuarentena y superseder por CR-SST-0208 para la parte de namespace; cualquier intención residual necesita ID propio. | Nunca fue adoptado como identidad canónica publicada. |
 | `CR-SST-0203` seguridad vs. persistencia de chat | Decisión humana requerida. | Jira de chat precede por minutos al commit local de seguridad, pero el contrato exige lifecycle local antes del mirror. La precedencia temporal no resuelve la autoridad. |
 | `CR-SST-0204` a `0206` Jira-only | No adoptar todavía como CRs canónicos; recuperar o crear lifecycles sólo mediante decisión explícita. | Falta source of truth local visible. |
 | Prerequisito de identidad/scope de memoria | Mantener `CR-SST-TODO-IDENTITY-SCOPE`. | Su ID depende del espacio liberado y del mapa final. |

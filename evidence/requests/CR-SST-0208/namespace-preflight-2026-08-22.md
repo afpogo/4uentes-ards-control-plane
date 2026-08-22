@@ -1,6 +1,10 @@
-# CR-SST-0207 - Preflight Del Namespace SST
+# CR-SST-0208 - Preflight Del Namespace SST
 
 Fecha: 2026-08-22.
+
+Estado: preflight histórico anterior al merge del PR #37. La reserva vigente
+de `CR-SST-0208` y la reasignación de Auth a `CR-SST-0209` se verifican en
+`post-pr37-canonical-readback-2026-08-22.md`.
 
 ## Alcance
 
@@ -11,17 +15,17 @@ Se aplicaron `work-tracker-control-plane-authority-policy`,
 La revisión fue read-only sobre Jira y Git. No se modificaron repositorios
 funcionales, ambientes ni issues.
 
-## Reserva De CR-SST-0207
+## Reserva De CR-SST-0208
 
-`CR-SST-0207` no apareció en:
+`CR-SST-0208` no apareció en:
 
 - el working tree publicado desde `origin/main`;
 - ninguna ref local ni remote-tracking disponible;
 - la historia Git alcanzable por esas refs;
-- búsquedas Jira de summary y texto para `CR-SST-0207`;
+- búsquedas Jira de summary y texto para `CR-SST-0208`;
 - el bloque adicional `CR-SST-0208` a `CR-SST-0220` consultado como margen.
 
-Por eso `CR-SST-0207` se reserva exclusivamente para gobernar esta
+Por eso `CR-SST-0208` se reserva exclusivamente para gobernar esta
 reconciliación. No se asigna todavía un ID numérico al prerequisito de memoria.
 
 ## Matriz De Colisiones

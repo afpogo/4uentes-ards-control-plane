@@ -583,11 +583,12 @@ core_owned_adoptions:
       mode: "request-identity-gate-and-operational-review"
       failure_behavior: "block-reservation-integration-or-retirement-and-quarantine-ambiguous-worktree"
     evidence:
-      - "requests/planned/CR-SST-0207-reconcile-sst-request-identity-namespace.yaml"
-      - "evidence/requests/CR-SST-0207/canonicalization-decision-2026-08-22.md"
-      - "evidence/requests/CR-SST-0207/worktree-disposition-2026-08-22.md"
-      - "evidence/requests/CR-SST-0207/worktree-policy-adoption-2026-08-22.md"
-      - "evidence/requests/CR-SST-0207/base-drift-readback-2026-08-22.md"
+      - "requests/planned/CR-SST-0208-reconcile-sst-request-identity-namespace.yaml"
+      - "evidence/requests/CR-SST-0208/canonicalization-decision-2026-08-22.md"
+      - "evidence/requests/CR-SST-0208/worktree-disposition-2026-08-22.md"
+      - "evidence/requests/CR-SST-0208/worktree-policy-adoption-2026-08-22.md"
+      - "evidence/requests/CR-SST-0208/base-drift-readback-2026-08-22.md"
+      - "evidence/requests/CR-SST-0208/post-pr37-canonical-readback-2026-08-22.md"
       - "scripts/verify-request-identities.js"
       - "scripts/verify-worktree-request-lifecycle-policy.js"
     gaps:

@@ -14,3 +14,4 @@
 - El payload prohíbe secretos y datos de sesión.
 - Jira permanece como mirror; ARDS/SDD local conserva autoridad.
 - El write requiere readback sanitizado y `npm run check` antes del cierre local.
+

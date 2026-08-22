@@ -1,4 +1,4 @@
-# CR-SST-0207 - Readback de deriva de base
+# CR-SST-0208 - Readback de deriva de base
 
 Fecha: 2026-08-22.
 
@@ -31,7 +31,7 @@ pero la branch no está lista para publicación hasta integrar la nueva main.
 3. Aceptar el `done` publicado de `0199/0201` y no recrear sus archivos
    `running`.
 4. Reconciliar las iniciativas conservando tanto el read model nuevo como el
-   namespace de `CR-SST-0207`.
+   namespace de `CR-SST-0208`.
 5. Reejecutar request identity, owner documentation, policy y full checks sobre
    el merge result.
 
@@ -57,7 +57,20 @@ de contenido en `INIT-SST-0007` e `INIT-SST-0008`.
 
 La resolución preservó la versión más nueva de `CR-SST-0203` publicada en
 `main`, incluida su evidencia de deriva post-write. En las iniciativas se
-combinaron ese read model nuevo y el mapa de namespace de `CR-SST-0207`.
+combinaron ese read model nuevo y el mapa de namespace de `CR-SST-0208`.
 
 La branch fue rebasada sobre `1b5327d`; `npm.cmd run check` y `git diff
 --check` volvieron a pasar antes de actualizar el PR.
+
+## Tercera deriva: PR #37
+
+El PR #37 fue fusionado posteriormente en `7837e39` y publicó un namespace de
+retención incompatible con los IDs todavía no fusionados del PR #38. La nueva
+base pasó a ser la autoridad: `0202` retención, `0204` Bend, `0205` Infra,
+`0206` Fend y `0207` QA.
+
+Con autorización explícita, la reconciliación se reasignó a `CR-SST-0208` y
+la intención Auth no publicada a `CR-SST-0209`. Se retiraron los contratos
+duplicados y el lifecycle `running` residual de `CR-SST-0202`. No se realizaron
+escrituras Jira. El detalle vigente está en
+`post-pr37-canonical-readback-2026-08-22.md`.

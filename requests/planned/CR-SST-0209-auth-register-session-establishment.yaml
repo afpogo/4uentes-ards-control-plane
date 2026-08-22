@@ -1,9 +1,9 @@
 schema_version: "1.0"
 phase: 2
-id: "CR-SST-0202"
+id: "CR-SST-0209"
 title: "Establish the web auth session during registration"
 status: "planned"
-source_request: "requests/inbox/CR-SST-0202-auth-register-session-establishment.yaml"
+source_request: "requests/inbox/CR-SST-0209-auth-register-session-establishment.yaml"
 created_at: "2026-08-21"
 requester: "4uentes"
 depends_on: []
@@ -73,3 +73,11 @@ rollback: >
   Restore the previous immutable Auth image through Git and Argo CD. Do not
   delete synthetic accounts or manipulate the identity database as rollback.
 decision: {status: "proposed-awaiting-execution-approval", approver: null, decided_at: null}
+
+namespace_reconciliation:
+  coordinated_by_request_id: "CR-SST-0208"
+  previous_unpublished_id: "CR-SST-0202"
+  status: "reassigned-after-pr37-canonical-publication"
+  jira_issue_key: null
+  jira_write_performed: false
+  evidence_ref: "evidence/requests/CR-SST-0208/post-pr37-canonical-readback-2026-08-22.md"

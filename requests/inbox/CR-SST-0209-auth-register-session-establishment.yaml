@@ -1,6 +1,6 @@
 schema_version: "1.0"
 phase: 1
-id: "CR-SST-0202"
+id: "CR-SST-0209"
 title: "Establish the web auth session during registration"
 status: "inbox"
 created_at: "2026-08-21"

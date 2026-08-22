@@ -1,6 +1,10 @@
-# CR-SST-0207 - Readback Jira en vivo
+# CR-SST-0208 - Readback Jira en vivo
 
 Fecha: 2026-08-22.
+
+Estado: readback histórico anterior al merge del PR #37. El mapa vigente está
+registrado en `post-pr37-canonical-readback-2026-08-22.md`; las correcciones
+propuestas al final de este documento quedaron supersedidas y no se ejecutan.
 
 La consulta fue read-only y no conservó URL, cloud ID, account ID ni
 credenciales.

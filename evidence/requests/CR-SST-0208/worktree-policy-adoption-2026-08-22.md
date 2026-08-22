@@ -1,4 +1,4 @@
-# CR-SST-0207 - Adopción de policy de worktrees
+# CR-SST-0208 - Adopción de policy de worktrees
 
 Fecha: 2026-08-22.
 

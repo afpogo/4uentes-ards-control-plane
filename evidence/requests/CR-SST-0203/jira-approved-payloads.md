@@ -135,3 +135,4 @@ Reconciliación de estado mediante `CR-SST-0203`.
 La primera versión conectada ya está fusionada, desplegada y validada en localhost development. Pasaron chat visible, realtime, persistencia/recuperación, registro/refresh y logout single-flight. El único gate integrado pendiente es el QA autenticado mediante el dominio ngrok reservado con GitHub OAuth legítimo.
 
 No se cambia el estado ni la prioridad de `SST-86`, y no se crean tickets en este lote. Jira permanece como mirror; el cierre lo determina la evidencia local de `CR-SST-0178` y sus CRs coordinados.
+
