@@ -39,6 +39,7 @@ known_change_requests:
   - "CR-SST-0200"
   - "CR-SST-0201"
   - "CR-SST-0203"
+  - "CR-SST-0204"
 tracking:
   jira:
     role: "mirror"
@@ -46,7 +47,7 @@ tracking:
     project_key: "SST"
     issue_type: "Epic"
     issue_key: "SST-86"
-    status_observation: "Tareas por hacer; CR-SST-0203 write completed before later canonical PR35 readback; correction pending separate authorization"
+    status_observation: "Tareas por hacer; post-PR35 narrative corrected and read back by CR-SST-0204"
     observed_at: "2026-08-22"
     write_authorized: false
 boundaries:
@@ -72,5 +73,4 @@ security_qualification:
   superseding_current_contract: "CR-SST-0180"
 gaps:
   - "CR-SST-0178 remains running for CR-SST-0200 signup copy, registration continuity and logout teardown retests."
-  - "SST-86 Jira narrative still requires a separately authorized correction for the later PR35 canonical readback."
   - "User RAG, stakeholder RAG, multi-session adoption and personal memory remain separate lifecycles and are not absorbed here."

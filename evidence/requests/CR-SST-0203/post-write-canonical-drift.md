@@ -18,3 +18,9 @@ Los payloads y el readback de `CR-SST-0203` siguen siendo evidencia histórica e
 La autorización de `JIRA-SEC-PREPROD-01` quedó consumida. No se ejecuta una segunda escritura Jira por inferencia. La corrección requiere un lote nuevo, mínimo, enumerado y aprobado; no necesita cambiar prioridad, estado, parent, labels ni summaries.
 
 No se conservaron secretos, datos de sesión ni identificadores privados de conexión.
+
+## Reconciliación posterior
+
+La deriva quedó corregida mediante el lote autorizado `JIRA-SEC-PREPROD-02`
+del request `CR-SST-0204`. El readback confirmó las narrativas nuevas y que
+estado, prioridad, labels, parent y summary permanecieron sin cambios.

@@ -1,0 +1,39 @@
+schema_version: "1.0"
+phase: 4
+id: "CR-SST-0204"
+title: "Correct post-PR35 Jira narratives"
+status: "done"
+source_request: "requests/inbox/CR-SST-0204-correct-post-pr35-jira-narratives.yaml"
+planned_request: "requests/planned/CR-SST-0204-correct-post-pr35-jira-narratives.yaml"
+started_at: "2026-08-22"
+completed_at: "2026-08-22"
+requester: "4uentes"
+scope:
+  repository: "4uentes-orchestor"
+  jira_project_key: "SST"
+  jira_issue_keys: ["SST-86", "SST-89", "SST-92"]
+execution:
+  status: "complete-readback-pass"
+  write_batch_id: "JIRA-SEC-PREPROD-02"
+  authorization_status: "consumed"
+  issue_creation_performed: false
+  transitions_performed: false
+  child_repo_mutation_performed: false
+  production_mutation_performed: false
+result:
+  SST-86: "description and one corrective comment added; other observed fields unchanged"
+  SST-89: "description and one corrective comment added; priority Low and other observed fields unchanged"
+  SST-92: "description and one corrective comment added; parent SST-89 and other observed fields unchanged"
+owner_documentation: {required: false, status: "not-applicable-control-plane-jira-mirror-only"}
+evidence_refs:
+  - "evidence/requests/CR-SST-0204/jira-write-batch-authorization.md"
+  - "evidence/requests/CR-SST-0204/doctor-summary.md"
+  - "evidence/requests/CR-SST-0204/correction-plan-preview.json"
+  - "evidence/requests/CR-SST-0204/jira-policy-check-summary.md"
+  - "evidence/requests/CR-SST-0204/jira-approved-payloads.md"
+  - "evidence/requests/CR-SST-0204/jira-write-result.md"
+  - "evidence/requests/CR-SST-0204/jira-readback.md"
+validation:
+  jira_readback: "PASS"
+  control_plane_check: "PASS on 2026-08-22"
+decision: {status: "complete", approver: "4uentes", decided_at: "2026-08-22"}
