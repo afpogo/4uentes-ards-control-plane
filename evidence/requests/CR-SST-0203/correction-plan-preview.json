@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0",
+  "request_id": "CR-SST-0203",
+  "batch_id": "JIRA-SEC-PREPROD-01",
+  "mode": "approved-write-preview",
+  "project_key": "SST",
+  "blocked": 0,
+  "actions": [
+    {"issue_key": "SST-89", "operations": ["set-description", "set-priority-low", "merge-labels", "add-comment"]},
+    {"issue_key": "SST-92", "operations": ["set-description", "add-comment"]},
+    {"issue_key": "SST-95", "operations": ["set-description", "add-comment"]},
+    {"issue_key": "SST-86", "operations": ["set-description", "add-comment"]}
+  ],
+  "forbidden": ["create", "transition", "delete", "reparent", "assign", "change-summary"],
+  "payload_ref": "evidence/requests/CR-SST-0203/jira-approved-payloads.md"
+}
+

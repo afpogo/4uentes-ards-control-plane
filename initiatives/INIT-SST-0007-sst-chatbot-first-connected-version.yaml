@@ -3,7 +3,7 @@ kind: "initiative"
 id: "INIT-SST-0007"
 title: "SST Chatbot First Connected Version"
 status: "active"
-updated_at: "2026-08-21"
+updated_at: "2026-08-22"
 owner_repository: "4uentes-orchestor"
 objective: >
   Deliver a governed SST chatbot with revocable identity, durable conversation
@@ -38,6 +38,7 @@ known_change_requests:
   - "CR-SST-0199"
   - "CR-SST-0200"
   - "CR-SST-0201"
+  - "CR-SST-0203"
 tracking:
   jira:
     role: "mirror"
@@ -45,8 +46,8 @@ tracking:
     project_key: "SST"
     issue_type: "Epic"
     issue_key: "SST-86"
-    status_observation: "historical-only-not-refreshed-in-this-gate"
-    last_historical_observation_at: "2026-08-13"
+    status_observation: "Tareas por hacer; CR-SST-0203 write completed before later canonical PR35 readback; correction pending separate authorization"
+    observed_at: "2026-08-22"
     write_authorized: false
 boundaries:
   control_plane_role: "lifecycle, coordination and evidence only"
@@ -71,4 +72,5 @@ security_qualification:
   superseding_current_contract: "CR-SST-0180"
 gaps:
   - "CR-SST-0178 remains running for CR-SST-0200 signup copy, registration continuity and logout teardown retests."
+  - "SST-86 Jira narrative still requires a separately authorized correction for the later PR35 canonical readback."
   - "User RAG, stakeholder RAG, multi-session adoption and personal memory remain separate lifecycles and are not absorbed here."
