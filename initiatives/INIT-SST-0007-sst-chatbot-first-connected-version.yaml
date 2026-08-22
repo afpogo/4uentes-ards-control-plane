@@ -58,9 +58,9 @@ boundaries:
 current_read_model:
   local_hybrid_slice: "historically-validated-local"
   development_cluster_slice: "gitops-reconciled-localhost-integrated-pass"
-  persistent_gitops_chat_runtime: "healthy-localhost-pass-reserved-ngrok-oauth-qa-pending"
+  persistent_gitops_chat_runtime: "healthy-chat-core-pass-spa-session-followups-pending"
   active_execution_request: "CR-SST-0178"
-  active_correction_request: "CR-SST-0199"
+  active_correction_request: "CR-SST-0200"
   current_session_contract_ref: "requests/running/CR-SST-0180-integrate-login-sessions-and-timeout-corrections.yaml"
   integrated_closure_plan_ref: "evidence/requests/CR-SST-0178/integrated-chat-raw-v2-plan-2026-08-21.md"
 security_qualification:
@@ -70,6 +70,5 @@ security_qualification:
     is not current authority for refresh/logout concurrency safety.
   superseding_current_contract: "CR-SST-0180"
 gaps:
-  - "CR-SST-0178 remains running because browser Socket.IO is captured by the sst-fend Ingress catch-all."
-  - "CR-SST-0199 must publish the scoped Infra lifecycle before its owner mutation and GitOps retest."
+  - "CR-SST-0178 remains running for CR-SST-0200 signup copy, registration continuity and logout teardown retests."
   - "User RAG, stakeholder RAG, multi-session adoption and personal memory remain separate lifecycles and are not absorbed here."

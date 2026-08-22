@@ -57,3 +57,7 @@ Por la regla de cierre, `CR-SST-0178`, `CR-SST-0199`, `CR-SST-0200` y `CR-SST-02
 - `scripts/qa-cr-sst-0201-migration.js`
 
 Los harnesses emiten solamente estados y contadores agregados; los valores sensibles existen solo en memoria durante la ejecucion.
+
+## Continuacion publica
+
+El gate ngrok fue ejecutado posteriormente. Sus resultados y el unico follow-up pendiente se registran en `public-ngrok-reconciliation-2026-08-21.md`.

@@ -1,0 +1,43 @@
+schema_version: "1.0"
+phase: 4
+id: "CR-SST-0201"
+title: "Adopt raw-v2 gradually in development"
+status: "done"
+source_request: "requests/inbox/CR-SST-0201-development-raw-v2-gradual-adoption.yaml"
+planned_request: "requests/planned/CR-SST-0201-development-raw-v2-gradual-adoption.yaml"
+created_at: "2026-08-21"
+started_at: "2026-08-21"
+completed_at: "2026-08-21"
+requester: "4uentes"
+control_plane_context: {initiative_id: "INIT-SST-0008", coordinated_by_request_id: "CR-SST-0178", jira_write_allowed: false}
+execution:
+  child_repo_mutation_targets: ["sst-fend", "sst-4uentes-infra", "4uentes-auth"]
+  conditional_auth_mutation_reason: "Preflight found exact legacy refresh-token index drift that broke valid post-migration sessions."
+owner_documentation:
+  required: true
+  status: "complete-in-merged-owner-prs"
+  owner_repos: ["sst-fend", "sst-4uentes-infra", "4uentes-auth"]
+implementation:
+  owner_pull_requests:
+    infra_initial_flags: "https://github.com/afpogo/sst-4uentes-infra/pull/10 (merged)"
+    infra_observation_revision: "https://github.com/afpogo/sst-4uentes-infra/pull/11 (merged)"
+    fend_raw_v2: "https://github.com/afpogo/sst-fend/pull/16 (merged)"
+    infra_auth_facade_url: "https://github.com/afpogo/sst-4uentes-infra/pull/12 (merged)"
+    infra_migration_promotion: "https://github.com/afpogo/sst-4uentes-infra/pull/13 (merged)"
+    auth_session_index_reconciliation: "https://github.com/afpogo/4uentes-auth/pull/10 (merged)"
+  effective_flags: {PASSWORD_RAW_V2_ACCEPT_ENABLED: true, PASSWORD_MIGRATE_ON_LOGIN_ENABLED: true, LOGIN_ATTEMPT_GUARD_MODE: observe}
+validation:
+  status: "validated-live"
+  passed:
+    - "Owner checks, two 15-minute observation windows and migration/rollback matrix PASS."
+    - "Public Auth telemetry confirmed raw-v2 with v2-scrypt success and no KDF saturation."
+    - "Reserved ngrok produced successful login and refresh responses over same-origin HTTPS."
+    - "No downgrade was observed and no credential, verifier, token, cookie or hash value was retained."
+decision:
+  status: "closed-validated-live"
+  approver: "4uentes"
+  decided_at: "2026-08-21"
+  note: "CR-SST-0159 remains running for password recovery; no Jira write was performed."
+evidence_refs:
+  - "evidence/requests/CR-SST-0178/integrated-runtime-validation-2026-08-21.md"
+  - "evidence/requests/CR-SST-0178/public-ngrok-reconciliation-2026-08-21.md"
