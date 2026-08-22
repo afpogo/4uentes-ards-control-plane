@@ -15,8 +15,8 @@ La clasificación resultante es:
 - 4 árboles limpios cuyo HEAD no es ancestro de `origin/main` o
   `origin/develop`; uno tiene un patch equivalente ya integrado y tres
   conservan commits únicos;
-- 33 candidatos estrictos a retiro posterior: limpios, integrados y asociados
-  a un lifecycle `done` publicado;
+- 33 candidatos estrictos fueron identificados: 3 worktrees de `CR-SST-0125`
+  ya se retiraron en el lote 01 y quedan 30 pendientes;
 - 34 árboles limpios integrados pero con lifecycle activo, ambiguo o sin mapping
   terminal suficiente; requieren readback específico antes del retiro.
 
@@ -75,10 +75,11 @@ el nombre del path; ambos requieren extracción por unidades auditables.
   requiere el readback owner y las mismas comprobaciones de uso que cualquier
   otro lote.
 
-## Candidatos estrictos a retiro posterior
+## Inventario estricto previo al retiro (33)
 
-Los siguientes 33 árboles están limpios, integrados en la ref canónica owner y
-correlacionados con un request `done` publicado:
+Los siguientes 33 árboles estaban limpios, integrados en la ref canónica owner
+y correlacionados con un request `done` publicado. Los tres paths de
+`CR-SST-0125` se retiraron luego en el lote 01; los otros 30 permanecen:
 
 - `4uentes-orchestor/worktrees/CR-4UENTES-0040-control-plane`
 - `4uentes-orchestor/worktrees/cr-sst-0125-closure`
@@ -152,7 +153,7 @@ coordinador todavía estaba mezclado.
 3. Portar selectivamente el diagnóstico de `8bc053d` bajo `CR-SST-0209` y
    autorizar por separado cualquier publicación de `CR-SST-0178-auth`.
 4. Extraer los siete árboles dirty por request/owner, sin merges completos.
-5. Tras integrar el readback, retirar los 33 candidatos estrictos por lotes
-   pequeños con verificación previa y readback posterior.
+5. Retirar los 30 candidatos estrictos restantes por lotes pequeños con
+   verificación previa y readback posterior.
 6. No borrar branches en el
    mismo lote salvo autorización explícita separada.
