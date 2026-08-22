@@ -14,6 +14,7 @@ initial_hypothesis: >
   state in sst-bend and agent processing in sst-chatbot while combining a
   realtime user experience with application-owned persistence and replay.
 source_evidence_refs:
+  - "evidence/requests/CR-SST-0208/post-pr37-canonical-readback-2026-08-22.md"
   - "evidence/initiatives/INIT-SST-0007/canonical-reconciliation-2026-08-18.md"
   - "evidence/initiatives/INIT-SST-0007/hybrid-realtime-plan.md"
   - "evidence/initiatives/INIT-SST-0007/operational-validation-2026-08-10.md"
@@ -45,6 +46,8 @@ known_change_requests:
   - "CR-SST-0205"
   - "CR-SST-0206"
   - "CR-SST-0207"
+  - "CR-SST-0208"
+  - "CR-SST-0209"
 tracking:
   jira:
     role: "mirror"
@@ -77,6 +80,8 @@ current_read_model:
   active_correction_request: "CR-SST-0200"
   completed_retention_design_request: "CR-SST-0202"
   next_retention_execution_request: "CR-SST-0204"
+  namespace_reconciliation_request: "CR-SST-0208"
+  auth_registration_session_request: "CR-SST-0209"
   current_session_contract_ref: "requests/running/CR-SST-0180-integrate-login-sessions-and-timeout-corrections.yaml"
   integrated_closure_plan_ref: "evidence/requests/CR-SST-0178/integrated-chat-raw-v2-plan-2026-08-21.md"
 security_qualification:
@@ -90,3 +95,18 @@ gaps:
   - "SST-86 Jira narrative still requires a separately authorized correction for the later PR35 canonical readback."
   - "User RAG, stakeholder RAG, multi-session adoption and personal memory remain separate lifecycles and are not absorbed here."
   - "CR-SST-0202 completed the control-plane contract; CR-SST-0204 through CR-SST-0207 require their own execution approvals before owner mutation or integrated QA."
+namespace_reconciliation:
+  request_id: "CR-SST-0208"
+  status: "pr37-canonical-map-preserved"
+  canonical_requests:
+    CR-SST-0202: "consent-aware chat retention contract"
+    CR-SST-0203: "pre-production security Jira reconciliation"
+    CR-SST-0204: "Bend chat retention and cache semantics"
+    CR-SST-0205: "development Redis runtime"
+    CR-SST-0206: "Fend retention consent UX"
+    CR-SST-0207: "integrated retention QA"
+    CR-SST-0208: "request namespace reconciliation and worktree lifecycle policy"
+    CR-SST-0209: "Auth registration session establishment"
+  jira_write_allowed: false
+  jira_write_performed: false
+  evidence_ref: "evidence/requests/CR-SST-0208/post-pr37-canonical-readback-2026-08-22.md"

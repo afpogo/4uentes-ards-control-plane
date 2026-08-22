@@ -71,6 +71,7 @@ Locally documented policies:
 - `agent-architecture-boundary-policy`
 - `owner-documentation-authority-policy`
 - `visual-documentation-as-code-policy`
+- `worktree-request-lifecycle-policy`
 
 Core-owned policy adoptions tracked locally:
 
@@ -79,7 +80,9 @@ Core-owned policy adoptions tracked locally:
 These policies define how to select model aliases, degrade strategy when
 resources are limited, atomize tasks, delegate work, manage context, respect
 architecture boundaries, and keep reproducible HTTP QA harnesses aligned with
-the core-owned canon when that policy is adopted locally.
+the core-owned canon when that policy is adopted locally. The local worktree
+policy additionally governs request reservation, isolated execution,
+information recovery and controlled retirement of worktrees.
 
 They complement working agreements, specs, docs and playbooks. They do not
 replace functional contracts or cross-repo ownership.
@@ -102,6 +105,8 @@ npm run check
 
 This runs:
 
+- `node scripts/verify-request-identities.js`
+- `node scripts/verify-worktree-request-lifecycle-policy.js`
 - `node scripts/verify-catalog.js`
 - `node scripts/verify-local-bindings.js --optional`
 - `node scripts/verify-state-model.js`
