@@ -95,6 +95,25 @@ El retiro físico sigue condicionado a comprobar procesos/mounts, registrar el
 path exacto y ejecutar una confirmación separada. Borrar la branch continúa
 siendo una decisión independiente.
 
+## Preflight local de uso de paths
+
+Después de publicar el inventario se ejecutó un preflight no destructivo sobre
+los 33 candidatos estrictos:
+
+- todos los paths existen y continúan siendo raíces Git válidas;
+- no se observaron archivos `*.lock` ni marcadores `locked` en sus gitdirs;
+- `git worktree list --porcelain` no reportó locks aplicables;
+- no se observaron procesos Windows cuyo command line referencie los paths;
+- Docker no tenía containers en ejecución ni bind mounts hacia `worktrees/`.
+
+El primer intento de normalizar gitdirs absolutos con `Join-Path` produjo un
+error de tooling y no se usó como evidencia. La repetición con
+`git rev-parse --path-format=absolute --git-dir` completó sin hallazgos.
+
+Resultado: los 33 paths pasan el preflight observable de uso local. Esto no
+autoriza borrar branches y no elimina la necesidad de retirar por lotes
+pequeños con readback posterior.
+
 ## Readback del coordinador
 
 La normalización de `CR-SST-0208` ya está publicada en `origin/main@8c37223`.
@@ -108,7 +127,6 @@ excepción de recuperación exigida por la policy para un coordinador mezclado.
 1. Publicar este readback de control plane.
 2. Separar y publicar o superseder los cuatro conjuntos de commits únicos.
 3. Extraer los siete árboles dirty por request/owner, sin merges completos.
-4. Verificar procesos y mounts de los 33 candidatos estrictos.
-5. Autorizar y retirar worktrees por lotes pequeños; no borrar branches en el
+4. Retirar los worktrees estrictos por lotes pequeños y registrar readback.
+5. No borrar branches en el
    mismo lote salvo autorización explícita separada.
-

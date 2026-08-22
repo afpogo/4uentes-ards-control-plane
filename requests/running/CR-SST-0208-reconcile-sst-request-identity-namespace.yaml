@@ -47,6 +47,8 @@ execution_status:
   worktree_disposition: "refreshed-79-observed-33-terminal-candidates-7-dirty-5-clean-nonancestor-no-worktrees-removed"
   legacy_coordinator_worktree: "quarantined-mixed-with-unique-cr-sst-0211-commit"
   validation_readback: "control-plane-candidate-branches-pass-except-dirty-root-self-test; owner blockers are missing local dependencies, while both dirty infra trees pass"
+  retirement_preflight: "33-terminal-candidates-pass-observable-git-lock-process-commandline-and-docker-mount-checks"
+  retirement_execution: "pending-small-batch-removal-no-branch-deletion"
   jira_correction: "not-required-pr37-map-preserved-no-write-performed"
   memory_identity_scope_assignment: "CR-SST-0210-proposed-not-yet-published"
 evidence_refs:
