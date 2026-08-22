@@ -34,8 +34,8 @@ execution_status:
   retention_lifecycle_ports: ["CR-SST-0204", "CR-SST-0205", "CR-SST-0206", "CR-SST-0208", "CR-SST-0209"]
   request_identity_gate: "implemented-self-tested-and-wired-into-full-check"
   worktree_lifecycle_policy: "adopted-locally-and-wired-into-full-check"
-  base_ref_readback: "origin-main-advanced-three-commits-during-execution"
-  publication_readiness: "blocked-until-non-destructive-main-integration-and-revalidation"
+  base_ref_readback: "origin-main-17b8451-integrated-and-revalidated"
+  publication_readiness: "ready-for-pr"
   historical_exception: "CR-SST-0016-frozen-by-exact-paths"
   worktree_disposition: "complete-no-worktrees-removed"
   jira_correction: "forbidden-not-authorized"

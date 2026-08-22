@@ -36,3 +36,14 @@ pero la branch no está lista para publicación hasta integrar la nueva main.
    el merge result.
 
 No se modificó ni retiró ningún otro worktree.
+
+## Readback posterior a la integración
+
+La branch fue preservada en un commit auditable y luego rebasada sobre
+`17b8451`, la `origin/main` observada. Los conflictos se resolvieron aceptando
+el lifecycle `done` ya publicado de `CR-SST-0199`, conservando el read model
+nuevo de las iniciativas y aplicando el namespace reconciliado.
+
+Después de la integración, `npm.cmd run check` y `git diff --check` pasaron.
+La branch quedó `ahead 1` y sin deriva respecto de esa base; está lista para
+publicación mediante PR.

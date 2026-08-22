@@ -8,9 +8,9 @@ La canonicalización local, los lifecycles portados y el gate de identidad son
 estructuralmente válidos. No se realizó ninguna escritura Jira, mutación de
 repositorios funcionales ni retiro de worktrees.
 
-El resultado corresponde al árbol local actual. `origin/main` avanzó tres
-commits durante la ejecución; por tanto la publicación permanece bloqueada
-hasta integrar esa base y repetir el gate sobre el merge result.
+El resultado corresponde al árbol local integrado sobre `origin/main` en
+`17b8451`. La deriva de tres commits fue reconciliada y el gate completo se
+repitió sobre el resultado del rebase.
 
 ## Checks
 
@@ -54,7 +54,7 @@ falla.
 
 - `CR-SST-0207`: running, normalización local completa.
 - canonicalización: aplicada en el worktree limpio.
-- publicación: bloqueada por deriva `behind 3`, sin rebase destructivo.
+- publicación: lista para PR; base integrada y gate completo repetido.
 - Jira: read-only; sin autorización de escritura.
 - repos funcionales: no modificados.
 - prerequisito de identidad/scope de memoria: `CR-SST-0210` propuesto, todavía
