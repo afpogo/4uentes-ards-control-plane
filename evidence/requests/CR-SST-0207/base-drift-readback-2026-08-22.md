@@ -45,5 +45,19 @@ el lifecycle `done` ya publicado de `CR-SST-0199`, conservando el read model
 nuevo de las iniciativas y aplicando el namespace reconciliado.
 
 Después de la integración, `npm.cmd run check` y `git diff --check` pasaron.
-La branch quedó `ahead 1` y sin deriva respecto de esa base; está lista para
-publicación mediante PR.
+La branch quedó entonces sin deriva respecto de esa base y fue publicada en el
+PR #38.
+
+## Segunda deriva observada en el PR #38
+
+Después de publicar la branch, `origin/main` avanzó hasta `1b5327d` mediante
+el PR #36. Ese merge incorporó el cierre más reciente de `CR-SST-0203` y
+produjo conflictos add/add en su evidencia y lifecycle, además de conflictos
+de contenido en `INIT-SST-0007` e `INIT-SST-0008`.
+
+La resolución preservó la versión más nueva de `CR-SST-0203` publicada en
+`main`, incluida su evidencia de deriva post-write. En las iniciativas se
+combinaron ese read model nuevo y el mapa de namespace de `CR-SST-0207`.
+
+La branch fue rebasada sobre `1b5327d`; `npm.cmd run check` y `git diff
+--check` volvieron a pasar antes de actualizar el PR.

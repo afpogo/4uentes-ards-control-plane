@@ -9,8 +9,9 @@ estructuralmente válidos. No se realizó ninguna escritura Jira, mutación de
 repositorios funcionales ni retiro de worktrees.
 
 El resultado corresponde al árbol local integrado sobre `origin/main` en
-`17b8451`. La deriva de tres commits fue reconciliada y el gate completo se
-repitió sobre el resultado del rebase.
+`1b5327d`. La primera deriva hasta `17b8451` y la segunda deriva introducida
+por el PR #36 fueron reconciliadas; el gate completo se repitió sobre el
+resultado final del rebase.
 
 ## Checks
 
@@ -54,7 +55,8 @@ falla.
 
 - `CR-SST-0207`: running, normalización local completa.
 - canonicalización: aplicada en el worktree limpio.
-- publicación: lista para PR; base integrada y gate completo repetido.
+- publicación: PR #38 listo para actualización; conflictos resueltos localmente
+  sobre `1b5327d` y gate completo repetido.
 - Jira: read-only; sin autorización de escritura.
 - repos funcionales: no modificados.
 - prerequisito de identidad/scope de memoria: `CR-SST-0210` propuesto, todavía
