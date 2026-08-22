@@ -12,8 +12,8 @@ branch.
 La clasificación resultante es:
 
 - 7 árboles con cambios sin commit: retiro bloqueado;
-- 5 árboles limpios cuyo HEAD no es ancestro de `origin/main` o
-  `origin/develop`; uno tiene un patch equivalente ya integrado y cuatro
+- 4 árboles limpios cuyo HEAD no es ancestro de `origin/main` o
+  `origin/develop`; uno tiene un patch equivalente ya integrado y tres
   conservan commits únicos;
 - 33 candidatos estrictos a retiro posterior: limpios, integrados y asociados
   a un lifecycle `done` publicado;
@@ -47,7 +47,6 @@ el nombre del path; ambos requieren extracción por unidades auditables.
 | Worktree | Estado |
 | --- | --- |
 | `cr-sst-0178-public-qa-reconciliation` | Conserva un commit único y además contiene la asignación histórica incompatible de `CR-SST-0202`; portar selectivamente, no fusionar completo. |
-| `CR-SST-0207-namespace` | Conserva el commit único de reserva de `CR-SST-0211`; el path es un alias físico legado de `CR-SST-0208` y ahora está mezclado con otro request. |
 | `system-feature-studies` | Conserva un commit único con correcciones Jira/evidencia de `CR-SST-0204`; requiere publicación o supersesión explícita. |
 | `CR-SST-0178-auth` | Conserva tres commits únicos de auth/chat; `CR-SST-0178` sigue activo y el retiro está bloqueado. |
 | `CR-SST-0193-bend` | El HEAD no es ancestro de develop, pero `git cherry origin/develop HEAD` marca su único patch como equivalente; retirar sólo después de registrar supersesión/readback owner. |
@@ -116,16 +115,16 @@ pequeños con readback posterior.
 
 ## Readback del coordinador
 
-La normalización de `CR-SST-0208` ya está publicada en `origin/main@8c37223`.
-El worktree físico legado `CR-SST-0207-namespace` no debe recibir más cambios de
-`CR-SST-0208`: contiene un commit único de `CR-SST-0211`. Este readback se
-preparó desde un worktree limpio, creado desde la ref canónica refrescada, como
-excepción de recuperación exigida por la policy para un coordinador mezclado.
+La normalización de `CR-SST-0208` está publicada y `CR-SST-0211` quedó integrado
+por el PR #40 en `origin/main@554183b`. El worktree físico legado
+`CR-SST-0207-namespace` ya no conserva commits únicos, pero no se reutiliza para
+este readback: la recuperación continuó en el worktree limpio creado cuando el
+coordinador todavía estaba mezclado.
 
 ## Siguiente gate
 
 1. Publicar este readback de control plane.
-2. Separar y publicar o superseder los cuatro conjuntos de commits únicos.
+2. Separar y publicar o superseder los tres conjuntos de commits únicos.
 3. Extraer los siete árboles dirty por request/owner, sin merges completos.
 4. Retirar los worktrees estrictos por lotes pequeños y registrar readback.
 5. No borrar branches en el
