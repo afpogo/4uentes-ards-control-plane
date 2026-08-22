@@ -51,6 +51,30 @@ el nombre del path; ambos requieren extracción por unidades auditables.
 | `CR-SST-0178-auth` | Conserva tres commits únicos de auth/chat; `CR-SST-0178` sigue activo y el retiro está bloqueado. |
 | `CR-SST-0193-bend` | El HEAD no es ancestro de develop, pero `git cherry origin/develop HEAD` marca su único patch como equivalente; retirar sólo después de registrar supersesión/readback owner. |
 
+### Disposición verificada de los cuatro casos
+
+- `cr-sst-0178-public-qa-reconciliation@8bc053d` no se puede fusionar completo.
+  Sus manifests locales de sesión Auth usan el ID incompatible `CR-SST-0202`;
+  esa intención ya fue reasignada y publicada como `CR-SST-0209`. El diagnóstico
+  `session-blockers-correction-plan-2026-08-21.md` puede portarse selectivamente
+  después de reemplazar las referencias obsoletas. Hasta entonces, se conserva
+  el worktree y su branch como evidencia recuperable.
+- `system-feature-studies@a0fa129` está publicado en el PR #39, pero no es
+  integrable sobre `origin/main`: crea un lifecycle Jira con ID `CR-SST-0204`,
+  hoy reservado canónicamente para Bend chat retention. Un merge local de
+  prueba produjo conflictos en las iniciativas 0007/0008 y fue abortado sin
+  modificar el worktree. Requiere un ID libre reservado y un readback propio;
+  no se renumera de forma implícita en este movimiento.
+- `CR-SST-0178-auth` contiene tres commits owner únicos (sesión revocable,
+  service tokens scoped y corrección del upstream durable), está diez commits
+  detrás de `origin/develop` y no tiene PR. Por su frontera de autenticación y
+  porque `CR-SST-0208` prohíbe mutación owner, queda en cuarentena hasta una
+  autorización de publicación owner separada.
+- `CR-SST-0193-bend` no aporta un patch nuevo respecto de `origin/develop`.
+  Pasa de "commit único" a "supersedido-equivalente", pero el retiro físico
+  requiere el readback owner y las mismas comprobaciones de uso que cualquier
+  otro lote.
+
 ## Candidatos estrictos a retiro posterior
 
 Los siguientes 33 árboles están limpios, integrados en la ref canónica owner y
@@ -123,9 +147,12 @@ coordinador todavía estaba mezclado.
 
 ## Siguiente gate
 
-1. Publicar este readback de control plane.
-2. Separar y publicar o superseder los tres conjuntos de commits únicos.
-3. Extraer los siete árboles dirty por request/owner, sin merges completos.
-4. Retirar los worktrees estrictos por lotes pequeños y registrar readback.
-5. No borrar branches en el
+1. Integrar este readback de control plane mediante el PR #41.
+2. Reservar un ID libre y corregir el PR #39 antes de intentar integrarlo.
+3. Portar selectivamente el diagnóstico de `8bc053d` bajo `CR-SST-0209` y
+   autorizar por separado cualquier publicación de `CR-SST-0178-auth`.
+4. Extraer los siete árboles dirty por request/owner, sin merges completos.
+5. Tras integrar el readback, retirar los 33 candidatos estrictos por lotes
+   pequeños con verificación previa y readback posterior.
+6. No borrar branches en el
    mismo lote salvo autorización explícita separada.
