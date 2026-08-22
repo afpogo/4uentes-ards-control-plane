@@ -25,6 +25,14 @@ result:
   SST-92: "description and comment updated; priority and status unchanged"
   SST-95: "description and comment updated; priority and status unchanged"
   SST-86: "description and comment updated; priority and status unchanged"
+post_write_reconciliation:
+  status: "later-canonical-drift-detected"
+  detail: >
+    origin/main PR35 was fetched after the Jira write and contains newer
+    canonical facts: CR-SST-0201 is validated-live/done while CR-SST-0200
+    remains running for signup, registration continuity and logout teardown.
+  correction_authorized: false
+  evidence_ref: "evidence/requests/CR-SST-0203/post-write-canonical-drift.md"
 owner_documentation: {required: false, status: "not-applicable-control-plane-jira-mirror-only"}
 evidence_refs:
   - "evidence/requests/CR-SST-0203/jira-write-batch-authorization.md"
@@ -34,6 +42,7 @@ evidence_refs:
   - "evidence/requests/CR-SST-0203/jira-approved-payloads.md"
   - "evidence/requests/CR-SST-0203/jira-write-result.md"
   - "evidence/requests/CR-SST-0203/jira-readback.md"
+  - "evidence/requests/CR-SST-0203/post-write-canonical-drift.md"
 validation:
   jira_readback: "PASS"
   control_plane_check: "PASS on 2026-08-22"

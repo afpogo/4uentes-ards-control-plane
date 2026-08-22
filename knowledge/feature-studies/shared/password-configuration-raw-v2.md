@@ -161,15 +161,16 @@ El rollback ordenado empieza por restaurar un Fend legacy y confirmar que todav�
 
 ## Estado actual y brechas que no deben ocultarse
 
-El diseño y sus flags existen en las líneas de Auth y Fend estudiadas, pero el cierre integrado sigue condicionado por QA y por correcciones separadas:
+`CR-SST-0201` quedó cerrado como `validated-live`: `raw-v2`, scrypt server-side, migración/rollback, login y refresh por el origen HTTPS protegido pasaron sin downgrade ni saturación KDF observada. Esto cierra la adopción web de ese protocolo en development, no el programa completo de password y sesión.
 
-- el registro en Auth no crea todavía de forma consistente la familia de refresh/cookies esperada; se trata como trabajo posterior de sesión;
-- se observaron problemas frontend con CSRF obsoleto después de refresh y requests autenticadas posteriores al logout;
-- la interfaz de signup puede conservar copy 8–12 aunque el contrato `raw-v2` sea 15–128;
-- password recovery es un gap independiente y no queda resuelto por adoptar `raw-v2`;
-- la validación completa exige localhost y el origen HTTPS protegido, además de observar capacidad KDF y ausencia de secretos en evidencia.
+Las brechas integradas más recientes pertenecen a `CR-SST-0200`:
 
-Por lo tanto, “el chat funciona” o “el login respondió una vez” no demuestra por sí solo que la adopción de password y sesión esté cerrada.
+- la interfaz de signup conserva copy 8–12 aunque el contrato `raw-v2` sea 15–128;
+- register → hard navigation → refresh → `/chat` no mantiene todavía la continuidad esperada en el QA manual;
+- logout devolvió `401` en la superficie pública y fue seguido por una carga autenticada rechazada, por lo que el teardown debe corregirse y repetirse;
+- password recovery continúa como gap independiente de `CR-SST-0159` y no queda resuelto por adoptar `raw-v2`.
+
+Por lo tanto, “el chat funciona” o “el login respondió una vez” no demuestra por sí solo que la sesión SPA o el lifecycle completo de password estén cerrados.
 
 ## Lo que esto no convierte en post-cuántico
 
@@ -191,4 +192,3 @@ Una estrategia post-cuántica real tendría que definir al menos algoritmos híb
 - Los flags de build de Fend se verifican en la imagen publicada; los flags runtime de Auth se reconcilian por GitOps.
 - Legacy permanece sólo durante la ventana documentada de compatibilidad y rollback.
 - Las brechas abiertas conservan owner, CR y evidencia; no se maquillan como aceptación.
-
