@@ -21,6 +21,12 @@ execution:
   worktree: "worktrees/CR-SST-0207-namespace"
   worktree_alias_status: "legacy-physical-path-only-does-not-reserve-request-identity"
   base_ref: "origin/main"
+readback_execution:
+  reason: "The legacy coordinator worktree contains a unique CR-SST-0211 commit and cannot accept more CR-SST-0208 changes."
+  branch: "agent/cr-sst-0208-worktree-disposition-readback"
+  worktree: "worktrees/CR-SST-0208-worktree-disposition-readback"
+  base_ref: "origin/main@8c37223"
+  exception: "Clean recovery worktree required by worktree-request-lifecycle-policy for a mixed coordinator."
 execution_status:
   policy_review: "complete"
   current_tree_scan: "complete"
@@ -35,10 +41,12 @@ execution_status:
   reassigned_unpublished_intents: ["CR-SST-0208-namespace-reconciliation", "CR-SST-0209-auth-register-session-establishment"]
   request_identity_gate: "implemented-self-tested-and-wired-into-full-check"
   worktree_lifecycle_policy: "adopted-locally-and-wired-into-full-check"
-  base_ref_readback: "origin-main-7837e39-pr37-integrated-canonical-map-preserved"
-  publication_readiness: "ready-for-pr-branch-update"
+  base_ref_readback: "origin-main-8c37223-pr38-integrated-namespace-normalization-published"
+  publication_readiness: "namespace-normalization-published-worktree-disposition-readback-pending-publication"
   historical_exception: "CR-SST-0016-frozen-by-exact-paths"
-  worktree_disposition: "complete-no-worktrees-removed"
+  worktree_disposition: "refreshed-79-observed-33-terminal-candidates-7-dirty-5-clean-nonancestor-no-worktrees-removed"
+  legacy_coordinator_worktree: "quarantined-mixed-with-unique-cr-sst-0211-commit"
+  validation_readback: "control-plane-candidate-branches-pass-except-dirty-root-self-test; owner blockers are missing local dependencies, while both dirty infra trees pass"
   jira_correction: "not-required-pr37-map-preserved-no-write-performed"
   memory_identity_scope_assignment: "CR-SST-0210-proposed-not-yet-published"
 evidence_refs:
@@ -51,6 +59,7 @@ evidence_refs:
   - "evidence/requests/CR-SST-0208/jira-live-readback-2026-08-22.md"
   - "evidence/requests/CR-SST-0208/validation-results-2026-08-22.md"
   - "evidence/requests/CR-SST-0208/post-pr37-canonical-readback-2026-08-22.md"
+  - "evidence/requests/CR-SST-0208/worktree-disposition-readback-2026-08-22.md"
 decision:
   status: "running-local-normalization-complete-publication-pending"
   approver: "4uentes"
