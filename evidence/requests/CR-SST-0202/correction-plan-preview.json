@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0",
+  "request_id": "CR-SST-0202",
+  "provider": "Jira",
+  "project_key": "SST",
+  "initiative_id": "INIT-SST-0007",
+  "epic_key": "SST-86",
+  "generated_at": "2026-08-22",
+  "authorization": {
+    "source": "explicit user authorization in the active conversation",
+    "window": "current execution turn",
+    "assignee": "current authenticated operator",
+    "allowed_operations": [
+      "create enumerated issues",
+      "assign enumerated issues",
+      "set descriptions and labels",
+      "add one initial comment per issue",
+      "create enumerated Blocks links"
+    ],
+    "prohibited_operations": ["delete", "transition", "wildcard update", "write outside SST"]
+  },
+  "duplicate_search": {
+    "method": "JQL by project and exact CR identifier in summary",
+    "candidates": ["CR-SST-0202", "CR-SST-0203", "CR-SST-0204", "CR-SST-0205", "CR-SST-0206"],
+    "compatible_matches": 0
+  },
+  "creates": [
+    {"candidate": "CR-SST-0202", "issue_type": "Tarea", "parent": "SST-86", "initial_status": "tracker default"},
+    {"candidate": "CR-SST-0203", "issue_type": "Subtask", "parent": "created CR-SST-0202 issue", "initial_status": "tracker default"},
+    {"candidate": "CR-SST-0204", "issue_type": "Subtask", "parent": "created CR-SST-0202 issue", "initial_status": "tracker default"},
+    {"candidate": "CR-SST-0205", "issue_type": "Subtask", "parent": "created CR-SST-0202 issue", "initial_status": "tracker default"},
+    {"candidate": "CR-SST-0206", "issue_type": "Subtask", "parent": "created CR-SST-0202 issue", "initial_status": "tracker default"}
+  ],
+  "dependency_links": [
+    {"blocker": "CR-SST-0203", "blocked": "CR-SST-0204"},
+    {"blocker": "CR-SST-0203", "blocked": "CR-SST-0205"},
+    {"blocker": "CR-SST-0203", "blocked": "CR-SST-0206"},
+    {"blocker": "CR-SST-0204", "blocked": "CR-SST-0206"},
+    {"blocker": "CR-SST-0205", "blocked": "CR-SST-0206"}
+  ],
+  "comments": 5,
+  "blocked": 0
+}

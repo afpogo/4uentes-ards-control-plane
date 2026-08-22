@@ -1,0 +1,65 @@
+schema_version: "1.0"
+phase: 4
+id: "CR-SST-0202"
+title: "Define consent-aware SST chat retention"
+status: "done"
+source_request: "requests/inbox/CR-SST-0202-consent-aware-chat-retention.yaml"
+planned_request: "requests/planned/CR-SST-0202-consent-aware-chat-retention.yaml"
+running_request: "requests/running/CR-SST-0202-consent-aware-chat-retention.yaml"
+started_at: "2026-08-22"
+completed_at: "2026-08-22"
+requester: "4uentes"
+control_plane_context:
+  initiative_id: "INIT-SST-0007"
+  coordinated_by_request_id: "CR-SST-0178"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  jira_issue_key: "SST-113"
+  jira_parent_epic_key: "SST-86"
+  jira_write_authorized: false
+scope:
+  functional_repositories_modified: false
+  runtime_code_modified: false
+  cluster_modified: false
+  production_modified: false
+decision:
+  status: "approved-closed-local"
+  approver: "4uentes"
+  decided_at: "2026-08-22"
+contract_result:
+  temporary: "Redis or compatible volatile memory with TTL; never PostgreSQL"
+  saved_in_sst: "PostgreSQL authoritative with Redis cache-aside after explicit user action"
+  browser_state: "message content in application memory; only opaque reference/cursor in session state"
+  browser_transport: "Socket.IO; Redis adapter/pub-sub permitted for replica fan-out"
+  grpc_role: "not required for browser session synchronization"
+  durable_write_order: "authorize, PostgreSQL commit, then Redis update or eviction"
+  actions:
+    clear_local: "clear this browser only"
+    finish_temporary: "delete volatile conversation and notify active sessions"
+    save_in_sst: "explicit idempotent promotion to durable storage"
+    delete_from_sst: "delete durable conversation and evict cache"
+child_lifecycles:
+  bend: {request_id: "CR-SST-0204", jira_issue_key: "SST-114", status: "planned"}
+  infrastructure: {request_id: "CR-SST-0205", jira_issue_key: "SST-115", status: "planned"}
+  frontend: {request_id: "CR-SST-0206", jira_issue_key: "SST-116", status: "planned"}
+  integrated_qa: {request_id: "CR-SST-0207", jira_issue_key: "SST-117", status: "planned"}
+validation:
+  architecture_privacy_review: "PASS"
+  atomization_review: "PASS"
+  jira_hierarchy_readback: "PASS"
+  control_plane_check: "PASS"
+  diff_check: "PASS"
+evidence_refs:
+  - "evidence/requests/CR-SST-0202/architecture-and-execution-plan.md"
+  - "evidence/requests/CR-SST-0202/contract-closure-validation.md"
+  - "evidence/requests/CR-SST-0202/jira-write-results.md"
+  - "evidence/requests/CR-SST-0202/jira-closure-comment-batch.json"
+  - "evidence/requests/CR-SST-0202/namespace-collision-reconciliation.md"
+  - "evidence/requests/CR-SST-0202/jira-namespace-reconciliation-batch.json"
+closure:
+  status: "complete-control-plane-contract"
+  next_request_id: "CR-SST-0204"
+  limits:
+    - "Closure authorizes no child repository mutation."
+    - "CR-SST-0204 requires an explicit execution approval before sst-bend changes."
+    - "A new enumerated batch is required for future Jira edits or transitions."
