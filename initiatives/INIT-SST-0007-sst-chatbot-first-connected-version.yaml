@@ -3,7 +3,7 @@ kind: "initiative"
 id: "INIT-SST-0007"
 title: "SST Chatbot First Connected Version"
 status: "active"
-updated_at: "2026-08-21"
+updated_at: "2026-08-22"
 owner_repository: "4uentes-orchestor"
 objective: >
   Deliver a governed SST chatbot with revocable identity, durable conversation
@@ -38,6 +38,7 @@ known_change_requests:
   - "CR-SST-0199"
   - "CR-SST-0200"
   - "CR-SST-0201"
+  - "CR-SST-0203"
 tracking:
   jira:
     role: "mirror"
@@ -45,8 +46,8 @@ tracking:
     project_key: "SST"
     issue_type: "Epic"
     issue_key: "SST-86"
-    status_observation: "historical-only-not-refreshed-in-this-gate"
-    last_historical_observation_at: "2026-08-13"
+    status_observation: "Tareas por hacer; description and comment reconciled by CR-SST-0203"
+    observed_at: "2026-08-22"
     write_authorized: false
 boundaries:
   control_plane_role: "lifecycle, coordination and evidence only"
@@ -70,6 +71,5 @@ security_qualification:
     is not current authority for refresh/logout concurrency safety.
   superseding_current_contract: "CR-SST-0180"
 gaps:
-  - "CR-SST-0178 remains running because browser Socket.IO is captured by the sst-fend Ingress catch-all."
-  - "CR-SST-0199 must publish the scoped Infra lifecycle before its owner mutation and GitOps retest."
+  - "CR-SST-0178 and coordinated CR-SST-0199 through CR-SST-0201 remain running pending authenticated browser QA through the reserved OAuth-protected ngrok domain."
   - "User RAG, stakeholder RAG, multi-session adoption and personal memory remain separate lifecycles and are not absorbed here."

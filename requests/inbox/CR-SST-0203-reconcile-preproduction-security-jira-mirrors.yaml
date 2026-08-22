@@ -1,0 +1,21 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0203"
+title: "Reconcile pre-production security Jira mirrors"
+status: "inbox"
+created_at: "2026-08-22"
+requester: "4uentes"
+summary: >
+  Reconcile the existing SST security and connected-chat Jira mirrors with the
+  current control-plane read model, preserving Jira as an operational mirror.
+requested_scope:
+  initiative_ids: ["INIT-SST-0007", "INIT-SST-0008"]
+  jira_project_key: "SST"
+  jira_issue_keys: ["SST-86", "SST-89", "SST-92", "SST-95"]
+constraints:
+  - "Do not create, transition, delete, reparent or assign Jira issues."
+  - "Change priority only on SST-89 from Medium to Low."
+  - "Do not store passwords, tokens, cookies, secrets, cloud identifiers or user identifiers in evidence."
+  - "Keep Jira as a mirror; local requests and initiatives remain authoritative."
+requested_next_step: "Run read-only preflight, publish exact payloads, apply the approved batch and perform sanitized readback."
+
