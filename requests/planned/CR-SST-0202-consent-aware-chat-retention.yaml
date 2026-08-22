@@ -1,0 +1,68 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0202"
+title: "Define consent-aware SST chat retention"
+status: "planned"
+source_request: "requests/inbox/CR-SST-0202-consent-aware-chat-retention.yaml"
+created_at: "2026-08-22"
+requester: "4uentes"
+control_plane_context:
+  initiative_id: "INIT-SST-0007"
+  coordinated_by_request_id: "CR-SST-0178"
+  child_request_ids: ["CR-SST-0204", "CR-SST-0205", "CR-SST-0206", "CR-SST-0207"]
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  jira_project_key: "SST"
+  jira_parent_epic_key: "SST-86"
+  jira_issue_type: "Task"
+  jira_issue_key: "SST-113"
+  jira_write_authorized: false
+  jira_write_batch_status: "consumed-2026-08-22"
+scope:
+  target_environment: "development"
+  child_repo_mutation_targets: []
+  deliverable: "approved retention state machine, API boundaries, dependency order and QA matrix"
+risk: {level: "high", score: 8, drivers: ["PRIVACY_CONSENT", "MULTI_REPO_CONTRACT", "DATA_LIFECYCLE", "AUTHORIZATION"]}
+task_weight: {classification: "complex-high-risk-task", risk_level: "high"}
+model_selection:
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "manual"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5"
+  fallback_reasoning_effort: "high"
+subagent_deployment_plan:
+  mode: "sequential-fallback"
+  reason: "The applicable runtime policy disables proactive delegation; architecture, privacy and validation reviews remain explicit sequential gates."
+execution:
+  requires_human_approval: true
+  approval_source: "User authorized lifecycle planning and start on 2026-08-22."
+  child_repo_mutation_allowed: false
+  deployment_allowed: false
+  production_mutation_allowed: false
+  jira_write_allowed: false
+architecture_decisions:
+  temporary:
+    storage: "Redis or compatible volatile memory with TTL; never PostgreSQL"
+    recovery: "active sessions of the same authenticated user until finish or TTL expiry"
+  saved_in_sst:
+    storage: "PostgreSQL authoritative with Redis cache-aside"
+    recovery: "after logout, across devices and future sessions"
+  local_state: "message content remains in application memory; local storage keeps only non-sensitive conversation reference/cursor"
+  transport: "Socket.IO for browser session fan-out; Redis adapter/pub-sub when horizontal scaling requires it; gRPC is not a browser sync dependency"
+  durable_write_order: "authorize, PostgreSQL commit, then Redis update or eviction"
+  deletion_semantics:
+    clear_local: "clear this browser only"
+    finish_temporary: "delete volatile conversation and notify active sessions"
+    delete_from_sst: "delete durable conversation and evict its cache"
+validation:
+  - "Review the state machine and privacy boundary before child execution."
+  - "4uentes-orchestor npm run check before publication or closure."
+acceptance:
+  - "No temporary conversation is written to PostgreSQL."
+  - "Durable persistence happens only after explicit user consent."
+  - "Every server read, promotion and deletion is scoped to the authenticated principal."
+  - "Each owner mutation is represented by an approved child request."
+rollback: "Withdraw the proposed contract before child execution; no runtime state changes exist in this request."
+decision: {status: "approved-planned", approver: "4uentes", decided_at: "2026-08-22"}

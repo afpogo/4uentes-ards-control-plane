@@ -1,0 +1,56 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0206"
+title: "Add explicit SST chat retention consent UX"
+status: "planned"
+source_request: "requests/inbox/CR-SST-0206-fend-chat-retention-consent-ux.yaml"
+created_at: "2026-08-22"
+requester: "4uentes"
+depends_on: ["CR-SST-0202", "CR-SST-0204"]
+control_plane_context:
+  initiative_id: "INIT-SST-0007"
+  parent_request_id: "CR-SST-0202"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  jira_issue_type: "Subtask"
+  jira_issue_key: "SST-116"
+  jira_parent_issue_key: "SST-113"
+  jira_write_authorized: false
+  jira_write_batch_status: "consumed-2026-08-22"
+scope:
+  target_environment: "development"
+  child_repo_mutation_targets: ["sst-fend"]
+risk: {level: "high", score: 8, drivers: ["PRIVACY_UX", "DESTRUCTIVE_ACTION", "SESSION_STATE", "ACCESSIBILITY"]}
+task_weight: {classification: "complex-high-risk-task", risk_level: "high"}
+model_selection: {provider: "codex", resource_level: "normal", primary_profile: "gpt-5.6-sol", reasoning_effort: "max", fallback_profile: "gpt-5.5"}
+subagent_deployment_plan: {mode: "sequential-fallback", reason: "Proactive delegation is disabled; UX, accessibility and privacy reviews are sequential gates."}
+execution:
+  requires_human_approval: true
+  approval_status: "pending-child-execution"
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets: ["sst-fend"]
+  deployment_allowed: false
+  production_mutation_allowed: false
+  jira_write_allowed: false
+implementation:
+  - "Show an unambiguous Temporary or Saved in SST status near the conversation controls."
+  - "Require an explicit Save in SST action; do not use a preselected consent checkbox."
+  - "Separate Clear this device, Finish temporary conversation and Delete from SST actions."
+  - "Keep message content in application memory and only an opaque reference/cursor in browser session state."
+  - "Recover saved history on demand after local clear and surface TTL/Redis degradation without claiming deletion."
+owner_documentation:
+  required: true
+  status: "planned"
+  owner_repos: ["sst-fend"]
+  planned_surfaces:
+    - "specs/integrations/sst-chat-retention-v1.yaml"
+    - "docs/chat.md"
+    - "docs/privacy/chat-retention.md"
+validation:
+  - "sst-fend full check plus keyboard, screen-reader labels and destructive confirmation tests."
+  - "4uentes-orchestor npm run check before closure."
+acceptance:
+  - "No chat becomes durable without the explicit Save in SST action."
+  - "Local clear never implies server deletion and recovery remains available for saved chats."
+rollback: "Restore the previous frontend release while retaining the server endpoints disabled from the UI."
+decision: {status: "pending-child-execution", approver: "TODO"}

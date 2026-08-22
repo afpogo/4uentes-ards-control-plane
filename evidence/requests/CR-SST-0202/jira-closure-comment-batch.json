@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0",
+  "request_id": "CR-SST-0202",
+  "provider": "Jira",
+  "project_key": "SST",
+  "issue_keys": ["SST-113"],
+  "operation": "add closure progress comment",
+  "parent": "SST-86",
+  "issue_type": "Tarea",
+  "expected_status": "tracker default; no transition",
+  "authorization_source": "user requested advancement of CR-SST-0202 and its associated Jira issue",
+  "window": "2026-08-22 active execution turn",
+  "preflight": "PASS",
+  "write_result": "PASS",
+  "readback": "SST-113 remained assigned under SST-86 in Tareas por hacer",
+  "transition_attempted": false,
+  "status": "consumed"
+}
