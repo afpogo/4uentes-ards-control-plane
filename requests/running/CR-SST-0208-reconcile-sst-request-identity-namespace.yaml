@@ -21,6 +21,12 @@ execution:
   worktree: "worktrees/CR-SST-0207-namespace"
   worktree_alias_status: "legacy-physical-path-only-does-not-reserve-request-identity"
   base_ref: "origin/main"
+readback_execution:
+  reason: "The clean recovery worktree was created while the legacy coordinator contained the then-unmerged CR-SST-0211 commit; PR #40 later integrated it."
+  branch: "agent/cr-sst-0208-worktree-disposition-readback"
+  worktree: "worktrees/CR-SST-0208-worktree-disposition-readback"
+  base_ref: "origin/main@554183b"
+  exception: "Clean recovery worktree required by worktree-request-lifecycle-policy for a mixed coordinator."
 execution_status:
   policy_review: "complete"
   current_tree_scan: "complete"
@@ -35,10 +41,19 @@ execution_status:
   reassigned_unpublished_intents: ["CR-SST-0208-namespace-reconciliation", "CR-SST-0209-auth-register-session-establishment"]
   request_identity_gate: "implemented-self-tested-and-wired-into-full-check"
   worktree_lifecycle_policy: "adopted-locally-and-wired-into-full-check"
-  base_ref_readback: "origin-main-7837e39-pr37-integrated-canonical-map-preserved"
-  publication_readiness: "ready-for-pr-branch-update"
+  base_ref_readback: "origin-main-554183b-pr40-integrated-cr-sst-0211-reservation"
+  publication_readiness: "namespace-normalization-published-worktree-disposition-readback-open-in-pr41"
   historical_exception: "CR-SST-0016-frozen-by-exact-paths"
-  worktree_disposition: "complete-no-worktrees-removed"
+  worktree_disposition: "refreshed-79-observed-33-terminal-candidates-7-dirty-4-clean-nonancestor-no-worktrees-removed"
+  legacy_coordinator_worktree: "cr-sst-0211-commit-integrated-by-pr40-no-longer-unique-not-reused"
+  validation_readback: "control-plane-candidate-branches-pass-except-dirty-root-self-test; owner blockers are missing local dependencies, while both dirty infra trees pass"
+  retirement_preflight: "33-terminal-candidates-pass-observable-git-lock-process-commandline-and-docker-mount-checks"
+  retirement_execution: "pending-small-batch-removal-no-branch-deletion"
+  clean_nonancestor_disposition: "three-preserved-with-unique-commits-one-patch-equivalent; full merges prohibited"
+  public_qa_reconciliation: "8bc053d-preserved-selective-port-to-cr-sst-0209-required-obsolete-cr-sst-0202-files-must-not-merge"
+  system_feature_studies: "pr39-open-but-blocked-by-cr-sst-0204-identity-collision-and-initiative-conflicts"
+  cr_sst_0178_auth: "three-owner-unique-security-sensitive-commits-held-no-pr-owner-publication-not-authorized"
+  cr_sst_0193_bend: "patch-equivalent-to-origin-develop-pending-owner-readback-before-retirement"
   jira_correction: "not-required-pr37-map-preserved-no-write-performed"
   memory_identity_scope_assignment: "CR-SST-0210-proposed-not-yet-published"
 evidence_refs:
@@ -51,6 +66,7 @@ evidence_refs:
   - "evidence/requests/CR-SST-0208/jira-live-readback-2026-08-22.md"
   - "evidence/requests/CR-SST-0208/validation-results-2026-08-22.md"
   - "evidence/requests/CR-SST-0208/post-pr37-canonical-readback-2026-08-22.md"
+  - "evidence/requests/CR-SST-0208/worktree-disposition-readback-2026-08-22.md"
 decision:
   status: "running-local-normalization-complete-publication-pending"
   approver: "4uentes"
