@@ -21,4 +21,3 @@ No se detectó un issue específico para `CR-SST-0178`, `CR-SST-0199`, `CR-SST-0
 - No se transicionarán estados.
 - No se modifican repositorios hijos ni runtime.
 - La información de conexión privada no se conserva en evidencia.
-

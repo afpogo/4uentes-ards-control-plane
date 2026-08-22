@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0",
+  "exceptions": [
+    {
+      "id": "CR-SST-0016",
+      "status": "frozen-historical-collision",
+      "canonical_slug": "sst-tag-prefix-engine-poc",
+      "historical_alias_slug": "onboard-sst-chatbot-control-plane",
+      "allowed_paths": [
+        "requests/inbox/CR-SST-0016-sst-tag-prefix-engine-poc.yaml",
+        "requests/planned/CR-SST-0016-sst-tag-prefix-engine-poc.yaml",
+        "requests/done/CR-SST-0016-onboard-sst-chatbot-control-plane.yaml",
+        "requests/done/CR-SST-0016-sst-tag-prefix-engine-poc.yaml"
+      ],
+      "remediation_request_id": "CR-SST-0207",
+      "rationale": "The collision predates the namespace gate and is referenced by immutable historical evidence. The exception allows only the exact published files and forbids any new lifecycle phase or slug under this id."
+    }
+  ]
+}

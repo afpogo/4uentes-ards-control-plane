@@ -1,0 +1,29 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0208"
+title: "Define consent-aware SST chat retention"
+status: "inbox"
+created_at: "2026-08-22"
+requester: "4uentes"
+summary: >
+  Define the user-visible retention modes and the cross-repository contract for
+  temporary Redis-backed chat and explicitly saved PostgreSQL-backed chat.
+requested_scope:
+  initiative_id: "INIT-SST-0007"
+  coordinated_by_request_id: "CR-SST-0178"
+  target_environment: "development"
+  owner_repositories: []
+  child_request_ids: ["CR-SST-0209", "CR-SST-0204", "CR-SST-0205", "CR-SST-0206"]
+constraints:
+  - "Temporary conversations must not be written to PostgreSQL."
+  - "Durable retention requires an explicit user action and remains deletable."
+  - "Redis is infrastructure/cache state, not the durable source of truth."
+  - "Do not write Jira without a separate enumerated batch authorization."
+requested_next_step: "Approve the contract and then execute the owner-specific child requests."
+
+namespace_reconciliation:
+  request_id: "CR-SST-0207"
+  source_worktree_alias: "cr-sst-0202-consent-chat-retention"
+  source_path: "requests/inbox/CR-SST-0202-consent-aware-chat-retention.yaml"
+  publication_status: "ported-with-canonical-identities"
+  jira_identity_update_status: "pending-explicit-enumerated-batch"

@@ -4,7 +4,10 @@
   "private": true,
   "description": "Logical ARDS/SDD control plane for 4uentes services and solutions.",
   "scripts": {
-    "check": "node scripts/verify-catalog.js && node scripts/verify-local-bindings.js --optional && node scripts/verify-state-model.js && node scripts/verify-initiatives.js && node scripts/verify-owner-documentation.js && node scripts/verify-visual-documentation.js",
+    "check": "node scripts/verify-request-identities.js && node scripts/verify-worktree-request-lifecycle-policy.js && node scripts/verify-catalog.js && node scripts/verify-local-bindings.js --optional && node scripts/verify-state-model.js && node scripts/verify-initiatives.js && node scripts/verify-owner-documentation.js && node scripts/verify-visual-documentation.js",
+    "check:request-ids": "node scripts/verify-request-identities.js",
+    "check:request-ids:self-test": "node scripts/verify-request-identities.js --self-test",
+    "check:worktree-policy": "node scripts/verify-worktree-request-lifecycle-policy.js",
     "check:state": "node scripts/verify-state-model.js",
     "check:initiatives": "node scripts/verify-initiatives.js",
     "check:owner-docs": "node scripts/verify-owner-documentation.js",

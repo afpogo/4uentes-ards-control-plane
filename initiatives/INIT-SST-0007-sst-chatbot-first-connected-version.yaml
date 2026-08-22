@@ -14,6 +14,7 @@ initial_hypothesis: >
   state in sst-bend and agent processing in sst-chatbot while combining a
   realtime user experience with application-owned persistence and replay.
 source_evidence_refs:
+  - "evidence/requests/CR-SST-0207/namespace-preflight-2026-08-22.md"
   - "evidence/initiatives/INIT-SST-0007/canonical-reconciliation-2026-08-18.md"
   - "evidence/initiatives/INIT-SST-0007/hybrid-realtime-plan.md"
   - "evidence/initiatives/INIT-SST-0007/operational-validation-2026-08-10.md"

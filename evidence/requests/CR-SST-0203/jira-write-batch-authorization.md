@@ -22,4 +22,3 @@ La autorización es consumible por este lote. No habilita escrituras Jira poster
 ## Protección de datos
 
 El lote no contiene passwords, verificadores, hashes, JWT, cookies, CSRF, claves, tokens, identificadores de usuario, identificadores cloud ni valores de secretos. Jira permanece como mirror operativo.
-

@@ -1,0 +1,103 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0207"
+title: "Reconcile the SST change-request identity namespace"
+status: "planned"
+source_request: "requests/inbox/CR-SST-0207-reconcile-sst-request-identity-namespace.yaml"
+created_at: "2026-08-22"
+requester: "4uentes"
+summary: >
+  Reconcile duplicate SST request identities across the published baseline,
+  local and remote-tracking refs, Jira mirrors and unpublished local intake.
+control_plane_context:
+  affected_initiatives: ["INIT-SST-0007", "INIT-SST-0008", "INIT-SST-0010"]
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  jira_project_key: "SST"
+  jira_write_authorized: false
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "global request identity"
+    - "cross-initiative lifecycle history"
+    - "published branch divergence"
+    - "Jira hierarchy and duplicate mirrors"
+model_selection:
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5-high"
+  reason: "Identity reconciliation changes governance history and external mirror routing."
+subagent_deployment_plan:
+  required: true
+  reason: "The user explicitly requested subagents; Git/worktree, Jira and canonicalization audits ran in parallel and remained read-only."
+  assignments:
+    - "worktree and branch inventory"
+    - "Jira mirror and hierarchy audit"
+    - "Git precedence and canonical identity proposal"
+implementation_units:
+  - id: "namespace-inventory"
+    objective: "Inventory identities across origin/main, all local and remote-tracking refs, Jira summaries/descriptions and unpublished intake."
+    output: "Sanitized collision matrix with chronology, authority and publication state."
+    risk: "medium"
+    validation: "Exact Git refs and structured Jira readback; no external writes."
+  - id: "canonicalization-decision"
+    objective: "Classify compatible duplicates, incompatible collisions and Jira-only intake."
+    output: "Human-approved retain, consolidate, reassign, quarantine or supersede map."
+    risk: "high"
+    validation: "One intention per retained CR ID and no silent renumbering."
+  - id: "local-lifecycle-normalization"
+    objective: "Apply the approved map to a clean control-plane branch while preserving history and evidence."
+    output: "Unique local request lifecycle and reconciled Initiative read models."
+    risk: "high"
+    validation: "Global duplicate scan plus full control-plane check."
+  - id: "request-id-uniqueness-enforcement"
+    objective: "Add a control-plane gate that rejects one CR ID mapped to incompatible lifecycle identities."
+    output: "Focused fixtures and validator integrated into npm.cmd run check."
+    risk: "high"
+    validation: "Compatible lifecycle phases pass; duplicate IDs with different titles or source identities fail."
+  - id: "jira-correction-preview"
+    objective: "Prepare exact Jira summary, description, parent or link corrections only if the approved map requires them."
+    output: "Sanitized unexecuted batch with issue keys and expected state."
+    risk: "high"
+    validation: "Fresh duplicate/hierarchy preflight and separate explicit batch authorization."
+  - id: "memory-unblock-readback"
+    objective: "Assign a verified free ID to the identity-scope predecessor only after namespace closure."
+    output: "Updated CR-SST-0193/0194 and INIT-SST-0010 dependency chain."
+    risk: "high"
+    validation: "No collision in published refs, tracker or active local worktrees."
+execution:
+  child_repo_mutation_allowed: false
+  control_plane_mutation_allowed: true
+  jira_write_allowed: false
+  production_data_allowed: false
+  branch: "agent/cr-sst-0207-request-namespace-reconciliation"
+  worktree: "worktrees/CR-SST-0207-namespace"
+  base_ref: "origin/main"
+decision_gates:
+  canonicalization_requires_human_approval: true
+  destructive_history_rewrite_allowed: false
+  jira_batch_requires_separate_authorization: true
+  memory_identity_assignment_requires_namespace_closure: true
+  uniqueness_validator_requires_canonical_map: true
+required_checks:
+  - "global request-id scan across current tree and Git refs"
+  - "structured Jira read-only duplicate preflight"
+  - "git diff --check"
+  - "npm.cmd run check"
+evidence_plan:
+  - "evidence/requests/CR-SST-0207/namespace-preflight-2026-08-22.md"
+  - "evidence/requests/CR-SST-0207/canonicalization-proposal-2026-08-22.md"
+  - "evidence/requests/CR-SST-0207/canonicalization-decision-2026-08-22.md"
+  - "evidence/requests/CR-SST-0207/worktree-disposition-2026-08-22.md"
+  - "evidence/requests/CR-SST-0207/worktree-policy-adoption-2026-08-22.md"
+  - "evidence/requests/CR-SST-0207/base-drift-readback-2026-08-22.md"
+  - "evidence/requests/CR-SST-0207/jira-live-readback-2026-08-22.md"
+  - "evidence/requests/CR-SST-0207/validation-results-2026-08-22.md"
+decision:
+  status: "approved-for-local-control-plane-normalization"
+  approver: "4uentes"
+  decided_at: "2026-08-22"

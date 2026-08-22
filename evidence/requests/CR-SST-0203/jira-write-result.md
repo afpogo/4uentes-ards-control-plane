@@ -20,4 +20,3 @@ La autorización quedó consumida y no habilita nuevas escrituras Jira.
 ## Protección de datos
 
 Esta evidencia conserva sólo keys Jira, operaciones y estados operativos. No contiene datos de conexión privados, identificadores de usuario, passwords, verificadores, hashes, tokens, cookies, CSRF, claves o secretos.
-
