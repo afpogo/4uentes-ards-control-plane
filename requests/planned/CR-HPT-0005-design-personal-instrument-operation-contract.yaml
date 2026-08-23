@@ -1,0 +1,315 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-HPT-0005"
+title: "Design the personal instrument-operation contract"
+status: "planned"
+source_request: "requests/inbox/CR-HPT-0005-design-personal-instrument-operation-contract.yaml"
+created_at: "2026-08-21"
+requester: "4uentes"
+
+summary: >
+  Establish the reviewable domain and integration contract for household
+  economic resources followed by market instruments, both explained through
+  auditable operations and effects. Preserve finanzas-personales-backend as the
+  producer identity and leave runtime and SST adoption to separate requests.
+
+initial_scope:
+  solution: "finanzas-personales"
+  services:
+    - "finanzas-personales-backend"
+  include_optional_services: false
+
+control_plane_context:
+  initiative_id: "INIT-HPT-0002"
+  related_governance_initiative_id: "INIT-HPT-0001"
+  predecessor_request_ids:
+    - "CR-HPT-0002"
+    - "CR-HPT-0003"
+  conflicting_request_id: "CR-HPT-0004"
+  conflict_reason: "CR-HPT-0004 is limited to visual-documentation policy adoption."
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "finanzas-personales-backend"
+      via: "future producer domain, API, audit and outbound capability contract"
+      ards_kind: "backend-api"
+    - service_id: "sst-bend"
+      via: "candidate protected facade or adapter; decision pending"
+      ards_kind: "backend-api"
+    - service_id: "sst-fend"
+      via: "future optional SST user experience and consumer contract"
+      ards_kind: "frontend-web"
+  affected_ards:
+    - "household-economic-resource-model"
+    - "cost-of-delay-model"
+    - "financial-education-feedback"
+    - "domain-model"
+    - "api-contract"
+    - "outbound-capability"
+    - "inbound-capability"
+    - "auditability"
+    - "cross-solution-boundary"
+  capabilities:
+    - "finanzas-personales-everyday-economic-resources"
+    - "finanzas-personales-instrument-operations"
+  risks:
+    - id: "FINANCIAL_DATA_SCOPE_LEAK"
+      severity: "high"
+    - id: "OPERATION_AND_CASHFLOW_CONFLATION"
+      severity: "high"
+    - id: "HOUSEHOLD_UTILITY_PRESENTED_AS_FINANCIAL_RETURN"
+      severity: "high"
+    - id: "UNCERTAIN_FUTURE_COST_PRESENTED_AS_FACT"
+      severity: "high"
+    - id: "DERIVED_POSITION_TREATED_AS_SOURCE_OF_TRUTH"
+      severity: "high"
+    - id: "SST_OWNERSHIP_COUPLING"
+      severity: "medium"
+    - id: "HISTORICAL_SNAPSHOT_PROMOTED_WITHOUT_VALIDATION"
+      severity: "medium"
+
+required_context:
+  - "4uentes-ards-core: standard/ARDS_KIND_MODEL_v1.md"
+  - "4uentes-ards-core: standard/ARDS_BACKEND_API_CORE_PROFILE_v1.md"
+  - "docs/policies/agent-architecture-boundary-policy.md"
+  - "docs/policies/owner-documentation-authority-policy.md"
+  - "requests/running/CR-HPT-0003-finanzas-personales-frontend-backend-boundary-reconciliation.yaml"
+  - "catalog/services/finanzas-personales-backend.yaml"
+  - "solutions/finanzas-personales.yaml"
+  - "finanzas-personales backend owner ARDS/SDD"
+  - "Alphinance ARDS/SDD source snapshot excluding its stash archive"
+
+required_checks:
+  - service_id: "4uentes-orchestor"
+    command: "npm.cmd run check"
+  - service_id: "finanzas-personales-backend"
+    command: "node backend/scripts/check-contracts.js"
+    required_when: "a future approved request mutates backend owner documentation"
+  - service_id: "finanzas-personales-backend"
+    command: "versioned HTTP QA harness"
+    required_when: "the producer owns executable HTTP contracts"
+
+risk:
+  level: "high"
+  score: 8
+  drivers:
+    - "sensitive personal financial data"
+    - "cross-solution producer and consumer contract"
+    - "audit and correction semantics"
+    - "future auth and account-scope dependency"
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "domain architecture"
+    - "financial auditability"
+    - "cross-repo ownership"
+    - "long source context"
+
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5-high"
+  reason: >
+    Financial data, audit invariants and cross-repo boundaries require the
+    complex-high-risk route and must not be silently downgraded.
+
+subagent_deployment_plan:
+  required: true
+  parallelizable: true
+  roles:
+    - role: "alphinance-source-discovery"
+      objective: "Extract verifiable operations-centered patterns and gaps without deciding the target architecture."
+      risk: "medium"
+      validation: "path-referenced facts separated from inference"
+    - role: "phinance-owner-discovery"
+      objective: "Inspect current backend contracts, gaps, validation and working-tree state without mutation."
+      risk: "medium"
+      validation: "owner paths and observed commands"
+    - role: "control-plane-lifecycle-discovery"
+      objective: "Detect existing identities, request conflicts, lifecycle gaps and validators."
+      risk: "low"
+      validation: "control-plane path references and ID collision check"
+  fallback: "Execute discovery sequentially while keeping architecture decisions in the primary agent."
+  evidence_required: true
+
+execution:
+  requires_human_approval: false
+  approval_source: "User explicitly requested ARDS/SDD analysis and control-plane inclusion on 2026-08-21."
+  allowed_window: "manual"
+  branch_strategy: "control-plane-analysis-only"
+  child_repo_mutation_allowed: false
+  runtime_implementation_allowed: false
+  jira_write_allowed: false
+  implementation_boundary: >
+    This request records analysis and a proposed contract boundary only. It
+    does not approve child-repo edits, runtime code, migrations, SST UI work,
+    auth mechanisms, market-data providers or production deployment.
+
+policy_application:
+  human_documentation_language: >
+    Human-facing evidence is written in Spanish. Stable identifiers, YAML
+    keys, lifecycle statuses, paths and API terms remain in technical English.
+  architecture_boundary: >
+    Household resources, market instruments, SST trust, financial estimates
+    and cross-repo ownership remain proposals until approved by their owners.
+  owner_documentation_authority: >
+    Control-plane evidence records analysis and orchestration only. Final API,
+    domain and capability contracts must be adopted in the
+    finanzas-personales backend owner under a child-mutation CR.
+  task_atomization: >
+    Everyday-resource modeling, market instruments, SST consumer adoption,
+    runtime implementation and integrated validation remain separate cuts.
+  delegation: >
+    Discovery may be delegated with path-verifiable output; architecture,
+    financial semantics, sensitive-data and ownership decisions remain with
+    the primary agent and human approver.
+  visual_documentation: >
+    Current evidence uses textual tables and prose. Any future normative
+    dependency, lifecycle, sequence or logical-data map must apply the local
+    visual-documentation profile or record an owner exception.
+  http_qa_harness: >
+    The backend owns HTTP contracts, so an approved implementation CR must add
+    or explicitly except a versioned reproducible HTTP QA harness.
+
+owner_documentation:
+  required: false
+  status: "not-applicable"
+  reason: "No child repository is mutated by this analysis request."
+  future_owner_repositories:
+    - "finanzas-personales/backend for producer API and domain contracts"
+    - "sst-bend for any facade or adapter contract"
+    - "sst-fend for consumer UX and fallback behavior"
+
+proposed_domain_invariants:
+  - "A household economic resource is not a regulated or market financial instrument even when the product UI calls it an everyday instrument."
+  - "Useful consumption, maintenance benefit and avoided cost are different effects from market profit or investment return."
+  - "Future cost and cost-of-delay values are estimates with horizon, range, assumptions and confidence; they are never posted ledger facts."
+  - "Expiration or deterioration records a resource event and possible waste loss without rewriting the original purchase transaction."
+  - "An instrument is a stable reference and never stores a user's mutable holding or trade event."
+  - "A posted operation is an auditable fact; correction occurs through reversal and replacement, not destructive editing."
+  - "Positions, cost basis, cash effects and performance are derived from posted, non-reversed operations."
+  - "Cash-flow transactions and investment operations remain distinct aggregates with explicit generated links when one causes the other."
+  - "Every owner record is scoped by the server-resolved finance profile based on validated account_id plus stable subject."
+  - "Valuation observations are time-stamped external evidence and never rewrite operation facts."
+  - "Money uses exact decimal strings, currencies use ISO 4217 and timestamps use RFC 3339 UTC."
+  - "Idempotency and audit events share the same resolved owner scope as the operation."
+  - "A broker or bank is not a portfolio and not an instrument; it is an optional institution associated with a financial account."
+  - "A user-defined instrument can later be linked to a canonical market instrument through reconciliation, never by destructive identity replacement."
+
+proposed_aggregate_boundaries:
+  household_economic_resource:
+    responsibility: "personal good or durable asset whose useful state changes through acquisition, use, time, maintenance or disposal"
+    classes: ["CONSUMABLE", "DURABLE_ASSET"]
+    examples: ["milk", "food", "car", "appliance", "home-equipment"]
+    product_alias: "everyday instrument or home instrument"
+    contract_rule: "Never expose this resource as a market or regulated financial instrument."
+  household_resource_event:
+    responsibility: "auditable event that changes quantity, usability or condition"
+    types: ["ACQUIRE", "CONSUME", "EXPIRE", "WASTE", "MAINTAIN", "REPAIR", "DEFER", "DISPOSE"]
+  economic_effect:
+    responsibility: "typed consequence of a transaction or household resource event"
+    types: ["CASH_OUTFLOW", "CASH_INFLOW", "QUANTITY_CHANGE", "CONDITION_CHANGE", "UTILITY_REALIZED", "WASTE_LOSS", "COST_AVOIDANCE_ESTIMATE"]
+    estimation_rule: "Estimated effects never post cash or profit and always carry provenance and confidence."
+  instrument:
+    responsibility: "reference identity and classification"
+    examples: ["cash", "term-deposit", "bond", "fund", "equity", "option", "loan", "user-defined"]
+    extensions: "type-specific metadata without a sparse all-in-one table"
+    identity_rule: >
+      A user-defined home instrument may start with a local label and OTHER
+      code, then be reconciled to a market instrument without rewriting the
+      historical operations that referenced the original identity.
+  instrument_identifier:
+    responsibility: "versionable identifier with scheme, value, market and issuer provenance"
+    schemes: ["ISIN", "TICKER", "CUSIP", "SEDOL", "LOCAL", "OTHER"]
+    uniqueness_rule: "Uniqueness is scoped by scheme plus market or issuing authority, not by the raw code alone."
+  financial_institution:
+    responsibility: "optional reference to a broker, bank, wallet provider or other custodian"
+    security_rule: "Store display identity and safe metadata only; never credentials or unmasked sensitive account secrets."
+  financial_account:
+    responsibility: "ownership and custody boundary under one finance profile"
+    types: ["BROKERAGE", "CHECKING", "SAVINGS", "CASH", "WALLET", "OTHER"]
+    aliases: ["brokerage-account", "cuenta-comitente", "cuenta-corriente", "caja-de-ahorro"]
+    institution_rule: "A broker is an institution; a cuenta comitente is a BROKERAGE account at that institution."
+    balance_rule: "Balances and holdings are derived from posted operation effects, not mutable account fields."
+  portfolio:
+    responsibility: "personal grouping of one or more financial accounts under one finance profile"
+    holdings_rule: "A portfolio contains an instrument only through a derived non-zero position produced by posted operations."
+    first_slice: "one default portfolio, optional user-defined instruments and manual financial accounts"
+  investment_operation:
+    responsibility: "immutable or reversible business event over one or more financial accounts, cash and optional instrument"
+    initial_kinds: ["buy", "sell", "income", "fee", "tax", "deposit", "withdrawal", "transfer", "adjustment"]
+    deferred_kinds: ["split", "subscription", "redemption", "exercise", "maturity"]
+    account_rule: "A transfer identifies source and destination accounts; other operations identify the affected account."
+  operation_effect:
+    responsibility: "balanced cash and unit effects generated when an operation is posted"
+  position:
+    responsibility: "rebuildable read model by finance profile, portfolio and instrument"
+  valuation_observation:
+    responsibility: "as-of price and provenance used only for valuation views"
+  audit_event:
+    responsibility: "append-only safe metadata for decisions, posting, reversal and access"
+
+integration_options:
+  recommended:
+    path: "finanzas-personales-backend -> sst-bend adapter/facade -> sst-fend"
+    reason: "Matches the canonical backend-api to BFF to frontend handoff and keeps SST-specific principal translation outside Phinance-API."
+  exception:
+    path: "finanzas-personales-backend -> sst-fend"
+    condition: "Requires an explicit architecture exception and an approved trusted principal-context mechanism."
+  solution_rule: "Keep finanzas-personales independent; represent SST as a related external consumer, not as backend ownership."
+
+follow_up_atomization:
+  - id: "CR-HPT-0008"
+    objective: "Implement the approved everyday-resource producer slice with migrations, tests, owner docs and HTTP QA harness."
+    prerequisites: ["CR-HPT-0002", "CR-HPT-0003", "CR-HPT-0005 approved contract"]
+  - id: "CR-HPT-TODO-MARKET-INSTRUMENTS"
+    objective: "Introduce traditional and crypto market instruments only after the everyday-resource learning model is validated."
+    prerequisites: ["everyday-resource capability validated", "market-data and compliance decisions"]
+  - id: "CR-SST-TODO"
+    objective: "Adopt the producer capability through the chosen SST boundary and document inbound/fallback behavior."
+    prerequisites: ["producer capability ready-for-consumer"]
+  - id: "CR-HPT-TODO-ECONOMIC-VALIDATION"
+    objective: "Validate account isolation, reversal, idempotency, audit and SST integration end to end."
+    prerequisites: ["producer runtime", "SST consumer runtime"]
+
+validation:
+  required_checks:
+    - "4uentes-orchestor: npm.cmd run check"
+    - "No absolute local path exists in catalog, solution, Initiative or request YAML."
+    - "No child repository was mutated by CR-HPT-0005."
+    - "Source facts and proposed target decisions remain distinguishable."
+  evidence_required:
+    - "source_intent_review"
+    - "source_and_path_decision"
+    - "domain_and_boundary_analysis"
+    - "child_ards_consolidation_review"
+    - "financial_read_models_and_table_presentation"
+    - "everyday_economic_resources_and_cost_of_delay"
+    - "policy_application_and_terminology_decisions"
+    - "subagent_contribution_summary"
+    - "validation_results"
+
+decision:
+  status: "approved-domain-contract"
+  approver: "4uentes"
+  approved_at: "2026-08-22"
+  approval_text: "ok avancemos"
+  accepted_scope:
+    - "household economic resources remain distinct from market financial instruments"
+    - "resource events and economic effects preserve fact-versus-estimate semantics"
+    - "cash-flow transactions remain distinct from future investment operations"
+    - "financial accounts, institutions, portfolios and positions keep separate responsibilities"
+    - "posted operations are auditable and corrected through reversal rather than destructive edits"
+  deferred_decisions:
+    - "SST adapter or direct-consumer exception path"
+    - "market-instrument and crypto contracts"
+    - "valuation, FX, tax and investment-performance formulas"
+    - "runtime persistence implementation under CR-HPT-0008"
+  blocker: "none-for-analysis-and-domain-contract-closure"

@@ -1,7 +1,7 @@
 schema_version: "1.0"
 phase: 1
 id: "CR-HPT-0003"
-title: "Finanzas personales frontend-backend boundary reconciliation"
+title: "Finanzas personales SST boundary and account-scope reconciliation"
 status: "inbox"
 created_at: "2026-07-12"
 requester: "4uentes"
@@ -23,4 +23,3 @@ initial_scope:
 decision:
   status: "accepted-for-planning"
   approver: "4uentes"
-

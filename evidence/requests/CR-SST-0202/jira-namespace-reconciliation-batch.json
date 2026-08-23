@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0",
+  "request_id": "CR-SST-0202",
+  "provider": "Jira",
+  "project_key": "SST",
+  "issue_keys": ["SST-113", "SST-114", "SST-115", "SST-116", "SST-117"],
+  "operations": ["edit summaries and descriptions for canonical CR renumbering", "add one audit comment per issue"],
+  "preserved_fields": ["parent", "issue type", "status", "assignee", "dependency links"],
+  "prohibited_operations": ["transition", "delete", "reparent", "change dependency links", "write outside SST"],
+  "authorization_source": "user requested resolution of PR 37 merge conflicts",
+  "window": "2026-08-22 active conflict-resolution turn",
+  "preflight": {
+    "canonical_collision": "CR-SST-0203 exists in main after PR 36",
+    "candidate_ids": ["CR-SST-0204", "CR-SST-0205", "CR-SST-0206", "CR-SST-0207"],
+    "result": "existing Jira matches are the same four retention subtasks being atomically renumbered",
+    "blocked": 0
+  },
+  "write_result": {
+    "edited_issues": 5,
+    "audit_comments": 5,
+    "transitions": 0,
+    "result": "PASS"
+  },
+  "readback": {
+    "summaries": "SST-114 through SST-117 map to CR-SST-0204 through CR-SST-0207",
+    "parent": "all four subtasks remain under SST-113; SST-113 remains under SST-86",
+    "status": "tracker default preserved",
+    "assignee": "preserved",
+    "dependency_links": "preserved",
+    "result": "PASS"
+  },
+  "status": "consumed"
+}

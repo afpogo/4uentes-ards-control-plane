@@ -1,0 +1,23 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0209"
+title: "Establish the web auth session during registration"
+status: "inbox"
+created_at: "2026-08-21"
+requester: "4uentes"
+summary: >
+  Make web registration create the same revocable session family and browser
+  cookies as login so hard navigation can refresh without retransmitting the
+  password.
+requested_scope:
+  initiative_id: "INIT-SST-0007"
+  coordinated_by_request_id: "CR-SST-0178"
+  target_environment: "development"
+  owner_repositories: ["4uentes-auth"]
+  consumer_repositories: ["sst-fend"]
+constraints:
+  - "Do not implement registration as a second login request from the SPA."
+  - "Do not log or persist plaintext passwords, refresh tokens, CSRF values or JWTs in evidence."
+  - "Do not query the database or use seeders for manual QA."
+  - "Do not write Jira without a separate enumerated batch authorization."
+requested_next_step: "Approve the planned owner change before creating a clean Auth worktree."

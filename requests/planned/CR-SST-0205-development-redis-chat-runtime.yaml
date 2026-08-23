@@ -1,0 +1,56 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0205"
+title: "Provide the development Redis runtime for SST chat"
+status: "planned"
+source_request: "requests/inbox/CR-SST-0205-development-redis-chat-runtime.yaml"
+created_at: "2026-08-22"
+requester: "4uentes"
+depends_on: ["CR-SST-0202", "CR-SST-0204"]
+control_plane_context:
+  initiative_id: "INIT-SST-0007"
+  parent_request_id: "CR-SST-0202"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  jira_issue_type: "Subtask"
+  jira_issue_key: "SST-115"
+  jira_parent_issue_key: "SST-113"
+  jira_write_authorized: false
+  jira_write_batch_status: "consumed-2026-08-22"
+scope:
+  target_environment: "development"
+  child_repo_mutation_targets: ["sst-4uentes-infra"]
+risk: {level: "high", score: 8, drivers: ["GITOPS", "VOLATILE_STATE", "SECRET_MANAGEMENT", "AVAILABILITY"]}
+task_weight: {classification: "complex-high-risk-task", risk_level: "high"}
+model_selection: {provider: "codex", resource_level: "normal", primary_profile: "gpt-5.6-sol", reasoning_effort: "max", fallback_profile: "gpt-5.5"}
+subagent_deployment_plan: {mode: "sequential-fallback", reason: "Proactive delegation is disabled; Infra render, security and recovery reviews are sequential gates."}
+execution:
+  requires_human_approval: true
+  approval_status: "pending-child-execution"
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets: ["sst-4uentes-infra"]
+  deployment_allowed: false
+  deployment_mode: "Git and Argo CD reconciliation only"
+  production_mutation_allowed: false
+  jira_write_allowed: false
+implementation:
+  - "Consume the Bend-owned Redis key, TTL and degradation contract without exposing Redis publicly."
+  - "Provide secret-backed connectivity and resource/health configuration in development GitOps."
+  - "Expose secret-safe hit/miss, eviction, latency, connection and error signals."
+  - "Document restart, outage and rollback behavior for volatile versus durable conversations."
+owner_documentation:
+  required: true
+  status: "planned"
+  owner_repos: ["sst-4uentes-infra"]
+  planned_surfaces:
+    - "specs/infra/environments/development.yaml"
+    - "specs/infra/deployment-contracts/sst-bend.yaml"
+    - "docs/runbooks/argocd-kind-development.md"
+validation:
+  - "Infra full check, Kustomize render, kubectl dry-run=client and secret-safe scan."
+  - "4uentes-orchestor npm run check before closure."
+acceptance:
+  - "Redis is reachable only from authorized workloads and no credential is committed or logged."
+  - "Redis loss expires temporary chats but cannot corrupt saved PostgreSQL conversations."
+rollback: "Revert the immutable GitOps change and reconcile Argo CD; Bend must degrade according to the approved owner contract."
+decision: {status: "pending-child-execution", approver: "TODO"}

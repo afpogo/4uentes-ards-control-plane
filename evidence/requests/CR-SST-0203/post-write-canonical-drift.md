@@ -21,6 +21,12 @@ No se conservaron secretos, datos de sesión ni identificadores privados de cone
 
 ## Reconciliación posterior
 
-La deriva quedó corregida mediante el lote autorizado `JIRA-SEC-PREPROD-02`
-del request `CR-SST-0204`. El readback confirmó las narrativas nuevas y que
-estado, prioridad, labels, parent y summary permanecieron sin cambios.
+Los hechos narrativos quedaron corregidos mediante el lote autorizado
+`JIRA-SEC-PREPROD-02`. El readback confirmó las narrativas nuevas y que estado,
+prioridad, labels, parent y summary permanecieron sin cambios.
+
+Ese lote usó `CR-SST-0204` como label de request antes de detectar que el
+namespace canónico ya asignaba ese ID a Bend chat retention and cache
+semantics. `CR-SST-0213` gobierna la reconciliación local de esa desviación.
+Los payloads y el readback históricos se preservan sin reescritura. Reemplazar
+el label en Jira requiere un lote nuevo, mínimo, enumerado y aprobado.

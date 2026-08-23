@@ -1,7 +1,7 @@
 schema_version: "1.0"
 kind: "ards_sdd_agent_policy_registry"
 status: "active"
-updated_at: "2026-07-11"
+updated_at: "2026-08-22"
 purpose: >
   Machine-readable registry for living ARDS/SDD policies adopted by the
   control-plane. It records local agent operating policies plus scoped
@@ -553,6 +553,52 @@ core_owned_adoptions:
     relates_to:
       - "owner-documentation-authority-policy"
       - "control-plane-link-policy"
+
+  - id: "worktree-request-lifecycle-policy"
+    name: "Worktree Request Lifecycle Policy"
+    type: "ards-sdd-governance-policy"
+    policy_class: "origin-repo-policy"
+    origin_repo: "4uentes-orchestor"
+    canonical_owner: "4uentes-ards-control-plane"
+    applicability: "control-plane executions that use Git branches or worktrees"
+    adoption_mode: "local-required"
+    required_for_profiles:
+      - "control-plane"
+    optional_for_profiles:
+      - "functional-repo"
+      - "child-repo"
+    template_binding: null
+    local_aliases: []
+    status: "active"
+    scope:
+      - "request-id-reservation"
+      - "branch-worktree-correlation"
+      - "workspace-isolation"
+      - "information-recovery"
+      - "controlled-worktree-retirement"
+    owner: "4uentes-ards-control-plane"
+    human_doc: "docs/policies/worktree-request-lifecycle-policy.md"
+    enforcement:
+      expected: "Reserve request identity in the canonical ref before execution; use one clean worktree per request and physical repo by default; classify and recover unique information before retirement; block identity collisions and unsafe cleanup."
+      mode: "request-identity-gate-and-operational-review"
+      failure_behavior: "block-reservation-integration-or-retirement-and-quarantine-ambiguous-worktree"
+    evidence:
+      - "requests/planned/CR-SST-0208-reconcile-sst-request-identity-namespace.yaml"
+      - "evidence/requests/CR-SST-0208/canonicalization-decision-2026-08-22.md"
+      - "evidence/requests/CR-SST-0208/worktree-disposition-2026-08-22.md"
+      - "evidence/requests/CR-SST-0208/worktree-policy-adoption-2026-08-22.md"
+      - "evidence/requests/CR-SST-0208/base-drift-readback-2026-08-22.md"
+      - "evidence/requests/CR-SST-0208/post-pr37-canonical-readback-2026-08-22.md"
+      - "scripts/verify-request-identities.js"
+      - "scripts/verify-worktree-request-lifecycle-policy.js"
+    gaps:
+      - "Promotion to 4uentes-ards-core requires a separate request and handoff."
+      - "Cross-ref and all-worktree preflight remains an evidence-producing operational review; CI validates the merge tree and policy wiring."
+    relates_to:
+      - "agent-context-management-policy"
+      - "agent-architecture-boundary-policy"
+      - "owner-documentation-authority-policy"
+      - "work-tracker-control-plane-authority-policy"
 
   - id: "work-tracker-control-plane-authority-policy"
     name: "Work Tracker Control Plane Authority Policy"

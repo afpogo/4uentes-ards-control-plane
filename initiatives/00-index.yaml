@@ -9,6 +9,8 @@ initiatives:
   - "initiatives/INIT-CP-0003-ards-sdd-runtime-enforcement.yaml"
   - "initiatives/INIT-FUENTES-0001-portfolio-product-i18n-and-jira-foundation.yaml"
   - "initiatives/INIT-HPT-0001-home-phinance-governance-adoption.yaml"
+  - "initiatives/INIT-HPT-0002-personal-finance-instrument-operations-api.yaml"
+  - "initiatives/INIT-HPT-0003-financial-document-intake-and-assisted-accounting.yaml"
   - "initiatives/INIT-PORTFOLIO-0001-portfolio-publication-readiness.yaml"
   - "initiatives/INIT-PORTFOLIO-0002-mobile-section-readiness.yaml"
   - "initiatives/INIT-PORTFOLIO-0003-portfolio-professionalization.yaml"

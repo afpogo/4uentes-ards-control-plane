@@ -1,0 +1,173 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-HPT-0006"
+title: "Define governed financial document intake and invoice extraction"
+status: "planned"
+source_request: "requests/inbox/CR-HPT-0006-define-governed-financial-document-intake.yaml"
+created_at: "2026-08-21"
+requester: "4uentes"
+
+summary: >
+  Register a future owner-controlled, human-confirmed financial-document intake
+  capability without changing the child repo. SST is the candidate owner of
+  mobile/web capture; Phinance is the candidate owner of document lifecycle,
+  extraction proposals, validation, provenance, review, ledger materialization
+  and audit. These boundaries remain hypotheses pending later owner adoption.
+
+control_plane_context:
+  initiative_id: "INIT-HPT-0003"
+  predecessor_request_ids:
+    - "CR-HPT-0005"
+  related_boundary_request_id: "CR-HPT-0003"
+  related_product_initiative_id: "INIT-HPT-0002"
+  work_origin: "user-requested-control-plane-registration"
+
+initial_scope:
+  solution: "finanzas-personales"
+  services:
+    - "finanzas-personales-backend"
+  include_optional_services: false
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "finanzas-personales-backend"
+      via: "future owner API, feature, state, capability, privacy and audit contracts"
+      ards_kind: "backend-api"
+    - service_id: "sst-fend"
+      via: "future camera/file capture, review and confirmation UX"
+      ards_kind: "frontend-web"
+  affected_ards:
+    - "product-ards"
+    - "api-contract"
+    - "feature-contract"
+    - "outbound-capability"
+    - "state-lifecycle"
+    - "privacy-and-retention"
+    - "financial-audit"
+  capabilities:
+    - "financial-document-intake"
+  risks:
+    - id: "UNCONFIRMED_EXTRACTION_POSTED_TO_LEDGER"
+      severity: "high"
+    - id: "CROSS_ACCOUNT_DOCUMENT_DISCLOSURE"
+      severity: "high"
+    - id: "SENSITIVE_IMAGE_OR_OCR_TEXT_LEAKAGE"
+      severity: "high"
+    - id: "DUPLICATE_DOCUMENT_DOUBLE_POSTING"
+      severity: "high"
+    - id: "STRUCTURAL_VALIDATION_MISREPRESENTED_AS_EXTERNAL_VERIFICATION"
+      severity: "high"
+    - id: "OCR_PROVIDER_OR_STORAGE_PREMATURELY_FIXED"
+      severity: "medium"
+
+required_context:
+  - "docs/policies/agent-architecture-boundary-policy.md"
+  - "docs/policies/owner-documentation-authority-policy.md"
+  - "specs/integration/policies.yaml"
+  - "requests/planned/CR-HPT-0005-design-personal-instrument-operation-contract.yaml"
+  - "finanzas-personales: ARDS_Phinance_API.md"
+  - "finanzas-personales: backend/specs/api/personal-finance.yaml"
+  - "finanzas-personales: backend/specs/api/sst-integration.yaml"
+  - "finanzas-personales: historical OCR and receipt-processing product ARDS"
+
+risk:
+  level: "high"
+  score: 9
+  drivers:
+    - "sensitive financial document images"
+    - "probabilistic extraction"
+    - "ledger materialization"
+    - "mobile capture and cross-repo boundary"
+    - "retention and provider decisions unresolved"
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "privacy"
+    - "financial integrity"
+    - "cross-repo ownership"
+    - "human review and audit lifecycle"
+
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5-high"
+  reason: "Sensitive financial images and ledger integrity require complex-high-risk handling."
+
+subagent_deployment_plan:
+  required: false
+  parallelizable: false
+  roles: []
+  fallback: >
+    Keep architecture, privacy and financial semantics in the primary agent.
+    Prior CR-HPT-0005 discovery remains source evidence; no sensitive decision
+    is delegated.
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  approval_source: "User explicitly limited this cut to control-plane registration on 2026-08-21."
+  allowed_window: "manual"
+  branch_strategy: "control-plane-only"
+  child_repo_mutation_allowed: false
+  runtime_implementation_allowed: false
+  dependency_changes_allowed: false
+  infrastructure_changes_allowed: false
+  jira_write_allowed: false
+  implementation_boundary: >
+    Register Initiative, product intent, lifecycle hypotheses, risks and future
+    owner paths only. Do not modify the finanzas-personales or SST repos and do
+    not implement image upload, storage, OCR, queues, providers, migrations,
+    mobile UI or endpoints.
+
+owner_documentation:
+  required: false
+  status: "not-applicable"
+  owner_repo: "finanzas-personales"
+  reason: "This cut does not mutate the child repo; owner adoption requires a future approved CR."
+  future_owner_docs:
+    - "ARDS_Phinance_API.md"
+    - "backend/specs/api/document-intake.yaml"
+    - "backend/specs/features/document-intake.yaml"
+    - "backend/specs/states/document-intake.yaml"
+    - "backend/specs/capabilities/outbound/financial-document-intake.yaml"
+    - "backend/docs/api/document-intake.md"
+    - "backend/docs/architecture/README.md"
+    - "backend/scripts/check-contracts.js"
+
+contract_invariants:
+  - "SST resolves trusted account membership before Phinance accepts a document intake."
+  - "Document, asset, extraction, review, resulting transaction and audit records share the resolved finance profile scope."
+  - "OCR and classifiers produce proposals, never authoritative financial facts."
+  - "Only explicit user confirmation can materialize a transaction or household-resource proposal."
+  - "Confirmation is idempotent and cannot double-post a duplicate document."
+  - "Every extracted field carries raw candidate, normalized candidate, confidence and validation results."
+  - "Structural validation is distinct from user confirmation and future external verification."
+  - "Images and OCR text follow explicit retention, deletion, encryption and access-control contracts before runtime."
+  - "Extraction engine, provider and model version are recorded as provenance without exposing secrets."
+  - "Failure, rejection and reprocessing preserve prior attempts and audit history."
+
+validation:
+  required_checks:
+    - "4uentes-orchestor: npm run check"
+    - "4uentes-orchestor: git diff --check"
+  evidence_required:
+    - "source_review"
+    - "initiative_boundary_summary"
+    - "changed_files_summary"
+    - "validation_results"
+
+decision:
+  status: "planned-control-plane-registration-only"
+  approver: "4uentes"
+  approved_at: "2026-08-21"
+  blocker: >
+    Owner documentation and runtime remain unapproved until the API baseline,
+    storage, retention, provider, SST capture and implementation contracts are
+    planned in separate requests.

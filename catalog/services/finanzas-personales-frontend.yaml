@@ -1,7 +1,7 @@
 service_id: finanzas-personales-frontend
 canonical_identity: finanzas-personales-frontend
 kind: frontend-spa
-status: draft
+status: deprecated
 shared: false
 solution_ids:
   - finanzas-personales
@@ -27,16 +27,16 @@ package:
     - TypeScript TODO
 ards:
   kind: frontend-web
-  status: product-draft
-  agents_md: true
-  specs_index: true
-  docs_overview: true
-  docs_ai_policy: true
+  status: deprecated
+  agents_md: false
+  specs_index: false
+  docs_overview: false
+  docs_ai_policy: false
 validation:
   check_command: TODO
 orchestrator_link_contract:
   required: true
-  status: pending-child-adoption
+  status: not-applicable
   rule_ref: "docs/cross-repo/child-repo-orchestrator-link-rule.md"
   template_ref: "templates/child-orchestrator-link-rule.md"
   metadata_key: "orchestrator_link"
@@ -45,7 +45,6 @@ integrations:
   consumes:
     - finanzas-personales-backend
 notes:
-  - Frontend ARDS/SDD service root inside the finanzas-personales monorepo.
-  - Direct backend-api consumption is a draft architecture exception tracked by CR-HPT-0003.
-  - No product runtime or executable validation route was observed.
-
+  - Historical frontend ARDS/SDD identity retained for traceability after the standalone HPT frontend was withdrawn.
+  - CR-HPT-0003 records that sst-fend owns the user-facing experience and consumes Phinance-API through an approved SST boundary.
+  - Deprecated services are not required local bindings and must not be treated as active runtimes.

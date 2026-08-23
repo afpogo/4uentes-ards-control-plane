@@ -8,14 +8,14 @@ created_at: "2026-07-12"
 requester: "4uentes"
 
 summary: >
-  Reconcile the frontend and backend ARDS roots with the current core common
-  policy runtime, adopt control-plane linkage and establish executable owner
-  documentation validation without changing product runtime.
+  Reconcile the active backend ARDS root with the current core common policy
+  runtime, adopt control-plane linkage and establish executable owner
+  documentation validation without changing product runtime. The former
+  frontend root is deprecated by CR-HPT-0003.
 
 initial_scope:
   solution: "finanzas-personales"
   services:
-    - "finanzas-personales-frontend"
     - "finanzas-personales-backend"
   include_optional_services: false
 
@@ -28,9 +28,6 @@ control_plane_context:
 impact_analysis:
   required: true
   affected_services:
-    - service_id: "finanzas-personales-frontend"
-      via: "policy manifests, contract binding, control-plane link and owner docs"
-      ards_kind: "frontend-web"
     - service_id: "finanzas-personales-backend"
       via: "policy manifests, contract binding, control-plane link and owner docs"
       ards_kind: "backend-api"
@@ -59,7 +56,7 @@ risk:
   score: 6
   drivers:
     - "request-driven child repo mutation"
-    - "two service roots share one Git repository"
+    - "historical two-root plan is reconciled to one active backend owner"
     - "policy adoption must not redefine core canon"
 
 task_weight:
@@ -88,12 +85,12 @@ subagent_deployment_plan:
 
 execution:
   requires_human_approval: true
-  allowed_window: "future-approved-window"
+  approval_source: "User requested continued execution on 2026-08-22."
+  allowed_window: "manual-current-session"
   branch_strategy: "child-repo-governance-only"
   child_repo_mutation_allowed: true
   child_repo_mutation_target:
     service_ids:
-      - "finanzas-personales-frontend"
       - "finanzas-personales-backend"
   owner_documentation_required: true
   implementation_boundary: >
@@ -110,12 +107,6 @@ owner_documentation:
     - "specs/ards/contract-binding.yaml"
     - "specs/integration/policies.yaml"
   owner_refs:
-    - repo: "finanzas-personales/frontend"
-      paths:
-        - "docs/policies/README.md"
-        - "specs/00-index.yaml"
-        - "specs/ards/contract-binding.yaml"
-        - "specs/integration/policies.yaml"
     - repo: "finanzas-personales/backend"
       paths:
         - "docs/policies/README.md"
@@ -135,8 +126,9 @@ jira:
 
 validation:
   required_checks:
-    - "finanzas-personales frontend: validation route defined by this CR"
-    - "finanzas-personales backend: validation route defined by this CR"
+    - "finanzas-personales backend: .venv/Scripts/python.exe -m pytest"
+    - "finanzas-personales backend: node scripts/check-contracts.js"
+    - "finanzas-personales backend: versioned .http harness present and linked"
     - "4uentes-orchestor: npm.cmd run check"
   evidence_required:
     - "policy_adoption_summary"
@@ -145,6 +137,7 @@ validation:
     - "validation_results"
 
 decision:
-  status: "planned-awaiting-child-execution-approval"
-  approver: "TODO"
-  blocker: "technical owner and child execution window must be confirmed"
+  status: "approved-for-child-governance-execution"
+  approver: "4uentes"
+  approved_at: "2026-08-22"
+  blocker: "none-for-documentation-and-policy-adoption-scope"

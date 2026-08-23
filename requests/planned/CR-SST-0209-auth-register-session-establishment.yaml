@@ -1,0 +1,83 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0209"
+title: "Establish the web auth session during registration"
+status: "planned"
+source_request: "requests/inbox/CR-SST-0209-auth-register-session-establishment.yaml"
+created_at: "2026-08-21"
+requester: "4uentes"
+depends_on: []
+control_plane_context:
+  initiative_id: "INIT-SST-0007"
+  coordinated_by_request_id: "CR-SST-0178"
+  related_request_ids: ["CR-SST-0180", "CR-SST-0200", "CR-SST-0201"]
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  jira_write_authorized: false
+scope:
+  target_environment: "development"
+  child_repo_mutation_targets: ["4uentes-auth"]
+  validation_consumers: ["sst-fend"]
+  owned_session_scope: "web registration session establishment only"
+  excluded_scope: ["password recovery", "cross-tab coordination", "extension sessions", "production"]
+risk: {level: "high", score: 9, drivers: ["AUTH_SESSION", "REFRESH_COOKIE", "CSRF", "CROSS_REPO_CONTRACT"]}
+task_weight: {classification: "complex-high-risk-task", risk_level: "high"}
+model_selection:
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5"
+  fallback_reasoning_effort: "high"
+subagent_deployment_plan:
+  mode: "none"
+  reason: "Auth session issuance and CSRF boundaries stay with the primary agent; proactive delegation is disabled."
+execution:
+  requires_human_approval: true
+  approval_source: null
+  child_repo_mutation_allowed: false
+  deployment_allowed: false
+  production_mutation_allowed: false
+  jira_write_allowed: false
+workspace_isolation:
+  base_ref: "origin/develop"
+  rule: "After approval, use a new clean 4uentes-auth worktree and preserve the dirty canonical checkout."
+implementation:
+  - "Extract or reuse one session-family issuance path shared by login and register."
+  - "Issue the registered web user an access token with the canonical sid, token_use, audience and chat scope claims."
+  - "Persist one refresh family and set refresh_token plus csrf_token cookies with the existing web cookie policy."
+  - "Return only the existing safe web register response; never expose the refresh token."
+  - "Do not make the frontend transmit registration credentials a second time."
+owner_documentation:
+  required: true
+  status: "planned"
+  owner_repos: ["4uentes-auth"]
+  planned_surfaces:
+    - "specs/auth.yaml"
+    - "specs/bf/31-auth-bf.yml"
+    - "docs/authentication.md"
+    - "docs/bf/04-auth.md"
+  capability_evaluation: "Update the existing auth contract surfaces; create no new capability id unless owner preflight finds a published web-session capability."
+validation:
+  - "4uentes-auth npm run check without starting MongoDB."
+  - "Unit/contract tests use repository fakes and prove one session family, safe response and both cookie names."
+  - "Negative tests prove failed registration creates no session and leaks no credential material."
+  - "UI-only development QA proves register -> hard reload -> refresh -> /chat without DB access or seeders."
+  - "4uentes-orchestor npm run check before closure."
+acceptance:
+  - "Register establishes one revocable web session with the same security profile as login."
+  - "Hard navigation refreshes successfully without a second credential request."
+  - "No password, refresh token, CSRF value, JWT or verifier is retained in evidence."
+rollback: >
+  Restore the previous immutable Auth image through Git and Argo CD. Do not
+  delete synthetic accounts or manipulate the identity database as rollback.
+decision: {status: "proposed-awaiting-execution-approval", approver: null, decided_at: null}
+
+namespace_reconciliation:
+  coordinated_by_request_id: "CR-SST-0208"
+  previous_unpublished_id: "CR-SST-0202"
+  status: "reassigned-after-pr37-canonical-publication"
+  jira_issue_key: null
+  jira_write_performed: false
+  evidence_ref: "evidence/requests/CR-SST-0208/post-pr37-canonical-readback-2026-08-22.md"

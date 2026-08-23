@@ -1,0 +1,70 @@
+schema_version: "1.0"
+phase: 4
+id: "CR-HPT-0002"
+title: "Finanzas personales child governance adoption"
+status: "done"
+source_request: "requests/inbox/CR-HPT-0002-finanzas-personales-child-governance-adoption.yaml"
+planned_request: "requests/planned/CR-HPT-0002-finanzas-personales-child-governance-adoption.yaml"
+started_at: "2026-08-22"
+closed_at: "2026-08-22"
+requester: "4uentes"
+
+summary: >
+  Reconciled the backend child governance contract with canonical
+  control_plane_link metadata, explicit policy manifests, executable owner
+  validation and a versioned .http harness. Product runtime behavior was not
+  changed.
+
+execution:
+  child_repo_mutation_allowed: true
+  runtime_implementation_allowed: false
+  dependency_changes_allowed: false
+  migration_changes_allowed: false
+  infrastructure_changes_allowed: false
+  sst_child_mutation_allowed: false
+  jira_write_allowed: false
+
+owner_documentation:
+  required: true
+  status: "satisfied"
+  owner_repo: "finanzas-personales"
+  owner_commit: "1e98966"
+  updated_owner_docs:
+    - "AGENTS.md"
+    - "docs/api/README.md"
+    - "docs/policies/README.md"
+    - "specs/00-index.yaml"
+    - "specs/ards/contract-binding.yaml"
+    - "specs/integration/control-plane-link.yaml"
+    - "specs/integration/policies.yaml"
+    - "specs/policies/00-index.yaml"
+    - "specs/policies/control-plane-link-adoption.yaml"
+    - "specs/policies/http-qa-harness-adoption.yaml"
+    - "specs/source-map.yaml"
+  evidence_refs:
+    - "evidence/requests/CR-HPT-0002/authorization-and-scope.md"
+    - "evidence/requests/CR-HPT-0002/changed-files-summary.md"
+    - "evidence/requests/CR-HPT-0002/owner-documentation-summary.md"
+    - "evidence/requests/CR-HPT-0002/policy-adoption-summary.md"
+    - "evidence/requests/CR-HPT-0002/validation-results.md"
+
+validation:
+  status: "passed"
+  required_checks:
+    - "finanzas-personales: .venv/Scripts/python.exe -m pytest (3 passed)"
+    - "finanzas-personales: node scripts/check-contracts.js"
+    - "finanzas-personales: live HTTP smoke"
+    - "finanzas-personales: git diff --check"
+    - "4uentes-orchestor: npm run check"
+    - "4uentes-orchestor: git diff --check"
+  evidence_refs:
+    - "evidence/requests/CR-HPT-0002/validation-results.md"
+
+follow_up:
+  request_id: "CR-HPT-0008"
+  readiness: "governance-prerequisites-satisfied; persistence-and-auth-slice-boundary-still-requires-plan"
+
+decision:
+  status: "closed"
+  approver: "4uentes"
+  blocker: "none-for-governance-scope"

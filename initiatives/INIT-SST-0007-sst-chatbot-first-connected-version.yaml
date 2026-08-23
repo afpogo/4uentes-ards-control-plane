@@ -14,6 +14,8 @@ initial_hypothesis: >
   state in sst-bend and agent processing in sst-chatbot while combining a
   realtime user experience with application-owned persistence and replay.
 source_evidence_refs:
+  - "evidence/requests/CR-SST-0213/identity-reconciliation-2026-08-23.md"
+  - "evidence/requests/CR-SST-0208/post-pr37-canonical-readback-2026-08-22.md"
   - "evidence/initiatives/INIT-SST-0007/canonical-reconciliation-2026-08-18.md"
   - "evidence/initiatives/INIT-SST-0007/hybrid-realtime-plan.md"
   - "evidence/initiatives/INIT-SST-0007/operational-validation-2026-08-10.md"
@@ -21,6 +23,8 @@ source_evidence_refs:
   - "evidence/requests/CR-SST-0178/current-status-reconciliation-2026-08-18.md"
   - "evidence/initiatives/INIT-SST-0007/validation-results-2026-08-18.md"
   - "evidence/initiatives/INIT-SST-0007/changed-files-summary-2026-08-18.md"
+  - "evidence/requests/CR-SST-0202/architecture-and-execution-plan.md"
+  - "evidence/requests/CR-SST-0211/implementation-plan.md"
 model_refs:
   - "specs/initiatives/initiative-model.yaml"
   - "docs/requests/initiative-model.md"
@@ -38,8 +42,16 @@ known_change_requests:
   - "CR-SST-0199"
   - "CR-SST-0200"
   - "CR-SST-0201"
+  - "CR-SST-0202"
   - "CR-SST-0203"
   - "CR-SST-0204"
+  - "CR-SST-0205"
+  - "CR-SST-0206"
+  - "CR-SST-0207"
+  - "CR-SST-0208"
+  - "CR-SST-0209"
+  - "CR-SST-0211"
+  - "CR-SST-0213"
 tracking:
   jira:
     role: "mirror"
@@ -47,9 +59,17 @@ tracking:
     project_key: "SST"
     issue_type: "Epic"
     issue_key: "SST-86"
-    status_observation: "Tareas por hacer; post-PR35 narrative corrected and read back by CR-SST-0204"
-    observed_at: "2026-08-22"
+    status_observation: "Tareas por hacer; post-PR35 facts corrected by historical batch JIRA-SEC-PREPROD-02; collided CR-SST-0204 label is under CR-SST-0213 reconciliation"
+    observed_at: "2026-08-23"
     write_authorized: false
+    request_issue_mirrors:
+      CR-SST-0202: "SST-113"
+      CR-SST-0204: "SST-114"
+      CR-SST-0205: "SST-115"
+      CR-SST-0206: "SST-116"
+      CR-SST-0207: "SST-117"
+      CR-SST-0211: null
+    last_write_batch: "consumed-2026-08-22"
 boundaries:
   control_plane_role: "lifecycle, coordination and evidence only"
   owner_documentation_authority: "functional child repositories"
@@ -63,6 +83,12 @@ current_read_model:
   persistent_gitops_chat_runtime: "healthy-chat-core-pass-spa-session-followups-pending"
   active_execution_request: "CR-SST-0178"
   active_correction_request: "CR-SST-0200"
+  completed_retention_design_request: "CR-SST-0202"
+  next_retention_execution_request: "CR-SST-0204"
+  active_retention_execution_request: "CR-SST-0204"
+  namespace_reconciliation_request: "CR-SST-0208"
+  auth_registration_session_request: "CR-SST-0209"
+  auth_retention_facade_request: "CR-SST-0211"
   current_session_contract_ref: "requests/running/CR-SST-0180-integrate-login-sessions-and-timeout-corrections.yaml"
   integrated_closure_plan_ref: "evidence/requests/CR-SST-0178/integrated-chat-raw-v2-plan-2026-08-21.md"
 security_qualification:
@@ -73,4 +99,30 @@ security_qualification:
   superseding_current_contract: "CR-SST-0180"
 gaps:
   - "CR-SST-0178 remains running for CR-SST-0200 signup copy, registration continuity and logout teardown retests."
+  - "SST-86 contains the collided CR-SST-0204 correction label; replacing it with CR-SST-0213 requires a new enumerated Jira write authorization."
   - "User RAG, stakeholder RAG, multi-session adoption and personal memory remain separate lifecycles and are not absorbed here."
+  - "CR-SST-0202 completed the control-plane contract; CR-SST-0204 through CR-SST-0207 require their own execution approvals before owner mutation or integrated QA."
+  - "CR-SST-0211 closes the missing Auth BFF owner lifecycle; it depends on CR-SST-0204 and blocks CR-SST-0206 plus integrated retention QA."
+namespace_reconciliation:
+  request_id: "CR-SST-0208"
+  status: "pr37-canonical-map-preserved"
+  canonical_requests:
+    CR-SST-0202: "consent-aware chat retention contract"
+    CR-SST-0203: "pre-production security Jira reconciliation"
+    CR-SST-0204: "Bend chat retention and cache semantics"
+    CR-SST-0205: "development Redis runtime"
+    CR-SST-0206: "Fend retention consent UX"
+    CR-SST-0207: "integrated retention QA"
+    CR-SST-0208: "request namespace reconciliation and worktree lifecycle policy"
+    CR-SST-0209: "Auth registration session establishment"
+    CR-SST-0211: "Auth BFF adoption of the chat retention HTTP facade"
+  jira_write_allowed: false
+  jira_write_performed: false
+  evidence_ref: "evidence/requests/CR-SST-0208/post-pr37-canonical-readback-2026-08-22.md"
+jira_correction_identity_reconciliation:
+  request_id: "CR-SST-0213"
+  status: "running-local-reconciliation-jira-write-not-authorized"
+  historical_batch_id: "JIRA-SEC-PREPROD-02"
+  collided_label: "CR-SST-0204"
+  canonical_cr_sst_0204_intent: "Bend chat retention and cache semantics"
+  evidence_ref: "evidence/requests/CR-SST-0213/identity-reconciliation-2026-08-23.md"

@@ -1,0 +1,42 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0208"
+title: "Reconcile the SST change-request identity namespace"
+status: "inbox"
+created_at: "2026-08-22"
+requester: "4uentes"
+business_context: >
+  Published control-plane refs, unmerged refs and Jira mirrors assigned the
+  same SST request IDs to incompatible intentions. PR #37 later established
+  the canonical retention namespace in main, so this reconciliation now
+  preserves that published map and removes the remaining branch collisions.
+requested_change: >
+  Inventory every competing identity, distinguish compatible duplicate
+  artifacts from incompatible requests, define a human-approved canonical map,
+  normalize the control-plane lifecycle and prepare any required Jira correction
+  as a separate explicitly authorized batch.
+expected_outcome: >
+  Every retained SST request identity maps to one intention, superseded or
+  quarantined artifacts remain traceable, the published Jira mapping remains
+  unchanged, and the next request can receive a verified free ID.
+initial_scope:
+  solution: "sst"
+  affected_initiatives: ["INIT-SST-0007", "INIT-SST-0008", "INIT-SST-0010"]
+  observed_id_range: "CR-SST-0016 historical exception and CR-SST-0199 through CR-SST-0210"
+constraints:
+  - "Control-plane mutation only; do not modify functional child repositories."
+  - "Do not rename, delete or reinterpret an existing request without an explicit canonicalization decision."
+  - "Do not write Jira without a separately enumerated and current batch authorization."
+  - "Treat Jira-only work as read-only intake until a local lifecycle is explicitly adopted."
+  - "Preserve unrelated dirty worktrees and branch history."
+  - "Preserve the CR-SST-0202 through CR-SST-0207 namespace merged by PR #37."
+decision:
+  status: "approved-for-control-plane-reconciliation"
+  approver: "4uentes"
+  decided_at: "2026-08-22"
+  approval_text: "vamos a trabajar solo aca para reconciliar la mayoria de worktrees con el lifecycle de sst control plane y encaminemos la governanza"
+post_pr37_authorization:
+  status: "approved"
+  approved_by: "4uentes"
+  approved_at: "2026-08-22"
+  approval_text: "autorizo"

@@ -1,0 +1,214 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-HPT-0011"
+title: "Adopt the Python Phinance-API owner baseline"
+status: "planned"
+source_request: "requests/inbox/CR-HPT-0011-adopt-python-phinance-api-owner-baseline.yaml"
+created_at: "2026-08-22"
+requester: "4uentes"
+
+summary: >
+  Reconcile the control plane and finanzas-personales backend owner ARDS/SDD
+  around one Python/FastAPI backend-api microservice. Keep runtime scaffolding,
+  SST consumer mutation and document intake in later requests.
+
+initial_scope:
+  solution: "finanzas-personales"
+  services:
+    - "finanzas-personales-backend"
+  include_optional_services: false
+
+control_plane_context:
+  initiative_id: "INIT-HPT-0002"
+  related_initiative_ids:
+    - "INIT-HPT-0001"
+    - "INIT-HPT-0003"
+  predecessor_request_ids:
+    - "CR-HPT-0003"
+    - "CR-HPT-0005"
+  reserved_follow_up_ids:
+    - "CR-HPT-0012"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "finanzas-personales-backend"
+      via: "runtime baseline and owner architecture decision"
+      ards_kind: "backend-api"
+  affected_ards:
+    - "service-catalog"
+    - "owner-local-index"
+    - "owner-architecture"
+    - "owner-overview"
+    - "owner-task-plan"
+    - "owner-integration-policy"
+  capabilities:
+    - "finanzas-personales-backend-api"
+  risks:
+    - id: "POLYGLOT_SPLIT_REINTRODUCED"
+      severity: "high"
+    - id: "OWNER_AND_CONTROL_PLANE_DRIFT"
+      severity: "high"
+    - id: "RUNTIME_IMPLEMENTED_BEFORE_SST_TRUST_CONTRACT"
+      severity: "high"
+    - id: "STABLE_SERVICE_ID_DUPLICATED"
+      severity: "medium"
+
+required_context:
+  - "catalog/services/finanzas-personales-backend.yaml"
+  - "initiatives/INIT-HPT-0002-personal-finance-instrument-operations-api.yaml"
+  - "initiatives/INIT-HPT-0003-financial-document-intake-and-assisted-accounting.yaml"
+  - "requests/running/CR-HPT-0003-finanzas-personales-frontend-backend-boundary-reconciliation.yaml"
+  - "requests/planned/CR-HPT-0005-design-personal-instrument-operation-contract.yaml"
+  - "docs/policies/agent-architecture-boundary-policy.md"
+  - "docs/policies/owner-documentation-authority-policy.md"
+  - "finanzas-personales backend owner ARDS/SDD"
+
+risk:
+  level: "high"
+  score: 7
+  drivers:
+    - "cross-repo owner documentation mutation"
+    - "sensitive financial domain"
+    - "runtime architecture baseline"
+    - "SST trust and routing dependency remains pending"
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "architecture decision"
+    - "cross-repo owner authority"
+    - "future financial runtime"
+
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5-high"
+  reason: >
+    Runtime ownership for a sensitive financial API is an architecture decision
+    and remains with the primary agent plus human approver.
+
+subagent_deployment_plan:
+  required: false
+  parallelizable: false
+  roles: []
+  fallback: "Execute sequentially because the owner worktree is dirty and the change is small but architecture-sensitive."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  approval_source: "User selected Python for all Phinance-API and explicitly requested execution on 2026-08-22."
+  allowed_window: "manual-current-session"
+  branch_strategy: "existing-dirty-owner-worktree-preserve-pre-existing-changes"
+  child_repo_mutation_allowed: true
+  child_repo_mutation_target:
+    service_ids:
+      - "finanzas-personales-backend"
+    paths:
+      - "ARDS_Phinance_API.md"
+      - "backend/AGENTS.md"
+      - "backend/specs/00-index.yaml"
+      - "backend/specs/integration/policies.yaml"
+      - "backend/docs/00-overview.md"
+      - "backend/docs/architecture/README.md"
+      - "backend/docs/tasks/README.md"
+  control_plane_mutation_allowed: true
+  runtime_implementation_allowed: false
+  dependency_changes_allowed: false
+  migration_changes_allowed: false
+  infrastructure_changes_allowed: false
+  sst_child_mutation_allowed: false
+  jira_write_allowed: false
+  implementation_boundary: >
+    Adopt the runtime choice in owner documentation and control-plane metadata
+    only. Do not add Python packages, source files, OpenAPI runtime generation,
+    database migrations, Dockerfiles, CI/CD or SST integration code.
+
+owner_documentation:
+  required: true
+  status: "planned"
+  owner_repo: "finanzas-personales"
+  planned_owner_docs:
+    - "ARDS_Phinance_API.md"
+    - "backend/AGENTS.md"
+    - "backend/specs/00-index.yaml"
+    - "backend/specs/integration/policies.yaml"
+    - "backend/docs/00-overview.md"
+    - "backend/docs/architecture/README.md"
+    - "backend/docs/tasks/README.md"
+  owner_refs:
+    - repo: "finanzas-personales/backend"
+      paths:
+        - "../ARDS_Phinance_API.md"
+        - "AGENTS.md"
+        - "specs/00-index.yaml"
+        - "specs/integration/policies.yaml"
+        - "docs/00-overview.md"
+        - "docs/architecture/README.md"
+        - "docs/tasks/README.md"
+
+architecture_decision:
+  stable_service_id: "finanzas-personales-backend"
+  product_name: "Phinance-API"
+  service_kind: "api"
+  ards_kind: "backend-api"
+  runtime: "Python"
+  framework: "FastAPI"
+  deployment_shape: "independently deployable microservice"
+  domain_owner: "Phinance-API"
+  persistence_owner: "Phinance-API"
+  primary_consumer: "sst-fend through an approved SST trust and routing boundary"
+  internal_shape: "modular monolith with a pure framework-independent finance domain"
+  explicit_non_decisions:
+    - "Python and framework versions"
+    - "package manager"
+    - "ORM and migration tool"
+    - "database topology"
+    - "trusted-principal transport"
+    - "gateway prefix and deployment environment"
+    - "OCR, document storage, queues and AI providers"
+
+policy_application:
+  architecture_boundary: >
+    Human approval selects the owner runtime and microservice shape. Pending SST
+    auth, routing, infrastructure and consumer contracts remain TODOs and are
+    not invented by this request.
+  owner_documentation_authority: >
+    The backend owner docs receive the runtime decision. Control-plane evidence
+    records orchestration and cannot substitute those owner changes.
+  task_atomization: >
+    Runtime adoption, scaffold implementation, SST consumer integration,
+    document intake and end-to-end validation remain separate requests.
+  human_documentation_language: >
+    Human Markdown remains Spanish; YAML identifiers and stable technical names
+    remain in controlled technical English.
+  visual_documentation: >
+    Existing textual topology remains sufficient for this bounded decision. A
+    future normative multi-component map must use the adopted visual profile.
+  http_qa_harness: >
+    No HTTP runtime exists in this request. CR-HPT-0012 must adopt or except the
+    core-owned HTTP QA harness when executable endpoints are scaffolded.
+
+validation:
+  required_checks:
+    - "finanzas-personales: node backend/scripts/check-contracts.js"
+    - "finanzas-personales: git diff --check"
+    - "4uentes-orchestor: npm.cmd run check"
+    - "4uentes-orchestor: git diff --check"
+    - "No Python runtime, dependencies, migrations or infrastructure files were created."
+  evidence_required:
+    - "authorization_and_scope"
+    - "owner_documentation_summary"
+    - "changed_files_summary"
+    - "validation_results"
+
+decision:
+  status: "approved-for-owner-documentation-execution"
+  approver: "4uentes"
+  approved_at: "2026-08-22"
+  runtime_follow_up: "CR-HPT-0012"

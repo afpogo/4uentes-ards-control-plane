@@ -1,0 +1,80 @@
+schema_version: "1.0"
+phase: 4
+id: "CR-HPT-0008"
+title: "Implement the first everyday economic-resource API slice"
+status: "done"
+source_request: "requests/inbox/CR-HPT-0008-implement-everyday-economic-resource-api-slice.yaml"
+planned_request: "requests/planned/CR-HPT-0008-implement-everyday-economic-resource-api-slice.yaml"
+started_at: "2026-08-22"
+closed_at: "2026-08-22"
+requester: "4uentes"
+
+summary: >
+  Implemented the first owner-governed household economic-resource event
+  ledger in Phinance-API with exact quantities, PostgreSQL migrations,
+  idempotent and audited writes, derived use/waste summaries and a production
+  boundary that fails closed until SST supplies a trusted PrincipalContext.
+
+execution:
+  child_repo_mutation_allowed: true
+  runtime_implementation_allowed: true
+  dependency_changes_allowed: true
+  migration_changes_allowed: true
+  infrastructure_changes_allowed: false
+  sst_child_mutation_allowed: false
+  jira_write_allowed: false
+
+owner_documentation:
+  required: true
+  status: "satisfied"
+  owner_repo: "finanzas-personales"
+  owner_commit: "b46608e"
+  owner_contract: "backend/specs/api/household-economic-resources.yaml"
+  updated_owner_docs:
+    - "ARDS_Phinance_API.md"
+    - "docs/api/README.md"
+    - "docs/architecture/README.md"
+    - "docs/tasks/README.md"
+    - "specs/api/household-economic-resources.yaml"
+    - "specs/api/00-index.yaml"
+    - "specs/features/00-index.yaml"
+    - "specs/capabilities/00-index.yaml"
+    - "specs/capabilities/outbound/household-economic-resources.yaml"
+    - "specs/source-map.yaml"
+  evidence_refs:
+    - "evidence/requests/CR-HPT-0008/authorization-and-scope.md"
+    - "evidence/requests/CR-HPT-0008/changed-files-summary.md"
+    - "evidence/requests/CR-HPT-0008/manual-qa-partial.md"
+    - "evidence/requests/CR-HPT-0008/validation-results.md"
+
+implemented_slice:
+  resources:
+    - "household_economic_resource"
+    - "household_resource_event"
+  persistence: "PostgreSQL + SQLAlchemy 2 + psycopg 3 + Alembic"
+  quantity: "Decimal and explicit unit, derived from append-only events"
+  durable_condition: ["USABLE", "LIMITED", "UNUSABLE", "DISPOSED"]
+  principal_boundary: "fail-closed trusted PrincipalContext port"
+  finance_honesty: "no subjective benefit, monetary defer or unsupported waste valuation"
+
+validation:
+  status: "passed"
+  required_checks:
+    - "finanzas-personales: pytest (10 passed, 2 PostgreSQL-marked skipped)"
+    - "finanzas-personales: PostgreSQL gate (2 passed)"
+    - "finanzas-personales: node scripts/check-contracts.js"
+    - "finanzas-personales: live HTTP harness"
+    - "finanzas-personales: MCP Chrome DevTools partial QA"
+    - "finanzas-personales: git diff --check"
+    - "4uentes-orchestor: npm run check"
+    - "4uentes-orchestor: git diff --check"
+
+follow_up:
+  - "Approve and implement the trusted SST PrincipalContext adapter."
+  - "Define event reversal and verified transaction-link semantics."
+  - "Plan SST guest-capability consumption under a separate cross-repo request."
+
+decision:
+  status: "closed"
+  approver: "4uentes"
+  blocker: "none"

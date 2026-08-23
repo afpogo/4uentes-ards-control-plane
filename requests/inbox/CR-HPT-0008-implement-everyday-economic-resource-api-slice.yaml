@@ -1,0 +1,41 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-HPT-0008"
+title: "Implement the first everyday economic-resource API slice"
+status: "inbox"
+created_at: "2026-08-22"
+requester: "4uentes"
+
+business_context: >
+  CR-HPT-0005 approved the household economic-resource domain boundary,
+  CR-HPT-0012 established the executable FastAPI scaffold, and CR-HPT-0002
+  completed child governance adoption. The first business slice can now be
+  planned without introducing market instruments or financial advice.
+
+requested_change: >
+  Implement account-scoped household economic resources, immutable resource
+  events, derived effects and useful-versus-waste read models in Phinance-API,
+  with owner contracts, PostgreSQL migrations, automated tests and HTTP QA.
+
+expected_outcome: >
+  An authenticated finance profile can record everyday resources and the
+  events that explain acquisition, use, waste, maintenance and disposal while
+  keeping estimates separate from cash, savings, profit and investment return.
+
+initial_scope:
+  solution: "finanzas-personales"
+  services:
+    - "finanzas-personales-backend"
+  include_optional_services: false
+
+constraints:
+  - "Do not implement market instruments, crypto, brokerage execution, OCR, AI or recommendations."
+  - "Do not accept account_id, stable subject or profile ownership from client bodies, queries or untrusted headers."
+  - "Do not activate business data access until a fail-closed trusted PrincipalContext contract is executable."
+  - "Do not treat utility, avoided cost or future exposure as posted money or investment return."
+
+decision:
+  status: "accepted-for-execution"
+  approver: "4uentes"
+  approved_at: "2026-08-22"
+  approval_text: "apruebo la propuesta"

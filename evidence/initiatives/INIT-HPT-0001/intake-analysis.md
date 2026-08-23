@@ -2,6 +2,10 @@
 
 Fecha: 2026-07-12
 
+> Actualización 2026-08-18: este documento conserva la observación inicial.
+> CR-HPT-0003 deprecó posteriormente el frontend standalone, asignó la
+> experiencia a `sst-fend` y exigió account scope SST validado.
+
 ## Resultado
 
 El repositorio `finanzas-personales` puede incorporarse al control-plane como
@@ -48,4 +52,3 @@ Las identidades logicas nuevas usan `finanzas-personales` y no heredan ese typo.
 - Auth, sharing permissions y retencion siguen sin decision final.
 - El technical owner y la responsabilidad de release siguen como `TODO`.
 - El estado `synced` del backend no refleja el common policy runtime actual.
-

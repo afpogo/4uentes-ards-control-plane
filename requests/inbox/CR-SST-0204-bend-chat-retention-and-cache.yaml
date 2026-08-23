@@ -1,0 +1,21 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0204"
+title: "Implement Bend chat retention and Redis cache semantics"
+status: "inbox"
+created_at: "2026-08-22"
+requester: "4uentes"
+summary: >
+  Implement authenticated conversation discovery, temporary TTL storage,
+  explicit promotion to durable PostgreSQL storage and cache-aside recovery.
+requested_scope:
+  initiative_id: "INIT-SST-0007"
+  parent_request_id: "CR-SST-0202"
+  target_environment: "development"
+  owner_repositories: ["sst-bend"]
+constraints:
+  - "Authorize every read and mutation with the authenticated principal."
+  - "Commit durable writes in PostgreSQL before updating or evicting Redis."
+  - "Do not persist temporary message content in PostgreSQL or logs."
+  - "Do not write Jira without a separate enumerated batch authorization."
+requested_next_step: "Execute only after CR-SST-0202 contract approval."

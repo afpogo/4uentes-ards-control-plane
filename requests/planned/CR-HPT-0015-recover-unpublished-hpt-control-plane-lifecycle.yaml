@@ -1,0 +1,78 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-HPT-0015"
+title: "Recover unpublished HPT control-plane lifecycle from the dirty root"
+status: "planned"
+source_request: "requests/inbox/CR-HPT-0015-recover-unpublished-hpt-control-plane-lifecycle.yaml"
+created_at: "2026-08-22"
+requester: "4uentes"
+summary: >
+  Selectively port the valid HPT governance history from eight unique commits
+  onto origin/main without adopting stale control-plane machinery or the
+  incompatible local CR-SST-0207 facade plan.
+control_plane_context:
+  coordinated_by_request_id: "CR-SST-0208"
+  affected_initiatives: ["INIT-HPT-0001", "INIT-HPT-0002", "INIT-HPT-0003"]
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  jira_write_authorized: false
+risk:
+  level: "high"
+  score: 9
+  drivers: ["HISTORICAL_LIFECYCLE_RECOVERY", "BASE_DRIFT", "REQUEST_ID_COLLISION", "OWNER_COMPLETION_CLAIMS"]
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+model_selection:
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5-high"
+  reason: "Recovery changes durable governance history and must separate evidence from execution authority."
+subagent_deployment_plan:
+  mode: "none"
+  reason: "The recovery is sequential, touches one canonical control-plane tree and proactive delegation is disabled."
+execution:
+  control_plane_mutation_allowed: true
+  child_repo_mutation_allowed: false
+  jira_write_allowed: false
+  production_data_allowed: false
+  branch: "agent/cr-hpt-0015-control-plane-recovery"
+  worktree: "worktrees/CR-HPT-0015-control-plane-recovery"
+  base_ref: "origin/main@659e1fe"
+recovery_units:
+  - id: "identity-and-source-readback"
+    objective: "Reserve CR-HPT-0015 and inventory the eight source commits, dirty dependencies and collisions."
+    validation: "Current-tree and all-refs identity scans plus exact source commit list."
+  - id: "hpt-lifecycle-port"
+    objective: "Port HPT initiatives, lifecycle phases and evidence one request at a time."
+    validation: "Every recovered request has one identity, coherent phase links and explicit historical authority."
+  - id: "canonical-read-model-reconciliation"
+    objective: "Reconcile catalog, solutions, initiatives and state against their current origin/main forms."
+    validation: "No whole-file replacement from the stale branch and no regression of newer canon."
+  - id: "excluded-content-readback"
+    objective: "Record obsolete validators, generated directories and the colliding CR-SST-0207 plan as excluded."
+    validation: "No excluded path appears in the recovery diff."
+  - id: "publication-and-root-readback"
+    objective: "Publish the recovered control-plane unit and verify whether unique HPT intent remains in the dirty root."
+    validation: "Full check, diff check, merged PR readback and source-root comparison."
+decision_gates:
+  owner_completion_claims_require_evidence: true
+  destructive_source_cleanup_allowed: false
+  jira_batch_requires_separate_authorization: true
+  facade_request_requires_new_free_identity: true
+required_checks:
+  - "node scripts/verify-request-identities.js"
+  - "git diff --check"
+  - "npm.cmd run check"
+evidence_plan:
+  - "evidence/requests/CR-HPT-0015/identity-and-source-preflight-2026-08-22.md"
+  - "evidence/requests/CR-HPT-0015/selective-port-manifest-2026-08-22.md"
+  - "evidence/requests/CR-HPT-0015/validation-results-2026-08-22.md"
+  - "evidence/requests/CR-HPT-0015/post-publication-source-readback-2026-08-22.md"
+decision:
+  status: "approved-for-control-plane-recovery"
+  approver: "4uentes"
+  decided_at: "2026-08-22"
