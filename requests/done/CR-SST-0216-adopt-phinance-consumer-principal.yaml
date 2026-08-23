@@ -1,0 +1,74 @@
+schema_version: "1.0"
+phase: 4
+id: "CR-SST-0216"
+title: "Adopt the Phinance consumer principal in sst-bend"
+status: "done"
+source_request: "requests/inbox/CR-SST-0216-adopt-phinance-consumer-principal.yaml"
+planned_request: "requests/planned/CR-SST-0216-adopt-phinance-consumer-principal.yaml"
+started_at: "2026-08-23"
+closed_at: "2026-08-23"
+requester: "4uentes"
+summary: >
+  Published the least-privilege SST membership-to-finance entitlement mapping,
+  bounded TrustedSstPrincipal producer and exact Phinance service-token
+  consumer while keeping business forwarding disabled.
+execution:
+  owner_repo: "sst-bend"
+  owner_base: "develop@357ac2a"
+  owner_commit: "75c4660"
+  owner_merge_commit: "90072eb"
+  owner_pull_request: "https://github.com/afpogo/sst-bend/pull/23"
+  child_repo_mutation_allowed: true
+  runtime_implementation_allowed: true
+  business_proxy_activation_allowed: false
+  dependency_changes_allowed: false
+  database_changes_allowed: false
+  infrastructure_changes_allowed: false
+  secret_value_changes_allowed: false
+implemented_contract:
+  entitlement_mapping:
+    owner: ["finance:read", "finance:write", "finance:audit:read"]
+    member: ["finance:read"]
+    unknown_or_inactive: []
+  trusted_fields: ["stable_subject", "validated_account_id", "entitlements", "request_id", "correlation_id"]
+  forbidden_fields: ["finance_profile_id", "local_resource_owner_id"]
+  service_grant: {client_id: "sst-bend", audience: "phinance-api", scope: "finance:invoke"}
+  activation_status: "implemented and tested, not wired to business forwarding"
+owner_documentation:
+  required: true
+  status: "satisfied"
+  owner_repo: "sst-bend"
+  updated_owner_docs:
+    - "specs/api/phinance-facade.yaml"
+    - "specs/capabilities/outbound/sst-phinance-facade-v1.yaml"
+    - "docs/api/27-phinance-facade.md"
+    - "docs/capabilities/outbound/sst-phinance-facade-v1.md"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0216/baseline-and-design-2026-08-23.md"
+    - "evidence/requests/CR-SST-0216/owner-validation-and-readback-2026-08-23.md"
+validation:
+  status: "passed-with-documented-local-runtime-preflight-degradation"
+  required_checks:
+    - "sst-bend: npm run test:phinance-consumer"
+    - "sst-bend: npm run test:service-token"
+    - "sst-bend: npm run build"
+    - "4uentes-orchestor: npm run check"
+  focused_consumer_test: "passed"
+  service_token_compatibility_test: "passed"
+  owner_build: "passed"
+  remote_node_18: "passed"
+  remote_node_20: "passed"
+  remote_build_publish_update: "passed"
+  local_full_check: "focused gates passed; HTTP preflight blocked because localhost:3005 was absent"
+  control_plane_check: "passed after terminal lifecycle and owner-documentation validation"
+known_debt:
+  npm_audit: "46 pre-existing findings: 10 low, 14 moderate, 19 high, 3 critical"
+  disposition: "No dependency mutation authorized; remediation requires a separate security lifecycle."
+follow_up:
+  - "Implement the concrete Phinance JWT/JWKS verifier and trusted-principal adapter."
+  - "Wire the facade and execute integrated account-isolation QA only after verifier closure."
+  - "Reconcile the stale CR-SST-0208 reference in HPT-5 through a separate Jira batch."
+decision:
+  status: "closed-consumer-adopted-fail-closed"
+  approver: "4uentes"
+  blocker: "none for consumer adoption; verifier and proxy activation remain separate"
