@@ -1,0 +1,100 @@
+schema_version: "1.0"
+phase: 4
+id: "CR-HPT-0014"
+title: "Implement local finance-profile resolution and a fail-closed principal boundary"
+status: "done"
+source_request: "requests/inbox/CR-HPT-0014-implement-local-finance-profile-resolution.yaml"
+planned_request: "requests/planned/CR-HPT-0014-implement-local-finance-profile-resolution.yaml"
+started_at: "2026-08-23"
+closed_at: "2026-08-23"
+requester: "4uentes"
+
+summary: >
+  Published and read back Phinance-owned finance profiles, idempotent local
+  principal resolution, referential ownership, trusted audit trace IDs and
+  dependency-aware readiness while preserving a fail-closed SST boundary.
+
+execution:
+  owner_repo: "finanzas-personales"
+  historical_owner_commit: "daa66e5"
+  published_owner_commit: "ef0d82f"
+  owner_merge_commit: "9f781e7"
+  owner_pull_request: "https://github.com/mena28/finanzas-personales/pull/2"
+  child_repo_mutation_allowed: true
+  runtime_implementation_allowed: true
+  migration_changes_allowed: true
+  dependency_changes_allowed: false
+  infrastructure_changes_allowed: false
+  sst_child_mutation_allowed: false
+  auth_child_mutation_allowed: false
+  jira_write_allowed: false
+  trusted_provider_enabled: false
+  sst_proxy_enabled: false
+  ordering_deviation: >
+    The historical implementation predates the canonical lifecycle. Closure
+    is based on the clean port ef0d82f and its remote main readback, not on the
+    quarantined source branch.
+
+implemented_slice:
+  finance_profile:
+    unique_key: [account_id, stable_subject]
+    provisioning: "PostgreSQL INSERT ON CONFLICT DO NOTHING plus owner-key lookup"
+    persisted_data: [id, account_id, stable_subject, created_at]
+  principal_boundary:
+    external_type: "TrustedSstPrincipal"
+    local_type: "PrincipalContext"
+    transport: "fail-closed pending concrete SST/Auth provider"
+  integrity:
+    - "foreign keys from resources, events, idempotency and audit to finance_profiles"
+    - "composite resource/profile consistency for household events"
+    - "migration blocker for unmappable existing owner rows"
+  readiness:
+    health: "process-only"
+    ready: "requires database and trusted principal provider"
+  audit:
+    trace_source: "trusted principal request_id and correlation_id"
+
+owner_documentation:
+  required: true
+  status: "satisfied"
+  owner_repo: "finanzas-personales"
+  owner_documentation_root: "backend"
+  updated_owner_docs:
+    - "ARDS_Phinance_API.md"
+    - "specs/00-index.yaml"
+    - "specs/api/personal-finance.yaml"
+    - "specs/api/sst-integration.yaml"
+    - "specs/integration/control-plane-link.yaml"
+    - "specs/integration/policies.yaml"
+    - "specs/source-map.yaml"
+    - "docs/00-overview.md"
+    - "docs/api/README.md"
+    - "docs/architecture/README.md"
+    - "docs/tasks/README.md"
+  evidence_refs:
+    - "evidence/requests/CR-HPT-0014/identity-and-source-preflight-2026-08-23.md"
+    - "evidence/requests/CR-HPT-0014/implementation-readiness.md"
+    - "evidence/requests/CR-HPT-0014/validation-results.md"
+    - "evidence/requests/CR-HPT-0014/owner-publication-readback-2026-08-23.md"
+
+validation:
+  status: "passed"
+  required_checks:
+    - "4uentes-orchestor: npm run check"
+  owner_contract_check: "passed"
+  owner_pytest_unit: "15 passed, 4 PostgreSQL tests skipped in the unit run"
+  owner_pytest_postgres: "4 passed against a dedicated ephemeral PostgreSQL 16 database"
+  owner_http_smoke: "passed"
+  owner_diff_check: "passed"
+  remote_readback: "ef0d82f is reachable from owner origin/main at 9f781e7"
+  control_plane_check: "passed"
+
+follow_up:
+  - "Publish the provider-owned sst-bend -> phinance-api / finance:invoke grant."
+  - "Implement the concrete Phinance verifier against that provider contract."
+  - "Enable the SST proxy and integrated account-isolation QA under a separate request."
+
+decision:
+  status: "closed-owner-local-slice"
+  approver: "4uentes"
+  blocker: "none for this slice; positive SST integration remains intentionally deferred"
