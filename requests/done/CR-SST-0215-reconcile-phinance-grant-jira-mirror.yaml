@@ -1,0 +1,44 @@
+schema_version: "1.0"
+phase: 4
+id: "CR-SST-0215"
+title: "Reconcile the Phinance grant Jira mirror"
+status: "done"
+source_request: "requests/inbox/CR-SST-0215-reconcile-phinance-grant-jira-mirror.yaml"
+planned_request: "requests/planned/CR-SST-0215-reconcile-phinance-grant-jira-mirror.yaml"
+started_at: "2026-08-23"
+closed_at: "2026-08-23"
+requester: "4uentes"
+summary: >
+  Reconciled HPT-6 in place from the collided CR-SST-0208 identity to canonical
+  CR-SST-0214, preserving its Task type, HPT-5 parent and Listo status.
+execution:
+  child_repo_mutation_allowed: false
+  product_runtime_mutation_allowed: false
+  jira_write_allowed: false
+  jira_write_batch_status: "consumed"
+jira:
+  project_key: "HPT"
+  initiative_epic: "HPT-5"
+  primary_issue: "HPT-6"
+  issue_type: "Tarea"
+  parent_key: "HPT-5"
+  final_status: "Listo"
+  canonical_request_id: "CR-SST-0214"
+  duplicate_count: 0
+  jira_source_of_truth: false
+validation:
+  status: "passed"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0215/jira-batch-authorization-2026-08-23.md"
+    - "evidence/requests/CR-SST-0215/jira-write-readback-2026-08-23.md"
+  control_plane_check: "passed after terminal running marker removal"
+known_drift:
+  - "HPT-5 description still names CR-SST-0208; it was outside this single-issue batch."
+owner_documentation:
+  required: false
+  status: "not-applicable"
+  reason: "This request changed only the control-plane lifecycle and its Jira mirror."
+decision:
+  status: "closed-jira-mirror-reconciled"
+  approver: "4uentes"
+  blocker: "none for HPT-6; HPT-5 description drift remains separately governed"

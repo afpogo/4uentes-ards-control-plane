@@ -36,6 +36,7 @@ source_evidence_refs:
   - "evidence/requests/CR-SST-0214/provider-readiness-and-adoption-plan.md"
   - "evidence/requests/CR-SST-0214/validation-results.md"
   - "evidence/requests/CR-SST-0214/owner-publication-readback-2026-08-23.md"
+  - "evidence/requests/CR-SST-0215/jira-write-readback-2026-08-23.md"
   - "evidence/requests/CR-SST-0212/execution-reconciliation-2026-08-23.md"
   - "evidence/requests/CR-SST-0212/owner-publication-readback-2026-08-23.md"
 model_refs:
@@ -62,7 +63,7 @@ tracking:
     source_of_truth: false
     project_key: "HPT"
     epic_key: "HPT-5"
-    write_status: "authorized-reconciliation-running"
+    write_status: "hpt-6-reconciled"
 boundaries:
   mutates_child_repositories: false
   promotes_runtime: false
@@ -87,5 +88,6 @@ open_gaps:
   - "CR-SST-0212 published the fail-closed SST facade shell; trusted financial forwarding remains blocked by provider and consumer prerequisites."
   - "Define technical, security, migration and operational owners."
   - "CR-HPT-0014 published the owner-local profile resolver and fail-closed principal boundary; live trust remains blocked by provider, verifier and integrated QA requests."
-  - "CR-SST-0214 published the exact Auth-owned Phinance service grant on develop; consumer activation remains separate and HPT-6 reconciliation is running under CR-SST-0215."
+  - "CR-SST-0214 published the exact Auth-owned Phinance service grant on develop; HPT-6 was reconciled under CR-SST-0215 and consumer activation remains separate."
+  - "The HPT-5 Epic description still names the collided CR-SST-0208 identity and requires a separate enumerated Jira batch."
   - "Define correction/reversal semantics and a verified link to financial transactions in a later owner request."
