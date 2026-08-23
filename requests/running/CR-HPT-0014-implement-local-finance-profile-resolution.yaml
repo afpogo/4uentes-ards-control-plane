@@ -1,0 +1,58 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-HPT-0014"
+title: "Implement local finance-profile resolution and a fail-closed principal boundary"
+status: "running"
+source_request: "requests/inbox/CR-HPT-0014-implement-local-finance-profile-resolution.yaml"
+planned_request: "requests/planned/CR-HPT-0014-implement-local-finance-profile-resolution.yaml"
+created_at: "2026-08-22"
+started_at: "2026-08-23"
+requester: "4uentes"
+
+authorization:
+  status: "approved-for-local-execution"
+  approved_by: "4uentes"
+  approved_at: "2026-08-23"
+  approval_text: "autorizo; ok avancemos"
+  approved_decisions:
+    - "Phinance-owned finance_profiles keyed by account_id and stable_subject"
+    - "idempotent PostgreSQL just-in-time resolution"
+    - "separate TrustedSstPrincipal and local PrincipalContext"
+    - "database and provider-aware readiness with independent liveness"
+    - "migration blockers instead of invented ownership"
+
+observed_deviation:
+  status: "retroactive-lifecycle-recovery"
+  details: >
+    Owner commit daa66e5 was created before the request was canonically
+    reserved. The dirty source roots remain untouched; only its bounded patch
+    may be ported to a clean worktree based on current owner main.
+
+execution:
+  child_repo_mutation_allowed: true
+  child_repo_mutation_target: "finanzas-personales owner runtime, migration, tests, QA and ARDS/SDD"
+  control_plane_mutation_allowed: true
+  runtime_implementation_allowed: true
+  dependency_changes_allowed: false
+  migration_changes_allowed: true
+  infrastructure_changes_allowed: false
+  sst_child_mutation_allowed: false
+  auth_child_mutation_allowed: false
+  jira_write_allowed: false
+
+execution_status:
+  lifecycle: "running-pending-owner-publication"
+  control_plane_preflight: "passed"
+  historical_owner_commit: "daa66e5"
+  owner_publication: "pending"
+  promotion: "blocked-until-owner-remote-readback"
+
+architecture_boundary:
+  principal_transport: "No production decoder without a provider-owned credential contract."
+  service_authentication: "Do not accept headers, user bearer, network location or CORS as service authentication."
+  integration: "Do not enable the SST proxy, modify Auth/SST or create deployment bindings."
+
+decision:
+  status: "executing-approved-scope"
+  approver: "4uentes"
+  blocker: "Live SST integration remains intentionally deferred."
