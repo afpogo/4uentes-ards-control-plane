@@ -83,6 +83,7 @@ current_read_model:
   active_correction_request: "CR-SST-0200"
   completed_retention_design_request: "CR-SST-0202"
   next_retention_execution_request: "CR-SST-0204"
+  active_retention_execution_request: "CR-SST-0204"
   namespace_reconciliation_request: "CR-SST-0208"
   auth_registration_session_request: "CR-SST-0209"
   auth_retention_facade_request: "CR-SST-0211"
