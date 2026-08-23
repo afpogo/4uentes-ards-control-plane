@@ -1,0 +1,40 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-HPT-0015"
+title: "Recover unpublished HPT control-plane lifecycle from the dirty root"
+status: "running"
+source_request: "requests/inbox/CR-HPT-0015-recover-unpublished-hpt-control-plane-lifecycle.yaml"
+planned_request: "requests/planned/CR-HPT-0015-recover-unpublished-hpt-control-plane-lifecycle.yaml"
+created_at: "2026-08-22"
+started_at: "2026-08-22"
+requester: "4uentes"
+authorization:
+  status: "approved-for-control-plane-recovery"
+  approved_by: "4uentes"
+  approved_at: "2026-08-22"
+  approval_text: "ok avancemos"
+execution:
+  control_plane_mutation_allowed: true
+  child_repo_mutation_allowed: false
+  jira_write_allowed: false
+  production_data_allowed: false
+  branch: "agent/cr-hpt-0015-control-plane-recovery"
+  worktree: "worktrees/CR-HPT-0015-control-plane-recovery"
+  base_ref: "origin/main@659e1fe"
+execution_status:
+  policy_review: "complete"
+  request_identity_preflight: "complete-free-in-current-tree-all-refs-local-branches-and-worktree-paths"
+  jira_identity_preflight: "not-executed-no-write-authorized-jira-is-not-source-of-truth"
+  source_commit_readback: "complete-eight-unique-commits-source-branch-85-behind-main"
+  source_dirty_dependency: "init-hpt-0002-has-uncommitted-colliding-cr-sst-0207-reference"
+  lifecycle_publication: "pending"
+  selective_port: "pending"
+  validation: "pending"
+evidence_refs:
+  - "evidence/requests/CR-SST-0208/dirty-worktree-recovery-manifest-2026-08-22.md"
+  - "evidence/requests/CR-SST-0208/dirty-root-hpt-readback-2026-08-22.md"
+  - "evidence/requests/CR-HPT-0015/identity-and-source-preflight-2026-08-22.md"
+decision:
+  status: "running-lifecycle-publication-pending"
+  approver: "4uentes"
+  decided_at: "2026-08-22"
