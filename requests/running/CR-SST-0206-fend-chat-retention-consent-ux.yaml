@@ -58,7 +58,7 @@ implementation_slice:
 
 owner_documentation:
   required: true
-  status: "authorized-pending-owner-worktree"
+  status: "published-in-owner-draft"
   owner_repos: ["sst-fend"]
   required_surfaces:
     - "specs/integrations/sst-chat-retention-v1.yaml"
@@ -73,11 +73,13 @@ validation:
   required_control_plane_check: "npm run check"
 
 implementation_readback:
-  status: "not-started-ready-for-owner-worktree"
+  status: "owner-pr-draft-awaiting-rendered-qa-and-ci"
   owner_branch: "feat/CR-SST-0206/chat-retention-consent-ux"
-  owner_commit: null
-  owner_pull_request: null
-  owner_checks: "not-run"
+  owner_commit: "890af538de58ba2d53ca2a2acf474847d721f5ee"
+  owner_pull_request: "https://github.com/afpogo/sst-fend/pull/17"
+  owner_checks: "local npm run check passed: policy and CSS gates, lint with 0 errors, production build, 36 suites and 240 tests; GitHub PR check in progress at readback"
+  rendered_qa: "pending: integrated browser initialization failed in the execution environment; required before lifecycle closure"
+  deployment: "not performed; PR event builds but does not push an image or update infra"
 
 decision:
   status: "approved-running"
@@ -88,3 +90,4 @@ evidence_refs:
   - "evidence/requests/CR-SST-0205/jira-close-and-next-lifecycle-batch-authorization-2026-08-23.md"
   - "evidence/requests/CR-SST-0206/execution-start-2026-08-23.md"
   - "evidence/requests/CR-SST-0206/jira-transition-readback-2026-08-23.md"
+  - "evidence/requests/CR-SST-0206/owner-draft-publication-2026-08-23.md"
