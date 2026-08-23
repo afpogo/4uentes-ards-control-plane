@@ -1,0 +1,60 @@
+schema_version: "1.0"
+phase: 4
+id: "CR-HPT-0011"
+title: "Adopt the Python Phinance-API owner baseline"
+status: "done"
+source_request: "requests/inbox/CR-HPT-0011-adopt-python-phinance-api-owner-baseline.yaml"
+planned_request: "requests/planned/CR-HPT-0011-adopt-python-phinance-api-owner-baseline.yaml"
+started_at: "2026-08-22"
+closed_at: "2026-08-22"
+requester: "4uentes"
+
+summary: >
+  Adopted Python and FastAPI as the single planned Phinance-API runtime while
+  preserving finanzas-personales-backend as the stable backend-api identity.
+  No runtime, dependencies, migrations or infrastructure were created.
+
+execution:
+  child_repo_mutation_allowed: true
+  runtime_implementation_allowed: false
+  jira_write_allowed: false
+
+owner_documentation:
+  required: true
+  status: "satisfied"
+  owner_repo: "finanzas-personales"
+  owner_commit: "55e7a78"
+  updated_owner_docs:
+    - "docs/00-overview.md"
+    - "docs/architecture/README.md"
+    - "docs/tasks/README.md"
+    - "specs/00-index.yaml"
+    - "specs/integration/policies.yaml"
+    - "specs/capabilities/outbound/00-index.yaml"
+  additional_owner_sources:
+    - "ARDS_Phinance_API.md"
+    - "backend/AGENTS.md"
+  evidence_refs:
+    - "evidence/requests/CR-HPT-0011/manual-qa-partial.md"
+    - "evidence/requests/CR-HPT-0011/owner-documentation-summary.md"
+    - "evidence/requests/CR-HPT-0011/validation-results.md"
+
+validation:
+  status: "passed-including-isolated-commit-checks"
+  control_plane_commit: "5e6e19d"
+  required_checks:
+    - "finanzas-personales: node backend/scripts/check-contracts.js"
+    - "4uentes-orchestor: npm run check"
+  evidence_refs:
+    - "evidence/requests/CR-HPT-0011/manual-qa-partial.md"
+    - "evidence/requests/CR-HPT-0011/owner-documentation-summary.md"
+    - "evidence/requests/CR-HPT-0011/validation-results.md"
+
+follow_up:
+  request_id: "CR-HPT-0012"
+  objective: "Scaffold the minimal executable Python/FastAPI microservice baseline."
+
+decision:
+  status: "closed"
+  approver: "4uentes"
+  blocker: "none"

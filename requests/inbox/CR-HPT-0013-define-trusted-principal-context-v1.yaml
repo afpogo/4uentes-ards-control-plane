@@ -1,0 +1,32 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-HPT-0013"
+title: "Define the trusted SST PrincipalContext v1 contract for Phinance"
+status: "inbox"
+created_at: "2026-08-22"
+requester: "4uentes"
+
+business_context: >
+  CR-HPT-0008 delivered finance routes that correctly fail closed because no
+  trusted SST adapter exists. The next safe unit is to define the cross-repo
+  principal contract, authority per field and protected transport before any
+  SST or Phinance runtime is changed.
+
+requested_change:
+  - "Define the SST-resolved external principal fields accepted by Phinance."
+  - "Keep finance_profile_id under Phinance ownership and out of the SST wire contract."
+  - "Select facade/direct routing, service authentication, entitlement and failure semantics."
+  - "Define the later request sequence for provider, consumer and integrated rollout."
+
+constraints:
+  - "The browser may request an active SST account but never assert trusted account membership."
+  - "Plain internal headers without authenticated service provenance are not authority."
+  - "SST does not resolve or mint a Phinance-local finance_profile_id."
+  - "Phinance does not duplicate SST account or membership storage."
+  - "Do not modify child repositories, runtime, infrastructure, secrets or Jira in this planning request."
+
+decision:
+  status: "accepted-for-planning"
+  approver: "4uentes"
+  approved_at: "2026-08-22"
+  approval_text: "ok sigamos con el siguiente CR"

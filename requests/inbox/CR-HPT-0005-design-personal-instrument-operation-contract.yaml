@@ -1,0 +1,48 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-HPT-0005"
+title: "Design the personal instrument-operation contract"
+status: "inbox"
+created_at: "2026-08-21"
+requester: "4uentes"
+
+business_context: >
+  The personal-finance module is expected to live as an honored guest in the
+  SST experience while retaining an independent product boundary and room for
+  future consumers. A historical Alphinance ARDS/SDD snapshot contains an
+  enterprise operations-centered model that may inform, but must not define,
+  the personal-market contract.
+
+requested_change: >
+  Analyze the Alphinance source snapshot and the current Phinance-API owner
+  documentation, propose a non-duplicated domain model that begins with
+  everyday economic resources and later expands to market instruments through
+  auditable operations, and plan the SST boundary before any runtime or
+  child-repository mutation.
+
+expected_outcome: >
+  A reviewable proposal distinguishes household resources, market instruments,
+  operations, cash-flow transactions and derived projections; makes useful
+  consumption, waste and cost of delay explainable; preserves one canonical
+  backend identity; and atomizes subsequent implementation requests.
+
+initial_scope:
+  solution: "finanzas-personales"
+  services:
+    - "finanzas-personales-backend"
+  external_consumers:
+    - "sst-fend"
+    - "sst-bend"
+  include_optional_services: false
+
+constraints:
+  - "Do not catalog the Alphinance snapshot as a runtime service or duplicate backend binding."
+  - "Do not mutate finanzas-personales or SST child repositories in this request."
+  - "Do not redefine account membership, auth, RBAC or financial-data retention."
+  - "Do not promote investment advice, brokerage execution or enterprise treasury scope."
+
+decision:
+  status: "accepted-for-domain-contract"
+  approver: "4uentes"
+  approved_at: "2026-08-22"
+  approval_text: "ok avancemos"

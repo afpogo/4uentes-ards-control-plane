@@ -1,0 +1,43 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-HPT-0012"
+title: "Scaffold the Python Phinance-API microservice baseline"
+status: "inbox"
+created_at: "2026-08-22"
+requester: "4uentes"
+
+business_context: >
+  CR-HPT-0011 adopted Python and FastAPI for the independently deployable
+  Phinance-API. The owner repository still has no executable API, so the next
+  auditable cut must establish a small runtime and its quality boundary before
+  financial behavior, persistence or SST integration are introduced.
+
+requested_change: >
+  Create the minimal executable FastAPI scaffold in the
+  finanzas-personales/backend owner with health, readiness and OpenAPI
+  surfaces, automated tests, owner documentation and a reproducible HTTP QA
+  harness.
+
+expected_outcome: >
+  Phinance-API starts locally as the existing
+  finanzas-personales-backend logical service, exposes only operational
+  bootstrap endpoints, and can be validated automatically and manually without
+  claiming financial-domain or SST integration readiness.
+
+initial_scope:
+  solution: "finanzas-personales"
+  services:
+    - "finanzas-personales-backend"
+  include_optional_services: false
+
+constraints:
+  - "Do not add persistence, migrations, financial-domain endpoints, OCR, AI, queues or object storage."
+  - "Do not modify SST repositories, routing, identity contracts or infrastructure."
+  - "Do not create a new logical service identity."
+  - "Readiness must describe scaffold process readiness, not business or dependency readiness."
+
+decision:
+  status: "accepted-for-execution"
+  approver: "4uentes"
+  approved_at: "2026-08-22"
+  approval_text: "avancemos al commit y continuemos con el siguiente CR"

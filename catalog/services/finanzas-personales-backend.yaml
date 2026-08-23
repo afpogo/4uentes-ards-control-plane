@@ -20,12 +20,12 @@ local_binding_evidence:
     observed_at: 2026-07-12
     path_record: inventory/evidence/git/finanzas-personales.md
 package:
-  name: TODO
-  runtime: planned-node-api
+  name: phinance-api
+  runtime: python-3.13-fastapi
   stack:
-    - Node.js TODO
-    - TypeScript TODO
-    - Python internal services TODO
+    - Python >=3.13,<3.14
+    - FastAPI >=0.116,<1.0
+    - PostgreSQL topology TODO
 ards:
   kind: backend-api
   status: product-draft
@@ -34,19 +34,26 @@ ards:
   docs_overview: true
   docs_ai_policy: true
 validation:
-  check_command: TODO
+  check_command: ".venv/Scripts/python.exe -m pytest && node scripts/check-contracts.js"
 orchestrator_link_contract:
   required: true
-  status: pending-child-adoption
+  status: adopted
   rule_ref: "docs/cross-repo/child-repo-orchestrator-link-rule.md"
   template_ref: "templates/child-orchestrator-link-rule.md"
+  canonical_policy_ref: "4uentes-ards-core:docs/policies/control-plane-link-policy.md"
   metadata_key: "orchestrator_link"
+  canonical_metadata_key: "control_plane_link"
+  alias_mapping: "orchestrator_link maps to control_plane_link during control-plane compatibility"
+  owner_ref: "specs/integration/control-plane-link.yaml"
   capability_state_map: "state/capability-links.yaml"
 integrations:
   produces:
     - finanzas-personales-backend-api
+  consumed_by:
+    - sst-fend
 notes:
   - Backend ARDS/SDD service root inside the finanzas-personales monorepo.
-  - Python, OCR and AI components remain internal draft boundaries until independent runtime evidence exists.
-  - HTTP QA harness adoption and an executable validation route are pending CR-HPT-0002.
-
+  - Python and FastAPI are the approved and executable scaffold baseline under CR-HPT-0012.
+  - OCR, document storage, queues and AI remain deferred to independently governed requests.
+  - CR-HPT-0002 adopted control-plane linkage, executable validation and the canonical versioned .http QA harness.
+  - SST account membership remains authoritative outside this service; finance ownership is scoped by validated account_id plus stable subject.

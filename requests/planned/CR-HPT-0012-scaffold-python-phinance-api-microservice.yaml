@@ -1,0 +1,161 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-HPT-0012"
+title: "Scaffold the Python Phinance-API microservice baseline"
+status: "planned"
+source_request: "requests/inbox/CR-HPT-0012-scaffold-python-phinance-api-microservice.yaml"
+created_at: "2026-08-22"
+requester: "4uentes"
+
+summary: >
+  Add the first executable Python/FastAPI process with operational endpoints,
+  tests and reproducible HTTP QA while preserving every unresolved domain,
+  identity, storage and deployment boundary as a later decision.
+
+control_plane_context:
+  initiative_id: "INIT-HPT-0002"
+  predecessor_request_ids:
+    - "CR-HPT-0011"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "finanzas-personales-backend"
+      via: "first executable owner runtime"
+      ards_kind: "backend-api"
+  affected_ards:
+    - "owner-api"
+    - "owner-architecture"
+    - "owner-policy-adoption"
+    - "owner-task-plan"
+  risks:
+    - id: "BOOTSTRAP_GROWS_INTO_UNAPPROVED_DOMAIN_RUNTIME"
+      severity: "high"
+    - id: "READINESS_OVERCLAIMS_EXTERNAL_DEPENDENCIES"
+      severity: "medium"
+    - id: "HTTP_QA_IS_NOT_REPRODUCIBLE"
+      severity: "medium"
+
+risk:
+  level: "high"
+  score: 7
+  drivers:
+    - "cross-repo runtime mutation"
+    - "sensitive financial owner"
+    - "first executable HTTP contract"
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "owner runtime creation"
+    - "policy adoption"
+    - "manual and automated QA"
+
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5-high"
+  reason: >
+    A first runtime in a sensitive financial owner is architecture-sensitive
+    even though this request deliberately keeps behavior minimal.
+
+subagent_deployment_plan:
+  required: false
+  parallelizable: false
+  roles: []
+  fallback: "Execute sequentially because the owner worktree is dirty and the scaffold is one atomic vertical cut."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  approval_source: "User requested continuation with the next CR on 2026-08-22."
+  allowed_window: "manual-current-session"
+  branch_strategy: "existing-dirty-owner-worktree-preserve-pre-existing-changes"
+  child_repo_mutation_allowed: true
+  child_repo_mutation_target:
+    service_ids:
+      - "finanzas-personales-backend"
+    paths:
+      - "backend/pyproject.toml"
+      - "backend/src/phinance_api/"
+      - "backend/tests/"
+      - "backend/qa/http/"
+      - "backend/specs/policies/"
+      - "backend/docs/"
+  control_plane_mutation_allowed: true
+  runtime_implementation_allowed: true
+  dependency_changes_allowed: true
+  migration_changes_allowed: false
+  infrastructure_changes_allowed: false
+  sst_child_mutation_allowed: false
+  jira_write_allowed: false
+  implementation_boundary: >
+    Create only the FastAPI process, configuration metadata, health/readiness,
+    OpenAPI, tests and a versioned local HTTP harness. No database, auth,
+    business routes, container, deployment or SST consumer work is authorized.
+
+owner_documentation:
+  required: true
+  status: "planned"
+  owner_repo: "finanzas-personales"
+  planned_owner_docs:
+    - "docs/00-overview.md"
+    - "docs/api/README.md"
+    - "docs/architecture/README.md"
+    - "docs/policies/README.md"
+    - "docs/tasks/README.md"
+    - "specs/api/00-index.yaml"
+    - "specs/integration/policies.yaml"
+    - "specs/policies/http-qa-harness-adoption.yaml"
+  owner_refs:
+    - repo: "finanzas-personales/backend"
+      paths:
+        - "docs/00-overview.md"
+        - "docs/api/README.md"
+        - "docs/architecture/README.md"
+        - "docs/policies/README.md"
+        - "docs/tasks/README.md"
+        - "specs/api/00-index.yaml"
+        - "specs/integration/policies.yaml"
+        - "specs/policies/http-qa-harness-adoption.yaml"
+
+policy_application:
+  architecture_boundary: >
+    Operational endpoints do not imply financial, identity, storage or
+    deployment contracts. Those remain TODO and request-driven.
+  owner_documentation_authority: >
+    Runtime and HTTP behavior are documented in the backend owner repository;
+    this control plane records authorization and evidence only.
+  task_atomization: >
+    Bootstrap, domain implementation, persistence, SST integration and document
+    intake remain separate requests.
+  human_documentation_language: >
+    Human Markdown remains Spanish; stable technical identifiers and schemas
+    may remain in controlled technical English.
+  http_qa_harness: >
+    Adopt the core-owned policy with an owner manifest and version a
+    reproducible local harness covering every executable bootstrap endpoint.
+
+validation:
+  required_checks:
+    - "finanzas-personales: Python automated tests"
+    - "finanzas-personales: node backend/scripts/check-contracts.js"
+    - "finanzas-personales: HTTP QA harness against a live local process"
+    - "finanzas-personales: git diff --check"
+    - "4uentes-orchestor: npm run check"
+    - "4uentes-orchestor: git diff --check"
+  evidence_required:
+    - "authorization_and_scope"
+    - "changed_files_summary"
+    - "manual_qa_partial"
+    - "validation_results"
+
+decision:
+  status: "approved-for-scaffold-execution"
+  approver: "4uentes"
+  approved_at: "2026-08-22"

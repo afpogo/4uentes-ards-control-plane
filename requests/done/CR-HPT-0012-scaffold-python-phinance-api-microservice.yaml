@@ -1,0 +1,79 @@
+schema_version: "1.0"
+phase: 4
+id: "CR-HPT-0012"
+title: "Scaffold the Python Phinance-API microservice baseline"
+status: "done"
+source_request: "requests/inbox/CR-HPT-0012-scaffold-python-phinance-api-microservice.yaml"
+planned_request: "requests/planned/CR-HPT-0012-scaffold-python-phinance-api-microservice.yaml"
+started_at: "2026-08-22"
+closed_at: "2026-08-22"
+requester: "4uentes"
+
+summary: >
+  Created the first executable Python/FastAPI Phinance-API scaffold with
+  process health, dependency-free readiness, generated OpenAPI, automated
+  tests and a versioned live HTTP harness. No finance, identity, persistence,
+  OCR or deployment behavior was introduced.
+
+execution:
+  child_repo_mutation_allowed: true
+  runtime_implementation_allowed: true
+  migration_changes_allowed: false
+  infrastructure_changes_allowed: false
+  sst_child_mutation_allowed: false
+  jira_write_allowed: false
+
+owner_documentation:
+  required: true
+  status: "satisfied"
+  owner_repo: "finanzas-personales"
+  owner_commit: "055d9c9"
+  updated_owner_docs:
+    - "docs/api/README.md"
+    - "docs/architecture/README.md"
+    - "docs/policies/README.md"
+    - "docs/tasks/README.md"
+    - "specs/00-index.yaml"
+    - "specs/api/00-index.yaml"
+    - "specs/integration/policies.yaml"
+    - "specs/policies/00-index.yaml"
+    - "specs/policies/http-qa-harness-adoption.yaml"
+  evidence_refs:
+    - "evidence/requests/CR-HPT-0012/authorization-and-scope.md"
+    - "evidence/requests/CR-HPT-0012/changed-files-summary.md"
+    - "evidence/requests/CR-HPT-0012/manual-qa-partial.md"
+    - "evidence/requests/CR-HPT-0012/validation-results.md"
+
+runtime_baseline:
+  stable_service_id: "finanzas-personales-backend"
+  product_name: "Phinance-API"
+  python: ">=3.13,<3.14"
+  fastapi: ">=0.116,<1.0"
+  executable_routes:
+    - "GET /health"
+    - "GET /ready"
+    - "GET /openapi.json"
+    - "GET /docs"
+  policy_adoption: "http-qa-harness-policy"
+
+validation:
+  status: "passed"
+  required_checks:
+    - "finanzas-personales: .venv/Scripts/python.exe -m pytest (3 passed)"
+    - "finanzas-personales: node scripts/check-contracts.js"
+    - "finanzas-personales: python qa/http/smoke.py against live local API"
+    - "finanzas-personales: git diff --check"
+    - "4uentes-orchestor: npm run check"
+    - "4uentes-orchestor: git diff --check"
+  evidence_refs:
+    - "evidence/requests/CR-HPT-0012/manual-qa-partial.md"
+    - "evidence/requests/CR-HPT-0012/validation-results.md"
+
+follow_up:
+  candidate_request_id: "CR-HPT-0008"
+  objective: "Implement the first approved everyday economic-resource API slice after its domain contract is accepted."
+
+decision:
+  status: "closed"
+  approver: "4uentes"
+  blocker: "none"

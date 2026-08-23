@@ -1,21 +1,20 @@
 schema_version: "1.0"
 phase: 2
 id: "CR-HPT-0003"
-title: "Finanzas personales frontend-backend boundary reconciliation"
+title: "Finanzas personales SST boundary and account-scope reconciliation"
 status: "planned"
 source_request: "requests/inbox/CR-HPT-0003-finanzas-personales-frontend-backend-boundary-reconciliation.yaml"
 created_at: "2026-07-12"
 requester: "4uentes"
 
 summary: >
-  Define the producer/consumer contract between frontend-web and backend-api,
-  document or resolve the direct-consumption exception, and keep proposed
-  Python/OCR/AI runtimes internal until independent service evidence exists.
+  Reconcile the withdrawn standalone frontend with sst-fend consumption, define
+  the protected SST-to-Phinance boundary, and require finance ownership scoped
+  by validated SST account plus stable subject.
 
 initial_scope:
   solution: "finanzas-personales"
   services:
-    - "finanzas-personales-frontend"
     - "finanzas-personales-backend"
   include_optional_services: false
 
@@ -31,19 +30,20 @@ impact_analysis:
     - service_id: "finanzas-personales-backend"
       via: "producer outbound capability and API ownership"
       ards_kind: "backend-api"
-    - service_id: "finanzas-personales-frontend"
-      via: "consumer inbound capability and architecture exception"
+    - service_id: "sst-fend"
+      via: "external consumer owned by the SST solution"
       ards_kind: "frontend-web"
   affected_ards:
     - "capability-outbound"
     - "capability-inbound"
-    - "architecture-exception"
+    - "cross-solution-boundary"
+    - "account-scope-isolation"
     - "owner-documentation"
     - "validation"
   capabilities:
     - "finanzas-personales-backend-api"
   risks:
-    - id: "DIRECT_BACKEND_API_EXCEPTION_UNGOVERNED"
+    - id: "SST_HPT_TRUST_BOUNDARY_UNSETTLED"
       severity: "high"
     - id: "AUTHORIZATION_BOUNDARY_UNDEFINED"
       severity: "high"
@@ -54,7 +54,6 @@ required_context:
   - "4uentes-ards-core: standard/ARDS_KIND_MODEL_v1.md"
   - "4uentes-ards-core: standard/ARDS_FRONTEND_WEB_CORE_PROFILE_v1.md"
   - "4uentes-ards-core: standard/ARDS_BACKEND_API_CORE_PROFILE_v1.md"
-  - "finanzas-personales: frontend/specs/capabilities/inbound/00-index.yaml"
   - "finanzas-personales: backend/specs/capabilities/outbound/00-index.yaml"
   - "finanzas-personales: backend/specs/api/00-index.yaml"
 
@@ -70,7 +69,8 @@ task_weight:
   classification: "complex-high-risk-task"
   risk_level: "high"
   drivers:
-    - "architecture exception decision"
+    - "cross-solution trust-boundary decision"
+    - "multi-account ownership isolation"
     - "security and data ownership"
     - "producer-consumer compatibility"
 
@@ -98,12 +98,12 @@ execution:
   child_repo_mutation_allowed: true
   child_repo_mutation_target:
     service_ids:
-      - "finanzas-personales-frontend"
       - "finanzas-personales-backend"
   owner_documentation_required: true
   implementation_boundary: >
-    Update only owner architecture, API and capability contracts. Do not build a
-    BFF, choose auth implementation, expose Python publicly or implement runtime.
+    Update owner architecture, API and capability contracts plus the related
+    control-plane topology. Do not build a BFF, choose auth implementation,
+    expose Python publicly or implement runtime.
 
 owner_documentation:
   required: true
@@ -112,14 +112,9 @@ owner_documentation:
   planned_owner_docs:
     - "docs/architecture/README.md"
     - "docs/api/README.md"
-    - "specs/capabilities/inbound/00-index.yaml"
     - "specs/capabilities/outbound/00-index.yaml"
     - "specs/api/00-index.yaml"
   owner_refs:
-    - repo: "finanzas-personales/frontend"
-      paths:
-        - "docs/architecture/README.md"
-        - "specs/capabilities/inbound/00-index.yaml"
     - repo: "finanzas-personales/backend"
       paths:
         - "docs/api/README.md"
@@ -138,7 +133,6 @@ jira:
 
 validation:
   required_checks:
-    - "finanzas-personales frontend: owner ARDS/SDD validation route"
     - "finanzas-personales backend: owner ARDS/SDD and HTTP contract validation route"
     - "4uentes-orchestor: npm.cmd run check"
   evidence_required:
@@ -148,6 +142,6 @@ validation:
     - "validation_results"
 
 decision:
-  status: "planned-awaiting-architecture-owner-approval"
-  approver: "TODO"
-  blocker: "technical owner must approve the architecture exception or BFF decision"
+  status: "approved-for-local-contract-reconciliation"
+  approver: "4uentes"
+  blocker: "runtime remains blocked until the protected SST PrincipalContext or membership-verification mechanism is approved"

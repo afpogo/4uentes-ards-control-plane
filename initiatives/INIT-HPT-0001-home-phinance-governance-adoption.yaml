@@ -3,18 +3,18 @@ kind: "initiative"
 id: "INIT-HPT-0001"
 title: "Home Phinance Ticket Governance Adoption"
 status: "active"
-updated_at: "2026-07-12"
+updated_at: "2026-08-22"
 owner_repository: "4uentes-orchestor"
 objective: >
   Onboard the finanzas-personales monorepo into the 4uentes ARDS/SDD
-  control-plane, adopt the current core governance contract in its frontend and
-  backend service roots, and make the frontend-backend boundary explicit before
-  product runtime implementation.
+  control-plane, adopt the current core governance contract in its backend
+  service root, and make the SST consumer, identity and account-scope boundary
+  explicit before product runtime implementation.
 initial_hypothesis: >
-  The repository already contains separate frontend-web and backend-api ARDS
-  surfaces, but lacks stable control-plane identities, policy manifests,
-  control-plane linkage, executable validation, and an explicit architecture
-  exception for direct backend API consumption.
+  The repository was onboarded with separate frontend-web and backend-api ARDS
+  surfaces. The product direction now withdraws the standalone frontend in
+  favor of sst-fend and requires reconciliation of control-plane topology,
+  policy adoption, executable validation and trusted SST account scope.
 source_evidence_refs:
   - "evidence/initiatives/INIT-HPT-0001/intake-analysis.md"
   - "evidence/initiatives/INIT-HPT-0001/jira-preflight.md"
@@ -37,12 +37,12 @@ candidate_change_requests:
     execution_order: "first"
   - id: "CR-HPT-0002"
     title: "Finanzas personales child governance adoption"
-    status: "planned"
+    status: "done"
     execution_order: "after-CR-HPT-0001"
   - id: "CR-HPT-0003"
     title: "Finanzas personales frontend-backend boundary reconciliation"
-    status: "planned"
-    execution_order: "after-CR-HPT-0002"
+    status: "done"
+    execution_order: "completed-out-of-order-to-resolve-topology-and-preflight-drift"
 discovered_change_requests: []
 tracking:
   jira:
@@ -79,5 +79,4 @@ policy_application:
     reconciliation remain separate CRs with independent validation.
 open_gaps:
   - "Resolve technical owner and release responsibility in the child repo."
-  - "Define executable frontend and backend validation routes."
-  - "Decide or document the direct frontend-web to backend-api exception."
+  - "Finalize the protected SST PrincipalContext or membership verification mechanism."
