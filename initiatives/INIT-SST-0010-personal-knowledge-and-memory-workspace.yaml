@@ -39,6 +39,7 @@ source_evidence_refs:
   - "evidence/requests/CR-SST-0210/post-merge-readback-2026-08-23.md"
   - "evidence/requests/CR-SST-0193/normal-identity-path-qa-2026-08-23.md"
   - "evidence/requests/CR-SST-0194/execution-start-2026-08-23.md"
+  - "evidence/requests/CR-SST-0194/implementation-plan-2026-08-23.md"
 model_refs:
   - "specs/initiatives/initiative-model.yaml"
   - "docs/requests/initiative-model.md"
