@@ -58,7 +58,7 @@ implementation_slice:
 
 owner_documentation:
   required: true
-  status: "published-in-owner-draft"
+  status: "published-and-validated-in-owner-draft"
   owner_repos: ["sst-fend"]
   required_surfaces:
     - "specs/integrations/sst-chat-retention-v1.yaml"
@@ -73,13 +73,14 @@ validation:
   required_control_plane_check: "npm run check"
 
 implementation_readback:
-  status: "owner-pr-draft-awaiting-rendered-qa"
+  status: "owner-pr-draft-ready-for-review"
   owner_branch: "feat/CR-SST-0206/chat-retention-consent-ux"
-  owner_commit: "890af538de58ba2d53ca2a2acf474847d721f5ee"
+  owner_commit: "e69521beec10f88bbb74cedceed5c0e788f69e67"
   owner_pull_request: "https://github.com/afpogo/sst-fend/pull/17"
-  owner_checks: "local npm run check passed: policy and CSS gates, lint with 0 errors, production build, 36 suites and 240 tests; GitHub build-publish-update passed in 5m23s"
-  rendered_qa: "pending: integrated browser initialization failed in the execution environment; required before lifecycle closure"
+  owner_checks: "local npm run check passed after visual remediation: policy and CSS gates, lint with 0 errors, production build, 36 suites and 240 tests; GitHub build-publish-update passed in 5m36s"
+  rendered_qa: "passed at 1440x1000 and 390x844: no horizontal overflow, interactive targets at least 44px, accessible message label and zero runtime exceptions"
   deployment: "not performed; PR event builds but does not push an image or update infra"
+  merge_authorization: "pending explicit user authorization; PR remains draft"
 
 decision:
   status: "approved-running"
