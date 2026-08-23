@@ -59,7 +59,7 @@ tracking:
     project_key: "SST"
     issue_type: "Epic"
     issue_key: "SST-86"
-    status_observation: "Tareas por hacer; post-PR35 facts corrected by historical batch JIRA-SEC-PREPROD-02; collided CR-SST-0204 label is under CR-SST-0213 reconciliation"
+    status_observation: "Tareas por hacer; post-PR35 facts and correction identity reconciled by CR-SST-0213 with Jira readback PASS"
     observed_at: "2026-08-23"
     write_authorized: false
     request_issue_mirrors:
@@ -69,7 +69,7 @@ tracking:
       CR-SST-0206: "SST-116"
       CR-SST-0207: "SST-117"
       CR-SST-0211: null
-    last_write_batch: "consumed-2026-08-22"
+    last_write_batch: "JIRA-SEC-PREPROD-03-consumed-2026-08-23"
 boundaries:
   control_plane_role: "lifecycle, coordination and evidence only"
   owner_documentation_authority: "functional child repositories"
@@ -99,7 +99,6 @@ security_qualification:
   superseding_current_contract: "CR-SST-0180"
 gaps:
   - "CR-SST-0178 remains running for CR-SST-0200 signup copy, registration continuity and logout teardown retests."
-  - "SST-86 contains the collided CR-SST-0204 correction label; replacing it with CR-SST-0213 requires a new enumerated Jira write authorization."
   - "User RAG, stakeholder RAG, multi-session adoption and personal memory remain separate lifecycles and are not absorbed here."
   - "CR-SST-0202 completed the control-plane contract; CR-SST-0204 through CR-SST-0207 require their own execution approvals before owner mutation or integrated QA."
   - "CR-SST-0211 closes the missing Auth BFF owner lifecycle; it depends on CR-SST-0204 and blocks CR-SST-0206 plus integrated retention QA."
@@ -121,8 +120,10 @@ namespace_reconciliation:
   evidence_ref: "evidence/requests/CR-SST-0208/post-pr37-canonical-readback-2026-08-22.md"
 jira_correction_identity_reconciliation:
   request_id: "CR-SST-0213"
-  status: "running-local-reconciliation-jira-write-not-authorized"
+  status: "done-jira-readback-pass"
   historical_batch_id: "JIRA-SEC-PREPROD-02"
+  correction_batch_id: "JIRA-SEC-PREPROD-03"
+  correction_batch_authorization_status: "consumed"
   collided_label: "CR-SST-0204"
   canonical_cr_sst_0204_intent: "Bend chat retention and cache semantics"
-  evidence_ref: "evidence/requests/CR-SST-0213/identity-reconciliation-2026-08-23.md"
+  evidence_ref: "evidence/requests/CR-SST-0213/jira-readback.md"

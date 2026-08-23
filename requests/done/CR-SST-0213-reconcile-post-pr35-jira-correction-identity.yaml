@@ -1,27 +1,29 @@
 schema_version: "1.0"
-phase: 3
+phase: 4
 id: "CR-SST-0213"
 title: "Reconcile the post-PR35 Jira correction identity"
-status: "running"
+status: "done"
 source_request: "requests/inbox/CR-SST-0213-reconcile-post-pr35-jira-correction-identity.yaml"
 planned_request: "requests/planned/CR-SST-0213-reconcile-post-pr35-jira-correction-identity.yaml"
 created_at: "2026-08-23"
 started_at: "2026-08-23"
+completed_at: "2026-08-23"
 requester: "4uentes"
 execution:
-  status: "jira-batch-approved-pending-canonical-publication"
+  status: "complete-readback-pass"
   pull_request: 39
   historical_batch_id: "JIRA-SEC-PREPROD-02"
   collided_execution_label: "CR-SST-0204"
   canonical_request_id: "CR-SST-0213"
   child_repo_mutation_performed: false
-  jira_write_performed_in_this_reconciliation: false
-  proposed_jira_batch_id: "JIRA-SEC-PREPROD-03"
-  proposed_jira_batch_authorized: true
+  jira_write_performed_in_this_reconciliation: true
+  write_batch_id: "JIRA-SEC-PREPROD-03"
+  write_batch_authorized: true
+  write_batch_authorization_status: "consumed"
   jira_batch_approval_source: "User explicitly authorized JIRA-SEC-PREPROD-03 on 2026-08-23."
   production_mutation_performed: false
 workspace_isolation:
-  branch: "agent/cr-sst-0213-jira-identity-correction"
+  branch: "agent/cr-sst-0213-jira-readback-closure"
   worktree: "worktrees/system-feature-studies"
   base_ref: "origin/main"
 owner_documentation:
@@ -34,6 +36,12 @@ validation:
   request_identity_check: "PASS with frozen historical CR-SST-0016 warning only"
   initiative_check: "PASS"
   diff_check: "PASS"
+  jira_write_result: "PASS"
+  jira_readback: "PASS"
+result:
+  SST-86: "sync line updated to CR-SST-0213 and one identity correction comment added; protected fields unchanged"
+  SST-89: "sync line updated to CR-SST-0213 and one identity correction comment added; protected fields unchanged"
+  SST-92: "sync line updated to CR-SST-0213 and one identity correction comment added; parent SST-89 and protected fields unchanged"
 evidence_refs:
   - "evidence/requests/CR-SST-0213/identity-preflight-2026-08-23.md"
   - "evidence/requests/CR-SST-0213/identity-reconciliation-2026-08-23.md"
@@ -46,7 +54,10 @@ evidence_refs:
   - "evidence/requests/CR-SST-0213/jira-identity-correction-proposed-payloads.md"
   - "evidence/requests/CR-SST-0213/jira-correction-preflight-validation.md"
   - "evidence/requests/CR-SST-0213/jira-write-batch-authorization.md"
+  - "evidence/requests/CR-SST-0213/jira-write-result.md"
+  - "evidence/requests/CR-SST-0213/jira-readback.md"
+  - "evidence/requests/CR-SST-0213/closure-validation.md"
 decision:
-  status: "approved-running"
+  status: "complete"
   approver: "4uentes"
   decided_at: "2026-08-23"
