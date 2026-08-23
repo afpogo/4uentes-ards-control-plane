@@ -1,0 +1,66 @@
+schema_version: "1.0"
+phase: 4
+id: "CR-SST-0204"
+title: "Implement Bend chat retention and Redis cache semantics"
+status: "done"
+source_request: "requests/inbox/CR-SST-0204-bend-chat-retention-and-cache.yaml"
+planned_request: "requests/planned/CR-SST-0204-bend-chat-retention-and-cache.yaml"
+running_request: "requests/running/CR-SST-0204-bend-chat-retention-and-cache.yaml"
+created_at: "2026-08-22"
+started_at: "2026-08-22"
+completed_at: "2026-08-23"
+requester: "4uentes"
+depends_on: ["CR-SST-0202"]
+control_plane_context:
+  initiative_id: "INIT-SST-0007"
+  parent_request_id: "CR-SST-0202"
+  downstream_request_ids: ["CR-SST-0211", "CR-SST-0206", "CR-SST-0207"]
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  jira_issue_key: "SST-114"
+  jira_write_allowed: false
+scope:
+  owner_repo_modified: "sst-bend"
+  auth_modified: false
+  frontend_modified: false
+  infra_gitops_modified: false
+  deployment_modified: false
+  production_modified: false
+publication:
+  owner_branch: "feat/CR-SST-0204/chat-retention-contract"
+  base_ref: "origin/develop@6ee18b3"
+  head_commit: "7b4dc9f"
+  pull_request: "afpogo/sst-bend#21"
+  merge_commit: "f58e0a9"
+  merged_to: "develop"
+  capability_status: "ready-for-consumer"
+  feature_flag_default: false
+validation:
+  postgres_migration_up_down_up: "PASS"
+  legacy_backfill: "PASS"
+  redis_available_smoke: "PASS"
+  redis_unavailable_fail_open_smoke: "PASS"
+  owner_check: "PASS"
+  owner_build: "PASS"
+  github_sst_node_18: "PASS"
+  github_sst_node_20: "PASS"
+  github_build_publish_update: "PASS"
+  control_plane_check: "PASS"
+decision:
+  status: "approved-closed-published"
+  approver: "4uentes"
+  decided_at: "2026-08-23"
+evidence_refs:
+  - "evidence/requests/CR-SST-0204/execution-start-2026-08-22.md"
+  - "evidence/requests/CR-SST-0204/owner-contract-checkpoint-2026-08-22.md"
+  - "evidence/requests/CR-SST-0204/runtime-checkpoint-2026-08-22.md"
+  - "evidence/requests/CR-SST-0204/cache-pagination-checkpoint-2026-08-22.md"
+  - "evidence/requests/CR-SST-0204/integrated-validation-2026-08-22.md"
+  - "evidence/requests/CR-SST-0204/publication-closure-2026-08-23.md"
+closure:
+  status: "complete-owner-published"
+  next_request_id: "CR-SST-0211"
+  limits:
+    - "Closure does not authorize deployment or feature-flag enablement."
+    - "Closure does not authorize Jira writes."
+    - "CR-SST-0211 must advance its own lifecycle before 4uentes-auth mutation."
