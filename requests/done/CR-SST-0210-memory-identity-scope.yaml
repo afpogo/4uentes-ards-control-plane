@@ -1,0 +1,81 @@
+schema_version: "1.0"
+phase: 4
+id: "CR-SST-0210"
+title: "Define personal memory identity and scope"
+status: "done"
+source_request: "requests/inbox/CR-SST-0210-memory-identity-scope.yaml"
+planned_request: "requests/planned/CR-SST-0210-memory-identity-scope.yaml"
+running_request: "requests/running/CR-SST-0210-memory-identity-scope.yaml"
+created_at: "2026-08-23"
+started_at: "2026-08-23"
+completed_at: "2026-08-23"
+requester: "4uentes"
+depends_on: ["CR-SST-0192"]
+unblocks: ["CR-SST-0193"]
+
+control_plane_context:
+  initiative_id: "INIT-SST-0010"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  jira_issue_key: null
+  jira_write_allowed: false
+
+publication:
+  owner_repo: "sst-bend"
+  owner_branch: "feat/CR-SST-0210/memory-identity-scope"
+  base_ref: "origin/develop@357ac2a"
+  head_commit: "9d166fcb7a3ed71fe1bfb96e4c4f4fa3d8edd56c"
+  pull_request: "https://github.com/afpogo/sst-bend/pull/24"
+  merge_commit: "8e2eeb3f0285ac33502889e400f2f3a2ed4abc2b"
+  merged_to: "develop"
+  capability_status: "draft-pending-consumer-contract"
+
+implemented_contract:
+  auth_authority: "verified access-token subject and active session"
+  bend_authority: "consolidated user, active membership, account and explicit tenant"
+  application_id: "sst"
+  caller_and_producer_separate: true
+  service_tokens_on_user_routes: "forbidden"
+  tenant_backfill: "none"
+  proposal_adoption: "explicit user acceptance remains required"
+
+owner_documentation:
+  required: true
+  status: "satisfied"
+  owner_repo: "sst-bend"
+  normative_contract: "specs/api/user-memory-identity-scope.yaml"
+  derived_doc: "docs/api/28-user-memory-identity-scope.md"
+
+validation:
+  user_memory_suite: "PASS"
+  owner_build: "PASS"
+  yaml_and_diff_check: "PASS"
+  postgres_migration_up_down_up: "PASS"
+  postgres_memory_smoke: "PASS"
+  owner_check: "PASS with protected HTTP skips documented because no SMOKE_JWT was available"
+  github_sst_node_18: "PASS"
+  github_sst_node_20: "PASS"
+  github_build_publish_update: "PASS"
+  owner_readback: "head commit reachable from origin/develop@8e2eeb3f0285ac33502889e400f2f3a2ed4abc2b"
+  control_plane_check: "PASS after terminal lifecycle and initiative update"
+
+decision:
+  status: "approved-closed-owner-published"
+  approver: "4uentes"
+  decided_at: "2026-08-23"
+
+evidence_refs:
+  - "evidence/requests/CR-SST-0210/identity-scope-contract-v1.yaml"
+  - "evidence/requests/CR-SST-0210/implementation-plan.md"
+  - "evidence/requests/CR-SST-0210/execution-start-2026-08-23.md"
+  - "evidence/requests/CR-SST-0210/owner-pr-readback-2026-08-23.md"
+  - "evidence/requests/CR-SST-0210/post-merge-readback-2026-08-23.md"
+
+closure:
+  status: "complete-owner-published"
+  next_request_id: "CR-SST-0193"
+  limits:
+    - "Closure does not authorize deployment, feature-flag enablement or production data mutation."
+    - "Closure does not authorize Jira writes or mutation of Auth, chatbot, frontend or infra."
+    - "CR-SST-0193 must pass normal identity-path QA before CR-SST-0194 execution."
+    - "Internal service-to-service memory access remains outside this contract."
