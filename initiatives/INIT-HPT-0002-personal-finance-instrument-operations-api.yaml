@@ -27,6 +27,7 @@ source_evidence_refs:
   - "evidence/requests/CR-HPT-0005/policy-application-and-terminology-decisions.md"
   - "evidence/requests/CR-HPT-0013/principal-context-v1-analysis.md"
   - "evidence/requests/CR-HPT-0013/control-plane-reconciliation-2026-08-22.md"
+  - "evidence/requests/CR-SST-0212/execution-reconciliation-2026-08-23.md"
 model_refs:
   - "specs/initiatives/initiative-model.yaml"
   - "docs/requests/initiative-model.md"
@@ -43,10 +44,10 @@ candidate_change_requests:
     title: "Define the trusted SST PrincipalContext v1 contract for Phinance"
     status: "running-owner-contract-publication"
     execution_order: "after-CR-HPT-0008-and-before-any-trusted-adapter-runtime"
-  - id: "CR-SST-TODO"
-    title: "Adopt Phinance-API as an optional SST guest capability"
-    status: "candidate"
-    execution_order: "after-producer-contract-ready-for-consumer"
+  - id: "CR-SST-0212"
+    title: "Publish the SST-Phinance facade and Swagger tracking surface"
+    status: "running-awaiting-owner-publication-readback"
+    execution_order: "fail-closed-shell-before-trusted-provider-enablement"
 discovered_change_requests: []
 tracking:
   jira:
@@ -76,7 +77,7 @@ policy_application:
 open_gaps:
   - "Approve the operation taxonomy and the boundary between cash-flow transactions and investment operations."
   - "CR-HPT-0002 governance adoption and CR-HPT-0003 owner-scope documentation are complete; approve the executable PrincipalContext adapter boundary before business-data access."
-  - "The SST facade path is approved; publish its independently numbered lifecycle before treating the provider as available."
+  - "CR-SST-0212 now owns the SST facade lifecycle; its local owner commit must be published and read back before closure."
   - "Define technical, security, migration and operational owners."
   - "The owner contract exists in local commit ef4f8d0; remote publication and readback remain pending before CR-HPT-0013 can close."
   - "Implement the trusted SST PrincipalContext adapter under a separate approved request before enabling business access in a deployed environment."
