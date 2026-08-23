@@ -9,16 +9,18 @@ created_at: "2026-08-23"
 started_at: "2026-08-23"
 requester: "4uentes"
 execution:
-  status: "published-mergeable-clean-jira-identity-correction-pending"
+  status: "post-merge-readback-pass-jira-batch-approval-pending"
   pull_request: 39
   historical_batch_id: "JIRA-SEC-PREPROD-02"
   collided_execution_label: "CR-SST-0204"
   canonical_request_id: "CR-SST-0213"
   child_repo_mutation_performed: false
   jira_write_performed_in_this_reconciliation: false
+  proposed_jira_batch_id: "JIRA-SEC-PREPROD-03"
+  proposed_jira_batch_authorized: false
   production_mutation_performed: false
 workspace_isolation:
-  branch: "docs/system-feature-studies"
+  branch: "agent/cr-sst-0213-jira-identity-correction"
   worktree: "worktrees/system-feature-studies"
   base_ref: "origin/main"
 owner_documentation:
@@ -37,6 +39,11 @@ evidence_refs:
   - "evidence/requests/CR-SST-0213/changed-files-summary.md"
   - "evidence/requests/CR-SST-0213/validation-results.md"
   - "evidence/requests/CR-SST-0213/github-publication-readback.md"
+  - "evidence/requests/CR-SST-0213/post-merge-readback.md"
+  - "evidence/requests/CR-SST-0213/jira-identity-correction-preflight.md"
+  - "evidence/requests/CR-SST-0213/jira-identity-correction-plan-preview.json"
+  - "evidence/requests/CR-SST-0213/jira-identity-correction-proposed-payloads.md"
+  - "evidence/requests/CR-SST-0213/jira-correction-preflight-validation.md"
 decision:
   status: "approved-running"
   approver: "4uentes"
