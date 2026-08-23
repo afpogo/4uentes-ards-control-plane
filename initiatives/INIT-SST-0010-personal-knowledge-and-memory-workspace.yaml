@@ -40,6 +40,7 @@ source_evidence_refs:
   - "evidence/requests/CR-SST-0193/normal-identity-path-qa-2026-08-23.md"
   - "evidence/requests/CR-SST-0194/execution-start-2026-08-23.md"
   - "evidence/requests/CR-SST-0194/implementation-plan-2026-08-23.md"
+  - "evidence/requests/CR-SST-0194/owner-publication-readback-2026-08-23.md"
 model_refs:
   - "specs/initiatives/initiative-model.yaml"
   - "docs/requests/initiative-model.md"
@@ -188,13 +189,15 @@ progress:
     - "CR-SST-0197"
     - "CR-SST-0198"
   next_recommended_request: >
-    Execute CR-SST-0194 through isolated owner worktrees, beginning with the
-    minimum-mutation runtime and contract readback.
+    Complete the CR-SST-0194 integrated QA gate with real signed M2M tokens,
+    cited cross-session recall and a needs_user_review proposal before closure.
   current_runtime_status: >
     CR-SST-0193 canonical persistence and API are implemented, merged and
     validated in local/dev. CR-SST-0210 supplies the merged tenant,
     account-membership, active-session and application scope authority. The
     normal authenticated identity path passed and CR-SST-0193 is closed.
+    CR-SST-0194 Auth, Bend and chatbot owner contracts are merged with CI
+    green; their integrated real-service smoke remains pending.
   manual_qa_status: >
     Contract walkthrough, focused functional API QA and normal identity-path QA
     are complete. Conversational proposal and recall QA is active in
