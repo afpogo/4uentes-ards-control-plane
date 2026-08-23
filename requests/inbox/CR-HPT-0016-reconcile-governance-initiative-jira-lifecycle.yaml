@@ -1,0 +1,41 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-HPT-0016"
+title: "Reconcile the governance initiative and Jira lifecycle"
+status: "inbox"
+created_at: "2026-08-23"
+requester: "4uentes"
+business_context: >
+  INIT-HPT-0001 remains active and its Jira Epic HPT-1 plus child Tasks
+  HPT-2, HPT-3 and HPT-4 still report Por hacer. Canonical evidence shows
+  CR-HPT-0002 and CR-HPT-0003 as done, while CR-HPT-0001 has implementation
+  and validation evidence but still reports planned in its lifecycle.
+requested_change: >
+  Reconcile the canonical lifecycle of CR-HPT-0001 and INIT-HPT-0001 first,
+  then prepare a separately enumerated Jira batch that mirrors the validated
+  local states without treating Jira as authority.
+expected_outcome: >
+  CR-HPT-0001 has one evidence-backed canonical state, HPT-2 through HPT-4
+  mirror their validated request states, and HPT-1 reflects the still-active
+  initiative until its named ownership and protected SST account-context gaps
+  are closed.
+initial_scope:
+  initiative_id: "INIT-HPT-0001"
+  request_ids: ["CR-HPT-0001", "CR-HPT-0002", "CR-HPT-0003"]
+  jira_project: "HPT"
+  jira_issue_keys: ["HPT-1", "HPT-2", "HPT-3", "HPT-4"]
+constraints:
+  - "This reservation does not authorize Jira or child-repository writes."
+  - "Reconcile the local lifecycle before mirroring any terminal Jira status."
+  - "Keep HPT-1 open while INIT-HPT-0001 retains unresolved completion gaps."
+  - "Use one explicit enumerated Jira batch with live metadata, duplicate, parent and transition preflight."
+  - "Do not alter product runtime, authentication behavior or financial data."
+requested_next_step: >
+  Publish this minimal reservation to the canonical ref, refresh origin/main,
+  and create a clean execution worktree for the lifecycle reconciliation and
+  Jira batch proposal.
+decision:
+  status: "accepted-for-reservation"
+  approver: "4uentes"
+  approved_at: "2026-08-23"
+  approval_text: "ok avancemos con esto"
