@@ -1,0 +1,103 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0216"
+title: "Adopt the Phinance consumer principal in sst-bend"
+status: "planned"
+source_request: "requests/inbox/CR-SST-0216-adopt-phinance-consumer-principal.yaml"
+created_at: "2026-08-23"
+requester: "4uentes"
+summary: >
+  Implement and publish the SST-owned consumer half of the Phinance trust
+  boundary without activating financial forwarding.
+control_plane_context:
+  initiative_id: "INIT-HPT-0002"
+  provider_request: "CR-SST-0214"
+  facade_shell_request: "CR-SST-0212"
+  owner_contract_request: "CR-HPT-0013"
+  finance_profile_request: "CR-HPT-0014"
+impact_analysis:
+  required: true
+  affected_services: ["sst-bend"]
+  intentionally_unaffected_services: ["4uentes-auth", "finanzas-personales-backend", "sst-fend"]
+  observed_baseline:
+    owner_base: "sst-bend origin/develop@357ac2a"
+    dirty_owner_root: "preserved and ineligible for mutation"
+    facade_status: "executable shell, business forwarding disabled"
+    account_roles: ["owner", "member"]
+    existing_token_provider: "generic exact-tuple client_credentials implementation under SST chat"
+risk:
+  level: "high"
+  score: 9
+  drivers: ["FINANCIAL_AUTHORIZATION", "SERVICE_CREDENTIAL_USE", "CROSS_REPO_TRUST_BOUNDARY"]
+approved_design_proposal:
+  membership_precondition: "active membership resolved by sst-bend for the verified JWT subject and active account"
+  entitlement_mapping:
+    owner: ["finance:read", "finance:write", "finance:audit:read"]
+    member: ["finance:read"]
+    unknown_or_inactive: []
+  trusted_principal_fields:
+    stable_subject: "verified JWT sub"
+    validated_account_id: "resolved accountContext.accountId"
+    entitlements: "server-side mapping only"
+    request_id: "bounded server request identifier"
+    correlation_id: "bounded server correlation identifier"
+  forbidden_fields: ["finance_profile_id", "local_resource_owner_id"]
+  service_grant:
+    grant_type: "client_credentials"
+    client_id: "sst-bend"
+    audience: "phinance-api"
+    scope: "finance:invoke"
+  activation_rule: >
+    The producer and token acquisition may be tested independently, but the
+    facade continues returning PHINANCE_FACADE_UNAVAILABLE for business routes.
+execution:
+  child_repo_mutation_allowed: true
+  owner_repo: "sst-bend"
+  owner_base: "origin/develop@357ac2a"
+  runtime_implementation_allowed: true
+  dependency_changes_allowed: false
+  database_changes_allowed: false
+  infrastructure_changes_allowed: false
+  secret_value_changes_allowed: false
+  auth_repo_mutation_allowed: false
+  phinance_repo_mutation_allowed: false
+  jira_write_allowed: false
+atomized_execution:
+  - order: 1
+    id: "publish-running-lifecycle"
+    objective: "Publish exact owner scope and design before child mutation."
+  - order: 2
+    id: "implement-entitlement-and-principal-producer"
+    objective: "Map validated roles and construct a bounded trusted principal fail-closed."
+  - order: 3
+    id: "adopt-exact-service-grant"
+    objective: "Configure and test only phinance-api / finance:invoke token acquisition."
+  - order: 4
+    id: "owner-docs-and-negative-qa"
+    objective: "Publish owner capability/docs and validate spoofing, inactive/unknown membership and over-entitlement negatives."
+  - order: 5
+    id: "publish-readback-close"
+    objective: "Merge owner PR, verify develop and close the control-plane lifecycle."
+owner_documentation:
+  required: true
+  status: "planned"
+  owner_repo: "sst-bend"
+  planned_surfaces:
+    - "specs/api/phinance-facade.yaml"
+    - "specs/capabilities/outbound/sst-phinance-facade-v1.yaml"
+    - "docs/api/27-phinance-facade.md"
+    - "docs/capabilities/outbound/sst-phinance-facade-v1.md"
+validation:
+  required_checks:
+    - "sst-bend: npm run check"
+    - "focused positive and negative trusted-principal tests"
+    - "exact M2M tuple, cache and expiry tests"
+    - "facade shell still returns PHINANCE_FACADE_UNAVAILABLE"
+    - "no credential, token or finance_profile_id leakage"
+    - "4uentes-orchestor: npm run check"
+    - "git diff --check in both repositories"
+decision:
+  status: "approved-for-sst-bend-consumer-adoption"
+  approver: "4uentes"
+  approved_at: "2026-08-23"
+  approval_text: "ok autorizo jira, y avancemos con el proximo frente"

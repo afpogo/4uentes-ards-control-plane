@@ -1,0 +1,24 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-SST-0216"
+title: "Adopt the Phinance consumer principal in sst-bend"
+status: "running"
+source_request: "requests/inbox/CR-SST-0216-adopt-phinance-consumer-principal.yaml"
+planned_request: "requests/planned/CR-SST-0216-adopt-phinance-consumer-principal.yaml"
+started_at: "2026-08-23"
+requester: "4uentes"
+current_unit: "publish-running-lifecycle"
+completed_units: ["owner-baseline-readonly-preflight", "contract-and-role-vocabulary-review"]
+execution:
+  child_repo_mutation_allowed: true
+  owner_repo: "sst-bend"
+  owner_base: "origin/develop@357ac2a"
+  dirty_owner_root: "preserve"
+  product_runtime_mutation_allowed: true
+  business_proxy_activation_allowed: false
+  jira_write_allowed: false
+decision:
+  status: "running-consumer-adoption"
+  approver: "4uentes"
+  blocker: "publish this running lifecycle before creating the child worktree"
+
