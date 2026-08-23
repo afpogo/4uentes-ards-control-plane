@@ -53,6 +53,7 @@ known_change_requests:
   - "CR-HPT-0014"
   - "CR-SST-0212"
   - "CR-SST-0214"
+  - "CR-SST-0215"
 candidate_change_requests: []
 discovered_change_requests: []
 tracking:
@@ -60,8 +61,8 @@ tracking:
     role: "mirror"
     source_of_truth: false
     project_key: "HPT"
-    epic_key: "TODO"
-    write_status: "not-requested"
+    epic_key: "HPT-5"
+    write_status: "authorized-reconciliation-running"
 boundaries:
   mutates_child_repositories: false
   promotes_runtime: false
@@ -86,5 +87,5 @@ open_gaps:
   - "CR-SST-0212 published the fail-closed SST facade shell; trusted financial forwarding remains blocked by provider and consumer prerequisites."
   - "Define technical, security, migration and operational owners."
   - "CR-HPT-0014 published the owner-local profile resolver and fail-closed principal boundary; live trust remains blocked by provider, verifier and integrated QA requests."
-  - "CR-SST-0214 published the exact Auth-owned Phinance service grant on develop; consumer activation and Jira HPT-6 reconciliation remain separate."
+  - "CR-SST-0214 published the exact Auth-owned Phinance service grant on develop; consumer activation remains separate and HPT-6 reconciliation is running under CR-SST-0215."
   - "Define correction/reversal semantics and a verified link to financial transactions in a later owner request."

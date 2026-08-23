@@ -1,0 +1,58 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0215"
+title: "Reconcile the Phinance grant Jira mirror"
+status: "planned"
+source_request: "requests/inbox/CR-SST-0215-reconcile-phinance-grant-jira-mirror.yaml"
+created_at: "2026-08-23"
+requester: "4uentes"
+summary: >
+  Correct the existing HPT-6 Task in place so its identity and evidence mirror
+  canonical CR-SST-0214 while preserving its HPT-5 parent and Listo state.
+control_plane_context:
+  initiative_id: "INIT-HPT-0002"
+  initiative_epic: "HPT-5"
+  canonical_request_id: "CR-SST-0214"
+  primary_issue: "HPT-6"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+risk:
+  level: "medium"
+  score: 4
+  drivers: ["EXTERNAL_MIRROR_WRITE", "HISTORICAL_IDENTITY_CORRECTION"]
+execution:
+  control_plane_mutation_allowed: true
+  child_repo_mutation_allowed: false
+  product_runtime_mutation_allowed: false
+  jira_write_allowed: true
+  jira_write_batch: "evidence/requests/CR-SST-0215/jira-batch-authorization-2026-08-23.md"
+  authorization_window: "single manual execution on 2026-08-23"
+atomized_execution:
+  - order: 1
+    id: "publish-authorized-lifecycle"
+    objective: "Publish inbox, plan, running state and exact Jira batch before writing."
+  - order: 2
+    id: "execute-enumerated-edit"
+    objective: "Edit only summary, description and labels on HPT-6."
+  - order: 3
+    id: "readback-and-close"
+    objective: "Read back HPT-5/HPT-6, record evidence and close locally."
+jira:
+  project_key: "HPT"
+  initiative_epic: "HPT-5"
+  issue_key: "HPT-6"
+  issue_type: "Tarea"
+  parent_key: "HPT-5"
+  expected_status_before: "Listo"
+  expected_status_after: "Listo"
+  allowed_operations: ["edit-summary", "edit-description", "replace-labels", "readback"]
+  forbidden_operations: ["create", "delete", "reparent", "link", "comment", "transition"]
+required_checks:
+  - "git diff --check"
+  - "npm run check"
+decision:
+  status: "approved-for-enumerated-jira-write"
+  approver: "4uentes"
+  approved_at: "2026-08-23"
+  approval_text: "ok autorizo jira, y avancemos con el proximo frente"
+
