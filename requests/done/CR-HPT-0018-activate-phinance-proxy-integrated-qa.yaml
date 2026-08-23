@@ -1,0 +1,97 @@
+schema_version: "1.0"
+phase: 4
+id: "CR-HPT-0018"
+title: "Activate the SST Phinance proxy with integrated isolation QA"
+status: "done"
+source_request: "requests/inbox/CR-HPT-0018-activate-phinance-proxy-integrated-qa.yaml"
+planned_request: "requests/planned/CR-HPT-0018-activate-phinance-proxy-integrated-qa.yaml"
+started_at: "2026-08-23"
+closed_at: "2026-08-23"
+requester: "4uentes"
+
+summary: >
+  Published and read back the disabled-by-default SST-to-Phinance proxy, its
+  bounded trust boundary, owner documentation and integrated account-isolation
+  QA without activating an environment or changing secrets or infrastructure.
+
+execution:
+  owner_repo: "sst-bend"
+  owner_base: "origin/develop@8e2eeb3"
+  published_owner_commit: "b1ead8635347f8a32c8c8cf9424782ec4544f34f"
+  owner_merge_commit: "845491b20809403ef6146370493ff6b0c7456d6a"
+  owner_pull_request: "https://github.com/afpogo/sst-bend/pull/26"
+  child_repo_mutation_allowed: true
+  auth_and_phinance_usage: "read-only contract and integration QA"
+  deployment_activation_allowed: false
+  infrastructure_changes_allowed: false
+  secret_value_changes_allowed: false
+  jira_write_allowed: false
+  phinance_proxy_default: false
+
+implemented_slice:
+  activation_gate:
+    environment: "PHINANCE_PROXY_ENABLED"
+    default: false
+    disabled_behavior: "503 PHINANCE_FACADE_UNAVAILABLE without upstream invocation"
+  trusted_forwarding:
+    service_grant: "sst-bend -> phinance-api / finance:invoke"
+    stable_subject: "verified browser JWT sub"
+    account: "active SST membership"
+    entitlements: "owner read/write/audit-read; member read-only"
+    trace_authority: "server-generated request and correlation UUIDs"
+    browser_authorization_forwarded: false
+    browser_trusted_headers_forwarded: false
+  http_boundary:
+    allowed_methods: ["GET", "POST"]
+    allowed_path_prefix: "/api/v1"
+    automatic_write_retries: false
+    redirects: "rejected"
+    maximum_response_bytes: 5242880
+    timeout: "bounded across token acquisition, request and response body"
+
+owner_documentation:
+  required: true
+  status: "satisfied"
+  owner_repo: "sst-bend"
+  updated_owner_docs:
+    - "specs/api/phinance-facade.yaml"
+    - "specs/capabilities/outbound/sst-phinance-facade-v1.yaml"
+    - "docs/api/27-phinance-facade.md"
+    - "docs/capabilities/outbound/sst-phinance-facade-v1.md"
+  evidence_refs:
+    - "evidence/requests/CR-HPT-0018/baseline-and-proxy-design-2026-08-23.md"
+    - "evidence/requests/CR-HPT-0018/owner-and-integrated-validation-2026-08-23.md"
+    - "evidence/requests/CR-HPT-0018/owner-publication-readback-2026-08-23.md"
+
+validation:
+  status: "passed"
+  required_checks:
+    - "sst-bend: npm run test:phinance-proxy"
+    - "sst-bend: npm run test:phinance-consumer"
+    - "sst-bend: npm run build"
+    - "sst-bend: npm run check"
+    - "sst-bend: npm run smoke:phinance-integrated"
+    - "4uentes-auth: npm run test:phinance-service-grant"
+    - "4uentes-orchestor: npm run check"
+  owner_focused_tests: "passed"
+  owner_build: "passed"
+  owner_full_check: "exit 0"
+  integrated_phinance_smoke: "passed against the real verifier and ephemeral PostgreSQL"
+  auth_service_grant_test: "passed against origin/develop@0be811f"
+  remote_checks: "Node 18, Node 20 and build-publish-update passed"
+  owner_remote_readback: "origin/develop equals 845491b and contains b1ead86"
+  control_plane_check: "passed"
+  documented_limitation: >
+    The generic protected HTTP smoke inside the owner full check ran without
+    SMOKE_JWT and therefore reported partial generic coverage; the dedicated
+    financial integration smoke independently exercised authenticated owner,
+    member, spoofing and cross-account cases end to end.
+
+follow_up:
+  - "Keep environment activation, secret references and deployed runtime verification in a separate approved request."
+  - "Do not interpret ready-for-consumer publication as production activation."
+
+decision:
+  status: "closed-owner-proxy-published-and-integrated-qa-passed"
+  approver: "4uentes"
+  blocker: "none for this slice; deployment activation remains intentionally out of scope"

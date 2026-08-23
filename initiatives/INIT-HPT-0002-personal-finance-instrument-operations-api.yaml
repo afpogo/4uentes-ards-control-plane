@@ -43,6 +43,8 @@ source_evidence_refs:
   - "evidence/requests/CR-HPT-0017/owner-validation-results-2026-08-23.md"
   - "evidence/requests/CR-HPT-0017/owner-publication-readback-2026-08-23.md"
   - "evidence/requests/CR-HPT-0018/baseline-and-proxy-design-2026-08-23.md"
+  - "evidence/requests/CR-HPT-0018/owner-and-integrated-validation-2026-08-23.md"
+  - "evidence/requests/CR-HPT-0018/owner-publication-readback-2026-08-23.md"
   - "evidence/requests/CR-SST-0212/execution-reconciliation-2026-08-23.md"
   - "evidence/requests/CR-SST-0212/owner-publication-readback-2026-08-23.md"
 model_refs:
@@ -94,12 +96,8 @@ policy_application:
 open_gaps:
   - "Approve the operation taxonomy and the boundary between cash-flow transactions and investment operations."
   - "CR-HPT-0013 published the PrincipalContext v1 owner contract; the executable adapter remains a separate request before business-data access."
-  - "CR-SST-0212 published the fail-closed SST facade shell; trusted financial forwarding remains blocked by provider and consumer prerequisites."
   - "Define technical, security, migration and operational owners."
-  - "CR-HPT-0014 published the owner-local profile resolver and fail-closed principal boundary; live trust remains blocked by provider, verifier and integrated QA requests."
   - "CR-SST-0214 published the exact Auth-owned Phinance service grant on develop; HPT-6 was reconciled under CR-SST-0215 and consumer activation remains separate."
   - "The HPT-5 Epic description still names the collided CR-SST-0208 identity and requires a separate enumerated Jira batch."
-  - "CR-SST-0216 published the SST-owned membership-to-finance-entitlement mapping and trusted-principal producer; the facade remains fail-closed until the Phinance verifier and integrated QA close."
-  - "CR-HPT-0017 published the Phinance-owned JWT/JWKS verifier and trusted-principal HTTP adapter; SST proxy activation remains a later integrated-QA request."
-  - "CR-HPT-0018 is activating the feature-gated SST-to-Phinance proxy and integrated account-isolation QA without claiming deployment activation."
+  - "CR-HPT-0018 closed the owner-published, feature-gated SST-to-Phinance trust chain and integrated account-isolation QA; environment activation, secret references and deployed runtime verification remain a separate approved request."
   - "Define correction/reversal semantics and a verified link to financial transactions in a later owner request."
