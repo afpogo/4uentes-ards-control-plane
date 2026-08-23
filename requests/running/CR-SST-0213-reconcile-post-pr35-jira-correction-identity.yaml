@@ -9,7 +9,7 @@ created_at: "2026-08-23"
 started_at: "2026-08-23"
 requester: "4uentes"
 execution:
-  status: "resolving-pr-conflicts"
+  status: "local-conflicts-resolved-validation-pass-pending-publication"
   pull_request: 39
   historical_batch_id: "JIRA-SEC-PREPROD-02"
   collided_execution_label: "CR-SST-0204"
@@ -27,6 +27,15 @@ owner_documentation:
 validation:
   required_control_plane_check: "npm run check"
   required_diff_check: "git diff --check origin/main...HEAD"
+  control_plane_check: "PASS on 2026-08-23"
+  request_identity_check: "PASS with frozen historical CR-SST-0016 warning only"
+  initiative_check: "PASS"
+  diff_check: "PASS"
+evidence_refs:
+  - "evidence/requests/CR-SST-0213/identity-preflight-2026-08-23.md"
+  - "evidence/requests/CR-SST-0213/identity-reconciliation-2026-08-23.md"
+  - "evidence/requests/CR-SST-0213/changed-files-summary.md"
+  - "evidence/requests/CR-SST-0213/validation-results.md"
 decision:
   status: "approved-running"
   approver: "4uentes"
