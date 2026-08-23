@@ -3,7 +3,7 @@ kind: "feature_state"
 id: "sst-chatbot"
 title: "SST Chatbot Capability Trace"
 status: "validated-local"
-updated_at: "2026-08-22"
+updated_at: "2026-08-23"
 solution_id: "sst"
 affected_services:
   - sst-chatbot
@@ -73,6 +73,7 @@ evidence_refs:
   - "evidence/requests/CR-SST-0178/current-status-reconciliation-2026-08-18.md"
   - "evidence/requests/CR-SST-0178/integrated-chat-raw-v2-plan-2026-08-21.md"
   - "evidence/requests/CR-SST-0202/architecture-and-execution-plan.md"
+  - "evidence/requests/CR-SST-0206/owner-merge-and-closure-2026-08-23.md"
 validation_refs:
   - "evidence/requests/CR-SST-0016/validation-results.md"
   - "evidence/requests/CR-SST-0021/validation-results.md"
@@ -89,10 +90,10 @@ runtime_read_model:
   development_cluster_observation: "persistent-gitops-public-core-pass"
   persistent_gitops_chat_runtime: "healthy-chat-core-pass-spa-session-followups-under-CR-SST-0178"
   current_session_contract: "CR-SST-0180"
-  consent_aware_retention_contract: "approved-control-plane-contract-under-CR-SST-0202"
+  consent_aware_retention_contract: "frontend-merged-and-development-image-published-under-CR-SST-0206; integrated QA pending"
 open_gaps:
   - "CR-SST-0178 remains running for CR-SST-0200 signup copy, registration continuity and logout teardown retests."
   - "CR-SST-0166 is a historical functional baseline; CR-SST-0180 is the current authority for atomic session rotation and logout semantics."
   - "User RAG, stakeholder RAG, multi-session adoption and personal memory remain separate lifecycles."
   - "CR-SST-0199 and CR-SST-0201 are done; CR-SST-0200 must correct signup copy, preserve registration session continuity and prove zero authenticated requests after logout before CR-SST-0178 can close."
-  - "The CR-SST-0202 consent-aware retention contract is complete; CR-SST-0204 through CR-SST-0207 remain planned and no owner execution is authorized yet."
+  - "The consent-aware retention contract, Bend, development Redis, Auth facade and Fend UX slices are complete; CR-SST-0207 integrated QA remains separately gated."
