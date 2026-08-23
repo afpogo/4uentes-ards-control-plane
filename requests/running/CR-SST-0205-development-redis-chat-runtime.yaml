@@ -53,6 +53,32 @@ implementation_slice:
     - "production manifests or production data"
     - "Jira mutation"
 
+implementation_readback:
+  status: "published-draft-awaiting-owner-gates"
+  owner_base: "sst-4uentes-infra origin/develop@b8d8f9fdffe7120a3abd08389fdbd3f98a4f3d2b"
+  owner_branch: "feat/CR-SST-0205/development-redis-runtime"
+  owner_commit: "764499cb355ade0ffc31b14fa17c8f189d3ffae2"
+  owner_pull_request: "afpogo/sst-4uentes-infra#14"
+  pull_request_mode: "draft"
+  implemented:
+    - "Private volatile Redis 7.4.10 Deployment and ClusterIP Service with no PVC or external exposure."
+    - "NetworkPolicy permits TCP 6379 only from pods labeled app=sst-bend."
+    - "sst-bend consumes CHAT_REDIS_URL from a manually provisioned runtime Secret; no credential is stored in Git."
+    - "Feature flag remains false; publication does not authorize merge, Argo CD sync or kubectl apply."
+    - "Owner specs and runbook distinguish Bend process-local temporary TTL from PostgreSQL-authoritative saved chat cache-aside."
+  validation_observed:
+    kustomize_development_render: "PASS"
+    render_architecture_assertions: "PASS"
+    git_diff_check: "PASS"
+    secret_safe_scan: "PASS"
+    owner_full_check: "BLOCKED_ENVIRONMENT"
+    blocker: "The configured kind API endpoint https://127.0.0.1:57569 is unavailable, so kubectl client dry-run cannot download OpenAPI or discovery data."
+    github_checks: "PASS: validate-repository, validate-desired-state and both validate-manifests jobs"
+  remaining_gates:
+    - "Repeat npm run check with the kind cluster API available."
+    - "Provision sst-chat-redis-secret outside Git before any separately authorized reconciliation."
+    - "Human review and explicit merge/deployment authority; keep PR draft until then."
+
 upstream_contract_gate:
   owner_repo: "sst-bend"
   request_id: "CR-SST-0204"
@@ -82,3 +108,4 @@ decision:
 
 evidence_refs:
   - "evidence/requests/CR-SST-0205/execution-start-2026-08-23.md"
+  - "evidence/requests/CR-SST-0205/owner-draft-publication-2026-08-23.md"
