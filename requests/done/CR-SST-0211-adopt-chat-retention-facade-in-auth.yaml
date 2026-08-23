@@ -1,0 +1,89 @@
+schema_version: "1.0"
+phase: 4
+id: "CR-SST-0211"
+title: "Adopt the SST chat retention facade in 4uentes-auth"
+status: "done"
+source_request: "requests/inbox/CR-SST-0211-adopt-chat-retention-facade-in-auth.yaml"
+planned_request: "requests/planned/CR-SST-0211-adopt-chat-retention-facade-in-auth.yaml"
+running_request: "requests/running/CR-SST-0211-adopt-chat-retention-facade-in-auth.yaml"
+created_at: "2026-08-22"
+started_at: "2026-08-23"
+completed_at: "2026-08-23"
+requester: "4uentes"
+depends_on: ["CR-SST-0204"]
+
+control_plane_context:
+  initiative_id: "INIT-SST-0007"
+  parent_request_id: "CR-SST-0202"
+  downstream_request_ids: ["CR-SST-0206", "CR-SST-0207"]
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  jira_issue_key: null
+  jira_write_allowed: false
+
+scope:
+  owner_repo_modified: "4uentes-auth"
+  sst_bend_modified: false
+  sst_fend_modified: false
+  deployment_modified: false
+  production_modified: false
+  jira_modified: false
+
+publication:
+  owner_branch: "feat/CR-SST-0211/chat-retention-facade"
+  base_ref: "origin/develop@ca5365ad1e70ace512c261d8ccdb0a7dca8b4387"
+  head_commit: "d1237278e9dfcb8b12b9fbda7abeed4eaee89795"
+  pull_request: "afpogo/4uentes-auth#11"
+  merge_commit: "89d00099657e0e009670eb3dcf4a36b3c76fea6b"
+  merged_to: "develop"
+  inbound_adoption_status: "implemented"
+  outbound_capability_status: "ready-for-consumer"
+
+owner_documentation:
+  required: true
+  status: "satisfied"
+  owner_repo: "4uentes-auth"
+  updated_surfaces:
+    - "specs/integrations-api.yaml"
+    - "specs/routing.yaml"
+    - "docs/bf/03-routing.md"
+    - "docs/bf/06-integrations-api.md"
+    - "docs/chat-sessions.md"
+    - "specs/capabilities/inbound/sst-bend--chat-retention-v1.yaml"
+    - "docs/capabilities/inbound/sst-bend--chat-retention-v1.md"
+    - "specs/capabilities/outbound/chat-retention-v1.yaml"
+    - "docs/capabilities/outbound/chat-retention-v1.md"
+    - "httpPruebas/sst_server.http"
+
+validation:
+  owner_ards_check: "PASS"
+  owner_typescript_build: "PASS"
+  owner_session_tests: "PASS"
+  owner_chat_facade_tests: "PASS"
+  auth_before_upstream: "PASS"
+  query_and_header_allowlists: "PASS"
+  exact_upstream_targets: "PASS"
+  domain_status_parity_403_404_409: "PASS"
+  timeout_and_unavailable_504_502: "PASS"
+  github_build_publish_update: "PASS"
+  remote_readback: "d123727 is reachable from origin/develop at 89d0009"
+  control_plane_check: "PASS"
+
+decision:
+  status: "approved-closed-published"
+  approver: "4uentes"
+  decided_at: "2026-08-23"
+
+evidence_refs:
+  - "evidence/requests/CR-SST-0211/namespace-and-boundary-preflight-2026-08-22.md"
+  - "evidence/requests/CR-SST-0211/implementation-plan.md"
+  - "evidence/requests/CR-SST-0211/execution-start-2026-08-23.md"
+  - "evidence/requests/CR-SST-0211/publication-closure-2026-08-23.md"
+
+closure:
+  status: "complete-owner-published"
+  next_request_id: "CR-SST-0206"
+  limits:
+    - "Closure does not authorize Jira writes."
+    - "Closure does not authorize deployment, production or feature-flag enablement."
+    - "Closure does not mutate sst-fend; CR-SST-0206 requires its own lifecycle and approval."
