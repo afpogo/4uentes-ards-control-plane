@@ -71,8 +71,8 @@ validation:
 execution_status:
   lifecycle_start: "published"
   owner_worktree: "clean-at-origin-develop-6ee18b3"
-  implementation: "contract-852f25f-runtime-575b577-cache-pagination-93fb3fd-http-harness-cb943ae-stale-race-0fe7508-local-only"
-  validation: "unit-http-migration-pagination-cache-order-fail-open-stale-race-and-build-pass-full-owner-check-blocked-services-not-running"
+  implementation: "contract-852f25f-runtime-575b577-cache-pagination-93fb3fd-http-harness-cb943ae-stale-race-0fe7508-integrated-validation-1fe43de-local-only"
+  validation: "postgres-up-down-up-legacy-backfill-redis-up-down-fail-open-cache-purge-build-and-full-owner-check-pass"
 decision:
   status: "approved-running"
   approver: "4uentes"
@@ -82,3 +82,4 @@ evidence_refs:
   - "evidence/requests/CR-SST-0204/owner-contract-checkpoint-2026-08-22.md"
   - "evidence/requests/CR-SST-0204/runtime-checkpoint-2026-08-22.md"
   - "evidence/requests/CR-SST-0204/cache-pagination-checkpoint-2026-08-22.md"
+  - "evidence/requests/CR-SST-0204/integrated-validation-2026-08-22.md"
