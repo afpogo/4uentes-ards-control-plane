@@ -30,6 +30,8 @@ execution:
   direct_cluster_mutation_allowed: false
   production_mutation_allowed: false
   jira_write_allowed: false
+  runtime_validation_authorization: "User requested continuation on 2026-08-23 after the owner draft publication."
+  runtime_validation_scope: "Recover access to the existing kind API and complete non-mutating render/client-dry-run checks only."
 
 workspace_isolation:
   owner_repo: "sst-4uentes-infra"
@@ -54,7 +56,7 @@ implementation_slice:
     - "Jira mutation"
 
 implementation_readback:
-  status: "published-draft-awaiting-owner-gates"
+  status: "published-draft-owner-gates-passed"
   owner_base: "sst-4uentes-infra origin/develop@b8d8f9fdffe7120a3abd08389fdbd3f98a4f3d2b"
   owner_branch: "feat/CR-SST-0205/development-redis-runtime"
   owner_commit: "764499cb355ade0ffc31b14fa17c8f189d3ffae2"
@@ -71,11 +73,12 @@ implementation_readback:
     render_architecture_assertions: "PASS"
     git_diff_check: "PASS"
     secret_safe_scan: "PASS"
-    owner_full_check: "BLOCKED_ENVIRONMENT"
-    blocker: "The configured kind API endpoint https://127.0.0.1:57569 is unavailable, so kubectl client dry-run cannot download OpenAPI or discovery data."
+    owner_full_check: "PASS"
+    owner_check_execution: "npm run check completed with host renders and client dry-runs routed to the same live kind API from inside the control-plane node."
+    environment_diagnostic: "Docker declared 127.0.0.1:57569 -> 6443 but the host forward refused connections; kube-apiserver was healthy internally on 6443."
+    runtime_action: "Restarted only sst-cluster-dev-control-plane once to attempt port-forward recovery; no Kubernetes resource was applied or mutated."
     github_checks: "PASS: validate-repository, validate-desired-state and both validate-manifests jobs"
   remaining_gates:
-    - "Repeat npm run check with the kind cluster API available."
     - "Provision sst-chat-redis-secret outside Git before any separately authorized reconciliation."
     - "Human review and explicit merge/deployment authority; keep PR draft until then."
 
@@ -87,7 +90,7 @@ upstream_contract_gate:
 
 owner_documentation:
   required: true
-  status: "running"
+  status: "validated-local-draft"
   owner_repos: ["sst-4uentes-infra"]
   required_surfaces:
     - "specs/infra/environments/development.yaml"
