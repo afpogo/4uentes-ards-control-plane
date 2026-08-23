@@ -1,0 +1,178 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0212"
+title: "Publish the SST-Phinance facade and Swagger tracking surface"
+status: "planned"
+source_request: "requests/inbox/CR-SST-0212-publish-sst-phinance-facade-swagger.yaml"
+created_at: "2026-08-22"
+requester: "4uentes"
+
+summary: >
+  Publish a documented finance facade in the existing sst-bend runtime so
+  manual QA follows the future SST consumer boundary. FastAPI keeps the
+  authoritative Phinance OpenAPI; SST publishes only a safe projection.
+
+identity_reconciliation:
+  canonical_id: "CR-SST-0212"
+  rejected_source_id: "CR-SST-0207"
+  reason: "CR-SST-0207 already owns integrated chat retention QA."
+  source_commit: "a0665bf"
+  source_branch: "agent/cr-sst-0152-sst-fend-evidence"
+
+control_plane_context:
+  initiative_id: "INIT-HPT-0002"
+  predecessor_request_ids:
+    - "CR-HPT-0008"
+    - "CR-HPT-0013"
+  related_future_request_ids:
+    - "CR-HPT-TODO-PHINANCE-ADAPTER"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "sst-bend"
+      via: "new /4uentes/v1/phinance facade routes and Swagger UI"
+    - service_id: "finanzas-personales-backend"
+      via: "upstream owner OpenAPI and future authenticated provider call"
+  affected_ards:
+    - "SST routing contract"
+    - "SST inbound facade OpenAPI"
+    - "Phinance outbound consumer projection"
+    - "HTTP QA harness"
+  capabilities:
+    - "sst-phinance-facade-v1"
+    - "principal-context-v1"
+  risks:
+    - id: "DUPLICATED_OPENAPI_AUTHORITY"
+      severity: "high"
+    - id: "SWAGGER_TOKEN_OR_CONTEXT_LEAK"
+      severity: "high"
+    - id: "UNTRUSTED_BROWSER_PRINCIPAL"
+      severity: "critical"
+    - id: "DIRTY_PACKAGE_MANIFEST_OVERLAP"
+      severity: "medium"
+
+routing_decision:
+  runtime: "existing sst-bend service"
+  facade_base_path: "/4uentes/v1/phinance"
+  openapi_path: "/4uentes/v1/phinance/openapi.json"
+  swagger_ui_path: "/4uentes/v1/phinance/docs"
+  owner_api_docs:
+    swagger_ui_path: "/docs"
+    redoc_path: "/redoc"
+    openapi_path: "/openapi.json"
+  rule: >
+    sst-phinance is a route group and anti-corruption facade, not a new
+    microservice or a duplicate Phinance owner API.
+
+contract_strategy:
+  owner_source: "Phinance FastAPI-generated OpenAPI plus accepted owner specs"
+  facade_source: "sst-bend owner specs for only the routes SST exposes"
+  drift_control:
+    - "Contract-test every facade operation against the accepted owner operation and response projection."
+    - "Do not copy owner-only health, readiness, internal principal or persistence fields into the facade."
+    - "Version facade paths and document intentional projection differences."
+  swagger_security:
+    - "Allow user bearer authentication only through Swagger's authorization control."
+    - "Never prefill or persist bearer tokens."
+    - "Do not expose trusted service credentials or principal headers in the browser schema."
+
+implementation_slices:
+  - order: 1
+    id: "contract-and-docs"
+    objective: "Publish the facade OpenAPI, route ownership and Swagger paths."
+    child_repo: "sst-bend"
+    observed_files:
+      - "specs/api/phinance-facade.yaml"
+      - "specs/api/routing.yaml"
+      - "docs/api/27-phinance-facade.md"
+      - "specs/capabilities/outbound/sst-phinance-facade-v1.yaml"
+      - "docs/capabilities/outbound/sst-phinance-facade-v1.md"
+  - order: 2
+    id: "swagger-and-fail-closed-shell"
+    objective: "Mount Swagger UI and the facade shell without upstream financial access."
+    child_repo: "sst-bend"
+    observed_owner_commit: "efa955b"
+    remote_status: "not-observed-in-remote-refs"
+  - order: 3
+    id: "trusted-proxy"
+    objective: "Enable selected proxy operations only after trust prerequisites are implemented."
+    status: "blocked-by-prerequisites"
+    prerequisites:
+      - "CR-HPT-0013 owner contract published and read back"
+      - "SST membership-to-finance-entitlement mapping approved"
+      - "Authenticated SST-to-Phinance service invocation available"
+      - "Phinance consumer adapter available under a separately reserved request"
+
+risk:
+  level: "high"
+  score: 9
+  drivers:
+    - "cross-repo security boundary"
+    - "financial data exposure"
+    - "new public documentation and facade routes"
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "contract projection, authentication and cross-repo sequencing"
+
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5-high"
+  reason: "The facade can expose account-scoped financial data and must preserve trust boundaries."
+
+subagent_deployment_plan:
+  required: false
+  parallelizable: false
+  roles: []
+  fallback: "The primary agent owns security decisions and verifies every recovered artifact."
+  evidence_required: true
+
+execution:
+  requires_human_approval: true
+  approval_source: "4uentes approved the recommended BFF-to-SST-to-Phinance flow on 2026-08-22 and authorized continuation on 2026-08-23."
+  allowed_window: "control-plane-recovery-and-owner-publication-readback"
+  child_repo_mutation_allowed: false
+  dependency_changes_allowed: false
+  runtime_implementation_allowed: false
+  trusted_proxy_allowed: false
+  jira_write_allowed: false
+  ordering_deviation: >
+    The owner commit predates canonical reservation of CR-SST-0212. This
+    lifecycle records the deviation retroactively without modifying sst-bend.
+
+owner_documentation:
+  required: true
+  status: "implemented-locally-awaiting-remote-readback"
+  primary_owner_repo: "sst-bend"
+  owner_commit: "efa955b"
+  observed_docs:
+    - "specs/api/phinance-facade.yaml"
+    - "specs/api/routing.yaml"
+    - "docs/api/27-phinance-facade.md"
+    - "specs/capabilities/outbound/sst-phinance-facade-v1.yaml"
+    - "docs/capabilities/outbound/sst-phinance-facade-v1.md"
+
+validation:
+  required_checks:
+    - "sst-bend owner checks and fail-closed facade shell test"
+    - "OpenAPI exposes only approved facade operations"
+    - "Swagger and raw OpenAPI contain no embedded credentials"
+    - "Unauthenticated business operations return 401"
+    - "Pre-trust facade shell cannot expose Phinance business data"
+    - "4uentes-orchestor: npm run check"
+    - "git diff --check in every mutated repo"
+
+decision:
+  status: "approved-for-control-plane-recovery"
+  approver: "4uentes"
+  approved_at: "2026-08-23"
+  approval_text: "autorizo"
+  blocker: "Owner commit efa955b must be published and read back before closure; trusted proxy remains separately blocked."
