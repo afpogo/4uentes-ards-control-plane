@@ -29,6 +29,7 @@ source_evidence_refs:
   - "evidence/requests/CR-HPT-0013/control-plane-reconciliation-2026-08-22.md"
   - "evidence/requests/CR-HPT-0013/owner-publication-readback-2026-08-23.md"
   - "evidence/requests/CR-SST-0212/execution-reconciliation-2026-08-23.md"
+  - "evidence/requests/CR-SST-0212/owner-publication-readback-2026-08-23.md"
 model_refs:
   - "specs/initiatives/initiative-model.yaml"
   - "docs/requests/initiative-model.md"
@@ -41,11 +42,8 @@ known_change_requests:
   - "CR-HPT-0012"
   - "CR-HPT-0008"
   - "CR-HPT-0013"
-candidate_change_requests:
-  - id: "CR-SST-0212"
-    title: "Publish the SST-Phinance facade and Swagger tracking surface"
-    status: "running-awaiting-owner-publication-readback"
-    execution_order: "fail-closed-shell-before-trusted-provider-enablement"
+  - "CR-SST-0212"
+candidate_change_requests: []
 discovered_change_requests: []
 tracking:
   jira:
@@ -75,7 +73,7 @@ policy_application:
 open_gaps:
   - "Approve the operation taxonomy and the boundary between cash-flow transactions and investment operations."
   - "CR-HPT-0013 published the PrincipalContext v1 owner contract; the executable adapter remains a separate request before business-data access."
-  - "CR-SST-0212 now owns the SST facade lifecycle; its local owner commit must be published and read back before closure."
+  - "CR-SST-0212 published the fail-closed SST facade shell; trusted financial forwarding remains blocked by provider and consumer prerequisites."
   - "Define technical, security, migration and operational owners."
   - "Implement the trusted SST PrincipalContext adapter under a separate approved request before enabling business access in a deployed environment."
   - "Define correction/reversal semantics and a verified link to financial transactions in a later owner request."

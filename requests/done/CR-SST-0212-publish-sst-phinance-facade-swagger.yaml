@@ -1,0 +1,66 @@
+schema_version: "1.0"
+phase: 4
+id: "CR-SST-0212"
+title: "Publish the SST-Phinance facade and Swagger tracking surface"
+status: "done"
+source_request: "requests/inbox/CR-SST-0212-publish-sst-phinance-facade-swagger.yaml"
+planned_request: "requests/planned/CR-SST-0212-publish-sst-phinance-facade-swagger.yaml"
+started_at: "2026-08-23"
+closed_at: "2026-08-23"
+requester: "4uentes"
+
+summary: >
+  Published the SST-Phinance OpenAPI and Swagger facade shell in sst-bend
+  under the collision-free CR-SST-0212 identity. Business forwarding remains
+  fail closed until the separately governed trust prerequisites are ready.
+
+identity_reconciliation:
+  canonical_id: "CR-SST-0212"
+  rejected_source_id: "CR-SST-0207"
+  source_control_plane_commit: "a0665bf"
+  source_owner_commit: "efa955b"
+
+owner_documentation:
+  required: true
+  status: "satisfied"
+  owner_repo: "sst-bend"
+  published_owner_head: "6a1b894"
+  owner_merge_commit: "357ac2a"
+  owner_pull_request: "https://github.com/afpogo/sst-bend/pull/22"
+  updated_owner_docs:
+    - "specs/api/phinance-facade.yaml"
+    - "specs/api/routing.yaml"
+    - "docs/api/27-phinance-facade.md"
+    - "specs/capabilities/outbound/sst-phinance-facade-v1.yaml"
+    - "docs/capabilities/outbound/sst-phinance-facade-v1.md"
+
+validation:
+  phinance_facade_shell_test: "passed"
+  typescript_build: "passed"
+  owner_full_check: "passed-with-policy-allowed-partial-protected-coverage-without-SMOKE_JWT"
+  github_node_18: "passed"
+  github_node_20: "passed"
+  github_build_publish_update: "passed"
+  owner_diff_check: "passed"
+  remote_readback: "6a1b894 is reachable from sst-bend origin/develop at 357ac2a"
+  control_plane_check: "passed"
+
+security_boundary:
+  swagger_embeds_credentials: false
+  trusted_proxy_enabled: false
+  unauthenticated_business_access: "401"
+  unavailable_owner_contract: "503-fail-closed"
+  dependency_audit_debt: "46 existing vulnerabilities; no audit fix applied in this request"
+
+evidence_refs:
+  - "evidence/requests/CR-SST-0212/identity-preflight-2026-08-22.md"
+  - "evidence/requests/CR-SST-0212/execution-reconciliation-2026-08-23.md"
+  - "evidence/requests/CR-SST-0212/swagger-facade-analysis.md"
+  - "evidence/requests/CR-SST-0212/validation-results.md"
+  - "evidence/requests/CR-SST-0212/manual-qa-partial.md"
+  - "evidence/requests/CR-SST-0212/owner-publication-readback-2026-08-23.md"
+
+decision:
+  status: "closed-fail-closed-shell"
+  approver: "4uentes"
+  blocker: "none for this slice; trusted proxy requires separate provider/consumer readiness"
