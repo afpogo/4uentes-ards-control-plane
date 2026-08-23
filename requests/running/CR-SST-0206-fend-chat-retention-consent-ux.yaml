@@ -73,11 +73,11 @@ validation:
   required_control_plane_check: "npm run check"
 
 implementation_readback:
-  status: "owner-pr-draft-awaiting-rendered-qa-and-ci"
+  status: "owner-pr-draft-awaiting-rendered-qa"
   owner_branch: "feat/CR-SST-0206/chat-retention-consent-ux"
   owner_commit: "890af538de58ba2d53ca2a2acf474847d721f5ee"
   owner_pull_request: "https://github.com/afpogo/sst-fend/pull/17"
-  owner_checks: "local npm run check passed: policy and CSS gates, lint with 0 errors, production build, 36 suites and 240 tests; GitHub PR check in progress at readback"
+  owner_checks: "local npm run check passed: policy and CSS gates, lint with 0 errors, production build, 36 suites and 240 tests; GitHub build-publish-update passed in 5m23s"
   rendered_qa: "pending: integrated browser initialization failed in the execution environment; required before lifecycle closure"
   deployment: "not performed; PR event builds but does not push an image or update infra"
 
