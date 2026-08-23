@@ -1,0 +1,93 @@
+schema_version: "1.0"
+phase: 4
+id: "CR-HPT-0017"
+title: "Implement the Phinance SST service verifier"
+status: "done"
+source_request: "requests/inbox/CR-HPT-0017-implement-phinance-sst-service-verifier.yaml"
+planned_request: "requests/planned/CR-HPT-0017-implement-phinance-sst-service-verifier.yaml"
+started_at: "2026-08-23"
+closed_at: "2026-08-23"
+requester: "4uentes"
+
+summary: >
+  Published and read back the Phinance-owned RS256/JWKS service-token verifier,
+  trusted-principal HTTP adapter, fail-closed readiness and negative security
+  coverage while leaving SST proxy activation disabled.
+
+execution:
+  owner_repo: "finanzas-personales"
+  owner_base: "origin/main@9f781e7"
+  published_owner_commit: "9f50d13"
+  owner_merge_commit: "c81e114"
+  owner_pull_request: "https://github.com/mena28/finanzas-personales/pull/3"
+  child_repo_mutation_allowed: true
+  runtime_implementation_allowed: true
+  dependency_changes_allowed: true
+  dependency_change: "PyJWT[crypto]>=2.13,<3.0"
+  database_changes_allowed: false
+  infrastructure_changes_allowed: false
+  sst_repo_mutation_allowed: false
+  auth_repo_mutation_allowed: false
+  jira_write_allowed: false
+  sst_proxy_enabled: false
+
+implemented_slice:
+  service_verifier:
+    algorithm: "RS256 only"
+    issuer: "sst-auth"
+    audience: "phinance-api"
+    caller: "sub and client_id equal sst-bend"
+    token_use: "service"
+    scope: "exactly finance:invoke"
+    maximum_ttl_seconds: 300
+    jwks: "bounded timeout and cached key set configured by environment"
+  principal_adapter:
+    authority_rule: "SST context headers are accepted only after service-token verification"
+    entitlements: ["finance:read", "finance:write", "finance:audit:read"]
+    authentication_reference: "derived from the verified jti claim when present"
+  readiness: "false when database or usable JWKS verifier configuration is absent"
+  failure_behavior:
+    - "401 for missing or invalid service credentials"
+    - "400 for incomplete or invalid trusted-principal envelopes"
+    - "403 for unknown or duplicate finance entitlements"
+    - "503 when verifier configuration or JWKS retrieval is unavailable"
+
+design_reconciliation:
+  authentication_reference_header: >
+    The planned X-SST-Authentication-Reference header was not accepted as
+    authority. The bounded reference is derived from verified JWT jti instead,
+    reducing the trusted wire surface without changing the principal schema.
+
+owner_documentation:
+  required: true
+  status: "satisfied"
+  owner_repo: "finanzas-personales"
+  owner_documentation_root: "backend"
+  updated_owner_docs:
+    - "specs/api/sst-integration.yaml"
+    - "docs/architecture/README.md"
+    - "docs/api/README.md"
+  evidence_refs:
+    - "evidence/requests/CR-HPT-0017/baseline-and-verifier-design-2026-08-23.md"
+    - "evidence/requests/CR-HPT-0017/owner-validation-results-2026-08-23.md"
+    - "evidence/requests/CR-HPT-0017/owner-publication-readback-2026-08-23.md"
+
+validation:
+  status: "passed"
+  required_checks:
+    - "4uentes-orchestor: npm run check"
+  owner_pytest: "36 passed, 4 PostgreSQL tests skipped because this slice has no database change"
+  owner_contract_check: "passed"
+  dependency_readback: "PyJWT 2.13.0 installed; pip check passed"
+  owner_diff_check: "passed"
+  remote_readback: "owner main equals c81e114 and contains published commit 9f50d13"
+  control_plane_check: "passed"
+
+follow_up:
+  - "Enable the SST proxy and run integrated account-isolation QA under a separate approved request."
+  - "Keep deployment bindings and secrets outside this owner-local implementation request."
+
+decision:
+  status: "closed-owner-verifier-published"
+  approver: "4uentes"
+  blocker: "none for this slice; positive SST forwarding remains intentionally deferred"

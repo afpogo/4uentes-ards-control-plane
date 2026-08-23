@@ -3,7 +3,7 @@ kind: "initiative"
 id: "INIT-HPT-0002"
 title: "Personal Economic Resources and Instrument Operations API"
 status: "hypothesis"
-updated_at: "2026-08-22"
+updated_at: "2026-08-23"
 owner_repository: "4uentes-orchestor"
 objective: >
   Evolve Phinance-API from personal cash-flow tracking toward an auditable
@@ -40,6 +40,8 @@ source_evidence_refs:
   - "evidence/requests/CR-SST-0216/baseline-and-design-2026-08-23.md"
   - "evidence/requests/CR-SST-0216/owner-validation-and-readback-2026-08-23.md"
   - "evidence/requests/CR-HPT-0017/baseline-and-verifier-design-2026-08-23.md"
+  - "evidence/requests/CR-HPT-0017/owner-validation-results-2026-08-23.md"
+  - "evidence/requests/CR-HPT-0017/owner-publication-readback-2026-08-23.md"
   - "evidence/requests/CR-SST-0212/execution-reconciliation-2026-08-23.md"
   - "evidence/requests/CR-SST-0212/owner-publication-readback-2026-08-23.md"
 model_refs:
@@ -96,5 +98,5 @@ open_gaps:
   - "CR-SST-0214 published the exact Auth-owned Phinance service grant on develop; HPT-6 was reconciled under CR-SST-0215 and consumer activation remains separate."
   - "The HPT-5 Epic description still names the collided CR-SST-0208 identity and requires a separate enumerated Jira batch."
   - "CR-SST-0216 published the SST-owned membership-to-finance-entitlement mapping and trusted-principal producer; the facade remains fail-closed until the Phinance verifier and integrated QA close."
-  - "CR-HPT-0017 is implementing the Phinance-owned JWT/JWKS verifier and trusted-principal HTTP adapter; SST proxy activation remains a later integrated-QA request."
+  - "CR-HPT-0017 published the Phinance-owned JWT/JWKS verifier and trusted-principal HTTP adapter; SST proxy activation remains a later integrated-QA request."
   - "Define correction/reversal semantics and a verified link to financial transactions in a later owner request."
