@@ -1,6 +1,6 @@
 # Payload propuesto para JIRA-SEC-PREPROD-03
 
-Estado: `PENDING HUMAN APPROVAL`.
+Estado: `APPROVED` el 2026-08-23 para una única ejecución del batch enumerado.
 
 ## Allowlist
 

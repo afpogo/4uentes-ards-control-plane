@@ -9,7 +9,7 @@ created_at: "2026-08-23"
 started_at: "2026-08-23"
 requester: "4uentes"
 execution:
-  status: "post-merge-readback-pass-jira-batch-approval-pending"
+  status: "jira-batch-approved-pending-canonical-publication"
   pull_request: 39
   historical_batch_id: "JIRA-SEC-PREPROD-02"
   collided_execution_label: "CR-SST-0204"
@@ -17,7 +17,8 @@ execution:
   child_repo_mutation_performed: false
   jira_write_performed_in_this_reconciliation: false
   proposed_jira_batch_id: "JIRA-SEC-PREPROD-03"
-  proposed_jira_batch_authorized: false
+  proposed_jira_batch_authorized: true
+  jira_batch_approval_source: "User explicitly authorized JIRA-SEC-PREPROD-03 on 2026-08-23."
   production_mutation_performed: false
 workspace_isolation:
   branch: "agent/cr-sst-0213-jira-identity-correction"
@@ -44,6 +45,7 @@ evidence_refs:
   - "evidence/requests/CR-SST-0213/jira-identity-correction-plan-preview.json"
   - "evidence/requests/CR-SST-0213/jira-identity-correction-proposed-payloads.md"
   - "evidence/requests/CR-SST-0213/jira-correction-preflight-validation.md"
+  - "evidence/requests/CR-SST-0213/jira-write-batch-authorization.md"
 decision:
   status: "approved-running"
   approver: "4uentes"

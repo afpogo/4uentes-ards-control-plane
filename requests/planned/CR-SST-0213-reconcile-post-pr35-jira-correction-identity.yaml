@@ -38,7 +38,7 @@ subagent_deployment_plan:
   reason: "The primary agent retains the identity and external-write reconciliation decision."
 execution:
   requires_human_approval: true
-  approval_status: "local-conflict-resolution-approved-jira-batch-pending"
+  approval_status: "jira-batch-approved"
   approval_source: "User instruction dated 2026-08-23."
   child_repo_mutation_allowed: false
   jira_write_allowed: false
@@ -50,6 +50,7 @@ execution:
     SST-86: ["replace-description-sync-line", "add-comment"]
     SST-89: ["replace-description-sync-line", "add-comment"]
     SST-92: ["replace-description-sync-line", "add-comment"]
+  jira_batch_approval_source: "User explicitly authorized JIRA-SEC-PREPROD-03 on 2026-08-23."
 resolution_plan:
   - "Merge the current origin/main into the PR branch and preserve its canonical namespace."
   - "Replace the collided local lifecycle with CR-SST-0213."
