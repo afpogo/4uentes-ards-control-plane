@@ -165,9 +165,9 @@ atomized_follow_up_sequence:
 
 execution:
   requires_human_approval: true
-  approval_source: "Pending explicit approval of the recommended PrincipalContext v1 decisions."
-  allowed_window: "not-open"
-  child_repo_mutation_allowed: false
+  approval_source: "4uentes approved the recommended BFF, SST membership facade and Phinance owner flow on 2026-08-22."
+  allowed_window: "owner-contract-publication-only"
+  child_repo_mutation_allowed: true
   runtime_implementation_allowed: false
   dependency_changes_allowed: false
   migration_changes_allowed: false
@@ -200,9 +200,8 @@ validation:
     - "4uentes-orchestor: npm run check and git diff --check"
 
 decision:
-  status: "planned-awaiting-architecture-approval"
-  approver: "TODO"
-  blocker: >
-    Approve facade routing, field authority, service authentication,
-    entitlement ownership, local profile resolution and readiness behavior
-    before any child or runtime mutation.
+  status: "approved-for-owner-contract-publication"
+  approver: "4uentes"
+  approved_at: "2026-08-22"
+  approval_text: "ok vayamos con tu recomendacion avancemos con esto"
+  blocker: "Runtime provider and consumer implementation remain separate requests."
