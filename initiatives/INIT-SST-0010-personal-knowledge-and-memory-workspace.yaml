@@ -36,6 +36,7 @@ source_evidence_refs:
   - "evidence/initiatives/INIT-SST-0010/namespace-and-publication-preflight-2026-08-23.md"
   - "evidence/requests/CR-SST-0210/identity-scope-contract-v1.yaml"
   - "evidence/requests/CR-SST-0210/implementation-plan.md"
+  - "evidence/requests/CR-SST-0210/post-merge-readback-2026-08-23.md"
 model_refs:
   - "specs/initiatives/initiative-model.yaml"
   - "docs/requests/initiative-model.md"
@@ -106,21 +107,20 @@ tracking:
     reconciliation_request_candidate: "CR-SST-TODO-JIRA-RECONCILIATION"
     reconciliation_batch_status: "quarantined-after-local-cr-sst-0202-id-collision"
 identifier_reconciliation:
-  status: "cr-sst-0210-reserved-and-planned-awaiting-execution-approval"
+  status: "cr-sst-0210-closed-owner-published"
   resolution: >
     INIT-SST-0010 and the minimal CR-SST-0210 inbox reservation are now
     canonical. CR-SST-0210 exclusively identifies the personal-memory
-    identity, tenant and application-scope predecessor and is being planned
-    from a clean execution worktree created after the reservation merge.
+    identity, tenant and application-scope predecessor. Its sst-bend owner
+    contract and runtime were published and merged through PR 24.
   externally_observed_occupied_ids:
     - "CR-SST-0199 through CR-SST-0209"
     - "CR-SST-0210"
     - "CR-SST-0211 through CR-SST-0213"
   identity_scope_request_id: "CR-SST-0210"
   failure_behavior: >
-    Keep child-repository execution blocked until the CR-SST-0210 plan is
-    published and receives explicit execution approval. Do not execute the
-    quarantined Jira reconciliation batch.
+    Keep CR-SST-0194 execution blocked until CR-SST-0193 proves the normal
+    identity path. Do not execute the quarantined Jira reconciliation batch.
   evidence_refs:
     - "evidence/initiatives/INIT-SST-0010/request-id-collision-2026-08-22.md"
     - "evidence/initiatives/INIT-SST-0010/namespace-and-publication-preflight-2026-08-23.md"
@@ -172,9 +172,9 @@ closure_gate: >
 progress:
   completed_requests:
     - "CR-SST-0192"
+    - "CR-SST-0210"
   active_requests:
     - "CR-SST-0193"
-    - "CR-SST-0210"
   quarantined_request_artifacts:
     - "CR-SST-0202 local memory reconciliation artifacts collide with Jira SST-113"
   planned_requests:
@@ -184,17 +184,13 @@ progress:
     - "CR-SST-0197"
     - "CR-SST-0198"
   next_recommended_request: >
-    Publish and approve the CR-SST-0210 identity-scope plan, execute its
-    sst-bend owner adoption from a separately authorized clean worktree, close
-    CR-SST-0193 through the normal identity path, and only then consider
-    CR-SST-0194 execution.
+    Close CR-SST-0193 through QA of the newly published normal identity path,
+    and only then consider CR-SST-0194 execution.
   current_runtime_status: >
     CR-SST-0193 canonical persistence and API are implemented, merged and
-    validated in local/dev. The request remains running because the normal
-    identity path has unresolved tenant, account-membership and application
-    scope authority; this is not safely solved by adding claims alone. The
-    mandatory control-plane check passed on 2026-08-22 after distinguishing a
-    sandbox EPERM from a repository failure.
+    validated in local/dev. CR-SST-0210 now supplies the merged tenant,
+    account-membership, active-session and application scope authority. The
+    remaining CR-SST-0193 gate is normal-path QA, not contract definition.
   manual_qa_status: >
     Contract walkthrough and focused functional API QA are complete. Normal
     identity-path QA remains blocked under CR-SST-0193; conversational QA
