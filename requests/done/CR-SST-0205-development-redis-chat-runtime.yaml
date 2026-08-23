@@ -1,0 +1,101 @@
+schema_version: "1.0"
+phase: 4
+id: "CR-SST-0205"
+title: "Provide the development Redis runtime for SST chat"
+status: "done"
+source_request: "requests/inbox/CR-SST-0205-development-redis-chat-runtime.yaml"
+planned_request: "requests/planned/CR-SST-0205-development-redis-chat-runtime.yaml"
+running_request: "requests/running/CR-SST-0205-development-redis-chat-runtime.yaml"
+created_at: "2026-08-22"
+started_at: "2026-08-23"
+completed_at: "2026-08-23"
+requester: "4uentes"
+depends_on: ["CR-SST-0202", "CR-SST-0204"]
+
+control_plane_context:
+  initiative_id: "INIT-SST-0007"
+  parent_request_id: "CR-SST-0202"
+  downstream_request_ids: ["CR-SST-0206", "CR-SST-0207"]
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  jira_issue_key: "SST-115"
+  jira_write_allowed: false
+
+scope:
+  owner_repo_modified: "sst-4uentes-infra"
+  development_runtime_reconciled: true
+  runtime_secret_provisioned_outside_git: true
+  sst_bend_modified: false
+  sst_fend_modified: false
+  production_modified: false
+  jira_modified: false
+  feature_enabled: false
+
+publication:
+  owner_base: "origin/develop@b8d8f9fdffe7120a3abd08389fdbd3f98a4f3d2b"
+  implementation_branch: "feat/CR-SST-0205/development-redis-runtime"
+  implementation_commit: "764499cb355ade0ffc31b14fa17c8f189d3ffae2"
+  implementation_pull_request: "afpogo/sst-4uentes-infra#14"
+  implementation_merge_commit: "5feac6aa998d574f7572c0e0c16d49fe9c369d8a"
+  argocd_policy_pull_request: "afpogo/sst-4uentes-infra#15"
+  argocd_policy_merge_commit: "7a50cbfafe5f7723ceee46a1c92e446213676f48"
+  podspec_correction_pull_request: "afpogo/sst-4uentes-infra#16"
+  podspec_correction_merge_commit: "9d351d121edde80c0cbe316e6efa4790635c3a37"
+  merged_to: "develop"
+
+runtime_readback:
+  environment: "development"
+  argocd_application: "sst-app"
+  argocd_status: "Synced/Healthy"
+  argocd_revision: "9d351d121edde80c0cbe316e6efa4790635c3a37"
+  argocd_operation: "Succeeded"
+  redis_deployment: "1/1 ready"
+  redis_service: "ClusterIP TCP 6379 with internal endpoint"
+  redis_network_policy: "present; ingress restricted to app=sst-bend"
+  service_account_token_automount: false
+  authenticated_ping: "PONG"
+  bend_rollout: "successful"
+  feature_flag: "CHAT_RETENTION_V1_ENABLED=false"
+  secret_evidence: "metadata only; REDIS_PASSWORD 64 bytes and CHAT_REDIS_URL 101 bytes; values never printed"
+
+owner_documentation:
+  required: true
+  status: "satisfied"
+  owner_repo: "sst-4uentes-infra"
+  updated_surfaces:
+    - "specs/infra/environments/development.yaml"
+    - "specs/infra/deployment-contracts/sst-bend.yaml"
+    - "specs/infra/gitops/sst-app.yaml"
+    - "specs/infra/security/secrets-provider.yaml"
+    - "docs/runbooks/argocd-kind-development.md"
+
+validation:
+  owner_full_check: "PASS"
+  owner_renders_and_client_dry_runs: "PASS"
+  argocd_project_dry_run: "PASS"
+  no_wildcard_project_grant: "PASS"
+  github_checks_pr_14: "PASS"
+  github_checks_pr_15: "PASS"
+  github_checks_pr_16: "PASS"
+  runtime_health: "PASS"
+  secret_safe_readback: "PASS"
+  control_plane_check: "PASS"
+
+decision:
+  status: "approved-closed-published-and-reconciled"
+  approver: "4uentes"
+  decided_at: "2026-08-23"
+
+evidence_refs:
+  - "evidence/requests/CR-SST-0205/execution-start-2026-08-23.md"
+  - "evidence/requests/CR-SST-0205/owner-draft-publication-2026-08-23.md"
+  - "evidence/requests/CR-SST-0205/runtime-reconciliation-closure-2026-08-23.md"
+
+closure:
+  status: "complete-owner-published-development-reconciled"
+  next_request_id: "CR-SST-0206"
+  limits:
+    - "Closure does not authorize Jira writes."
+    - "Closure does not authorize production mutation."
+    - "Closure does not authorize CHAT_RETENTION_V1_ENABLED=true."
+    - "CR-SST-0206 requires its own lifecycle and approval before child-repo mutation."
