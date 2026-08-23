@@ -19,13 +19,14 @@ control_plane_context:
   jira_parent_issue_key: "SST-113"
   jira_write_authorized: true
   jira_write_scope: "One transition of SST-116 to En curso after this running lifecycle is merged."
-  jira_write_batch_status: "authorized-pending-lifecycle-merge"
+  jira_write_batch_status: "consumed-2026-08-23"
+  jira_transition_readback: "SST-116 is En curso under SST-113; no comment or field edit was performed."
 
 execution:
   requires_human_approval: true
   approval_source: "Explicit user authorization dated 2026-08-23: actualicemos jira y avancemos al siguiente lifecycle."
   approval_scope: "CR-SST-0206 exclusively in sst-fend for development consent-aware chat retention UX"
-  approval_status: "approved-pending-running-lifecycle-merge"
+  approval_status: "approved-running"
   child_repo_mutation_allowed: true
   child_repo_mutation_targets: ["sst-fend"]
   deployment_allowed: false
@@ -72,17 +73,18 @@ validation:
   required_control_plane_check: "npm run check"
 
 implementation_readback:
-  status: "not-started-awaiting-running-lifecycle-merge"
+  status: "not-started-ready-for-owner-worktree"
   owner_branch: "feat/CR-SST-0206/chat-retention-consent-ux"
   owner_commit: null
   owner_pull_request: null
   owner_checks: "not-run"
 
 decision:
-  status: "approved-running-after-lifecycle-merge"
+  status: "approved-running"
   approver: "4uentes"
   decided_at: "2026-08-23"
 
 evidence_refs:
   - "evidence/requests/CR-SST-0205/jira-close-and-next-lifecycle-batch-authorization-2026-08-23.md"
   - "evidence/requests/CR-SST-0206/execution-start-2026-08-23.md"
+  - "evidence/requests/CR-SST-0206/jira-transition-readback-2026-08-23.md"

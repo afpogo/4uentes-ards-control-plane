@@ -28,7 +28,7 @@ scope:
   sst_bend_modified: false
   sst_fend_modified: false
   production_modified: false
-  jira_modified: false
+  jira_modified: true
   feature_enabled: false
 
 publication:
@@ -79,6 +79,7 @@ validation:
   github_checks_pr_16: "PASS"
   runtime_health: "PASS"
   secret_safe_readback: "PASS"
+  jira_closure_sync: "PASS: SST-115 Finalizada with resolution Listo; exact later-authorized batch"
   control_plane_check: "PASS"
 
 decision:
@@ -90,6 +91,8 @@ evidence_refs:
   - "evidence/requests/CR-SST-0205/execution-start-2026-08-23.md"
   - "evidence/requests/CR-SST-0205/owner-draft-publication-2026-08-23.md"
   - "evidence/requests/CR-SST-0205/runtime-reconciliation-closure-2026-08-23.md"
+  - "evidence/requests/CR-SST-0205/jira-close-and-next-lifecycle-batch-authorization-2026-08-23.md"
+  - "evidence/requests/CR-SST-0206/jira-transition-readback-2026-08-23.md"
 
 closure:
   status: "complete-owner-published-development-reconciled"
