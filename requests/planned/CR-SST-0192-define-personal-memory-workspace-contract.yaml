@@ -1,0 +1,68 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0192"
+title: "Define SST personal memory and portable workspace contract"
+status: "planned"
+source_request: "requests/inbox/CR-SST-0192-define-personal-memory-workspace-contract.yaml"
+created_at: "2026-08-17"
+requester: "4uentes"
+summary: >
+  Reconcile the original tag-governed personal knowledge intention, the
+  corrected SST user internal memory model and the existing generated
+  workspace POC into one implementable V1 contract.
+control_plane_context:
+  initiative_id: "INIT-SST-0010"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  jira_project_key: "SST"
+  jira_issue_type: "Tarea"
+  jira_epic_key: "SST-105"
+  jira_issue_key: "SST-106"
+  jira_parent: "SST-105"
+  jira_status_observed: "Tareas por hacer"
+depends_on:
+  - "CR-SST-0030"
+  - "CR-SST-0031"
+  - "CR-SST-0155"
+impact_analysis:
+  required: true
+  affected_services:
+    - {service_id: "4uentes-orchestor", via: "product contract and execution governance"}
+    - {service_id: "sst-bend", via: "future canonical memory owner"}
+    - {service_id: "sst-chatbot", via: "future proposal, recall and projection consumer"}
+    - {service_id: "sst-fend", via: "future review and export UX"}
+    - {service_id: "4uentes-auth", via: "identity and future M2M scopes"}
+  risks:
+    - "Confusing product memory with project ARDS/SDD."
+    - "Making inferred memory durable without review rules."
+    - "Declaring a local device tree canonical without sync and conflict semantics."
+contract_decisions_required:
+  - "Canonical entity model for memory space, event, proposal, fact, intention, thread and recall audit."
+  - "Structured tag groups for domain, topic, kind, source, visibility and lifecycle."
+  - "Retention, correction, deletion, supersession and provenance semantics."
+  - "Server-canonical V1 with portable projection and future device replica."
+  - "M2M and user authorization boundaries."
+  - "Robot memory view and proposal permissions."
+execution:
+  child_repo_mutation_allowed: false
+  jira_write_allowed: false
+  jira_write_scope: "Create batch completed and authorization consumed."
+required_checks:
+  - "npm run check"
+  - "No absolute local paths in stable initiative or request artifacts"
+  - "Jira duplicate and hierarchy preflight"
+planned_jira_mirror:
+  summary: "[SST][INIT-SST-0010][CR-SST-0192] Define personal memory and portable workspace contract"
+  description: >
+    IntenciÃ³n de avance: cerrar el contrato V1 que une la base de conocimiento
+    personal gobernada por tags, la memoria interna de usuario y la proyecciÃ³n
+    portable inspirada en ARDS. Se definirÃ¡n ownership, entidades, lifecycle,
+    privacidad, tags, provenance, storage server-canonical, lÃ­mites de rÃ©plica
+    de dispositivo y vistas para robots. No modifica repos funcionales. Jira es
+    mirror; ARDS/SDD en 4uentes-orchestor conserva la autoridad. Resultado:
+    contrato aprobado y listo para atomizar implementaciÃ³n backend, chatbot,
+    proyecciÃ³n, UX y E2E.
+decision:
+  status: "approved-for-planning"
+  approver: "4uentes"
+  decided_at: "2026-08-17"

@@ -1,0 +1,78 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0192"
+title: "Define SST personal memory and portable workspace contract"
+status: "done"
+source_request: "requests/inbox/CR-SST-0192-define-personal-memory-workspace-contract.yaml"
+planned_request: "requests/planned/CR-SST-0192-define-personal-memory-workspace-contract.yaml"
+created_at: "2026-08-17"
+completed_at: "2026-08-17"
+requester: "4uentes"
+
+control_plane_context:
+  initiative_id: "INIT-SST-0010"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  jira_project_key: "SST"
+  jira_issue_key: "SST-106"
+  jira_status_observed: "Tareas por hacer"
+  jira_write_performed: false
+
+implemented_change: >
+  Approved an implementable cross-repo V1 contract for private SST user memory,
+  explicit review, canonical backend authority, governed proposal and recall,
+  retention, correction, deletion, portable workspace projection and
+  capability-scoped robot views.
+
+affected_repos:
+  - service_id: "4uentes-orchestor"
+    local_binding: "current-workspace"
+
+future_owner_repos:
+  - "sst-bend"
+  - "sst-chatbot"
+  - "4uentes-auth"
+  - "sst-fend"
+
+contract_decisions:
+  - "sst-bend is the canonical memory and policy-decision owner."
+  - "Raw chat and provider state are not accepted memory."
+  - "V1 requires recorded user acceptance before recall, indexing, robot use or export."
+  - "Incomplete tenant/account/user/application/memory-space scope fails closed."
+  - "Provider input is minimized and provider output cannot expand authority."
+  - "Portable physical state is a derived noncanonical projection."
+  - "Robot profiles use backend-filtered capabilities and never replace human account roles."
+
+execution:
+  child_repo_mutation_allowed: false
+  jira_write_allowed: false
+  owner_documentation:
+    status: "not-applicable-no-child-mutation"
+    future_rule: "Each implementation CR must adopt this contract in its owner repo documentation or record an approved exception."
+
+validation:
+  required_checks:
+    - "npm run check"
+    - "git diff --check for CR-SST-0192 artifacts"
+    - "absolute local path scan"
+    - "manual contract scenario walkthrough"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0192/personal-memory-governance-v1.yaml"
+    - "evidence/requests/CR-SST-0192/contract-decision.md"
+    - "evidence/requests/CR-SST-0192/authorization-decision-matrix.md"
+    - "evidence/requests/CR-SST-0192/portable-workspace-and-robot-contract.md"
+    - "evidence/requests/CR-SST-0192/owner-handoff-plan.md"
+    - "evidence/requests/CR-SST-0192/manual-qa-readiness-and-walkthrough.md"
+    - "evidence/requests/CR-SST-0192/implementation-summary.md"
+    - "evidence/requests/CR-SST-0192/changed-files-summary.md"
+    - "evidence/requests/CR-SST-0192/validation-results.md"
+
+decision:
+  status: "approved-done"
+  approver: "4uentes"
+  decided_at: "2026-08-17"
+
+next_sequence:
+  next_request_id: "CR-SST-0193"
+  next_request_ref: "requests/planned/CR-SST-0193-implement-canonical-user-memory-runtime.yaml"
+  note: "Implement the canonical backend slice before connecting proposal, recall, projection or UX."

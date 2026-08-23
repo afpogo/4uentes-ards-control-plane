@@ -1,0 +1,99 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0194"
+title: "Integrate governed memory proposals and recall into SST chatbot"
+status: "planned"
+source_request: "requests/inbox/CR-SST-0194-integrate-chatbot-memory-proposals-and-recall.yaml"
+created_at: "2026-08-17"
+requester: "4uentes"
+summary: >
+  Connect the existing governed RAG and HTTP chat runtime to sst-bend canonical
+  memory through explicit source and proposal ports.
+control_plane_context:
+  initiative_id: "INIT-SST-0010"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  jira_project_key: "SST"
+  jira_issue_type: "Tarea"
+  jira_epic_key: "SST-105"
+  jira_issue_key: "SST-108"
+  jira_parent: "SST-105"
+  jira_status_observed: "Tareas por hacer"
+depends_on: ["CR-SST-0192", "CR-SST-0193", "CR-SST-0155", "CR-SST-0168"]
+implementation_scope:
+  owner_repos: ["sst-chatbot", "sst-bend", "4uentes-auth"]
+  must_implement:
+    - "GovernedMemorySourcePort adapter backed by sst-bend."
+    - "Structured user-memory proposal port and backend validation handoff."
+    - "Memory-aware ChatRuntimePort composition with cancellation and bounded context."
+    - "M2M scope and PrincipalContext propagation without forwarding identity to the provider."
+    - "Fake-backed proposal and recall smoke with citations."
+  must_not_implement:
+    - "Direct canonical writes from sst-chatbot"
+    - "Provider-controlled authorization"
+    - "Mandatory real OpenAI credentials"
+architecture_gate:
+  status: "blocked-by-predecessor-and-request-id-namespace-reconciliation"
+  evidence_ref: "evidence/requests/CR-SST-0194/identity-scope-policy-analysis-2026-08-22.md"
+  predecessor_candidate:
+    placeholder_id: "CR-SST-TODO-IDENTITY-SCOPE"
+    title: "Reconcile trusted SST user-memory identity, tenant and application scope"
+    assignment_status: "blocked-until-global-cr-namespace-is-reconciled"
+    required_outcome: >
+      Version and implement trusted tenant/account/user/application scope before
+      chatbot memory integration starts.
+  execution_blocked_until:
+    - "The global CR namespace is reconciled without rewriting existing identities."
+    - "The identity-scope predecessor receives a free ID, approval, implementation and closure evidence."
+    - "CR-SST-0193 is locally closed after its normal identity path passes."
+    - "Explicit cross-repo execution approval covers the owner repos required by CR-SST-0194."
+implementation_units:
+  - id: "identity-scope-predecessor-readback"
+    objective: "Verify the separate identity-scope predecessor is closed before any CR-SST-0194 runtime mutation."
+    owners: ["4uentes-orchestor"]
+    risk: "high"
+    validation: "Free canonical CR ID, owner-doc evidence, negative isolation tests and CR-SST-0193 closure are all present."
+  - id: "memory-m2m-ports"
+    objective: "Expose minimum-scope proposal and recall surfaces for sst-chatbot."
+    owners: ["sst-bend", "4uentes-auth"]
+    risk: "high"
+    validation: "M2M scopes, backend scope reconstruction, idempotency and fail-closed tests."
+  - id: "chatbot-memory-adapters"
+    objective: "Compose governed proposal and recall adapters with bounded provider context."
+    owners: ["sst-chatbot"]
+    risk: "high"
+    validation: "Fake-provider proposal, recall, citations, cancellation and secret-boundary tests."
+  - id: "integrated-memory-smoke"
+    objective: "Prove real login through cross-session cited recall without provider-owned memory."
+    owners: ["4uentes-auth", "sst-bend", "sst-chatbot"]
+    risk: "high"
+    validation: "All owner checks plus the full control-plane check."
+execution:
+  child_repo_mutation_allowed: false
+  future_execution_condition: >
+    Identity-scope predecessor closed, CR-SST-0193 closed, explicit cross-repo
+    approval granted and one clean branch/worktree per owner repo.
+  jira_write_allowed: false
+  jira_write_scope: "Create batch completed and authorization consumed."
+required_checks:
+  - "sst-chatbot full check and governed RAG coverage gate"
+  - "sst-bend API and auth tests"
+  - "control-plane npm run check"
+owner_documentation:
+  required: true
+  rule: >
+    Every mutated owner repo must update its own ARDS/SDD contract and test
+    documentation; control-plane evidence cannot replace those owner docs.
+planned_jira_mirror:
+  summary: "[SST][INIT-SST-0010][CR-SST-0194] Integrate chatbot memory proposals and recall"
+  description: >
+    IntenciÃ³n de avance: conectar el runtime HTTP y el RAG gobernado del
+    chatbot con la memoria canÃ³nica de sst-bend. El agente podrÃ¡ proponer hechos
+    o intenciones y recuperar memoria aceptada con citas, pero nunca persistirÃ¡
+    directamente. Incluye M2M, PrincipalContext, contexto acotado, cancelaciÃ³n y
+    smoke determinista. Depende de CR-SST-0192, CR-SST-0193, CR-SST-0155 y
+    CR-SST-0168. Jira es mirror; la ejecuciÃ³n requiere aprobaciÃ³n cross-repo.
+decision:
+  status: "approved-for-planning"
+  approver: "4uentes"
+  decided_at: "2026-08-17"
