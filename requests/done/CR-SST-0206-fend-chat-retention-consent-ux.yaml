@@ -22,7 +22,8 @@ control_plane_context:
   jira_parent_issue_key: "SST-113"
   jira_close_authorized: true
   jira_close_scope: "Transition only SST-116 to Finalizada with resolution Listo after this closure lifecycle is merged."
-  jira_close_batch_status: "authorized-pending-control-plane-merge"
+  jira_close_batch_status: "consumed-2026-08-23"
+  jira_close_readback: "SST-116 is Finalizada with resolution Listo, remains a Subtask of SST-113, and received no comment or field edit."
 
 scope:
   owner_repo_modified: "sst-fend"
@@ -33,6 +34,7 @@ scope:
   cluster_reconciliation_observed: false
   production_modified: false
   jira_modified_during_closure_publication: false
+  jira_modified_after_closure_publication: true
   feature_flag_enabled: false
 
 publication:
@@ -76,7 +78,7 @@ validation:
   rendered_qa: "PASS at 1440x1000 and 390x844 with no horizontal overflow or runtime exceptions"
   accessibility_and_privacy_gates: "PASS"
   control_plane_check: "PASS: 696 lifecycle files scanned with 0 FAIL; owner documentation and visual documentation gates passed"
-  jira_closure_sync: "PENDING until this control-plane closure is merged"
+  jira_closure_sync: "PASS: SST-116 Finalizada with resolution Listo; exact authorized batch consumed"
 
 decision:
   status: "approved-owner-merged-closure-publication"
@@ -90,12 +92,13 @@ evidence_refs:
   - "evidence/requests/CR-SST-0206/owner-draft-publication-2026-08-23.md"
   - "evidence/requests/CR-SST-0206/owner-merge-and-closure-2026-08-23.md"
   - "evidence/requests/CR-SST-0206/jira-close-authorization-2026-08-23.md"
+  - "evidence/requests/CR-SST-0206/jira-close-readback-2026-08-23.md"
 
 closure:
   status: "complete-owner-merged-development-artifacts-published"
   next_request_id: "CR-SST-0207"
   limits:
-    - "Jira closure must wait until this control-plane closure is merged."
+    - "The one-time Jira closure batch is consumed; any future Jira write requires new authorization."
     - "No Jira issue other than SST-116 is authorized for mutation."
     - "No cluster health or rollout claim is made from the CI image-tag update alone."
     - "Production mutation and feature-flag activation remain unauthorized."
