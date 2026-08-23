@@ -30,3 +30,11 @@ namespace canónico ya asignaba ese ID a Bend chat retention and cache
 semantics. `CR-SST-0213` gobierna la reconciliación local de esa desviación.
 Los payloads y el readback históricos se preservan sin reescritura. Reemplazar
 el label en Jira requiere un lote nuevo, mínimo, enumerado y aprobado.
+
+## Cierre de identidad
+
+`JIRA-SEC-PREPROD-03` fue autorizado y consumido el 2026-08-23 bajo
+`CR-SST-0213`. Las descripciones de `SST-86`, `SST-89` y `SST-92` ahora
+referencian `CR-SST-0213`; cada issue recibió un comentario aclaratorio y el
+readback confirmó que status, priority, labels, parent y summary permanecieron
+sin cambios.

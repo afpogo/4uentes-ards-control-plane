@@ -26,7 +26,7 @@ result:
   SST-95: "description and comment updated; priority and status unchanged"
   SST-86: "description and comment updated; priority and status unchanged"
 post_write_reconciliation:
-  status: "narrative-corrected-identity-reconciliation-running"
+  status: "narrative-and-identity-corrected"
   detail: >
     origin/main PR35 was fetched after the Jira write and contains newer
     canonical facts: CR-SST-0201 is validated-live/done while CR-SST-0200
@@ -36,7 +36,10 @@ post_write_reconciliation:
   historical_collided_request_label: "CR-SST-0204"
   narrative_correction_readback: "PASS"
   identity_reconciliation_request_id: "CR-SST-0213"
-  jira_identity_correction_authorized: false
+  jira_identity_correction_authorized: true
+  jira_identity_correction_batch_id: "JIRA-SEC-PREPROD-03"
+  jira_identity_correction_authorization_status: "consumed"
+  jira_identity_correction_readback: "PASS"
   evidence_ref: "evidence/requests/CR-SST-0203/post-write-canonical-drift.md"
 owner_documentation: {required: false, status: "not-applicable-control-plane-jira-mirror-only"}
 evidence_refs:
