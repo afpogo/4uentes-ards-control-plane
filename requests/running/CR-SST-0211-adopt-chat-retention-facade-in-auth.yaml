@@ -1,0 +1,84 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-SST-0211"
+title: "Adopt the SST chat retention facade in 4uentes-auth"
+status: "running"
+source_request: "requests/inbox/CR-SST-0211-adopt-chat-retention-facade-in-auth.yaml"
+planned_request: "requests/planned/CR-SST-0211-adopt-chat-retention-facade-in-auth.yaml"
+created_at: "2026-08-22"
+started_at: "2026-08-23"
+requester: "4uentes"
+depends_on: ["CR-SST-0204"]
+control_plane_context:
+  initiative_id: "INIT-SST-0007"
+  parent_request_id: "CR-SST-0202"
+  coordinated_request_ids: ["CR-SST-0204", "CR-SST-0206", "CR-SST-0207"]
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  jira_issue_key: null
+  jira_write_authorized: false
+execution:
+  requires_human_approval: true
+  approval_source: "Explicit user authorization dated 2026-08-23."
+  approval_scope: "CR-SST-0211 exclusively in 4uentes-auth from a clean origin/develop worktree"
+  approval_status: "approved"
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets: ["4uentes-auth"]
+  deployment_allowed: false
+  production_mutation_allowed: false
+  jira_write_allowed: false
+workspace_isolation:
+  owner_repo: "4uentes-auth"
+  base_ref: "origin/develop"
+  required_branch: "feat/CR-SST-0211/chat-retention-facade"
+  required_worktree: "worktrees/CR-SST-0211-auth-owner"
+  rule: "Refresh origin/develop, preserve the dirty canonical checkout and execute only in the clean request worktree."
+implementation_slice:
+  objective: >
+    Adopt the published Bend chat-retention V1 contract as a thin authenticated
+    HTTP facade without moving chat data authority into 4uentes-auth.
+  required_operations: [list, create-temporary, history, save, finish-temporary, delete-saved]
+  excluded_surfaces:
+    - "sst-bend retention storage, PostgreSQL or Redis"
+    - "sst-fend consent UX"
+    - "Socket.IO routing"
+    - "authentication or session-family redesign"
+    - "Jira, deployment and production"
+upstream_contract_gate:
+  owner_repo: "sst-bend"
+  request_id: "CR-SST-0204"
+  published_ref: "develop@f58e0a9"
+  contract_ref: "specs/api/chat-retention-v1.yaml"
+  capability_status: "ready-for-consumer"
+owner_documentation:
+  required: true
+  status: "running"
+  owner_repos: ["4uentes-auth"]
+  required_surfaces:
+    - "specs/integrations-api.yaml"
+    - "specs/routing.yaml"
+    - "docs/bf/03-routing.md"
+    - "docs/bf/06-integrations-api.md"
+    - "docs/chat-sessions.md"
+    - "specs/capabilities/inbound/sst-bend--chat-retention-v1.yaml"
+    - "docs/capabilities/inbound/sst-bend--chat-retention-v1.md"
+    - "specs/capabilities/outbound/chat-retention-v1.yaml"
+    - "docs/capabilities/outbound/chat-retention-v1.md"
+    - "httpPruebas/sst_server.http"
+validation:
+  required_owner_check: "npm run check"
+  required_control_plane_check: "npm run check"
+  required_security_tests:
+    - "JWT rejected before upstream invocation"
+    - "query and header allowlists"
+    - "encoded identifiers and exact upstream targets"
+    - "timeout/unavailable never reported as successful mutation"
+  evidence_safety: "No token, cookie, message content or credential in evidence."
+decision:
+  status: "approved-running"
+  approver: "4uentes"
+  decided_at: "2026-08-23"
+evidence_refs:
+  - "evidence/requests/CR-SST-0211/namespace-and-boundary-preflight-2026-08-22.md"
+  - "evidence/requests/CR-SST-0211/implementation-plan.md"
+  - "evidence/requests/CR-SST-0211/execution-start-2026-08-23.md"
