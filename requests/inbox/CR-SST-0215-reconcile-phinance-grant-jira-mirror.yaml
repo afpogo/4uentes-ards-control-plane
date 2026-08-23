@@ -1,0 +1,35 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0215"
+title: "Reconcile the Phinance grant Jira mirror"
+status: "inbox"
+created_at: "2026-08-23"
+requester: "4uentes"
+business_context: >
+  HPT-6 is the existing primary Jira Task for the Phinance service grant, but
+  it still mirrors the collided historical identity CR-SST-0208. The canonical
+  provider adoption is closed as CR-SST-0214 and Jira must remain a mirror.
+requested_change: >
+  Reconcile HPT-6 in place to the canonical CR-SST-0214 identity and validated
+  provider evidence without creating, deleting, reparenting or transitioning
+  any issue.
+expected_outcome: >
+  HPT-6 remains the single Task under HPT-5, stays Listo and accurately mirrors
+  the closed CR-SST-0214 provider adoption.
+initial_scope:
+  initiative_id: "INIT-HPT-0002"
+  jira_project: "HPT"
+  jira_issue_keys: ["HPT-5", "HPT-6"]
+  canonical_request_id: "CR-SST-0214"
+  stale_request_id: "CR-SST-0208"
+constraints:
+  - "Jira is a mirror; the control-plane lifecycle remains authoritative."
+  - "Do not create, delete, reparent, link, comment on or transition issues."
+  - "Only summary, description and labels of HPT-6 may be reconciled."
+  - "Do not expose secrets, credentials, private URLs or personal data."
+decision:
+  status: "accepted-for-reconciliation"
+  approver: "4uentes"
+  approved_at: "2026-08-23"
+  approval_text: "ok autorizo jira, y avancemos con el proximo frente"
+
