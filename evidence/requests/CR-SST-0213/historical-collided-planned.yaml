@@ -1,0 +1,53 @@
+# Historical snapshot: this provisional lifecycle reused the canonical
+# CR-SST-0204 identity and is preserved only as execution evidence for
+# CR-SST-0213. It is not an active request lifecycle.
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0204"
+title: "Correct post-PR35 Jira narratives"
+status: "planned"
+source_request: "requests/inbox/CR-SST-0204-correct-post-pr35-jira-narratives.yaml"
+created_at: "2026-08-22"
+requester: "4uentes"
+control_plane_context:
+  initiative_ids: ["INIT-SST-0007", "INIT-SST-0008"]
+  related_request_ids: ["CR-SST-0159", "CR-SST-0178", "CR-SST-0199", "CR-SST-0200", "CR-SST-0201", "CR-SST-0203"]
+  jira_role: "mirror"
+  jira_source_of_truth: false
+scope:
+  repository: "4uentes-orchestor"
+  external_system: "Jira"
+  project_key: "SST"
+  issue_keys: ["SST-86", "SST-89", "SST-92"]
+  child_repo_mutation_targets: []
+risk: {level: "medium", drivers: ["EXTERNAL_WRITE", "CANONICAL_STATUS_CORRECTION", "SECURITY_NARRATIVE"]}
+task_weight: {classification: "complex-high-risk-task", risk_level: "medium"}
+model_selection:
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5"
+  fallback_reasoning_effort: "high"
+subagent_deployment_plan:
+  mode: "none"
+  reason: "The exact external security narrative remains with the primary agent."
+execution:
+  requires_human_approval: true
+  approval_status: "approved"
+  approval_source: "User explicitly approved JIRA-SEC-PREPROD-02 on 2026-08-22."
+  jira_write_allowed: true
+  allowed_operations:
+    SST-86: ["set-description", "add-comment"]
+    SST-89: ["set-description", "add-comment"]
+    SST-92: ["set-description", "add-comment"]
+  prohibited_operations: ["create", "delete", "transition", "set-priority", "set-labels", "reparent", "assign", "change-summary"]
+  production_mutation_allowed: false
+owner_documentation: {required: false, status: "not-applicable-control-plane-jira-mirror-only"}
+validation:
+  - "Read back identity, type, parent, status, priority, labels, description and comment count for all allowlisted issues."
+  - "Confirm CR-SST-0199 and CR-SST-0201 are described as done and CR-SST-0178/0200 as running."
+  - "Confirm no field outside description/comments changed."
+  - "Run full 4uentes-orchestor npm run check."
+decision: {status: "approved-planned", approver: "4uentes", decided_at: "2026-08-22"}

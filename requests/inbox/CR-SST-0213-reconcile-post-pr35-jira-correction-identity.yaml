@@ -1,0 +1,28 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0213"
+title: "Reconcile the post-PR35 Jira correction identity"
+status: "inbox"
+created_at: "2026-08-23"
+requester: "4uentes"
+summary: >
+  Resolve PR #39 against the canonical request namespace after the historical
+  Jira correction batch used CR-SST-0204, an identity now owned by Bend chat
+  retention and cache semantics.
+requested_scope:
+  repository: "4uentes-orchestor"
+  pull_request: 39
+  initiative_ids: ["INIT-SST-0007", "INIT-SST-0008"]
+  historical_batch_id: "JIRA-SEC-PREPROD-02"
+constraints:
+  - "Preserve CR-SST-0204 as the canonical Bend chat-retention request."
+  - "Do not rewrite historical Jira payloads or readback as if they used CR-SST-0213."
+  - "Record the collided label and lifecycle-ordering deviation explicitly."
+  - "Do not perform a Jira write without a new enumerated batch authorization."
+  - "Do not modify child repositories, runtime, deployment or production."
+requested_next_step: "Reconcile the PR in its isolated worktree and publish a validation-backed conflict resolution."
+decision:
+  status: "accepted-for-planning"
+  approver: "4uentes"
+  approved_at: "2026-08-23"
+  approval_text: "ok avancemos para resolver conflictos"
