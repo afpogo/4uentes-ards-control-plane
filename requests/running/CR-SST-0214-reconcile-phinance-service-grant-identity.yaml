@@ -1,0 +1,62 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-SST-0214"
+title: "Adopt the Phinance service invocation grant under its canonical identity"
+status: "running"
+source_request: "requests/inbox/CR-SST-0214-reconcile-phinance-service-grant-identity.yaml"
+planned_request: "requests/planned/CR-SST-0214-reconcile-phinance-service-grant-identity.yaml"
+created_at: "2026-08-23"
+started_at: "2026-08-23"
+requester: "4uentes"
+
+authorization:
+  status: "approved-for-auth-provider-adoption"
+  approved_by: "4uentes"
+  approved_at: "2026-08-23"
+  approval_text: "continuemos con adopcion"
+  approved_decisions:
+    - "one exact sst-bend -> phinance-api / finance:invoke grant"
+    - "RS256 service token with maximum five-minute lifetime"
+    - "no user, account, membership or finance entitlement claims"
+    - "owner traceability correction from CR-SST-0208 to CR-SST-0214"
+
+execution:
+  child_repo_mutation_allowed: true
+  child_repo_mutation_target: "4uentes-auth owner contract, configuration, allowlist and provider tests"
+  control_plane_mutation_allowed: true
+  runtime_implementation_allowed: true
+  dependency_changes_allowed: false
+  infrastructure_changes_allowed: false
+  secret_changes_allowed: false
+  sst_child_mutation_allowed: false
+  phinance_child_mutation_allowed: false
+  jira_write_allowed: false
+
+baseline_gate:
+  dirty_owner_root: "preserved"
+  historical_source: "33a5dc8 based on origin/main@6b44285"
+  canonical_execution_base: "origin/develop@89d0009"
+  execution_strategy: "clean isolated worktree and selective patch port"
+  stop_condition: "stop on ambiguous provider contract or semantic conflict"
+
+owner_documentation:
+  required: true
+  status: "planned"
+  owner_repo: "4uentes-auth"
+  planned_owner_surfaces:
+    - "specs/auth.yaml"
+    - "specs/capabilities/outbound/phinance-service-token-grant-v1.yaml"
+    - "docs/security/service-token-lifecycle.md"
+    - "docs/capabilities/outbound/phinance-service-token-grant-v1.md"
+
+execution_status:
+  lifecycle: "running-pending-owner-port"
+  control_plane_preflight: "passed"
+  historical_owner_commit: "33a5dc8"
+  owner_publication: "pending"
+  jira_reconciliation: "blocked-pending-enumerated-batch"
+
+decision:
+  status: "executing-approved-scope"
+  approver: "4uentes"
+  blocker: "consumer, verifier, deployment, proxy and Jira remain outside this window"

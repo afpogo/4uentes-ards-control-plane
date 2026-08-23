@@ -1,0 +1,168 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0214"
+title: "Adopt the Phinance service invocation grant under its canonical identity"
+status: "planned"
+source_request: "requests/inbox/CR-SST-0214-reconcile-phinance-service-grant-identity.yaml"
+created_at: "2026-08-23"
+requester: "4uentes"
+
+summary: >
+  Port the validated Auth-owned Phinance service grant from historical commit
+  33a5dc8 onto current 4uentes-auth develop, correct owner traceability from
+  the collided CR-SST-0208 identity to CR-SST-0214, validate it and publish it
+  without changing runtime behavior.
+
+control_plane_context:
+  initiative_id: "INIT-HPT-0002"
+  predecessor_request_ids:
+    - "CR-SST-0167"
+    - "CR-HPT-0013"
+    - "CR-HPT-0014"
+    - "CR-SST-0212"
+  historical_request_id: "CR-SST-0208"
+  preserved_owner_commit: "33a5dc8"
+  preserved_reservation_commit: "a9ef5f8"
+  canonical_reservation_merge: "44bd2d0"
+  planned_follow_up_sequence:
+    - "SST consumer adoption and membership-to-finance-entitlement mapping"
+    - "Concrete Phinance JWT/JWKS verifier"
+    - "Facade proxy activation and integrated account-isolation QA"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "4uentes-auth"
+      via: "exact client_credentials allowlist tuple and owner capability"
+  intentionally_unaffected_services:
+    - "sst-bend"
+    - "finanzas-personales-backend"
+  observed_baseline:
+    dirty_owner_root: "preserved and ineligible for this mutation"
+    historical_base: "4uentes-auth origin/main@6b44285"
+    current_owner_base: "4uentes-auth origin/develop@89d0009"
+    established_provider_contract: "present on current develop"
+    historical_commit_in_develop: false
+  risks:
+    - id: "OVERBROAD_SERVICE_GRANT"
+      severity: "critical"
+    - id: "SECRET_OR_TOKEN_DISCLOSURE"
+      severity: "critical"
+    - id: "SERVICE_AND_USER_AUTH_CONFLATION"
+      severity: "critical"
+    - id: "IDENTITY_TRACEABILITY_DRIFT"
+      severity: "high"
+
+risk:
+  level: "high"
+  score: 10
+  drivers:
+    - "machine credentials and token issuance"
+    - "financial-service authorization boundary"
+    - "retroactive request identity correction"
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "authentication architecture, credential lifecycle and cross-repo sequencing"
+
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5-high"
+  reason: "The request changes issuance policy for a service protecting financial data."
+
+subagent_deployment_plan:
+  required: false
+  parallelizable: false
+  roles: []
+  fallback: "The primary agent performs baseline reconciliation, security review and publication sequentially."
+
+approved_design_proposal:
+  provider: "4uentes-auth"
+  token_endpoint: "POST /api/auth/internal/oauth/token"
+  grant_type: "client_credentials"
+  signing: {algorithm: "RS256", issuer: "sst-auth", jwks_path: "/.well-known/jwks.json"}
+  allowlist_tuple: {caller: "sst-bend", audience: "phinance-api", scope: "finance:invoke"}
+  required_claims:
+    sub: "sst-bend"
+    client_id: "sst-bend"
+    token_use: "service"
+    audience: "phinance-api"
+    scope: "finance:invoke"
+    temporal: ["iat", "exp"]
+  lifetime: {maximum_seconds: 300, refresh_token_allowed: false}
+  identity_correction_rule: >
+    Replace stale CR-SST-0208 references introduced by the historical patch
+    with CR-SST-0214 only in owner documentation, specs, test metadata and
+    orchestrator linkage; preserve executable grant semantics.
+  fail_closed_rule: >
+    A mismatched client, secret, grant type, audience or scope must not produce
+    a usable token. This provider publication does not activate the consumer.
+
+atomized_execution:
+  - order: 1
+    id: "publish-governed-running-state"
+    objective: "Publish authorization and exact owner allowlist before mutation."
+    validation: "full control-plane check"
+  - order: 2
+    id: "port-and-relabel-owner-patch"
+    objective: "Port 33a5dc8 to current develop and correct request traceability only."
+    validation: "runtime semantic diff plus owner docs/capability review"
+  - order: 3
+    id: "owner-security-validation"
+    objective: "Run full Auth check and focused positive/negative grant tests."
+    validation: "npm run check and focused grant test"
+  - order: 4
+    id: "publish-readback-close"
+    objective: "Merge owner PR, read back develop and close the control-plane lifecycle."
+    validation: "remote ancestry, full control-plane check and worktree retirement"
+
+execution:
+  requires_human_approval: true
+  approval_source: "The user explicitly requested continuation with adoption on 2026-08-23."
+  child_repo_mutation_allowed: true
+  runtime_implementation_allowed: true
+  dependency_changes_allowed: false
+  infrastructure_changes_allowed: false
+  secret_changes_allowed: false
+  sst_child_mutation_allowed: false
+  phinance_child_mutation_allowed: false
+  jira_write_allowed: false
+  approval_boundary: >
+    Only 4uentes-auth owner files contained in the historical patch plus exact
+    request-link correction are allowed. Jira requires a separate enumerated batch.
+
+owner_documentation:
+  required: true
+  status: "planned"
+  owner_repo: "4uentes-auth"
+  planned_owner_surfaces:
+    - "specs/auth.yaml"
+    - "specs/capabilities/outbound/phinance-service-token-grant-v1.yaml"
+    - "docs/security/service-token-lifecycle.md"
+    - "docs/capabilities/outbound/phinance-service-token-grant-v1.md"
+    - "docs/chat-sessions.md"
+  orchestrator_link_required: true
+
+validation:
+  required_checks:
+    - "4uentes-auth: npm run check."
+    - "Focused positive and negative Phinance service grant test."
+    - "RS256/JWKS verification, exact claims and maximum five-minute TTL."
+    - "No secret, credential, private key, token or authorization header in diff or evidence."
+    - "Runtime semantics match the historical validated patch except for base integration."
+    - "4uentes-orchestor: npm run check."
+    - "git diff --check in every mutated repository."
+
+decision:
+  status: "approved-for-auth-provider-adoption"
+  approver: "4uentes"
+  approved_at: "2026-08-23"
+  approval_text: "continuemos con adopcion"
+  blocker: "Jira correction and consumer activation remain separate authorization windows."
