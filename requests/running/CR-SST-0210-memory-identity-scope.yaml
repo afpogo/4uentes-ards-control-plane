@@ -22,7 +22,7 @@ execution:
   requires_human_approval: true
   approval_source: "Explicit user authorization dated 2026-08-23: autorizo."
   approval_scope: "CR-SST-0210 exclusively in sst-bend for development identity and personal-memory scope adoption"
-  approval_status: "approved-pending-running-lifecycle-merge"
+  approval_status: "approved-running-lifecycle-merged"
   child_repo_mutation_allowed: true
   child_repo_mutation_targets: ["sst-bend"]
   deployment_allowed: false
@@ -63,7 +63,7 @@ implementation_slice:
 
 owner_documentation:
   required: true
-  status: "authorized-pending-owner-worktree"
+  status: "published-owner-pr-review-pending"
   owner_repos: ["sst-bend"]
   required_surfaces:
     - "specs/api/users-accounts-robots.yaml"
@@ -86,12 +86,15 @@ validation:
   downstream_gate: "CR-SST-0194 stays blocked until CR-SST-0210 closes and CR-SST-0193 normal-path QA passes."
 
 implementation_readback:
-  status: "not-started-awaiting-running-lifecycle-merge"
+  status: "owner-pr-open-checks-pass"
   owner_branch: "feat/CR-SST-0210/memory-identity-scope"
-  owner_commit: null
-  owner_pull_request: null
-  owner_checks: "not-run"
-  control_plane_checks: "PASS before running publication"
+  owner_base: "develop"
+  owner_commit: "9d166fcb7a3ed71fe1bfb96e4c4f4fa3d8edd56c"
+  owner_pull_request: "https://github.com/afpogo/sst-bend/pull/24"
+  owner_pull_request_state: "open-mergeable"
+  owner_checks: "PASS locally and on GitHub Node 18, Node 20 and build-publish-update"
+  control_plane_checks: "PASS after local execution-evidence update"
+  merge_gate: "Human review and merge are still required; this readback does not close CR-SST-0210."
 
 decision:
   status: "approved-running-after-lifecycle-merge"
@@ -102,3 +105,4 @@ evidence_refs:
   - "evidence/requests/CR-SST-0210/identity-scope-contract-v1.yaml"
   - "evidence/requests/CR-SST-0210/implementation-plan.md"
   - "evidence/requests/CR-SST-0210/execution-start-2026-08-23.md"
+  - "evidence/requests/CR-SST-0210/owner-pr-readback-2026-08-23.md"
