@@ -47,12 +47,12 @@ flowchart LR
     M[MemorySpace<br/>scope canónico]
     C[sst-chatbot<br/>proposal / recall]
     L[Proveedor LLM<br/>contenido minimizado]
-    A -->|identidad autenticada [confirmed]| B
-    B -->|construye y revalida [proposed]| P
-    P -->|resuelve tuple completa [proposed]| M
-    C -->|caller y correlation ref [proposed]| B
-    B -->|contexto autorizado acotado [proposed]| C
-    C -->|sin campos de identidad [proposed]| L
+    A -->|identidad autenticada - confirmed| B
+    B -->|construye y revalida - proposed| P
+    P -->|resuelve tuple completa - proposed| M
+    C -->|caller y correlation ref - proposed| B
+    B -->|contexto autorizado acotado - proposed| C
+    C -->|sin campos de identidad - proposed| L
 ```
 
 ### Fallback textual del mapa
