@@ -27,4 +27,8 @@ ARDS/SDD conserva la autoridad del lifecycle.
 
 ## Estado
 
-`authorized-pending-control-plane-closure-merge`.
+`consumed-2026-08-23`.
+
+El lote se ejecuto una vez despues de confirmar el merge del cierre ARDS/SDD
+en `c22d8babdc1005c8dbd3e1169f19c52d632957b9`. El resultado sanitizado vive en
+`evidence/requests/CR-SST-0206/jira-close-readback-2026-08-23.md`.
