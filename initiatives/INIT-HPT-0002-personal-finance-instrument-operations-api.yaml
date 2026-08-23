@@ -26,6 +26,7 @@ source_evidence_refs:
   - "evidence/requests/CR-HPT-0005/everyday-economic-resources-and-cost-of-delay.md"
   - "evidence/requests/CR-HPT-0005/policy-application-and-terminology-decisions.md"
   - "evidence/requests/CR-HPT-0013/principal-context-v1-analysis.md"
+  - "evidence/requests/CR-HPT-0013/control-plane-reconciliation-2026-08-22.md"
 model_refs:
   - "specs/initiatives/initiative-model.yaml"
   - "docs/requests/initiative-model.md"
@@ -40,7 +41,7 @@ known_change_requests:
 candidate_change_requests:
   - id: "CR-HPT-0013"
     title: "Define the trusted SST PrincipalContext v1 contract for Phinance"
-    status: "planned-awaiting-architecture-approval"
+    status: "running-owner-contract-publication"
     execution_order: "after-CR-HPT-0008-and-before-any-trusted-adapter-runtime"
   - id: "CR-SST-TODO"
     title: "Adopt Phinance-API as an optional SST guest capability"
@@ -75,7 +76,8 @@ policy_application:
 open_gaps:
   - "Approve the operation taxonomy and the boundary between cash-flow transactions and investment operations."
   - "CR-HPT-0002 governance adoption and CR-HPT-0003 owner-scope documentation are complete; approve the executable PrincipalContext adapter boundary before business-data access."
-  - "Choose whether SST consumes through an sst-bend facade or an explicitly approved direct API exception."
+  - "The SST facade path is approved; publish its independently numbered lifecycle before treating the provider as available."
   - "Define technical, security, migration and operational owners."
+  - "The owner contract exists in local commit ef4f8d0; remote publication and readback remain pending before CR-HPT-0013 can close."
   - "Implement the trusted SST PrincipalContext adapter under a separate approved request before enabling business access in a deployed environment."
   - "Define correction/reversal semantics and a verified link to financial transactions in a later owner request."
