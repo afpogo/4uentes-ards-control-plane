@@ -1,0 +1,45 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0210"
+title: "Define personal memory identity and scope"
+status: "inbox"
+created_at: "2026-08-23"
+requester: "4uentes"
+business_context: >
+  INIT-SST-0010 now canonically describes the personal knowledge and memory
+  workspace, including chatbot-generated proposals and paragraph-sequential
+  derivations. The initiative reserves CR-SST-0210 conceptually as the
+  prerequisite for defining whose memory is addressed and under which tenant
+  and application boundary it may be recalled or adopted.
+requested_change: >
+  Define the canonical identity, tenant and application-scope contract for SST
+  personal memory before chatbot proposal and recall flows advance. Preserve
+  the distinction between generated memory proposals and user-adopted memory.
+expected_outcome: >
+  Every personal-memory operation can be resolved to an authenticated subject,
+  tenant and application scope; cross-scope recall is rejected by contract;
+  and a derivation result remains a proposal until the SST owner validates and
+  persists its adoption state.
+initial_scope:
+  initiative_id: "INIT-SST-0010"
+  solution: "sst"
+  control_repository: "4uentes-orchestor"
+  expected_owner_repository: "sst-bend"
+  participating_services:
+    - "sst-chatbot"
+    - "sst-fend"
+constraints:
+  - "This reservation does not authorize child-repository, Jira, runtime or deployment writes."
+  - "Do not treat chatbot output as adopted canonical memory without SST validation and user consent."
+  - "Do not silently reuse memory across authenticated subjects, tenants or application scopes."
+  - "Do not redefine shared ARDS/SDD kinds or policy contracts owned by 4uentes-ards-core."
+  - "Publish and merge this minimal inbox reservation before creating the execution worktree."
+requested_next_step: >
+  Publish this minimal reservation to the canonical ref, refresh origin/main,
+  then create a clean execution worktree to plan the identity and scope
+  contract without mutating child repositories.
+decision:
+  status: "accepted-for-reservation"
+  approver: "4uentes"
+  approved_at: "2026-08-23"
+  approval_text: "ok se fusiono el pr"
