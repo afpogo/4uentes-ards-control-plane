@@ -1,0 +1,65 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0213"
+title: "Reconcile the post-PR35 Jira correction identity"
+status: "planned"
+source_request: "requests/inbox/CR-SST-0213-reconcile-post-pr35-jira-correction-identity.yaml"
+created_at: "2026-08-23"
+requester: "4uentes"
+control_plane_context:
+  initiative_ids: ["INIT-SST-0007", "INIT-SST-0008"]
+  related_request_ids: ["CR-SST-0203", "CR-SST-0204", "CR-SST-0208"]
+  pull_request: 39
+  jira_role: "mirror"
+  jira_source_of_truth: false
+scope:
+  repository: "4uentes-orchestor"
+  external_system: "Jira"
+  historical_batch_id: "JIRA-SEC-PREPROD-02"
+  historical_issue_keys: ["SST-86", "SST-89", "SST-92"]
+  child_repo_mutation_targets: []
+risk:
+  level: "high"
+  drivers: ["REQUEST_IDENTITY_COLLISION", "HISTORICAL_EXTERNAL_WRITE", "SECURITY_NARRATIVE"]
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+model_selection:
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5"
+  fallback_reasoning_effort: "high"
+  reason: "Identity reconciliation affects canonical ARDS/SDD references and an already-consumed Jira write batch."
+subagent_deployment_plan:
+  mode: "none"
+  reason: "The primary agent retains the identity and external-write reconciliation decision."
+execution:
+  requires_human_approval: true
+  approval_status: "approved-for-local-conflict-resolution"
+  approval_source: "User instruction dated 2026-08-23."
+  child_repo_mutation_allowed: false
+  jira_write_allowed: false
+  production_mutation_allowed: false
+  branch: "docs/system-feature-studies"
+  worktree: "worktrees/system-feature-studies"
+resolution_plan:
+  - "Merge the current origin/main into the PR branch and preserve its canonical namespace."
+  - "Replace the collided local lifecycle with CR-SST-0213."
+  - "Preserve historical batch contents while labeling CR-SST-0204 as the collided execution label."
+  - "Keep Jira identity correction pending a separately authorized enumerated batch."
+  - "Run git diff --check and the full npm run check gate before publication."
+owner_documentation:
+  required: false
+  status: "not-applicable-control-plane-only"
+validation:
+  - "node scripts/verify-request-identities.js --self-test"
+  - "npm run check"
+  - "git diff --check origin/main...HEAD"
+  - "GitHub PR mergeability readback"
+decision:
+  status: "approved-planned"
+  approver: "4uentes"
+  decided_at: "2026-08-23"
