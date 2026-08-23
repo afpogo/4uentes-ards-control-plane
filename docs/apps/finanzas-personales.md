@@ -8,12 +8,14 @@ nombre observado es `home-phinance-ticket`.
 
 ## Servicios
 
-- `finanzas-personales-frontend`: experiencia web y contratos inbound.
-- `finanzas-personales-backend`: API, persistencia y orquestacion de boundaries
-  internos de calculo, OCR e IA.
+- `finanzas-personales-backend`: Phinance-API, persistencia y boundaries
+  internos de cálculo.
+- `finanzas-personales-frontend`: identidad histórica deprecada; no es un
+  runtime activo.
 
-Ambos servicios viven hoy en el mismo repositorio Git. La raiz del repositorio
-no es un servicio adicional.
+`sst-fend` posee la experiencia web como servicio de la solución SST y consume
+Phinance-API mediante un boundary autenticado todavía contract-pending. La raíz
+del repositorio HPT no es un servicio adicional.
 
 ## Estado
 
@@ -22,8 +24,10 @@ runtimes, deployments ni rutas ejecutables de validacion.
 
 ## Boundaries
 
-- La integracion directa frontend-web a backend-api requiere excepcion o una
-  decision posterior de BFF.
+- SST debe resolver la cuenta activa, validar membership y entregar a HPT un
+  contexto confiable; HPT no acepta `account_id` ni owner desde body o query.
+- El mecanismo interno de handoff entre SST y Phinance-API debe cerrarse antes
+  de implementar runtime.
 - Python, OCR e IA no se catalogan como servicios hasta que exista ownership,
   contrato y evidencia runtime independiente.
 - Auth, autorizacion, sharing, retencion y datos financieros sensibles requieren
@@ -35,5 +39,5 @@ runtimes, deployments ni rutas ejecutables de validacion.
 - `INIT-HPT-0001`: adopcion de gobernanza.
 - `CR-HPT-0001`: onboarding del control-plane.
 - `CR-HPT-0002`: adopcion de policies y owner baseline del repo hijo.
-- `CR-HPT-0003`: reconciliacion del boundary frontend-backend.
-
+- `CR-HPT-0003`: reconciliación del boundary SST-HPT y del aislamiento
+  multicuenta.

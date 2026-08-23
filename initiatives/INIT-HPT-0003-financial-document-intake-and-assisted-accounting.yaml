@@ -1,0 +1,81 @@
+schema_version: "1.0"
+kind: "initiative"
+id: "INIT-HPT-0003"
+title: "Financial Document Intake and Assisted Accounting"
+status: "hypothesis"
+updated_at: "2026-08-22"
+owner_repository: "4uentes-orchestor"
+objective: >
+  Preserve and govern the future capability for receiving a financial-document
+  photo from SST, detecting its type, extracting candidate values, validating
+  them and presenting a human review before any confirmed financial data enters
+  Phinance.
+initial_hypothesis: >
+  Mobile document capture can make Phinance distinctive if extraction remains
+  proposal-only, every field carries confidence and provenance, deterministic
+  validations are separated from external verification, and explicit user
+  confirmation is required before ledger materialization.
+source_evidence_refs:
+  - "evidence/initiatives/INIT-HPT-0003/source-intent-review.md"
+  - "evidence/requests/CR-HPT-0006/initiative-boundary-summary.md"
+model_refs:
+  - "specs/initiatives/initiative-model.yaml"
+  - "docs/requests/initiative-model.md"
+parent_initiative_refs: []
+related_initiative_refs:
+  - "INIT-HPT-0001"
+  - "INIT-HPT-0002"
+known_change_requests:
+  - "CR-HPT-0006"
+candidate_change_requests:
+  - id: "CR-HPT-0007"
+    title: "Adopt financial-document intake contracts in the backend owner ARDS/SDD"
+    status: "candidate"
+    execution_order: "after-CR-HPT-0012-api-runtime-baseline-and-explicit-child-mutation-approval"
+  - id: "CR-HPT-0009"
+    title: "Implement governed financial-document intake runtime"
+    status: "candidate"
+    execution_order: "after-owner-contract-storage-retention-and-provider-decisions"
+  - id: "CR-SST-TODO-CAPTURE"
+    title: "Adopt mobile document capture and review UX in SST"
+    status: "candidate"
+    execution_order: "after-producer-capability-ready-for-consumer"
+  - id: "CR-HPT-0010"
+    title: "Validate financial-document intake and SST integration end to end"
+    status: "candidate"
+    execution_order: "after-producer-and-consumer-runtime"
+discovered_change_requests: []
+tracking:
+  jira:
+    role: "mirror"
+    source_of_truth: false
+    project_key: "HPT"
+    epic_key: "TODO"
+    write_status: "not-requested"
+boundaries:
+  mutates_child_repositories: false
+  promotes_runtime: false
+  changes_core_canon: false
+  belongs_to_sst: false
+  sensitive_financial_documents: true
+policy_application:
+  architecture_boundary: >
+    This Initiative preserves intent and constraints only. It does not choose
+    upload transport, storage, OCR engine, AI provider, queue, database schema,
+    retention, mobile UX or deployment topology.
+  owner_documentation: >
+    Future producer contracts belong in finanzas-personales/backend. Future
+    camera, upload and review UX contracts belong in the applicable SST owner.
+  human_confirmation: >
+    Extraction and validation produce proposals. No transaction, resource or
+    accounting fact is materialized without explicit user confirmation.
+  atomization: >
+    Control-plane registration, backend owner adoption, runtime, SST capture
+    adoption and end-to-end validation remain separate requests.
+open_gaps:
+  - "Implement the approved Python/FastAPI API runtime baseline under CR-HPT-0012 before document-intake owner adoption or implementation."
+  - "Define image storage, encryption, retention, deletion and access controls."
+  - "Choose provider-agnostic OCR/extraction interfaces and permitted providers."
+  - "Define supported document types, jurisdictions and deterministic validation rules."
+  - "Define duplicate detection, review corrections and idempotent ledger materialization."
+  - "Resolve the trusted SST principal context and mobile capture boundary."

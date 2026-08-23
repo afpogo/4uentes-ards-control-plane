@@ -1,0 +1,82 @@
+schema_version: "1.0"
+phase: 4
+id: "CR-HPT-0005"
+title: "Design the personal instrument-operation contract"
+status: "done"
+source_request: "requests/inbox/CR-HPT-0005-design-personal-instrument-operation-contract.yaml"
+planned_request: "requests/planned/CR-HPT-0005-design-personal-instrument-operation-contract.yaml"
+started_at: "2026-08-22"
+closed_at: "2026-08-22"
+requester: "4uentes"
+
+summary: >
+  Accepted the domain contract that separates household economic resources
+  from market instruments, preserves auditable event history, distinguishes
+  facts from estimates and keeps cash-flow separate from future investment
+  operations. This request remained control-plane analysis only.
+
+execution:
+  child_repo_mutation_allowed: false
+  runtime_implementation_allowed: false
+  migration_changes_allowed: false
+  infrastructure_changes_allowed: false
+  sst_child_mutation_allowed: false
+  jira_write_allowed: false
+
+owner_documentation:
+  required: false
+  status: "not-applicable"
+  reason: >
+    CR-HPT-0005 approves control-plane analysis only and did not mutate a child
+    repository. Owner contract adoption and implementation remain scoped to an
+    approved child-mutation request.
+
+accepted_contract:
+  first_slice: "household_economic_resource"
+  events:
+    - "ACQUIRE"
+    - "CONSUME"
+    - "EXPIRE"
+    - "WASTE"
+    - "MAINTAIN"
+    - "REPAIR"
+    - "DEFER"
+    - "DISPOSE"
+  effects:
+    - "CASH_OUTFLOW"
+    - "CASH_INFLOW"
+    - "QUANTITY_CHANGE"
+    - "CONDITION_CHANGE"
+    - "UTILITY_REALIZED"
+    - "WASTE_LOSS"
+    - "COST_AVOIDANCE_ESTIMATE"
+  invariants:
+    - "household resources are not market financial instruments"
+    - "estimates never post cash, profit, savings or investment return"
+    - "original purchases remain immutable when a resource expires or is wasted"
+    - "corrections append compensating or reversal events"
+    - "all owner data remains scoped by server-resolved account_id plus stable subject"
+
+validation:
+  status: "passed"
+  required_checks:
+    - "4uentes-orchestor: npm run check"
+    - "4uentes-orchestor: git diff --check"
+    - "No child repository mutation occurred under CR-HPT-0005."
+  evidence_refs:
+    - "evidence/requests/CR-HPT-0005/domain-contract-approval.md"
+    - "evidence/requests/CR-HPT-0005/domain-and-boundary-analysis.md"
+    - "evidence/requests/CR-HPT-0005/everyday-economic-resources-and-cost-of-delay.md"
+    - "evidence/requests/CR-HPT-0005/financial-read-models-and-table-presentation.md"
+    - "evidence/requests/CR-HPT-0005/policy-application-and-terminology-decisions.md"
+    - "evidence/requests/CR-HPT-0005/validation-results.md"
+
+follow_up:
+  request_id: "CR-HPT-0008"
+  objective: "Adopt and implement the first household economic-resource producer slice in the backend owner."
+
+decision:
+  status: "closed"
+  approver: "4uentes"
+  approved_at: "2026-08-22"
+  blocker: "none"

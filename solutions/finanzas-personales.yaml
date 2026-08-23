@@ -3,24 +3,25 @@ name: Finanzas Personales
 status: planned
 services:
   core:
-    - finanzas-personales-frontend
     - finanzas-personales-backend
   shared: []
   optional: []
   infrastructure: []
 relationships:
-  - from: finanzas-personales-frontend
+  - from: sst-fend
     to: finanzas-personales-backend
-    type: consumes-api-direct-exception-draft
+    type: consumes-api-through-sst-authenticated-boundary-contract-pending
 observed_deployment_targets:
   - local-todo
-related_solutions: []
+related_solutions:
+  - sst
 tracking:
   jira_project_key: HPT
   jira_project_name_observed: home-phinance-ticket
 notes:
   - Independent product solution governed by the global 4uentes control-plane.
-  - Both logical services currently share one Git monorepo.
+  - The former standalone frontend identity is deprecated and retained only for historical traceability.
+  - sst-fend is the external frontend consumer; no second HPT frontend runtime is planned.
   - The repository root is a workspace, not a third runtime service or control-plane.
   - Proposed Python, OCR and AI runtimes are not cataloged independently without implementation evidence.
-
+  - Phinance-API must isolate data by validated SST account scope plus stable subject; the internal handoff mechanism remains contract-pending.

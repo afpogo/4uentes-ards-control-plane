@@ -1,0 +1,42 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0212"
+title: "Publish the SST-Phinance facade and Swagger tracking surface"
+status: "inbox"
+created_at: "2026-08-22"
+requester: "4uentes"
+
+business_context: >
+  Phinance publishes its owner OpenAPI document, while SST needs a navigable
+  consumer-facing contract and a fail-closed facade shell for personal QA.
+
+requested_change:
+  - "Adopt the recovered SST-Phinance facade intent under the collision-free ID CR-SST-0212."
+  - "Keep the existing sst-bend route group and Swagger shell fail closed until the trusted provider and consumer prerequisites are available."
+  - "Preserve Phinance OpenAPI as owner authority and publish only the SST consumer projection."
+
+identity_reconciliation:
+  rejected_id: "CR-SST-0207"
+  reason: "CR-SST-0207 is already canonically reserved for integrated chat retention QA."
+  source_commit: "a0665bf"
+  source_branch: "agent/cr-sst-0152-sst-fend-evidence"
+  source_status: "quarantined-and-preserved"
+
+initial_scope:
+  solution: "finanzas-personales"
+  services:
+    - "sst-bend"
+    - "finanzas-personales-backend"
+  include_optional_services: true
+
+constraints:
+  - "This inbox reservation does not authorize new child-repository mutation."
+  - "The existing sst-bend commit efa955b is local evidence, not proof of remote publication."
+  - "The trusted proxy remains outside scope until both sides of the trust boundary are implemented and validated."
+  - "Jira remains a mirror and no Jira write is authorized."
+
+decision:
+  status: "accepted-for-planning"
+  approver: "4uentes"
+  approved_at: "2026-08-22"
+  approval_text: "ok avancemos con el siguiente frente"

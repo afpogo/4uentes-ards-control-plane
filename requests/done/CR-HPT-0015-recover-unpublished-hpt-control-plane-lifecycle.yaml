@@ -1,0 +1,56 @@
+schema_version: "1.0"
+phase: 4
+id: "CR-HPT-0015"
+title: "Recover unpublished HPT control-plane lifecycle from the dirty root"
+status: "done"
+source_request: "requests/inbox/CR-HPT-0015-recover-unpublished-hpt-control-plane-lifecycle.yaml"
+planned_request: "requests/planned/CR-HPT-0015-recover-unpublished-hpt-control-plane-lifecycle.yaml"
+started_at: "2026-08-22"
+closed_at: "2026-08-22"
+requester: "4uentes"
+summary: >
+  Recovered the valid HPT governance history from eight unique commits through
+  a selective port onto current main. Historical running phases, obsolete
+  binding validation and the colliding SST-Phinance request identity remained
+  excluded. No owner repository or Jira issue was mutated.
+scope:
+  control_plane_only: true
+  child_repositories_modified: []
+  jira_written: false
+publication:
+  lifecycle_pr: 46
+  lifecycle_merge_commit: "26805ebc867ab344e1fdb3fb0d260a4f6cb47e78"
+  recovery_pr: 48
+  recovery_merge_commit: "c6448e7eebaaf277527437ffcfd7c81307eb17d0"
+recovered:
+  source_commits: ["5e6e19d", "049c0d3", "22ca50f", "8800a3c", "7ad8d9a", "27c2ffe", "83bc374", "08af86a"]
+  initiatives: ["INIT-HPT-0002", "INIT-HPT-0003"]
+  done_requests: ["CR-HPT-0002", "CR-HPT-0003", "CR-HPT-0005", "CR-HPT-0008", "CR-HPT-0011", "CR-HPT-0012"]
+  planned_requests: ["CR-HPT-0006", "CR-HPT-0013"]
+source_path_disposition:
+  identical: 69
+  reconciled: 4
+  excluded: 7
+exclusions:
+  - "Six historical running files whose requests have terminal done phases."
+  - "The obsolete verify-local-bindings self-test and its unproven validator delta."
+  - "The uncommitted SST-Phinance lifecycle using the canonical CR-SST-0207 chat-QA identity."
+post_snapshot_readback:
+  dirty_root_remains_quarantined: true
+  later_hpt_work: "CR-HPT-0013 has new uncommitted planned/running advancement outside the recovered snapshot."
+  collision: "Local CR-SST-0207 inbox/planned/running must not be published under that identity."
+validation:
+  git_diff_check: "PASS"
+  full_control_plane_check: "PASS"
+  lifecycle_files_scanned: 646
+  failures: 0
+evidence_refs:
+  - "evidence/requests/CR-SST-0208/dirty-root-hpt-readback-2026-08-22.md"
+  - "evidence/requests/CR-HPT-0015/identity-and-source-preflight-2026-08-22.md"
+  - "evidence/requests/CR-HPT-0015/selective-port-manifest-2026-08-22.md"
+  - "evidence/requests/CR-HPT-0015/validation-results-2026-08-22.md"
+  - "evidence/requests/CR-HPT-0015/post-publication-source-readback-2026-08-22.md"
+decision:
+  status: "done-source-snapshot-recovered-dirty-root-retained"
+  approver: "4uentes"
+  decided_at: "2026-08-22"

@@ -1,0 +1,207 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-HPT-0013"
+title: "Define the trusted SST PrincipalContext v1 contract for Phinance"
+status: "planned"
+source_request: "requests/inbox/CR-HPT-0013-define-trusted-principal-context-v1.yaml"
+created_at: "2026-08-22"
+requester: "4uentes"
+
+summary: >
+  Plan the versioned trust boundary that lets SST authenticate a user, resolve
+  active account membership and invoke Phinance without allowing the browser
+  or SST to assert Phinance-local ownership identifiers.
+
+control_plane_context:
+  initiative_id: "INIT-HPT-0002"
+  predecessor_request_ids:
+    - "CR-HPT-0002"
+    - "CR-HPT-0003"
+    - "CR-HPT-0008"
+    - "CR-HPT-0012"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "finanzas-personales-backend"
+      via: "trusted principal consumer and local finance-profile resolution"
+    - service_id: "sst-bend"
+      via: "authoritative account-membership resolver and proposed facade"
+    - service_id: "4uentes-auth"
+      via: "existing browser auth/BFF boundary; exact change remains evidence-dependent"
+    - service_id: "sst-fend"
+      via: "primary consumer that may select account only as untrusted SST input"
+  affected_ards:
+    - "cross-repo trust contract"
+    - "SST account-context capability"
+    - "Phinance inbound principal contract"
+    - "routing and environment binding"
+  risks:
+    - id: "FORGED_ACCOUNT_CONTEXT"
+      severity: "critical"
+    - id: "CROSS_AUDIENCE_TOKEN_REUSE"
+      severity: "critical"
+    - id: "PHINANCE_OWNER_ID_ASSIGNED_BY_SST"
+      severity: "high"
+    - id: "MEMBERSHIP_RULES_DUPLICATED_IN_PHINANCE"
+      severity: "high"
+    - id: "AUTH_DEPENDENCY_REPORTED_READY"
+      severity: "high"
+
+risk:
+  level: "high"
+  score: 10
+  drivers:
+    - "cross-repo authentication and authorization boundary"
+    - "sensitive account-scoped financial data"
+    - "service-to-service identity and routing decisions"
+    - "current contract/runtime mismatch around finance_profile_id"
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "security architecture, ownership, provider readiness and cross-repo sequencing"
+
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5-high"
+  reason: "The contract controls access to account-scoped financial data across service boundaries."
+
+subagent_deployment_plan:
+  required: false
+  parallelizable: true
+  roles:
+    - id: "principal-contract-audit"
+      scope: "Read-only comparison of control-plane, SST and Phinance contracts."
+      authority: "No architecture decision or repository mutation."
+      status: "completed-and-main-agent-verified"
+  fallback: "The primary agent retains all security, ownership and architecture decisions."
+  evidence_required: true
+
+observed_contract_mismatch:
+  external_authority: >
+    SST can attest stable_subject, validated active account membership and
+    approved entitlements after authenticating the user.
+  current_runtime_problem: >
+    Phinance PrincipalContext currently requires finance_profile_id, but that
+    identifier is local to Phinance and no finance-profile resolver exists.
+  required_correction: >
+    Separate an SST-resolved external principal from the local Phinance
+    PrincipalContext produced after owner-local profile resolution.
+
+recommended_decisions_requiring_approval:
+  routing:
+    decision: "Use the SST facade path; do not expose Phinance directly to the browser in v1."
+    logical_flow:
+      - "sst-fend sends its authenticated request and optional account selection to the SST boundary."
+      - "sst-bend validates the user token and resolves active account membership."
+      - "sst-bend invokes a private Phinance route through authenticated service-to-service provenance."
+    direct_access_exception: "A direct browser-to-Phinance path requires a separate explicit architecture exception."
+  authority_by_field:
+    sst_resolved:
+      - "stable_subject"
+      - "validated_account_id"
+      - "approved finance entitlements"
+      - "request_id"
+      - "correlation_id"
+      - "bounded authentication/session reference when the provider contract supports it"
+    phinance_resolved:
+      - "finance_profile_id"
+      - "local resource ownership"
+    forbidden_from_browser_authority:
+      - "stable_subject"
+      - "validated_account_id"
+      - "finance_profile_id"
+      - "finance entitlements"
+  service_trust:
+    decision: >
+      Accept principal fields only after authenticating the calling SST service
+      with a dedicated Phinance audience and least-privilege invoke permission,
+      or an equivalently approved protected mechanism.
+    rule: "Plain headers, network location and CORS are not authentication."
+    provider_readiness_gate: >
+      Existing control-plane claims about M2M or introspection must be reconciled
+      with owner runtime evidence before reuse; no capability is assumed from a
+      different branch or stale checkout.
+  entitlements:
+    proposed_values: ["finance:read", "finance:write", "finance:audit:read"]
+    decision: "SST must explicitly adopt and attest finance entitlements; Phinance enforces them."
+    role_mapping: "TODO approve the mapping from SST membership/account roles to finance entitlements."
+  local_profile_resolution:
+    decision: >
+      Phinance derives or resolves finance_profile_id only after receiving the
+      validated account_id plus stable_subject pair.
+    persistence_shape: "Deferred to the bounded Phinance implementation CR; SST never receives authority over the local identifier."
+  failure_matrix:
+    unauthorized_401: "Missing, expired, malformed, invalid-issuer or invalid-audience user credential at the SST edge."
+    forbidden_403: "Valid user without account membership or required finance entitlement."
+    unavailable_503: "Required identity, membership or service-auth provider unavailable; fail closed."
+    not_found_404: "Authorized principal cannot enumerate resources outside its local finance profile."
+  readiness:
+    decision: >
+      Business readiness must not report ready when required database,
+      trusted-principal adapter or provider configuration is unavailable.
+    liveness: "Process-focused /health remains independent of dependencies."
+
+atomized_follow_up_sequence:
+  - order: 1
+    request: "CR-HPT-0013"
+    objective: "Approve and publish PrincipalContext v1 contract only."
+  - order: 2
+    request: "CR-SST-TODO-PHINANCE-PRINCIPAL-PROVIDER"
+    objective: "Implement/publish the SST facade, membership resolution and authenticated service invocation in the correct SST owners."
+  - order: 3
+    request: "CR-HPT-0014"
+    objective: "Implement the Phinance consumer adapter, local profile resolver, readiness and negative tests."
+  - order: 4
+    request: "CR-HPT-TODO-INTEGRATED-BINDING"
+    objective: "Create environment bindings and integrated account-isolation/revocation QA."
+
+execution:
+  requires_human_approval: true
+  approval_source: "4uentes approved the recommended BFF, SST membership facade and Phinance owner flow on 2026-08-22."
+  allowed_window: "owner-contract-publication-only"
+  child_repo_mutation_allowed: true
+  runtime_implementation_allowed: false
+  dependency_changes_allowed: false
+  migration_changes_allowed: false
+  infrastructure_changes_allowed: false
+  sst_child_mutation_allowed: false
+  jira_write_allowed: false
+  implementation_boundary: >
+    This request is a contract plan. Approval may authorize owner-documentation
+    adoption, but provider and consumer runtime mutations remain separate
+    requests with their own running lifecycle and validation.
+
+owner_documentation:
+  required: true
+  status: "planned"
+  owner_repo: "finanzas-personales"
+  planned_owner_docs:
+    - "specs/api/sst-integration.yaml"
+    - "docs/architecture/README.md"
+    - "docs/api/README.md"
+  cross_repo_owner_docs:
+    - "sst-bend: specs/capabilities/outbound/principal-context-v1.yaml (future provider request)"
+    - "4uentes-auth: specs/routing.yaml or explicit no-change evidence (future provider request)"
+
+validation:
+  required_checks:
+    - "contract field authority and no finance_profile_id on the SST wire"
+    - "browser-forgery and cross-audience negative matrix"
+    - "SST provider owner-doc and runtime evidence before consumer implementation"
+    - "Phinance owner contract checker and fail-closed tests"
+    - "4uentes-orchestor: npm run check and git diff --check"
+
+decision:
+  status: "approved-for-owner-contract-publication"
+  approver: "4uentes"
+  approved_at: "2026-08-22"
+  approval_text: "ok vayamos con tu recomendacion avancemos con esto"
+  blocker: "Runtime provider and consumer implementation remain separate requests."

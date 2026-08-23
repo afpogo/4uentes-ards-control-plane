@@ -1,0 +1,39 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-HPT-0006"
+title: "Define governed financial document intake and invoice extraction"
+status: "inbox"
+created_at: "2026-08-21"
+requester: "4uentes"
+
+business_context: >
+  Phinance should make personal accounting distinctive by accepting a photo
+  captured from SST, detecting whether it is a supported invoice or receipt,
+  extracting candidate values, validating them and requiring user review
+  before confirmed data enters the financial ledger.
+
+requested_change: >
+  Register document capture and OCR/extraction as a future governed capability
+  in a separate control-plane Initiative. Define preliminary lifecycle,
+  ownership, validation, provenance, privacy, audit and SST capture boundaries
+  without changing the backend owner ARDS/SDD or implementing runtime.
+
+expected_outcome: >
+  A separate Initiative and planned request preserve the product intent,
+  boundaries, risks and future owner-adoption sequence. No OCR result, API,
+  child contract or runtime is created in this cut.
+
+initial_scope:
+  solution: "finanzas-personales"
+  services:
+    - "finanzas-personales-backend"
+  external_consumers:
+    - "sst-fend"
+  include_optional_services: false
+
+constraints:
+  - "Control-plane registration only; do not mutate child owner documentation."
+  - "No runtime, dependencies, storage, queue or provider implementation."
+  - "Do not catalog OCR, Python, object storage or AI as independent services without runtime evidence."
+  - "Do not trust extracted values without deterministic checks and explicit user confirmation."
+  - "Do not persist or log access tokens, raw images, EXIF location or full OCR payloads outside approved storage and retention contracts."

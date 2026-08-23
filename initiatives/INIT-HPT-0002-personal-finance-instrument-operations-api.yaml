@@ -1,0 +1,83 @@
+schema_version: "1.0"
+kind: "initiative"
+id: "INIT-HPT-0002"
+title: "Personal Economic Resources and Instrument Operations API"
+status: "hypothesis"
+updated_at: "2026-08-22"
+owner_repository: "4uentes-orchestor"
+objective: >
+  Evolve Phinance-API from personal cash-flow tracking toward an auditable
+  personal-economy capability that first explains everyday resources, useful
+  consumption, waste and cost of delay, and later expands to market instrument
+  operations while remaining independently owned by finanzas-personales.
+initial_hypothesis: >
+  Everyday goods and durable assets should be modeled as household economic
+  resources rather than regulated financial instruments. Purchases,
+  consumption, expiration, maintenance and repair should be auditable events
+  whose cash, utility, condition and cost-of-delay effects remain explicit.
+  Market instruments can later reuse the operation/effect/projection pattern
+  without conflating household utility with investment return.
+source_evidence_refs:
+  - "evidence/initiatives/INIT-HPT-0002/source-intent-review.md"
+  - "evidence/requests/CR-HPT-0005/domain-and-boundary-analysis.md"
+  - "evidence/requests/CR-HPT-0005/source-and-path-decision.md"
+  - "evidence/requests/CR-HPT-0005/child-ards-consolidation-review.md"
+  - "evidence/requests/CR-HPT-0005/financial-read-models-and-table-presentation.md"
+  - "evidence/requests/CR-HPT-0005/everyday-economic-resources-and-cost-of-delay.md"
+  - "evidence/requests/CR-HPT-0005/policy-application-and-terminology-decisions.md"
+  - "evidence/requests/CR-HPT-0013/principal-context-v1-analysis.md"
+  - "evidence/requests/CR-HPT-0013/control-plane-reconciliation-2026-08-22.md"
+model_refs:
+  - "specs/initiatives/initiative-model.yaml"
+  - "docs/requests/initiative-model.md"
+parent_initiative_refs: []
+related_initiative_refs:
+  - "INIT-HPT-0001"
+known_change_requests:
+  - "CR-HPT-0005"
+  - "CR-HPT-0011"
+  - "CR-HPT-0012"
+  - "CR-HPT-0008"
+candidate_change_requests:
+  - id: "CR-HPT-0013"
+    title: "Define the trusted SST PrincipalContext v1 contract for Phinance"
+    status: "running-owner-contract-publication"
+    execution_order: "after-CR-HPT-0008-and-before-any-trusted-adapter-runtime"
+  - id: "CR-SST-TODO"
+    title: "Adopt Phinance-API as an optional SST guest capability"
+    status: "candidate"
+    execution_order: "after-producer-contract-ready-for-consumer"
+discovered_change_requests: []
+tracking:
+  jira:
+    role: "mirror"
+    source_of_truth: false
+    project_key: "HPT"
+    epic_key: "TODO"
+    write_status: "not-requested"
+boundaries:
+  mutates_child_repositories: false
+  promotes_runtime: false
+  changes_core_canon: false
+  belongs_to_sst: false
+  sensitive_financial_data: true
+policy_application:
+  architecture_boundary: >
+    This Initiative records a product hypothesis and request sequence. It does
+    not approve the domain contract, the SST trust mechanism, runtime code,
+    financial advice, brokerage integration or child-repository mutation.
+  owner_documentation: >
+    Producer contracts and runtime behavior belong in the
+    finanzas-personales backend owner. Any SST adapter or UI adoption belongs
+    in the applicable SST owner repository under a separate approved request.
+  atomization: >
+    Domain contract, backend runtime, SST consumer adoption and integrated
+    validation remain independently reviewable change requests.
+open_gaps:
+  - "Approve the operation taxonomy and the boundary between cash-flow transactions and investment operations."
+  - "CR-HPT-0002 governance adoption and CR-HPT-0003 owner-scope documentation are complete; approve the executable PrincipalContext adapter boundary before business-data access."
+  - "The SST facade path is approved; publish its independently numbered lifecycle before treating the provider as available."
+  - "Define technical, security, migration and operational owners."
+  - "The owner contract exists in local commit ef4f8d0; remote publication and readback remain pending before CR-HPT-0013 can close."
+  - "Implement the trusted SST PrincipalContext adapter under a separate approved request before enabling business access in a deployed environment."
+  - "Define correction/reversal semantics and a verified link to financial transactions in a later owner request."
