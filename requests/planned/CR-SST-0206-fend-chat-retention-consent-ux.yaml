@@ -6,7 +6,7 @@ status: "planned"
 source_request: "requests/inbox/CR-SST-0206-fend-chat-retention-consent-ux.yaml"
 created_at: "2026-08-22"
 requester: "4uentes"
-depends_on: ["CR-SST-0202", "CR-SST-0204"]
+depends_on: ["CR-SST-0202", "CR-SST-0204", "CR-SST-0211"]
 control_plane_context:
   initiative_id: "INIT-SST-0007"
   parent_request_id: "CR-SST-0202"
@@ -33,6 +33,7 @@ execution:
   production_mutation_allowed: false
   jira_write_allowed: false
 implementation:
+  - "Consume retention HTTP operations only through the CR-SST-0211 4uentes-auth facade; keep the direct Bend exception limited to Socket.IO."
   - "Show an unambiguous Temporary or Saved in SST status near the conversation controls."
   - "Require an explicit Save in SST action; do not use a preselected consent checkbox."
   - "Separate Clear this device, Finish temporary conversation and Delete from SST actions."

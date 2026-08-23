@@ -23,6 +23,7 @@ source_evidence_refs:
   - "evidence/initiatives/INIT-SST-0007/validation-results-2026-08-18.md"
   - "evidence/initiatives/INIT-SST-0007/changed-files-summary-2026-08-18.md"
   - "evidence/requests/CR-SST-0202/architecture-and-execution-plan.md"
+  - "evidence/requests/CR-SST-0211/implementation-plan.md"
 model_refs:
   - "specs/initiatives/initiative-model.yaml"
   - "docs/requests/initiative-model.md"
@@ -48,6 +49,7 @@ known_change_requests:
   - "CR-SST-0207"
   - "CR-SST-0208"
   - "CR-SST-0209"
+  - "CR-SST-0211"
 tracking:
   jira:
     role: "mirror"
@@ -64,6 +66,7 @@ tracking:
       CR-SST-0205: "SST-115"
       CR-SST-0206: "SST-116"
       CR-SST-0207: "SST-117"
+      CR-SST-0211: null
     last_write_batch: "consumed-2026-08-22"
 boundaries:
   control_plane_role: "lifecycle, coordination and evidence only"
@@ -82,6 +85,7 @@ current_read_model:
   next_retention_execution_request: "CR-SST-0204"
   namespace_reconciliation_request: "CR-SST-0208"
   auth_registration_session_request: "CR-SST-0209"
+  auth_retention_facade_request: "CR-SST-0211"
   current_session_contract_ref: "requests/running/CR-SST-0180-integrate-login-sessions-and-timeout-corrections.yaml"
   integrated_closure_plan_ref: "evidence/requests/CR-SST-0178/integrated-chat-raw-v2-plan-2026-08-21.md"
 security_qualification:
@@ -95,6 +99,7 @@ gaps:
   - "SST-86 Jira narrative still requires a separately authorized correction for the later PR35 canonical readback."
   - "User RAG, stakeholder RAG, multi-session adoption and personal memory remain separate lifecycles and are not absorbed here."
   - "CR-SST-0202 completed the control-plane contract; CR-SST-0204 through CR-SST-0207 require their own execution approvals before owner mutation or integrated QA."
+  - "CR-SST-0211 closes the missing Auth BFF owner lifecycle; it depends on CR-SST-0204 and blocks CR-SST-0206 plus integrated retention QA."
 namespace_reconciliation:
   request_id: "CR-SST-0208"
   status: "pr37-canonical-map-preserved"
@@ -107,6 +112,7 @@ namespace_reconciliation:
     CR-SST-0207: "integrated retention QA"
     CR-SST-0208: "request namespace reconciliation and worktree lifecycle policy"
     CR-SST-0209: "Auth registration session establishment"
+    CR-SST-0211: "Auth BFF adoption of the chat retention HTTP facade"
   jira_write_allowed: false
   jira_write_performed: false
   evidence_ref: "evidence/requests/CR-SST-0208/post-pr37-canonical-readback-2026-08-22.md"

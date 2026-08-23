@@ -1,0 +1,134 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0211"
+title: "Adopt the SST chat retention facade in 4uentes-auth"
+status: "planned"
+source_request: "requests/inbox/CR-SST-0211-adopt-chat-retention-facade-in-auth.yaml"
+created_at: "2026-08-22"
+requester: "4uentes"
+depends_on: ["CR-SST-0204"]
+control_plane_context:
+  initiative_id: "INIT-SST-0007"
+  parent_request_id: "CR-SST-0202"
+  coordinated_request_ids: ["CR-SST-0204", "CR-SST-0206", "CR-SST-0207"]
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  jira_issue_key: null
+  jira_write_authorized: false
+scope:
+  target_environment: "development"
+  child_repo_mutation_targets: ["4uentes-auth"]
+  producer_repositories: ["sst-bend"]
+  validation_consumers: ["sst-fend"]
+  owned_scope: "authenticated HTTP facade adoption only"
+  excluded_scope:
+    - "sst-bend retention storage, TTL, PostgreSQL or Redis implementation"
+    - "sst-fend consent UX"
+    - "Socket.IO routing or browser realtime transport"
+    - "access-token, refresh-family, cookie or CSRF redesign"
+    - "deployment, production and Jira mutation"
+risk:
+  level: "high"
+  score: 9
+  drivers: ["AUTHORIZATION_BOUNDARY", "PRIVACY", "CROSS_REPO_CONTRACT", "DESTRUCTIVE_ACTION", "IDEMPOTENCY"]
+task_weight: {classification: "complex-high-risk-task", risk_level: "high"}
+model_selection:
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5"
+  fallback_reasoning_effort: "high"
+subagent_deployment_plan:
+  mode: "none"
+  reason: "The authorization, privacy and destructive-action boundary stays with the primary agent; proactive delegation is disabled."
+execution:
+  requires_human_approval: true
+  approval_source: null
+  approval_status: "pending-child-execution"
+  child_repo_mutation_allowed: false
+  deployment_allowed: false
+  production_mutation_allowed: false
+  jira_write_allowed: false
+workspace_isolation:
+  owner_repo: "4uentes-auth"
+  base_ref: "origin/develop"
+  rule: "After explicit execution approval, refresh the remote ref and use one new clean 4uentes-auth worktree; preserve the dirty canonical checkout."
+upstream_contract_gate:
+  owner_repo: "sst-bend"
+  request_id: "CR-SST-0204"
+  required_ref: "specs/api/chat-retention-v1.yaml"
+  rule: >
+    Do not invent route names, payloads or state transitions in 4uentes-auth.
+    Adopt the exact Bend owner contract after it is published and validated.
+facade_contract:
+  public_prefix: "/api/chat"
+  upstream_prefix_source: "SST_CHAT_BASE_URL"
+  required_operations:
+    - "list conversations with status and owner-scoped pagination"
+    - "create a temporary conversation without implicit durable consent"
+    - "read owner-scoped message history with replay cursor"
+    - "promote or save a temporary conversation idempotently"
+    - "finish a temporary conversation without claiming durable deletion"
+    - "delete a saved conversation durably"
+  compatibility_gate: >
+    Preserve the existing create, history and delete facade until CR-SST-0204
+    defines compatibility. Never silently change the existing DELETE meaning
+    or alias temporary finish to durable delete.
+  passthrough_rules:
+    - "Require AuthMiddleware.validateJwt on every route."
+    - "Forward Authorization and supported active-account context; SST independently authorizes ownership."
+    - "Forward the upstream-defined idempotency and correlation headers for mutating operations."
+    - "Allowlist upstream-defined query parameters and preserve response status and body semantics."
+    - "Do not derive user, account, retention mode or consent from request body helper fields."
+    - "Do not store or cache conversation content in 4uentes-auth MongoDB, memory or logs."
+  failure_behavior:
+    - "Preserve upstream 400, 401, 403, 404 and 409 domain outcomes without converting authorization failures into not-found success paths."
+    - "Map timeout or unreachable upstream through the existing sanitized BFF error policy; never claim that data was deleted or saved."
+    - "Reject malformed identifiers before constructing an upstream URL and encode every path parameter."
+owner_documentation:
+  required: true
+  status: "planned"
+  owner_repos: ["4uentes-auth"]
+  planned_surfaces:
+    - "specs/integrations-api.yaml"
+    - "specs/routing.yaml"
+    - "docs/bf/03-routing.md"
+    - "docs/bf/06-integrations-api.md"
+    - "docs/chat-sessions.md"
+    - "specs/capabilities/inbound/sst-bend--chat-retention-v1.yaml"
+    - "docs/capabilities/inbound/sst-bend--chat-retention-v1.md"
+    - "specs/capabilities/outbound/chat-retention-v1.yaml"
+    - "docs/capabilities/outbound/chat-retention-v1.md"
+    - "httpPruebas/sst_server.http"
+  capability_rule: >
+    Mark inbound adoption and outbound publication ready only after the
+    4uentes-auth runtime implements the Bend contract and the owner check passes.
+validation:
+  owner_checks:
+    - "4uentes-auth npm run check, including build and chat contract tests."
+    - "Static route tests prove exact target construction, encoded identifiers and query/header allowlists."
+    - "Negative tests prove missing/invalid JWT is rejected before upstream invocation."
+    - "Contract tests prove cross-user list, read, promote, finish and delete outcomes remain denied by SST."
+    - "Failure tests distinguish timeout/unavailable from successful save, finish or deletion."
+    - "HTTP QA examples use synthetic content and contain no token, cookie, message body or credential in evidence."
+  control_plane_checks:
+    - "4uentes-orchestor npm run check before publication and closure."
+  integrated_gate: "CR-SST-0207 must validate the complete Bend -> Auth -> Fend HTTP path after CR-SST-0206."
+acceptance:
+  - "sst-fend can perform every retention HTTP operation through 4uentes-auth without direct SST HTTP calls."
+  - "The facade preserves explicit consent and never converts temporary state into durable state implicitly."
+  - "Temporary finish, local clear and durable delete remain distinct operations and outcomes."
+  - "4uentes-auth remains a thin authenticated facade and does not become the chat data authority."
+rollback: >
+  Revert the 4uentes-auth facade release and keep the retention UI disabled.
+  Do not mutate PostgreSQL, Redis or MongoDB as rollback and do not reinterpret
+  a failed request as a completed destructive action.
+decision:
+  status: "proposed-awaiting-execution-approval"
+  approver: null
+  decided_at: null
+evidence_refs:
+  - "evidence/requests/CR-SST-0211/namespace-and-boundary-preflight-2026-08-22.md"
+  - "evidence/requests/CR-SST-0211/implementation-plan.md"
