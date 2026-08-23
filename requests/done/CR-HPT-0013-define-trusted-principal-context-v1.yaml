@@ -1,0 +1,58 @@
+schema_version: "1.0"
+phase: 4
+id: "CR-HPT-0013"
+title: "Define the trusted SST PrincipalContext v1 contract for Phinance"
+status: "done"
+source_request: "requests/inbox/CR-HPT-0013-define-trusted-principal-context-v1.yaml"
+planned_request: "requests/planned/CR-HPT-0013-define-trusted-principal-context-v1.yaml"
+started_at: "2026-08-22"
+closed_at: "2026-08-23"
+requester: "4uentes"
+
+summary: >
+  Published and read back the Phinance owner contract that separates the
+  SST-attested external principal from the Phinance-local PrincipalContext
+  and finance_profile_id.
+
+owner_documentation:
+  required: true
+  status: "satisfied"
+  owner_repo: "finanzas-personales"
+  source_owner_commit: "ef4f8d0"
+  published_owner_head: "588e030"
+  owner_merge_commit: "b68c960"
+  owner_pull_request: "https://github.com/mena28/finanzas-personales/pull/1"
+  updated_owner_docs:
+    - "backend/specs/api/sst-integration.yaml"
+    - "backend/specs/api/00-index.yaml"
+    - "backend/docs/architecture/README.md"
+    - "backend/docs/api/README.md"
+    - "backend/scripts/check-contracts.js"
+  prerequisite_owner_commits_published:
+    - "c801ecf: CR-HPT-0011 owner baseline"
+    - "5fa0421: CR-HPT-0012 FastAPI scaffold"
+    - "f883b02: CR-HPT-0002 governance linkage"
+    - "8cdc715: CR-HPT-0008 everyday resource API"
+
+validation:
+  owner_contract_check: "passed"
+  owner_pytest: "10 passed, 2 skipped"
+  owner_diff_check: "passed"
+  remote_readback: "588e030 is reachable from finanzas-personales origin/main at b68c960"
+  control_plane_check: "passed"
+
+runtime:
+  changed_by_this_request: false
+  provider_adapter: "deferred"
+  consumer_adapter: "deferred"
+
+evidence_refs:
+  - "evidence/requests/CR-HPT-0013/principal-context-v1-analysis.md"
+  - "evidence/requests/CR-HPT-0013/validation-results.md"
+  - "evidence/requests/CR-HPT-0013/control-plane-reconciliation-2026-08-22.md"
+  - "evidence/requests/CR-HPT-0013/owner-publication-readback-2026-08-23.md"
+
+decision:
+  status: "closed"
+  approver: "4uentes"
+  blocker: "none for contract publication; runtime adapters remain separate lifecycles"
