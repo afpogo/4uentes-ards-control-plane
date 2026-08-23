@@ -174,10 +174,10 @@ progress:
     - "CR-SST-0192"
   active_requests:
     - "CR-SST-0193"
+    - "CR-SST-0210"
   quarantined_request_artifacts:
     - "CR-SST-0202 local memory reconciliation artifacts collide with Jira SST-113"
   planned_requests:
-    - "CR-SST-0210"
     - "CR-SST-0194"
     - "CR-SST-0195"
     - "CR-SST-0196"
