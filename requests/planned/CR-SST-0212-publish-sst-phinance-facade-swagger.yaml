@@ -150,9 +150,12 @@ execution:
 
 owner_documentation:
   required: true
-  status: "implemented-locally-awaiting-remote-readback"
+  status: "satisfied"
   primary_owner_repo: "sst-bend"
-  owner_commit: "efa955b"
+  source_owner_commit: "efa955b"
+  published_owner_head: "6a1b894"
+  owner_merge_commit: "357ac2a"
+  owner_pull_request: "https://github.com/afpogo/sst-bend/pull/22"
   observed_docs:
     - "specs/api/phinance-facade.yaml"
     - "specs/api/routing.yaml"
@@ -171,8 +174,8 @@ validation:
     - "git diff --check in every mutated repo"
 
 decision:
-  status: "approved-for-control-plane-recovery"
+  status: "completed-fail-closed-shell"
   approver: "4uentes"
   approved_at: "2026-08-23"
   approval_text: "autorizo"
-  blocker: "Owner commit efa955b must be published and read back before closure; trusted proxy remains separately blocked."
+  blocker: "none for fail-closed shell publication; trusted proxy remains separately blocked"
