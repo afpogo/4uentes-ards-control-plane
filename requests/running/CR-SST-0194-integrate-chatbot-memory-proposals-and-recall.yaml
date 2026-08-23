@@ -1,0 +1,144 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-SST-0194"
+title: "Integrate governed memory proposals and recall into SST chatbot"
+status: "running"
+source_request: "requests/inbox/CR-SST-0194-integrate-chatbot-memory-proposals-and-recall.yaml"
+planned_request: "requests/planned/CR-SST-0194-integrate-chatbot-memory-proposals-and-recall.yaml"
+created_at: "2026-08-17"
+started_at: "2026-08-23"
+requester: "4uentes"
+summary: >
+  Connect the governed SST chatbot runtime to canonical private user memory in
+  sst-bend through explicit proposal and recall ports, preserving backend
+  authority, bounded provider context and user consent.
+
+control_plane_context:
+  initiative_id: "INIT-SST-0010"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  jira_issue_key: "SST-108"
+  jira_write_allowed: false
+
+depends_on: ["CR-SST-0192", "CR-SST-0193", "CR-SST-0155", "CR-SST-0168", "CR-SST-0210"]
+
+authorization:
+  status: "approved-for-cross-repo-execution"
+  approved_by: "4uentes"
+  approved_at: "2026-08-23"
+  approval_text: "ok autorizo y sigamos"
+  scope: >
+    Execute CR-SST-0194 only in isolated worktrees for sst-chatbot, sst-bend
+    and 4uentes-auth, subject to the implementation plan and owner checks.
+  exclusions:
+    - "No Jira writes."
+    - "No deployment or feature-flag mutation."
+    - "No production data mutation."
+    - "No sst-fend, sst-extension or infrastructure mutation."
+
+architecture_gate:
+  status: "passed-predecessors-closed-and-cross-repo-execution-approved"
+  predecessor_request: "CR-SST-0210"
+  predecessor_ref: "requests/done/CR-SST-0210-memory-identity-scope.yaml"
+  runtime_request_ref: "requests/done/CR-SST-0193-implement-canonical-user-memory-runtime.yaml"
+  policy_analysis_ref: "evidence/requests/CR-SST-0194/identity-scope-policy-analysis-2026-08-22.md"
+
+execution:
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets: ["sst-chatbot", "sst-bend", "4uentes-auth"]
+  child_repo_mutation_forbidden: ["sst-fend", "sst-extension", "sst-4uentes-infra"]
+  isolated_worktree_required: true
+  control_plane_branch: "agent/cr-sst-0194-chatbot-memory-integration"
+  control_plane_worktree: "worktrees/CR-SST-0194-chatbot-memory-integration"
+  child_branches:
+    sst-chatbot: "feat/CR-SST-0194/governed-memory-proposal-recall"
+    sst-bend: "feat/CR-SST-0194/chatbot-memory-m2m-ports"
+    4uentes-auth: "feat/CR-SST-0194/chatbot-memory-service-grant"
+  production_data_allowed: false
+  jira_write_allowed: false
+
+execution_status:
+  lifecycle_and_authorization: "recorded"
+  predecessor_readback: "passed-cr-sst-0210-and-cr-sst-0193-closed"
+  owner_repo_preflight: "in-progress"
+  implementation_plan: "pending-owner-runtime-readback"
+  child_repo_mutation: "not-started"
+  integrated_qa: "not-started"
+  control_plane_check: "pending"
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "private user memory and consent"
+    - "cross-service authentication and M2M scope"
+    - "tenant/account/user isolation"
+    - "provider context minimization"
+    - "cross-repo proposal and recall contracts"
+
+model_selection:
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5-high"
+  effective_model: "environment-managed"
+  reason: "Security-sensitive cross-repo integration over private memory and service identity."
+
+subagent_deployment_plan:
+  required: false
+  reason: "No explicit delegation was requested and proactive subagent use is disabled."
+  execution: "The main agent performs architecture, implementation, security review and validation sequentially."
+
+implementation_units:
+  - id: "owner-runtime-readback"
+    objective: "Discover the current Auth, Bend and chatbot contracts and reduce mutation to the minimum required owners."
+    owners: ["4uentes-orchestor"]
+    risk: "high"
+    validation: "Clean remote refs, owner docs, existing capabilities and explicit gap matrix."
+  - id: "memory-m2m-ports"
+    objective: "Expose minimum-scope proposal and recall surfaces for the chatbot without trusting forwarded PrincipalContext."
+    owners: ["sst-bend", "4uentes-auth"]
+    risk: "high"
+    validation: "Service grant, backend scope reconstruction, idempotency and fail-closed tests."
+  - id: "chatbot-memory-adapters"
+    objective: "Compose governed proposal and recall adapters with bounded provider context and citations."
+    owners: ["sst-chatbot"]
+    risk: "high"
+    validation: "Fake-provider proposal, recall, citations, cancellation and secret-boundary tests."
+  - id: "integrated-memory-smoke"
+    objective: "Prove an authenticated proposal and later cited recall without provider-owned memory."
+    owners: ["4uentes-auth", "sst-bend", "sst-chatbot"]
+    risk: "high"
+    validation: "All mutated owner checks, reproducible smoke and full control-plane check."
+
+owner_documentation:
+  required: true
+  status: "planned"
+  owner_repos: ["sst-chatbot", "sst-bend", "4uentes-auth"]
+  planned_paths:
+    - "specs/capabilities/"
+    - "docs/capabilities/"
+    - "specs/integrations/"
+    - "docs/architecture/"
+  rule: >
+    Every mutated owner must update its own normative contract and derived
+    documentation, or the lifecycle must record why that authorized owner did
+    not require mutation.
+
+required_checks:
+  - "sst-chatbot full check and governed RAG coverage"
+  - "sst-bend memory API, auth and architecture tests"
+  - "4uentes-auth build and service-grant tests when Auth mutation is required"
+  - "integrated fake-backed and local/dev smoke"
+  - "control-plane npm run check"
+
+decision:
+  status: "approved-running-owner-preflight"
+  approver: "4uentes"
+  decided_at: "2026-08-23"
+
+evidence_refs:
+  - "evidence/requests/CR-SST-0194/identity-scope-policy-analysis-2026-08-22.md"
+  - "evidence/requests/CR-SST-0194/execution-start-2026-08-23.md"
