@@ -4,7 +4,7 @@
 
 La implementacion quedo publicada como PR draft
 `afpogo/sst-fend#17` desde
-`feat/CR-SST-0206/chat-retention-consent-ux@890af538de58ba2d53ca2a2acf474847d721f5ee`,
+`feat/CR-SST-0206/chat-retention-consent-ux@e69521beec10f88bbb74cedceed5c0e788f69e67`,
 basada en `origin/develop@44e1c2a`.
 
 El checkout canonico sucio de `sst-fend` se preservo intacto. Todo el trabajo
@@ -34,15 +34,31 @@ owner ocurrio en el worktree limpio
 - Tests: 36 suites y 240 tests PASS; 6 cubren especificamente consentimiento,
   almacenamiento, clear local, confirmaciones y recuperacion.
 - `git diff --check`: PASS antes del commit.
-- GitHub readback final: PR abierta, draft y mergeable; el check
-  `build-publish-update` paso en 5m23s. Paso repository check, build frontend y
+- GitHub readback final: PR abierta, draft y mergeable; el check del commit
+  final `build-publish-update` paso en 5m36s. Paso repository check, build frontend y
   build de imagen. Login a GHCR, push de imagen, checkout de Infra y update de
   tag fueron omitidos por tratarse de un evento `pull_request`.
 
-La QA renderizada desktop/mobile no se pudo ejecutar porque el navegador
-integrado no logro inicializarse en el entorno de automatizacion. La deuda esta
-registrada tambien en la documentacion owner y bloquea declarar el request
-cerrado, pero no la publicacion del draft.
+## QA renderizada
+
+El navegador integrado no logro inicializarse, por lo que se uso Chrome
+headless local con un preview y una clave de persistencia efimeros. La primera
+captura detecto que la clase global `sr-only` no existia y desplazaba el label,
+input y boton del composer. Se reemplazo por una clase CSS Module de ocultacion
+visual accesible en `e69521b`.
+
+Readback posterior a la correccion:
+
+- Desktop `1440x1000`: PASS.
+- Mobile `390x844`: PASS.
+- Ancho de documento igual al viewport en ambas resoluciones: sin overflow
+  horizontal.
+- Botones de 44px e input de 46px; label `Mensaje` asociado y accesible.
+- Cero excepciones de runtime.
+- Preview, perfiles, capturas y clave efimera retirados antes del gate final.
+
+El full check owner se repitio despues de la correccion y mantuvo 36 suites / 240
+tests, build y ARDS check en verde.
 
 ## Limites
 
@@ -50,3 +66,4 @@ No se fusiono el PR, no se activo `CHAT_RETENTION_V1_ENABLED`, no se desplego y
 no se modificaron Auth, Bend, Extension, Chatbot, Infra, produccion ni Jira.
 El workflow disparado por `pull_request` compila la imagen con `push: false`;
 solo el evento `push` sobre `develop` puede publicar imagen o actualizar Infra.
+La PR permanece draft y su merge requiere autorizacion explicita posterior.
