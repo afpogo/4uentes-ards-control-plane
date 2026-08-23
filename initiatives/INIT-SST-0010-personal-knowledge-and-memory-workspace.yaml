@@ -1,0 +1,202 @@
+schema_version: "1.0"
+kind: "initiative"
+id: "INIT-SST-0010"
+title: "SST Personal Knowledge and Memory Workspace V1"
+status: "active"
+updated_at: "2026-08-23"
+owner_repository: "4uentes-orchestor"
+objective: >
+  Deliver the first governed SST personal knowledge and user-memory workspace:
+  canonical private memory in sst-bend, proposal and recall integration in
+  sst-chatbot, a portable ARDS-inspired projection, user review controls,
+  capability-scoped robot views and end-to-end evidence across sessions.
+initial_hypothesis: >
+  SST can preserve the original product intention of a tag-governed personal
+  knowledge base without cloning project ARDS/SDD per user by separating the
+  canonical structured memory model from optional physical, downloadable and
+  device-replicated workspace projections.
+source_evidence_refs:
+  - "evidence/initiatives/INIT-SST-0010/initiative-decision.md"
+  - "evidence/initiatives/INIT-SST-0010/source-intent-review.md"
+  - "evidence/initiatives/INIT-SST-0010/jira-mirror-plan.md"
+  - "evidence/initiatives/INIT-SST-0010/jira-readonly-preflight.md"
+  - "evidence/initiatives/INIT-SST-0010/jira-write-batch-authorization.md"
+  - "evidence/initiatives/INIT-SST-0010/jira-write-summary.md"
+  - "evidence/initiatives/INIT-SST-0010/jira-final-readback.md"
+  - "evidence/initiatives/INIT-SST-0010/validation-results.md"
+  - "evidence/requests/CR-SST-0192/contract-decision.md"
+  - "evidence/requests/CR-SST-0192/personal-memory-governance-v1.yaml"
+  - "evidence/requests/CR-SST-0192/manual-qa-readiness-and-walkthrough.md"
+  - "evidence/initiatives/INIT-SST-0010/reconciliation-analysis-2026-08-22.md"
+  - "evidence/initiatives/INIT-SST-0010/jira-reconciliation-batch-preview-2026-08-22.md"
+  - "evidence/initiatives/INIT-SST-0010/reconciliation-validation-2026-08-22.md"
+  - "evidence/initiatives/INIT-SST-0010/request-id-collision-2026-08-22.md"
+  - "evidence/requests/CR-SST-0194/identity-scope-policy-analysis-2026-08-22.md"
+  - "evidence/initiatives/INIT-SST-0010/paragraph-sequential-derivation-adoption-plan.md"
+  - "evidence/initiatives/INIT-SST-0010/namespace-and-publication-preflight-2026-08-23.md"
+model_refs:
+  - "specs/initiatives/initiative-model.yaml"
+  - "docs/requests/initiative-model.md"
+known_change_requests:
+  - "CR-SST-0192"
+  - "CR-SST-0193"
+  - "CR-SST-0194"
+  - "CR-SST-0195"
+  - "CR-SST-0196"
+  - "CR-SST-0197"
+  - "CR-SST-0198"
+candidate_change_requests:
+  - id: "CR-SST-TODO-IDENTITY-SCOPE"
+    title: "Reconcile trusted SST user-memory identity, tenant and application scope"
+    candidate_id: "CR-SST-0210"
+    status: "conceptually-reserved-awaiting-initiative-publication-and-minimal-inbox-merge"
+  - id: "CR-SST-TODO"
+    title: "Implement encrypted offline device replica and conflict resolution"
+    status: "candidate-after-server-canonical-mvp"
+  - id: "CR-SST-TODO"
+    title: "Adopt embeddings and vector retrieval for accepted memory"
+    status: "candidate-after-lexical-retrieval-evaluation"
+  - id: "CR-SST-TODO-PARA-CONTRACT"
+    title: "Adopt paragraph-sequential long-source derivation contract"
+    status: "blocked-until-global-cr-namespace-and-identity-scope-reconciliation"
+  - id: "CR-SST-TODO-PARA-BEND"
+    title: "Persist governed paragraph derivation runs and proposals"
+    status: "candidate-after-paragraph-derivation-contract"
+  - id: "CR-SST-TODO-PARA-CHATBOT"
+    title: "Implement sequential derivation pipeline and prompt profiles"
+    status: "candidate-after-paragraph-derivation-contract"
+  - id: "CR-SST-TODO-PARA-INTEGRATION"
+    title: "Integrate durable paragraph derivation across backend and chatbot"
+    status: "candidate-after-backend-and-chatbot-owner-adoption"
+  - id: "CR-SST-TODO-PARA-FEND"
+    title: "Adopt prompt selection and derivation proposal review UX"
+    status: "candidate-after-integrated-paragraph-derivation-and-memory-controls"
+  - id: "CR-SST-TODO-PARA-E2E"
+    title: "Validate paragraph-sequential derivation and memory adoption end to end"
+    status: "candidate-after-required-owner-adoption"
+tracking:
+  jira:
+    role: "mirror"
+    source_of_truth: false
+    project_key: "SST"
+    issue_type: "Epic"
+    issue_key: "SST-105"
+    current_status_observed: "Tareas por hacer"
+    write_status: "historical-create-batch-consumed-reconciliation-not-authorized"
+    read_status: "available-live-readback-2026-08-23"
+    evidence_ref: "evidence/initiatives/INIT-SST-0010/jira-final-readback.md"
+    associated_issue_keys: ["SST-106", "SST-107", "SST-108", "SST-109", "SST-110", "SST-111", "SST-112"]
+    request_issue_map:
+      CR-SST-0192: "SST-106"
+      CR-SST-0193: "SST-107"
+      CR-SST-0194: "SST-108"
+      CR-SST-0195: "SST-109"
+      CR-SST-0196: "SST-110"
+      CR-SST-0197: "SST-111"
+      CR-SST-0198: "SST-112"
+    issue_status_observed_at: "2026-08-22"
+    issue_status_observed:
+      SST-105: "Tareas por hacer"
+      SST-106: "Tareas por hacer"
+      SST-107: "Tareas por hacer"
+      SST-108: "Tareas por hacer"
+      SST-109: "Tareas por hacer"
+      SST-110: "Tareas por hacer"
+      SST-111: "Tareas por hacer"
+      SST-112: "Tareas por hacer"
+    reconciliation_request_candidate: "CR-SST-TODO-JIRA-RECONCILIATION"
+    reconciliation_batch_status: "quarantined-after-local-cr-sst-0202-id-collision"
+identifier_reconciliation:
+  status: "ready-for-initiative-publication-before-cr-sst-0210-reservation"
+  resolution: >
+    Canonical origin/main assigns CR-SST-0199 through CR-SST-0209 and
+    CR-SST-0211 through CR-SST-0213. The namespace decision under CR-SST-0208
+    reserves CR-SST-0210 conceptually for memory identity and scope, but the
+    worktree lifecycle policy requires INIT-SST-0010 publication followed by a
+    separate minimal inbox merge before that identity becomes canonical.
+  externally_observed_occupied_ids:
+    - "CR-SST-0199 through CR-SST-0209"
+    - "CR-SST-0211 through CR-SST-0213"
+  candidate_identity_scope_id: "CR-SST-0210"
+  failure_behavior: >
+    Publish this Initiative first. Then reserve CR-SST-0210 through a minimal
+    inbox PR, refresh origin/main and only afterward create its execution
+    worktree. Do not execute the quarantined Jira reconciliation batch.
+  evidence_refs:
+    - "evidence/initiatives/INIT-SST-0010/request-id-collision-2026-08-22.md"
+    - "evidence/initiatives/INIT-SST-0010/namespace-and-publication-preflight-2026-08-23.md"
+    - "evidence/requests/CR-SST-0208/canonicalization-decision-2026-08-22.md"
+relationships:
+  depends_on:
+    - {initiative_id: "INIT-SST-0007", role: "authenticated realtime chat and internal chatbot runtime"}
+    - {initiative_id: "INIT-SST-0001", role: "accepted LearningWorkspace context and tag-governed knowledge"}
+  historical_request_refs:
+    - "CR-SST-0021"
+    - "CR-SST-0026"
+    - "CR-SST-0027"
+    - "CR-SST-0030"
+    - "CR-SST-0031"
+    - "CR-SST-0092"
+    - "CR-SST-0155"
+boundaries:
+  mutates_child_repositories: false
+  promotes_runtime: false
+  changes_core_canon: false
+  jira_writes_authorized: false
+  jira_writes_were_authorized: true
+  jira_write_authorization_consumed: true
+  jira_write_authorization_scope: "Created one Epic and seven Tasks with descriptions only during the authorized planning turn."
+  child_repo_mutation_requires_later_execution_approval: true
+  canonical_memory_owner: "sst-bend"
+  proposal_and_recall_owner: "sst-chatbot"
+  identity_owner: "4uentes-auth"
+  membership_and_business_scope_owner: "sst-bend"
+  principal_context_authority: "sst-bend"
+  physical_workspace_role: "derived-portable-projection"
+  device_replica_role: "future-opt-in-noncanonical-replica"
+  prohibited_actions:
+    - "Treat raw chat history as accepted durable memory."
+    - "Allow sst-chatbot or a robot to bypass sst-bend validation."
+    - "Clone the project control-plane ARDS/SDD tree for every SST user."
+    - "Treat a physical device directory as canonical before an offline sync contract is approved."
+    - "Persist secrets, credentials or unrestricted cross-user context."
+success_scenario: >
+  An authenticated user asks SST to remember an engineering intention. The
+  backend persists the event, validates the chatbot proposal, stores the
+  accepted intention, exposes an optional portable workspace projection, and
+  a later conversation recalls it with scope, provenance and user controls.
+closure_gate: >
+  INIT-SST-0010 remains planned or active until CR-SST-0198 proves durable
+  cross-session recall, restart recovery, scope isolation, user review,
+  portable projection integrity and owner-repository validation, or records an
+  explicitly approved residual.
+progress:
+  completed_requests:
+    - "CR-SST-0192"
+  active_requests:
+    - "CR-SST-0193"
+  quarantined_request_artifacts:
+    - "CR-SST-0202 local memory reconciliation artifacts collide with Jira SST-113"
+  planned_requests:
+    - "CR-SST-0194"
+    - "CR-SST-0195"
+    - "CR-SST-0196"
+    - "CR-SST-0197"
+    - "CR-SST-0198"
+  next_recommended_request: >
+    Publish INIT-SST-0010 from its clean control-plane worktree, reserve
+    CR-SST-0210 through a separate minimal inbox merge, plan and approve the
+    identity-scope predecessor, close CR-SST-0193 through the normal identity
+    path, and only then consider CR-SST-0194 execution.
+  current_runtime_status: >
+    CR-SST-0193 canonical persistence and API are implemented, merged and
+    validated in local/dev. The request remains running because the normal
+    identity path has unresolved tenant, account-membership and application
+    scope authority; this is not safely solved by adding claims alone. The
+    mandatory control-plane check passed on 2026-08-22 after distinguishing a
+    sandbox EPERM from a repository failure.
+  manual_qa_status: >
+    Contract walkthrough and focused functional API QA are complete. Normal
+    identity-path QA remains blocked under CR-SST-0193; conversational QA
+    starts after CR-SST-0194, user-visible QA starts after CR-SST-0196 and the
+    initiative closes only through CR-SST-0198 evidence.

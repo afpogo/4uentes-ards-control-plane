@@ -1,0 +1,283 @@
+schema_version: "1.0"
+kind: "cross_repo_product_contract"
+id: "sst-personal-memory-governance-v1"
+version: "1.0.0"
+status: "approved-for-owner-implementation"
+updated_at: "2026-08-17"
+initiative_id: "INIT-SST-0010"
+request_id: "CR-SST-0192"
+purpose: >
+  Govern private SST user memory from capture through review, durable
+  acceptance, recall, correction, deletion, portable projection and
+  capability-scoped robot access without treating raw chat, provider state or
+  a device filesystem as canonical memory.
+
+authority:
+  identity_and_session: "4uentes-auth"
+  canonical_memory_and_policy_decision: "sst-bend"
+  proposal_recall_and_provider_adaptation: "sst-chatbot"
+  user_review_and_export_experience: "sst-fend"
+  cross_repo_contract_and_execution_lifecycle: "4uentes-orchestor"
+  explicit_denials:
+    - "The LLM provider is not an identity, authorization or persistence authority."
+    - "A robot persona is not an account role and cannot grant itself capabilities."
+    - "Raw chat, provider conversation state, vector indexes, exports and device directories are not canonical memory."
+
+scope:
+  required_fields: [tenant_id, account_id, user_id, application_id, memory_space_id]
+  source: "PrincipalContext derived from an authenticated session and membership"
+  rules:
+    - "User text, prompt content and provider output cannot set or expand scope."
+    - "Missing or unresolved scope fails closed; user-memory V1 must not use a legacy or default tenant fallback."
+    - "Every read, write, review, export and robot view repeats scope authorization in sst-bend."
+
+entities:
+  user_memory_space:
+    role: "Canonical private scope root."
+    required_fields: [memory_space_id, tenant_id, account_id, user_id, application_id, status, created_at]
+    statuses: [active, suspended, deletion_pending, deleted]
+  user_memory_event:
+    role: "Durable evidence that a relevant action occurred; not accepted memory by itself."
+    required_fields:
+      - event_id
+      - memory_space_id
+      - event_type
+      - source_surface
+      - source_ref
+      - payload_minimized
+      - body_hash
+      - occurred_at
+      - correlation_id
+      - idempotency_key
+    initial_types:
+      - chat.memory_requested
+      - chat.memory_confirmed
+      - user.item_saved
+      - user.item_tagged
+      - user.remember_requested
+      - memory.correct_requested
+      - memory.delete_requested
+    rules:
+      - "chat.message_sent metadata may reference a canonical chat message, but raw message text is not copied by default."
+      - "Only the minimum excerpt necessary for an explicit memory request may enter payload_minimized."
+  user_memory_proposal:
+    role: "Structured candidate produced by a governed service and validated by sst-bend."
+    required_fields:
+      - proposal_id
+      - memory_space_id
+      - producer_service
+      - source_event_ids
+      - proposal_type
+      - proposed_payload
+      - tags
+      - classification
+      - confidence
+      - validation_summary
+      - correlation_id
+      - idempotency_key
+      - status
+      - created_at
+    proposal_types: [fact, intention, thread_link]
+    statuses: [drafted, validated, needs_user_review, accepted, rejected, superseded, expired]
+  user_memory_fact:
+    role: "Accepted statement that may be recalled while active and eligible."
+    required_fields:
+      - fact_id
+      - memory_space_id
+      - statement
+      - tags
+      - classification
+      - visibility
+      - source_event_ids
+      - source_proposal_id
+      - confidence
+      - lifecycle_status
+      - created_by
+      - created_at
+      - updated_at
+    statuses: [active, archived, superseded, deletion_pending, deleted]
+  user_memory_intention:
+    role: "Accepted user objective, preference or pending direction."
+    required_fields:
+      - intention_id
+      - memory_space_id
+      - intent_text
+      - tags
+      - classification
+      - visibility
+      - source_event_ids
+      - source_proposal_id
+      - priority
+      - next_action_hint
+      - lifecycle_status
+      - created_at
+      - updated_at
+    statuses: [active, completed, paused, archived, superseded, deletion_pending, deleted]
+  user_memory_thread:
+    role: "Explicit relation among accepted facts, intentions and source records."
+    required_fields: [thread_id, memory_space_id, title, member_refs, tags, lifecycle_status, created_at, updated_at]
+  user_memory_recall:
+    role: "Metadata-only audit of a governed retrieval decision."
+    required_fields:
+      - recall_id
+      - memory_space_id
+      - correlation_id
+      - requester_type
+      - requester_id
+      - policy_version
+      - decision_code
+      - retrieved_memory_ids
+      - citation_refs
+      - created_at
+    forbidden_fields: [raw_query, rendered_prompt, provider_response, access_token, refresh_token]
+
+tags:
+  required_groups: [domain, topic, kind, source, visibility, lifecycle]
+  rules:
+    - "Tags are structured attributes, not values inferred only at query time."
+    - "Free text cannot create authorization entitlements."
+    - "Unknown tag groups may be preserved as candidate metadata but cannot expand retrieval or robot access."
+
+classification:
+  values: [public, internal, private, restricted, secret]
+  default_for_user_memory: private
+  rules:
+    - "Credential-like or secret content is rejected before durable content persistence and before provider access."
+    - "Restricted and secret content is never indexable, downloadable or provider-eligible in V1."
+    - "Private content may reach a provider only when accepted, active, explicitly provider-eligible and minimized."
+    - "Unknown classification fails closed."
+
+capture_and_consent:
+  rules:
+    - "Raw conversation history and application activity are evidence inputs, not accepted memory."
+    - "Every inferred fact, intention or thread link starts as a proposal."
+    - "V1 requires an explicit recorded user acceptance before a proposal becomes durable accepted memory."
+    - "An explicit remember request records capture intent but does not bypass backend validation or review."
+    - "Rejected, expired or unreviewed proposals are excluded from recall, robots, indexes and exports."
+
+policy_evaluation_order:
+  - authenticated_principal
+  - current_session_and_membership
+  - complete_scope
+  - capture_consent
+  - classification_and_secret_detection
+  - lifecycle_eligibility
+  - robot_capabilities_when_applicable
+  - retrieval_and_context_budget
+  - provider_minimization
+  - grounded_output_and_disclosure
+  - audit_without_business_content
+failure_behavior: "fail-closed-with-sanitized-decision-code"
+
+retrieval:
+  eligible_when_all:
+    - "scope matches tenant, account, user, application and memory space"
+    - "record is accepted and active"
+    - "record is indexable"
+    - "classification and source are allowed"
+    - "required entitlements are present"
+    - "record is not secret-like, deleted, superseded or expired"
+  rules:
+    - "Authorization runs before ranking or vector lookup results reach the provider."
+    - "A user query, retrieved document or prompt injection cannot expand scope or capabilities."
+    - "Vector stores and caches are derived indexes and never a source of truth."
+
+provider_boundary:
+  allowed_input:
+    - "the current user message after secret detection"
+    - "minimal authorized content chunks"
+    - "opaque chunk identifiers required for citation"
+  forbidden_input:
+    - tenant_id
+    - account_id
+    - user_id
+    - session_id
+    - entitlements
+    - access_or_refresh_tokens
+    - internal_policy_rules
+    - rejected_or_deleted_memory
+  output_rules:
+    - "Claims must be structured and cite only retrieved authorized chunks."
+    - "Unknown citations, sensitive output and privilege escalation instructions are rejected."
+    - "Provider-managed conversation memory is configuration state, not SST user memory."
+
+robot_views:
+  identity_rule: "Human owner/member roles remain account authorization; robot profiles are capability-scoped application actors."
+  capabilities: [memory.read, memory.propose, memory.handoff]
+  filters:
+    - tenant_id
+    - account_id
+    - user_id
+    - application_id
+    - allowed_domains
+    - allowed_kinds
+    - allowed_sources
+    - allowed_classifications
+    - required_entitlements
+  rules:
+    - "Robots never access the database, vector store, export directory or device filesystem directly."
+    - "A robot cannot accept, delete or export memory unless a later capability explicitly grants that action."
+    - "Every successful robot recall records robot profile, policy version and consumed memory IDs."
+
+correction_and_deletion:
+  correction: "Create a revision or superseding record; preserve provenance and never silently overwrite accepted meaning."
+  deletion:
+    - "Move the canonical record to deletion_pending in the same authorized operation that excludes it from new recall."
+    - "Remove content from active storage and derived indexes; invalidate generated exports and projection entries."
+    - "Keep a metadata-only tombstone for 30 days for idempotency and deletion propagation, then purge it unless an approved operational requirement says otherwise."
+    - "Backups and account-closure erasure timing require an owner operational policy before release."
+
+retention:
+  user_memory_event_content_days: 30
+  drafted_validated_or_rejected_proposal_days: 30
+  accepted_fact_intention_or_thread: "until user deletion, account closure or explicit lifecycle transition"
+  recall_audit_metadata_days: 90
+  generated_download_artifact_hours: 24
+  rules:
+    - "Chat retention and accepted-memory retention are separate policies."
+    - "Retention jobs must be idempotent, scoped and covered by negative deletion/retrieval tests."
+
+portable_workspace:
+  authority: "derived projection of canonical accepted memory"
+  modes: [logical, physical, hybrid]
+  manifest_required_fields:
+    - contract_version
+    - generated_at
+    - memory_space_ref
+    - policy_version
+    - canonical_revision
+    - entries
+    - content_hashes
+  allowed_entries: [accepted_facts, accepted_intentions, active_threads, provenance_refs, structured_tags]
+  forbidden_entries: [raw_chat_dump, secrets, credentials, rejected_proposals, deleted_content, tokens, absolute_paths]
+  rules:
+    - "Paths are stable, relative and validated against traversal, reserved names and unsafe normalization."
+    - "The projection may be regenerated from canonical state and must not be imported as authority without a future governed import contract."
+    - "A device replica is future opt-in, encrypted and noncanonical; V1 does not define offline conflict resolution."
+
+audit_and_observability:
+  required_metadata: [correlation_id, policy_version, decision_code, requester_type, counts, duration]
+  forbidden_metadata: [raw_memory_content, prompt, provider_response, credentials, tokens]
+  rules:
+    - "User-facing provenance is a product view; operational logs remain metadata-only."
+    - "Errors expose stable sanitized codes and never reveal whether another user's record exists."
+
+minimum_validation:
+  positive:
+    - "explicit remember request -> proposal -> user acceptance -> accepted intention -> later cited recall"
+    - "accepted memory -> deterministic portable manifest and safe export"
+  negative:
+    - "cross-tenant, cross-account and cross-user access is denied"
+    - "duplicate event and proposal writes are idempotent"
+    - "raw, rejected, deleted, secret-like and non-indexable records are excluded"
+    - "robot prompt and provider output cannot escalate privilege"
+    - "unsafe export paths are rejected"
+    - "deletion removes records from recall, indexes and new exports"
+
+out_of_scope_v1:
+  - "Encrypted offline device replica and conflict resolution"
+  - "Vector retrieval as the canonical memory store"
+  - "Automatic acceptance of inferred memory"
+  - "Community sharing among users or robots"
+  - "Provider-specific long-term memory as product authority"
+  - "Production legal-retention claims without a separately approved jurisdictional policy"

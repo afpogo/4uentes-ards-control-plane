@@ -1,0 +1,28 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0192"
+title: "Define SST personal memory and portable workspace contract"
+status: "inbox"
+created_at: "2026-08-17"
+requester: "4uentes"
+business_context: >
+  SST needs one approved contract that reconciles the original personal
+  knowledge-base intention with the corrected user internal memory boundary.
+requested_change: >
+  Define canonical memory ownership, structured tags, lifecycle, privacy,
+  portable workspace projections, device-replica boundaries and robot-scoped
+  views before functional repositories are modified.
+expected_outcome: >
+  The program has an implementable V1 contract and explicit decisions for what
+  is canonical, derived, portable, indexable, downloadable and device-local.
+initial_scope:
+  solution: "sst"
+  services: ["4uentes-orchestor"]
+constraints:
+  - "Do not mutate child repositories in this planning request."
+  - "Do not redefine project ARDS/SDD as per-user runtime memory."
+  - "Do not make a device replica canonical without a later sync contract."
+decision:
+  status: "approved-for-planning"
+  approver: "4uentes"
+  decided_at: "2026-08-17"

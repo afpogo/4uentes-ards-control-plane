@@ -1,0 +1,56 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0195"
+title: "Implement portable ARDS-inspired memory workspace projection"
+status: "planned"
+source_request: "requests/inbox/CR-SST-0195-implement-portable-memory-workspace-projection.yaml"
+created_at: "2026-08-17"
+requester: "4uentes"
+summary: >
+  Materialize accepted canonical memory as a safe, versioned and portable
+  workspace projection without turning filesystem state into authority.
+control_plane_context:
+  initiative_id: "INIT-SST-0010"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  jira_project_key: "SST"
+  jira_issue_type: "Tarea"
+  jira_epic_key: "SST-105"
+  jira_issue_key: "SST-109"
+  jira_parent: "SST-105"
+  jira_status_observed: "Tareas por hacer"
+depends_on: ["CR-SST-0192", "CR-SST-0193"]
+implementation_scope:
+  owner_repos: ["sst-bend", "sst-chatbot"]
+  must_implement:
+    - "Portable workspace and manifest contract."
+    - "Stable relative paths and logical, physical and hybrid modes."
+    - "Projection for accepted events, facts, intentions, threads and provenance."
+    - "Download and index eligibility filters."
+    - "Deterministic ZIP/export tests and unsafe-path rejection."
+  must_not_implement:
+    - "Per-user clone of control-plane requests or policies"
+    - "Raw chat dump"
+    - "Device conflict resolution"
+execution:
+  child_repo_mutation_allowed: false
+  future_execution_condition: "Explicit approval and decision of exact owner paths after CR-SST-0192."
+  jira_write_allowed: false
+  jira_write_scope: "Create batch completed and authorization consumed."
+required_checks:
+  - "Projection and manifest tests"
+  - "Secret-safe export smoke"
+  - "Owner checks and control-plane npm run check"
+planned_jira_mirror:
+  summary: "[SST][INIT-SST-0010][CR-SST-0195] Implement portable memory workspace projection"
+  description: >
+    IntenciÃ³n de avance: materializar la memoria aceptada como un workspace
+    portable inspirado en ARDS, con manifest, paths relativos seguros, modos
+    logical/physical/hybrid y exportaciÃ³n ZIP. El Ã¡rbol serÃ¡ una proyecciÃ³n
+    derivada; Postgres seguirÃ¡ siendo canÃ³nico. Se excluyen chat crudo,
+    secretos, propuestas rechazadas y sync offline. Depende de CR-SST-0192 y
+    CR-SST-0193. Jira es mirror y no autoriza filesystem writes todavÃ­a.
+decision:
+  status: "approved-for-planning"
+  approver: "4uentes"
+  decided_at: "2026-08-17"

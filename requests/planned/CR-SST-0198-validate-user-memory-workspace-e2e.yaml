@@ -1,0 +1,64 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0198"
+title: "Validate SST user memory workspace end to end"
+status: "planned"
+source_request: "requests/inbox/CR-SST-0198-validate-user-memory-workspace-e2e.yaml"
+created_at: "2026-08-17"
+requester: "4uentes"
+summary: >
+  Prove the complete user value and safety boundary before INIT-SST-0010 can
+  close or promote the memory capability.
+control_plane_context:
+  initiative_id: "INIT-SST-0010"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  jira_project_key: "SST"
+  jira_issue_type: "Tarea"
+  jira_epic_key: "SST-105"
+  jira_issue_key: "SST-112"
+  jira_parent: "SST-105"
+  jira_status_observed: "Tareas por hacer"
+depends_on:
+  - "CR-SST-0193"
+  - "CR-SST-0194"
+  - "CR-SST-0195"
+  - "CR-SST-0196"
+  - "CR-SST-0197"
+validation_scope:
+  positive_journey:
+    - "Login and connect to protected chat."
+    - "Ask SST to remember an engineering intention."
+    - "Review and accept the proposal."
+    - "Restart services and start a new conversation."
+    - "Recall the intention with provenance and citations."
+    - "Export the portable workspace and validate its manifest."
+  negative_journey:
+    - "Duplicate event/proposal idempotency."
+    - "Cross-user, account and tenant denial."
+    - "Rejected, deleted, secret-like and non-indexable memory exclusion."
+    - "Robot capability and provider-output privilege escalation denial."
+execution:
+  child_repo_mutation_allowed: false
+  future_execution_condition: "All dependencies implemented and explicit integrated-QA authorization."
+  jira_write_allowed: false
+  jira_write_scope: "Create batch completed and authorization consumed."
+required_checks:
+  - "All owner repository checks"
+  - "Deterministic simulated-provider smoke"
+  - "Authenticated memory E2E with restart recovery"
+  - "control-plane npm run check"
+planned_jira_mirror:
+  summary: "[SST][INIT-SST-0010][CR-SST-0198] Validate user memory workspace E2E"
+  description: >
+    IntenciÃ³n de avance: probar la vertical completa antes de cerrar la
+    capability. El E2E cubrirÃ¡ login, recordar una intenciÃ³n de ingenierÃ­a,
+    revisiÃ³n, persistencia, reinicio, nueva conversaciÃ³n, recall con citas,
+    exportaciÃ³n y manifest. TambiÃ©n validarÃ¡ idempotencia, aislamiento de scope,
+    secretos, borrado y permisos de robots. OpenAI real, embeddings y sync
+    offline no son prerequisitos. Jira es mirror; Listo requerirÃ¡ cierre local y
+    evidencia reproducible.
+decision:
+  status: "approved-for-planning"
+  approver: "4uentes"
+  decided_at: "2026-08-17"

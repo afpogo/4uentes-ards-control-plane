@@ -1,0 +1,27 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0198"
+title: "Validate SST user memory workspace end to end"
+status: "inbox"
+created_at: "2026-08-17"
+requester: "4uentes"
+business_context: >
+  The capability must prove durable memory, user control, portable projection
+  and agent recall across sessions before the initiative can close.
+requested_change: >
+  Execute owner checks and an integrated smoke covering login, remember,
+  review, persistence, restart, recall, export and negative scope cases.
+expected_outcome: >
+  INIT-SST-0010 has reproducible evidence that the first memory workspace is
+  safe, durable, explainable and usable through the SST agent interaction.
+initial_scope:
+  solution: "sst"
+  services: ["4uentes-auth", "sst-bend", "sst-chatbot", "sst-fend"]
+constraints:
+  - "Execution requires later explicit validation authorization."
+  - "Real user data and production credentials are forbidden in evidence."
+  - "OpenAI, embeddings and offline device sync are not closure prerequisites."
+decision:
+  status: "approved-for-planning"
+  approver: "4uentes"
+  decided_at: "2026-08-17"

@@ -1,0 +1,28 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0197"
+title: "Define capability-scoped robot memory views and access"
+status: "inbox"
+created_at: "2026-08-17"
+requester: "4uentes"
+business_context: >
+  The original SST intention assigns personalities and operational roles to
+  robots, but user memory must remain protected by account authority.
+requested_change: >
+  Define robot profiles, allowed domains, memory record kinds, proposal
+  permissions and backend-enforced retrieval views without removing human
+  account roles.
+expected_outcome: >
+  Each SST agent receives only the memory required by its approved capabilities
+  and cannot access another user, account or unrestricted workspace tree.
+initial_scope:
+  solution: "sst"
+  services: ["4uentes-auth", "sst-bend", "sst-chatbot"]
+constraints:
+  - "Execution requires later explicit child-repository approval."
+  - "Robot personas do not replace human membership and account roles."
+  - "Robots never receive direct filesystem or database access."
+decision:
+  status: "approved-for-planning"
+  approver: "4uentes"
+  decided_at: "2026-08-17"
