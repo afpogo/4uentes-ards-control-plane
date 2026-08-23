@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0",
+  "request_id": "CR-SST-0213",
+  "batch_id": "JIRA-SEC-PREPROD-03",
+  "mode": "pending-human-approval",
+  "project_key": "SST",
+  "observed_at": "2026-08-23",
+  "blocked": 1,
+  "blockers": ["EXPLICIT_ENUMERATED_BATCH_APPROVAL_REQUIRED"],
+  "actions": [
+    {"issue_key": "SST-86", "operations": ["replace-description-sync-line", "add-comment"]},
+    {"issue_key": "SST-89", "operations": ["replace-description-sync-line", "add-comment"]},
+    {"issue_key": "SST-92", "operations": ["replace-description-sync-line", "add-comment"]}
+  ],
+  "replacement": {
+    "before": "Proceso de sincronización: `CR-SST-0204`.",
+    "after": "Proceso de sincronización: `CR-SST-0213`."
+  },
+  "forbidden": ["create", "delete", "transition", "set-priority", "set-labels", "reparent", "assign", "change-summary", "edit-historical-comments"]
+}
