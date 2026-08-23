@@ -18,3 +18,15 @@ Los payloads y el readback de `CR-SST-0203` siguen siendo evidencia histórica e
 La autorización de `JIRA-SEC-PREPROD-01` quedó consumida. No se ejecuta una segunda escritura Jira por inferencia. La corrección requiere un lote nuevo, mínimo, enumerado y aprobado; no necesita cambiar prioridad, estado, parent, labels ni summaries.
 
 No se conservaron secretos, datos de sesión ni identificadores privados de conexión.
+
+## Reconciliación posterior
+
+Los hechos narrativos quedaron corregidos mediante el lote autorizado
+`JIRA-SEC-PREPROD-02`. El readback confirmó las narrativas nuevas y que estado,
+prioridad, labels, parent y summary permanecieron sin cambios.
+
+Ese lote usó `CR-SST-0204` como label de request antes de detectar que el
+namespace canónico ya asignaba ese ID a Bend chat retention and cache
+semantics. `CR-SST-0213` gobierna la reconciliación local de esa desviación.
+Los payloads y el readback históricos se preservan sin reescritura. Reemplazar
+el label en Jira requiere un lote nuevo, mínimo, enumerado y aprobado.
