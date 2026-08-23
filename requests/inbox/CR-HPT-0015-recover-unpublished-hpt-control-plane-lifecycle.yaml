@@ -1,0 +1,38 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-HPT-0015"
+title: "Recover unpublished HPT control-plane lifecycle from the dirty root"
+status: "inbox"
+created_at: "2026-08-22"
+requester: "4uentes"
+business_context: >
+  The dirty control-plane root preserves eight unique HPT commits and one
+  later uncommitted initiative edit on a legacy SST-named branch. The branch
+  is 85 commits behind origin/main and cannot be merged or replayed wholesale
+  without reintroducing obsolete validators, stale state and a colliding SST
+  request identity.
+requested_change: >
+  Recover the still-valid HPT initiatives, request lifecycles and evidence by
+  selectively reconciling each artifact against the current control-plane
+  canon, while preserving the dirty root until publication readback proves no
+  unique HPT intent remains there.
+expected_outcome: >
+  Valid HPT control-plane history is published from a clean worktree, stale or
+  incompatible artifacts remain explicitly excluded, and no functional owner
+  repository or Jira issue is mutated by this request.
+initial_scope:
+  affected_initiatives: ["INIT-HPT-0001", "INIT-HPT-0002", "INIT-HPT-0003"]
+  source_branch: "agent/cr-sst-0152-sst-fend-evidence"
+  source_commits: ["5e6e19d", "049c0d3", "22ca50f", "8800a3c", "7ad8d9a", "27c2ffe", "83bc374", "08af86a"]
+constraints:
+  - "Control-plane mutation only; do not modify Finanzas Personales or SST owner repositories."
+  - "Do not cherry-pick or merge the historical branch wholesale."
+  - "Do not publish the colliding local CR-SST-0207 SST-Phinance facade identity."
+  - "Treat historical owner-completion claims as evidence requiring reconciliation, not as new execution authority."
+  - "Do not write Jira without a separate current batch authorization and live preflight."
+  - "Keep the dirty root and its branch intact until recovery readback is integrated."
+decision:
+  status: "approved-for-control-plane-recovery"
+  approver: "4uentes"
+  decided_at: "2026-08-22"
+  approval_text: "ok avancemos"
