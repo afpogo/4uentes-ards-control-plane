@@ -21,6 +21,7 @@ initial_scope:
     - "finanzas-personales-backend"
   include_optional_services: false
 decision:
-  status: "accepted-for-planning"
+  status: "accepted-for-execution"
   approver: "4uentes"
-
+  approved_at: "2026-08-22"
+  approval_text: "ok avancemos"

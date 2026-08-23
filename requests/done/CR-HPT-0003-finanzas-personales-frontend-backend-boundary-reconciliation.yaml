@@ -1,0 +1,49 @@
+schema_version: "1.0"
+phase: 4
+id: "CR-HPT-0003"
+title: "Finanzas personales SST boundary and account-scope reconciliation"
+status: "done"
+source_request: "requests/inbox/CR-HPT-0003-finanzas-personales-frontend-backend-boundary-reconciliation.yaml"
+planned_request: "requests/planned/CR-HPT-0003-finanzas-personales-frontend-backend-boundary-reconciliation.yaml"
+started_at: "2026-08-18"
+closed_at: "2026-08-22"
+requester: "4uentes"
+
+summary: >
+  Deprecated the standalone HPT frontend identity, assigned the web experience
+  to sst-fend, and reconciled finance ownership to validated SST account_id plus
+  stable subject without implementing runtime.
+
+execution:
+  child_repo_mutation_allowed: true
+  runtime_implementation_allowed: false
+  jira_write_allowed: false
+
+owner_documentation:
+  required: true
+  status: "satisfied"
+  owner_repo: "finanzas-personales"
+  owner_commit: "55e7a78"
+  updated_owner_docs:
+    - "docs/00-overview.md"
+    - "docs/architecture/README.md"
+    - "specs/00-index.yaml"
+    - "specs/api/sst-integration.yaml"
+  evidence_refs:
+    - "evidence/requests/CR-HPT-0003/changed-files-summary.md"
+    - "evidence/requests/CR-HPT-0003/validation-results.md"
+
+validation:
+  status: "passed"
+  control_plane_commit: "5e6e19d"
+  required_checks:
+    - "finanzas-personales: node backend/scripts/check-contracts.js"
+    - "4uentes-orchestor: npm run check"
+  evidence_refs:
+    - "evidence/requests/CR-HPT-0003/changed-files-summary.md"
+    - "evidence/requests/CR-HPT-0003/validation-results.md"
+
+decision:
+  status: "closed"
+  approver: "4uentes"
+  blocker: "none"

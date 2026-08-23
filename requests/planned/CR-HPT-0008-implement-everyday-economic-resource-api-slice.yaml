@@ -1,0 +1,187 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-HPT-0008"
+title: "Implement the first everyday economic-resource API slice"
+status: "planned"
+source_request: "requests/inbox/CR-HPT-0008-implement-everyday-economic-resource-api-slice.yaml"
+created_at: "2026-08-22"
+requester: "4uentes"
+
+summary: >
+  Plan a bounded vertical slice for household economic resources and events.
+  Execution remains blocked until the owner approves persistence, quantity and
+  trusted-principal decisions listed below.
+
+control_plane_context:
+  initiative_id: "INIT-HPT-0002"
+  predecessor_request_ids:
+    - "CR-HPT-0002"
+    - "CR-HPT-0003"
+    - "CR-HPT-0005"
+    - "CR-HPT-0012"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "finanzas-personales-backend"
+      via: "first persistent business API slice"
+      ards_kind: "backend-api"
+  affected_ards:
+    - "owner-domain-contract"
+    - "owner-api-contract"
+    - "owner-persistence-and-migrations"
+    - "owner-http-qa"
+  risks:
+    - id: "UNTRUSTED_OWNER_SCOPE"
+      severity: "critical"
+    - id: "ESTIMATE_POSTED_AS_FINANCIAL_FACT"
+      severity: "high"
+    - id: "EVENT_HISTORY_DESTRUCTIVELY_EDITED"
+      severity: "high"
+    - id: "PARTIAL_QUANTITY_WASTE_MISPRICED"
+      severity: "medium"
+
+risk:
+  level: "high"
+  score: 9
+  drivers:
+    - "first persistent sensitive-data slice"
+    - "trusted SST ownership dependency"
+    - "migrations and irreversible schema decisions"
+    - "financial-honesty semantics"
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "domain, persistence, auth boundary and auditability"
+
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5-high"
+  reason: "Sensitive owner scope and persistent event semantics require the high-risk route."
+
+subagent_deployment_plan:
+  required: false
+  parallelizable: false
+  roles: []
+  fallback: "Keep architecture, financial semantics and owner-scope decisions in the primary agent."
+  evidence_required: true
+
+proposed_first_slice:
+  resources:
+    - "household_economic_resource"
+    - "household_resource_event"
+    - "economic_effect as a derived read model"
+  resource_classes:
+    - "CONSUMABLE"
+    - "DURABLE_ASSET"
+  categories:
+    - "FOOD"
+    - "TRANSPORT"
+    - "HEALTH"
+    - "HOME"
+    - "EDUCATION"
+    - "OTHER"
+  events:
+    - "ACQUIRE"
+    - "CONSUME"
+    - "EXPIRE"
+    - "WASTE"
+    - "MAINTAIN"
+    - "REPAIR"
+    - "DEFER"
+    - "DISPOSE"
+  api_groups:
+    - "POST and GET /api/v1/household-resources"
+    - "GET /api/v1/household-resources/{resourceId}"
+    - "POST and GET /api/v1/household-resources/{resourceId}/events"
+    - "GET /api/v1/household-resource-summaries/use-and-waste"
+
+recommended_decisions_requiring_approval:
+  persistence:
+    database: "PostgreSQL"
+    orm: "SQLAlchemy 2.x"
+    migrations: "Alembic 1.x"
+    driver: "psycopg 3.x"
+    rule: "Tests may use isolated adapters, but migration and integration gates must target PostgreSQL semantics."
+  quantity:
+    decision: "Record exact decimal quantity plus an explicit unit on quantity-changing events."
+    rule: "Current quantity is derived from non-reversed events and never stored as an authoritative mutable balance."
+  durable_condition:
+    values: ["USABLE", "LIMITED", "UNUSABLE", "DISPOSED"]
+    rule: "Condition is user-declared and never a mechanical or safety diagnosis."
+  qualitative_benefit:
+    decision: "No subjective score in the first slice."
+  partial_waste:
+    rule: "Compute prorated waste only when acquisition cost and compatible quantity units are known; otherwise expose value as unavailable."
+  cost_of_delay:
+    decision: "Defer monetary cost-of-delay scenarios from the first persistent slice; retain DEFER as an auditable event without posting money."
+  trusted_principal:
+    decision: >
+      Business routes depend on a PrincipalContext port resolved by trusted
+      infrastructure. Tests may override the port; production configuration
+      without an approved adapter fails closed and cannot access owner data.
+
+execution:
+  requires_human_approval: true
+  approval_source: "User explicitly approved the recommended proposal on 2026-08-22."
+  allowed_window: "manual-current-session"
+  child_repo_mutation_allowed: true
+  child_repo_mutation_target:
+    service_ids:
+      - "finanzas-personales-backend"
+    paths:
+      - "ARDS_Phinance_API.md"
+      - "backend/src/phinance_api/"
+      - "backend/tests/"
+      - "backend/alembic/"
+      - "backend/qa/http/"
+      - "backend/specs/"
+      - "backend/docs/"
+      - "backend/pyproject.toml"
+  runtime_implementation_allowed: true
+  dependency_changes_allowed: true
+  migration_changes_allowed: true
+  infrastructure_changes_allowed: false
+  sst_child_mutation_allowed: false
+  jira_write_allowed: false
+  implementation_boundary: >
+    This phase is a plan only. A running lifecycle must explicitly authorize
+    owner files, dependencies, migrations and the fail-closed principal
+    boundary before any child mutation.
+
+owner_documentation:
+  required: true
+  status: "planned"
+  owner_repo: "finanzas-personales"
+  planned_owner_docs:
+    - "ARDS_Phinance_API.md"
+    - "docs/api/README.md"
+    - "docs/architecture/README.md"
+    - "docs/tasks/README.md"
+    - "specs/api/household-economic-resources.yaml"
+    - "specs/api/00-index.yaml"
+    - "specs/features/00-index.yaml"
+    - "specs/capabilities/outbound/household-economic-resources.yaml"
+    - "specs/source-map.yaml"
+
+validation:
+  required_checks:
+    - "owner unit, property, migration and PostgreSQL integration tests"
+    - "owner account-isolation and fail-closed PrincipalContext tests"
+    - "owner .http and automated live HTTP harness"
+    - "owner contract checker and git diff --check"
+    - "4uentes-orchestor: npm run check and git diff --check"
+
+decision:
+  status: "approved-for-owner-implementation"
+  approver: "4uentes"
+  approved_at: "2026-08-22"
+  approval_text: "apruebo la propuesta"
+  blocker: "none"

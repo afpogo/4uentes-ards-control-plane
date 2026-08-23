@@ -1,0 +1,44 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-HPT-0011"
+title: "Adopt the Python Phinance-API owner baseline"
+status: "inbox"
+created_at: "2026-08-22"
+requester: "4uentes"
+
+business_context: >
+  Phinance must govern the finance bounded context as an independently
+  deployable API microservice inside the SST solution context. The owner ARDS
+  currently leaves the runtime pending and explicitly withdraws the former
+  Node/Python split.
+
+requested_change: >
+  Adopt Python with FastAPI as the single planned runtime for Phinance-API,
+  preserve finanzas-personales-backend as the stable logical service identity,
+  and update the backend owner ARDS/SDD without scaffolding runtime code.
+
+expected_outcome: >
+  The control plane and backend owner documentation agree that Phinance-API is
+  a Python backend-api microservice, owns its financial domain and persistence,
+  consumes trusted SST identity/account context, and defers implementation to
+  a separate approved request.
+
+initial_scope:
+  solution: "finanzas-personales"
+  services:
+    - "finanzas-personales-backend"
+  external_consumers:
+    - "sst-fend"
+  include_optional_services: false
+
+constraints:
+  - "Do not create application runtime, dependencies, migrations, containers or deployment manifests."
+  - "Do not create a second logical service identity for the Python implementation."
+  - "Do not modify SST repositories or define the pending trusted-principal transport."
+  - "Do not bring document intake, OCR, AI, queues or object storage into the API baseline."
+
+decision:
+  status: "accepted-for-execution"
+  approver: "4uentes"
+  approved_at: "2026-08-22"
+  approval_text: "Perfecto avancemos"
