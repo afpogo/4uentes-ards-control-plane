@@ -1,0 +1,113 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-HPT-0018"
+title: "Activate the SST Phinance proxy with integrated isolation QA"
+status: "planned"
+source_request: "requests/inbox/CR-HPT-0018-activate-phinance-proxy-integrated-qa.yaml"
+created_at: "2026-08-23"
+requester: "4uentes"
+summary: >
+  Replace the authenticated facade 503 placeholder with a feature-gated,
+  least-privilege SST-to-Phinance proxy and validate the complete trust chain.
+control_plane_context:
+  initiative_id: "INIT-HPT-0002"
+  facade_request: "CR-SST-0212"
+  provider_request: "CR-SST-0214"
+  consumer_request: "CR-SST-0216"
+  verifier_request: "CR-HPT-0017"
+impact_analysis:
+  required: true
+  affected_services: ["sst-bend", "finanzas-personales-backend", "4uentes-auth"]
+  mutable_services: ["sst-bend"]
+  read_only_services: ["finanzas-personales-backend", "4uentes-auth"]
+  observed_baselines:
+    sst_bend: "origin/develop@8e2eeb3; facade returns PHINANCE_FACADE_UNAVAILABLE"
+    auth: "origin/develop@0be811f; exact Phinance grant published"
+    phinance: "origin/main@c81e114; RS256/JWKS verifier published"
+    dirty_roots: "all preserved and ineligible for mutation"
+risk:
+  level: "high"
+  score: 12
+  drivers: ["AUTHENTICATION", "AUTHORIZATION", "FINANCIAL_DATA", "CROSS_REPO_RUNTIME", "REMOTE_HTTP"]
+model_selection:
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  task_class: "complex-high-risk-task"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5 high"
+  reason: "Auth, entitlement and financial isolation decisions cannot be safely degraded."
+  subagent_deployment_plan: "none; security and cross-repo contract work stays in the primary agent"
+approved_design_proposal:
+  activation:
+    env: "PHINANCE_PROXY_ENABLED"
+    default: false
+    disabled_behavior: "503 PHINANCE_FACADE_UNAVAILABLE"
+  outbound_identity:
+    service_bearer: "fresh or safely cached sst-bend -> phinance-api / finance:invoke token"
+    stable_subject: "verified browser JWT sub"
+    account: "active membership resolved by sst-bend"
+    entitlements: "CR-SST-0216 exact role mapping"
+    request_id: "server-generated opaque UUID"
+    correlation_id: "server-generated opaque UUID"
+  forwarding:
+    target: "PHINANCE_BASE_URL plus the owner /api/v1 path"
+    browser_authorization_forwarded: false
+    trusted_headers_overwrite_browser_values: true
+    safe_request_headers: ["accept", "content-type", "idempotency-key", "if-match", "if-none-match"]
+    hop_by_hop_headers_forwarded: false
+    write_retries: false
+    timeout_env: "PHINANCE_REQUEST_TIMEOUT_MS"
+  response_boundary:
+    preserve: ["status", "content-type", "etag", "retry-after", "safe problem body"]
+    hide: ["upstream URL", "service token", "internal exception", "stack"]
+  qa_matrix:
+    - "owner can read and write only inside the validated account"
+    - "member can read and receives 403 for write"
+    - "inactive, unknown-role and cross-account contexts fail before finance access"
+    - "browser-spoofed SST headers and trace IDs are replaced"
+    - "missing service configuration, token failure, timeout and upstream failure fail closed"
+    - "no service credential or upstream internals appear in body or logs"
+execution:
+  child_repo_mutation_allowed: true
+  owner_repo: "sst-bend"
+  owner_base: "origin/develop@8e2eeb3"
+  runtime_implementation_allowed: true
+  qa_harness_changes_allowed: true
+  dependency_changes_allowed: false
+  database_changes_allowed: false
+  auth_repo_mutation_allowed: false
+  phinance_repo_mutation_allowed: false
+  sst_fend_mutation_allowed: false
+  infrastructure_changes_allowed: false
+  secret_value_changes_allowed: false
+  jira_write_allowed: false
+atomized_execution:
+  - {order: 1, id: "publish-running-lifecycle", objective: "Publish exact security and QA boundaries before owner mutation."}
+  - {order: 2, id: "implement-bounded-proxy", objective: "Wire principal, token and safe HTTP forwarding behind the disabled-by-default gate."}
+  - {order: 3, id: "owner-negative-qa", objective: "Prove spoofing, membership, entitlement, timeout and credential failures locally."}
+  - {order: 4, id: "integrated-trust-qa", objective: "Exercise the published Auth and Phinance contracts and account isolation without persisting secrets."}
+  - {order: 5, id: "publish-readback-close", objective: "Merge owner work, read back canonical refs and close with full control-plane validation."}
+owner_documentation:
+  required: true
+  status: "planned"
+  owner_repo: "sst-bend"
+  planned_owner_docs:
+    - "specs/api/phinance-facade.yaml"
+    - "specs/capabilities/outbound/sst-phinance-facade-v1.yaml"
+    - "docs/api/27-phinance-facade.md"
+    - "docs/capabilities/outbound/sst-phinance-facade-v1.md"
+validation:
+  required_checks:
+    - "sst-bend: npm run test:phinance-proxy"
+    - "sst-bend: npm run test:phinance-consumer"
+    - "sst-bend: npm run build"
+    - "sst-bend: integrated Phinance trust and account-isolation smoke"
+    - "4uentes-orchestor: npm run check"
+    - "git diff --check in every mutated repository"
+decision:
+  status: "approved-for-bounded-proxy-and-integrated-qa"
+  approver: "4uentes"
+  approved_at: "2026-08-23"
+  approval_text: "ok avancemos al proximo frente"

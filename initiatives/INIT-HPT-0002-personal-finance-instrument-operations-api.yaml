@@ -42,6 +42,7 @@ source_evidence_refs:
   - "evidence/requests/CR-HPT-0017/baseline-and-verifier-design-2026-08-23.md"
   - "evidence/requests/CR-HPT-0017/owner-validation-results-2026-08-23.md"
   - "evidence/requests/CR-HPT-0017/owner-publication-readback-2026-08-23.md"
+  - "evidence/requests/CR-HPT-0018/baseline-and-proxy-design-2026-08-23.md"
   - "evidence/requests/CR-SST-0212/execution-reconciliation-2026-08-23.md"
   - "evidence/requests/CR-SST-0212/owner-publication-readback-2026-08-23.md"
 model_refs:
@@ -62,6 +63,7 @@ known_change_requests:
   - "CR-SST-0215"
   - "CR-SST-0216"
   - "CR-HPT-0017"
+  - "CR-HPT-0018"
 candidate_change_requests: []
 discovered_change_requests: []
 tracking:
@@ -99,4 +101,5 @@ open_gaps:
   - "The HPT-5 Epic description still names the collided CR-SST-0208 identity and requires a separate enumerated Jira batch."
   - "CR-SST-0216 published the SST-owned membership-to-finance-entitlement mapping and trusted-principal producer; the facade remains fail-closed until the Phinance verifier and integrated QA close."
   - "CR-HPT-0017 published the Phinance-owned JWT/JWKS verifier and trusted-principal HTTP adapter; SST proxy activation remains a later integrated-QA request."
+  - "CR-HPT-0018 is activating the feature-gated SST-to-Phinance proxy and integrated account-isolation QA without claiming deployment activation."
   - "Define correction/reversal semantics and a verified link to financial transactions in a later owner request."
