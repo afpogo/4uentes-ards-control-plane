@@ -1,12 +1,14 @@
 schema_version: "1.0"
-phase: 3
+phase: 4
 id: "CR-SST-0193"
 title: "Implement canonical SST user memory persistence and APIs"
-status: "running"
+status: "done"
 source_request: "requests/inbox/CR-SST-0193-implement-canonical-user-memory-runtime.yaml"
 planned_request: "requests/planned/CR-SST-0193-implement-canonical-user-memory-runtime.yaml"
+running_request: "requests/running/CR-SST-0193-implement-canonical-user-memory-runtime.yaml"
 created_at: "2026-08-17"
 started_at: "2026-08-18"
+completed_at: "2026-08-23"
 requester: "4uentes"
 
 control_plane_context:
@@ -48,10 +50,10 @@ execution_status:
   postgres_concurrency_smoke: "passed-two-accepts-one-record-cleanup-zero"
   architecture_documentation: "six-owner-visual-maps-created-and-validated"
   proposal_consent_boundary: "resolved-client-cannot-select-review-state"
-  authenticated_http_qa: "sst-bend-pass-27-assertions-node-auth-token-blocked-missing-tenant-and-application-claims"
-  local_dev_runtime: "develop-6ee18b3-migrated-feature-enabled-argo-synced-healthy"
-  runtime_http_smoke: "passed-27-assertions"
-  identity_integration: "blocked-real-access-token-cannot-resolve-trusted-tenant-account-application-scope"
+  authenticated_http_qa: "passed-30-assertions-with-real-auth-session-and-explicit-account-tenant"
+  local_dev_runtime: "develop-8e2eeb3f0285-migrated-feature-enabled-healthy"
+  runtime_http_smoke: "passed-normal-identity-path-30-assertions"
+  identity_integration: "passed-normal-auth-session-explicit-account-tenant-fixed-sst-application"
   identity_scope_analysis: "authority-and-model-gap-not-a-missing-claim-only"
   downstream_scope_decision: "separate-cross-repo-blocker-request-required-id-pending-namespace-reconciliation"
   downstream_policy_analysis: "evidence/requests/CR-SST-0194/identity-scope-policy-analysis-2026-08-22.md"
@@ -75,10 +77,12 @@ execution_status:
   neutral_traceability: "implemented-and-validated-locally"
   neutral_traceability_evidence: "evidence/requests/CR-SST-0193/neutral-traceability-validation-2026-08-21.md"
   latest_child_repo_check: "passed-with-protected-smoke-coverage-warning"
-  latest_control_plane_check: "passed-2026-08-22-with-four-nonblocking-local-binding-remote-warnings"
+  latest_control_plane_check: "passed-2026-08-23-with-only-known-historical-and-optional-local-binding-warnings"
   previous_control_plane_blocker_status: "resolved-sandbox-spawn-eperm-was-not-a-repository-failure"
   blocker_ref: "evidence/requests/CR-SST-0193/control-plane-preflight-blocker.md"
   resolution_ref: "evidence/requests/CR-SST-0193/control-plane-preflight-resolution.md"
+  normal_identity_path_qa: "passed-30-assertions-cleanup-verified"
+  normal_identity_path_qa_evidence: "evidence/requests/CR-SST-0193/normal-identity-path-qa-2026-08-23.md"
 
 task_weight:
   classification: "complex-high-risk-task"
@@ -129,7 +133,11 @@ implementation_units:
 
 owner_documentation:
   required: true
+  status: "satisfied"
   owner_repo: "sst-bend"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0193/local-implementation-validation.md"
+    - "evidence/requests/CR-SST-0193/user-memory-architecture-maps.md"
   planned_paths:
     - "specs/api/user-memory.yaml"
     - "docs/api/27-user-memory.md"
@@ -188,6 +196,15 @@ required_checks:
   - "manual QA only when the feature-flagged runtime, database and valid scoped token are available"
 
 decision:
-  status: "running-runtime-validated-awaiting-identity-scope-predecessor"
+  status: "approved-done-normal-identity-path-validated"
   approver: "4uentes"
-  decided_at: "2026-08-18"
+  decided_at: "2026-08-23"
+
+closure:
+  status: "complete-runtime-and-normal-identity-path-validated"
+  evidence_ref: "evidence/requests/CR-SST-0193/normal-identity-path-qa-2026-08-23.md"
+  next_request_id: "CR-SST-0194"
+  limits:
+    - "Closure does not authorize CR-SST-0194 execution or child-repository mutation."
+    - "Closure does not authorize Jira writes, deployment, feature-flag changes or production data mutation."
+    - "Conversational proposal and recall integration remains owned by CR-SST-0194."

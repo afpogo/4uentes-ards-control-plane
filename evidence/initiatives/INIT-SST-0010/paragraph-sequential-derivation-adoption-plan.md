@@ -46,7 +46,7 @@ visual_map:
   source_refs:
     - "initiatives/INIT-SST-0010-personal-knowledge-and-memory-workspace.yaml"
     - "docs/projects/sst/propuesta-derivacion-secuencial-por-parrafos.md"
-    - "requests/running/CR-SST-0193-implement-canonical-user-memory-runtime.yaml"
+    - "requests/done/CR-SST-0193-implement-canonical-user-memory-runtime.yaml"
     - "requests/planned/CR-SST-0194-integrate-chatbot-memory-proposals-and-recall.yaml"
     - "requests/planned/CR-SST-0196-adopt-user-memory-review-and-export-ux.yaml"
     - "evidence/initiatives/INIT-SST-0010/request-id-collision-2026-08-22.md"

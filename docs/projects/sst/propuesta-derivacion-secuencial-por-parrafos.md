@@ -29,7 +29,7 @@ visual_map:
     - "initiatives/INIT-SST-0010-personal-knowledge-and-memory-workspace.yaml"
     - "requests/done/CR-SST-0027-paragraph-sequential-ards-derivation.yaml"
     - "requests/done/CR-SST-0030-sst-user-internal-memory-boundary.yaml"
-    - "requests/running/CR-SST-0193-implement-canonical-user-memory-runtime.yaml"
+    - "requests/done/CR-SST-0193-implement-canonical-user-memory-runtime.yaml"
     - "requests/planned/CR-SST-0194-integrate-chatbot-memory-proposals-and-recall.yaml"
     - "evidence/initiatives/INIT-SST-0010/request-id-collision-2026-08-22.md"
   observed_at: "2026-08-22"
