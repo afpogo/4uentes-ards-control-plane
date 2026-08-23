@@ -1,0 +1,39 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-HPT-0014"
+title: "Implement local finance-profile resolution and a fail-closed principal boundary"
+status: "inbox"
+created_at: "2026-08-22"
+requester: "4uentes"
+
+business_context: >
+  CR-HPT-0013 published the trusted SST principal contract and CR-SST-0212
+  published the first governed SST-Phinance facade path. Phinance still lacks
+  the owner-local finance profile that converts a validated SST account and
+  stable subject into the identifier used to isolate financial records.
+
+requested_change:
+  - "Persist a Phinance-owned finance profile for each validated account_id and stable_subject pair."
+  - "Resolve the local finance_profile_id idempotently only after a trusted principal and finance entitlement are available."
+  - "Separate the external TrustedSstPrincipal from the local PrincipalContext."
+  - "Make business readiness depend on the database and trusted-principal provider while preserving process liveness."
+  - "Keep all unverified transport inputs fail-closed until the SST/Auth provider capability is published."
+
+initial_scope:
+  solution: "finanzas-personales"
+  services:
+    - "finanzas-personales-backend"
+  include_optional_services: false
+
+constraints:
+  - "Do not accept finance_profile_id from SST, the browser, headers, bodies or queries."
+  - "Do not treat plain headers, network location, CORS or a user bearer token as service authentication."
+  - "Do not enable the SST trusted proxy in this request."
+  - "Do not modify sst-bend, 4uentes-auth, infrastructure, secrets or Jira in this request."
+  - "Do not invent ownership for pre-existing rows that cannot be mapped to an account and subject."
+
+decision:
+  status: "accepted-for-planning"
+  approver: "4uentes"
+  approved_at: "2026-08-22"
+  approval_text: "ok avancemos"
