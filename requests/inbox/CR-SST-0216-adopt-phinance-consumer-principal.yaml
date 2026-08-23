@@ -1,0 +1,39 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0216"
+title: "Adopt the Phinance consumer principal in sst-bend"
+status: "inbox"
+created_at: "2026-08-23"
+requester: "4uentes"
+business_context: >
+  Auth now publishes the exact sst-bend to phinance-api service grant and
+  sst-bend already owns verified user, active-account and membership context.
+  The missing consumer boundary is a least-privilege mapping from validated
+  SST membership to the owner-approved Phinance entitlements.
+requested_change: >
+  Adopt the exact finance:invoke service-token tuple in sst-bend and implement
+  an owner-documented TrustedSstPrincipal producer that derives stable subject,
+  validated account, entitlements and bounded trace context only after JWT and
+  active membership validation.
+expected_outcome: >
+  sst-bend can construct and test a trusted Phinance invocation envelope while
+  business forwarding remains fail-closed until the independent Phinance
+  verifier request is implemented and integrated.
+initial_scope:
+  initiative_id: "INIT-HPT-0002"
+  owner_repository: "sst-bend"
+  provider_repository: "4uentes-auth"
+  downstream_repository: "finanzas-personales-backend"
+  predecessor_requests: ["CR-SST-0212", "CR-SST-0214", "CR-HPT-0013", "CR-HPT-0014"]
+constraints:
+  - "Do not enable the business-data proxy or call a live Phinance endpoint."
+  - "Do not accept stable subject, validated account, entitlements or finance_profile_id from browser input."
+  - "Do not add dependencies, migrations, secrets or infrastructure changes."
+  - "Preserve the dirty sst-bend root; use a clean worktree from current origin/develop."
+  - "Do not modify Auth or Phinance repositories in this request."
+decision:
+  status: "accepted-for-consumer-adoption"
+  approver: "4uentes"
+  approved_at: "2026-08-23"
+  approval_text: "ok autorizo jira, y avancemos con el proximo frente"
+
