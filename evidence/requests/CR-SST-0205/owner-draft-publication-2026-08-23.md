@@ -31,10 +31,15 @@ en `worktrees/CR-SST-0205-infra-owner`.
   feature flag apagado y ausencia de exposición externa: PASS.
 - `git diff --check`: PASS.
 - Scan secret-safe de patrones de credenciales: PASS.
-- `npm run check`: BLOCKED_ENVIRONMENT antes del dry-run development. El
-  contexto configurado intenta acceder a `https://127.0.0.1:57569`, pero el API
-  del cluster kind está apagado. No se inició el cluster porque no existe
-  autorización operacional para hacerlo.
+- `npm run check`: PASS. Docker declaraba el mapping
+  `127.0.0.1:57569 -> 6443`, pero el forward host rechazaba conexiones. El
+  kube-apiserver estaba sano dentro de `sst-cluster-dev-control-plane` y
+  respondía `200` en `/livez`; por eso los renders se ejecutaron en host y los
+  dos `kubectl apply --dry-run=client` contra el mismo API desde el nodo.
+- Se reinició una vez sólo el contenedor control-plane para intentar recuperar
+  el mapping. No se recreó el cluster ni se aplicó o mutó ningún recurso.
+- El wrapper de validación y las copias bajo `/tmp` se retiraron; los worktrees
+  owner y control plane quedaron sin artefactos temporales.
 - Checks GitHub owner: PASS en `validate-repository`, `validate-desired-state`
   y ambos jobs `validate-manifests`; la PR quedó `CLEAN` y mergeable.
 
@@ -44,6 +49,6 @@ La PR permanece draft. No se fusionó, no se creó el Secret runtime, no se
 sincronizó Argo CD, no se ejecutó `kubectl apply`, y no hubo cambios en Jira,
 producción ni repos funcionales.
 
-Antes de evaluar merge/reconciliación debe repetirse el check owner completo
-con el API kind disponible y provisionarse el Secret fuera de Git bajo
-autorización separada.
+Antes de evaluar merge/reconciliación debe provisionarse el Secret fuera de Git
+bajo autorización separada. La corrección durable del forwarding host de Docker
+es mantenimiento local independiente y no bloquea la validez de los manifests.
