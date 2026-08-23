@@ -6,7 +6,7 @@ status: "planned"
 source_request: "requests/inbox/CR-SST-0207-integrated-chat-retention-qa.yaml"
 created_at: "2026-08-22"
 requester: "4uentes"
-depends_on: ["CR-SST-0204", "CR-SST-0205", "CR-SST-0206"]
+depends_on: ["CR-SST-0204", "CR-SST-0205", "CR-SST-0211", "CR-SST-0206"]
 control_plane_context:
   initiative_id: "INIT-SST-0007"
   parent_request_id: "CR-SST-0202"
@@ -33,6 +33,7 @@ execution:
   production_mutation_allowed: false
   jira_write_allowed: false
 qa_matrix:
+  - "Facade: every retention HTTP operation traverses sst-fend -> 4uentes-auth -> sst-bend; only Socket.IO uses the direct browser-to-Bend exception."
   - "Temporary: two active sessions share turns; logout/new future session and TTL expiry do not recover them."
   - "Saved: explicit promotion survives logout, Redis eviction and a second device/session."
   - "Cache: first durable read after eviction misses to PostgreSQL; subsequent read hits Redis without changing authority."
