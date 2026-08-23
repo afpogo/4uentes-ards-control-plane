@@ -34,8 +34,10 @@ owner ocurrio en el worktree limpio
 - Tests: 36 suites y 240 tests PASS; 6 cubren especificamente consentimiento,
   almacenamiento, clear local, confirmaciones y recuperacion.
 - `git diff --check`: PASS antes del commit.
-- GitHub readback inicial: PR abierta, draft y mergeable; el check
-  `build-publish-update` estaba en progreso.
+- GitHub readback final: PR abierta, draft y mergeable; el check
+  `build-publish-update` paso en 5m23s. Paso repository check, build frontend y
+  build de imagen. Login a GHCR, push de imagen, checkout de Infra y update de
+  tag fueron omitidos por tratarse de un evento `pull_request`.
 
 La QA renderizada desktop/mobile no se pudo ejecutar porque el navegador
 integrado no logro inicializarse en el entorno de automatizacion. La deuda esta
