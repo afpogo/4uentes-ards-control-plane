@@ -1,0 +1,37 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-HPT-0017"
+title: "Implement the Phinance SST service verifier"
+status: "inbox"
+created_at: "2026-08-23"
+requester: "4uentes"
+business_context: >
+  Auth publishes the exact sst-bend service grant, SST publishes a validated
+  membership-to-entitlement principal producer, and Phinance already owns the
+  TrustedSstPrincipal plus finance-profile resolver. Its HTTP dependency still
+  fails closed because no concrete service-token verifier exists.
+requested_change: >
+  Implement the Phinance-owned RS256/JWKS verifier and HTTP adapter for the
+  exact sst-bend caller, phinance-api audience and finance:invoke scope, then
+  construct TrustedSstPrincipal only from bounded internal headers after token
+  verification.
+expected_outcome: >
+  Phinance accepts an authenticated SST service invocation, rejects invalid or
+  overbroad credentials and untrusted context, and reports verifier readiness
+  without exposing keys, tokens or owner-local finance_profile_id.
+initial_scope:
+  initiative_id: "INIT-HPT-0002"
+  owner_repository: "finanzas-personales-backend"
+  predecessor_requests: ["CR-HPT-0013", "CR-HPT-0014", "CR-SST-0214", "CR-SST-0216"]
+constraints:
+  - "Do not modify sst-bend, 4uentes-auth, infrastructure or Jira."
+  - "Do not expose Phinance publicly or activate the SST business proxy."
+  - "Only RS256 is accepted; issuer, audience, token_use, caller and scope are exact."
+  - "Do not accept finance_profile_id or browser-selected ownership context."
+  - "Preserve the dirty owner root and use a clean origin/main worktree."
+decision:
+  status: "accepted-for-verifier-implementation"
+  approver: "4uentes"
+  approved_at: "2026-08-23"
+  approval_text: "ok avancemos"
+

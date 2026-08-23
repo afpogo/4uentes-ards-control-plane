@@ -1,0 +1,100 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-HPT-0017"
+title: "Implement the Phinance SST service verifier"
+status: "planned"
+source_request: "requests/inbox/CR-HPT-0017-implement-phinance-sst-service-verifier.yaml"
+created_at: "2026-08-23"
+requester: "4uentes"
+summary: >
+  Replace the fail-closed placeholder with an owner-local JWT/JWKS verifier and
+  bounded TrustedSstPrincipal adapter while leaving SST forwarding disabled.
+control_plane_context:
+  initiative_id: "INIT-HPT-0002"
+  provider_request: "CR-SST-0214"
+  consumer_request: "CR-SST-0216"
+  principal_contract_request: "CR-HPT-0013"
+  profile_resolution_request: "CR-HPT-0014"
+impact_analysis:
+  required: true
+  affected_services: ["finanzas-personales-backend"]
+  intentionally_unaffected_services: ["sst-bend", "4uentes-auth", "sst-fend"]
+  observed_baseline:
+    owner_base: "origin/main@9f781e7"
+    dirty_owner_root: "preserved and ineligible for mutation"
+    dependency_state: "trusted_sst_principal returns 503 and readiness is false"
+risk:
+  level: "high"
+  score: 10
+  drivers: ["JWT_VERIFICATION", "FINANCIAL_DATA_BOUNDARY", "REMOTE_JWKS", "DEPENDENCY_CHANGE"]
+approved_design_proposal:
+  service_token:
+    algorithm: "RS256"
+    issuer: "sst-auth"
+    audience: "phinance-api"
+    token_use: "service"
+    caller: "sst-bend"
+    scope: "finance:invoke"
+    required_claims: ["exp", "iat", "iss", "aud", "sub", "client_id", "token_use", "scope"]
+  jwks:
+    url_env: "PHINANCE_SST_JWKS_URL"
+    cache_ttl_env: "PHINANCE_SST_JWKS_CACHE_TTL_SECONDS"
+    timeout_env: "PHINANCE_SST_JWKS_TIMEOUT_SECONDS"
+    unknown_kid_behavior: "refresh once then reject"
+  trusted_headers:
+    stable_subject: "X-SST-Stable-Subject"
+    validated_account_id: "X-SST-Account-ID"
+    entitlements: "X-SST-Entitlements"
+    request_id: "X-Request-ID"
+    correlation_id: "X-Correlation-ID"
+    authentication_reference: "X-SST-Authentication-Reference"
+  header_rule: >
+    Principal headers are ignored as authority until the service bearer token
+    passes every exact verification check; missing, duplicate, malformed or
+    over-bounded values fail closed.
+  dependency:
+    package: "PyJWT[crypto]"
+    range: ">=2.13,<3.0"
+    reason: "PyJWT 2.13 supports Python 3.13 and PyJWKClient cache/timeout controls."
+execution:
+  child_repo_mutation_allowed: true
+  owner_repo: "finanzas-personales-backend"
+  owner_base: "origin/main@9f781e7"
+  runtime_implementation_allowed: true
+  dependency_changes_allowed: true
+  allowed_dependency_change: "PyJWT[crypto]>=2.13,<3.0 only"
+  database_changes_allowed: false
+  infrastructure_changes_allowed: false
+  sst_repo_mutation_allowed: false
+  auth_repo_mutation_allowed: false
+  jira_write_allowed: false
+atomized_execution:
+  - {order: 1, id: "publish-running-lifecycle", objective: "Publish exact verifier and wire contract before owner mutation."}
+  - {order: 2, id: "implement-jwks-verifier", objective: "Verify exact RS256 token claims with bounded JWKS retrieval."}
+  - {order: 3, id: "implement-principal-adapter", objective: "Construct TrustedSstPrincipal only after service authentication."}
+  - {order: 4, id: "negative-and-readiness-qa", objective: "Validate bad signature, claims, scope, context and configuration failures."}
+  - {order: 5, id: "publish-readback-close", objective: "Merge owner PR, read back main and close locally."}
+owner_documentation:
+  required: true
+  status: "planned"
+  owner_repo: "finanzas-personales"
+  planned_owner_docs:
+    - "specs/api/sst-integration.yaml"
+    - "docs/architecture/README.md"
+    - "docs/api/README.md"
+  planned_runtime_surfaces:
+    - "backend/src/phinance_api/api/"
+    - "backend/src/phinance_api/infrastructure/"
+validation:
+  required_checks:
+    - "node backend/scripts/check-contracts.js"
+    - "backend pytest suite"
+    - "focused verifier positive/negative tests"
+    - "dependency lock or installed-version readback"
+    - "4uentes-orchestor: npm run check"
+    - "git diff --check in both repositories"
+decision:
+  status: "approved-for-phinance-verifier-implementation"
+  approver: "4uentes"
+  approved_at: "2026-08-23"
+  approval_text: "ok avancemos"
