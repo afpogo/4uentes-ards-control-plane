@@ -1,0 +1,121 @@
+schema_version: "1.0"
+kind: "cross_repo_contract_addendum"
+id: "sst-personal-memory-identity-scope-v1"
+version: "1.0.0-proposed"
+status: "proposed-awaiting-owner-adoption"
+updated_at: "2026-08-23"
+initiative_id: "INIT-SST-0010"
+request_id: "CR-SST-0210"
+amends: "evidence/requests/CR-SST-0192/personal-memory-governance-v1.yaml"
+purpose: >
+  Correct the observed authority mismatch and define how SST derives a complete
+  personal-memory scope without trusting prompt text, caller claims or legacy
+  tenant fallbacks.
+authority:
+  authentication_subject_and_session: "4uentes-auth"
+  sst_user_account_membership_and_tenant: "sst-bend"
+  final_principal_context: "sst-bend"
+  memory_space_and_policy_decision: "sst-bend"
+  proposal_and_recall_orchestration: "sst-chatbot"
+  explicit_corrections:
+    - "4uentes-auth does not own SST account membership or business tenant resolution."
+    - "sst-bend does not accept tenant, account, user or application authority from free request fields."
+    - "sst-chatbot and the LLM provider never become identity or authorization authorities."
+canonical_scope:
+  required_dimensions: [tenant_id, account_id, user_id, application_id, memory_space_id]
+  application_id:
+    v1_value: "sst"
+    meaning: "stable SST product boundary shared by its web, backend and chatbot surfaces"
+    forbidden_sources: ["azp", "client_id", "producer_service", "prompt", "request_body"]
+  tenant_id:
+    representation: "explicit durable value associated with the SST account"
+    provisioning_rule: "must be non-empty and supplied by approved SST provisioning"
+    forbidden_values: ["default", "legacy", "unknown", ""]
+  account_id:
+    source: "active SST AccountMembership resolved by sst-bend"
+  user_id:
+    source: "consolidated SST user mapped from the authenticated subject"
+  memory_space_id:
+    source: "opaque durable identifier created and resolved by sst-bend"
+    uniqueness: [tenant_id, account_id, user_id, application_id]
+caller_identity:
+  fields: [caller_type, caller_id, producer_service]
+  rule: "caller identity is auditable metadata and cannot change canonical_scope"
+  examples:
+    web_user: {caller_type: "user-session", caller_id_source: "validated OAuth client/session"}
+    chatbot: {caller_type: "service", caller_id_source: "validated M2M client", producer_service: "sst-chatbot"}
+principal_context:
+  required_fields:
+    - auth_subject
+    - auth_reference
+    - user_id
+    - tenant_id
+    - account_id
+    - application_id
+    - memory_space_id
+    - caller_type
+    - caller_id
+    - audience
+    - scopes
+    - entitlements
+    - policy_version
+  optional_fields: [session_id, producer_service, conversation_ref, correlation_id]
+  construction_rule: "sst-bend constructs the final context from validated authentication plus its own durable state"
+  propagation_rule: >
+    Consumers may receive only the fields needed for their governed operation.
+    A returned or forwarded PrincipalContext is revalidated by sst-bend and is
+    never forwarded into provider prompts.
+resolution_flows:
+  user_session:
+    - "validate access token audience, token_use and current session"
+    - "map auth subject to the consolidated SST user"
+    - "resolve requested active account membership inside sst-bend"
+    - "read the account's explicit tenant_id"
+    - "assign application_id=sst"
+    - "create or resolve the unique memory_space_id"
+    - "evaluate authorization and consent for the requested operation"
+  service_proposal_or_recall:
+    - "validate the M2M caller and minimum service scope"
+    - "resolve conversation_ref or other opaque correlation against sst-bend state"
+    - "rebuild the user scope from durable user, membership and account state"
+    - "record caller and producer separately from application_id"
+    - "evaluate proposal or recall policy without allowing canonical acceptance"
+failure_behavior:
+  default: "fail-closed-with-sanitized-code"
+  codes:
+    unauthenticated: "authentication is absent or invalid"
+    session_inactive: "the user session is expired or revoked"
+    membership_missing: "no active membership resolves the requested account"
+    tenant_unresolved: "the account has no approved explicit tenant"
+    incomplete_scope: "one or more canonical dimensions cannot be resolved"
+    scope_mismatch: "the requested record belongs to another canonical scope"
+    application_mismatch: "the operation is outside the SST product boundary"
+    caller_not_allowed: "the user or service caller lacks the required operation scope"
+    scope_spoofing_denied: "untrusted input attempted to set or expand canonical scope"
+migration_and_compatibility:
+  rules:
+    - "No existing default or legacy tenant value is promoted automatically."
+    - "Existing accounts require an explicit governed tenant backfill before personal memory is enabled."
+    - "Existing memory rows remain inaccessible when their canonical scope cannot be reconciled."
+    - "The migration is idempotent and has an approved reversible path before execution."
+    - "Auth token shape may remain unchanged for V1 when sub, sid, audience and caller identity are sufficient for sst-bend resolution."
+provider_boundary:
+  forbidden_fields:
+    - auth_subject
+    - auth_reference
+    - session_id
+    - tenant_id
+    - account_id
+    - user_id
+    - application_id
+    - memory_space_id
+    - scopes
+    - entitlements
+  proposal_rule: "provider output is untrusted content and starts as a reviewable proposal"
+owner_adoption:
+  required_owner: "sst-bend"
+  required_before_runtime: true
+  downstream_consumers:
+    4uentes-auth: "continue providing validated subject, session and caller identity without inventing SST membership"
+    sst-chatbot: "adopt account-aware PrincipalContext and opaque correlation under CR-SST-0194"
+    sst-fend: "use authenticated account selection and review controls under CR-SST-0196"

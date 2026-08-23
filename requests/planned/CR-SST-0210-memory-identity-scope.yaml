@@ -1,0 +1,125 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0210"
+title: "Define personal memory identity and scope"
+status: "planned"
+source_request: "requests/inbox/CR-SST-0210-memory-identity-scope.yaml"
+created_at: "2026-08-23"
+requester: "4uentes"
+depends_on: ["CR-SST-0192"]
+unblocks: ["CR-SST-0193", "CR-SST-0194"]
+control_plane_context:
+  initiative_id: "INIT-SST-0010"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  jira_issue_key: null
+  jira_write_authorized: false
+scope:
+  target_environment: "development"
+  primary_owner_repository: "sst-bend"
+  planned_child_repo_mutation_targets: ["sst-bend"]
+  contract_consumers: ["4uentes-auth", "sst-chatbot", "sst-fend"]
+  owned_scope: "personal-memory identity, tenant, account, application and memory-space resolution"
+  excluded_scope:
+    - "chatbot proposal and recall adapters owned by CR-SST-0194"
+    - "frontend review UX owned by CR-SST-0196"
+    - "portable projection, robot views, embeddings and offline replicas"
+    - "OAuth token, refresh-family, cookie, CSRF or global RBAC redesign"
+    - "production deployment and Jira mutation"
+risk:
+  level: "high"
+  score: 10
+  drivers: ["AUTHORIZATION_BOUNDARY", "PRIVATE_DATA", "MULTI_TENANT_SCOPE", "CROSS_REPO_CONTRACT", "MIGRATION"]
+task_weight: {classification: "complex-high-risk-task", risk_level: "high"}
+model_selection:
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5"
+  fallback_reasoning_effort: "high"
+subagent_deployment_plan:
+  mode: "none"
+  reason: "Identity, authorization and private-memory boundaries remain with the primary agent; proactive delegation is disabled."
+execution:
+  requires_human_approval: true
+  approval_source: null
+  approval_status: "pending-child-execution"
+  child_repo_mutation_allowed: false
+  deployment_allowed: false
+  production_mutation_allowed: false
+  jira_write_allowed: false
+contract_decisions:
+  identity_and_session_authority: "4uentes-auth"
+  membership_and_business_scope_authority: "sst-bend"
+  principal_context_authority: "sst-bend"
+  canonical_memory_authority: "sst-bend"
+  application_id_v1: "sst"
+  application_rule: "application_id identifies the SST product memory boundary and never copies azp or client_id"
+  tenant_rule: "persist an explicit non-empty tenant_id with the SST account; no default or legacy fallback"
+  membership_rule: "resolve tenant, account and SST user from a current authenticated subject and active account membership"
+  memory_space_rule: "sst-bend creates or resolves one durable memory_space_id per tenant/account/user/application tuple"
+  caller_rule: "record caller_id and producer_service separately from application_id"
+  provider_rule: "identity and authorization fields never cross into the LLM provider prompt"
+  consent_rule: "a derivation or chatbot result remains a proposal until backend validation and explicit user adoption"
+workspace_isolation:
+  owner_repo: "sst-bend"
+  base_ref: "origin/develop"
+  rule: >
+    After explicit child-execution approval, refresh the owner remote and use
+    one new clean sst-bend worktree. Preserve any dirty canonical checkout.
+planned_owner_work:
+  - id: "BEND-IDENTITY-CONTRACT"
+    objective: "Publish the owner addendum for PrincipalContext, tenant, application and memory-space resolution."
+    output: "Versioned owner specs/docs and sanitized decision codes."
+    validation: "Owner documentation and contract checks pass before runtime changes."
+  - id: "BEND-SCOPE-FOUNDATION"
+    objective: "Persist explicit tenant scope and resolve it from active account membership."
+    output: "Migration, provisioning rule and fail-closed resolver without default or legacy fallbacks."
+    validation: "Migration smoke plus negative tenant/account/user/application tests."
+  - id: "BEND-PRINCIPAL-CONTEXT"
+    objective: "Build the final PrincipalContext and memory-space lookup inside sst-bend."
+    output: "User-session path and service-caller revalidation path with caller separated from application."
+    validation: "Revoked session, missing membership, cross-scope and spoofed-body tests deny access."
+  - id: "BEND-MEMORY-READBACK"
+    objective: "Repeat CR-SST-0193 normal-path QA with the canonical scope resolver."
+    output: "Synthetic HTTP and persistence evidence suitable for closing the identity blocker."
+    validation: "Owner full check, HTTP QA and control-plane full check pass."
+owner_documentation:
+  required: true
+  status: "planned"
+  owner_repos: ["sst-bend"]
+  planned_surfaces:
+    - "local PrincipalContext and authentication specs"
+    - "personal-memory API and persistence specs"
+    - "account membership and tenant model documentation"
+    - "capability documentation and reproducible HTTP QA harness"
+  rule: "Control-plane evidence cannot replace sst-bend owner documentation."
+validation:
+  owner_checks:
+    - "sst-bend full repository check and migration smoke."
+    - "Positive QA resolves the same memory space for user and authorized service flows within the same SST scope."
+    - "Negative QA denies missing scope, revoked session, inactive membership and cross-tenant/account/user/application access."
+    - "Spoofed tenant_id, account_id, user_id, application_id or memory_space_id in body, query or untrusted headers is ignored or rejected."
+    - "Provider-bound payload inspection proves identity and authorization fields are absent."
+  control_plane_checks:
+    - "4uentes-orchestor npm run check before plan publication and lifecycle closure."
+  downstream_gate: "CR-SST-0194 remains blocked until CR-SST-0210 closes and CR-SST-0193 completes normal-path QA."
+acceptance:
+  - "A valid SST user session and active membership resolve exactly one complete PrincipalContext."
+  - "application_id is the stable value sst while caller identity remains independently auditable."
+  - "No implicit tenant, legacy account, caller-derived application or user-supplied scope fallback exists."
+  - "Every personal-memory read and write revalidates the canonical scope in sst-bend."
+  - "CR-SST-0193 can complete its normal authenticated path without weakening fail-closed behavior."
+rollback: >
+  Revert the owner release and migration using its approved reversible path,
+  disable the normal personal-memory route, and preserve fail-closed behavior.
+  Never restore default or legacy tenant fallbacks as rollback.
+decision:
+  status: "proposed-awaiting-execution-approval"
+  approver: null
+  decided_at: null
+evidence_refs:
+  - "evidence/requests/CR-SST-0210/identity-scope-contract-v1.yaml"
+  - "evidence/requests/CR-SST-0210/implementation-plan.md"
