@@ -1,0 +1,100 @@
+schema_version: "1.0"
+phase: 4
+id: "CR-SST-0214"
+title: "Adopt the Phinance service invocation grant under its canonical identity"
+status: "done"
+source_request: "requests/inbox/CR-SST-0214-reconcile-phinance-service-grant-identity.yaml"
+planned_request: "requests/planned/CR-SST-0214-reconcile-phinance-service-grant-identity.yaml"
+started_at: "2026-08-23"
+closed_at: "2026-08-23"
+requester: "4uentes"
+
+summary: >
+  Adopted the exact Auth-owned sst-bend -> phinance-api / finance:invoke grant
+  on current develop, corrected owner traceability to CR-SST-0214 and preserved
+  fail-closed separation from user entitlements and consumer activation.
+
+execution:
+  owner_repo: "4uentes-auth"
+  owner_base: "develop@89d0009"
+  historical_owner_commit: "33a5dc8"
+  published_owner_commit: "2700ba1"
+  owner_merge_commit: "0be811f"
+  owner_pull_request: "https://github.com/afpogo/4uentes-auth/pull/12"
+  child_repo_mutation_allowed: true
+  runtime_implementation_allowed: true
+  dependency_changes_allowed: false
+  infrastructure_changes_allowed: false
+  secret_changes_allowed: false
+  sst_child_mutation_allowed: false
+  phinance_child_mutation_allowed: false
+  jira_write_allowed: false
+  jira_mirror: "HPT-6 pending a separate enumerated batch"
+
+identity_reconciliation:
+  canonical_request_id: "CR-SST-0214"
+  collided_historical_id: "CR-SST-0208"
+  owner_stale_references_remaining: false
+  historical_runtime_semantics: "preserved"
+  conflict_resolution: >
+    Six documentation, index and gate conflicts were resolved by retaining
+    current develop behavior and adding the Phinance grant. No conflict
+    occurred in the grant runtime files.
+
+implemented_contract:
+  endpoint: "POST /api/auth/internal/oauth/token"
+  caller: "sst-bend"
+  audience: "phinance-api"
+  scope: "finance:invoke"
+  signing: "RS256"
+  issuer: "sst-auth"
+  token_use: "service"
+  maximum_ttl_seconds: 300
+  refresh_token_allowed: false
+  user_claims_allowed: false
+
+owner_documentation:
+  required: true
+  status: "satisfied"
+  owner_repo: "4uentes-auth"
+  updated_owner_docs:
+    - "specs/auth.yaml"
+    - "specs/capabilities/outbound/00-index.yaml"
+    - "specs/capabilities/outbound/phinance-service-token-grant-v1.yaml"
+    - "docs/capabilities/00-overview.md"
+    - "docs/capabilities/outbound/phinance-service-token-grant-v1.md"
+    - "docs/security/service-token-lifecycle.md"
+    - "docs/chat-sessions.md"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0214/identity-and-source-preflight-2026-08-23.md"
+    - "evidence/requests/CR-SST-0214/provider-readiness-and-adoption-plan.md"
+    - "evidence/requests/CR-SST-0214/validation-results.md"
+    - "evidence/requests/CR-SST-0214/owner-publication-readback-2026-08-23.md"
+
+validation:
+  status: "passed"
+  required_checks:
+    - "4uentes-auth: npm run check"
+    - "4uentes-auth: npm run test:phinance-service-grant"
+    - "4uentes-orchestor: npm run check"
+  owner_full_check: "passed"
+  owner_focused_grant_test: "passed"
+  owner_remote_ci: "build-publish-update passed"
+  owner_diff_check: "passed"
+  package_lock: "unchanged"
+  remote_readback: "2700ba1 reachable from origin/develop at 0be811f"
+  control_plane_check: "passed"
+
+known_debt:
+  npm_audit: "20 pre-existing findings: 4 low, 3 moderate, 11 high, 2 critical"
+  disposition: "No dependency mutation authorized; remediation requires a separate security lifecycle."
+
+follow_up:
+  - "Create a separately authorized Jira batch before correcting HPT-6."
+  - "Adopt the grant in sst-bend and map validated membership to finance entitlements."
+  - "Implement the concrete Phinance verifier and integrated proxy QA."
+
+decision:
+  status: "closed-provider-adopted"
+  approver: "4uentes"
+  blocker: "none for provider adoption; Jira and consumer activation remain separate"

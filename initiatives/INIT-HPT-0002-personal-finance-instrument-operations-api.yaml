@@ -34,6 +34,8 @@ source_evidence_refs:
   - "evidence/requests/CR-HPT-0014/owner-publication-readback-2026-08-23.md"
   - "evidence/requests/CR-SST-0214/identity-and-source-preflight-2026-08-23.md"
   - "evidence/requests/CR-SST-0214/provider-readiness-and-adoption-plan.md"
+  - "evidence/requests/CR-SST-0214/validation-results.md"
+  - "evidence/requests/CR-SST-0214/owner-publication-readback-2026-08-23.md"
   - "evidence/requests/CR-SST-0212/execution-reconciliation-2026-08-23.md"
   - "evidence/requests/CR-SST-0212/owner-publication-readback-2026-08-23.md"
 model_refs:
@@ -84,5 +86,5 @@ open_gaps:
   - "CR-SST-0212 published the fail-closed SST facade shell; trusted financial forwarding remains blocked by provider and consumer prerequisites."
   - "Define technical, security, migration and operational owners."
   - "CR-HPT-0014 published the owner-local profile resolver and fail-closed principal boundary; live trust remains blocked by provider, verifier and integrated QA requests."
-  - "CR-SST-0214 is adopting the exact Auth-owned Phinance service grant on the current owner develop baseline; consumer activation remains separate."
+  - "CR-SST-0214 published the exact Auth-owned Phinance service grant on develop; consumer activation and Jira HPT-6 reconciliation remain separate."
   - "Define correction/reversal semantics and a verified link to financial transactions in a later owner request."
