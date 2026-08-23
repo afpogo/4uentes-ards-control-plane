@@ -3,7 +3,7 @@ kind: "initiative"
 id: "INIT-SST-0007"
 title: "SST Chatbot First Connected Version"
 status: "active"
-updated_at: "2026-08-22"
+updated_at: "2026-08-23"
 owner_repository: "4uentes-orchestor"
 objective: >
   Deliver a governed SST chatbot with revocable identity, durable conversation
@@ -25,6 +25,7 @@ source_evidence_refs:
   - "evidence/initiatives/INIT-SST-0007/changed-files-summary-2026-08-18.md"
   - "evidence/requests/CR-SST-0202/architecture-and-execution-plan.md"
   - "evidence/requests/CR-SST-0211/implementation-plan.md"
+  - "evidence/requests/CR-SST-0206/owner-merge-and-closure-2026-08-23.md"
 model_refs:
   - "specs/initiatives/initiative-model.yaml"
   - "docs/requests/initiative-model.md"
@@ -84,8 +85,9 @@ current_read_model:
   active_execution_request: "CR-SST-0178"
   active_correction_request: "CR-SST-0200"
   completed_retention_design_request: "CR-SST-0202"
-  next_retention_execution_request: "CR-SST-0204"
-  active_retention_execution_request: "CR-SST-0204"
+  completed_retention_frontend_request: "CR-SST-0206"
+  next_retention_execution_request: "CR-SST-0207"
+  active_retention_execution_request: null
   namespace_reconciliation_request: "CR-SST-0208"
   auth_registration_session_request: "CR-SST-0209"
   auth_retention_facade_request: "CR-SST-0211"
@@ -100,8 +102,7 @@ security_qualification:
 gaps:
   - "CR-SST-0178 remains running for CR-SST-0200 signup copy, registration continuity and logout teardown retests."
   - "User RAG, stakeholder RAG, multi-session adoption and personal memory remain separate lifecycles and are not absorbed here."
-  - "CR-SST-0202 completed the control-plane contract; CR-SST-0204 through CR-SST-0207 require their own execution approvals before owner mutation or integrated QA."
-  - "CR-SST-0211 closes the missing Auth BFF owner lifecycle; it depends on CR-SST-0204 and blocks CR-SST-0206 plus integrated retention QA."
+  - "CR-SST-0202, CR-SST-0204, CR-SST-0205, CR-SST-0206 and CR-SST-0211 are complete; CR-SST-0207 remains the separately gated integrated retention QA lifecycle."
 namespace_reconciliation:
   request_id: "CR-SST-0208"
   status: "pr37-canonical-map-preserved"

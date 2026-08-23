@@ -1,0 +1,102 @@
+schema_version: "1.0"
+phase: 4
+id: "CR-SST-0206"
+title: "Add explicit SST chat retention consent UX"
+status: "done"
+source_request: "requests/inbox/CR-SST-0206-fend-chat-retention-consent-ux.yaml"
+planned_request: "requests/planned/CR-SST-0206-fend-chat-retention-consent-ux.yaml"
+running_request: "requests/running/CR-SST-0206-fend-chat-retention-consent-ux.yaml"
+created_at: "2026-08-22"
+started_at: "2026-08-23"
+completed_at: "2026-08-23"
+requester: "4uentes"
+depends_on: ["CR-SST-0202", "CR-SST-0204", "CR-SST-0211"]
+
+control_plane_context:
+  initiative_id: "INIT-SST-0007"
+  parent_request_id: "CR-SST-0202"
+  next_request_id: "CR-SST-0207"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  jira_issue_key: "SST-116"
+  jira_parent_issue_key: "SST-113"
+  jira_close_authorized: true
+  jira_close_scope: "Transition only SST-116 to Finalizada with resolution Listo after this closure lifecycle is merged."
+  jira_close_batch_status: "authorized-pending-control-plane-merge"
+
+scope:
+  owner_repo_modified: "sst-fend"
+  owner_runtime_code_modified: true
+  owner_documentation_modified: true
+  development_image_published: true
+  automated_infra_tag_update_observed: true
+  cluster_reconciliation_observed: false
+  production_modified: false
+  jira_modified_during_closure_publication: false
+  feature_flag_enabled: false
+
+publication:
+  owner_base: "develop"
+  owner_branch: "feat/CR-SST-0206/chat-retention-consent-ux"
+  owner_head_commit: "e69521beec10f88bbb74cedceed5c0e788f69e67"
+  owner_pull_request: "afpogo/sst-fend#17"
+  owner_merge_commit: "317b17247cb6375ea01472856dfaae379b0f4a0c"
+  merged_at: "2026-08-23T21:33:49Z"
+  development_workflow_run: "afpogo/sst-fend actions run 32667902700"
+  development_workflow_result: "PASS in 6m1s"
+  development_image_tag: "ghcr.io/afpogo/sst-fend:develop-317b17247cb6"
+  automated_infra_commit: "afpogo/sst-4uentes-infra@e5e46cc7b7ff6566a6acdfaf189df8f778880d59"
+  automated_infra_scope: "One development kustomization image-tag update produced by the existing sst-fend workflow."
+
+implementation_result:
+  retention_status: "Explicit Temporary or Saved in SST state is visible near chat controls."
+  consent: "Durable persistence requires an explicit Save in SST action."
+  action_separation: "Local clear, temporary finish and durable delete remain distinct actions."
+  browser_storage: "Message content stays in application memory; browser session state keeps only an opaque reference or cursor."
+  integration_boundary: "Retention HTTP operations are consumed through the approved 4uentes-auth facade."
+  accessibility: "Labels, confirmation behavior and interactive target sizing were validated."
+
+owner_documentation:
+  required: true
+  status: "satisfied-and-merged"
+  owner_repo: "sst-fend"
+  updated_surfaces:
+    - "specs/integrations/sst-chat-retention-v1.yaml"
+    - "specs/capabilities/inbound/node-auth--chat-retention-v1.yaml"
+    - "specs/realtime-chat-v1.yml"
+    - "docs/chat.md"
+    - "docs/privacy/chat-retention.md"
+    - "docs/capabilities/inbound/node-auth--chat-retention-v1.md"
+    - "docs/tasks/2026-08-23-cr-sst-0206-chat-retention-consent-ux.md"
+
+validation:
+  owner_local_full_check: "PASS: policy and CSS gates, lint with 0 errors, production build, 36 suites and 240 tests"
+  owner_pull_request_check: "PASS: build-publish-update"
+  owner_post_merge_workflow: "PASS: repository check, frontend build, image publication and automated infra tag update"
+  rendered_qa: "PASS at 1440x1000 and 390x844 with no horizontal overflow or runtime exceptions"
+  accessibility_and_privacy_gates: "PASS"
+  control_plane_check: "PASS: 696 lifecycle files scanned with 0 FAIL; owner documentation and visual documentation gates passed"
+  jira_closure_sync: "PENDING until this control-plane closure is merged"
+
+decision:
+  status: "approved-owner-merged-closure-publication"
+  approver: "4uentes"
+  authorization_source: "User authorized the next gate and instructed Jira transition plus final ARDS/SDD documentation on 2026-08-23."
+  decided_at: "2026-08-23"
+
+evidence_refs:
+  - "evidence/requests/CR-SST-0206/execution-start-2026-08-23.md"
+  - "evidence/requests/CR-SST-0206/jira-transition-readback-2026-08-23.md"
+  - "evidence/requests/CR-SST-0206/owner-draft-publication-2026-08-23.md"
+  - "evidence/requests/CR-SST-0206/owner-merge-and-closure-2026-08-23.md"
+  - "evidence/requests/CR-SST-0206/jira-close-authorization-2026-08-23.md"
+
+closure:
+  status: "complete-owner-merged-development-artifacts-published"
+  next_request_id: "CR-SST-0207"
+  limits:
+    - "Jira closure must wait until this control-plane closure is merged."
+    - "No Jira issue other than SST-116 is authorized for mutation."
+    - "No cluster health or rollout claim is made from the CI image-tag update alone."
+    - "Production mutation and feature-flag activation remain unauthorized."
+    - "CR-SST-0207 requires its own lifecycle and approval before integrated QA execution."
