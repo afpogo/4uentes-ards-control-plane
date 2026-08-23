@@ -59,6 +59,8 @@ execution_status:
   dirty_control_plane_root: "preserve-split-into-eight-lifecycle-families-generated-local-directories-excluded"
   dirty_extension: "preserve-56-files-spanning-seven-request-identities-owner-approval-required"
   dirty_supersession_candidates: "two-infra-one-chatbot-one-embedded-fend-await-explicit-discard-approval"
+  dirty_root_hpt_readback: "eight-unique-commits-preserve-selective-port-required-branch-85-behind-main"
+  dirty_root_hpt_collision: "uncommitted-cr-sst-0207-phinance-plan-conflicts-with-canonical-chat-qa-id-exclude-from-port"
   jira_correction: "not-required-pr37-map-preserved-no-write-performed"
   memory_identity_scope_assignment: "CR-SST-0210-proposed-not-yet-published"
 evidence_refs:
@@ -74,6 +76,7 @@ evidence_refs:
   - "evidence/requests/CR-SST-0208/worktree-disposition-readback-2026-08-22.md"
   - "evidence/requests/CR-SST-0208/worktree-retirement-batch-01-2026-08-22.md"
   - "evidence/requests/CR-SST-0208/dirty-worktree-recovery-manifest-2026-08-22.md"
+  - "evidence/requests/CR-SST-0208/dirty-root-hpt-readback-2026-08-22.md"
 decision:
   status: "running-local-normalization-complete-publication-pending"
   approver: "4uentes"
