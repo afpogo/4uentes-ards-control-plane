@@ -37,6 +37,7 @@ source_evidence_refs:
   - "evidence/requests/CR-SST-0210/identity-scope-contract-v1.yaml"
   - "evidence/requests/CR-SST-0210/implementation-plan.md"
   - "evidence/requests/CR-SST-0210/post-merge-readback-2026-08-23.md"
+  - "evidence/requests/CR-SST-0193/normal-identity-path-qa-2026-08-23.md"
 model_refs:
   - "specs/initiatives/initiative-model.yaml"
   - "docs/requests/initiative-model.md"
@@ -119,8 +120,9 @@ identifier_reconciliation:
     - "CR-SST-0211 through CR-SST-0213"
   identity_scope_request_id: "CR-SST-0210"
   failure_behavior: >
-    Keep CR-SST-0194 execution blocked until CR-SST-0193 proves the normal
-    identity path. Do not execute the quarantined Jira reconciliation batch.
+    CR-SST-0193 proved the normal identity path and closed. Keep CR-SST-0194
+    execution blocked until explicit cross-repo approval. Do not execute the
+    quarantined Jira reconciliation batch.
   evidence_refs:
     - "evidence/initiatives/INIT-SST-0010/request-id-collision-2026-08-22.md"
     - "evidence/initiatives/INIT-SST-0010/namespace-and-publication-preflight-2026-08-23.md"
@@ -172,9 +174,9 @@ closure_gate: >
 progress:
   completed_requests:
     - "CR-SST-0192"
-    - "CR-SST-0210"
-  active_requests:
     - "CR-SST-0193"
+    - "CR-SST-0210"
+  active_requests: []
   quarantined_request_artifacts:
     - "CR-SST-0202 local memory reconciliation artifacts collide with Jira SST-113"
   planned_requests:
@@ -184,15 +186,15 @@ progress:
     - "CR-SST-0197"
     - "CR-SST-0198"
   next_recommended_request: >
-    Close CR-SST-0193 through QA of the newly published normal identity path,
-    and only then consider CR-SST-0194 execution.
+    Review and explicitly authorize CR-SST-0194 before any cross-repo mutation
+    for chatbot memory proposals and recall.
   current_runtime_status: >
     CR-SST-0193 canonical persistence and API are implemented, merged and
-    validated in local/dev. CR-SST-0210 now supplies the merged tenant,
+    validated in local/dev. CR-SST-0210 supplies the merged tenant,
     account-membership, active-session and application scope authority. The
-    remaining CR-SST-0193 gate is normal-path QA, not contract definition.
+    normal authenticated identity path passed and CR-SST-0193 is closed.
   manual_qa_status: >
-    Contract walkthrough and focused functional API QA are complete. Normal
-    identity-path QA remains blocked under CR-SST-0193; conversational QA
-    starts after CR-SST-0194, user-visible QA starts after CR-SST-0196 and the
-    initiative closes only through CR-SST-0198 evidence.
+    Contract walkthrough, focused functional API QA and normal identity-path QA
+    are complete. Conversational QA starts after CR-SST-0194, user-visible QA
+    starts after CR-SST-0196 and the initiative closes only through CR-SST-0198
+    evidence.
