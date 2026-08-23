@@ -34,6 +34,8 @@ source_evidence_refs:
   - "evidence/requests/CR-SST-0194/identity-scope-policy-analysis-2026-08-22.md"
   - "evidence/initiatives/INIT-SST-0010/paragraph-sequential-derivation-adoption-plan.md"
   - "evidence/initiatives/INIT-SST-0010/namespace-and-publication-preflight-2026-08-23.md"
+  - "evidence/requests/CR-SST-0210/identity-scope-contract-v1.yaml"
+  - "evidence/requests/CR-SST-0210/implementation-plan.md"
 model_refs:
   - "specs/initiatives/initiative-model.yaml"
   - "docs/requests/initiative-model.md"
@@ -45,11 +47,8 @@ known_change_requests:
   - "CR-SST-0196"
   - "CR-SST-0197"
   - "CR-SST-0198"
+  - "CR-SST-0210"
 candidate_change_requests:
-  - id: "CR-SST-TODO-IDENTITY-SCOPE"
-    title: "Reconcile trusted SST user-memory identity, tenant and application scope"
-    candidate_id: "CR-SST-0210"
-    status: "conceptually-reserved-awaiting-initiative-publication-and-minimal-inbox-merge"
   - id: "CR-SST-TODO"
     title: "Implement encrypted offline device replica and conflict resolution"
     status: "candidate-after-server-canonical-mvp"
@@ -107,21 +106,21 @@ tracking:
     reconciliation_request_candidate: "CR-SST-TODO-JIRA-RECONCILIATION"
     reconciliation_batch_status: "quarantined-after-local-cr-sst-0202-id-collision"
 identifier_reconciliation:
-  status: "ready-for-initiative-publication-before-cr-sst-0210-reservation"
+  status: "cr-sst-0210-reserved-and-planned-awaiting-execution-approval"
   resolution: >
-    Canonical origin/main assigns CR-SST-0199 through CR-SST-0209 and
-    CR-SST-0211 through CR-SST-0213. The namespace decision under CR-SST-0208
-    reserves CR-SST-0210 conceptually for memory identity and scope, but the
-    worktree lifecycle policy requires INIT-SST-0010 publication followed by a
-    separate minimal inbox merge before that identity becomes canonical.
+    INIT-SST-0010 and the minimal CR-SST-0210 inbox reservation are now
+    canonical. CR-SST-0210 exclusively identifies the personal-memory
+    identity, tenant and application-scope predecessor and is being planned
+    from a clean execution worktree created after the reservation merge.
   externally_observed_occupied_ids:
     - "CR-SST-0199 through CR-SST-0209"
+    - "CR-SST-0210"
     - "CR-SST-0211 through CR-SST-0213"
-  candidate_identity_scope_id: "CR-SST-0210"
+  identity_scope_request_id: "CR-SST-0210"
   failure_behavior: >
-    Publish this Initiative first. Then reserve CR-SST-0210 through a minimal
-    inbox PR, refresh origin/main and only afterward create its execution
-    worktree. Do not execute the quarantined Jira reconciliation batch.
+    Keep child-repository execution blocked until the CR-SST-0210 plan is
+    published and receives explicit execution approval. Do not execute the
+    quarantined Jira reconciliation batch.
   evidence_refs:
     - "evidence/initiatives/INIT-SST-0010/request-id-collision-2026-08-22.md"
     - "evidence/initiatives/INIT-SST-0010/namespace-and-publication-preflight-2026-08-23.md"
@@ -178,16 +177,17 @@ progress:
   quarantined_request_artifacts:
     - "CR-SST-0202 local memory reconciliation artifacts collide with Jira SST-113"
   planned_requests:
+    - "CR-SST-0210"
     - "CR-SST-0194"
     - "CR-SST-0195"
     - "CR-SST-0196"
     - "CR-SST-0197"
     - "CR-SST-0198"
   next_recommended_request: >
-    Publish INIT-SST-0010 from its clean control-plane worktree, reserve
-    CR-SST-0210 through a separate minimal inbox merge, plan and approve the
-    identity-scope predecessor, close CR-SST-0193 through the normal identity
-    path, and only then consider CR-SST-0194 execution.
+    Publish and approve the CR-SST-0210 identity-scope plan, execute its
+    sst-bend owner adoption from a separately authorized clean worktree, close
+    CR-SST-0193 through the normal identity path, and only then consider
+    CR-SST-0194 execution.
   current_runtime_status: >
     CR-SST-0193 canonical persistence and API are implemented, merged and
     validated in local/dev. The request remains running because the normal
