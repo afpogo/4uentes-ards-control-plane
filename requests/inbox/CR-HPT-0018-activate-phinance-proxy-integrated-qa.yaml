@@ -1,0 +1,38 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-HPT-0018"
+title: "Activate the SST Phinance proxy with integrated isolation QA"
+status: "inbox"
+created_at: "2026-08-23"
+requester: "4uentes"
+business_context: >
+  Auth now publishes the exact sst-bend service grant, SST produces a bounded
+  trusted principal from active membership, and Phinance verifies that service
+  credential before resolving its owner-local finance profile. The SST facade
+  still returns 503 for every business route.
+requested_change: >
+  Wire the existing SST principal and service-token consumers into a bounded
+  Phinance reverse proxy, keep activation disabled by default, and prove
+  authentication, entitlement, trace authority and account isolation through
+  automated and live integration QA.
+expected_outcome: >
+  An authenticated SST user with an active account can reach only the finance
+  resources allowed by the mapped entitlements and validated account, while
+  spoofed context, invalid membership, unavailable dependencies and cross-account
+  access fail closed without leaking service credentials or upstream internals.
+initial_scope:
+  initiative_id: "INIT-HPT-0002"
+  runtime_owner_repository: "sst-bend"
+  read_only_provider_repositories: ["4uentes-auth", "finanzas-personales"]
+  predecessor_requests: ["CR-SST-0212", "CR-SST-0214", "CR-SST-0216", "CR-HPT-0017"]
+constraints:
+  - "Do not modify 4uentes-auth, finanzas-personales, sst-fend, infrastructure, deployed secrets or Jira."
+  - "Keep PHINANCE_PROXY_ENABLED false by default and do not claim deployment activation."
+  - "Never forward the browser bearer, browser-selected owner fields or browser trace headers as trusted Phinance context."
+  - "Do not retry financial writes automatically."
+  - "Preserve dirty repository roots and use clean worktrees from canonical remote branches."
+decision:
+  status: "accepted-for-proxy-activation-and-integrated-qa"
+  approver: "4uentes"
+  approved_at: "2026-08-23"
+  approval_text: "ok avancemos al proximo frente"
