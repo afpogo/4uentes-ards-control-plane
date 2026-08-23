@@ -69,13 +69,14 @@ validation:
   required_control_plane_check: "npm run check"
   evidence_safety: "No token, cookie, credential, Redis secret or conversation body may be recorded."
 execution_status:
-  lifecycle_start: "authorized-pending-publication"
-  owner_worktree: "pending"
-  implementation: "pending"
-  validation: "pending"
+  lifecycle_start: "published"
+  owner_worktree: "clean-at-origin-develop-6ee18b3"
+  implementation: "contract-first-checkpoint-local-852f25f"
+  validation: "yaml-and-build-pass-full-owner-check-blocked-services-not-running"
 decision:
   status: "approved-running"
   approver: "4uentes"
   decided_at: "2026-08-22"
 evidence_refs:
   - "evidence/requests/CR-SST-0204/execution-start-2026-08-22.md"
+  - "evidence/requests/CR-SST-0204/owner-contract-checkpoint-2026-08-22.md"
