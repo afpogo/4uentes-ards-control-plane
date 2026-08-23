@@ -62,9 +62,15 @@ execution_status:
   predecessor_readback: "passed-cr-sst-0210-and-cr-sst-0193-closed"
   owner_repo_preflight: "passed-three-owner-origin-develop-readback"
   implementation_plan: "complete-minimum-three-owner-scope"
-  child_repo_mutation: "not-started"
-  integrated_qa: "not-started"
-  control_plane_check: "pending"
+  child_repo_mutation: "complete-three-owner-prs-merged"
+  owner_repo_checks: "passed-all-local-and-ci-gates"
+  owner_documentation: "satisfied-in-all-three-owner-repos"
+  auth_publication: "pr-13-merged-b9c38fc"
+  bend_publication: "pr-25-merged-a15ebca"
+  chatbot_publication: "pr-10-merged-5b96bbb"
+  integrated_qa: "pending-real-signed-m2m-cross-session-smoke"
+  integrated_qa_limit: "No deployment or feature-flag mutation is authorized by the current execution approval."
+  control_plane_check: "passed-owner-publication-readback-2026-08-23"
 
 task_weight:
   classification: "complex-high-risk-task"
@@ -115,13 +121,24 @@ implementation_units:
 
 owner_documentation:
   required: true
-  status: "planned"
+  status: "satisfied"
   owner_repos: ["sst-chatbot", "sst-bend", "4uentes-auth"]
   planned_paths:
     - "specs/capabilities/"
     - "docs/capabilities/"
     - "specs/integrations/"
     - "docs/architecture/"
+  published_refs:
+    4uentes-auth:
+      - "specs/capabilities/outbound/chatbot-user-memory-service-grants-v1.yaml"
+      - "docs/capabilities/outbound/chatbot-user-memory-service-grants-v1.md"
+    sst-bend:
+      - "specs/api/chatbot-user-memory.yaml"
+      - "specs/capabilities/outbound/chatbot-user-memory-ports-v1.yaml"
+      - "docs/api/29-chatbot-user-memory.md"
+    sst-chatbot:
+      - "specs/integrations/sst-governed-user-memory-chat.yaml"
+      - "docs/architecture/governed-user-memory-chat-integration.md"
   rule: >
     Every mutated owner must update its own normative contract and derived
     documentation, or the lifecycle must record why that authorized owner did
@@ -135,7 +152,7 @@ required_checks:
   - "control-plane npm run check"
 
 decision:
-  status: "approved-running-owner-preflight"
+  status: "owner-publication-complete-integrated-qa-pending"
   approver: "4uentes"
   decided_at: "2026-08-23"
 
@@ -143,3 +160,4 @@ evidence_refs:
   - "evidence/requests/CR-SST-0194/identity-scope-policy-analysis-2026-08-22.md"
   - "evidence/requests/CR-SST-0194/execution-start-2026-08-23.md"
   - "evidence/requests/CR-SST-0194/implementation-plan-2026-08-23.md"
+  - "evidence/requests/CR-SST-0194/owner-publication-readback-2026-08-23.md"

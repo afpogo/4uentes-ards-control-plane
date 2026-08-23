@@ -47,7 +47,7 @@ visual_map:
     - "initiatives/INIT-SST-0010-personal-knowledge-and-memory-workspace.yaml"
     - "docs/projects/sst/propuesta-derivacion-secuencial-por-parrafos.md"
     - "requests/done/CR-SST-0193-implement-canonical-user-memory-runtime.yaml"
-    - "requests/planned/CR-SST-0194-integrate-chatbot-memory-proposals-and-recall.yaml"
+    - "requests/running/CR-SST-0194-integrate-chatbot-memory-proposals-and-recall.yaml"
     - "requests/planned/CR-SST-0196-adopt-user-memory-review-and-export-ux.yaml"
     - "evidence/initiatives/INIT-SST-0010/request-id-collision-2026-08-22.md"
     - "docs/policies/owner-documentation-authority-policy.md"
@@ -64,7 +64,7 @@ flowchart LR
     INIT["INIT-SST-0010 [authoritative]"]
     NS["Namespace e identidad/scope [blocked]"]
     M["CR-SST-0193 memoria canÃ³nica [running]"]
-    H["CR-SST-0194 proposal y recall ports [planned]"]
+    H["CR-SST-0194 proposal y recall ports [running] owners merged"]
     CP["Control plane: contrato y CRs numÃ©ricas [planned]"]
     BE["sst-bend: persistencia y APIs de derivaciÃ³n [planned]"]
     BOT["sst-chatbot: pipeline y prompts [planned]"]
@@ -105,7 +105,7 @@ flowchart LR
 INIT-SST-0010 [authoritative] gobierna los candidatos descubiertos del control plane.
 El namespace y el predecessor de identidad/scope [blocked] deben habilitar IDs y ejecuciÃ³n.
 CR-SST-0193 [running] debe cerrar con scope confiable antes de CR-SST-0194.
-CR-SST-0194 [planned] debe estabilizar proposal y recall ports antes de esta adopciÃ³n.
+CR-SST-0194 [running] ya publicó proposal y recall ports; su QA integrado debe cerrar antes de esta adopción.
 El control plane [planned] publica el contrato aprobado y crea CRs numÃ©ricas separadas.
 sst-bend [planned] adopta persistencia, lifecycle y APIs de derivaciÃ³n.
 sst-chatbot [planned] adopta el pipeline secuencial, prompt profiles y salida estructurada.
@@ -375,7 +375,7 @@ El control plane conserva:
 - Namespace global de CRs sin reconciliar.
 - Predecessor de identidad/scope todavÃ­a sin ID canÃ³nico.
 - `CR-SST-0193` permanece `running` hasta validar el flujo normal de identidad.
-- `CR-SST-0194` permanece planificado y sin autorizaciÃ³n de mutaciÃ³n.
+- `CR-SST-0194` está running: los owners están fusionados y el QA integrado permanece pendiente.
 - Paths owner exactos para el nuevo contrato quedan `TODO` hasta que cada CR
   aprobada permita discovery dentro del repo correspondiente.
 

@@ -30,7 +30,8 @@ visual_map:
     - "requests/done/CR-SST-0027-paragraph-sequential-ards-derivation.yaml"
     - "requests/done/CR-SST-0030-sst-user-internal-memory-boundary.yaml"
     - "requests/done/CR-SST-0193-implement-canonical-user-memory-runtime.yaml"
-    - "requests/planned/CR-SST-0194-integrate-chatbot-memory-proposals-and-recall.yaml"
+    - "requests/running/CR-SST-0194-integrate-chatbot-memory-proposals-and-recall.yaml"
+    - "evidence/requests/CR-SST-0194/owner-publication-readback-2026-08-23.md"
     - "evidence/initiatives/INIT-SST-0010/request-id-collision-2026-08-22.md"
   observed_at: "2026-08-22"
   authority_boundary: "Vista derivada; la Initiative, los lifecycle de las CRs y su evidencia conservan autoridad."
@@ -47,7 +48,7 @@ flowchart LR
     C["CR-SST-0030 boundary de memoria [authoritative]"]
     M["CR-SST-0193 memoria canÃ³nica [running]"]
     B["Identidad, scope y namespace [blocked]"]
-    H["CR-SST-0194 handoff de propuestas [planned]"]
+    H["CR-SST-0194 handoff de propuestas [running] owners merged"]
     P["Nueva CR propuesta de derivaciÃ³n por pÃ¡rrafos [planned]"]
 
     I -->|"gobierna la secuencia"| D
@@ -76,7 +77,7 @@ INIT-SST-0010 [authoritative] --gobierna la secuencia--> CR-SST-0027 [validated]
 CR-SST-0027 --reutiliza contrato validado--> nueva CR de derivaciÃ³n por pÃ¡rrafos [proposed].
 CR-SST-0030 [authoritative] --corrige el destino a memoria interna SST--> nueva CR propuesta.
 CR-SST-0193 [running] --provee persistencia canÃ³nica--> gate de identidad, scope y namespace [blocked].
-El gate bloqueado --impide cerrar la integraciÃ³n--> CR-SST-0194 [planned].
+El QA integrado pendiente --impide cerrar la integraciÃ³n--> CR-SST-0194 [running].
 CR-SST-0194 --debe habilitar proposal y recall ports--> nueva CR de derivaciÃ³n por pÃ¡rrafos [proposed].
 La nueva CR no puede numerarse ni ejecutarse hasta reconciliar el namespace global.
 ```
@@ -104,7 +105,7 @@ visual_map:
     - "evidence/requests/CR-SST-0027/prompt-versioning-summary.md"
     - "evidence/requests/CR-SST-0027/agent-authority-boundary.md"
     - "evidence/requests/CR-SST-0030/correction-impact-summary.md"
-    - "requests/planned/CR-SST-0194-integrate-chatbot-memory-proposals-and-recall.yaml"
+    - "requests/running/CR-SST-0194-integrate-chatbot-memory-proposals-and-recall.yaml"
   observed_at: "2026-08-22"
   authority_boundary: "Vista derivada de una propuesta; CR-SST-0027, CR-SST-0030 y los contratos owner conservan autoridad."
   textual_fallback_required: true
