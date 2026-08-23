@@ -54,6 +54,11 @@ execution_status:
   system_feature_studies: "pr39-open-but-blocked-by-cr-sst-0204-identity-collision-and-initiative-conflicts"
   cr_sst_0178_auth: "three-owner-unique-security-sensitive-commits-held-no-pr-owner-publication-not-authorized"
   cr_sst_0193_bend: "patch-equivalent-to-origin-develop-pending-owner-readback-before-retirement"
+  dirty_recovery_inventory: "complete-seven-trees-atomized-no-owner-mutation-no-discard"
+  dirty_recovery_disposition: "two-preserve-and-extract-one-dependent-four-semantic-supersession-candidates"
+  dirty_control_plane_root: "preserve-split-into-eight-lifecycle-families-generated-local-directories-excluded"
+  dirty_extension: "preserve-56-files-spanning-seven-request-identities-owner-approval-required"
+  dirty_supersession_candidates: "two-infra-one-chatbot-one-embedded-fend-await-explicit-discard-approval"
   jira_correction: "not-required-pr37-map-preserved-no-write-performed"
   memory_identity_scope_assignment: "CR-SST-0210-proposed-not-yet-published"
 evidence_refs:
@@ -68,6 +73,7 @@ evidence_refs:
   - "evidence/requests/CR-SST-0208/post-pr37-canonical-readback-2026-08-22.md"
   - "evidence/requests/CR-SST-0208/worktree-disposition-readback-2026-08-22.md"
   - "evidence/requests/CR-SST-0208/worktree-retirement-batch-01-2026-08-22.md"
+  - "evidence/requests/CR-SST-0208/dirty-worktree-recovery-manifest-2026-08-22.md"
 decision:
   status: "running-local-normalization-complete-publication-pending"
   approver: "4uentes"
