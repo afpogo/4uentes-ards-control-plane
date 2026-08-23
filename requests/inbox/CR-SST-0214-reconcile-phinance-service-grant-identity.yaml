@@ -1,0 +1,46 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0214"
+title: "Reconcile the Phinance service invocation grant identity"
+status: "inbox"
+created_at: "2026-08-23"
+requester: "4uentes"
+business_context: >
+  The Phinance service invocation grant was implemented and validated under a
+  stale local assignment of CR-SST-0208. The canonical main ref already owns
+  that identity for SST request-namespace and worktree governance, while Jira
+  issue HPT-6 mirrors the stale assignment.
+requested_change: >
+  Reserve a collision-free identity for the existing Phinance service grant
+  and prepare a subsequent, separately governed reconciliation of its
+  control-plane lifecycle, Auth owner link, branch evidence and Jira mirror.
+expected_outcome: >
+  CR-SST-0214 identifies only the Phinance service grant reconciliation, the
+  validated runtime implementation remains preserved, and canonical
+  CR-SST-0208, CR-SST-0209 and CR-SST-0212 retain their published meanings.
+initial_scope:
+  solution: "sst"
+  owner_repository: "4uentes-auth"
+  control_repository: "4uentes-orchestor"
+  jira_mirror: "HPT-6"
+  preserved_owner_commit: "33a5dc8"
+constraints:
+  - "This reservation does not authorize child-repository or Jira writes."
+  - "Do not rewrite Git history or delete the stale branch or evidence."
+  - "Do not alter the validated grant runtime behavior during identity reconciliation."
+  - "Do not advance the SST consumer request until this identity correction is closed."
+  - "Use a new enumerated batch authorization before correcting Jira issue HPT-6."
+ordering_deviation: >
+  Auth implementation, control-plane artifacts and the Jira mirror predated
+  this canonical reservation because work continued from a stale branch whose
+  local namespace did not include the published CR-SST-0208 assignment. This
+  request records that deviation without treating the stale branch or Jira as
+  identity authority.
+requested_next_step: >
+  Publish this minimal reservation to the canonical ref, refresh main, then
+  create a clean execution worktree and an auditable reconciliation plan.
+decision:
+  status: "accepted-for-reservation"
+  approver: "4uentes"
+  approved_at: "2026-08-23"
+  approval_text: "continuemos con adopcion"
