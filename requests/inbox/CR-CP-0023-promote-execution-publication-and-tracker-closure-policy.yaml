@@ -1,0 +1,33 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-CP-0023"
+title: "Promote execution publication and tracker closure rule to core policy"
+status: "inbox"
+created_at: "2026-08-23"
+requester: "4uentes"
+business_context: >
+  CR-CP-0022 defined an opt-in local execution rule and completed its own
+  publication, validation, tracker reconciliation, terminal readback and
+  cleanup sequence without exception.
+requested_change: >
+  Promote the validated rule to 4uentes-ards-core as a provider-agnostic,
+  core-profile-scoped policy for control-plane execution lifecycles.
+expected_outcome: >
+  Core owns the reusable policy definition and adoption guidance while the
+  orchestrator consumes it locally and child propagation remains request-driven.
+initial_scope:
+  initiative_id: "INIT-CP-0003"
+  predecessor_request_id: "CR-CP-0022"
+  origin_policy_id: "execution-publication-and-tracker-closure-rule"
+  canonical_policy_id: "execution-publication-and-tracker-closure-policy"
+  canonical_owner: "4uentes-ards-core"
+constraints:
+  - "Publish and read back this lifecycle before mutating 4uentes-ards-core."
+  - "Do not copy Jira keys, local paths, request instance IDs or provider-specific authorization mechanics into core canon."
+  - "Do not propagate the policy to child repositories in this request."
+  - "Preserve finite terminal readback semantics without recursive evidence commits."
+decision:
+  status: "accepted-for-core-promotion"
+  approver: "4uentes"
+  approved_at: "2026-08-23"
+  approval_text: "Ok perfecto, actualicemos la regla en el ARDS/SDD y si resulta la subiremos a policy avancemos"

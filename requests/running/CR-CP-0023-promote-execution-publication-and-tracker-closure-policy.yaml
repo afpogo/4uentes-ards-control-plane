@@ -1,0 +1,34 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-CP-0023"
+title: "Promote execution publication and tracker closure rule to core policy"
+status: "running"
+source_request: "requests/inbox/CR-CP-0023-promote-execution-publication-and-tracker-closure-policy.yaml"
+planned_request: "requests/planned/CR-CP-0023-promote-execution-publication-and-tracker-closure-policy.yaml"
+started_at: "2026-08-23"
+requester: "4uentes"
+current_unit: "publish-lifecycle"
+completed_units: ["identity-preflight", "policy-review", "core-boundary-review", "trial-terminal-readback"]
+execution:
+  child_repo_mutation_allowed: false
+  core_repo_mutation_allowed: false
+  core_repo_mutation_pending_plan_readback: true
+  jira_write_allowed: false
+execution_publication_rule:
+  rule_id: "execution-publication-and-tracker-closure-rule"
+  adoption_status: "trial"
+  git_publication:
+    applicable: true
+    plan_merge_required: true
+    terminal_merge_required: true
+  tracker_mirror:
+    applicable: true
+    provider: "jira"
+    project_key: "ARDS"
+    epic_key: "ARDS-13"
+  cleanup:
+    remote_readback_required: true
+decision:
+  status: "running-lifecycle-publication"
+  approver: "4uentes"
+  blocker: "publish and read back this lifecycle before Core mutation"

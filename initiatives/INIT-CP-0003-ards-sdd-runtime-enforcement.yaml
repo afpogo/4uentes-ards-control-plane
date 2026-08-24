@@ -25,6 +25,7 @@ source_evidence_refs:
   - "evidence/requests/CR-CP-0022/local-rule-validation-2026-08-23.md"
   - "evidence/requests/CR-CP-0022/jira-exact-batch-2026-08-23.json"
   - "evidence/requests/CR-CP-0022/jira-readback-2026-08-23.md"
+  - "evidence/requests/CR-CP-0023/promotion-readiness-2026-08-23.md"
 model_refs:
   - "specs/initiatives/initiative-model.yaml"
   - "docs/requests/initiative-model.md"
@@ -41,6 +42,7 @@ known_change_requests:
   - "CR-CP-0013"
   - "CR-SST-0174"
   - "CR-CP-0022"
+  - "CR-CP-0023"
 candidate_change_requests:
   - id: "CR-CP-0014"
     title: "Promote policy audit runtime pack to core canon"
@@ -96,4 +98,4 @@ policy_application:
 open_gaps:
   - "Define exact local path for audit packs before implementation."
   - "Confirm in Jira UI that ARDS-7 through ARDS-12 render under ARDS-13 as intended."
-  - "CR-CP-0022 passed the finite execution publication and tracker closure trial; core policy promotion remains gated on its terminal merge/readback and separate CR-CP-0023 lifecycle."
+  - "CR-CP-0023 is promoting the successful execution publication and tracker closure trial to provider-agnostic Core canon; child rollout remains request-driven."
