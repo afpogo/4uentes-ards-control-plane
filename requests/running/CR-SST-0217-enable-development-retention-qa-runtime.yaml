@@ -18,9 +18,10 @@ control_plane_context:
   jira_role: "mirror"
   jira_source_of_truth: false
   jira_issue_type: "Subtask"
-  jira_issue_key: "TODO"
+  jira_issue_key: "SST-118"
   jira_parent_issue_key: "SST-113"
-  jira_start_batch_status: "authorized-after-publication"
+  jira_start_batch_status: "consumed-2026-08-23"
+  jira_start_readback: "SST-118 is En curso without resolution, is a Subtask of SST-113 and has no comments."
 
 risk: {level: "high", score: 8, drivers: ["GITOPS", "FEATURE_ENABLEMENT", "VOLATILE_STATE", "LOCAL_CLUSTER_AVAILABILITY"]}
 task_weight: {classification: "complex-high-risk-task", risk_level: "high"}
@@ -39,7 +40,7 @@ execution:
   production_mutation_allowed: false
   datastore_mutation_allowed: false
   secret_mutation_allowed: false
-  jira_write_allowed: "Create one Subtask under SST-113 and transition only the new issue to En curso after this lifecycle is merged."
+  jira_write_allowed: "Consumed: SST-118 was created under SST-113 and transitioned to En curso; no further Jira write is authorized."
 
 runtime_target:
   environment: "development"
@@ -65,13 +66,14 @@ validation:
   argo_reconciliation: "PENDING"
   localhost_reachability: "PENDING"
   reserved_ngrok_reachability: "PENDING"
-  control_plane_check: "PASS: 703 lifecycle files scanned with 0 FAIL; owner documentation and visual documentation gates passed."
+  control_plane_check: "PASS: 706 lifecycle files scanned with 0 FAIL; owner documentation and visual documentation gates passed."
 
 decision: {status: "approved-running", approver: "4uentes", decided_at: "2026-08-23"}
 
 evidence_refs:
   - "evidence/requests/CR-SST-0207/runtime-preflight-blocker-2026-08-23.md"
   - "evidence/requests/CR-SST-0217/execution-start-2026-08-23.md"
+  - "evidence/requests/CR-SST-0217/jira-start-readback-2026-08-23.md"
 
 closure_limits:
   - "No cluster restart, recreation or direct apply without a new exact operational gate."

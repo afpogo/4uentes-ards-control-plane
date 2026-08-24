@@ -16,7 +16,7 @@ control_plane_context:
   jira_role: "mirror"
   jira_source_of_truth: false
   jira_issue_type: "Subtask"
-  jira_issue_key: "TODO"
+  jira_issue_key: "SST-118"
   jira_parent_issue_key: "SST-113"
 
 scope:

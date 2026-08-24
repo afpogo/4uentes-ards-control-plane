@@ -71,7 +71,7 @@ tracking:
       CR-SST-0206: "SST-116"
       CR-SST-0207: "SST-117"
       CR-SST-0211: null
-      CR-SST-0217: null
+      CR-SST-0217: "SST-118"
     last_write_batch: "JIRA-SEC-PREPROD-03-consumed-2026-08-23"
 boundaries:
   control_plane_role: "lifecycle, coordination and evidence only"
