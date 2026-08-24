@@ -19,7 +19,7 @@ Fecha: 2026-08-23.
 - Operaciones estructuralmente bloqueadas: 0.
 - Aprobación exacta vigente: 1.
 - Blocked: 0.
-- Escritura Jira ejecutada: no.
+- Escritura Jira ejecutada: sí, lote consumido con resultado exitoso.
 
-El usuario autorizó el lote exacto publicado. El doctor no observa bloqueos
-estructurales o de autorización; la escritura queda limitada a una ejecución.
+El usuario autorizó el lote exacto publicado. Las dos operaciones se ejecutaron
+una vez y el readback observó HPT-5 actualizado y HPT-7 en `Listo`.

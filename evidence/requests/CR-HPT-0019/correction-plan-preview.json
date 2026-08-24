@@ -3,7 +3,7 @@
   "requestId": "CR-HPT-0019",
   "projectKey": "HPT",
   "externalWrite": true,
-  "authorizationStatus": "approved-single-execution",
+  "authorizationStatus": "consumed-successfully",
   "summary": {
     "proposedUpdates": 1,
     "proposedCreates": 1,
@@ -46,5 +46,12 @@
     "link",
     "reparent",
     "edit-other-issues"
-  ]
+  ],
+  "executionResult": {
+    "status": "success",
+    "epicUpdated": "HPT-5",
+    "issueCreated": "HPT-7",
+    "createdStatus": "Listo",
+    "primarySummaryMatchCount": 1
+  }
 }
