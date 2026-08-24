@@ -88,10 +88,14 @@ execution_status:
   auth_publication: "pr-13-merged-b9c38fc"
   bend_publication: "pr-25-merged-a15ebca"
   chatbot_publication: "pr-10-merged-5b96bbb"
-  integrated_qa: "pending-real-signed-m2m-cross-session-smoke"
+  integrated_qa: "passed-real-signed-m2m-cross-session-smoke-2026-08-23"
   integrated_qa_limit: "Temporary local/dev runtime and flags authorized; persistent deployment and infrastructure mutation remain forbidden."
   integrated_qa_authorization: "recorded-2026-08-23"
-  control_plane_check: "passed-owner-publication-readback-2026-08-23"
+  integrated_qa_followup:
+    sst-bend: "pr-27-open-be7ba20"
+    sst-chatbot: "pr-11-open-6b8826a"
+  integrated_qa_fixture_cleanup: "verified-idempotent-zero-residue"
+  control_plane_check: "passed-integrated-qa-result-2026-08-23"
 
 task_weight:
   classification: "complex-high-risk-task"
@@ -173,7 +177,7 @@ required_checks:
   - "control-plane npm run check"
 
 decision:
-  status: "owner-publication-complete-integrated-qa-pending"
+  status: "integrated-qa-passed-followup-owner-prs-pending"
   approver: "4uentes"
   decided_at: "2026-08-23"
 
@@ -183,3 +187,4 @@ evidence_refs:
   - "evidence/requests/CR-SST-0194/implementation-plan-2026-08-23.md"
   - "evidence/requests/CR-SST-0194/owner-publication-readback-2026-08-23.md"
   - "evidence/requests/CR-SST-0194/integrated-qa-start-2026-08-23.md"
+  - "evidence/requests/CR-SST-0194/integrated-qa-result-2026-08-23.md"
