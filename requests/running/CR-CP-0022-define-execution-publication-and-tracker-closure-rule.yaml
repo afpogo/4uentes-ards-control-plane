@@ -1,0 +1,33 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-CP-0022"
+title: "Define the execution publication and tracker closure rule"
+status: "running"
+source_request: "requests/inbox/CR-CP-0022-define-execution-publication-and-tracker-closure-rule.yaml"
+planned_request: "requests/planned/CR-CP-0022-define-execution-publication-and-tracker-closure-rule.yaml"
+started_at: "2026-08-23"
+requester: "4uentes"
+current_unit: "publish-lifecycle"
+completed_units: ["identity-preflight", "policy-review", "architecture-boundary-review", "rule-design"]
+execution:
+  child_repo_mutation_allowed: false
+  core_repo_mutation_allowed: false
+  jira_write_allowed: false
+execution_publication_rule:
+  rule_id: "execution-publication-and-tracker-closure-rule"
+  adoption_status: "trial"
+  git_publication:
+    applicable: true
+    plan_merge_required: true
+    terminal_merge_required: true
+  tracker_mirror:
+    applicable: true
+    provider: "jira"
+    project_key: "ARDS"
+    epic_key: "ARDS-13"
+  cleanup:
+    remote_readback_required: true
+decision:
+  status: "running-lifecycle-publication"
+  approver: "4uentes"
+  blocker: "publish and read back this lifecycle before implementation"

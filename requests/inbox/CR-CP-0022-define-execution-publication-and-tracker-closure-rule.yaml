@@ -1,0 +1,35 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-CP-0022"
+title: "Define the execution publication and tracker closure rule"
+status: "inbox"
+created_at: "2026-08-23"
+requester: "4uentes"
+business_context: >
+  Recent cross-repo work proved useful when implementation, validation,
+  canonical merge/readback, Jira reconciliation and terminal lifecycle merge
+  were treated as one finite closure sequence instead of independent chores.
+requested_change: >
+  Add a prospective ARDS/SDD execution rule that makes publication, remote
+  readback, tracker reconciliation or explicit non-applicability, terminal
+  closure publication and safe worktree cleanup auditable.
+expected_outcome: >
+  Opted-in requests cannot claim a governed closure without declaring and
+  evidencing the complete publication sequence, while avoiding recursive
+  readback commits and preserving Jira as a mirror.
+initial_scope:
+  initiative_id: "INIT-CP-0003"
+  origin_repository: "4uentes-orchestor"
+  target_status: "experimental-rule"
+  future_policy_owner: "4uentes-ards-core"
+constraints:
+  - "Do not register the rule as policy before the local trial passes."
+  - "Do not modify 4uentes-ards-core in this request."
+  - "Do not retrofit or fail historical requests that did not opt into the trial."
+  - "Do not require a recursive commit only to record readback of the terminal closure merge."
+  - "Jira remains an operational mirror and every write still requires an exact authorized batch."
+decision:
+  status: "accepted-for-local-experimental-rule"
+  approver: "4uentes"
+  approved_at: "2026-08-23"
+  approval_text: "Ok perfecto, actualicemos la regla en el ARDS/SDD y si resulta la subiremos a policy avancemos"

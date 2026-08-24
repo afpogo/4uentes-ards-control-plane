@@ -21,6 +21,7 @@ source_evidence_refs:
   - "evidence/requests/CR-CP-0003/policy-enforcement-gap-analysis.md"
   - "evidence/requests/CR-CP-0003/audit-runtime-policy-enforcement-review.md"
   - "evidence/requests/CR-SST-0174/policy-adoption-summary.md"
+  - "evidence/requests/CR-CP-0022/rule-design-and-boundary-2026-08-23.md"
 model_refs:
   - "specs/initiatives/initiative-model.yaml"
   - "docs/requests/initiative-model.md"
@@ -36,6 +37,7 @@ known_change_requests:
   - "CR-CP-0012"
   - "CR-CP-0013"
   - "CR-SST-0174"
+  - "CR-CP-0022"
 candidate_change_requests:
   - id: "CR-CP-0014"
     title: "Promote policy audit runtime pack to core canon"
@@ -90,3 +92,4 @@ policy_application:
 open_gaps:
   - "Define exact local path for audit packs before implementation."
   - "Confirm in Jira UI that ARDS-7 through ARDS-12 render under ARDS-13 as intended."
+  - "CR-CP-0022 is trialing a finite execution publication and tracker closure rule; core policy promotion remains gated on local validation and terminal readback."
