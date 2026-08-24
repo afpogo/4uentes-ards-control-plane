@@ -3,7 +3,7 @@ kind: "initiative"
 id: "INIT-CP-0003"
 title: "ARDS/SDD Runtime Enforcement MVP"
 status: "planned"
-updated_at: "2026-07-10"
+updated_at: "2026-08-23"
 owner_repository: "4uentes-orchestor"
 objective: >
   Build the initial ARDS/SDD runtime enforcement MVP so policies and living
@@ -24,6 +24,7 @@ source_evidence_refs:
   - "evidence/requests/CR-CP-0022/rule-design-and-boundary-2026-08-23.md"
   - "evidence/requests/CR-CP-0022/local-rule-validation-2026-08-23.md"
   - "evidence/requests/CR-CP-0022/jira-exact-batch-2026-08-23.json"
+  - "evidence/requests/CR-CP-0022/jira-readback-2026-08-23.md"
 model_refs:
   - "specs/initiatives/initiative-model.yaml"
   - "docs/requests/initiative-model.md"
@@ -74,6 +75,7 @@ tracking:
       - "ARDS-10"
       - "ARDS-11"
       - "ARDS-12"
+      - "ARDS-19"
 boundaries:
   mutates_child_repositories: false
   promotes_runtime: true
@@ -94,4 +96,4 @@ policy_application:
 open_gaps:
   - "Define exact local path for audit packs before implementation."
   - "Confirm in Jira UI that ARDS-7 through ARDS-12 render under ARDS-13 as intended."
-  - "CR-CP-0022 is trialing a finite execution publication and tracker closure rule; core policy promotion remains gated on local validation and terminal readback."
+  - "CR-CP-0022 passed the finite execution publication and tracker closure trial; core policy promotion remains gated on its terminal merge/readback and separate CR-CP-0023 lifecycle."

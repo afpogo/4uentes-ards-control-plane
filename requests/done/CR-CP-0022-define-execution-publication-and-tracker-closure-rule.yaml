@@ -1,0 +1,85 @@
+schema_version: "1.0"
+phase: 4
+id: "CR-CP-0022"
+title: "Define the execution publication and tracker closure rule"
+status: "done"
+source_request: "requests/inbox/CR-CP-0022-define-execution-publication-and-tracker-closure-rule.yaml"
+planned_request: "requests/planned/CR-CP-0022-define-execution-publication-and-tracker-closure-rule.yaml"
+closed_at: "2026-08-23"
+requester: "4uentes"
+
+summary: >
+  Defined and exercised a prospective opt-in ARDS/SDD rule for finite plan,
+  implementation, tracker, terminal publication and safe worktree cleanup.
+
+control_plane_context:
+  initiative_id: "INIT-CP-0003"
+  jira_epic_key: "ARDS-13"
+  jira_issue_key: "ARDS-19"
+  jira_status_observed: "Listo"
+  jira_sync_status: "verified"
+
+execution:
+  child_repo_mutation_performed: false
+  core_repo_mutation_performed: false
+  jira_write_performed: true
+  jira_allowed_write_count: 1
+  jira_actual_write_count: 1
+
+delivered_scope:
+  rule_ref: "specs/requests/execution-publication-rule.yaml"
+  human_doc_ref: "docs/requests/execution-publication-rule.md"
+  validator_ref: "scripts/verify-execution-publication-rule.js"
+  full_gate: "npm run check"
+  promotion_candidate_request: "CR-CP-0023"
+
+publication_evidence:
+  plan_pr: 106
+  plan_merge_commit: "ddfbeb867450deb0699ffb49160aa02a0684f555"
+  implementation_pr: 108
+  implementation_merge_commit: "05f42d5db5a2e5252b4e3fc5b9991e375228f4a1"
+  jira_batch_pr: 110
+  jira_batch_merge_commit: "169fef7f9cbba2cfc9e0c5852a62d4bce4a4f9ad"
+
+validation:
+  result: "passed"
+  checks:
+    - "execution publication validator self-test: 6 cases"
+    - "execution publication validator: 2 opted-in lifecycle files"
+    - "npm run check: 0 failures"
+    - "git diff --check"
+    - "sanitized Jira readback"
+  evidence_refs:
+    - "evidence/requests/CR-CP-0022/rule-design-and-boundary-2026-08-23.md"
+    - "evidence/requests/CR-CP-0022/local-rule-validation-2026-08-23.md"
+    - "evidence/requests/CR-CP-0022/jira-exact-batch-2026-08-23.json"
+    - "evidence/requests/CR-CP-0022/jira-readback-2026-08-23.md"
+
+execution_publication_rule:
+  rule_id: "execution-publication-and-tracker-closure-rule"
+  adoption_status: "trial"
+  git_publication:
+    applicable: true
+    plan_merge_required: true
+    terminal_merge_required: true
+  tracker_mirror:
+    applicable: true
+    provider: "jira"
+    project_key: "ARDS"
+    epic_key: "ARDS-13"
+    issue_key: "ARDS-19"
+  cleanup:
+    remote_readback_required: true
+  trial_result:
+    status: "passed"
+    plan_publication: "merged-and-read-back"
+    implementation_publication: "merged-and-read-back"
+    tracker_reconciliation: "merged-and-read-back"
+    terminal_publication_contract: "merge-and-readback-before-cleanup"
+    cleanup_gate: "remote-readback-required"
+
+decision:
+  status: "closed-trial"
+  approver: "4uentes"
+  blocker: "none"
+  next_gate: "terminal merge/readback, then separate CR-CP-0023 promotion lifecycle"
