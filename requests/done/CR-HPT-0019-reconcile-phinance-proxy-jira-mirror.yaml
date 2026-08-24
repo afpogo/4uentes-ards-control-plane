@@ -1,0 +1,58 @@
+schema_version: "1.0"
+phase: 4
+id: "CR-HPT-0019"
+title: "Reconcile the Phinance proxy Jira mirror"
+status: "done"
+source_request: "requests/inbox/CR-HPT-0019-reconcile-phinance-proxy-jira-mirror.yaml"
+planned_request: "requests/planned/CR-HPT-0019-reconcile-phinance-proxy-jira-mirror.yaml"
+started_at: "2026-08-23"
+closed_at: "2026-08-23"
+requester: "4uentes"
+summary: >
+  Refreshed the HPT-5 operational mirror and created HPT-7 as the unique
+  completed Jira Task for canonical CR-HPT-0018 under the authorized batch.
+execution:
+  control_plane_mutation_allowed: true
+  child_repo_mutation_allowed: false
+  product_runtime_mutation_allowed: false
+  jira_write_allowed: true
+  jira_batch_status: "consumed-successfully"
+  jira_operations_executed: 2
+  infrastructure_changes_allowed: false
+  secret_value_changes_allowed: false
+jira:
+  project_key: "HPT"
+  initiative_epic: "HPT-5"
+  created_issue: "HPT-7"
+  issue_type: "Tarea"
+  parent_key: "HPT-5"
+  final_status: "Listo"
+  final_resolution: "Listo"
+  canonical_request_id: "CR-HPT-0018"
+  primary_summary_match_count: 1
+  jira_source_of_truth: false
+validation:
+  status: "passed"
+  required_checks:
+    - "Jira pre-write metadata, duplicate and transition readback"
+    - "Jira HPT-5 and HPT-7 post-write readback"
+    - "Jira primary summary uniqueness search"
+    - "git diff --check"
+    - "4uentes-orchestor: npm run check"
+  hpt_5_description: "updated to the published Phinance trust chain"
+  hpt_7_readback: "Tarea under HPT-5, Listo, expected labels and exact summary"
+  primary_issue_uniqueness: "one HPT issue with CR-HPT-0018 in summary"
+  control_plane_check: "passed"
+owner_documentation:
+  required: false
+  status: "not-applicable"
+  reason: "This request changed only control-plane lifecycle and the Jira operational mirror."
+evidence_refs:
+  - "evidence/requests/CR-HPT-0019/jira-preflight-2026-08-23.md"
+  - "evidence/requests/CR-HPT-0019/correction-plan-preview.json"
+  - "evidence/requests/CR-HPT-0019/jira-batch-authorization-2026-08-23.md"
+  - "evidence/requests/CR-HPT-0019/jira-write-readback-2026-08-23.md"
+decision:
+  status: "closed-jira-mirror-reconciled"
+  approver: "4uentes"
+  blocker: "none for this mirror batch; environment activation remains separate"
