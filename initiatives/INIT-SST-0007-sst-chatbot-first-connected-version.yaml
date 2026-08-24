@@ -28,6 +28,7 @@ source_evidence_refs:
   - "evidence/requests/CR-SST-0206/owner-merge-and-closure-2026-08-23.md"
   - "evidence/requests/CR-SST-0217/owner-and-runtime-readback-2026-08-24.md"
   - "evidence/requests/CR-SST-0207/integrated-matrix-checkpoint-2026-08-24.md"
+  - "evidence/requests/CR-SST-0218/implementation-plan-2026-08-24.md"
 model_refs:
   - "specs/initiatives/initiative-model.yaml"
   - "docs/requests/initiative-model.md"
@@ -56,6 +57,7 @@ known_change_requests:
   - "CR-SST-0211"
   - "CR-SST-0213"
   - "CR-SST-0217"
+  - "CR-SST-0218"
 tracking:
   jira:
     role: "mirror"
@@ -74,6 +76,7 @@ tracking:
       CR-SST-0207: "SST-117"
       CR-SST-0211: null
       CR-SST-0217: "SST-118"
+      CR-SST-0218: null
     last_write_batch: "JIRA-SEC-PREPROD-03-consumed-2026-08-23"
 boundaries:
   control_plane_role: "lifecycle, coordination and evidence only"
@@ -93,6 +96,7 @@ current_read_model:
   next_retention_execution_request: null
   active_retention_execution_request: "CR-SST-0207"
   retention_qa_enablement_request: "CR-SST-0217"
+  retention_terminal_event_remediation_request: "CR-SST-0218"
   namespace_reconciliation_request: "CR-SST-0208"
   auth_registration_session_request: "CR-SST-0209"
   auth_retention_facade_request: "CR-SST-0211"
@@ -111,6 +115,7 @@ gaps:
   - "CR-SST-0217 restored the development preflight: Argo is Synced/Healthy, localhost and the reserved edge are reachable, retention is enabled and TTL is bounded to 120 seconds; lifecycle/Jira closure remains separately gated."
   - "The CR-SST-0194 chatbot correction merged to main rather than develop; the current development image therefore predates that merge and the branch drift requires a separate lifecycle if promotion is needed."
   - "CR-SST-0207 localhost QA found no realtime terminal event after finish, no product-safe cache eviction hook, reserved-edge authentication blocking the public matrix and two saved synthetic residues from aborted attempts; remediation must use separate approved lifecycles."
+  - "CR-SST-0218 is planned only for the terminal-event defect; child mutation and Jira remain blocked until plan readback and exact authorization."
 namespace_reconciliation:
   request_id: "CR-SST-0208"
   status: "pr37-canonical-map-preserved"

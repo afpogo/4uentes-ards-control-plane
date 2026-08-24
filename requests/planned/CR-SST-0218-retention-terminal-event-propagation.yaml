@@ -1,0 +1,180 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0218"
+title: "Propagate chat retention terminal events to active sessions"
+status: "planned"
+source_request: "requests/inbox/CR-SST-0218-retention-terminal-event-propagation.yaml"
+created_at: "2026-08-24"
+requester: "4uentes"
+summary: >
+  Close the realtime convergence defect found by CR-SST-0207 without changing
+  HTTP ownership, retention authority or the existing Auth facade boundary.
+
+control_plane_context:
+  initiative_id: "INIT-SST-0007"
+  parent_request_id: "CR-SST-0202"
+  source_qa_request_id: "CR-SST-0207"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  proposed_jira_issue_type: "Subtask"
+  proposed_jira_parent_issue_key: "SST-113"
+  jira_issue_key: null
+  jira_write_authorized: false
+
+impact_analysis:
+  required: true
+  affected_services: ["sst-bend", "sst-fend"]
+  intentionally_unaffected_services: ["4uentes-auth", "sst-chatbot", "sst-4uentes-infra"]
+  observed_baseline:
+    control_plane: "origin/main@2a5c072"
+    bend: "origin/develop@fc5573a"
+    fend: "origin/develop@317b172"
+    qa_evidence: "evidence/requests/CR-SST-0207/integrated-matrix-checkpoint-2026-08-24.md"
+
+risk:
+  level: "high"
+  score: 8
+  drivers: ["CROSS_REPO_CONTRACT", "DESTRUCTIVE_CHAT_LIFECYCLE", "ACTIVE_TURN_RACE", "PRIVACY"]
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+model_selection:
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5"
+  reason: "The lifecycle changes an observable cross-repo realtime contract around destructive and privacy-sensitive state transitions."
+subagent_deployment_plan:
+  mode: "none"
+  reason: "The producer-consumer contract and architecture boundary remain with the primary agent; proactive delegation is disabled."
+
+contract:
+  server_event: "chat:conversation:terminated"
+  delivery_scope: "all currently connected authorized sockets joined to conversation:<conversationId>"
+  transient: true
+  replayed_from_history: false
+  payload:
+    conversationId: "opaque conversation UUID"
+    reason: ["temporary_finished", "saved_deleted"]
+  forbidden_payload: ["message content", "assistant delta", "token", "cookie", "credential", "principal data"]
+  emission_order: "successful authoritative deletion, then room broadcast, then HTTP 204"
+  unsuccessful_mutation_behavior: "400, 404 or 409 responses emit no terminal event"
+  race_rule: "Cancel or fence active turns before they can persist or emit post-terminal content; deleted state must not be resurrected."
+  client_rule: "Clear local state only when the payload conversationId matches the active conversation; duplicate delivery is idempotent."
+  ttl_expiry_event: "out-of-scope; disconnected or expired recovery continues through the existing 404 path"
+
+execution:
+  requires_human_approval: true
+  approval_status: "pending-execution-authorization"
+  child_repo_mutation_allowed: false
+  planned_child_repo_mutation_targets: ["sst-bend", "sst-fend"]
+  deployment_allowed: false
+  planned_deployment_mode: "owner CI automatic development publication only; no direct GitOps or production mutation"
+  production_mutation_allowed: false
+  datastore_mutation_allowed: false
+  secret_mutation_allowed: false
+  jira_write_allowed: false
+
+atomized_execution:
+  - order: 1
+    id: "publish-and-readback-plan"
+    objective: "Merge this planned lifecycle and read it back from canonical main before child mutation."
+    validation: "Control-plane full check passes and the plan merge is reachable from origin/main."
+  - order: 2
+    id: "implement-bend-producer"
+    objective: "Publish the metadata-only event after successful finish/delete and fence active-turn races."
+    validation: "Bend unit/integration tests prove room delivery, no-event negatives and no resurrection."
+  - order: 3
+    id: "implement-fend-consumer"
+    objective: "Consume the event idempotently and converge only the matching active chat view."
+    validation: "Fend tests prove matching reset, non-matching ignore, duplicate safety and user-visible notice."
+  - order: 4
+    id: "publish-owner-changes"
+    objective: "Merge and read back Bend and Fend runtime plus owner documentation."
+    validation: "Both owner full checks pass and canonical refs contain the reviewed commits."
+  - order: 5
+    id: "reconcile-jira-mirror"
+    objective: "After a fresh duplicate/hierarchy preflight, execute only an explicitly authorized Jira batch."
+    validation: "Readback matches the exact issue, parent, type and status with no extra writes."
+  - order: 6
+    id: "resume-integrated-qa"
+    objective: "Rerun the CR-SST-0207 terminal and race rows through localhost using synthetic secret-safe data."
+    validation: "All active sessions receive the event and HTTP/history cannot recover deleted state."
+  - order: 7
+    id: "publish-terminal-lifecycle"
+    objective: "Merge done evidence, read back canonical closure and only then retire temporary worktrees."
+    validation: "Control-plane full check and remote terminal readback pass."
+
+owner_documentation:
+  required: true
+  status: "planned"
+  owner_repos:
+    sst-bend:
+      role: "event producer and retention authority"
+      planned_surfaces:
+        - "specs/api/realtime-chat-v1.yaml"
+        - "specs/api/chat-retention-v1.yaml"
+        - "specs/capabilities/outbound/chat-retention-v1.yaml"
+        - "docs/architecture/realtime-chat-v1.md"
+        - "docs/api/chat-retention.md"
+        - "docs/capabilities/outbound/chat-retention-v1.md"
+    sst-fend:
+      role: "direct realtime consumer under the existing Socket.IO exception"
+      planned_surfaces:
+        - "specs/realtime-chat-v1.yml"
+        - "specs/integrations/sst-chat-retention-v1.yaml"
+        - "docs/chat.md"
+        - "docs/privacy/chat-retention.md"
+        - "docs/tasks/TODO-cr-sst-0218-terminal-event.md"
+
+validation:
+  - "sst-bend npm run check plus focused retention/realtime and concurrent finish/delete tests."
+  - "sst-fend npm run check plus Chat component tests for matching, non-matching and duplicate terminal events."
+  - "CR-SST-0207 realtime/HTTP harness rerun against localhost after owner publication."
+  - "No message body, token, cookie, credential, principal or private URL in payloads, logs or evidence."
+  - "4uentes-orchestor npm run check before plan publication and closure."
+  - "git diff --check in every changed repository."
+
+acceptance:
+  - "Exactly one successful finish/delete transition emits chat:conversation:terminated to every connected authorized room member, including the initiating session."
+  - "The payload contains only conversationId and one approved reason value."
+  - "Failed or unauthorized mutations emit no terminal signal."
+  - "Active processing cannot persist or emit content after terminal deletion, and later reads remain 404."
+  - "Fend clears only the matching active conversation and exposes a non-sensitive terminal notice."
+  - "HTTP remains behind 4uentes-auth and Socket.IO remains the only direct Bend-to-Fend exception."
+  - "No change reaches production, direct GitOps, Redis, PostgreSQL schema, secrets or sst-chatbot."
+
+proposed_jira_batch:
+  status: "not-authorized"
+  prerequisites: ["plan merged and read back", "OAuth restored", "JQL duplicate search", "hierarchy readback", "exact operator authorization"]
+  candidate:
+    project: "SST"
+    issue_type: "Subtask"
+    parent: "SST-113"
+    summary: "[CR-SST-0218] Propagar eventos terminales de retencion a sesiones activas"
+  proposed_operations: ["create exactly one candidate if no compatible mirror exists", "transition only that issue to En curso"]
+  forbidden_operations: ["comments", "links", "assignee changes", "labels", "edits to any other issue"]
+
+execution_publication_plan:
+  canonical_policy_id: "execution-publication-and-tracker-closure-policy"
+  activation_gate: "Add the executable execution_publication_rule marker when the separately authorized running lifecycle is published."
+  plan_merge_required: true
+  owner_merge_and_readback_required: true
+  tracker_exact_batch_and_readback_required: true
+  terminal_merge_and_readback_required: true
+  cleanup_after_terminal_readback_only: true
+
+rollback: >
+  Before execution, abandon the plan without child mutation. During owner
+  execution, revert the Bend and Fend owner PRs together so producer and
+  consumer return to the previous event set; let existing development CI/GitOps
+  reconcile. Do not repair state through direct datastore mutation.
+
+decision:
+  status: "approved-for-plan-publication"
+  approver: "4uentes"
+  decided_at: "2026-08-24"
+  blocker: "Merge and read back this planned lifecycle, then obtain exact authorization for running publication, child mutation and the Jira batch."
