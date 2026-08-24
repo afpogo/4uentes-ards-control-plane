@@ -27,6 +27,7 @@ orchestrator.
 ## Docs Canonicos Actuales
 
 - [execution-model.md](execution-model.md)
+- [execution-publication-rule.md](execution-publication-rule.md)
 - [initiative-model.md](initiative-model.md)
 - [state-read-model.md](state-read-model.md)
 - [capability-state-linkage.md](capability-state-linkage.md)

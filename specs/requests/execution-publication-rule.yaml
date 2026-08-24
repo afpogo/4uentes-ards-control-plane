@@ -1,0 +1,97 @@
+schema_version: "1.0"
+kind: "ards_sdd_execution_rule"
+id: "execution-publication-and-tracker-closure-rule"
+title: "Execution publication and tracker closure rule"
+status: "experimental"
+origin_repo: "4uentes-orchestor"
+owner: "4uentes-ards-control-plane"
+canonical_policy_owner_if_promoted: "4uentes-ards-core"
+
+purpose: >
+  Make the finite sequence from approved plan through implementation
+  publication, tracker reconciliation, terminal lifecycle publication and
+  temporary-worktree cleanup explicit and verifiable.
+
+authority:
+  control_plane: "request lifecycle, scope, checks, evidence and closure decision"
+  owner_repositories: "runtime, contracts, owner documentation and owner validation"
+  work_tracker: "operational mirror only"
+  core: "future reusable policy canon; not modified by this experimental rule"
+
+applicability:
+  mode: "prospective-opt-in-trial"
+  adoption_marker: "execution_publication_rule.rule_id"
+  historical_requests: "not-retrofitted"
+  git_publication: "declare applicable true or false"
+  tracker_mirror: "declare applicable true or false; false requires a reason"
+
+sequence:
+  - order: 1
+    id: "plan-publication"
+    requirement: "Merge and read back the approved lifecycle before governed external mutation."
+  - order: 2
+    id: "implementation-publication"
+    requirement: "Run required checks, merge applicable owner changes and read back canonical refs."
+  - order: 3
+    id: "tracker-reconciliation"
+    requirement: "Apply an exact authorized tracker batch or record explicit non-applicability."
+  - order: 4
+    id: "terminal-publication"
+    requirement: "Merge the done lifecycle and closure evidence into the canonical control-plane branch."
+  - order: 5
+    id: "terminal-readback-and-cleanup"
+    requirement: "Read back the terminal merge before retiring temporary worktrees."
+
+finite_closure:
+  recursive_commit_required: false
+  rule: >
+    Terminal readback proves that the canonical branch contains the done
+    lifecycle. It is an operational post-merge gate and does not require a new
+    commit whose only purpose is to record that readback.
+
+adoption_contract:
+  required_common_fields:
+    - "rule_id"
+    - "adoption_status"
+    - "git_publication.applicable"
+    - "git_publication.plan_merge_required"
+    - "git_publication.terminal_merge_required"
+    - "tracker_mirror.applicable"
+    - "tracker_mirror.provider when applicable"
+    - "cleanup.remote_readback_required"
+  allowed_adoption_status: ["trial"]
+  done_requirements:
+    - "trial_result.status"
+    - "trial_result.plan_publication"
+    - "trial_result.implementation_publication"
+    - "trial_result.tracker_reconciliation"
+    - "trial_result.terminal_publication_contract"
+    - "trial_result.cleanup_gate"
+
+failure_behavior:
+  plan_not_published: "block governed external mutation"
+  required_checks_failed: "block merge and closure"
+  owner_not_merged_or_read_back: "keep request running and record blocker"
+  tracker_applicable_without_authorized_batch: "block tracker write"
+  tracker_not_applicable_without_reason: "fail validation"
+  terminal_lifecycle_not_merged: "do not report canonical closure"
+  remote_readback_missing: "do not remove temporary worktree"
+
+validation:
+  validator: "scripts/verify-execution-publication-rule.js"
+  self_test: "node scripts/verify-execution-publication-rule.js --self-test"
+  full_gate: "npm run check"
+
+promotion_gate:
+  candidate_request_id: "CR-CP-0023"
+  target_class: "core-profile-scoped"
+  allowed_when:
+    - "local rule artifacts are merged and read back"
+    - "normal validation and negative self-tests pass"
+    - "CR-CP-0022 completes the rule without exception"
+    - "tracker applicability or valid non-applicability is demonstrated"
+    - "terminal remote readback precedes cleanup"
+  prohibited_here:
+    - "registering the rule as a policy"
+    - "modifying 4uentes-ards-core"
+    - "propagating the rule to child repositories"

@@ -21,6 +21,8 @@ scripts:
   verify_state_model: "scripts/verify-state-model.js"
   verify_initiatives: "scripts/verify-initiatives.js"
   plan_change: "scripts/plan-change.js"
+request_rules:
+  execution_publication: "specs/requests/execution-publication-rule.yaml"
 docs:
   overview: "docs/00-overview.md"
   service_catalog: "docs/apps/service-catalog.md"
@@ -73,4 +75,5 @@ validation:
   check_command: "npm run check"
   check_state_command: "npm run check:state"
   check_initiatives_command: "npm run check:initiatives"
+  check_execution_publication_command: "npm run check:execution-publication"
   plan_change_command: "npm run plan:change -- requests/inbox/TODO.yaml"
