@@ -1,0 +1,94 @@
+schema_version: "1.0"
+phase: 4
+id: "CR-CP-0023"
+title: "Promote execution publication and tracker closure rule to core policy"
+status: "done"
+source_request: "requests/inbox/CR-CP-0023-promote-execution-publication-and-tracker-closure-policy.yaml"
+planned_request: "requests/planned/CR-CP-0023-promote-execution-publication-and-tracker-closure-policy.yaml"
+closed_at: "2026-08-24"
+requester: "4uentes"
+
+summary: >
+  Promoted the successful local execution publication trial into
+  provider-agnostic Core canon and adopted it in the control plane without
+  propagating it to child repositories.
+
+control_plane_context:
+  initiative_id: "INIT-CP-0003"
+  predecessor_request_id: "CR-CP-0022"
+  jira_epic_key: "ARDS-13"
+  jira_issue_key: "ARDS-20"
+  jira_status_observed: "Listo"
+  jira_sync_status: "verified"
+
+execution:
+  core_repo_mutation_performed: true
+  control_plane_adoption_performed: true
+  child_repo_mutation_performed: false
+  jira_write_performed: true
+  jira_allowed_write_count: 1
+  jira_actual_write_count: 1
+
+policy_result:
+  policy_id: "execution-publication-and-tracker-closure-policy"
+  policy_class: "core-profile-scoped"
+  canonical_owner: "4uentes-ards-core"
+  required_for_profiles: ["control-plane"]
+  core_status: "canonical-active"
+  control_plane_status: "adopted"
+  local_enforcement_alias: "execution-publication-and-tracker-closure-rule"
+  child_rollout: "not-performed-request-driven"
+
+publication_evidence:
+  lifecycle_plan_pr: 112
+  lifecycle_plan_merge_commit: "f674d044fa8521c48af86fff6024678377c4e24b"
+  core_pr: 4
+  core_merge_commit: "ded8c466dc3c02a02f7b24642ce99de6cebcc91c"
+  control_plane_adoption_pr: 113
+  control_plane_adoption_merge_commit: "e68593b8dec77d1a894938df2e75b3113a5da8aa"
+  jira_batch_pr: 114
+  jira_batch_merge_commit: "f53bd2a1fa0bddaa7c95a7b9d450b58cb3f33a4d"
+
+validation:
+  result: "passed"
+  checks:
+    - "4uentes-ards-core npm run check: 0 errors, 0 warnings"
+    - "4uentes-orchestor execution publication self-test: 7 cases"
+    - "4uentes-orchestor npm run check: 0 failures"
+    - "git diff --check in both repositories"
+    - "secret-safe review in both repositories"
+    - "canonical Core, control-plane and Jira readbacks"
+  evidence_refs:
+    - "evidence/requests/CR-CP-0023/promotion-readiness-2026-08-23.md"
+    - "evidence/requests/CR-CP-0023/core-policy-publication-readback-2026-08-23.md"
+    - "evidence/requests/CR-CP-0023/jira-exact-batch-2026-08-23.json"
+    - "evidence/requests/CR-CP-0023/jira-readback-2026-08-23.md"
+
+execution_publication_rule:
+  rule_id: "execution-publication-and-tracker-closure-rule"
+  adoption_status: "adopted"
+  git_publication:
+    applicable: true
+    plan_merge_required: true
+    terminal_merge_required: true
+  tracker_mirror:
+    applicable: true
+    provider: "jira"
+    project_key: "ARDS"
+    epic_key: "ARDS-13"
+    issue_key: "ARDS-20"
+  cleanup:
+    remote_readback_required: true
+  trial_result:
+    status: "passed"
+    plan_publication: "merged-and-read-back"
+    implementation_publication: "merged-and-read-back"
+    tracker_reconciliation: "merged-and-read-back"
+    terminal_publication_contract: "merge-and-readback-before-cleanup"
+    cleanup_gate: "remote-readback-required"
+
+decision:
+  status: "closed-core-promotion-and-adoption"
+  approver: "4uentes"
+  blocker: "none"
+  next_gate: "separate request-driven child adoption or exception only when selected"

@@ -28,6 +28,7 @@ source_evidence_refs:
   - "evidence/requests/CR-CP-0023/promotion-readiness-2026-08-23.md"
   - "evidence/requests/CR-CP-0023/core-policy-publication-readback-2026-08-23.md"
   - "evidence/requests/CR-CP-0023/jira-exact-batch-2026-08-23.json"
+  - "evidence/requests/CR-CP-0023/jira-readback-2026-08-23.md"
 model_refs:
   - "specs/initiatives/initiative-model.yaml"
   - "docs/requests/initiative-model.md"
@@ -80,6 +81,7 @@ tracking:
       - "ARDS-11"
       - "ARDS-12"
       - "ARDS-19"
+      - "ARDS-20"
 boundaries:
   mutates_child_repositories: false
   promotes_runtime: true
@@ -100,4 +102,4 @@ policy_application:
 open_gaps:
   - "Define exact local path for audit packs before implementation."
   - "Confirm in Jira UI that ARDS-7 through ARDS-12 render under ARDS-13 as intended."
-  - "CR-CP-0023 is promoting the successful execution publication and tracker closure trial to provider-agnostic Core canon; child rollout remains request-driven."
+  - "CR-CP-0023 promoted and locally adopted the execution publication and tracker closure policy; any child rollout remains request-driven."
