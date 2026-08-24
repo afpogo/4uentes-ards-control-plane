@@ -36,6 +36,26 @@ authorization:
     - "No production data mutation."
     - "No sst-fend, sst-extension or infrastructure mutation."
 
+integrated_qa_authorization:
+  status: "approved-local-dev-temporary-runtime"
+  approved_by: "4uentes"
+  approved_at: "2026-08-23"
+  approval_text: "Ok avancemos con el proximo gate"
+  scope: >
+    Prepare and exercise a temporary local/dev environment for the integrated
+    CR-SST-0194 smoke, including temporary local feature flags and synthetic QA
+    fixtures required to prove signed M2M recall and proposal behavior.
+  allowed:
+    - "Start, rebuild, restart and stop temporary local/dev services."
+    - "Set temporary local process/container feature flags required by the smoke."
+    - "Create and clean synthetic QA users, sessions, accounts, conversations and memory records."
+    - "Use already-published owner artifacts and isolated owner worktrees."
+  exclusions:
+    - "No production or real user data."
+    - "No Jira writes."
+    - "No GitOps, Kubernetes manifest or infrastructure-repository mutation."
+    - "No persistent deployment or permanent feature-flag change."
+
 architecture_gate:
   status: "passed-predecessors-closed-and-cross-repo-execution-approved"
   predecessor_request: "CR-SST-0210"
@@ -69,7 +89,8 @@ execution_status:
   bend_publication: "pr-25-merged-a15ebca"
   chatbot_publication: "pr-10-merged-5b96bbb"
   integrated_qa: "pending-real-signed-m2m-cross-session-smoke"
-  integrated_qa_limit: "No deployment or feature-flag mutation is authorized by the current execution approval."
+  integrated_qa_limit: "Temporary local/dev runtime and flags authorized; persistent deployment and infrastructure mutation remain forbidden."
+  integrated_qa_authorization: "recorded-2026-08-23"
   control_plane_check: "passed-owner-publication-readback-2026-08-23"
 
 task_weight:
@@ -161,3 +182,4 @@ evidence_refs:
   - "evidence/requests/CR-SST-0194/execution-start-2026-08-23.md"
   - "evidence/requests/CR-SST-0194/implementation-plan-2026-08-23.md"
   - "evidence/requests/CR-SST-0194/owner-publication-readback-2026-08-23.md"
+  - "evidence/requests/CR-SST-0194/integrated-qa-start-2026-08-23.md"
