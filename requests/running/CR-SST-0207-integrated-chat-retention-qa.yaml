@@ -22,6 +22,8 @@ control_plane_context:
   jira_start_scope: "Transition only SST-117 to En curso after this running lifecycle is merged."
   jira_start_batch_status: "consumed-2026-08-23"
   jira_start_readback: "SST-117 is En curso without resolution, remains a Subtask of SST-113, and received no comment or field edit."
+  jira_blocker_comment_batch_status: "consumed-2026-08-23"
+  jira_blocker_comment_readback: "SST-117 remains En curso without resolution and retains parent SST-113 after one blocker comment referencing PR #102."
 
 risk:
   level: "high"
@@ -57,7 +59,7 @@ execution:
   cluster_direct_mutation_allowed: false
   production_mutation_allowed: false
   feature_flag_mutation_allowed: false
-  jira_write_allowed: "One blocker comment on SST-117 after this preflight evidence is merged; no transition, field edit, link or parent change."
+  jira_write_allowed: "Consumed: one blocker comment was added to SST-117 after PR #102 merged; no further Jira write is authorized."
 
 qa_scope:
   target_environment: "development"
@@ -102,6 +104,7 @@ evidence_refs:
   - "evidence/requests/CR-SST-0207/jira-start-authorization-2026-08-23.md"
   - "evidence/requests/CR-SST-0207/jira-start-readback-2026-08-23.md"
   - "evidence/requests/CR-SST-0207/runtime-preflight-blocker-2026-08-23.md"
+  - "evidence/requests/CR-SST-0207/jira-blocker-comment-readback-2026-08-23.md"
 
 closure_limits:
   - "Every QA matrix row must pass on localhost and reserved ngrok before complete closure."
