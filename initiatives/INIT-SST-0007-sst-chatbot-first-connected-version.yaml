@@ -27,6 +27,7 @@ source_evidence_refs:
   - "evidence/requests/CR-SST-0211/implementation-plan.md"
   - "evidence/requests/CR-SST-0206/owner-merge-and-closure-2026-08-23.md"
   - "evidence/requests/CR-SST-0217/owner-and-runtime-readback-2026-08-24.md"
+  - "evidence/requests/CR-SST-0207/integrated-matrix-checkpoint-2026-08-24.md"
 model_refs:
   - "specs/initiatives/initiative-model.yaml"
   - "docs/requests/initiative-model.md"
@@ -109,6 +110,7 @@ gaps:
   - "CR-SST-0202, CR-SST-0204, CR-SST-0205, CR-SST-0206 and CR-SST-0211 are complete; CR-SST-0207 remains the separately gated integrated retention QA lifecycle."
   - "CR-SST-0217 restored the development preflight: Argo is Synced/Healthy, localhost and the reserved edge are reachable, retention is enabled and TTL is bounded to 120 seconds; lifecycle/Jira closure remains separately gated."
   - "The CR-SST-0194 chatbot correction merged to main rather than develop; the current development image therefore predates that merge and the branch drift requires a separate lifecycle if promotion is needed."
+  - "CR-SST-0207 localhost QA found no realtime terminal event after finish, no product-safe cache eviction hook, reserved-edge authentication blocking the public matrix and two saved synthetic residues from aborted attempts; remediation must use separate approved lifecycles."
 namespace_reconciliation:
   request_id: "CR-SST-0208"
   status: "pr37-canonical-map-preserved"
