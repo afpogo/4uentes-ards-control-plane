@@ -11,8 +11,8 @@ Fecha: 2026-08-23.
 - Transición allowlist: id `41`, destino `Listo`, sólo dentro del create.
 - Duplicados exactos observados: 0.
 - Secret scan del payload: PASS.
-- `blocked`: 1.
-- Motivo: autorización exacta pendiente.
+- `blocked`: 0.
+- Autorización: exacta, vigente y limitada a una ejecución.
 
 ## Operaciones permitidas después de aprobación
 
@@ -25,5 +25,5 @@ Fecha: 2026-08-23.
 No se permiten comentarios, links, borrados, reparenting, cambios de summary o
 status de HPT-5 ni escrituras sobre HPT-6 u otro issue.
 
-El PASS estructural no abre el writer: `blocked` debe cambiar a `0` mediante
-evidencia de autorización explícita antes de cualquier write.
+El PASS estructural y la autorización exacta abren únicamente las dos
+operaciones enumeradas. Un resultado parcial o incierto consume el lote.

@@ -17,10 +17,9 @@ Fecha: 2026-08-23.
 
 - Operaciones propuestas: 2.
 - Operaciones estructuralmente bloqueadas: 0.
-- Aprobación exacta pendiente: 1.
-- Blocked: 1.
+- Aprobación exacta vigente: 1.
+- Blocked: 0.
 - Escritura Jira ejecutada: no.
 
-El único bloqueo es deliberado: la instrucción general de mantener Jira al día
-autoriza preparar este frente, pero la policy exige aprobar el payload exacto
-antes de consumir el lote externo.
+El usuario autorizó el lote exacto publicado. El doctor no observa bloqueos
+estructurales o de autorización; la escritura queda limitada a una ejecución.
