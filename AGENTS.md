@@ -84,6 +84,14 @@ the core-owned canon when that policy is adopted locally. The local worktree
 policy additionally governs request reservation, isolated execution,
 information recovery and controlled retirement of worktrees.
 
+Experimental execution rules:
+
+- `specs/requests/execution-publication-rule.yaml`
+
+Requests that opt into this trial must complete its publication, tracker or
+explicit non-applicability, terminal readback and cleanup gates. This rule is
+not yet a core policy and must not be propagated to child repositories.
+
 They complement working agreements, specs, docs and playbooks. They do not
 replace functional contracts or cross-repo ownership.
 
@@ -107,6 +115,7 @@ This runs:
 
 - `node scripts/verify-request-identities.js`
 - `node scripts/verify-worktree-request-lifecycle-policy.js`
+- `node scripts/verify-execution-publication-rule.js`
 - `node scripts/verify-catalog.js`
 - `node scripts/verify-local-bindings.js --optional`
 - `node scripts/verify-state-model.js`

@@ -55,6 +55,17 @@ retroactiva. Esa normalizacion no debe ocultar el desvio: debe declarar que la
 evidencia fue registrada despues de la ejecucion y debe dejar trazabilidad de
 servicios afectados, validaciones y riesgos residuales.
 
+## Regla experimental de publicación y cierre
+
+Los requests que adopten explícitamente
+`execution-publication-and-tracker-closure-rule` también deben publicar y
+releer el plan, la implementación aplicable, el mirror del tracker o su
+no-aplicabilidad, y el cierre terminal antes del cleanup.
+
+El contrato completo y su semántica de cierre finito están en
+[execution-publication-rule.md](execution-publication-rule.md). Durante
+`CR-CP-0022` esta regla es un trial local y no una policy canónica.
+
 ## Deteccion De Impacto
 
 El analisis de impacto lee:
