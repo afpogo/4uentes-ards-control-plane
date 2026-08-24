@@ -21,6 +21,7 @@ control_plane_context:
   jira_source_of_truth: false
   jira_issue_key: "SST-108"
   jira_write_allowed: false
+  jira_write_scope: "exact-closure-batch-sst-108-consumed"
 
 depends_on: ["CR-SST-0192", "CR-SST-0193", "CR-SST-0155", "CR-SST-0168", "CR-SST-0210"]
 
@@ -78,6 +79,7 @@ execution:
     4uentes-auth: "feat/CR-SST-0194/chatbot-memory-service-grant"
   production_data_allowed: false
   jira_write_allowed: false
+  jira_write_authorization_ref: "evidence/requests/CR-SST-0194/jira-sst-108-closure-batch-2026-08-24.md"
 
 execution_status:
   lifecycle_and_authorization: "recorded"
@@ -99,6 +101,7 @@ execution_status:
   integrated_qa_fixture_cleanup: "verified-idempotent-zero-residue"
   canonical_owner_readback: "passed-auth-b9c38fc-bend-fc5573a7-chatbot-99ecc162"
   control_plane_check: "passed-final-readback-2026-08-24"
+  jira_reconciliation: "passed-finalized-comment-10343-readback-2026-08-24"
 
 task_weight:
   classification: "complex-high-risk-task"
@@ -193,7 +196,7 @@ closure:
   evidence_ref: "evidence/requests/CR-SST-0194/final-readback-2026-08-24.md"
   limits:
     - "Closure does not authorize a persistent deployment or production feature-flag mutation."
-    - "Closure does not authorize Jira writes or infrastructure-repository mutation."
+    - "The exact SST-108 Jira closure batch was consumed; no additional Jira write is authorized."
     - "A real external provider and vector store remain separate future decisions."
 
 evidence_refs:
@@ -204,3 +207,4 @@ evidence_refs:
   - "evidence/requests/CR-SST-0194/integrated-qa-start-2026-08-23.md"
   - "evidence/requests/CR-SST-0194/integrated-qa-result-2026-08-23.md"
   - "evidence/requests/CR-SST-0194/final-readback-2026-08-24.md"
+  - "evidence/requests/CR-SST-0194/jira-sst-108-closure-batch-2026-08-24.md"

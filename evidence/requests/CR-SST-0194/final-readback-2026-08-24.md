@@ -50,3 +50,15 @@ memoria por sÃ­ mismo ni confiar scope enviado por el cliente.
 
 Este cierre no autoriza producciÃ³n, despliegue persistente, Jira, cambios de
 infraestructura, proveedor externo real ni vector store.
+
+## Reconciliacion Jira Posterior
+
+La autorizacion posterior `ok actualicemos jira` habilito solamente el lote
+exacto documentado en
+`evidence/requests/CR-SST-0194/jira-sst-108-closure-batch-2026-08-24.md`.
+El mirror `SST-108` recibio el comentario `10343`, fue transicionado mediante
+`41` y el readback confirmo estado `Finalizada` con resolucion `Listo`.
+
+Esa autorizacion quedo consumida. No autoriza nuevas escrituras Jira y no
+altera los limites sobre produccion, despliegue, infraestructura, proveedor
+externo real ni vector store.
