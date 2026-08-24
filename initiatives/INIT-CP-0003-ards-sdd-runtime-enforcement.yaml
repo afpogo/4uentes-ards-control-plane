@@ -23,6 +23,7 @@ source_evidence_refs:
   - "evidence/requests/CR-SST-0174/policy-adoption-summary.md"
   - "evidence/requests/CR-CP-0022/rule-design-and-boundary-2026-08-23.md"
   - "evidence/requests/CR-CP-0022/local-rule-validation-2026-08-23.md"
+  - "evidence/requests/CR-CP-0022/jira-exact-batch-2026-08-23.json"
 model_refs:
   - "specs/initiatives/initiative-model.yaml"
   - "docs/requests/initiative-model.md"

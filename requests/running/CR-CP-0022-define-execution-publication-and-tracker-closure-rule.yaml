@@ -7,8 +7,8 @@ source_request: "requests/inbox/CR-CP-0022-define-execution-publication-and-trac
 planned_request: "requests/planned/CR-CP-0022-define-execution-publication-and-tracker-closure-rule.yaml"
 started_at: "2026-08-23"
 requester: "4uentes"
-current_unit: "exercise-trial"
-completed_units: ["identity-preflight", "policy-review", "architecture-boundary-review", "rule-design", "publish-lifecycle", "define-rule", "implement-validator", "validate-local-rule"]
+current_unit: "authorize-jira-exact-batch"
+completed_units: ["identity-preflight", "policy-review", "architecture-boundary-review", "rule-design", "publish-lifecycle", "define-rule", "implement-validator", "validate-local-rule", "publish-implementation", "read-back-implementation", "jira-read-preflight"]
 execution:
   child_repo_mutation_allowed: false
   core_repo_mutation_allowed: false
@@ -30,4 +30,4 @@ execution_publication_rule:
 decision:
   status: "running-local-rule-validation"
   approver: "4uentes"
-  blocker: "none for local validation; Jira exact batch remains pending"
+  blocker: "exact confirmation of evidence/requests/CR-CP-0022/jira-exact-batch-2026-08-23.json"
