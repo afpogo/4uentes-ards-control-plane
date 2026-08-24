@@ -1,0 +1,48 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0218"
+title: "Propagate chat retention terminal events to active sessions"
+status: "inbox"
+created_at: "2026-08-24"
+requester: "4uentes"
+business_context: >
+  The localhost matrix of CR-SST-0207 proved that finishing a temporary
+  conversation removes its volatile HTTP state, but active realtime sessions
+  receive no terminal event. The missing producer-consumer contract prevents
+  clients from converging immediately after finish or durable deletion.
+requested_change: >
+  Define and implement an end-to-end retention terminal-event contract so
+  sst-bend publishes a metadata-only terminal signal after an authorized
+  finish or deletion and sst-fend applies it only to the matching active
+  conversation without resurrecting removed state.
+expected_outcome: >
+  All authorized active sessions converge after temporary finish or durable
+  deletion, while HTTP ownership checks, room isolation, privacy boundaries
+  and the existing 204/404 semantics remain unchanged.
+initial_scope:
+  initiative_id: "INIT-SST-0007"
+  source_request_id: "CR-SST-0207"
+  solution: "sst"
+  control_repository: "4uentes-orchestor"
+  expected_owner_repositories:
+    - "sst-bend"
+    - "sst-fend"
+  excluded_followups:
+    - "product-safe Redis eviction and cache hit/miss QA"
+    - "reserved-ngrok QA access strategy"
+    - "cleanup contract for inaccessible synthetic test data"
+constraints:
+  - "This reservation does not authorize child-repository, Jira, runtime, deployment, datastore or secret writes."
+  - "Do not define the final event name or payload before the owner-contract planning gate."
+  - "The event must remain metadata-only and must not expose message content, credentials, tokens or private connection data."
+  - "Preserve sst-bend as the runtime producer authority and sst-fend as the consumer UX authority."
+  - "Publish and merge this minimal inbox reservation before creating the execution-planning worktree."
+requested_next_step: >
+  Publish this minimal reservation to the canonical ref, refresh origin/main,
+  then create a clean worktree to plan the producer-consumer contract, owner
+  documentation, validation and exact Jira mirror batch.
+decision:
+  status: "accepted-for-reservation"
+  approver: "4uentes"
+  approved_at: "2026-08-24"
+  approval_text: "ok avancemos con el siguiente gate"
