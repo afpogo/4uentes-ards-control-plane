@@ -1,0 +1,64 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-HPT-0019"
+title: "Reconcile the Phinance proxy Jira mirror"
+status: "planned"
+source_request: "requests/inbox/CR-HPT-0019-reconcile-phinance-proxy-jira-mirror.yaml"
+created_at: "2026-08-23"
+requester: "4uentes"
+summary: >
+  Publish a two-operation Jira correction plan for HPT-5 and the missing
+  CR-HPT-0018 Task, then execute it only after exact batch authorization.
+control_plane_context:
+  initiative_id: "INIT-HPT-0002"
+  initiative_epic: "HPT-5"
+  canonical_request_id: "CR-HPT-0018"
+  canonical_request_status: "done"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+risk:
+  level: "medium"
+  score: 5
+  drivers: ["EXTERNAL_MIRROR_WRITE", "ISSUE_CREATE", "TERMINAL_STATUS_MIRROR"]
+model_selection:
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  task_class: "short-defined-task"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "low"
+  fallback_profile: "gpt-5.5 high"
+  reason: "The batch is small but externally mutating and requires exact readback."
+  subagent_deployment_plan: "none; the external write sequence remains in the primary agent"
+execution:
+  control_plane_mutation_allowed: true
+  child_repo_mutation_allowed: false
+  product_runtime_mutation_allowed: false
+  jira_write_allowed: false
+  jira_write_gate: "pending exact batch authorization"
+  infrastructure_changes_allowed: false
+  secret_value_changes_allowed: false
+atomized_execution:
+  - {order: 1, id: "publish-preflight", objective: "Publish observed Jira metadata, duplicate search and exact correction payload."}
+  - {order: 2, id: "authorize-batch", objective: "Obtain approval for the exact HPT-5 edit and CR-HPT-0018 Task creation."}
+  - {order: 3, id: "execute-readback", objective: "Execute the batch once, read back both issues and record the created key."}
+  - {order: 4, id: "merge-close", objective: "Merge terminal lifecycle and Jira evidence into main."}
+jira:
+  project_key: "HPT"
+  initiative_epic: "HPT-5"
+  issue_type: "Tarea"
+  parent_key: "HPT-5"
+  expected_create_status: "Listo"
+  expected_create_transition_id: "41"
+  allowed_operations: ["edit-hpt-5-description", "create-cr-hpt-0018-task-in-listo", "readback"]
+  forbidden_operations: ["delete", "comment", "link", "reparent", "edit-other-issues"]
+required_checks:
+  - "duplicate search returns zero CR-HPT-0018 issues"
+  - "doctor summary declares the exact two-operation plan"
+  - "policy check passes with the write gate blocked pending approval"
+  - "git diff --check"
+  - "npm run check"
+decision:
+  status: "planned-pending-exact-jira-batch-authorization"
+  approver: "4uentes"
+  blocker: "the exact published payload has not yet been authorized"

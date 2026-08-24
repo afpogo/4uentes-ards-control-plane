@@ -1,0 +1,31 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-HPT-0019"
+title: "Reconcile the Phinance proxy Jira mirror"
+status: "inbox"
+created_at: "2026-08-23"
+requester: "4uentes"
+business_context: >
+  CR-HPT-0018 is closed and owner-published, but HPT-5 still describes the
+  stale pre-verifier sequence and Jira has no primary issue for CR-HPT-0018.
+requested_change: >
+  Update the HPT-5 description to mirror the published trust chain and create
+  one completed Task for CR-HPT-0018 under that Epic.
+expected_outcome: >
+  Jira exposes the current Phinance integration state without becoming a
+  source of truth or implying environment activation.
+initial_scope:
+  initiative_id: "INIT-HPT-0002"
+  canonical_request_id: "CR-HPT-0018"
+  jira_project: "HPT"
+  jira_epic: "HPT-5"
+constraints:
+  - "Jira remains an operational mirror; control-plane lifecycle is authoritative."
+  - "Do not change product runtime, child repositories, infrastructure or secrets."
+  - "Do not delete, comment, link or reparent Jira issues."
+  - "Do not execute Jira writes until the exact two-operation batch is published and explicitly authorized."
+decision:
+  status: "accepted-for-preflight-and-batch-design"
+  approver: "4uentes"
+  approved_at: "2026-08-23"
+  approval_text: "ok vayamos mergeando todo lo que vamos contruyendo y vayamos actualizando jira no olvidemos"

@@ -1,0 +1,50 @@
+{
+  "schemaVersion": "1.0",
+  "requestId": "CR-HPT-0019",
+  "projectKey": "HPT",
+  "externalWrite": false,
+  "authorizationStatus": "pending-exact-batch-approval",
+  "summary": {
+    "proposedUpdates": 1,
+    "proposedCreates": 1,
+    "blocked": 1
+  },
+  "actions": [
+    {
+      "sequence": 1,
+      "tool": "editJiraIssue",
+      "issueKey": "HPT-5",
+      "fields": {
+        "description": "Mirror operativo de `INIT-HPT-0002`.\n\nObjetivo: evolucionar Phinance-API desde flujo de caja personal hacia recursos económicos cotidianos y operaciones auditables, preservando ownership independiente y una integración SST fail-closed.\n\nEl control plane ARDS/SDD en `4uentes-orchestor` es source of truth. Jira refleja visibilidad y coordinación; no crea, aprueba, amplía ni cierra Change Requests.\n\nSecuencia publicada:\n\n* `CR-HPT-0013`: contrato TrustedSstPrincipal, cerrado.\n* `CR-SST-0212`: fachada Swagger SST fail-closed, cerrada.\n* `CR-HPT-0014`: perfil financiero local y aislamiento owner-local, cerrado.\n* `CR-SST-0214`: grant M2M Auth canónico, cerrado y reflejado en `HPT-6`.\n* `CR-SST-0216`: productor SST de principal y entitlements, cerrado.\n* `CR-HPT-0017`: verificador RS256/JWKS de Phinance, cerrado.\n* `CR-HPT-0018`: proxy SST-to-Phinance feature-gated y QA integrada de aislamiento por cuenta, cerrado.\n\nEstado actual: la cadena de confianza está publicada y validada, pero `PHINANCE_PROXY_ENABLED` permanece `false` por defecto. Activación por ambiente, referencias de secretos y verificación del runtime desplegado requieren un lifecycle separado.\n\nLa Initiative continúa abierta como hypothesis por la taxonomía de operaciones, owners operativos y semántica de corrección/reversión pendientes."
+      }
+    },
+    {
+      "sequence": 2,
+      "tool": "createJiraIssue",
+      "issueType": "Tarea",
+      "parentKey": "HPT-5",
+      "summary": "[CR-HPT-0018] Publish the gated SST-to-Phinance proxy and integrated isolation QA",
+      "description": "Mirror operativo del cierre canónico `CR-HPT-0018` bajo `INIT-HPT-0002`.\n\nResultado validado:\n\n* Owner runtime: `sst-bend`.\n* Proxy SST-to-Phinance publicado detrás de `PHINANCE_PROXY_ENABLED=false` por defecto.\n* Browser bearer, account headers, entitlements y trace IDs no se aceptan como autoridad; SST genera y sobrescribe el contexto confiable.\n* Grant exacto: caller `sst-bend`, audience `phinance-api`, scope `finance:invoke`.\n* Sólo `GET` y `POST` bajo `/api/v1`, sin retry automático de writes, con timeout, redirect rejection y límite de respuesta.\n* QA integrada aprobó owner/member, spoofing y aislamiento entre cuentas contra el verificador real de Phinance y PostgreSQL efímero.\n* Publicación owner: `sst-bend` PR 26, merge `845491b`.\n* Cierre del control plane: PR 96, merge `1aaefda`.\n\nNo se activó un ambiente, no se cambiaron secretos ni infraestructura y no se afirma despliegue productivo. La activación runtime permanece en un lifecycle separado.\n\nARDS/SDD en `4uentes-orchestor` es source of truth. Jira es mirror operativo.",
+      "labels": [
+        "ards-sdd",
+        "control-plane-mirror",
+        "cr-hpt-0018",
+        "integrated-qa",
+        "phinance",
+        "sst",
+        "validated-owner"
+      ],
+      "transition": {
+        "id": "41",
+        "expectedStatus": "Listo"
+      }
+    }
+  ],
+  "forbiddenOperations": [
+    "delete",
+    "comment",
+    "link",
+    "reparent",
+    "edit-other-issues"
+  ]
+}
