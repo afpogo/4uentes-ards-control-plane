@@ -1,0 +1,23 @@
+schema_version: "1.0"
+kind: "feature_state"
+id: "paragraph-sequential-derivation"
+title: "SST Paragraph-Sequential Derivation"
+status: "planned"
+updated_at: "2026-08-24"
+solution_id: "sst"
+affected_services:
+  - "sst-bend"
+  - "sst-chatbot"
+  - "sst-fend"
+request_ids:
+  - "CR-SST-0219"
+spec_refs:
+  - "requests/planned/CR-SST-0219-adopt-paragraph-sequential-derivation-contract.yaml"
+evidence_refs:
+  - "evidence/initiatives/INIT-SST-0010/paragraph-sequential-derivation-adoption-plan.md"
+  - "evidence/requests/CR-SST-0219/implementation-plan.md"
+open_gaps:
+  - "The control-plane contract is planned but not yet approved as implemented."
+  - "Owner-local Bend, chatbot, frontend, integration and E2E lifecycles do not yet have canonical numeric IDs."
+  - "Jira mirror creation is blocked until Atlassian OAuth is reconnected and an exact batch is authorized."
+  - "No runtime or user-visible paragraph derivation is implemented by CR-SST-0219."
