@@ -1,0 +1,108 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-SST-0207"
+title: "Validate consent-aware chat retention end to end"
+status: "running"
+source_request: "requests/inbox/CR-SST-0207-integrated-chat-retention-qa.yaml"
+planned_request: "requests/planned/CR-SST-0207-integrated-chat-retention-qa.yaml"
+created_at: "2026-08-22"
+started_at: "2026-08-23"
+requester: "4uentes"
+depends_on: ["CR-SST-0204", "CR-SST-0205", "CR-SST-0211", "CR-SST-0206"]
+
+control_plane_context:
+  initiative_id: "INIT-SST-0007"
+  parent_request_id: "CR-SST-0202"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  jira_issue_type: "Subtask"
+  jira_issue_key: "SST-117"
+  jira_parent_issue_key: "SST-113"
+  jira_start_authorized: true
+  jira_start_scope: "Transition only SST-117 to En curso after this running lifecycle is merged."
+  jira_start_batch_status: "authorized-pending-control-plane-merge"
+
+risk:
+  level: "high"
+  score: 8
+  drivers: ["PRIVACY_EVIDENCE", "MULTI_SESSION", "TTL", "DESTRUCTIVE_ACTION"]
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+
+model_selection:
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5"
+  reason: "The matrix crosses privacy, multi-session behavior, TTL and destructive product actions."
+
+subagent_deployment_plan:
+  mode: "sequential-fallback"
+  reason: "Proactive delegation is disabled; the integrated matrix runs sequentially with isolated identities."
+
+execution:
+  requires_human_approval: true
+  approval_source: "Explicit user approval dated 2026-08-23 to advance CR-SST-0207 and update Jira."
+  approval_status: "approved-running"
+  child_repo_mutation_allowed: false
+  child_repo_mutation_targets: []
+  synthetic_runtime_test_data_allowed: true
+  synthetic_data_cleanup_required: true
+  deployment_allowed: false
+  cluster_direct_mutation_allowed: false
+  production_mutation_allowed: false
+  feature_flag_mutation_allowed: false
+  jira_write_allowed: "Only the exact SST-117 start transition batch after lifecycle publication."
+
+qa_scope:
+  target_environment: "development"
+  surfaces: ["localhost", "reserved-ngrok"]
+  routing_rule: "Retention HTTP uses sst-fend -> 4uentes-auth -> sst-bend; only Socket.IO may use the direct browser-to-Bend exception."
+  evidence_rule: "Use synthetic identities and preserve no password, token, cookie, message body, Redis credential or private URL."
+  rollback: "Delete synthetic test data only through the product contract; do not mutate backing stores directly."
+
+qa_matrix:
+  - id: "facade-routing"
+    expected: "Every retention HTTP operation traverses the approved Auth facade."
+  - id: "temporary-multi-session-ttl"
+    expected: "Two active sessions share turns; logout, a future session and TTL expiry cannot recover temporary history."
+  - id: "saved-durability"
+    expected: "Explicit promotion survives logout, Redis eviction and a second device or session."
+  - id: "cache-aside"
+    expected: "First durable read after eviction misses to PostgreSQL; the next read hits Redis without changing authority."
+  - id: "clear-local"
+    expected: "Browser state clears while saved history remains recoverable on demand."
+  - id: "finish-temporary"
+    expected: "Volatile data disappears and active sessions receive the terminal event."
+  - id: "delete-from-sst"
+    expected: "PostgreSQL row and Redis cache disappear and a race cannot resurrect them."
+  - id: "cross-principal-isolation"
+    expected: "A second principal cannot enumerate, read, promote or delete another user's conversations."
+
+validation:
+  dependency_lifecycles: "PASS: CR-SST-0204, CR-SST-0205, CR-SST-0206 and CR-SST-0211 are done."
+  runtime_preflight: "PENDING"
+  localhost_matrix: "PENDING"
+  reserved_ngrok_matrix: "PENDING"
+  owner_checks: "PENDING"
+  control_plane_check: "PASS: 697 lifecycle files scanned with 0 FAIL; owner documentation and visual documentation gates passed"
+
+decision:
+  status: "approved-running"
+  approver: "4uentes"
+  decided_at: "2026-08-23"
+
+evidence_refs:
+  - "evidence/requests/CR-SST-0207/execution-start-2026-08-23.md"
+  - "evidence/requests/CR-SST-0207/jira-start-authorization-2026-08-23.md"
+
+closure_limits:
+  - "Every QA matrix row must pass on localhost and reserved ngrok before complete closure."
+  - "A failed row is recorded as a blocker or follow-up; it is not silently waived."
+  - "No child repository change may be used to repair a finding inside this lifecycle."
+  - "No direct datastore, cluster, production or feature-flag mutation is authorized."
+  - "Jira closure requires a separate exact authorization batch after ARDS/SDD closure."
