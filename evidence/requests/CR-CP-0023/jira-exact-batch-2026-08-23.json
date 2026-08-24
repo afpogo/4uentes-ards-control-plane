@@ -1,0 +1,41 @@
+{
+  "requestId": "CR-CP-0023",
+  "provider": "Jira",
+  "projectKey": "ARDS",
+  "approvalStatus": "pending-exact-confirmation",
+  "preparedAt": "2026-08-23",
+  "allowedWriteCount": 1,
+  "allowedWrites": [
+    {
+      "sequence": 1,
+      "tool": "createJiraIssue",
+      "issueType": "Tarea",
+      "parent": "ARDS-13",
+      "summary": "[CP][INIT-CP-0003][CR-CP-0023] Promote execution publication and tracker closure policy to Core",
+      "description": "Request: CR-CP-0023\nInitiative: INIT-CP-0003\nParent Epic: ARDS-13\nPredecessor: CR-CP-0022 / ARDS-19\n\nOutcome:\n- Promote execution-publication-and-tracker-closure-policy to 4uentes-ards-core as provider-agnostic, core-profile-scoped canon.\n- Require the policy for control-plane lifecycles that govern external mutation, cross-repo publication or tracker synchronization.\n- Adopt the canonical policy in the control plane while preserving the local rule ID as an enforcement alias.\n\nCanonical publication:\n- Core PR #4, merge ded8c466dc3c02a02f7b24642ce99de6cebcc91c on develop.\n- Control-plane adoption PR #113, merge e68593b8dec77d1a894938df2e75b3113a5da8aa on main.\n\nValidation:\n- Core npm run check: PASS, 0 errors and 0 warnings.\n- Control-plane npm run check: PASS, 0 failures.\n- Local enforcement self-test: PASS, 7 cases.\n\nBoundary:\n- Jira is an operational mirror; ARDS/SDD remains authoritative.\n- No child repository was adopted or mutated.\n- Future child rollout requires a separate approved lifecycle and adoption or exception manifest.",
+      "transitionId": "41",
+      "transitionName": "Listo",
+      "targetStatus": "Listo"
+    }
+  ],
+  "readOnlyPreflight": {
+    "summaryDuplicateSearch": "no CR-CP-0023 issue found",
+    "descriptionOnlyReference": "ARDS-19 mentions CR-CP-0023 as its future gate and is not a duplicate",
+    "parentIssue": "ARDS-13",
+    "parentType": "Epic",
+    "taskType": "Tarea",
+    "transition": "41 Listo"
+  },
+  "forbiddenWrites": [
+    "comment",
+    "delete",
+    "edit-after-create",
+    "reparent",
+    "assign",
+    "link",
+    "epic-transition",
+    "other-issue-transition"
+  ],
+  "consumed": false,
+  "resultRef": "evidence/requests/CR-CP-0023/jira-readback-2026-08-23.md"
+}
