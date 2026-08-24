@@ -3,7 +3,7 @@ kind: "initiative"
 id: "INIT-SST-0007"
 title: "SST Chatbot First Connected Version"
 status: "active"
-updated_at: "2026-08-23"
+updated_at: "2026-08-24"
 owner_repository: "4uentes-orchestor"
 objective: >
   Deliver a governed SST chatbot with revocable identity, durable conversation
@@ -26,6 +26,7 @@ source_evidence_refs:
   - "evidence/requests/CR-SST-0202/architecture-and-execution-plan.md"
   - "evidence/requests/CR-SST-0211/implementation-plan.md"
   - "evidence/requests/CR-SST-0206/owner-merge-and-closure-2026-08-23.md"
+  - "evidence/requests/CR-SST-0217/owner-and-runtime-readback-2026-08-24.md"
 model_refs:
   - "specs/initiatives/initiative-model.yaml"
   - "docs/requests/initiative-model.md"
@@ -106,7 +107,8 @@ gaps:
   - "CR-SST-0178 remains running for CR-SST-0200 signup copy, registration continuity and logout teardown retests."
   - "User RAG, stakeholder RAG, multi-session adoption and personal memory remain separate lifecycles and are not absorbed here."
   - "CR-SST-0202, CR-SST-0204, CR-SST-0205, CR-SST-0206 and CR-SST-0211 are complete; CR-SST-0207 remains the separately gated integrated retention QA lifecycle."
-  - "CR-SST-0217 is the separate development Infra lifecycle that must restore localhost/ngrok and enable the QA retention configuration before CR-SST-0207 resumes."
+  - "CR-SST-0217 restored the development preflight: Argo is Synced/Healthy, localhost and the reserved edge are reachable, retention is enabled and TTL is bounded to 120 seconds; lifecycle/Jira closure remains separately gated."
+  - "The CR-SST-0194 chatbot correction merged to main rather than develop; the current development image therefore predates that merge and the branch drift requires a separate lifecycle if promotion is needed."
 namespace_reconciliation:
   request_id: "CR-SST-0208"
   status: "pr37-canonical-map-preserved"

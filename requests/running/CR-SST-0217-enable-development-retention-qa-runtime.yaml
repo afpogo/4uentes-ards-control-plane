@@ -52,7 +52,7 @@ runtime_target:
 
 owner_documentation:
   required: true
-  status: "pending"
+  status: "satisfied-in-owner-pr-17"
   owner_repo: "sst-4uentes-infra"
   planned_surfaces:
     - "specs/infra/environments/development.yaml"
@@ -61,12 +61,30 @@ owner_documentation:
     - "docs/runbooks/argocd-kind-development.md"
 
 validation:
-  owner_check: "PENDING"
-  render_and_dry_run: "PENDING"
-  argo_reconciliation: "PENDING"
-  localhost_reachability: "PENDING"
-  reserved_ngrok_reachability: "PENDING"
-  control_plane_check: "PASS: 706 lifecycle files scanned with 0 FAIL; owner documentation and visual documentation gates passed."
+  owner_check: "PASS: npm run check completed with exit code 0 on 2026-08-24."
+  render_and_dry_run: "PASS: bootstrap and development kustomize renders plus client dry-runs completed."
+  argo_reconciliation: "PASS: sst-app is Synced and Healthy at 126f25eeed4d20b7ecba35036a7e35530482c946 with Succeeded operation."
+  localhost_reachability: "PASS: root and JWKS returned HTTP 200 through localhost:8088."
+  reserved_ngrok_reachability: "PASS: the reserved edge reached the authentication redirect; the private URL was not persisted."
+  control_plane_check: "PASS: 709 lifecycle files scanned with 0 FAIL; execution publication, owner documentation and visual documentation gates passed."
+
+owner_publication:
+  repository: "afpogo/sst-4uentes-infra"
+  pull_request: "https://github.com/afpogo/sst-4uentes-infra/pull/17"
+  merge_commit: "85ccc828cc8329d2319e778a9ccd7ac365ed3d61"
+  canonical_develop_readback: "126f25eeed4d20b7ecba35036a7e35530482c946"
+  canonical_develop_note: "A later automation merge updated the sst-bend image to develop-fc5573a7f054 without changing the bounded retention configuration."
+
+runtime_readback:
+  observed_at: "2026-08-24"
+  cluster_context: "kind-sst-cluster-dev"
+  nodes: "PASS: control-plane and worker Ready"
+  workloads: "PASS: all observed 4uentes-sst pods Running and ready"
+  retention_enabled: true
+  temporary_ttl_seconds: 120
+  redis: "PASS: pod ready and opaque Secret exposes the expected CHAT_REDIS_URL and REDIS_PASSWORD keys; values were not read or persisted."
+  deployed_bend_image: "ghcr.io/afpogo/sst-bend:develop-fc5573a7f054"
+  recovery_note: "The previously unavailable Docker/Kind control-plane recovered without a successful manual restart, recreation, direct apply or secret mutation."
 
 decision: {status: "approved-running", approver: "4uentes", decided_at: "2026-08-23"}
 
@@ -74,6 +92,7 @@ evidence_refs:
   - "evidence/requests/CR-SST-0207/runtime-preflight-blocker-2026-08-23.md"
   - "evidence/requests/CR-SST-0217/execution-start-2026-08-23.md"
   - "evidence/requests/CR-SST-0217/jira-start-readback-2026-08-23.md"
+  - "evidence/requests/CR-SST-0217/owner-and-runtime-readback-2026-08-24.md"
 
 closure_limits:
   - "No cluster restart, recreation or direct apply without a new exact operational gate."

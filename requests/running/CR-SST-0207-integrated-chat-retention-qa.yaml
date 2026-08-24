@@ -88,11 +88,11 @@ qa_matrix:
 
 validation:
   dependency_lifecycles: "PASS: CR-SST-0204, CR-SST-0205, CR-SST-0206 and CR-SST-0211 are done."
-  runtime_preflight: "BLOCKED: the cluster is internally healthy, but localhost:8088 refuses connections and CHAT_RETENTION_V1_ENABLED remains false in the Argo-managed development ConfigMap."
-  localhost_matrix: "BLOCKED: the durable host endpoint is unavailable; no synthetic identity or test data was created."
-  reserved_ngrok_matrix: "BLOCKED: the automatic tunnel exists and the edge redirects to authentication, but its localhost:8088 upstream is unavailable; application reachability is therefore unproven."
-  owner_checks: "PENDING"
-  control_plane_check: "PASS: 700 lifecycle files scanned with 0 FAIL; owner documentation and visual documentation gates passed"
+  runtime_preflight: "PASS after CR-SST-0217: Argo is Synced/Healthy, localhost root and JWKS return HTTP 200, retention is true and the bounded temporary TTL is 120 seconds."
+  localhost_matrix: "READY: the durable host endpoint is available; integrated synthetic-data rows remain pending."
+  reserved_ngrok_matrix: "READY: the reserved edge reaches the authentication redirect; authenticated integrated rows remain pending."
+  owner_checks: "PASS: CR-SST-0217 Infra owner check, renders and dry-runs passed on 2026-08-24."
+  control_plane_check: "PASS: 709 lifecycle files scanned with 0 FAIL; execution publication, owner documentation and visual documentation gates passed."
 
 decision:
   status: "approved-running"
@@ -105,6 +105,7 @@ evidence_refs:
   - "evidence/requests/CR-SST-0207/jira-start-readback-2026-08-23.md"
   - "evidence/requests/CR-SST-0207/runtime-preflight-blocker-2026-08-23.md"
   - "evidence/requests/CR-SST-0207/jira-blocker-comment-readback-2026-08-23.md"
+  - "evidence/requests/CR-SST-0217/owner-and-runtime-readback-2026-08-24.md"
 
 closure_limits:
   - "Every QA matrix row must pass on localhost and reserved ngrok before complete closure."
