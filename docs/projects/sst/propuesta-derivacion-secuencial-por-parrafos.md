@@ -30,7 +30,7 @@ visual_map:
     - "requests/done/CR-SST-0027-paragraph-sequential-ards-derivation.yaml"
     - "requests/done/CR-SST-0030-sst-user-internal-memory-boundary.yaml"
     - "requests/done/CR-SST-0193-implement-canonical-user-memory-runtime.yaml"
-    - "requests/running/CR-SST-0194-integrate-chatbot-memory-proposals-and-recall.yaml"
+    - "requests/done/CR-SST-0194-integrate-chatbot-memory-proposals-and-recall.yaml"
     - "evidence/requests/CR-SST-0194/owner-publication-readback-2026-08-23.md"
     - "evidence/initiatives/INIT-SST-0010/request-id-collision-2026-08-22.md"
   observed_at: "2026-08-22"
@@ -105,7 +105,7 @@ visual_map:
     - "evidence/requests/CR-SST-0027/prompt-versioning-summary.md"
     - "evidence/requests/CR-SST-0027/agent-authority-boundary.md"
     - "evidence/requests/CR-SST-0030/correction-impact-summary.md"
-    - "requests/running/CR-SST-0194-integrate-chatbot-memory-proposals-and-recall.yaml"
+    - "requests/done/CR-SST-0194-integrate-chatbot-memory-proposals-and-recall.yaml"
   observed_at: "2026-08-22"
   authority_boundary: "Vista derivada de una propuesta; CR-SST-0027, CR-SST-0030 y los contratos owner conservan autoridad."
   textual_fallback_required: true
