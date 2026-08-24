@@ -1,12 +1,14 @@
 schema_version: "1.0"
-phase: 3
+phase: 4
 id: "CR-SST-0194"
 title: "Integrate governed memory proposals and recall into SST chatbot"
-status: "running"
+status: "done"
 source_request: "requests/inbox/CR-SST-0194-integrate-chatbot-memory-proposals-and-recall.yaml"
 planned_request: "requests/planned/CR-SST-0194-integrate-chatbot-memory-proposals-and-recall.yaml"
+running_request: "requests/running/CR-SST-0194-integrate-chatbot-memory-proposals-and-recall.yaml"
 created_at: "2026-08-17"
 started_at: "2026-08-23"
+completed_at: "2026-08-24"
 requester: "4uentes"
 summary: >
   Connect the governed SST chatbot runtime to canonical private user memory in
@@ -92,10 +94,11 @@ execution_status:
   integrated_qa_limit: "Temporary local/dev runtime and flags authorized; persistent deployment and infrastructure mutation remain forbidden."
   integrated_qa_authorization: "recorded-2026-08-23"
   integrated_qa_followup:
-    sst-bend: "pr-27-open-be7ba20"
-    sst-chatbot: "pr-11-open-6b8826a"
+    sst-bend: "pr-27-merged-fc5573a7-head-be7ba20"
+    sst-chatbot: "pr-11-merged-99ecc162-head-6b8826a"
   integrated_qa_fixture_cleanup: "verified-idempotent-zero-residue"
-  control_plane_check: "passed-integrated-qa-result-2026-08-23"
+  canonical_owner_readback: "passed-auth-b9c38fc-bend-fc5573a7-chatbot-99ecc162"
+  control_plane_check: "passed-final-readback-2026-08-24"
 
 task_weight:
   classification: "complex-high-risk-task"
@@ -148,6 +151,10 @@ owner_documentation:
   required: true
   status: "satisfied"
   owner_repos: ["sst-chatbot", "sst-bend", "4uentes-auth"]
+  evidence_refs:
+    - "evidence/requests/CR-SST-0194/owner-publication-readback-2026-08-23.md"
+    - "evidence/requests/CR-SST-0194/integrated-qa-result-2026-08-23.md"
+    - "evidence/requests/CR-SST-0194/final-readback-2026-08-24.md"
   planned_paths:
     - "specs/capabilities/"
     - "docs/capabilities/"
@@ -177,9 +184,17 @@ required_checks:
   - "control-plane npm run check"
 
 decision:
-  status: "integrated-qa-passed-followup-owner-prs-pending"
+  status: "approved-done-integrated-memory-path-validated"
   approver: "4uentes"
-  decided_at: "2026-08-23"
+  decided_at: "2026-08-24"
+
+closure:
+  status: "complete-owner-merges-and-integrated-qa-validated"
+  evidence_ref: "evidence/requests/CR-SST-0194/final-readback-2026-08-24.md"
+  limits:
+    - "Closure does not authorize a persistent deployment or production feature-flag mutation."
+    - "Closure does not authorize Jira writes or infrastructure-repository mutation."
+    - "A real external provider and vector store remain separate future decisions."
 
 evidence_refs:
   - "evidence/requests/CR-SST-0194/identity-scope-policy-analysis-2026-08-22.md"
@@ -188,3 +203,4 @@ evidence_refs:
   - "evidence/requests/CR-SST-0194/owner-publication-readback-2026-08-23.md"
   - "evidence/requests/CR-SST-0194/integrated-qa-start-2026-08-23.md"
   - "evidence/requests/CR-SST-0194/integrated-qa-result-2026-08-23.md"
+  - "evidence/requests/CR-SST-0194/final-readback-2026-08-24.md"

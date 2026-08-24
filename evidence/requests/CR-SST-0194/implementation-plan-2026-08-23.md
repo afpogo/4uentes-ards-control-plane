@@ -37,7 +37,7 @@ visual_map:
   question: "Como integra el chatbot proposal y recall sin adquirir autoridad sobre memoria o identidad?"
   abstraction_level: "cross-repo runtime contract"
   source_refs:
-    - "requests/running/CR-SST-0194-integrate-chatbot-memory-proposals-and-recall.yaml"
+    - "requests/done/CR-SST-0194-integrate-chatbot-memory-proposals-and-recall.yaml"
     - "requests/done/CR-SST-0193-implement-canonical-user-memory-runtime.yaml"
     - "requests/done/CR-SST-0210-memory-identity-scope.yaml"
     - "evidence/requests/CR-SST-0210/identity-scope-contract-v1.yaml"
