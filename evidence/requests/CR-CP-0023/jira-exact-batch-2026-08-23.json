@@ -2,7 +2,10 @@
   "requestId": "CR-CP-0023",
   "provider": "Jira",
   "projectKey": "ARDS",
-  "approvalStatus": "pending-exact-confirmation",
+  "approvalStatus": "approved-and-consumed",
+  "approvedBy": "4uentes",
+  "approvalStatementReceived": "Autorizo el lote Jira de CR-CP-0023",
+  "approvedAt": "2026-08-24T01:04:00-03:00",
   "preparedAt": "2026-08-23",
   "allowedWriteCount": 1,
   "allowedWrites": [
@@ -36,6 +39,9 @@
     "epic-transition",
     "other-issue-transition"
   ],
-  "consumed": false,
+  "consumed": true,
+  "consumedAt": "2026-08-24T01:04:26-03:00",
+  "consumptionStatus": "complete",
+  "createdIssueKey": "ARDS-20",
   "resultRef": "evidence/requests/CR-CP-0023/jira-readback-2026-08-23.md"
 }
