@@ -44,7 +44,7 @@ function validateAdoption(text, state, file = "fixture.yaml") {
 
   const fail = (message) => errors.push(`${file}: ${message}`);
   if (!hasValue(block, "rule_id", RULE_ID)) fail(`rule_id must be ${RULE_ID}`);
-  if (!hasValue(block, "adoption_status", "trial")) fail("adoption_status must be trial");
+  if (!hasValue(block, "adoption_status", "trial") && !hasValue(block, "adoption_status", "adopted")) fail("adoption_status must be trial or adopted");
 
   const git = nestedBlock(block, "git_publication");
   const tracker = nestedBlock(block, "tracker_mirror");
@@ -95,6 +95,7 @@ function selfTest() {
   const validDone = `${common}  trial_result:\n    status: "passed"\n    plan_publication: "merged-and-read-back"\n    implementation_publication: "not-applicable"\n    tracker_reconciliation: "not-applicable"\n    terminal_publication_contract: "merge-and-readback-before-cleanup"\n    cleanup_gate: "remote-readback-required"\n`;
   const cases = [
     ["valid-running", common, "running", 0],
+    ["valid-adopted-running", common.replace('adoption_status: "trial"', 'adoption_status: "adopted"'), "running", 0],
     ["invalid-cleanup", common.replace("remote_readback_required: true", "remote_readback_required: false"), "running", 1],
     ["invalid-tracker-reason", common.replace('    not_applicable_reason: "no tracker mapping"\n', ""), "running", 1],
     ["invalid-tracker-provider", common.replace('    applicable: false\n    not_applicable_reason: "no tracker mapping"', "    applicable: true"), "running", 1],
@@ -120,8 +121,9 @@ function verifySurfaces() {
   const readme = fs.readFileSync(path.join(ROOT, "docs/requests/README.md"), "utf8");
   const agents = fs.readFileSync(path.join(ROOT, "AGENTS.md"), "utf8");
   const pkg = JSON.parse(fs.readFileSync(path.join(ROOT, "package.json"), "utf8"));
-  if (!spec.includes(`id: "${RULE_ID}"`) || !spec.includes('status: "experimental"')) errors.push("machine spec must declare the experimental rule");
-  for (const section of ["## Secuencia obligatoria", "## Cierre finito", "## Aplicabilidad y excepciones", "## Promoción futura"]) {
+  if (!spec.includes(`id: "${RULE_ID}"`) || !spec.includes('status: "active-local-enforcement"')) errors.push("machine spec must declare active local enforcement");
+  if (!spec.includes('id: "execution-publication-and-tracker-closure-policy"')) errors.push("machine spec must map to the canonical Core policy");
+  for (const section of ["## Secuencia obligatoria", "## Cierre finito", "## Aplicabilidad y excepciones", "## Promoción canónica"]) {
     if (!doc.includes(section)) errors.push(`${DOC} missing section: ${section}`);
   }
   if (!execution.includes("execution-publication-rule.md")) errors.push("execution model does not link the rule");

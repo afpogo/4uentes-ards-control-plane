@@ -1,7 +1,7 @@
 schema_version: "1.0"
 kind: "ards_sdd_agent_policy_registry"
 status: "active"
-updated_at: "2026-08-22"
+updated_at: "2026-08-23"
 purpose: >
   Machine-readable registry for living ARDS/SDD policies adopted by the
   control-plane. It records local agent operating policies plus scoped
@@ -463,6 +463,56 @@ policies:
       - "state/features/visual-documentation-as-code-adoption.current.yaml"
     gaps:
       - "Each child repo still requires an approved lifecycle and local adoption or exception manifest."
+
+  - id: "execution-publication-and-tracker-closure-policy"
+    name: "Execution Publication and Tracker Closure Policy"
+    type: "ards-sdd-governance-policy"
+    policy_class: "core-profile-scoped"
+    origin_repo: "4uentes-orchestor"
+    canonical_owner: "4uentes-ards-core"
+    applicability: "control-plane lifecycles that govern external mutation, cross-repo publication or tracker synchronization"
+    adoption_mode: "required-by-profile-or-request-driven"
+    required_for_profiles:
+      - "control-plane"
+    optional_for_profiles:
+      - "multi-repo-solution"
+      - "repo-with-governed-external-mutation"
+    template_binding: null
+    local_aliases:
+      - local_alias: "execution-publication-and-tracker-closure-rule"
+        maps_to: "execution-publication-and-tracker-closure-policy"
+        status: "active-enforcement-alias"
+    status: "active-local-adoption-from-canonical-core"
+    scope:
+      - "request-lifecycle-publication"
+      - "owner-publication-readback"
+      - "tracker-exact-batch-authorization"
+      - "terminal-closure-readback"
+      - "temporary-workspace-cleanup"
+    owner: "4uentes-ards-core"
+    standard_source_ref: "docs/policies/execution-publication-and-tracker-closure-policy.md"
+    human_doc: "docs/policies/execution-publication-and-tracker-closure-policy.md"
+    local_implementation:
+      spec: "specs/requests/execution-publication-rule.yaml"
+      validator: "scripts/verify-execution-publication-rule.js"
+      package_gate: "npm run check"
+    handoff:
+      core_promotion_request_id: "CR-CP-0023"
+      core_commit: "b2a4f63c35fb87b6441586b5502e4a5f8693816d"
+      core_merge_commit: "ded8c466dc3c02a02f7b24642ce99de6cebcc91c"
+      status: "complete-canonical-readback"
+    child_propagation:
+      mode: "request-driven"
+      required_artifacts:
+        - "policy_adoption_manifest"
+        - "policy_exception_manifest"
+      rule: "Core publication and control-plane adoption do not prove child adoption."
+    evidence:
+      - "specs/policies/adoptions/execution-publication-and-tracker-closure-policy.yaml"
+      - "evidence/requests/CR-CP-0023/core-policy-publication-readback-2026-08-23.md"
+      - "requests/done/CR-CP-0022-define-execution-publication-and-tracker-closure-rule.yaml"
+    gaps:
+      - "Any child rollout requires a separate approved request and owner manifest."
 
 core_owned_adoptions:
   - id: "http-qa-harness-policy"

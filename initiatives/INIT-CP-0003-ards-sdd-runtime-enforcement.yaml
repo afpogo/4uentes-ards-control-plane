@@ -26,6 +26,7 @@ source_evidence_refs:
   - "evidence/requests/CR-CP-0022/jira-exact-batch-2026-08-23.json"
   - "evidence/requests/CR-CP-0022/jira-readback-2026-08-23.md"
   - "evidence/requests/CR-CP-0023/promotion-readiness-2026-08-23.md"
+  - "evidence/requests/CR-CP-0023/core-policy-publication-readback-2026-08-23.md"
 model_refs:
   - "specs/initiatives/initiative-model.yaml"
   - "docs/requests/initiative-model.md"

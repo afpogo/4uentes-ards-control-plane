@@ -2,10 +2,16 @@ schema_version: "1.0"
 kind: "ards_sdd_execution_rule"
 id: "execution-publication-and-tracker-closure-rule"
 title: "Execution publication and tracker closure rule"
-status: "experimental"
+status: "active-local-enforcement"
 origin_repo: "4uentes-orchestor"
 owner: "4uentes-ards-control-plane"
 canonical_policy_owner_if_promoted: "4uentes-ards-core"
+canonical_policy:
+  id: "execution-publication-and-tracker-closure-policy"
+  source_repo: "4uentes-ards-core"
+  source_ref: "docs/policies/execution-publication-and-tracker-closure-policy.md"
+  source_version: "ded8c466dc3c02a02f7b24642ce99de6cebcc91c"
+  adoption_manifest: "specs/policies/adoptions/execution-publication-and-tracker-closure-policy.yaml"
 
 purpose: >
   Make the finite sequence from approved plan through implementation
@@ -59,7 +65,7 @@ adoption_contract:
     - "tracker_mirror.applicable"
     - "tracker_mirror.provider when applicable"
     - "cleanup.remote_readback_required"
-  allowed_adoption_status: ["trial"]
+  allowed_adoption_status: ["trial", "adopted"]
   done_requirements:
     - "trial_result.status"
     - "trial_result.plan_publication"
@@ -82,9 +88,11 @@ validation:
   self_test: "node scripts/verify-execution-publication-rule.js --self-test"
   full_gate: "npm run check"
 
-promotion_gate:
+promotion_result:
   candidate_request_id: "CR-CP-0023"
   target_class: "core-profile-scoped"
+  status: "merged-and-read-back"
+  core_merge_commit: "ded8c466dc3c02a02f7b24642ce99de6cebcc91c"
   allowed_when:
     - "local rule artifacts are merged and read back"
     - "normal validation and negative self-tests pass"

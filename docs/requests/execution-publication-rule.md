@@ -7,9 +7,11 @@ checks locales. Un cierre gobernado también debe publicar lo construido,
 releer las fuentes canónicas, sincronizar el tracker cuando corresponda y
 retirar los worktrees temporales únicamente al final.
 
-Su identificador es
-`execution-publication-and-tracker-closure-rule`. Durante `CR-CP-0022` su
-estado es experimental y su aplicación es prospectiva mediante opt-in.
+Su identificador local es
+`execution-publication-and-tracker-closure-rule`. Nació como trial en
+`CR-CP-0022` y ahora implementa localmente la policy canónica
+`execution-publication-and-tracker-closure-policy`, promovida por `CR-CP-0023`.
+Su aplicación sigue siendo prospectiva mediante opt-in.
 
 ## Secuencia obligatoria
 
@@ -70,10 +72,11 @@ El validator sólo inspecciona lifecycles que adoptan explícitamente el trial.
 Sus self-tests incluyen casos inválidos para tracker sin razón, readback
 deshabilitado y `done` incompleto.
 
-## Promoción futura
+## Promoción canónica
 
-Esta regla no es una policy. Si `CR-CP-0022` completa el circuito sin excepción,
-`CR-CP-0023` podrá proponerla a `4uentes-ards-core` como policy
-`core-profile-scoped`. Ese follow-up deberá releer el merge terminal del trial,
-modificar Core desde un lifecycle separado y mantener la propagación a child
-repos como trabajo request-driven.
+`CR-CP-0023` promovió la policy a `4uentes-ards-core` como
+`core-profile-scoped`. El merge canónico
+`ded8c466dc3c02a02f7b24642ce99de6cebcc91c` fue releído desde
+`origin/develop`. Esta regla permanece como enforcement local y alias estable
+para lifecycles ya publicados; la propagación a child repos continúa como
+trabajo request-driven.

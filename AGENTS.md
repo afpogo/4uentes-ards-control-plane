@@ -76,6 +76,7 @@ Locally documented policies:
 Core-owned policy adoptions tracked locally:
 
 - `http-qa-harness-policy`
+- `execution-publication-and-tracker-closure-policy`
 
 These policies define how to select model aliases, degrade strategy when
 resources are limited, atomize tasks, delegate work, manage context, respect
@@ -84,13 +85,14 @@ the core-owned canon when that policy is adopted locally. The local worktree
 policy additionally governs request reservation, isolated execution,
 information recovery and controlled retirement of worktrees.
 
-Experimental execution rules:
+Local policy enforcement:
 
 - `specs/requests/execution-publication-rule.yaml`
 
-Requests that opt into this trial must complete its publication, tracker or
-explicit non-applicability, terminal readback and cleanup gates. This rule is
-not yet a core policy and must not be propagated to child repositories.
+Requests that opt into this enforcement must complete its publication, tracker
+or explicit non-applicability, terminal readback and cleanup gates. The local
+rule maps to the Core-owned policy and must not be propagated to child
+repositories without a separate approved lifecycle.
 
 They complement working agreements, specs, docs and playbooks. They do not
 replace functional contracts or cross-repo ownership.
