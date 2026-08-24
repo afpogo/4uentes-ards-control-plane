@@ -1,0 +1,108 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0217"
+title: "Enable the development runtime for integrated retention QA"
+status: "planned"
+source_request: "requests/inbox/CR-SST-0217-enable-development-retention-qa-runtime.yaml"
+created_at: "2026-08-23"
+requester: "4uentes"
+depends_on: ["CR-SST-0205"]
+unblocks: ["CR-SST-0207"]
+
+control_plane_context:
+  initiative_id: "INIT-SST-0007"
+  parent_request_id: "CR-SST-0202"
+  blocking_request_id: "CR-SST-0207"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  jira_issue_type: "Subtask"
+  jira_issue_key: "TODO"
+  jira_parent_issue_key: "SST-113"
+
+scope:
+  target_environment: "development"
+  child_repo_mutation_targets: ["sst-4uentes-infra"]
+  gitops_changes:
+    retention_enabled: true
+    temporary_ttl_seconds: 120
+    configuration_scope: "development overlay only"
+  operational_recovery:
+    endpoint: "http://localhost:8088"
+    initial_mode: "read-only diagnosis"
+    restart_or_recreation_gate: "separate exact approval required"
+
+risk:
+  level: "high"
+  score: 8
+  drivers: ["GITOPS", "FEATURE_ENABLEMENT", "VOLATILE_STATE", "LOCAL_CLUSTER_AVAILABILITY"]
+
+task_weight: {classification: "complex-high-risk-task", risk_level: "high"}
+model_selection:
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5"
+  reason: "The work enables privacy-sensitive retention behavior and may require a disruptive development-cluster recovery gate."
+subagent_deployment_plan:
+  mode: "sequential-fallback"
+  reason: "Proactive delegation is disabled; lifecycle, owner mutation, runtime reconciliation and QA handoff remain sequential gates."
+
+execution:
+  requires_human_approval: true
+  approval_status: "approved-running-publication"
+  approval_source: "Operator instruction dated 2026-08-23 to advance the separate infrastructure lifecycle."
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets: ["sst-4uentes-infra"]
+  deployment_allowed: true
+  deployment_mode: "Merge to develop and Argo CD reconciliation only."
+  cluster_direct_mutation_allowed: false
+  cluster_restart_or_recreation_allowed: false
+  production_mutation_allowed: false
+  datastore_mutation_allowed: false
+  secret_mutation_allowed: false
+  jira_write_allowed: "After lifecycle publication, create exactly one SST Subtask under SST-113 and transition only that new issue to En curso; no other Jira write."
+
+implementation:
+  - "Create an isolated Infra worktree from current origin/develop and preserve unrelated user work."
+  - "Set CHAT_RETENTION_V1_ENABLED=true and CHAT_TEMPORARY_TTL_SECONDS=120 only in the development overlay."
+  - "Update Infra owner specs, state and runbook with the QA-only configuration, rollback and orchestrator link."
+  - "Run the full Infra check, Kustomize render, client dry-run and secret-safe diff review."
+  - "Publish and merge the Infra PR, then observe Argo reconciliation without direct apply."
+  - "Diagnose localhost:8088 and request an exact operational gate if recovery requires restart or recreation."
+  - "Verify localhost and reserved-ngrok reachability before handing control back to CR-SST-0207."
+
+owner_documentation:
+  required: true
+  status: "planned"
+  owner_repos: ["sst-4uentes-infra"]
+  planned_surfaces:
+    - "specs/infra/environments/development.yaml"
+    - "specs/infra/deployment-contracts/sst-bend.yaml"
+    - "specs/states/enable-development-retention-qa.yaml"
+    - "docs/runbooks/argocd-kind-development.md"
+
+validation:
+  - "Infra npm run check."
+  - "Development Kustomize render and kubectl dry-run=client."
+  - "Rendered ConfigMap contains true and 120 only for development."
+  - "Argo CD reports Synced/Healthy at the merged revision."
+  - "localhost JWKS returns 200 and the reserved public edge reaches the same ingress surface."
+  - "4uentes-orchestor npm run check before handoff or closure."
+
+acceptance:
+  - "Development enables retention through GitOps without changing production defaults."
+  - "The temporary TTL is 120 seconds and is documented as a QA-only override."
+  - "The durable localhost endpoint and reserved ngrok edge are both usable for CR-SST-0207."
+  - "No secret value, credential, token, cookie or private URL is recorded."
+
+rollback: >
+  Revert the Infra PR so development returns to CHAT_RETENTION_V1_ENABLED=false
+  and CHAT_TEMPORARY_TTL_SECONDS=86400, then let Argo CD reconcile. Runtime
+  recovery actions use the separately approved operational rollback.
+
+decision:
+  status: "approved-running-publication"
+  approver: "4uentes"
+  decided_at: "2026-08-23"

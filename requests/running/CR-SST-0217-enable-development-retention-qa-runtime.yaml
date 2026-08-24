@@ -1,0 +1,80 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-SST-0217"
+title: "Enable the development runtime for integrated retention QA"
+status: "running"
+source_request: "requests/inbox/CR-SST-0217-enable-development-retention-qa-runtime.yaml"
+planned_request: "requests/planned/CR-SST-0217-enable-development-retention-qa-runtime.yaml"
+created_at: "2026-08-23"
+started_at: "2026-08-23"
+requester: "4uentes"
+depends_on: ["CR-SST-0205"]
+unblocks: ["CR-SST-0207"]
+
+control_plane_context:
+  initiative_id: "INIT-SST-0007"
+  parent_request_id: "CR-SST-0202"
+  blocking_request_id: "CR-SST-0207"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  jira_issue_type: "Subtask"
+  jira_issue_key: "TODO"
+  jira_parent_issue_key: "SST-113"
+  jira_start_batch_status: "authorized-after-publication"
+
+risk: {level: "high", score: 8, drivers: ["GITOPS", "FEATURE_ENABLEMENT", "VOLATILE_STATE", "LOCAL_CLUSTER_AVAILABILITY"]}
+task_weight: {classification: "complex-high-risk-task", risk_level: "high"}
+model_selection: {provider: "codex", resource_level: "normal", resource_source: "default", primary_profile: "gpt-5.6-sol", reasoning_effort: "max", fallback_profile: "gpt-5.5"}
+subagent_deployment_plan: {mode: "sequential-fallback", reason: "Proactive delegation is disabled; execution remains sequential and evidence-gated."}
+
+execution:
+  approval_source: "Operator instruction dated 2026-08-23 to advance the separate infrastructure lifecycle."
+  approval_status: "approved-running"
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets: ["sst-4uentes-infra"]
+  deployment_allowed: true
+  deployment_mode: "GitOps merge and Argo CD reconciliation only"
+  cluster_direct_mutation_allowed: false
+  cluster_restart_or_recreation_allowed: false
+  production_mutation_allowed: false
+  datastore_mutation_allowed: false
+  secret_mutation_allowed: false
+  jira_write_allowed: "Create one Subtask under SST-113 and transition only the new issue to En curso after this lifecycle is merged."
+
+runtime_target:
+  environment: "development"
+  retention_enabled: true
+  temporary_ttl_seconds: 120
+  endpoint: "http://localhost:8088"
+  public_surface: "reserved-ngrok"
+  rollback_values: {retention_enabled: false, temporary_ttl_seconds: 86400}
+
+owner_documentation:
+  required: true
+  status: "pending"
+  owner_repo: "sst-4uentes-infra"
+  planned_surfaces:
+    - "specs/infra/environments/development.yaml"
+    - "specs/infra/deployment-contracts/sst-bend.yaml"
+    - "specs/states/enable-development-retention-qa.yaml"
+    - "docs/runbooks/argocd-kind-development.md"
+
+validation:
+  owner_check: "PENDING"
+  render_and_dry_run: "PENDING"
+  argo_reconciliation: "PENDING"
+  localhost_reachability: "PENDING"
+  reserved_ngrok_reachability: "PENDING"
+  control_plane_check: "PASS: 703 lifecycle files scanned with 0 FAIL; owner documentation and visual documentation gates passed."
+
+decision: {status: "approved-running", approver: "4uentes", decided_at: "2026-08-23"}
+
+evidence_refs:
+  - "evidence/requests/CR-SST-0207/runtime-preflight-blocker-2026-08-23.md"
+  - "evidence/requests/CR-SST-0217/execution-start-2026-08-23.md"
+
+closure_limits:
+  - "No cluster restart, recreation or direct apply without a new exact operational gate."
+  - "No production, datastore, secret or application-code mutation."
+  - "CR-SST-0207 remains the owner of the integrated product QA matrix."
+  - "Jira closure requires a separate exact authorization."
