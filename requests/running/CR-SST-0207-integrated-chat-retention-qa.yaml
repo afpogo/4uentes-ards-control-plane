@@ -57,7 +57,7 @@ execution:
   cluster_direct_mutation_allowed: false
   production_mutation_allowed: false
   feature_flag_mutation_allowed: false
-  jira_write_allowed: "Only the exact SST-117 start transition batch after lifecycle publication."
+  jira_write_allowed: "One blocker comment on SST-117 after this preflight evidence is merged; no transition, field edit, link or parent change."
 
 qa_scope:
   target_environment: "development"
@@ -86,11 +86,11 @@ qa_matrix:
 
 validation:
   dependency_lifecycles: "PASS: CR-SST-0204, CR-SST-0205, CR-SST-0206 and CR-SST-0211 are done."
-  runtime_preflight: "PENDING"
-  localhost_matrix: "PENDING"
-  reserved_ngrok_matrix: "PENDING"
+  runtime_preflight: "BLOCKED: the cluster is internally healthy, but localhost:8088 refuses connections and CHAT_RETENTION_V1_ENABLED remains false in the Argo-managed development ConfigMap."
+  localhost_matrix: "BLOCKED: the durable host endpoint is unavailable; no synthetic identity or test data was created."
+  reserved_ngrok_matrix: "BLOCKED: the automatic tunnel exists and the edge redirects to authentication, but its localhost:8088 upstream is unavailable; application reachability is therefore unproven."
   owner_checks: "PENDING"
-  control_plane_check: "PASS: 697 lifecycle files scanned with 0 FAIL; owner documentation and visual documentation gates passed"
+  control_plane_check: "PASS: 700 lifecycle files scanned with 0 FAIL; owner documentation and visual documentation gates passed"
 
 decision:
   status: "approved-running"
@@ -101,6 +101,7 @@ evidence_refs:
   - "evidence/requests/CR-SST-0207/execution-start-2026-08-23.md"
   - "evidence/requests/CR-SST-0207/jira-start-authorization-2026-08-23.md"
   - "evidence/requests/CR-SST-0207/jira-start-readback-2026-08-23.md"
+  - "evidence/requests/CR-SST-0207/runtime-preflight-blocker-2026-08-23.md"
 
 closure_limits:
   - "Every QA matrix row must pass on localhost and reserved ngrok before complete closure."
