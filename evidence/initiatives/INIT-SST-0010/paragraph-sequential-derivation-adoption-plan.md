@@ -1,6 +1,28 @@
 # INIT-SST-0010 - Plan De AdopciÃ³n De DerivaciÃ³n Secuencial Por PÃ¡rrafos
 
-Fecha observada: 2026-08-23.
+Fecha observada: 2026-08-24.
+
+## Actualización Canónica 2026-08-24
+
+Los blockers de namespace, identidad y `CR-SST-0194` que aparecen en el mapa
+histórico de este documento ya están cerrados. `CR-SST-0218` fue descartado por
+una reserva remota existente y `CR-SST-0219` quedó asignado al contrato
+`PARA-CONTRACT`.
+
+El mapa vigente, el orden actualizado y los gates de QA/Jira viven en
+`evidence/requests/CR-SST-0219/implementation-plan.md`. El mapa inferior se
+conserva como snapshot de la decisión previa y no debe usarse para inferir el
+estado actual del lifecycle.
+
+Mapping canónico actual:
+
+- `CR-SST-TODO-PARA-CONTRACT` -> `CR-SST-0219` (`planned`).
+- `CR-SST-TODO-PARA-BEND`, `PARA-CHATBOT`, `PARA-INTEGRATION`, `PARA-FEND` y
+  `PARA-E2E` continúan como candidatos sin ID numérico.
+- Jira para `CR-SST-0219` permanece bloqueado hasta reconectar OAuth, repetir
+  JQL y autorizar un lote exacto.
+- Todo CR futuro debe actualizar ARDS/SDD owner y cerrar con QA manual de
+  última revisión.
 
 ## Objetivo
 
@@ -144,7 +166,7 @@ Los identificadores siguientes son placeholders de planificaciÃ³n. No son IDs
 canÃ³nicos y no deben aparecer en Jira ni en branches hasta reconciliar el
 namespace global.
 
-### `CR-SST-TODO-PARA-CONTRACT` - Contrato Del Control Plane
+### `CR-SST-0219` - Contrato Del Control Plane
 
 Owner: `4uentes-orchestor`.
 

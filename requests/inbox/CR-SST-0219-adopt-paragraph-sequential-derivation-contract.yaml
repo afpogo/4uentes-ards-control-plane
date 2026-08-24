@@ -1,0 +1,26 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0219"
+title: "Adopt the paragraph-sequential derivation contract"
+status: "inbox"
+created_at: "2026-08-24"
+requester: "4uentes"
+summary: >
+  Convert the approved paragraph-by-paragraph analysis proposal into a
+  governed control-plane contract with stable lifecycle, prompt-profile,
+  provenance, memory-proposal and manual-QA closure rules.
+requested_scope:
+  initiative_id: "INIT-SST-0010"
+  feature_state_id: "paragraph-sequential-derivation"
+  owner_repository: "4uentes-orchestor"
+  predecessor_requests: ["CR-SST-0192", "CR-SST-0193", "CR-SST-0194", "CR-SST-0210"]
+  future_owner_repositories: ["sst-bend", "sst-chatbot", "sst-fend"]
+constraints:
+  - "This request changes control-plane artifacts only."
+  - "No child repository, runtime, deployment, production data or infrastructure mutation is authorized."
+  - "The control plane defines orchestration and boundaries; each functional owner must publish its own ARDS/SDD contract in a later approved request."
+  - "Jira remains a mirror and requires a separate exact authorized batch after duplicate and hierarchy preflight."
+  - "Every future runtime slice must finish with owner ARDS/SDD updates and a final manual QA review before closure."
+requested_next_step: >
+  Publish and read back the planned lifecycle, then request approval for the
+  contract implementation gate and a separately enumerated Jira mirror batch.

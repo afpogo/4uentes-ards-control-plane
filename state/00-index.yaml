@@ -1,7 +1,7 @@
 schema_version: "1.0"
 kind: "state_index"
 status: "active"
-updated_at: "2026-08-09"
+updated_at: "2026-08-24"
 machine: "state/state-machine.yaml"
 capability_links: "state/capability-links.yaml"
 features:
@@ -53,6 +53,7 @@ features:
   - "state/features/sst-chatbot.current.yaml"
   - "state/features/sst-user-ards-rag.current.yaml"
   - "state/features/sst-stakeholder-metrics-rag.current.yaml"
+  - "state/features/paragraph-sequential-derivation.current.yaml"
 bugfixes:
   - "state/bugfixes/login-504-proxy-timeout.current.yaml"
   - "state/bugfixes/sst-bend-emfile-watchers.current.yaml"

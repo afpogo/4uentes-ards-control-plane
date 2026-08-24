@@ -1,0 +1,196 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0219"
+title: "Adopt the paragraph-sequential derivation contract"
+status: "planned"
+source_request: "requests/inbox/CR-SST-0219-adopt-paragraph-sequential-derivation-contract.yaml"
+created_at: "2026-08-24"
+requester: "4uentes"
+summary: >
+  Establish the implementable ARDS/SDD contract and ordered adoption gates for
+  paragraph-sequential derivation without mutating functional repositories.
+depends_on: ["CR-SST-0192", "CR-SST-0193", "CR-SST-0194", "CR-SST-0210"]
+
+control_plane_context:
+  initiative_id: "INIT-SST-0010"
+  feature_state_id: "paragraph-sequential-derivation"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  jira_project_key: "SST"
+  jira_issue_type: "Task"
+  jira_parent_issue_key: "SST-105"
+  jira_issue_key: "TODO-after-jql-preflight"
+  jira_write_allowed: false
+  jira_blocker: "Atlassian OAuth refresh token invalid during the 2026-08-24 preflight."
+
+risk:
+  level: "high"
+  score: 8
+  drivers: ["PRIVATE_USER_CONTENT", "PROMPT_INJECTION", "CROSS_REPO_CONTRACT", "DURABLE_MEMORY_PROPOSALS"]
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+
+model_selection:
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  task_class: "complex-high-risk-task"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5 high"
+  reason: "The contract governs private source content, prompt composition, cross-repo ownership and durable memory proposals."
+
+subagent_deployment_plan:
+  required: false
+  mode: "sequential-main-agent"
+  reason: "No explicit delegation was requested; architecture, security and ownership decisions remain with the primary agent."
+
+execution:
+  control_plane_mutation_allowed: true
+  child_repo_mutation_allowed: false
+  core_repo_mutation_allowed: false
+  runtime_mutation_allowed: false
+  deployment_allowed: false
+  production_data_allowed: false
+  jira_write_allowed: false
+  next_external_gate: "Plan publication and canonical readback must precede child-repo or Jira mutation."
+
+execution_publication_plan:
+  canonical_policy_id: "execution-publication-and-tracker-closure-policy"
+  activation_gate: "Activate the local enforcement marker when the approved running lifecycle is created."
+  git_publication:
+    applicable: true
+    plan_merge_required: true
+    terminal_merge_required: true
+  tracker_mirror:
+    applicable: true
+    provider: "jira"
+    project_key: "SST"
+    epic_key: "SST-105"
+  cleanup:
+    remote_readback_required: true
+
+contract_boundary:
+  orchestration_authority: "4uentes-orchestor"
+  canonical_memory_authority: "sst-bend"
+  derivation_pipeline_owner: "sst-chatbot"
+  user_review_owner: "sst-fend"
+  identity_and_scope_predecessor: "CR-SST-0210"
+  core_change_required: false
+  rule: >
+    This request records product orchestration and handoff boundaries. Later
+    owner requests define and implement their local APIs, schemas, prompts,
+    persistence and UI contracts.
+
+contract_decisions:
+  aggregate_root: "DERIVATION_RUN"
+  ordered_children: "PARAGRAPH_DERIVATION ordered by paragraph_index"
+  evolving_state: "Each DERIVATION_RUN owns one versioned CONTEXT_CHAIN."
+  source_rule: "SOURCE_SNAPSHOT and PARAGRAPH_SEQUENCE are immutable for a run."
+  prompt_default: "open-general-analysis"
+  prompt_override_rule: "A prompt/profile change creates a new run or explicit fork and never rewrites prior derivations."
+  prompt_composition: ["SYSTEM_GUARDRAILS", "DEFAULT_DERIVATION_PROMPT", "SELECTED_ANALYSIS_PROFILE", "USER_ANALYSIS_INSTRUCTIONS", "BOUNDED_CONTEXT_CHAIN", "CURRENT_PARAGRAPH", "OUTPUT_SCHEMA"]
+  finalization_rule: "FINAL_DERIVATION is produced only after ordered paragraph processing reaches a terminal successful state."
+  memory_handoff_rule: "Finalization may create a DERIVATION_MEMORY_PROPOSAL in needs_review; it never adopts canonical memory automatically."
+  provenance_rule: "Every claim retains source snapshot, paragraph, prompt version, run and evidence references."
+  privacy_rule: "Private source content and prompts remain outside browser persistence, Jira and operational logs."
+
+planned_lifecycle_states:
+  derivation_run: ["created", "running", "paused", "completed", "failed", "cancelled", "superseded"]
+  paragraph_derivation: ["pending", "running", "completed", "failed", "skipped", "superseded"]
+  memory_proposal: ["needs_review", "accepted", "corrected", "rejected", "superseded"]
+
+atomized_execution:
+  - order: 1
+    id: "publish-plan"
+    objective: "Merge and read back the approved CR-SST-0219 lifecycle."
+    inputs: ["INIT-SST-0010", "CR-SST-0192", "CR-SST-0193", "CR-SST-0194", "CR-SST-0210"]
+    output: "Canonical planned lifecycle."
+    files: ["requests/inbox/", "requests/planned/", "evidence/requests/CR-SST-0219/"]
+    risk: "medium"
+    validation: "npm run check and remote main readback."
+  - order: 2
+    id: "approve-contract-implementation"
+    objective: "Obtain explicit approval before promoting the contract from plan to implemented control-plane artifacts."
+    inputs: ["Published plan", "manual QA scenarios", "Jira preflight"]
+    output: "Bounded implementation and tracker authorizations."
+    files: ["requests/running/CR-SST-0219-*.yaml"]
+    risk: "high"
+    validation: "Authorization enumerates control-plane and Jira operations separately."
+  - order: 3
+    id: "materialize-contract"
+    objective: "Publish the logical data, lifecycle, prompt and handoff contract in the control plane."
+    inputs: ["Approved plan", "existing product proposal"]
+    output: "Feature-state and normative orchestration documentation."
+    files: ["state/features/paragraph-sequential-derivation.current.yaml", "docs/projects/sst/", "evidence/requests/CR-SST-0219/"]
+    risk: "high"
+    validation: "Contract review, visual-map validation and npm run check."
+  - order: 4
+    id: "allocate-owner-slices"
+    objective: "Reserve separate future CR IDs for Bend, chatbot, integration, Fend and E2E after namespace preflight."
+    inputs: ["Approved contract", "live global namespace"]
+    output: "Ordered child lifecycles with explicit owners and dependencies."
+    files: ["requests/inbox/", "requests/planned/", "initiatives/INIT-SST-0010-*.yaml"]
+    risk: "high"
+    validation: "No ID collision; no child mutation before each plan is published."
+  - order: 5
+    id: "last-review-and-close"
+    objective: "Run the final manual contract walkthrough, reconcile Jira through an exact batch and publish terminal evidence."
+    inputs: ["Implemented contract", "automated checks", "Jira description draft"]
+    output: "Human-approved QA evidence, Jira readback and done lifecycle."
+    files: ["evidence/requests/CR-SST-0219/", "requests/done/CR-SST-0219-*.yaml"]
+    risk: "high"
+    validation: "Manual QA PASS, npm run check PASS, tracker readback and terminal main readback."
+
+owner_documentation:
+  required_for_this_request: false
+  reason: "CR-SST-0219 does not mutate child repositories or claim owner-local runtime contracts."
+  required_for_future_owner_slices: true
+  future_owner_repos: ["sst-bend", "sst-chatbot", "sst-fend"]
+  closure_rule: "Every mutated owner must publish its local ARDS/SDD specs/docs and pass the control-plane owner-documentation gate."
+
+manual_qa:
+  required: true
+  timing: "last-review-before-local-closure"
+  mode: "human contract and scenario walkthrough"
+  approver: "4uentes"
+  plan_ref: "evidence/requests/CR-SST-0219/manual-qa-last-review-plan.md"
+  closure_rule: "CR-SST-0219 cannot move to done without an explicit final human QA result."
+
+jira_mirror_plan:
+  description_ref: "evidence/requests/CR-SST-0219/jira-description-draft.md"
+  preflight_ref: "evidence/requests/CR-SST-0219/jira-preflight-blocker-2026-08-24.md"
+  start_batch_status: "blocked-oauth-and-not-authorized"
+  closure_behavior: "Update the Jira description with final scope and QA evidence, add one closure comment and transition only after local done evidence exists."
+  exact_batch_required: true
+
+required_checks:
+  - "npm run check"
+  - "git diff --check"
+  - "visual documentation validator through the full check"
+  - "final human contract walkthrough"
+  - "Jira readback when the mirror batch is authorized"
+
+acceptance:
+  - "CR-SST-0219 is the unique canonical ID for the paragraph-sequential derivation contract."
+  - "The contract preserves backend memory authority and explicit user adoption."
+  - "The default prompt is open but governed; custom prompts create new provenance."
+  - "Owner slices, dependencies, ARDS/SDD duties and QA gates are explicit."
+  - "No child repo or Jira write occurs before its corresponding publication and authorization gate."
+  - "The last review is manual, recorded and required before closure."
+
+decision:
+  status: "approved-for-plan-publication"
+  approver: "4uentes"
+  decided_at: "2026-08-24"
+  approval_text: "ok avancemos con pasos ordenados"
+  blocker: "Jira OAuth must be reconnected before live duplicate preflight or mirror creation."
+
+evidence_refs:
+  - "evidence/initiatives/INIT-SST-0010/paragraph-sequential-derivation-adoption-plan.md"
+  - "evidence/requests/CR-SST-0219/implementation-plan.md"
+  - "evidence/requests/CR-SST-0219/manual-qa-last-review-plan.md"
+  - "evidence/requests/CR-SST-0219/jira-description-draft.md"
+  - "evidence/requests/CR-SST-0219/jira-preflight-blocker-2026-08-24.md"
