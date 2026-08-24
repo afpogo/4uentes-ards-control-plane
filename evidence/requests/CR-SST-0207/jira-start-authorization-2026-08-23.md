@@ -16,4 +16,8 @@ el lifecycle `running`:
 No se autorizan comentarios, campos, links, reparenting, creaciones, borrados ni
 escrituras sobre `SST-113`, `SST-116` u otro issue.
 
-Estado del lote: `authorized-pending-control-plane-running-merge`.
+Estado del lote: `consumed-2026-08-23`.
+
+El lote se ejecuto despues de confirmar el merge del lifecycle `running` en
+`3d3b02f635141c03cf721686da51214b1c858595`. El readback sanitizado vive en
+`jira-start-readback-2026-08-23.md`.

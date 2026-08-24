@@ -20,7 +20,8 @@ control_plane_context:
   jira_parent_issue_key: "SST-113"
   jira_start_authorized: true
   jira_start_scope: "Transition only SST-117 to En curso after this running lifecycle is merged."
-  jira_start_batch_status: "authorized-pending-control-plane-merge"
+  jira_start_batch_status: "consumed-2026-08-23"
+  jira_start_readback: "SST-117 is En curso without resolution, remains a Subtask of SST-113, and received no comment or field edit."
 
 risk:
   level: "high"
@@ -99,6 +100,7 @@ decision:
 evidence_refs:
   - "evidence/requests/CR-SST-0207/execution-start-2026-08-23.md"
   - "evidence/requests/CR-SST-0207/jira-start-authorization-2026-08-23.md"
+  - "evidence/requests/CR-SST-0207/jira-start-readback-2026-08-23.md"
 
 closure_limits:
   - "Every QA matrix row must pass on localhost and reserved ngrok before complete closure."
