@@ -48,6 +48,7 @@ El registry machine-readable esta en:
 - [work-tracker-control-plane-authority-policy.md](work-tracker-control-plane-authority-policy.md)
 - [worktree-request-lifecycle-policy.md](worktree-request-lifecycle-policy.md)
 - [visual-documentation-as-code-policy.md](visual-documentation-as-code-policy.md)
+- [execution-publication-and-tracker-closure-policy.md](execution-publication-and-tracker-closure-policy.md)
 
 ## Propagacion A Repos Hijos
 
@@ -64,6 +65,9 @@ El registry machine-readable esta en:
 - La policy de documentacion visual se promueve desde el commit Core `3764d34`
   mediante `CR-CP-0020`. Su rollout se coordina con `CR-CP-0006`; publicar el
   canon no marca automaticamente a ningun child repo como adoptante.
+- La policy de publicacion y cierre se consume desde el merge Core
+  `ded8c466dc3c02a02f7b24642ce99de6cebcc91c`; su alias local conserva
+  compatibilidad con lifecycles opt-in y no autoriza rollout a child repos.
 - Para `control-plane-link-policy`, un repo hijo solo queda obligado cuando su
   profile, request aprobado o manifest local adopta la policy; en caso
   contrario debe quedar como no aplicable o pendiente de rollout, no como

@@ -1,0 +1,43 @@
+schema_version: "1.0"
+kind: "policy_adoption_manifest"
+status: "active"
+adopting_repo: "4uentes-ards-control-plane"
+adoption_status: "adopted"
+policy_id: "execution-publication-and-tracker-closure-policy"
+policy_class: "core-profile-scoped"
+source_repo: "4uentes-ards-core"
+source_ref: "docs/policies/execution-publication-and-tracker-closure-policy.md"
+source_version: "ded8c466dc3c02a02f7b24642ce99de6cebcc91c"
+source_status: "canonical-core-develop-verified"
+origin_repo: "4uentes-orchestor"
+canonical_owner: "4uentes-ards-core"
+applicability: >
+  Control-plane lifecycles that govern external mutation, cross-repo
+  publication or tracker synchronization.
+adoption_mode: "required-by-profile"
+required_for_profiles:
+  - "control-plane"
+optional_for_profiles: []
+template_binding: null
+local_alias: "execution-publication-and-tracker-closure-rule"
+maps_to: "execution-publication-and-tracker-closure-policy"
+local_implementation_path: "specs/requests/execution-publication-rule.yaml"
+implementation_refs:
+  - "docs/requests/execution-publication-rule.md"
+  - "scripts/verify-execution-publication-rule.js"
+  - "docs/policies/execution-publication-and-tracker-closure-policy.md"
+validation_ref: "npm run check"
+request_id: "CR-CP-0023"
+owner: "4uentes-ards-control-plane"
+observed_at: "2026-08-23"
+evidence_ref: "evidence/requests/CR-CP-0023/core-policy-publication-readback-2026-08-23.md"
+canonical_publication:
+  status: "merged-and-read-back"
+  github_pr: "https://github.com/afpogo/4uentes-ards-core/pull/4"
+  merge_commit: "ded8c466dc3c02a02f7b24642ce99de6cebcc91c"
+  merged_at: "2026-08-24T01:49:40Z"
+  ancestry_check: "PASS: b2a4f63 is an ancestor of origin/develop@ded8c466dc3c02a02f7b24642ce99de6cebcc91c"
+  blocking_effect: "Core publication gate is satisfied; child adoption remains request-driven."
+notes:
+  - "The local rule ID is retained only as an enforcement alias for already published lifecycle markers."
+  - "Core remains provider-agnostic; Jira authorization details are local implementation behavior."

@@ -7,12 +7,13 @@ source_request: "requests/inbox/CR-CP-0023-promote-execution-publication-and-tra
 planned_request: "requests/planned/CR-CP-0023-promote-execution-publication-and-tracker-closure-policy.yaml"
 started_at: "2026-08-23"
 requester: "4uentes"
-current_unit: "publish-lifecycle"
-completed_units: ["identity-preflight", "policy-review", "core-boundary-review", "trial-terminal-readback"]
+current_unit: "reconcile-control-plane"
+completed_units: ["identity-preflight", "policy-review", "core-boundary-review", "trial-terminal-readback", "publish-lifecycle", "read-back-lifecycle", "map-trial-to-canon", "implement-core-policy", "validate-core", "publish-core", "read-back-core"]
 execution:
   child_repo_mutation_allowed: false
-  core_repo_mutation_allowed: false
-  core_repo_mutation_pending_plan_readback: true
+  core_repo_mutation_allowed: true
+  core_repo_mutation_performed: true
+  core_merge_commit: "ded8c466dc3c02a02f7b24642ce99de6cebcc91c"
   jira_write_allowed: false
 execution_publication_rule:
   rule_id: "execution-publication-and-tracker-closure-rule"
@@ -29,6 +30,6 @@ execution_publication_rule:
   cleanup:
     remote_readback_required: true
 decision:
-  status: "running-lifecycle-publication"
+  status: "running-control-plane-adoption"
   approver: "4uentes"
-  blocker: "publish and read back this lifecycle before Core mutation"
+  blocker: "none for local adoption; Jira exact batch remains pending"
