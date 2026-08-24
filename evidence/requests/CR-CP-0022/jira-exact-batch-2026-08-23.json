@@ -1,0 +1,40 @@
+{
+  "requestId": "CR-CP-0022",
+  "provider": "Jira",
+  "projectKey": "ARDS",
+  "approvalStatus": "pending-exact-confirmation",
+  "preparedAt": "2026-08-23",
+  "allowedWriteCount": 1,
+  "allowedWrites": [
+    {
+      "sequence": 1,
+      "tool": "createJiraIssue",
+      "issueType": "Tarea",
+      "parent": "ARDS-13",
+      "summary": "[CP][INIT-CP-0003][CR-CP-0022] Define execution publication and tracker closure rule",
+      "description": "Request: CR-CP-0022\nInitiative: INIT-CP-0003\nParent Epic: ARDS-13\n\nOutcome:\n- Define a prospective opt-in ARDS/SDD execution rule for plan publication, implementation readback, tracker reconciliation, terminal publication and safe worktree cleanup.\n- Add a focused validator with positive and negative self-tests and wire it into npm run check.\n- Exercise the rule on its own lifecycle before considering promotion.\n\nCanonical implementation:\n- Control-plane PR #108\n- Merge commit 05f42d5db5a2e5252b4e3fc5b9991e375228f4a1\n\nValidation:\n- Focused self-test: PASS, 6 cases.\n- Focused validator: PASS.\n- Full npm run check: PASS, 0 FAIL.\n\nBoundary:\n- Jira is an operational mirror; ARDS/SDD remains authoritative.\n- CR-CP-0022 does not modify 4uentes-ards-core or child repositories.\n- Promotion is gated to a separate CR-CP-0023 after terminal merge/readback.",
+      "transitionId": "41",
+      "transitionName": "Listo",
+      "targetStatus": "Listo"
+    }
+  ],
+  "readOnlyPreflight": {
+    "duplicateSearch": "no CR-CP-0022 issue found",
+    "parentIssue": "ARDS-13",
+    "parentType": "Epic",
+    "taskType": "Tarea",
+    "transition": "41 Listo"
+  },
+  "forbiddenWrites": [
+    "comment",
+    "delete",
+    "edit-after-create",
+    "reparent",
+    "assign",
+    "link",
+    "epic-transition",
+    "other-issue-transition"
+  ],
+  "consumed": false,
+  "resultRef": "evidence/requests/CR-CP-0022/jira-readback-2026-08-23.md"
+}
