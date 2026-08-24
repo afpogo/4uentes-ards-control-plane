@@ -53,6 +53,7 @@ known_change_requests:
   - "CR-SST-0209"
   - "CR-SST-0211"
   - "CR-SST-0213"
+  - "CR-SST-0217"
 tracking:
   jira:
     role: "mirror"
@@ -70,6 +71,7 @@ tracking:
       CR-SST-0206: "SST-116"
       CR-SST-0207: "SST-117"
       CR-SST-0211: null
+      CR-SST-0217: null
     last_write_batch: "JIRA-SEC-PREPROD-03-consumed-2026-08-23"
 boundaries:
   control_plane_role: "lifecycle, coordination and evidence only"
@@ -88,6 +90,7 @@ current_read_model:
   completed_retention_frontend_request: "CR-SST-0206"
   next_retention_execution_request: null
   active_retention_execution_request: "CR-SST-0207"
+  retention_qa_enablement_request: "CR-SST-0217"
   namespace_reconciliation_request: "CR-SST-0208"
   auth_registration_session_request: "CR-SST-0209"
   auth_retention_facade_request: "CR-SST-0211"
@@ -103,6 +106,7 @@ gaps:
   - "CR-SST-0178 remains running for CR-SST-0200 signup copy, registration continuity and logout teardown retests."
   - "User RAG, stakeholder RAG, multi-session adoption and personal memory remain separate lifecycles and are not absorbed here."
   - "CR-SST-0202, CR-SST-0204, CR-SST-0205, CR-SST-0206 and CR-SST-0211 are complete; CR-SST-0207 remains the separately gated integrated retention QA lifecycle."
+  - "CR-SST-0217 is the separate development Infra lifecycle that must restore localhost/ngrok and enable the QA retention configuration before CR-SST-0207 resumes."
 namespace_reconciliation:
   request_id: "CR-SST-0208"
   status: "pr37-canonical-map-preserved"

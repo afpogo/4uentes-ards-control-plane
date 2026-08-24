@@ -1,0 +1,24 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0217"
+title: "Enable the development runtime for integrated retention QA"
+status: "inbox"
+created_at: "2026-08-23"
+requester: "4uentes"
+summary: >
+  Restore the durable development ingress and enable the consent-aware chat
+  retention runtime with a bounded QA TTL so CR-SST-0207 can resume its
+  localhost and reserved-ngrok matrix.
+requested_scope:
+  initiative_id: "INIT-SST-0007"
+  parent_request_id: "CR-SST-0202"
+  blocking_request_id: "CR-SST-0207"
+  target_environment: "development"
+  owner_repositories: ["sst-4uentes-infra"]
+constraints:
+  - "Git and Argo CD remain the deployment authority for configuration changes."
+  - "The feature flag and QA TTL override apply only to development."
+  - "No production, datastore, secret or application-code mutation is allowed."
+  - "A cluster restart or recreation requires a separate exact operational gate."
+  - "Jira remains a mirror and may be written only through the enumerated batch."
+requested_next_step: "Publish the approved running lifecycle before modifying sst-4uentes-infra."
