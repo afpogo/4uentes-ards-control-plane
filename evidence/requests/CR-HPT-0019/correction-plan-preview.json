@@ -2,12 +2,12 @@
   "schemaVersion": "1.0",
   "requestId": "CR-HPT-0019",
   "projectKey": "HPT",
-  "externalWrite": false,
-  "authorizationStatus": "pending-exact-batch-approval",
+  "externalWrite": true,
+  "authorizationStatus": "approved-single-execution",
   "summary": {
     "proposedUpdates": 1,
     "proposedCreates": 1,
-    "blocked": 1
+    "blocked": 0
   },
   "actions": [
     {

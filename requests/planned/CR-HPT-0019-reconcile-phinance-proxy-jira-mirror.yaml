@@ -34,8 +34,8 @@ execution:
   control_plane_mutation_allowed: true
   child_repo_mutation_allowed: false
   product_runtime_mutation_allowed: false
-  jira_write_allowed: false
-  jira_write_gate: "pending exact batch authorization"
+  jira_write_allowed: true
+  jira_write_gate: "exact batch authorized for one execution"
   infrastructure_changes_allowed: false
   secret_value_changes_allowed: false
 atomized_execution:
@@ -59,6 +59,8 @@ required_checks:
   - "git diff --check"
   - "npm run check"
 decision:
-  status: "planned-pending-exact-jira-batch-authorization"
+  status: "approved-for-exact-two-operation-jira-batch"
   approver: "4uentes"
-  blocker: "the exact published payload has not yet been authorized"
+  approved_at: "2026-08-23"
+  approval_text: "autorizo"
+  blocker: "none before the single execution"
