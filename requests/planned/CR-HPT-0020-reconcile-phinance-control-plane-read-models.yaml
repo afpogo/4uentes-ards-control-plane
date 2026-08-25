@@ -1,0 +1,130 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-HPT-0020"
+title: "Reconcile the published SST-to-Phinance control-plane read models"
+status: "planned"
+source_request: "requests/inbox/CR-HPT-0020-reconcile-phinance-control-plane-read-models.yaml"
+created_at: "2026-08-25"
+requester: "4uentes"
+summary: >
+  Reconcile control-plane catalog, solution, Initiative and feature-state
+  views with the owner-published fail-closed SST-to-Phinance trust chain while
+  keeping environment activation and all external mutation out of scope.
+
+control_plane_context:
+  initiative_id: "INIT-HPT-0002"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  jira_epic_key: "HPT-5"
+  source_request_ids: ["CR-SST-0216", "CR-HPT-0017", "CR-HPT-0018", "CR-HPT-0019"]
+  reservation_pull_request: 133
+  reservation_merge: "55e17df51898ad251f2b1eca00d4b53de184550c"
+
+impact_analysis:
+  required: true
+  affected_control_plane_surfaces:
+    - "catalog/services/finanzas-personales-backend.yaml"
+    - "solutions/finanzas-personales.yaml"
+    - "initiatives/INIT-HPT-0002-personal-finance-instrument-operations-api.yaml"
+    - "state/00-index.yaml"
+    - "state/capability-links.yaml"
+    - "state/features/phinance-sst-trust-chain.current.yaml"
+  intentionally_unaffected_repositories:
+    - "finanzas-personales"
+    - "sst-bend"
+    - "4uentes-auth"
+    - "sst-fend"
+    - "sst-4uentes-infra"
+  observed_control_plane_base: "origin/main@55e17df51898ad251f2b1eca00d4b53de184550c"
+  source_evidence:
+    - "evidence/requests/CR-SST-0216/owner-validation-and-readback-2026-08-23.md"
+    - "evidence/requests/CR-HPT-0017/owner-publication-readback-2026-08-23.md"
+    - "evidence/requests/CR-HPT-0018/owner-and-integrated-validation-2026-08-23.md"
+    - "evidence/requests/CR-HPT-0018/owner-publication-readback-2026-08-23.md"
+    - "evidence/requests/CR-HPT-0019/jira-write-readback-2026-08-23.md"
+
+risk:
+  level: "medium"
+  score: 5
+  drivers: ["CROSS_REPO_READ_MODEL", "SENSITIVE_FINANCIAL_BOUNDARY", "HISTORICAL_WORKTREE_DRIFT"]
+
+task_weight:
+  classification: "long-context-task"
+  risk_level: "medium"
+model_selection:
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "high"
+  fallback_profile: "gpt-5.4-fast-high"
+  reason: "The change is control-plane-only but reconciles several published owner lifecycles and a sensitive cross-repo trust boundary."
+subagent_deployment_plan:
+  mode: "none"
+  reason: "The authority reconciliation is sequential and proactive delegation is disabled."
+
+execution:
+  requires_human_approval: true
+  approval_status: "approved-control-plane-only"
+  control_plane_mutation_allowed: true
+  child_repo_mutation_allowed: false
+  runtime_mutation_allowed: false
+  deployment_allowed: false
+  infrastructure_changes_allowed: false
+  secret_value_changes_allowed: false
+  jira_write_allowed: false
+  branch: "agent/cr-hpt-0020-read-model-reconciliation"
+  worktree: "worktrees/CR-HPT-0020-read-model-reconciliation"
+
+atomized_execution:
+  - order: 1
+    id: "publish-and-readback-plan"
+    objective: "Merge this plan before changing stable control-plane read models."
+    validation: "The plan is reachable from refreshed origin/main and the full control-plane check passes."
+  - order: 2
+    id: "reconcile-stable-read-models"
+    objective: "Update catalog, solution, Initiative and a dedicated feature state from published evidence."
+    validation: "No claim implies deployed or production activation; stable files contain no local absolute paths."
+  - order: 3
+    id: "validate-control-plane"
+    objective: "Run identity, worktree, execution-publication, catalog, state, Initiative, owner-doc and visual-documentation gates."
+    validation: "git diff --check and npm run check pass with zero failures."
+  - order: 4
+    id: "publish-terminal-lifecycle"
+    objective: "Publish done evidence and read back the canonical merge before retiring the worktree."
+    validation: "The terminal merge is reachable from origin/main and the worktree is clean before retirement."
+
+owner_documentation:
+  required: false
+  status: "not-applicable"
+  reason: "This request changes only control-plane read models derived from already published owner documentation and evidence."
+
+execution_publication_rule:
+  rule_id: "execution-publication-and-tracker-closure-rule"
+  adoption_status: "adopted"
+  git_publication:
+    applicable: true
+    plan_merge_required: true
+    terminal_merge_required: true
+  tracker_mirror:
+    applicable: false
+    not_applicable_reason: "HPT-5 already reflects the published trust chain and this CR changes no Jira-visible lifecycle state."
+  cleanup:
+    remote_readback_required: true
+
+required_checks:
+  - "git diff --check"
+  - "npm run check"
+
+acceptance:
+  - "finanzas-personales-backend is no longer described as an unimplemented July draft."
+  - "The solution maps the browser through sst-bend and the feature-gated sst-bend-to-Phinance boundary without a direct browser-to-Phinance claim."
+  - "A dedicated feature state records the published trust chain, its validation evidence and its disabled-by-default deployment gate."
+  - "INIT-HPT-0002 lists CR-HPT-0020 and retains only genuine product, ownership and activation gaps."
+  - "No child repository, Jira issue, runtime, deployment, infrastructure or secret is changed."
+
+decision:
+  status: "approved-for-plan-publication"
+  approver: "4uentes"
+  decided_at: "2026-08-25"
+  blocker: "Publish and read back this plan before editing stable control-plane read models."
