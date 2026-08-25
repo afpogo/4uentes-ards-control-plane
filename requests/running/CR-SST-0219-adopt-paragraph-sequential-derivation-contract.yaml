@@ -41,7 +41,7 @@ control_plane_context:
   jira_project_key: "SST"
   jira_issue_type: "Tarea"
   jira_parent_issue_key: "SST-105"
-  jira_issue_key: "TODO-create-candidate"
+  jira_issue_key: "SST-120"
   jira_write_allowed: false
 
 jira_preflight:
@@ -57,7 +57,7 @@ jira_preflight:
   evidence_ref: "evidence/requests/CR-SST-0219/jira-preflight-2026-08-24.md"
 
 jira_exact_batch:
-  status: "proposed-awaiting-explicit-authorization"
+  status: "completed-authorization-consumed"
   provider: "jira"
   project_key: "SST"
   candidate_summary: "[SST][INIT-SST-0010][CR-SST-0219] Adopt paragraph-sequential derivation contract"
@@ -72,6 +72,18 @@ jira_exact_batch:
     - "Read back the transitioned issue."
   description_ref: "evidence/requests/CR-SST-0219/jira-description-draft.md"
   authorization_ref: "evidence/requests/CR-SST-0219/jira-start-batch-authorization.md"
+  result_ref: "evidence/requests/CR-SST-0219/jira-start-batch-result-2026-08-25.md"
+  authorization:
+    approved_by: "4uentes"
+    approved_at: "2026-08-25"
+    approval_text: "ok autorizo"
+    reusable: false
+  result:
+    issue_key: "SST-120"
+    issue_id: "10237"
+    final_status: "En curso"
+    resolution: null
+    readback: "passed"
   exclusions:
     - "No edits, comments, links, assignee changes, labels, deletes or writes to any other issue."
     - "No transition of SST-105 or any existing INIT-SST-0010 task."
@@ -102,9 +114,9 @@ execution_publication_rule:
     remote_readback_required: true
 
 execution_status:
-  running_publication: "pending-merge-and-readback"
-  contract_materialization: "not-started"
-  jira_start_batch: "preflight-passed-awaiting-explicit-authorization"
+  running_publication: "merged-and-read-back-pr-126"
+  contract_materialization: "implemented-and-automated-checks-passed-pending-manual-qa-and-terminal-publication"
+  jira_start_batch: "passed-sst-120-en-curso-readback-authorization-consumed"
   manual_qa_last_review: "required-pending"
   owner_repo_execution: "not-authorized"
 
@@ -132,3 +144,7 @@ evidence_refs:
   - "evidence/requests/CR-SST-0219/jira-description-draft.md"
   - "evidence/requests/CR-SST-0219/jira-preflight-2026-08-24.md"
   - "evidence/requests/CR-SST-0219/jira-start-batch-authorization.md"
+  - "evidence/requests/CR-SST-0219/jira-start-batch-result-2026-08-25.md"
+  - "evidence/requests/CR-SST-0219/paragraph-sequential-derivation-contract-v1.yaml"
+  - "docs/projects/sst/contrato-derivacion-secuencial-por-parrafos-v1.md"
+  - "evidence/requests/CR-SST-0219/contract-validation-2026-08-25.md"

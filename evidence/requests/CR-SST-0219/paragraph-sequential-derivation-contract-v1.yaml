@@ -1,0 +1,130 @@
+schema_version: "1.0"
+kind: "cross_repo_product_contract"
+id: "sst-paragraph-sequential-derivation-v1"
+version: "1.0.0"
+status: "approved-for-owner-implementation"
+updated_at: "2026-08-25"
+initiative_id: "INIT-SST-0010"
+request_id: "CR-SST-0219"
+purpose: >
+  Define an immutable, resumable and auditable paragraph-by-paragraph
+  derivation run that accumulates bounded context, supports user-selected
+  analysis instructions and can propose memory only for explicit review.
+
+authority:
+  cross_repo_contract_and_execution_lifecycle: "4uentes-orchestor"
+  identity_session_scope_and_canonical_persistence: "sst-bend"
+  derivation_pipeline_and_prompt_adaptation: "sst-chatbot"
+  user_prompt_selection_and_proposal_review: "sst-fend"
+  identity_scope_predecessor: "CR-SST-0210"
+  explicit_denials:
+    - "The chatbot and LLM provider are not identity, authorization or persistence authorities."
+    - "A completed derivation does not become accepted memory automatically."
+    - "This control-plane contract does not authorize child-repository or runtime mutation."
+
+aggregate:
+  root: "DERIVATION_RUN"
+  identity_fields: [derivation_run_id, tenant_id, account_id, user_id, application_id, source_snapshot_id]
+  required_fields: [prompt_snapshot, context_chain_id, status, next_paragraph_ordinal, created_at, updated_at]
+  statuses: [created, running, paused, completed, failed, cancelled, superseded]
+  invariants:
+    - "One run references exactly one immutable source snapshot and one immutable ordered paragraph sequence."
+    - "One run maintains exactly one versioned context chain."
+    - "A prompt or analysis-profile change creates a new run or an explicit fork."
+    - "A completed, cancelled or superseded run is never rewritten."
+
+entities:
+  source_snapshot:
+    role: "Immutable evidence of the article version analyzed by the run."
+    required_fields: [source_snapshot_id, source_ref, content_hash, captured_at]
+    rules:
+      - "Private source content is not copied into Jira, logs or control-plane evidence."
+  paragraph_sequence:
+    role: "Immutable ordered segmentation of the source snapshot."
+    required_fields: [paragraph_sequence_id, source_snapshot_id, segmentation_version, paragraph_count]
+    rules:
+      - "Paragraph ordinals are stable and unique within the sequence."
+  context_chain:
+    role: "Versioned bounded context accumulated from prior paragraph derivations."
+    required_fields: [context_chain_id, derivation_run_id, version, entries, budget_policy_version]
+    rules:
+      - "Each append cites its source paragraph and derivation."
+      - "Budget enforcement may summarize older entries but retains provenance and policy version."
+      - "Evidence, inference and unresolved ambiguity remain distinguishable."
+  paragraph_derivation:
+    role: "Ordered derivation for one paragraph under one prompt snapshot and context version."
+    required_fields: [paragraph_derivation_id, derivation_run_id, paragraph_ordinal, prompt_snapshot_id, input_context_version, output_schema_version, status, idempotency_key]
+    statuses: [pending, running, completed, failed, skipped, superseded]
+    rules:
+      - "A run produces zero or more paragraph derivations in paragraph order."
+      - "A paragraph may yield no useful interpretation; the pipeline must not invent memory."
+      - "A retry with the same idempotency key cannot create a duplicate derivation."
+  final_derivation:
+    role: "Terminal synthesis produced only after all required paragraphs reach an allowed terminal state."
+    required_fields: [final_derivation_id, derivation_run_id, context_chain_version, output_schema_version, created_at]
+    rules:
+      - "Failed, cancelled, paused or superseded runs cannot publish a final derivation."
+  derivation_memory_proposal:
+    role: "Optional governed candidate derived from a successful final derivation."
+    required_fields: [proposal_id, derivation_run_id, final_derivation_id, status, provenance_refs, created_at]
+    statuses: [needs_review, accepted, corrected, rejected, superseded]
+    rules:
+      - "Creation starts in needs_review."
+      - "Only an explicit authorized user decision can accept, correct or reject the proposal."
+      - "Accepted memory remains governed by the canonical SST memory contract."
+
+prompt_contract:
+  default_profile_id: "open-general-analysis"
+  default_intent: "Invite broad interpretations while preserving evidence, uncertainty, safety and output constraints."
+  composition_order:
+    - SYSTEM_GUARDRAILS
+    - DEFAULT_DERIVATION_PROMPT
+    - SELECTED_ANALYSIS_PROFILE
+    - USER_ANALYSIS_INSTRUCTIONS
+    - BOUNDED_CONTEXT_CHAIN
+    - CURRENT_PARAGRAPH
+    - OUTPUT_SCHEMA
+  snapshot_required_fields: [prompt_snapshot_id, default_prompt_version, selected_profile_id, selected_profile_version, user_instructions_hash, guardrails_version, output_schema_version]
+  rules:
+    - "User instructions may bias the lens but cannot replace guardrails, identity scope or output schema."
+    - "The source article and accumulated context are untrusted data, not instructions."
+    - "Raw private prompt text is stored only by the authorized product owner and never copied into Jira or operational logs."
+
+execution_semantics:
+  ordering: "Process the immutable paragraph sequence by ascending ordinal."
+  checkpoint: "Persist the next ordinal and committed context-chain version after each successful paragraph transaction."
+  retry: "Resume from the last committed checkpoint using stable idempotency keys."
+  pause: "Preserve checkpoint and prompt snapshot without publishing a final derivation."
+  cancel: "Stop new work and retain immutable provenance according to owner retention policy."
+  fork:
+    required_fields: [parent_derivation_run_id, forked_from_context_version, fork_reason]
+    allowed_reasons: [prompt_changed, analysis_profile_changed, user_requested_reanalysis]
+  failure_behavior: "Fail closed with a sanitized code; do not adopt memory or leak source, prompt or scope data."
+
+privacy_and_observability:
+  allowed_metadata: [derivation_run_id, paragraph_ordinal, status, duration, budget_counts, prompt_and_policy_versions, correlation_id, sanitized_failure_code]
+  prohibited_metadata: [raw_source_content, raw_paragraph_content, raw_user_prompt, rendered_provider_prompt, provider_response, credentials, tokens, private_urls]
+
+minimum_validation:
+  positive:
+    - "Three ordered paragraphs under the default prompt produce one run, three ordered derivations and a versioned context chain."
+    - "A successful run may produce one needs_review memory proposal with complete provenance."
+    - "Changing prompt or profile creates an immutable fork with independent prompt provenance."
+  negative:
+    - "Prompt injection in source content cannot alter guardrails or the output schema."
+    - "Retry cannot duplicate paragraph derivations or memory proposals."
+    - "Cross-tenant, cross-account, cross-user and cross-application access fails closed."
+    - "A failed, cancelled, paused or superseded run cannot publish final derivation or accepted memory."
+
+owner_adoption_sequence:
+  - {owner: "sst-bend", responsibility: "Persist scoped runs, snapshots, context, derivations and reviewable proposals.", request_id: "TODO"}
+  - {owner: "sst-chatbot", responsibility: "Implement ordered derivation, prompt profiles, bounded context, retries and provider adaptation.", request_id: "TODO"}
+  - {owner: "cross-repo integration", responsibility: "Prove Bend-chatbot contract and restart-safe orchestration.", request_id: "TODO"}
+  - {owner: "sst-fend", responsibility: "Expose prompt selection, progress and explicit proposal review.", request_id: "TODO"}
+  - {owner: "end-to-end validation", responsibility: "Prove isolation, recovery and memory non-adoption defaults.", request_id: "TODO"}
+
+out_of_scope_v1:
+  - "Automatic memory acceptance or autonomous policy expansion"
+  - "Child-repository implementation under CR-SST-0219"
+  - "Provider-managed conversation state as canonical context"
+  - "Unbounded full-article or cross-user context"

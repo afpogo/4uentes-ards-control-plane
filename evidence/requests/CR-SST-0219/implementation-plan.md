@@ -97,7 +97,7 @@ El cierre requiere QA manual final y E2E autenticado.
   `PARAGRAPH_SEQUENCE` inmutable.
 - Mantiene una sola `CONTEXT_CHAIN` versionada.
 - Produce cero o más `PARAGRAPH_DERIVATION`, ordenadas por
-  `paragraph_index`.
+  `paragraph_ordinal`.
 - Una corrida completada puede producir una `FINAL_DERIVATION`.
 - La finalización puede entregar una `DERIVATION_MEMORY_PROPOSAL` en
   `needs_review`.

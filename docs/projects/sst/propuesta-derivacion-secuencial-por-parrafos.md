@@ -2,6 +2,12 @@
 
 Fecha observada: 2026-08-22.
 
+> Estado posterior (2026-08-25): este documento queda como antecedente
+> historico. El contrato vigente aprobado por `CR-SST-0219` se explica en
+> [`contrato-derivacion-secuencial-por-parrafos-v1.md`](contrato-derivacion-secuencial-por-parrafos-v1.md)
+> y su autoridad machine-readable es
+> [`paragraph-sequential-derivation-contract-v1.yaml`](../../../evidence/requests/CR-SST-0219/paragraph-sequential-derivation-contract-v1.yaml).
+
 Este documento explica cÃ³mo recuperar la intenciÃ³n de `CR-SST-0027` dentro de
 `INIT-SST-0010`, respetando la correcciÃ³n conceptual de `CR-SST-0030`.
 
