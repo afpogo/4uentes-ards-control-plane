@@ -9,10 +9,16 @@ services:
   infrastructure: []
 relationships:
   - from: sst-fend
+    to: sst-bend
+    type: uses-protected-phinance-facade
+  - from: 4uentes-auth
+    to: sst-bend
+    type: issues-phinance-service-token-for-exact-grant
+  - from: sst-bend
     to: finanzas-personales-backend
-    type: consumes-api-through-sst-authenticated-boundary-contract-pending
+    type: invokes-feature-gated-api-with-service-token-and-trusted-principal
 observed_deployment_targets:
-  - local-todo
+  - local-ephemeral-integrated-qa
 related_solutions:
   - sst
 tracking:
@@ -24,4 +30,5 @@ notes:
   - sst-fend is the external frontend consumer; no second HPT frontend runtime is planned.
   - The repository root is a workspace, not a third runtime service or control-plane.
   - Proposed Python, OCR and AI runtimes are not cataloged independently without implementation evidence.
-  - Phinance-API must isolate data by validated SST account scope plus stable subject; the internal handoff mechanism remains contract-pending.
+  - Phinance-API isolates data by validated SST account scope plus stable subject through the owner-published trust chain.
+  - The SST-to-Phinance proxy is published behind PHINANCE_PROXY_ENABLED=false by default; no persistent environment activation is claimed.

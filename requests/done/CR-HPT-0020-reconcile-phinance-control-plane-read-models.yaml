@@ -1,0 +1,74 @@
+schema_version: "1.0"
+phase: 4
+id: "CR-HPT-0020"
+title: "Reconcile the published SST-to-Phinance control-plane read models"
+status: "done"
+source_request: "requests/inbox/CR-HPT-0020-reconcile-phinance-control-plane-read-models.yaml"
+planned_request: "requests/planned/CR-HPT-0020-reconcile-phinance-control-plane-read-models.yaml"
+started_at: "2026-08-25"
+closed_at: "2026-08-25"
+requester: "4uentes"
+
+summary: >
+  Reconciled the stable Phinance catalog, solution, Initiative, capability and
+  feature-state views with the already published fail-closed SST-to-Phinance
+  trust chain, without activating an environment or mutating any child repo.
+
+execution:
+  control_plane_mutation_performed: true
+  child_repo_mutation_performed: false
+  jira_write_performed: false
+  runtime_mutation_performed: false
+  deployment_performed: false
+  infrastructure_changes_performed: false
+  secret_value_changes_performed: false
+
+read_model_result:
+  backend_catalog_status: "active"
+  solution_consumer: "sst-bend"
+  trust_chain_state: "validated-local"
+  persistent_activation: "not-authorized"
+  feature_flag_default: "PHINANCE_PROXY_ENABLED=false"
+  source_request_ids: ["CR-SST-0216", "CR-HPT-0017", "CR-HPT-0018", "CR-HPT-0019"]
+
+validation:
+  status: "passed"
+  required_checks:
+    - "git diff --check"
+    - "npm run check"
+  control_plane_check: "passed-with-zero-failures"
+  evidence_refs:
+    - "evidence/requests/CR-HPT-0020/identity-worktree-and-source-preflight-2026-08-25.md"
+    - "evidence/requests/CR-HPT-0020/read-model-reconciliation-2026-08-25.md"
+    - "evidence/requests/CR-HPT-0020/validation-results-2026-08-25.md"
+
+owner_documentation:
+  required: false
+  status: "not-applicable"
+  reason: "The request only reconciled control-plane read models from already published owner evidence."
+
+execution_publication_rule:
+  rule_id: "execution-publication-and-tracker-closure-rule"
+  adoption_status: "adopted"
+  git_publication:
+    applicable: true
+    plan_merge_required: true
+    terminal_merge_required: true
+  tracker_mirror:
+    applicable: false
+    not_applicable_reason: "HPT-5 already reflects the published trust chain and this CR changes no Jira-visible lifecycle state."
+  cleanup:
+    remote_readback_required: true
+  trial_result:
+    status: "passed"
+    plan_publication: "merged-and-read-back"
+    implementation_publication: "merged-and-read-back"
+    tracker_reconciliation: "not-applicable"
+    terminal_publication_contract: "merge-and-readback-before-cleanup"
+    cleanup_gate: "remote-readback-required"
+
+decision:
+  status: "closed-control-plane-read-models-reconciled"
+  approver: "4uentes"
+  blocker: "none"
+  next_gate: "A separate approved request is required for persistent environment activation or further child-repo mutation."
