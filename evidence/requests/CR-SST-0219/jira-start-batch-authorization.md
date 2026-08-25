@@ -1,6 +1,6 @@
 # CR-SST-0219 - Autorización Del Lote Jira De Inicio
 
-Estado: `proposed-awaiting-explicit-authorization`.
+Estado: `approved-and-consumed`.
 
 ## Lote Exacto
 
@@ -31,6 +31,10 @@ al completar las dos escrituras o ante el primer fallo parcial.
 
 ## Autorización
 
-- Estado: `pending`.
-- Aprobador esperado: `4uentes`.
-- Texto requerido: autorización explícita del lote enumerado.
+- Estado: `consumed`.
+- Aprobador: `4uentes`.
+- Fecha: `2026-08-25`.
+- Texto: `ok autorizo`.
+- Resultado: `SST-120` fue creado, leído, movido una vez a `En curso` y leído nuevamente.
+- Evidencia: `jira-start-batch-result-2026-08-25.md`.
+- Autorización vigente para nuevas escrituras: `false`.

@@ -21,6 +21,7 @@ Incluye:
 - Cluster dependency map: [../../cross-repo/sst-cluster-dependency-map.md](../../cross-repo/sst-cluster-dependency-map.md)
 - Promotion path allowlist: [../../cross-repo/release-allowlists.md](../../cross-repo/release-allowlists.md)
 - Chatbot handoff: [../../cross-repo/sst-chatbot-orchestrator-handoff.md](../../cross-repo/sst-chatbot-orchestrator-handoff.md)
+- Contrato de derivacion secuencial por parrafos V1: [contrato-derivacion-secuencial-por-parrafos-v1.md](contrato-derivacion-secuencial-por-parrafos-v1.md)
 
 ## Documentos Por App
 
