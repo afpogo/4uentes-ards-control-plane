@@ -1,0 +1,51 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-HPT-0020"
+title: "Reconcile the published SST-to-Phinance control-plane read models"
+status: "inbox"
+created_at: "2026-08-25"
+requester: "4uentes"
+business_context: >
+  CR-HPT-0018 published and validated the feature-gated SST-to-Phinance trust
+  chain, and CR-HPT-0019 reconciled its Jira mirror. The stable control-plane
+  catalog, solution and feature-state views still describe the backend as a
+  July draft, the SST boundary as contract-pending and the deployment target
+  as local-todo.
+requested_change: >
+  Reconcile the stable ARDS/SDD read models with the already published owner
+  contracts and closure evidence without activating an environment, changing
+  runtime behavior or expanding the approved trust boundary.
+expected_outcome: >
+  Catalog, solution, Initiative and feature state consistently describe the
+  published fail-closed SST-to-Phinance integration, preserve owner authority
+  and keep environment activation as a separately governed lifecycle.
+initial_scope:
+  initiative_id: "INIT-HPT-0002"
+  jira_epic_key: "HPT-5"
+  solution: "finanzas-personales"
+  control_repository: "4uentes-orchestor"
+  expected_control_plane_surfaces:
+    - "catalog/services/finanzas-personales-backend.yaml"
+    - "solutions/finanzas-personales.yaml"
+    - "initiatives/INIT-HPT-0002-personal-finance-instrument-operations-api.yaml"
+    - "state/features/"
+  source_request_ids:
+    - "CR-SST-0216"
+    - "CR-HPT-0017"
+    - "CR-HPT-0018"
+    - "CR-HPT-0019"
+constraints:
+  - "This reservation does not authorize child-repository, Jira, runtime, deployment, infrastructure or secret writes."
+  - "Do not represent ready-for-consumer publication as environment or production activation."
+  - "Do not replace owner ARDS/SDD documentation with control-plane evidence."
+  - "Keep HPT-5 as the operational mirror of INIT-HPT-0002; Jira remains read-only until a separate exact batch is authorized."
+  - "Publish and merge this minimal inbox reservation before creating the execution-planning worktree."
+requested_next_step: >
+  Publish this minimal reservation to the canonical ref, refresh origin/main,
+  then create one clean worktree to plan and execute the control-plane-only
+  reconciliation with full validation and publication readback.
+decision:
+  status: "accepted-for-reservation"
+  approver: "4uentes"
+  approved_at: "2026-08-25"
+  approval_text: "ok revisemos si fuimos avanzando en otros worktrees, avanza con CR-HPT-0020 aislemos el desarrollo segun policies"
