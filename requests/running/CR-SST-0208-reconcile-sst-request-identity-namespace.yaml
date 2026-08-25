@@ -66,6 +66,10 @@ execution_status:
   retirement_batch_04_preflight: "four-terminal-clean-integrated-paths-ready-pending-exact-user-confirmation"
   retirement_batch_04_legacy_mapping: "cr-sst-0184-control-plane-path-maps-to-cr-sst-0199-branch-pr33-and-done-lifecycle"
   retirement_batch_04_branch_disposition: "all-branches-refs-and-commits-explicitly-retained"
+  retirement_batch_04_execution: "complete-four-worktrees-removed-post-readback-confirmed"
+  retirement_batch_04_effective_base: "origin-main-bb199518bc7d5d48290da8760b34667336eaabed"
+  post_batch_04_snapshot: "32-registered-worktrees-25-clean-integrated-5-clean-nonancestor-1-dirty-integrated-1-dirty-nonancestor"
+  concurrent_active_worktrees: "cr-sst-0218-and-cr-sst-0219-running-branches-preserved-out-of-scope"
   newly_observed_dirty_tree: "cr-sst-0207-integrated-matrix-quarantined-one-untracked-http-qa-script"
   system_feature_studies_readback: "head-now-integrated-but-deferred-after-identity-and-branch-change"
   jira_retirement_mirror: "not-applicable-no-primary-issue-jira-write-disabled"
@@ -102,6 +106,7 @@ evidence_refs:
   - "evidence/requests/CR-SST-0208/worktree-retirement-batch-03-preflight-2026-08-24.md"
   - "evidence/requests/CR-SST-0208/worktree-retirement-batch-03-readback-2026-08-24.md"
   - "evidence/requests/CR-SST-0208/worktree-retirement-batch-04-preflight-2026-08-24.md"
+  - "evidence/requests/CR-SST-0208/worktree-retirement-batch-04-readback-2026-08-24.md"
 decision:
   status: "running-local-normalization-complete-publication-pending"
   approver: "4uentes"
