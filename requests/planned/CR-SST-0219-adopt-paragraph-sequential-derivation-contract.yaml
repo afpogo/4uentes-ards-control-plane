@@ -55,11 +55,11 @@ execution:
   deployment_allowed: false
   production_data_allowed: false
   jira_write_allowed: false
-  next_external_gate: "Plan publication and canonical readback must precede child-repo or Jira mutation."
+  next_external_gate: "The running lifecycle must be published and read back before contract implementation or Jira mutation."
 
-execution_publication_plan:
-  canonical_policy_id: "execution-publication-and-tracker-closure-policy"
-  activation_gate: "Activate the local enforcement marker when the approved running lifecycle is created."
+execution_publication_rule:
+  rule_id: "execution-publication-and-tracker-closure-rule"
+  adoption_status: "adopted"
   git_publication:
     applicable: true
     plan_merge_required: true

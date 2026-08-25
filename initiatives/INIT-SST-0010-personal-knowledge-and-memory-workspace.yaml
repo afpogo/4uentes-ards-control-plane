@@ -44,6 +44,8 @@ source_evidence_refs:
   - "evidence/requests/CR-SST-0194/final-readback-2026-08-24.md"
   - "evidence/requests/CR-SST-0194/jira-sst-108-closure-batch-2026-08-24.md"
   - "evidence/requests/CR-SST-0219/implementation-plan.md"
+  - "evidence/requests/CR-SST-0219/jira-preflight-2026-08-24.md"
+  - "evidence/requests/CR-SST-0219/jira-start-batch-authorization.md"
 model_refs:
   - "specs/initiatives/initiative-model.yaml"
   - "docs/requests/initiative-model.md"
@@ -133,7 +135,7 @@ identifier_reconciliation:
     - "evidence/initiatives/INIT-SST-0010/namespace-and-publication-preflight-2026-08-23.md"
     - "evidence/requests/CR-SST-0208/canonicalization-decision-2026-08-22.md"
 paragraph_derivation_adoption:
-  status: "contract-planned"
+  status: "contract-running-publication-pending"
   contract_request_id: "CR-SST-0219"
   feature_state_id: "paragraph-sequential-derivation"
   prior_candidate_id: "CR-SST-TODO-PARA-CONTRACT"
@@ -141,9 +143,9 @@ paragraph_derivation_adoption:
     CR-SST-0218 was rejected because a live remote branch already reserves it
     for retention terminal-event work. Git canonical and remote searches found
     no CR-SST-0219 reservation, so the control-plane lifecycle reserves it.
-  jira_status: "blocked-until-oauth-reconnect-jql-preflight-and-exact-authorization"
-  owner_execution_status: "not-authorized"
-  next_gate: "merge and read back the CR-SST-0219 planned lifecycle"
+  jira_status: "preflight-passed-awaiting-running-publication-and-exact-authorization"
+  owner_execution_status: "control-plane-only-approved; child-owner-execution-not-authorized"
+  next_gate: "merge and read back the CR-SST-0219 running lifecycle"
 relationships:
   depends_on:
     - {initiative_id: "INIT-SST-0007", role: "authenticated realtime chat and internal chatbot runtime"}
@@ -194,19 +196,19 @@ progress:
     - "CR-SST-0193"
     - "CR-SST-0210"
     - "CR-SST-0194"
-  active_requests: []
+  active_requests:
+    - "CR-SST-0219"
   quarantined_request_artifacts:
     - "CR-SST-0202 local memory reconciliation artifacts collide with Jira SST-113"
   planned_requests:
-    - "CR-SST-0219"
     - "CR-SST-0195"
     - "CR-SST-0196"
     - "CR-SST-0197"
     - "CR-SST-0198"
   next_recommended_request: >
-    Merge and read back the CR-SST-0219 paragraph-sequential derivation
-    contract plan. Then obtain separate approval for contract implementation
-    and for the exact Jira mirror batch after OAuth/JQL preflight.
+    Merge and read back the CR-SST-0219 running lifecycle. Then obtain exact
+    authorization for the prepared Jira create-and-start batch before
+    materializing the control-plane contract.
   current_runtime_status: >
     CR-SST-0193 canonical persistence and API are implemented, merged and
     validated in local/dev. CR-SST-0210 supplies the merged tenant,
@@ -214,8 +216,9 @@ progress:
     normal authenticated identity path passed and CR-SST-0193 is closed.
     CR-SST-0194 Auth, Bend and chatbot owner contracts are merged; its signed
     integrated smoke, proposal/recall readback, Jira closure and terminal
-    control-plane publication passed. Paragraph-sequential derivation remains
-    planned and has no owner-runtime implementation yet.
+    control-plane publication passed. Paragraph-sequential derivation has an
+    approved control-plane execution gate pending running publication and has
+    no owner-runtime implementation yet.
   manual_qa_status: >
     Contract walkthrough, focused functional API QA, normal identity-path QA
     and conversational proposal/recall QA are complete for the published
