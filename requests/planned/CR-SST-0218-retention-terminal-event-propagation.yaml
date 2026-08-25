@@ -158,14 +158,21 @@ proposed_jira_batch:
   proposed_operations: ["create exactly one candidate if no compatible mirror exists", "transition only that issue to En curso"]
   forbidden_operations: ["comments", "links", "assignee changes", "labels", "edits to any other issue"]
 
-execution_publication_plan:
-  canonical_policy_id: "execution-publication-and-tracker-closure-policy"
-  activation_gate: "Add the executable execution_publication_rule marker when the separately authorized running lifecycle is published."
-  plan_merge_required: true
-  owner_merge_and_readback_required: true
-  tracker_exact_batch_and_readback_required: true
-  terminal_merge_and_readback_required: true
-  cleanup_after_terminal_readback_only: true
+execution_publication_rule:
+  rule_id: "execution-publication-and-tracker-closure-rule"
+  adoption_status: "adopted"
+  git_publication:
+    applicable: true
+    plan_merge_required: true
+    terminal_merge_required: true
+  tracker_mirror:
+    applicable: true
+    provider: "jira"
+    project_key: "SST"
+    parent_issue_key: "SST-113"
+    issue_key: null
+  cleanup:
+    remote_readback_required: true
 
 rollback: >
   Before execution, abandon the plan without child mutation. During owner

@@ -1,0 +1,157 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-SST-0218"
+title: "Propagate chat retention terminal events to active sessions"
+status: "running"
+source_request: "requests/inbox/CR-SST-0218-retention-terminal-event-propagation.yaml"
+planned_request: "requests/planned/CR-SST-0218-retention-terminal-event-propagation.yaml"
+created_at: "2026-08-24"
+started_at: "2026-08-24"
+requester: "4uentes"
+
+control_plane_context:
+  initiative_id: "INIT-SST-0007"
+  parent_request_id: "CR-SST-0202"
+  source_qa_request_id: "CR-SST-0207"
+  plan_pr: 123
+  plan_merge_commit: "e7f0523db8de3a6cbe2469e345ab765694f9ec3b"
+  plan_readback_main: "bb628ea3e4817d3f17fa49d62abffd55498de678"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  jira_issue_key: null
+  jira_parent_issue_key: "SST-113"
+  jira_start_batch_status: "authorized-pending-running-readback-and-oauth-preflight"
+
+risk:
+  level: "high"
+  score: 8
+  drivers: ["CROSS_REPO_CONTRACT", "DESTRUCTIVE_CHAT_LIFECYCLE", "ACTIVE_TURN_RACE", "PRIVACY"]
+task_weight: {classification: "complex-high-risk-task", risk_level: "high"}
+model_selection:
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5"
+  reason: "Execution changes a destructive cross-repo realtime contract and must preserve privacy, ownership and no-resurrection guarantees."
+subagent_deployment_plan:
+  mode: "none"
+  reason: "Proactive delegation is disabled and the primary agent retains the producer-consumer contract decision."
+
+execution:
+  approval_status: "approved-running-publication-and-scoped-execution"
+  approval_source: "Operator instruction on 2026-08-24: 'Ok autorizo, avancemos con el proximo gate'."
+  activation_gate: "This running lifecycle must be merged and read back before any child-repository or Jira write."
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets: ["sst-bend", "sst-fend"]
+  owner_publication_allowed: true
+  owner_merge_order: ["sst-bend producer", "sst-fend consumer"]
+  dependency_changes_allowed: false
+  database_schema_changes_allowed: false
+  direct_datastore_mutation_allowed: false
+  secret_mutation_allowed: false
+  feature_flag_changes_allowed: false
+  direct_infra_or_gitops_mutation_allowed: false
+  production_mutation_allowed: false
+  development_publication_allowed: true
+  development_publication_mode: "Existing owner CI and GitOps automation triggered by approved develop merges only."
+  jira_write_allowed: "After running merge/readback and a fresh OAuth, duplicate and hierarchy preflight: create at most one enumerated Subtask under SST-113 and transition only that issue to En curso."
+
+contract:
+  server_event: "chat:conversation:terminated"
+  payload_fields: ["conversationId", "reason"]
+  reason_values: ["temporary_finished", "saved_deleted"]
+  delivery_scope: "authorized connected sockets already joined to conversation:<conversationId>"
+  transient: true
+  post_delete_replay: false
+  mutation_order: ["validate ownership and state", "fence active turns", "delete authoritative state", "broadcast terminal event", "return HTTP 204"]
+  negative_rule: "Validation, ownership, not-found or state-conflict responses emit no event."
+  client_rule: "Reset only a matching active conversation; duplicate delivery and an already-reset initiator are idempotent."
+  privacy_rule: "No content, delta, token, cookie, credential, principal or private URL in the event, logs or evidence."
+
+execution_sequence:
+  - "Publish and read back this running lifecycle."
+  - "Recover Jira OAuth, rerun duplicate/hierarchy preflight and execute only the authorized start batch."
+  - "Refresh canonical Bend develop, create one isolated owner worktree, implement producer/fencing/docs/tests, run full check and publish owner PR."
+  - "Merge/read back Bend before opening the Fend consumer worktree from canonical develop."
+  - "Implement matching/idempotent Fend convergence plus owner docs/tests, run full check and publish owner PR."
+  - "Merge/read back Fend and observe only the existing automatic development publication path."
+  - "Rerun the CR-SST-0207 terminal/race rows on localhost with synthetic data."
+  - "Publish done evidence, reconcile Jira through a separately authorized terminal batch, read back and then clean worktrees."
+
+owner_documentation:
+  required: true
+  status: "authorized-pending-owner-implementation"
+  owner_repos:
+    sst-bend:
+      role: "producer and retention authority"
+      planned_surfaces:
+        - "specs/api/realtime-chat-v1.yaml"
+        - "specs/api/chat-retention-v1.yaml"
+        - "specs/capabilities/outbound/chat-retention-v1.yaml"
+        - "docs/architecture/realtime-chat-v1.md"
+        - "docs/api/chat-retention.md"
+        - "docs/capabilities/outbound/chat-retention-v1.md"
+    sst-fend:
+      role: "consumer and visible-convergence authority"
+      planned_surfaces:
+        - "specs/realtime-chat-v1.yml"
+        - "specs/integrations/sst-chat-retention-v1.yaml"
+        - "docs/chat.md"
+        - "docs/privacy/chat-retention.md"
+        - "docs/tasks/2026-08-24-cr-sst-0218-terminal-event.md"
+
+jira_start_batch:
+  authorization_status: "authorized-pending-preflight"
+  provider: "jira"
+  project: "SST"
+  candidate_count: 1
+  candidate:
+    request_id: "CR-SST-0218"
+    issue_type: "Subtask"
+    parent: "SST-113"
+    expected_parent_type: "Task"
+    expected_epic: "SST-86"
+    summary: "[CR-SST-0218] Propagar eventos terminales de retencion a sesiones activas"
+    expected_status_after_batch: "En curso"
+  allowed_operations: ["create exactly one candidate only if no compatible mirror exists", "transition only the resolved issue to En curso"]
+  forbidden_operations: ["comments", "links", "assignee changes", "labels", "edits or transitions on any other issue"]
+  window: "One start batch after running merge/readback on 2026-08-24; consumed by successful readback or expired before any later retry that would broaden operations."
+  blocker: "Atlassian OAuth refresh is currently invalid; no write may be attempted until read-only preflight succeeds."
+
+execution_publication_rule:
+  rule_id: "execution-publication-and-tracker-closure-rule"
+  adoption_status: "adopted"
+  git_publication:
+    applicable: true
+    plan_merge_required: true
+    terminal_merge_required: true
+  tracker_mirror:
+    applicable: true
+    provider: "jira"
+    project_key: "SST"
+    parent_issue_key: "SST-113"
+    issue_key: null
+  cleanup:
+    remote_readback_required: true
+
+validation:
+  - "sst-bend npm run check and focused realtime/retention race tests."
+  - "sst-fend npm run check and matching/non-matching/duplicate terminal-event tests."
+  - "CR-SST-0207 localhost HTTP and realtime terminal rows."
+  - "4uentes-orchestor npm run check after owner publication and before closure."
+  - "Owner documentation validator and secret-safe diff review."
+
+decision:
+  status: "approved-running-publication-and-scoped-execution"
+  approver: "4uentes"
+  decided_at: "2026-08-24"
+  next_gate: "Merge/read back this running lifecycle; then execute Jira preflight/start batch and Bend owner implementation in that order."
+
+evidence_refs:
+  - "evidence/requests/CR-SST-0207/integrated-matrix-checkpoint-2026-08-24.md"
+  - "evidence/requests/CR-SST-0218/implementation-plan-2026-08-24.md"
+  - "evidence/requests/CR-SST-0218/execution-start-2026-08-24.md"
+  - "evidence/requests/CR-SST-0218/jira-start-batch-authorization-2026-08-24.md"
+
