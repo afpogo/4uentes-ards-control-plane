@@ -1,0 +1,134 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-SST-0219"
+title: "Adopt the paragraph-sequential derivation contract"
+status: "running"
+source_request: "requests/inbox/CR-SST-0219-adopt-paragraph-sequential-derivation-contract.yaml"
+planned_request: "requests/planned/CR-SST-0219-adopt-paragraph-sequential-derivation-contract.yaml"
+created_at: "2026-08-24"
+started_at: "2026-08-24"
+requester: "4uentes"
+summary: >
+  Execute the control-plane-only contract gate for paragraph-sequential
+  derivation after the planned lifecycle was merged and read back.
+depends_on: ["CR-SST-0192", "CR-SST-0193", "CR-SST-0194", "CR-SST-0210"]
+
+authorization:
+  status: "approved-for-control-plane-contract-execution"
+  approved_by: "4uentes"
+  approved_at: "2026-08-24"
+  approval_text: "listo vayamos por el proximmo orden"
+  allowed:
+    - "Publish the CR-SST-0219 running lifecycle."
+    - "Implement the paragraph-sequential derivation contract in control-plane artifacts after running publication readback."
+    - "Prepare a sanitized exact Jira batch for separate authorization."
+  exclusions:
+    - "No child-repository, runtime, deployment, infrastructure or production-data mutation."
+    - "No Jira write before a separately enumerated exact-batch approval."
+
+plan_publication:
+  status: "merged-and-read-back"
+  pull_request: 122
+  head_commit: "6d05f6087aa12cc4e0d32e6f2cfcba308e85420b"
+  merge_commit: "da609cd29830c4c5dd371ed7ef39dec78a567169"
+  canonical_branch: "main"
+
+control_plane_context:
+  initiative_id: "INIT-SST-0010"
+  feature_state_id: "paragraph-sequential-derivation"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  jira_project_key: "SST"
+  jira_issue_type: "Tarea"
+  jira_parent_issue_key: "SST-105"
+  jira_issue_key: "TODO-create-candidate"
+  jira_write_allowed: false
+
+jira_preflight:
+  status: "passed-read-only"
+  observed_at: "2026-08-24"
+  duplicate_jql_result: "zero issues matching CR-SST-0219 in summary or description"
+  epic: "SST-105"
+  epic_type: "Epic"
+  epic_status: "Tareas por hacer"
+  target_issue_type: "Tarea"
+  target_issue_type_id: "10008"
+  required_fields: ["issuetype", "project", "reporter-default", "summary"]
+  evidence_ref: "evidence/requests/CR-SST-0219/jira-preflight-2026-08-24.md"
+
+jira_exact_batch:
+  status: "proposed-awaiting-explicit-authorization"
+  provider: "jira"
+  project_key: "SST"
+  candidate_summary: "[SST][INIT-SST-0010][CR-SST-0219] Adopt paragraph-sequential derivation contract"
+  candidate_issue_type: "Tarea"
+  candidate_parent: "SST-105"
+  initial_status_expected: "Tareas por hacer"
+  target_status_after_start: "En curso"
+  operations:
+    - "Create exactly one Tarea using the fixed sanitized description."
+    - "Read back key, summary, description, type, parent and status."
+    - "Apply exactly one available transition to En curso."
+    - "Read back the transitioned issue."
+  description_ref: "evidence/requests/CR-SST-0219/jira-description-draft.md"
+  authorization_ref: "evidence/requests/CR-SST-0219/jira-start-batch-authorization.md"
+  exclusions:
+    - "No edits, comments, links, assignee changes, labels, deletes or writes to any other issue."
+    - "No transition of SST-105 or any existing INIT-SST-0010 task."
+
+execution:
+  control_plane_mutation_allowed: true
+  child_repo_mutation_allowed: false
+  core_repo_mutation_allowed: false
+  runtime_mutation_allowed: false
+  deployment_allowed: false
+  production_data_allowed: false
+  jira_write_allowed: false
+  contract_implementation_gate: "Only after this running lifecycle is merged and read back."
+
+execution_publication_rule:
+  rule_id: "execution-publication-and-tracker-closure-rule"
+  adoption_status: "adopted"
+  git_publication:
+    applicable: true
+    plan_merge_required: true
+    terminal_merge_required: true
+  tracker_mirror:
+    applicable: true
+    provider: "jira"
+    project_key: "SST"
+    epic_key: "SST-105"
+  cleanup:
+    remote_readback_required: true
+
+execution_status:
+  running_publication: "pending-merge-and-readback"
+  contract_materialization: "not-started"
+  jira_start_batch: "preflight-passed-awaiting-explicit-authorization"
+  manual_qa_last_review: "required-pending"
+  owner_repo_execution: "not-authorized"
+
+owner_documentation:
+  required_for_this_request: false
+  reason: "The running gate and contract implementation remain control-plane-only."
+  future_owner_rule: "Every later mutated owner must update local ARDS/SDD and pass owner checks plus the control-plane owner-documentation gate."
+
+manual_qa:
+  required: true
+  timing: "last-review-before-local-closure"
+  plan_ref: "evidence/requests/CR-SST-0219/manual-qa-last-review-plan.md"
+  result_ref: "evidence/requests/CR-SST-0219/manual-qa-last-review-result.md"
+  status: "pending"
+
+required_checks:
+  - "npm run check"
+  - "git diff --check"
+  - "manual contract walkthrough before closure"
+  - "Jira readback after any separately authorized batch"
+
+evidence_refs:
+  - "evidence/requests/CR-SST-0219/implementation-plan.md"
+  - "evidence/requests/CR-SST-0219/manual-qa-last-review-plan.md"
+  - "evidence/requests/CR-SST-0219/jira-description-draft.md"
+  - "evidence/requests/CR-SST-0219/jira-preflight-2026-08-24.md"
+  - "evidence/requests/CR-SST-0219/jira-start-batch-authorization.md"
