@@ -74,6 +74,10 @@ execution_status:
   retirement_batch_05_scope: "initiative-publication-sst6-jira-closure-and-cr-sst-0219-plan-only-active-successors-preserved"
   retirement_batch_05_post_restart_readback: "git-process-lock-and-docker-mount-gates-repeated-and-passed"
   retirement_batch_05_branch_disposition: "all-branches-refs-and-commits-explicitly-retained"
+  retirement_batch_05_execution: "complete-three-phase-superseded-worktrees-removed-post-readback-confirmed"
+  retirement_batch_05_effective_base: "origin-main-405947095473cef743cd27c23c009e2173f78b0b"
+  post_batch_05_snapshot: "30-registered-worktrees-24-clean-integrated-4-clean-nonancestor-1-dirty-integrated-1-dirty-nonancestor"
+  concurrent_cr_sst_0219_materialization: "new-clean-nonintegrated-contract-worktree-preserved-active-execution"
   newly_observed_dirty_tree: "cr-sst-0207-integrated-matrix-quarantined-one-untracked-http-qa-script"
   system_feature_studies_readback: "head-now-integrated-but-deferred-after-identity-and-branch-change"
   jira_retirement_mirror: "not-applicable-no-primary-issue-jira-write-disabled"
@@ -112,6 +116,7 @@ evidence_refs:
   - "evidence/requests/CR-SST-0208/worktree-retirement-batch-04-preflight-2026-08-24.md"
   - "evidence/requests/CR-SST-0208/worktree-retirement-batch-04-readback-2026-08-24.md"
   - "evidence/requests/CR-SST-0208/worktree-retirement-batch-05-preflight-2026-08-25.md"
+  - "evidence/requests/CR-SST-0208/worktree-retirement-batch-05-readback-2026-08-25.md"
 decision:
   status: "running-local-normalization-complete-publication-pending"
   approver: "4uentes"
