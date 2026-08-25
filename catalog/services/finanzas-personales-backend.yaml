@@ -1,7 +1,7 @@
 service_id: finanzas-personales-backend
 canonical_identity: finanzas-personales-backend
 kind: api
-status: draft
+status: active
 shared: false
 solution_ids:
   - finanzas-personales
@@ -11,9 +11,9 @@ repo:
   remote: git@github.com:mena28/finanzas-personales.git
   branch_observed: main
   upstream_observed: origin/main
-  head_observed: edf4c9c
+  head_observed: c81e114
   working_tree_observed: clean
-  observed_at: 2026-07-12
+  observed_at: 2026-08-23
 local_binding_evidence:
   - id: local-finanzas-personales
     role: monorepo-working-copy
@@ -28,7 +28,7 @@ package:
     - PostgreSQL topology TODO
 ards:
   kind: backend-api
-  status: product-draft
+  status: ready
   agents_md: true
   specs_index: true
   docs_overview: true
@@ -50,10 +50,14 @@ integrations:
   produces:
     - finanzas-personales-backend-api
   consumed_by:
-    - sst-fend
+    - sst-bend
+deployment_targets_observed:
+  - local-ephemeral-integrated-qa
 notes:
   - Backend ARDS/SDD service root inside the finanzas-personales monorepo.
   - Python and FastAPI are the approved and executable scaffold baseline under CR-HPT-0012.
   - OCR, document storage, queues and AI remain deferred to independently governed requests.
   - CR-HPT-0002 adopted control-plane linkage, executable validation and the canonical versioned .http QA harness.
   - SST account membership remains authoritative outside this service; finance ownership is scoped by validated account_id plus stable subject.
+  - CR-HPT-0017 published the RS256/JWKS service verifier and trusted-principal adapter on owner main at c81e114.
+  - CR-HPT-0018 validated the feature-gated SST-to-Phinance path and cross-account isolation without activating a persistent environment.

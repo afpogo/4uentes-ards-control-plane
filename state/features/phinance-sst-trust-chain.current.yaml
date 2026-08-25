@@ -1,0 +1,55 @@
+schema_version: "1.0"
+kind: "feature_state"
+id: "phinance-sst-trust-chain"
+title: "Phinance SST Trust Chain"
+status: "validated-local"
+updated_at: "2026-08-25"
+solution_id: "finanzas-personales"
+affected_services:
+  - finanzas-personales-backend
+  - sst-bend
+  - 4uentes-auth
+request_ids:
+  - CR-HPT-0013
+  - CR-SST-0212
+  - CR-HPT-0014
+  - CR-SST-0214
+  - CR-SST-0215
+  - CR-SST-0216
+  - CR-HPT-0017
+  - CR-HPT-0018
+  - CR-HPT-0019
+  - CR-HPT-0020
+capability_refs:
+  - "sst-phinance-facade-v1"
+spec_refs:
+  - "catalog/services/finanzas-personales-backend.yaml"
+  - "solutions/finanzas-personales.yaml"
+  - "initiatives/INIT-HPT-0002-personal-finance-instrument-operations-api.yaml"
+  - "requests/done/CR-SST-0216-adopt-phinance-consumer-principal.yaml"
+  - "requests/done/CR-HPT-0017-implement-phinance-sst-service-verifier.yaml"
+  - "requests/done/CR-HPT-0018-activate-phinance-proxy-integrated-qa.yaml"
+evidence_refs:
+  - "evidence/requests/CR-SST-0216/owner-validation-and-readback-2026-08-23.md"
+  - "evidence/requests/CR-HPT-0017/owner-validation-results-2026-08-23.md"
+  - "evidence/requests/CR-HPT-0017/owner-publication-readback-2026-08-23.md"
+  - "evidence/requests/CR-HPT-0018/owner-and-integrated-validation-2026-08-23.md"
+  - "evidence/requests/CR-HPT-0018/owner-publication-readback-2026-08-23.md"
+  - "evidence/requests/CR-HPT-0019/jira-write-readback-2026-08-23.md"
+  - "evidence/requests/CR-HPT-0020/read-model-reconciliation-2026-08-25.md"
+owner_refs:
+  - "sst-bend/specs/api/phinance-facade.yaml"
+  - "sst-bend/specs/capabilities/outbound/sst-phinance-facade-v1.yaml"
+  - "finanzas-personales/backend/specs/api/sst-integration.yaml"
+runtime_read_model:
+  browser_boundary: "sst-fend uses the protected sst-bend facade"
+  service_grant: "sst-bend -> phinance-api / finance:invoke"
+  principal_scope: "validated SST account plus stable subject and bounded entitlements"
+  phinance_verifier: "RS256/JWKS, issuer sst-auth, exact caller and scope, maximum TTL 300 seconds"
+  forwarding_gate: "PHINANCE_PROXY_ENABLED=false by default"
+  integrated_validation: "owner, member, spoofing and cross-account isolation passed against the real Phinance verifier and ephemeral PostgreSQL"
+  persistent_environment_activation: "not-authorized"
+open_gaps:
+  - "Name technical, security, migration and operational owners."
+  - "Approve a development activation request with secret references, rollback and deployed runtime verification."
+  - "Do not infer production readiness from local integrated QA."
