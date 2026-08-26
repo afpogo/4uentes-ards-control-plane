@@ -18,7 +18,7 @@ completed_units:
   - "model-private-gitops-topology"
 execution:
   owner_mutation_started: true
-  environment_mutation_started: false
+  environment_mutation_started: true
   jira_write_started: false
   secret_value_accessed: false
 execution_publication_rule:
@@ -39,4 +39,4 @@ execution_publication_rule:
 decision:
   status: "blocked-before-secret-and-live-activation"
   approver: "4uentes"
-  blocker: "Infra preview and CNI preflight passed, but phinance-postgres-secret is absent and the approved plan prohibits implicit Secret value changes; image pull smoke and live activation remain pending."
+  blocker: "Infra preview, CNI and private image pull preflight passed, but phinance-postgres-secret is absent and the approved plan prohibits implicit Secret value changes; live activation remains pending."
