@@ -1,0 +1,200 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-HPT-0021"
+title: "Activate a private ephemeral Phinance development environment"
+status: "planned"
+source_request: "requests/inbox/CR-HPT-0021-activate-private-ephemeral-phinance-development.yaml"
+created_at: "2026-08-25"
+requester: "4uentes"
+summary: >
+  Package and deploy Phinance into the existing private SST development kind
+  cluster, connect the disabled-by-default SST proxy only in that environment,
+  and prove authentication, isolation, rollback and teardown with synthetic data.
+
+control_plane_context:
+  initiative_id: "INIT-HPT-0002"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  jira_epic_key: "HPT-5"
+  reservation_pull_request: 136
+  reservation_merge: "a53c0a194b5dea27313501e3aeeeb32062e79108"
+  predecessor_request_ids: ["CR-SST-0216", "CR-HPT-0017", "CR-HPT-0018", "CR-HPT-0020"]
+
+impact_analysis:
+  required: true
+  affected_services: ["finanzas-personales-backend", "sst-bend", "4uentes-auth", "sst-4uentes-infra"]
+  mutable_owner_repositories: ["finanzas-personales", "sst-4uentes-infra"]
+  configuration_only_runtime_owner: "sst-bend via the infra-owned development overlay"
+  read_only_security_owner: "4uentes-auth"
+  observed_baselines:
+    phinance: "origin/main@c81e11467de0901b90a88a41e1759fbc034b9ca7; verifier and PostgreSQL migrations exist, deployment packaging does not"
+    sst_bend: "origin/develop@fc5573a7f05433814c1407a7f7f81c7474c54c57; published proxy commit 845491b is reachable and remains disabled by default"
+    sst_infra: "origin/develop@126f25eeed4d20b7ecba35036a7e35530482c946; env.development exists but has no Phinance workload or contract"
+    dirty_roots: "all observed roots are preserved and ineligible for mutation"
+
+risk:
+  level: "high"
+  score: 14
+  drivers: ["FINANCIAL_DATA", "AUTHENTICATION", "AUTHORIZATION", "CROSS_REPO_DEPLOYMENT", "SECRETS", "DATABASE_MIGRATION", "NETWORK_BOUNDARY"]
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+model_selection:
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5 high"
+  reason: "The work combines sensitive financial data, service authentication, deployment, secrets and cross-repo ownership."
+subagent_deployment_plan:
+  mode: "none"
+  reason: "Security, ownership and deployment decisions remain sequential in the primary agent; proactive delegation is disabled."
+
+approved_topology:
+  environment: "env.development"
+  cluster: "cluster.sst-dev.kind"
+  namespace: "4uentes-sst"
+  data_policy: "synthetic-only"
+  public_ingress: false
+  direct_host_exposure: false
+  phinance_runtime:
+    workload: "Deployment/phinance-api"
+    service: "phinance-api-service:8766"
+    service_type: "ClusterIP"
+    allowed_callers: ["sst-bend"]
+    health: ["GET /health", "GET /ready"]
+  persistence:
+    workload: "dedicated ephemeral PostgreSQL"
+    service: "phinance-postgres-service:5432"
+    durability: "none beyond the private development lifecycle"
+    migration: "owner Alembic upgrade runs before application readiness"
+    prohibited: ["production data", "copied user data", "shared SST domain tables"]
+  proxy_activation:
+    phinance_base_url: "http://phinance-api-service:8766"
+    phinance_proxy_enabled: true
+    scope: "development overlay only"
+    base_default: false
+  service_auth:
+    token_endpoint: "http://node-auth-service:4000/api/auth/internal/oauth/token"
+    exact_grant: "sst-bend -> phinance-api / finance:invoke"
+    jwks_url: "http://node-auth-service:4000/.well-known/jwks.json"
+    browser_bearer_forwarded: false
+  network_policy:
+    phinance_ingress: "allow sst-bend and required health/migration traffic only"
+    postgres_ingress: "allow phinance-api and its migration job only"
+    external_phinance_route: "none"
+
+ownership:
+  technical_runtime: "finanzas-personales"
+  integration: "sst-bend"
+  security_contract: "4uentes-auth, read-only in this request"
+  migration: "finanzas-personales"
+  operational_and_gitops: "sst-4uentes-infra"
+
+secret_references:
+  value_policy: "never commit, print or persist values in evidence"
+  existing_m2m_secret: "sst-chat-m2m-secret/M2M_SST_BEND_CLIENT_SECRET"
+  new_phinance_database_secret: "phinance-postgres-secret"
+  required_keys: ["POSTGRES_USER", "POSTGRES_PASSWORD", "POSTGRES_DB", "PHINANCE_DATABASE_URL"]
+  provisioning: "human/operator outside Git before GitOps reconciliation"
+  rotation: "not authorized by this request"
+
+execution:
+  requires_human_approval: true
+  approval_status: "approved-for-plan-publication-only"
+  child_repo_mutation_allowed_after_plan_readback: true
+  allowed_owner_repositories: ["finanzas-personales", "sst-4uentes-infra"]
+  sst_bend_code_mutation_allowed: false
+  auth_repo_mutation_allowed: false
+  sst_fend_mutation_allowed: false
+  production_mutation_allowed: false
+  secret_value_changes_allowed: false
+  live_development_deployment_allowed: true
+  destructive_database_migration_allowed: false
+  jira_write_allowed: false
+  branch: "agent/cr-hpt-0021-private-dev-planning"
+  worktree: "worktrees/CR-HPT-0021-private-dev-planning"
+
+atomized_execution:
+  - order: 1
+    id: "publish-and-readback-impact-plan"
+    objective: "Merge this plan and running lifecycle before any owner or environment mutation."
+    validation: "Plan is reachable from refreshed origin/main and the full control-plane check passes."
+  - order: 2
+    id: "package-phinance-owner-runtime"
+    objective: "Add reproducible container packaging and owner deployment documentation without changing the financial API contract."
+    validation: "Owner tests, contract gate, image build, non-root runtime and health/readiness checks pass."
+  - order: 3
+    id: "publish-owner-image"
+    objective: "Publish one immutable development image from the owner repo."
+    validation: "Digest or immutable tag is read back; exact image repository remains TODO until owner publication configuration is inspected."
+  - order: 4
+    id: "model-private-gitops-topology"
+    objective: "Add the Phinance deployment contract, workload, ephemeral PostgreSQL, migration, Secret examples and NetworkPolicies to the infra owner."
+    validation: "Kustomize render and client dry-run pass; no secret value or public ingress is present."
+  - order: 5
+    id: "preflight-live-activation"
+    objective: "Verify cluster reachability, required Secret references, image availability and rollback target without reading secret values."
+    validation: "Names and keys exist, workloads are not yet enabled, and rollback/teardown commands are recorded."
+  - order: 6
+    id: "activate-private-development"
+    objective: "Reconcile the approved Git revision and enable the SST proxy only in env.development."
+    validation: "Argo CD/Kubernetes reaches healthy state with Phinance remaining ClusterIP-only."
+  - order: 7
+    id: "run-deployed-security-and-isolation-qa"
+    objective: "Exercise readiness, service auth, owner/member permissions, spoofing rejection, cross-account isolation and failure behavior with synthetic data."
+    validation: "Positive and negative HTTP QA passes without credentials, tokens, private URLs or financial records in evidence."
+  - order: 8
+    id: "reconcile-tracker-and-publish-terminal-lifecycle"
+    objective: "Create or reconcile one Jira Task under HPT-5 through a separate exact batch, then publish done evidence and canonical readbacks."
+    validation: "Jira uniqueness/readback, owner merges, full control-plane check and terminal merge/readback pass before cleanup."
+
+rollback_and_teardown:
+  immediate_containment: "Set PHINANCE_PROXY_ENABLED=false through the development overlay and reconcile."
+  workload_rollback: "Restore the last approved immutable Git revision through Argo CD; do not use kubectl set image as persistent state."
+  data_teardown: "Delete only the explicitly named ephemeral Phinance PostgreSQL workload and synthetic data after evidence is captured."
+  secret_teardown: "Remove the request-scoped Phinance database Secret through the approved operator path; do not alter the existing SST M2M grant."
+  prohibited: "No recursive namespace deletion and no production rollback operation."
+
+owner_documentation:
+  required: true
+  status: "planned"
+  repositories:
+    - repo: "finanzas-personales"
+      planned_surfaces: ["backend/specs/", "backend/docs/", "backend/AGENTS.md when commands change"]
+    - repo: "sst-4uentes-infra"
+      planned_surfaces: ["specs/infra/deployment-contracts/", "specs/infra/environments/development.yaml", "docs/runbooks/", "k8s-manifests/"]
+
+execution_publication_rule:
+  rule_id: "execution-publication-and-tracker-closure-rule"
+  adoption_status: "adopted"
+  git_publication:
+    applicable: true
+    plan_merge_required: true
+    terminal_merge_required: true
+  tracker_mirror:
+    applicable: true
+    provider: "jira"
+    project_key: "HPT"
+    epic_key: "HPT-5"
+    issue_key: "TODO-after-plan-publication-and-duplicate-preflight"
+  cleanup:
+    remote_readback_required: true
+
+required_checks:
+  - "git diff --check in every mutated repository"
+  - "finanzas-personales owner contract and pytest gates"
+  - "Phinance container build and live health/readiness smoke"
+  - "sst-4uentes-infra npm run check"
+  - "kubectl kustomize k8s-manifests/overlays/development"
+  - "kubectl apply --dry-run=client -k k8s-manifests/overlays/development"
+  - "deployed private trust-chain, authorization and account-isolation HTTP QA"
+  - "4uentes-orchestor npm run check"
+
+decision:
+  status: "approved-for-plan-publication"
+  approver: "4uentes"
+  decided_at: "2026-08-25"
+  blocker: "Merge and read back this plan before owner worktrees, image publication, secrets or environment activation."

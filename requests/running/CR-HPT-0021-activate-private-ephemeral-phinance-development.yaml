@@ -1,0 +1,38 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-HPT-0021"
+title: "Activate a private ephemeral Phinance development environment"
+status: "running"
+source_request: "requests/inbox/CR-HPT-0021-activate-private-ephemeral-phinance-development.yaml"
+planned_request: "requests/planned/CR-HPT-0021-activate-private-ephemeral-phinance-development.yaml"
+started_at: "2026-08-25"
+requester: "4uentes"
+current_unit: "publish-and-readback-impact-plan"
+completed_units:
+  - "global-identity-and-worktree-preflight"
+  - "canonical-inbox-reservation"
+  - "read-only-owner-and-topology-discovery"
+execution:
+  owner_mutation_started: false
+  environment_mutation_started: false
+  jira_write_started: false
+  secret_value_accessed: false
+execution_publication_rule:
+  rule_id: "execution-publication-and-tracker-closure-rule"
+  adoption_status: "adopted"
+  git_publication:
+    applicable: true
+    plan_merge_required: true
+    terminal_merge_required: true
+  tracker_mirror:
+    applicable: true
+    provider: "jira"
+    project_key: "HPT"
+    epic_key: "HPT-5"
+    issue_key: "TODO-after-plan-publication-and-duplicate-preflight"
+  cleanup:
+    remote_readback_required: true
+decision:
+  status: "running-plan-publication"
+  approver: "4uentes"
+  blocker: "No child repository or environment mutation before canonical plan readback."
