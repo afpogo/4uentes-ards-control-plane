@@ -7,13 +7,17 @@ source_request: "requests/inbox/CR-HPT-0021-activate-private-ephemeral-phinance-
 planned_request: "requests/planned/CR-HPT-0021-activate-private-ephemeral-phinance-development.yaml"
 started_at: "2026-08-25"
 requester: "4uentes"
-current_unit: "publish-and-readback-impact-plan"
+current_unit: "preflight-live-activation"
 completed_units:
   - "global-identity-and-worktree-preflight"
   - "canonical-inbox-reservation"
   - "read-only-owner-and-topology-discovery"
+  - "publish-and-readback-impact-plan"
+  - "package-phinance-owner-runtime"
+  - "publish-owner-image"
+  - "model-private-gitops-topology"
 execution:
-  owner_mutation_started: false
+  owner_mutation_started: true
   environment_mutation_started: false
   jira_write_started: false
   secret_value_accessed: false
@@ -33,6 +37,6 @@ execution_publication_rule:
   cleanup:
     remote_readback_required: true
 decision:
-  status: "running-plan-publication"
+  status: "blocked-before-secret-and-live-activation"
   approver: "4uentes"
-  blocker: "No child repository or environment mutation before canonical plan readback."
+  blocker: "Infra preview and CNI preflight passed, but phinance-postgres-secret is absent and the approved plan prohibits implicit Secret value changes; image pull smoke and live activation remain pending."
