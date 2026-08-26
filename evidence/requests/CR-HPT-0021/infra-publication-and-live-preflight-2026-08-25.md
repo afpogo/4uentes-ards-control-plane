@@ -50,8 +50,21 @@ development activo. Los manifests, la imagen inmutable y
 
 ## Estado De La Compuerta
 
-No hubo mutacion del cluster, Secret ni reconciliacion de Argo CD. La prueba de
-pull de la imagen privada y la activacion siguen bloqueadas hasta disponer del
-Secret efimero de PostgreSQL por el mecanismo operator aprobado. La solicitud
-vigente prohibe cambiar valores de Secret y registra su provision fuera de Git,
-por lo que el agente no lo crea implicitamente.
+Tras publicar este checkpoint se ejecuto un smoke reversible de pull, sin datos
+ni Secret nuevos:
+
+- El pod temporal `phinance-image-pull-preflight-cr-hpt-0021` alcanzo
+  `Running/Ready` en el worker.
+- El runtime resolvio la imagen al digest exacto
+  `sha256:b5c5233485871edd048937eefe932c90c7a775cc6cdedb110440d263c957b613`.
+- El pod temporal fue eliminado y un readback posterior devolvio `NotFound`.
+- No quedaron Deployment, Service, Job o NetworkPolicy persistentes de
+  Phinance.
+- Argo CD releyo el merge `f6dc7088a90c578e379c0ded43e02f32e56c98c0`
+  y permanece `Synced/Healthy`; como el preview es inactivo, no desplego
+  Phinance.
+
+La activacion sigue bloqueada hasta disponer del Secret efimero de PostgreSQL
+por el mecanismo operator aprobado. La solicitud vigente prohibe cambiar
+valores de Secret y registra su provision fuera de Git, por lo que el agente no
+lo crea implicitamente.
