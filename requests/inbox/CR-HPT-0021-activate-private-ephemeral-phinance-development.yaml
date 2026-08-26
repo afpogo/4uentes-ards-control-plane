@@ -1,0 +1,53 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-HPT-0021"
+title: "Activate a private ephemeral Phinance development environment"
+status: "inbox"
+created_at: "2026-08-25"
+requester: "4uentes"
+business_context: >
+  CR-HPT-0020 reconciled the control-plane with the published fail-closed
+  SST-to-Phinance trust chain. The proxy remains disabled by default and the
+  only observed target is local ephemeral integrated QA; there is no approved
+  private development instance for continued HPT work.
+requested_change: >
+  Define, provision and verify one isolated non-production Phinance development
+  instance with private developer access, explicit owners, secret references,
+  rollback and deployed-runtime evidence. Preserve the published trust boundary
+  and keep production activation outside this lifecycle.
+expected_outcome: >
+  HPT development can continue against a reproducible private environment whose
+  access, topology, data handling, activation and teardown are bounded and
+  auditable without weakening authentication or account isolation.
+initial_scope:
+  initiative_id: "INIT-HPT-0002"
+  jira_epic_key: "HPT-5"
+  solution: "finanzas-personales"
+  control_repository: "4uentes-orchestor"
+  candidate_owner_repositories:
+    - "finanzas-personales"
+    - "sst-bend"
+    - "sst-4uentes-infra"
+  source_request_ids:
+    - "CR-SST-0216"
+    - "CR-HPT-0017"
+    - "CR-HPT-0018"
+    - "CR-HPT-0020"
+constraints:
+  - "This reservation does not authorize child-repository, Jira, runtime, deployment, infrastructure or secret writes."
+  - "Publish and read back an approved impact plan before any child repository or environment is modified."
+  - "Use secret references only; never publish secret values, private URLs, tokens, cookies or credentials."
+  - "Keep PHINANCE_PROXY_ENABLED false outside the explicitly bounded private development target."
+  - "Do not infer staging or production readiness from the private development instance."
+  - "Define teardown and rollback before activation, and preserve owner ARDS/SDD authority in every mutated child repository."
+  - "Jira remains an operational mirror and requires a separate exact write batch if reconciliation becomes applicable."
+requested_next_step: >
+  Publish this minimal reservation, refresh origin/main and create one clean
+  planning worktree to discover the existing deployment topology, resolve
+  technical/security/migration/operations owners and produce an atomized impact
+  plan before any external mutation.
+decision:
+  status: "accepted-for-reservation"
+  approver: "4uentes"
+  approved_at: "2026-08-25"
+  approval_text: "continuemos"
