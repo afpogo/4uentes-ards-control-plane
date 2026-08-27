@@ -7,7 +7,7 @@ source_request: "requests/inbox/CR-HPT-0021-activate-private-ephemeral-phinance-
 planned_request: "requests/planned/CR-HPT-0021-activate-private-ephemeral-phinance-development.yaml"
 started_at: "2026-08-25"
 requester: "4uentes"
-current_unit: "preflight-live-activation"
+current_unit: "publish-secret-and-compose-scope-addendum"
 completed_units:
   - "global-identity-and-worktree-preflight"
   - "canonical-inbox-reservation"
@@ -21,6 +21,18 @@ execution:
   environment_mutation_started: true
   jira_write_started: false
   secret_value_accessed: false
+authorization_addenda:
+  - date: "2026-08-27"
+    source: "explicit-owner-instruction"
+    allowed:
+      - "generate and reference request-scoped ephemeral PostgreSQL credentials without publishing values"
+      - "add a reproducible local Docker Compose surface to the finanzas-personales owner"
+    prohibited:
+      - "real or copied financial data"
+      - "staging or production mutation"
+      - "shared M2M Secret mutation"
+      - "secret values in Git, Jira, logs or evidence"
+    encryption_gate: "Cluster preflight found no etcd EncryptionConfiguration or secret operator; Secret write waits for an explicit protection choice."
 execution_publication_rule:
   rule_id: "execution-publication-and-tracker-closure-rule"
   adoption_status: "adopted"
@@ -37,6 +49,6 @@ execution_publication_rule:
   cleanup:
     remote_readback_required: true
 decision:
-  status: "blocked-before-secret-and-live-activation"
+  status: "compose-authorized-secret-protection-choice-pending"
   approver: "4uentes"
-  blocker: "Infra preview, CNI and private image pull preflight passed, but phinance-postgres-secret is absent and the approved plan prohibits implicit Secret value changes; live activation remains pending."
+  blocker: "Compose is authorized; Secret creation and live activation wait for an explicit choice because this kind cluster does not currently prove encryption at rest for Kubernetes Secrets."
