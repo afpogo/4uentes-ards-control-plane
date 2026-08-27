@@ -16,11 +16,17 @@ control_plane_context:
   plan_pr: 123
   plan_merge_commit: "e7f0523db8de3a6cbe2469e345ab765694f9ec3b"
   plan_readback_main: "bb628ea3e4817d3f17fa49d62abffd55498de678"
+  running_pr: 128
+  running_merge_commit: "6b014ff05b362ffd6d52eed629d5d3a0ec00d817"
+  bend_owner_pr: 28
+  bend_owner_head_commit: "ea213114ebfbc9e7c98184d5ada3f6a58ac90776"
+  bend_owner_merge_commit: "9faae46cd2af7f4d829204c08cfaf026c5948672"
+  bend_owner_merge_readback_at: "2026-08-27"
   jira_role: "mirror"
   jira_source_of_truth: false
-  jira_issue_key: null
+  jira_issue_key: "SST-121"
   jira_parent_issue_key: "SST-113"
-  jira_start_batch_status: "authorized-pending-running-readback-and-oauth-preflight"
+  jira_start_batch_status: "consumed-readback-en-curso"
 
 risk:
   level: "high"
@@ -42,7 +48,7 @@ subagent_deployment_plan:
 execution:
   approval_status: "approved-running-publication-and-scoped-execution"
   approval_source: "Operator instruction on 2026-08-24: 'Ok autorizo, avancemos con el proximo gate'."
-  activation_gate: "This running lifecycle must be merged and read back before any child-repository or Jira write."
+  activation_gate: "Satisfied by running merge/readback; Bend owner merge/readback is satisfied and Fend remains gated by publication of this checkpoint."
   child_repo_mutation_allowed: true
   child_repo_mutation_targets: ["sst-bend", "sst-fend"]
   owner_publication_allowed: true
@@ -56,7 +62,7 @@ execution:
   production_mutation_allowed: false
   development_publication_allowed: true
   development_publication_mode: "Existing owner CI and GitOps automation triggered by approved develop merges only."
-  jira_write_allowed: "After running merge/readback and a fresh OAuth, duplicate and hierarchy preflight: create at most one enumerated Subtask under SST-113 and transition only that issue to En curso."
+  jira_write_allowed: "Start batch consumed by SST-121 readback in En curso; no further Jira write is allowed until a separate terminal batch is explicitly authorized."
 
 contract:
   server_event: "chat:conversation:terminated"
@@ -82,10 +88,13 @@ execution_sequence:
 
 owner_documentation:
   required: true
-  status: "authorized-pending-owner-implementation"
+  status: "bend-published-fend-pending"
   owner_repos:
     sst-bend:
       role: "producer and retention authority"
+      publication_status: "merged-and-read-back"
+      pull_request: 28
+      merge_commit: "9faae46cd2af7f4d829204c08cfaf026c5948672"
       planned_surfaces:
         - "specs/api/realtime-chat-v1.yaml"
         - "specs/api/chat-retention-v1.yaml"
@@ -103,7 +112,7 @@ owner_documentation:
         - "docs/tasks/2026-08-24-cr-sst-0218-terminal-event.md"
 
 jira_start_batch:
-  authorization_status: "authorized-pending-preflight"
+  authorization_status: "consumed"
   provider: "jira"
   project: "SST"
   candidate_count: 1
@@ -115,10 +124,12 @@ jira_start_batch:
     expected_epic: "SST-86"
     summary: "[CR-SST-0218] Propagar eventos terminales de retencion a sesiones activas"
     expected_status_after_batch: "En curso"
+    resolved_issue_key: "SST-121"
+    readback_status: "En curso"
   allowed_operations: ["create exactly one candidate only if no compatible mirror exists", "transition only the resolved issue to En curso"]
   forbidden_operations: ["comments", "links", "assignee changes", "labels", "edits or transitions on any other issue"]
-  window: "One start batch after running merge/readback on 2026-08-24; consumed by successful readback or expired before any later retry that would broaden operations."
-  blocker: "Atlassian OAuth refresh is currently invalid; no write may be attempted until read-only preflight succeeds."
+  window: "Consumed by successful SST-121 readback in En curso; no retry or additional start operation remains authorized."
+  blocker: null
 
 execution_publication_rule:
   rule_id: "execution-publication-and-tracker-closure-rule"
@@ -132,7 +143,7 @@ execution_publication_rule:
     provider: "jira"
     project_key: "SST"
     parent_issue_key: "SST-113"
-    issue_key: null
+    issue_key: "SST-121"
   cleanup:
     remote_readback_required: true
 
@@ -147,11 +158,11 @@ decision:
   status: "approved-running-publication-and-scoped-execution"
   approver: "4uentes"
   decided_at: "2026-08-24"
-  next_gate: "Merge/read back this running lifecycle; then execute Jira preflight/start batch and Bend owner implementation in that order."
+  next_gate: "Publish and read back the Bend merge checkpoint; then refresh canonical sst-fend develop and implement only the authorized consumer convergence."
 
 evidence_refs:
   - "evidence/requests/CR-SST-0207/integrated-matrix-checkpoint-2026-08-24.md"
   - "evidence/requests/CR-SST-0218/implementation-plan-2026-08-24.md"
   - "evidence/requests/CR-SST-0218/execution-start-2026-08-24.md"
   - "evidence/requests/CR-SST-0218/jira-start-batch-authorization-2026-08-24.md"
-
+  - "evidence/requests/CR-SST-0218/bend-owner-merge-readback-2026-08-27.md"
