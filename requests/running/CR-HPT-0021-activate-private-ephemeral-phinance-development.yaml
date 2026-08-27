@@ -7,7 +7,7 @@ source_request: "requests/inbox/CR-HPT-0021-activate-private-ephemeral-phinance-
 planned_request: "requests/planned/CR-HPT-0021-activate-private-ephemeral-phinance-development.yaml"
 started_at: "2026-08-25"
 requester: "4uentes"
-current_unit: "publish-secret-and-compose-scope-addendum"
+current_unit: "choose-kubernetes-secret-protection"
 completed_units:
   - "global-identity-and-worktree-preflight"
   - "canonical-inbox-reservation"
@@ -16,6 +16,8 @@ completed_units:
   - "package-phinance-owner-runtime"
   - "publish-owner-image"
   - "model-private-gitops-topology"
+  - "publish-secret-and-compose-scope-addendum"
+  - "package-and-publish-local-compose"
 execution:
   owner_mutation_started: true
   environment_mutation_started: true
@@ -49,6 +51,6 @@ execution_publication_rule:
   cleanup:
     remote_readback_required: true
 decision:
-  status: "compose-authorized-secret-protection-choice-pending"
+  status: "compose-validated-secret-protection-choice-pending"
   approver: "4uentes"
   blocker: "Compose is authorized; Secret creation and live activation wait for an explicit choice because this kind cluster does not currently prove encryption at rest for Kubernetes Secrets."
