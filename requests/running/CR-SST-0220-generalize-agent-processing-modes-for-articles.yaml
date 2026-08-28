@@ -1,0 +1,115 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-SST-0220"
+title: "Generalize agent processing modes for articles"
+status: "running"
+source_request: "requests/inbox/CR-SST-0220-generalize-agent-processing-modes-for-articles.yaml"
+planned_request: "requests/planned/CR-SST-0220-generalize-agent-processing-modes-for-articles.yaml"
+created_at: "2026-08-27"
+started_at: "2026-08-27"
+requester: "4uentes"
+summary: >
+  Execute the control-plane-only contract gate for article-centered agent
+  processing after the planned lifecycle was merged and read back.
+depends_on: ["CR-SST-0192", "CR-SST-0194", "CR-SST-0210", "CR-SST-0219"]
+
+authorization:
+  status: "approved-for-control-plane-contract-execution"
+  approved_by: "4uentes"
+  approved_at: "2026-08-27"
+  approval_text: "ok autorizo avanzar"
+  allowed:
+    - "Publish the CR-SST-0220 running lifecycle."
+    - "Materialize the versioned article-processing contract and human-readable maps."
+    - "Update the control-plane feature state and INIT-SST-0010 progress."
+    - "Prepare sanitized tracker and manual-review evidence."
+  exclusions:
+    - "No child-repository, runtime, deployment, infrastructure or production-data mutation."
+    - "No Jira read or write without a separate preflight and exact authorization."
+    - "No owner request allocation under this gate."
+
+plan_publication:
+  status: "merged-and-read-back"
+  pull_request: 144
+  head_commit: "c95772cd734a534e140a4437c3499290ed0ff53d"
+  merge_commit: "a3366904e5e9dae7c197b8d81293107fa990d15b"
+  canonical_branch: "main"
+  evidence_ref: "evidence/requests/CR-SST-0220/post-merge-readback-2026-08-27.md"
+
+control_plane_context:
+  initiative_id: "INIT-SST-0010"
+  feature_state_id: "article-agent-processing"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  jira_project_key: "SST"
+  jira_parent_issue_key: "SST-105"
+  jira_issue_key: "TODO-after-readonly-preflight"
+  jira_write_allowed: false
+
+execution:
+  control_plane_mutation_allowed: true
+  child_repo_mutation_allowed: false
+  core_repo_mutation_allowed: false
+  runtime_mutation_allowed: false
+  deployment_allowed: false
+  production_data_allowed: false
+  jira_write_allowed: false
+  owner_request_allocation_allowed: false
+
+execution_publication_rule:
+  rule_id: "execution-publication-and-tracker-closure-rule"
+  adoption_status: "adopted"
+  git_publication:
+    applicable: true
+    plan_merge_required: true
+    terminal_merge_required: true
+  tracker_mirror:
+    applicable: true
+    provider: "jira"
+    project_key: "SST"
+    epic_key: "SST-105"
+  cleanup:
+    remote_readback_required: true
+
+execution_status:
+  running_publication: "pending-merge-and-readback"
+  contract_materialization: "implemented-local-pending-validation-and-publication"
+  jira_mirror: "not-preflighted-and-not-authorized"
+  control_plane_manual_review: "required-pending"
+  downstream_browser_qa: "deferred-to-owner-integration; plan-published"
+  owner_repo_execution: "not-authorized"
+
+contract:
+  id: "sst-article-agent-processing-v1"
+  version: "1.0.0"
+  machine_ref: "evidence/requests/CR-SST-0220/article-agent-processing-contract-v1.yaml"
+  human_ref: "docs/projects/sst/contrato-procesamiento-articulos-con-agente-v1.md"
+  predecessor_ref: "evidence/requests/CR-SST-0219/paragraph-sequential-derivation-contract-v1.yaml"
+
+owner_documentation:
+  required_for_this_request: false
+  reason: "This running gate remains control-plane-only."
+  future_owner_rule: "Every later mutated owner must update local ARDS/SDD and pass owner checks plus the full control-plane check."
+
+manual_qa:
+  control_plane_review_required: true
+  control_plane_review_ref: "evidence/requests/CR-SST-0220/manual-contract-review.md"
+  control_plane_review_status: "pending-human-result"
+  downstream_browser_plan_ref: "evidence/requests/CR-SST-0220/manual-qa-plan.md"
+  downstream_browser_mode: "Chrome DevTools MCP only"
+
+required_checks:
+  - "npm run check"
+  - "git diff --check"
+  - "visual documentation validator through the full check"
+  - "manual contract walkthrough before terminal closure"
+  - "remote main readback after merge"
+
+evidence_refs:
+  - "evidence/requests/CR-SST-0220/implementation-plan.md"
+  - "evidence/requests/CR-SST-0220/post-merge-readback-2026-08-27.md"
+  - "evidence/requests/CR-SST-0220/article-agent-processing-contract-v1.yaml"
+  - "docs/projects/sst/contrato-procesamiento-articulos-con-agente-v1.md"
+  - "evidence/requests/CR-SST-0220/manual-contract-review.md"
+  - "evidence/requests/CR-SST-0220/manual-qa-plan.md"
+  - "evidence/requests/CR-SST-0220/jira-description-draft.md"

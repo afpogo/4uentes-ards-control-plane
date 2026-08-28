@@ -2,7 +2,7 @@ schema_version: "1.0"
 kind: "feature_state"
 id: "article-agent-processing"
 title: "SST Article Agent Processing"
-status: "planned"
+status: "ards-documented"
 updated_at: "2026-08-27"
 solution_id: "sst"
 affected_services:
@@ -15,13 +15,18 @@ request_ids:
 spec_refs:
   - "requests/planned/CR-SST-0219-adopt-paragraph-sequential-derivation-contract.yaml"
   - "requests/planned/CR-SST-0220-generalize-agent-processing-modes-for-articles.yaml"
+  - "requests/running/CR-SST-0220-generalize-agent-processing-modes-for-articles.yaml"
+  - "evidence/requests/CR-SST-0220/article-agent-processing-contract-v1.yaml"
 evidence_refs:
   - "evidence/requests/CR-SST-0219/paragraph-sequential-derivation-contract-v1.yaml"
   - "evidence/requests/CR-SST-0220/implementation-plan.md"
   - "evidence/requests/CR-SST-0220/manual-qa-plan.md"
   - "evidence/requests/CR-SST-0220/browser-discovery-2026-08-27.md"
+  - "evidence/requests/CR-SST-0220/post-merge-readback-2026-08-27.md"
+  - "docs/projects/sst/contrato-procesamiento-articulos-con-agente-v1.md"
+  - "evidence/requests/CR-SST-0220/manual-contract-review.md"
 open_gaps:
-  - "CR-SST-0220 is planned and requires merge/readback before running authorization."
+  - "The materialized contract requires publication/readback and final human contract review before terminal closure."
   - "Owner-local Bend, chatbot, Fend, integration and E2E lifecycles are not reserved yet."
   - "No article-agent runtime or user-visible processing control is implemented by this request."
   - "Browser discovery observed unhealthy article APIs, so final UI QA is not ready."
