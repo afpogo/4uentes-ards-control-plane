@@ -72,10 +72,10 @@ execution_publication_rule:
     remote_readback_required: true
 
 execution_status:
-  running_publication: "pending-merge-and-readback"
-  contract_materialization: "implemented-local-pending-validation-and-publication"
+  running_publication: "merged-and-read-back-pr-149"
+  contract_materialization: "published-and-human-approved"
   jira_mirror: "not-preflighted-and-not-authorized"
-  control_plane_manual_review: "required-pending"
+  control_plane_manual_review: "passed-2026-08-27"
   downstream_browser_qa: "deferred-to-owner-integration; plan-published"
   owner_repo_execution: "not-authorized"
 
@@ -94,9 +94,23 @@ owner_documentation:
 manual_qa:
   control_plane_review_required: true
   control_plane_review_ref: "evidence/requests/CR-SST-0220/manual-contract-review.md"
-  control_plane_review_status: "pending-human-result"
+  control_plane_review_status: "passed"
+  approved_by: "4uentes"
+  approved_at: "2026-08-27"
+  approval_text: "apruebo, recordemos realizar la documentacion con los mapas segun la policy"
   downstream_browser_plan_ref: "evidence/requests/CR-SST-0220/manual-qa-plan.md"
   downstream_browser_mode: "Chrome DevTools MCP only"
+
+future_owner_visual_documentation:
+  policy_id: "visual-documentation-as-code-policy"
+  required: true
+  rule: >
+    Every owner request must evaluate whether data, sequence, dependency or
+    lifecycle relationships materially benefit from a map. When applicable,
+    publish metadata, Mermaid and textual fallback backed by owner authority.
+  control_plane_maps:
+    - "article-agent-processing-data-v1"
+    - "article-agent-processing-sequence-v1"
 
 required_checks:
   - "npm run check"
@@ -108,6 +122,7 @@ required_checks:
 evidence_refs:
   - "evidence/requests/CR-SST-0220/implementation-plan.md"
   - "evidence/requests/CR-SST-0220/post-merge-readback-2026-08-27.md"
+  - "evidence/requests/CR-SST-0220/running-contract-readback-2026-08-27.md"
   - "evidence/requests/CR-SST-0220/article-agent-processing-contract-v1.yaml"
   - "docs/projects/sst/contrato-procesamiento-articulos-con-agente-v1.md"
   - "evidence/requests/CR-SST-0220/manual-contract-review.md"

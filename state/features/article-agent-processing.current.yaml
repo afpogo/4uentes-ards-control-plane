@@ -23,10 +23,11 @@ evidence_refs:
   - "evidence/requests/CR-SST-0220/manual-qa-plan.md"
   - "evidence/requests/CR-SST-0220/browser-discovery-2026-08-27.md"
   - "evidence/requests/CR-SST-0220/post-merge-readback-2026-08-27.md"
+  - "evidence/requests/CR-SST-0220/running-contract-readback-2026-08-27.md"
   - "docs/projects/sst/contrato-procesamiento-articulos-con-agente-v1.md"
   - "evidence/requests/CR-SST-0220/manual-contract-review.md"
 open_gaps:
-  - "The materialized contract requires publication/readback and final human contract review before terminal closure."
+  - "The materialized contract is published and human-approved; Jira preflight and reconciliation remain before terminal closure."
   - "Owner-local Bend, chatbot, Fend, integration and E2E lifecycles are not reserved yet."
   - "No article-agent runtime or user-visible processing control is implemented by this request."
   - "Browser discovery observed unhealthy article APIs, so final UI QA is not ready."
