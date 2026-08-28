@@ -1,0 +1,115 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0229"
+title: "Reconcile historical SST kind API-port stabilization"
+status: "inbox"
+created_at: "2026-08-28"
+requester: "4uentes"
+
+business_context: >
+  Historical work stabilized the SST development kind API at
+  127.0.0.1:16443 and the durable ingress binding at
+  127.0.0.1:8088 -> 32080. That work was performed under the unpublished
+  label CR-SST-0210, which collides with a different canonical request, and
+  the observed owner-repository artifacts remain in a dirty local worktree.
+
+requested_change: >
+  Reconcile the completed historical execution under a unique canonical
+  identity without rewriting its provenance: inventory the exact owner
+  artifacts and runtime evidence, determine which changes are unpublished,
+  prepare an owner-scoped recovery and publication plan, and define the later
+  Jira correction for SST-119 as a separately authorized mirror operation.
+
+expected_outcome: >
+  The kind API-port stabilization is attributable to CR-SST-0229, the stale
+  CR-SST-0210 label remains historical provenance only, owner changes are not
+  mistaken for canonical publication, and any future integration or tracker
+  correction proceeds through explicit validation and authorization gates.
+
+initial_scope:
+  solution: "sst"
+  primary_initiative_id: "INIT-SST-0004"
+  quality_reconciliation_initiative_id: "INIT-SST-0009"
+  coordinator_request_id: "CR-SST-0222"
+  control_repository: "4uentes-orchestor"
+  owner_repository: "sst-4uentes-infra"
+  target_environment: "development"
+  target_cluster: "cluster.sst-dev.kind"
+  historical_label: "CR-SST-0210"
+  historical_jira_issue: "SST-119"
+
+ordering_deviation: >
+  Owner-repository edits, controlled cluster recreation, host restart
+  validation and Jira synchronization occurred before this canonical request
+  was reserved. CR-SST-0229 records that deviation; it does not retroactively
+  convert the collided label into valid authorization or prove that the dirty
+  owner changes were published.
+
+constraints:
+  - "This inbox reserves identity and supports planning only."
+  - "Do not modify, clean, stage, commit, publish or retire the dirty sst-4uentes-infra worktree during reservation."
+  - "Do not mutate or recreate the cluster, restart the host, access backups or secrets, or change runtime bindings."
+  - "Separate observed current owner-repository facts from historical evidence and unresolved publication state."
+  - "Do not reuse CR-SST-0210 as a canonical identity; it belongs to the published memory identity scope."
+  - "Keep robots.txt and llms.txt outside SST scope and do not create either file."
+  - "Jira is a mirror; no correction to SST-119 is authorized by this reservation."
+  - "Do not expose credentials, private URLs, cloud identifiers, account identifiers, secret values or backup contents in evidence."
+
+identity_preflight:
+  canonical_ref: "origin/main@b268847820a196ea550cb9852807b79a4163ceb9"
+  canonical_tree_match: false
+  branch_or_worktree_match: false
+  jira_match: false
+  skipped_ids:
+    - range: "CR-SST-0223..CR-SST-0227"
+      reason: "An active concurrent worktree signals allocation for article-owner plans; racing those identities would create an avoidable collision."
+    - range: "CR-SST-0228"
+      reason: "The identity is already published for the shared development Secret-storage migration."
+  evidence: "evidence/requests/CR-SST-0229/identity-and-owner-preflight-2026-08-28.md"
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "RETROACTIVE_CHILD_REPOSITORY_RECONCILIATION"
+    - "DIRTY_OWNER_WORKTREE"
+    - "SHARED_DEVELOPMENT_CLUSTER_HISTORY"
+    - "COLLIDED_REQUEST_AND_JIRA_IDENTITY"
+
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5"
+  fallback_reasoning_effort: "high"
+  reason: "The plan must preserve an ambiguous dirty owner tree and historical shared-cluster evidence without creating false publication or closure claims."
+
+subagent_deployment_plan:
+  mode: "none"
+  reason: "No delegation was requested; identity, owner-state and authorization decisions remain on one auditable path."
+
+execution:
+  approval_source: "Operator instruction on 2026-08-28: ok avancemos al siguiente gate"
+  approval_consumed_for: "reservation commit, push, PR, merge and canonical readback only"
+  control_plane_mutation_allowed: true
+  git_reservation_publication_allowed: true
+  child_repo_mutation_allowed: false
+  cluster_mutation_allowed: false
+  runtime_mutation_allowed: false
+  host_mutation_allowed: false
+  backup_or_secret_access_allowed: false
+  jira_write_allowed: false
+
+requested_next_step: >
+  Publish and read back this minimal reservation, then create a fresh execution
+  worktree from refreshed origin/main before planning owner recovery. The
+  reservation does not authorize owner-repository or runtime mutation.
+
+decision:
+  status: "approved-for-reservation-publication"
+  approver: "4uentes"
+  approved_at: "2026-08-28"
+  approval_text: "ok avancemos al siguiente gate"
