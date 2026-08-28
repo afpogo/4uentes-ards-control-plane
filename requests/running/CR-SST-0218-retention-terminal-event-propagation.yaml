@@ -22,6 +22,13 @@ control_plane_context:
   bend_owner_head_commit: "ea213114ebfbc9e7c98184d5ada3f6a58ac90776"
   bend_owner_merge_commit: "9faae46cd2af7f4d829204c08cfaf026c5948672"
   bend_owner_merge_readback_at: "2026-08-27"
+  fend_owner_pr: 18
+  fend_owner_head_commit: "c9759f6e5aad4c61654ba3a5fc75e10ff60b985c"
+  fend_owner_merge_commit: "bd9b8d2aa52aab2346b7bf94b0db05ed188c09a3"
+  fend_owner_merge_readback_at: "2026-08-27"
+  fend_development_workflow_run: 33128193119
+  fend_development_image_tag: "develop-bd9b8d2aa52a"
+  infra_development_commit: "e7f6ada7a4f906856816aaa54907a232fd5d3451"
   jira_role: "mirror"
   jira_source_of_truth: false
   jira_issue_key: "SST-121"
@@ -46,12 +53,13 @@ subagent_deployment_plan:
   reason: "Proactive delegation is disabled and the primary agent retains the producer-consumer contract decision."
 
 execution:
-  approval_status: "approved-running-publication-and-scoped-execution"
+  approval_status: "approved-running-owner-publication-consumed-qa-pending"
   approval_source: "Operator instruction on 2026-08-24: 'Ok autorizo, avancemos con el proximo gate'."
-  activation_gate: "Satisfied by running merge/readback; Bend owner merge/readback is satisfied and Fend remains gated by publication of this checkpoint."
-  child_repo_mutation_allowed: true
+  continuation_source: "Operator instruction on 2026-08-27: 'ok sigamos con el proximo paso'."
+  activation_gate: "Both owner merges and the automatic development publication are read back; integrated QA remains gated by publication of this Fend checkpoint."
+  child_repo_mutation_allowed: false
   child_repo_mutation_targets: ["sst-bend", "sst-fend"]
-  owner_publication_allowed: true
+  owner_publication_allowed: false
   owner_merge_order: ["sst-bend producer", "sst-fend consumer"]
   dependency_changes_allowed: false
   database_schema_changes_allowed: false
@@ -88,7 +96,7 @@ execution_sequence:
 
 owner_documentation:
   required: true
-  status: "bend-published-fend-pending"
+  status: "owners-merged-and-read-back"
   owner_repos:
     sst-bend:
       role: "producer and retention authority"
@@ -104,9 +112,15 @@ owner_documentation:
         - "docs/capabilities/outbound/chat-retention-v1.md"
     sst-fend:
       role: "consumer and visible-convergence authority"
+      publication_status: "merged-and-read-back"
+      pull_request: 18
+      merge_commit: "bd9b8d2aa52aab2346b7bf94b0db05ed188c09a3"
       planned_surfaces:
         - "specs/realtime-chat-v1.yml"
         - "specs/integrations/sst-chat-retention-v1.yaml"
+        - "specs/capabilities/inbound/node-auth--chat-retention-v1.yaml"
+        - "docs/architecture/realtime-chat-v1.md"
+        - "docs/capabilities/inbound/node-auth--chat-retention-v1.md"
         - "docs/chat.md"
         - "docs/privacy/chat-retention.md"
         - "docs/tasks/2026-08-24-cr-sst-0218-terminal-event.md"
@@ -155,10 +169,10 @@ validation:
   - "Owner documentation validator and secret-safe diff review."
 
 decision:
-  status: "approved-running-publication-and-scoped-execution"
+  status: "approved-running-owner-publication-consumed-qa-pending"
   approver: "4uentes"
   decided_at: "2026-08-24"
-  next_gate: "Publish and read back the Bend merge checkpoint; then refresh canonical sst-fend develop and implement only the authorized consumer convergence."
+  next_gate: "Publish and read back the Fend merge checkpoint; then rerun only the CR-SST-0207 terminal and active-turn race rows on localhost with synthetic data."
 
 evidence_refs:
   - "evidence/requests/CR-SST-0207/integrated-matrix-checkpoint-2026-08-24.md"
@@ -166,3 +180,4 @@ evidence_refs:
   - "evidence/requests/CR-SST-0218/execution-start-2026-08-24.md"
   - "evidence/requests/CR-SST-0218/jira-start-batch-authorization-2026-08-24.md"
   - "evidence/requests/CR-SST-0218/bend-owner-merge-readback-2026-08-27.md"
+  - "evidence/requests/CR-SST-0218/fend-owner-merge-readback-2026-08-27.md"
