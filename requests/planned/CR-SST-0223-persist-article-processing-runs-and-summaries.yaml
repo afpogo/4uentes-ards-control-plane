@@ -1,0 +1,59 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0223"
+title: "Persist governed article processing runs and summaries"
+status: "planned"
+source_request: "requests/inbox/CR-SST-0223-persist-article-processing-runs-and-summaries.yaml"
+created_at: "2026-08-28"
+requester: "4uentes"
+summary: "Plan the Bend owner adoption required by sst-article-agent-processing-v1."
+depends_on: ["CR-SST-0210", "CR-SST-0220"]
+control_plane_context:
+  initiative_id: "INIT-SST-0010"
+  parent_request_id: "CR-SST-0220"
+  owner_repository: "sst-bend"
+risk:
+  level: "high"
+  drivers: ["PRIVATE_ARTICLE_CONTENT", "TENANT_SCOPE", "DURABLE_PERSISTENCE", "MEMORY_BOUNDARY"]
+model_selection:
+  provider: "codex"
+  resource_level: "normal"
+  task_class: "complex-high-risk-task"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5 high"
+subagent_deployment_plan:
+  required: false
+  reason: "No delegation was requested; security and persistence boundaries remain with the primary agent."
+execution:
+  control_plane_reservation_allowed: true
+  child_repo_mutation_allowed: false
+  runtime_mutation_allowed: false
+  jira_write_allowed: false
+  next_gate: "Merge/readback, then explicit running authorization for sst-bend only."
+owner_contract:
+  responsibilities:
+    - "Authorize article processing under tenant, account, user and application scope."
+    - "Persist source snapshots, runs, context, results, summaries and memory proposals."
+    - "Enforce idempotency, immutable provenance and independent summary/memory review states."
+  prohibited:
+    - "Trust caller-supplied scope without Bend reconstruction."
+    - "Publish summaries or accept memory automatically."
+    - "Persist raw private content in operational logs."
+owner_documentation:
+  required: true
+  minimum: ["normative API and persistence contract", "human-readable ARDS/SDD", "data and lifecycle maps when applicable"]
+visual_documentation:
+  policy_id: "visual-documentation-as-code-policy"
+  shared_map_ref: "evidence/requests/CR-SST-0220/owner-request-allocation-preflight-2026-08-27.md"
+  owner_map_expectation: "Map Bend entities, scope authority and lifecycle with metadata and textual fallback."
+atomized_execution:
+  - {order: 1, objective: "Publish Bend ARDS/SDD and migrations plan.", validation: "owner documentation review"}
+  - {order: 2, objective: "Implement persistence and authorization behind tests.", validation: "owner unit, migration and scope checks"}
+  - {order: 3, objective: "Publish owner PR and remote readback.", validation: "CI and canonical branch readback"}
+  - {order: 4, objective: "Update control plane and perform final manual contract review.", validation: "npm run check and human PASS"}
+acceptance:
+  - "Bend is canonical authority for runs, results, summaries and proposals."
+  - "Both processing modes share one scoped aggregate without silent truncation."
+  - "Owner ARDS/SDD and relevant maps are published before closure."
+  - "No implementation starts under this reservation gate."

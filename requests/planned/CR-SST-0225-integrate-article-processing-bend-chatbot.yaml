@@ -1,0 +1,56 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0225"
+title: "Integrate durable article processing across Bend and chatbot"
+status: "planned"
+source_request: "requests/inbox/CR-SST-0225-integrate-article-processing-bend-chatbot.yaml"
+created_at: "2026-08-28"
+requester: "4uentes"
+summary: "Plan the cross-repo Bend-chatbot handoff after both owner contracts publish."
+depends_on: ["CR-SST-0223", "CR-SST-0224"]
+control_plane_context:
+  initiative_id: "INIT-SST-0010"
+  parent_request_id: "CR-SST-0220"
+  owner_repositories: ["sst-bend", "sst-chatbot"]
+risk:
+  level: "high"
+  drivers: ["CROSS_REPO_HANDOFF", "IDENTITY_SCOPE", "IDEMPOTENCY", "RESTART_RECOVERY"]
+model_selection:
+  provider: "codex"
+  resource_level: "normal"
+  task_class: "complex-high-risk-task"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5 high"
+subagent_deployment_plan:
+  required: false
+  reason: "No delegation was requested; cross-repo integration decisions remain with the primary agent."
+execution:
+  control_plane_reservation_allowed: true
+  child_repo_mutation_allowed: false
+  runtime_mutation_allowed: false
+  jira_write_allowed: false
+  predecessor_gate: "CR-SST-0223 and CR-SST-0224 must publish and pass owner checks."
+  next_gate: "Explicit cross-repo running authorization after predecessor readback."
+integration_contract:
+  responsibilities:
+    - "Prove authorized command, status and result handoffs for both modes."
+    - "Prove stable idempotency, checkpoint resume and failure reconciliation across restarts."
+    - "Prove provenance and privacy boundaries across Bend and chatbot."
+owner_documentation:
+  required: true
+  minimum: ["owner handoff specs in both repositories", "cross-repo integration doc", "sequence and failure maps"]
+visual_documentation:
+  policy_id: "visual-documentation-as-code-policy"
+  shared_map_ref: "evidence/requests/CR-SST-0220/owner-request-allocation-preflight-2026-08-27.md"
+  owner_map_expectation: "Map successful and failed Bend-chatbot sequences with authority and fallback."
+atomized_execution:
+  - {order: 1, objective: "Read back both predecessor owner contracts.", validation: "canonical merge and version compatibility"}
+  - {order: 2, objective: "Publish integration ARDS/SDD in both owners.", validation: "owner documentation gate"}
+  - {order: 3, objective: "Implement and prove handoff plus restart recovery.", validation: "contract and integration tests"}
+  - {order: 4, objective: "Publish owners and update control plane.", validation: "all owner checks plus npm run check"}
+acceptance:
+  - "Bend remains scope and persistence authority while chatbot remains derivation executor."
+  - "Retries and restarts do not duplicate results, summaries or proposals."
+  - "Both owners publish ARDS/SDD and policy-compliant maps."
+  - "No integration starts under this reservation gate."

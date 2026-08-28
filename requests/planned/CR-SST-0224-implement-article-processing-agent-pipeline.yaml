@@ -1,0 +1,59 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0224"
+title: "Implement the governed article processing agent pipeline"
+status: "planned"
+source_request: "requests/inbox/CR-SST-0224-implement-article-processing-agent-pipeline.yaml"
+created_at: "2026-08-28"
+requester: "4uentes"
+summary: "Plan the chatbot owner adoption required by sst-article-agent-processing-v1."
+depends_on: ["CR-SST-0219", "CR-SST-0220"]
+control_plane_context:
+  initiative_id: "INIT-SST-0010"
+  parent_request_id: "CR-SST-0220"
+  owner_repository: "sst-chatbot"
+risk:
+  level: "high"
+  drivers: ["PROMPT_INJECTION", "PRIVATE_ARTICLE_CONTENT", "MODEL_PROVIDER", "RETRY_AND_LIMITS"]
+model_selection:
+  provider: "codex"
+  resource_level: "normal"
+  task_class: "complex-high-risk-task"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5 high"
+subagent_deployment_plan:
+  required: false
+  reason: "No delegation was requested; prompt and provider boundaries remain with the primary agent."
+execution:
+  control_plane_reservation_allowed: true
+  child_repo_mutation_allowed: false
+  runtime_mutation_allowed: false
+  jira_write_allowed: false
+  next_gate: "Merge/readback, then explicit running authorization for sst-chatbot only."
+owner_contract:
+  responsibilities:
+    - "Execute full_document and sequential_paragraphs under immutable prompt snapshots."
+    - "Enforce prompt composition, output validation, size limits, checkpoints and retry semantics."
+    - "Return provenance-rich derivations without becoming persistence or authorization authority."
+  prohibited:
+    - "Treat article text or accumulated context as system instructions."
+    - "Silently truncate full-document input."
+    - "Store provider conversation state as canonical context or memory."
+owner_documentation:
+  required: true
+  minimum: ["normative pipeline and provider contract", "human-readable ARDS/SDD", "sequence and trust-boundary maps when applicable"]
+visual_documentation:
+  policy_id: "visual-documentation-as-code-policy"
+  shared_map_ref: "evidence/requests/CR-SST-0220/owner-request-allocation-preflight-2026-08-27.md"
+  owner_map_expectation: "Map prompt composition, both modes and provider trust boundary with textual fallback."
+atomized_execution:
+  - {order: 1, objective: "Publish chatbot ARDS/SDD and prompt contract.", validation: "owner documentation review"}
+  - {order: 2, objective: "Implement both modes, validation, limits and retries.", validation: "fake-provider and injection tests"}
+  - {order: 3, objective: "Publish owner PR and remote readback.", validation: "CI and canonical branch readback"}
+  - {order: 4, objective: "Update control plane and perform final manual contract review.", validation: "npm run check and human PASS"}
+acceptance:
+  - "Both modes produce schema-valid outputs with immutable provenance."
+  - "Prompt changes create new runs and prompt injection fails closed."
+  - "Owner ARDS/SDD and relevant maps are published before closure."
+  - "No implementation starts under this reservation gate."
