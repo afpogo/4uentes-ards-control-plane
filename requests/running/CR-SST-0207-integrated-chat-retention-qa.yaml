@@ -89,14 +89,15 @@ qa_matrix:
 validation:
   dependency_lifecycles: "PASS: CR-SST-0204, CR-SST-0205, CR-SST-0206 and CR-SST-0211 are done."
   runtime_preflight: "PASS after CR-SST-0217: Argo is Synced/Healthy, localhost root and JWKS return HTTP 200, retention is true and the bounded temporary TTL is 120 seconds."
-  localhost_matrix: "PARTIAL: facade, multi-session replay, TTL, cross-principal isolation, save/session durability, clear-local recovery, finish deletion and saved delete passed; terminal realtime notification and cache eviction remain unsatisfied."
+  localhost_matrix: "PARTIAL: facade, multi-session replay, TTL, cross-principal isolation, save/session durability, clear-local recovery, finish/delete terminal notification and active-turn no-resurrection passed; product-safe cache eviction remains unsatisfied."
   reserved_ngrok_matrix: "BLOCKED: the reserved edge returns HTTP 302 before synthetic registration because external access authentication is required; no bypass was attempted."
   owner_checks: "PASS: CR-SST-0217 Infra owner check, renders and dry-runs passed on 2026-08-24."
   cache_aside_matrix: "BLOCKED: no product contract can trigger a bounded Redis eviction and direct datastore/cache mutation is forbidden in this lifecycle."
-  realtime_terminal_event: "FAIL: two active sessions received no finish/delete/terminal event after HTTP finish, although the second session replayed the completed turn."
+  realtime_terminal_event: "PASS after CR-SST-0218: two active sessions each received exactly one chat:conversation:terminated event with the exact allowlisted payload for both temporary_finished and saved_deleted."
+  delete_saved_active_turn_race: "PASS after CR-SST-0218: deletion fenced and cancelled an accepted turn, emitted no assistant completion after the fence, returned history 404 and did not resurrect the saved list entry."
   browser_consent_and_clear_local: "PASS: consent copy, explicit save, clear-local recovery and confirmed saved deletion passed in Chrome headless with sanitized screenshots."
-  synthetic_cleanup: "PARTIAL: successful runs cleaned conversations through product contracts; read-only counts found 8 synthetic identities and 2 saved conversations left by aborted attempts, with no authorized product cleanup path for those lost ephemeral credentials."
-  control_plane_check: "PASS: 709 lifecycle files scanned with 0 FAIL; execution publication, owner documentation and visual documentation gates passed."
+  synthetic_cleanup: "PARTIAL: this rerun cleaned both conversations through product contracts; its single synthetic Auth identity remains because no product deletion route exists. Historical residue was not re-read or mutated."
+  control_plane_check: "PASS after CR-SST-0218 QA: full gate completed with 0 FAIL; execution publication, owner documentation and visual documentation passed."
 
 decision:
   status: "approved-running"
@@ -111,6 +112,7 @@ evidence_refs:
   - "evidence/requests/CR-SST-0207/jira-blocker-comment-readback-2026-08-23.md"
   - "evidence/requests/CR-SST-0217/owner-and-runtime-readback-2026-08-24.md"
   - "evidence/requests/CR-SST-0207/integrated-matrix-checkpoint-2026-08-24.md"
+  - "evidence/requests/CR-SST-0218/integrated-terminal-race-qa-2026-08-27.md"
 
 closure_limits:
   - "Every QA matrix row must pass on localhost and reserved ngrok before complete closure."
