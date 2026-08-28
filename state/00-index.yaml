@@ -44,6 +44,7 @@ features:
   - "state/features/document-agent.current.yaml"
   - "state/features/dictionary-tags.current.yaml"
   - "state/features/dictionary-secret-management.current.yaml"
+  - "state/features/kubernetes-secret-storage-encryption.current.yaml"
   - "state/features/sst-tags-governance.current.yaml"
   - "state/features/learning-content-tags.current.yaml"
   - "state/features/article-semantic-kind.current.yaml"
