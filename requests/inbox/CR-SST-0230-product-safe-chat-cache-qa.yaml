@@ -1,0 +1,98 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0230"
+title: "Enable product-safe chat cache-aside QA"
+status: "inbox"
+created_at: "2026-08-28"
+requester: "4uentes"
+
+business_context: >
+  CR-SST-0207 proved the retention contract on localhost except for the
+  cache-aside row. PostgreSQL remains authoritative and Redis remains an
+  optional fail-open cache, but the integrated harness cannot provoke a
+  bounded eviction and distinguish the following miss and hit without direct
+  backing-store access, which is forbidden.
+
+requested_change: >
+  Plan a product-owned, metadata-only QA signal for saved-chat history cache
+  outcomes and a synthetic sequence that invalidates cache through existing
+  authenticated product behavior. Preserve the Auth facade for every HTTP
+  operation and keep Redis credentials, keys and direct commands outside the
+  QA surface.
+
+expected_outcome: >
+  CR-SST-0207 can prove that an owned saved conversation survives bounded
+  cache invalidation, that the first subsequent history read falls through to
+  PostgreSQL and that the next read is served from cache, without changing
+  durable authority or exposing private data.
+
+initial_scope:
+  solution: "sst"
+  initiative_id: "INIT-SST-0007"
+  parent_request_id: "CR-SST-0202"
+  source_qa_request_id: "CR-SST-0207"
+  control_repository: "4uentes-orchestor"
+  expected_owner_repositories: ["sst-bend", "4uentes-auth"]
+  intentionally_unaffected_repositories: ["sst-fend", "sst-chatbot", "sst-4uentes-infra"]
+
+constraints:
+  - "This inbox reserves identity and supports planning only."
+  - "Do not modify child repositories, runtime, deployment, feature flags, datastores, secrets or Jira during reservation."
+  - "Do not add an administrative cache-eviction endpoint or allow the QA harness to issue Redis commands."
+  - "Use only existing authenticated owner-scoped product behavior to invalidate synthetic chat history."
+  - "Any proposed hit/miss signal must contain no conversation ID, principal, message content, Redis key, credential, latency detail or private URL."
+  - "Preserve PostgreSQL as durable authority and Redis as optional fail-open cache-aside."
+  - "Preserve 4uentes-auth as the HTTP facade; direct browser-to-Bend remains limited to the existing Socket.IO exception."
+  - "Keep reserved-edge access and inaccessible synthetic-identity cleanup outside this lifecycle."
+
+identity_preflight:
+  canonical_ref: "origin/main@7e059ab"
+  canonical_tree_match: false
+  branch_or_worktree_match: false
+  jira_exact_identity_match: false
+  related_jira_context: ["SST-114", "SST-113"]
+  evidence: "evidence/requests/CR-SST-0230/identity-and-owner-preflight-2026-08-28.md"
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers: ["CROSS_REPO_OBSERVABILITY_CONTRACT", "CACHE_AUTHORITY", "PRIVACY", "QA_DATA_MUTATION"]
+
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5"
+  fallback_reasoning_effort: "high"
+  reason: "The future plan crosses Bend cache semantics and Auth response forwarding while protecting durable authority and privacy."
+
+subagent_deployment_plan:
+  mode: "none"
+  reason: "No delegation was requested; contract and ownership decisions remain on one auditable path."
+
+execution:
+  approval_source: "Operator instruction on 2026-08-28: 'continuemos'."
+  approval_consumed_for: "reservation commit, push, PR, merge and canonical readback only"
+  control_plane_mutation_allowed: true
+  git_reservation_publication_allowed: true
+  child_repo_mutation_allowed: false
+  runtime_mutation_allowed: false
+  deployment_allowed: false
+  production_mutation_allowed: false
+  datastore_mutation_allowed: false
+  secret_mutation_allowed: false
+  jira_write_allowed: false
+
+requested_next_step: >
+  Publish and read back this reservation, refresh origin/main and create a new
+  isolated worktree to plan the exact Bend producer signal, Auth header
+  allowlist, owner documentation, validation and later Jira mirror batch.
+
+decision:
+  status: "approved-for-reservation-publication"
+  approver: "4uentes"
+  approved_at: "2026-08-28"
+  approval_text: "continuemos"
