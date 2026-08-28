@@ -30,7 +30,28 @@ execution:
   child_repo_mutation_allowed: false
   runtime_mutation_allowed: false
   jira_write_allowed: false
-  next_gate: "Merge/readback, then explicit running authorization for sst-bend only."
+  next_gate: "Publish this execution preview, then obtain explicit running and Jira batch authorizations."
+plan_publication:
+  status: "merged-and-read-back"
+  pull_request: 167
+  head_commit: "7749d95301c81415e17e7b6c3f3a00fdfd9804a5"
+  merge_commit: "7ee86709bf9e679d71781e4f66fa373660cdab61"
+  evidence_ref: "evidence/requests/CR-SST-0223/plan-publication-readback-2026-08-28.md"
+owner_readonly_preflight:
+  status: "passed-with-dirty-checkout-excluded"
+  integration_branch: "develop"
+  existing_runtime_strategy: "evolve-document-agent-jobs-as-compatible-derivation-run"
+  child_repo_mutation_performed: false
+  evidence_ref: "evidence/requests/CR-SST-0223/owner-readonly-preflight-2026-08-28.md"
+jira_readonly_preflight:
+  status: "passed"
+  duplicate_matches: 0
+  parent_issue_key: "SST-122"
+  issue_type: "Subtask"
+  issue_type_id: "10006"
+  start_transition_id: "21"
+  writes_performed: false
+  evidence_ref: "evidence/requests/CR-SST-0223/jira-readonly-preflight-2026-08-28.md"
 owner_contract:
   responsibilities:
     - "Authorize article processing under tenant, account, user and application scope."
@@ -57,3 +78,10 @@ acceptance:
   - "Both processing modes share one scoped aggregate without silent truncation."
   - "Owner ARDS/SDD and relevant maps are published before closure."
   - "No implementation starts under this reservation gate."
+evidence_refs:
+  - "evidence/requests/CR-SST-0223/plan-publication-readback-2026-08-28.md"
+  - "evidence/requests/CR-SST-0223/owner-readonly-preflight-2026-08-28.md"
+  - "evidence/requests/CR-SST-0223/implementation-plan.md"
+  - "evidence/requests/CR-SST-0223/jira-readonly-preflight-2026-08-28.md"
+  - "evidence/requests/CR-SST-0223/jira-description-draft.md"
+  - "evidence/requests/CR-SST-0223/execution-authorization-preview-2026-08-28.md"
