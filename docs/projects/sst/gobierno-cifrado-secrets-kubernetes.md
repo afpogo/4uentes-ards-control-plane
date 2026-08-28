@@ -1,9 +1,11 @@
 # Gobierno del cifrado de Secrets de Kubernetes en SST
 
-Estado observado: `plan-published` al 2026-08-27.
+Estado observado: `disposable-prototype-proven/shared-migration-planned` al
+2026-08-28.
 
 Este documento explica visualmente la funcionalidad gobernada por
-`CR-SST-0221`. La autoridad machine-readable permanece en
+`CR-SST-0221` y su sucesor operativo `CR-SST-0228`. La autoridad
+machine-readable permanece en
 `state/features/kubernetes-secret-storage-encryption.current.yaml` y en el
 lifecycle de la solicitud. Los mapas no autorizan cambios en el clúster, claves,
 Secrets, repositorios hijos, workloads o Jira.
@@ -36,7 +38,8 @@ visual_map:
   source_refs:
     - "state/features/kubernetes-secret-storage-encryption.current.yaml"
     - "requests/planned/CR-SST-0221-adopt-encrypted-kubernetes-secret-storage.yaml"
-  observed_at: "2026-08-27"
+    - "requests/planned/CR-SST-0228-migrate-shared-development-secret-storage.yaml"
+  observed_at: "2026-08-28"
   authority_boundary: "Vista derivada; el feature state CR-SST-0221 y los futuros contratos del owner de infraestructura conservan autoridad."
   textual_fallback_required: true
 ```
@@ -94,7 +97,8 @@ visual_map:
   source_refs:
     - "state/features/kubernetes-secret-storage-encryption.current.yaml"
     - "requests/planned/CR-SST-0221-adopt-encrypted-kubernetes-secret-storage.yaml"
-  observed_at: "2026-08-27"
+    - "requests/planned/CR-SST-0228-migrate-shared-development-secret-storage.yaml"
+  observed_at: "2026-08-28"
   authority_boundary: "Vista derivada; el lifecycle CR-SST-0221 conserva autoridad y cada mutacion futura requiere autorizacion separada."
   textual_fallback_required: true
   status_vocabulary: ["observed", "published", "proven", "authorized", "migrating", "steady", "blocked"]
@@ -104,8 +108,8 @@ visual_map:
 flowchart LR
     U["Unencrypted storage [confirmed]"]
     P["Plan publication [validated]"]
+    X["Disposable prototype [validated]"]
     C["Data and recovery approval gate [blocked]"]
-    X["Disposable prototype [planned]"]
     A["Shared migration [planned]"]
     F["Encrypted plus identity fallback [planned]"]
     S["Encrypted without identity [planned]"]
@@ -113,9 +117,9 @@ flowchart LR
     B["Stop and recover [blocked]"]
 
     U -->|"plan merge and readback"| P
-    P -->|"custodian, backup and outage defined"| C
-    C -->|"synthetic proof approved"| X
-    X -->|"human path decision"| A
+    P -->|"synthetic proof approved"| X
+    X -->|"custodian, backup and outage defined"| C
+    C -->|"human path decision"| A
     A -->|"activate provider with bounded waves"| F
     F -->|"rewrite all Secrets and verify raw prefix"| S
     S -->|"rotate and prove recovery"| V
@@ -137,9 +141,9 @@ flowchart LR
 
 ```text
 Unencrypted observed --plan merge and readback--> Plan published.
-Plan published --custodian, backup and outage defined--> Data and recovery gate.
-Data and recovery gate --synthetic proof approved--> Disposable prototype proven.
-Disposable prototype --human path decision--> Shared migration authorized.
+Plan published --synthetic proof approved--> Disposable prototype proven.
+Disposable prototype --custodian, backup and outage defined--> Data and recovery gate.
+Data and recovery gate --human path decision--> Shared migration authorized.
 Shared migration --activate provider with bounded waves--> Encrypted plus identity fallback.
 Encrypted plus identity fallback --rewrite and verify--> Encrypted without identity.
 Encrypted without identity --rotate and recover--> Rotation and recovery validated.
@@ -160,8 +164,9 @@ visual_map:
   source_refs:
     - "state/features/kubernetes-secret-storage-encryption.current.yaml"
     - "requests/planned/CR-SST-0221-adopt-encrypted-kubernetes-secret-storage.yaml"
+    - "requests/planned/CR-SST-0228-migrate-shared-development-secret-storage.yaml"
     - "evidence/requests/CR-SST-0221/baseline-and-adoption-decision-2026-08-27.md"
-  observed_at: "2026-08-27"
+  observed_at: "2026-08-28"
   authority_boundary: "Vista derivada sin valores; la futura solicitud de infraestructura y su runbook owner conservaran autoridad de ejecucion."
   textual_fallback_required: true
 ```
@@ -214,7 +219,8 @@ visual_map:
   source_refs:
     - "state/features/kubernetes-secret-storage-encryption.current.yaml"
     - "requests/planned/CR-SST-0221-adopt-encrypted-kubernetes-secret-storage.yaml"
-  observed_at: "2026-08-27"
+    - "requests/planned/CR-SST-0228-migrate-shared-development-secret-storage.yaml"
+  observed_at: "2026-08-28"
   authority_boundary: "Vista derivada sin material criptografico; el futuro runbook de sst-4uentes-infra y la aprobacion del custodio conservaran autoridad operativa."
   textual_fallback_required: true
 ```
