@@ -1,0 +1,190 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0222"
+title: "Reconcile stale SST integrated-quality identities"
+status: "planned"
+source_request: "requests/inbox/CR-SST-0222-reconcile-stale-integrated-quality-identities.yaml"
+created_at: "2026-08-28"
+requester: "4uentes"
+
+summary: >
+  Establish INIT-SST-0009 and reconcile the unpublished or collided identities
+  produced by the stale quality run without rewriting history, repeating child
+  mutation or treating Jira as request authority.
+
+control_plane_context:
+  initiative_id: "INIT-SST-0009"
+  reservation_pr: 155
+  reservation_commit: "08735a4189189af5573221fbd6d2cd9b701e7df1"
+  reservation_merge_commit: "af0560dea03aae6df18d7a08e88f5b4cd5e2146e"
+  planning_base: "origin/main@9e8677d0a9b62a53370b2c69b9a531e198315942"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  jira_epic_key: "SST-101"
+  jira_coordinating_issue_key: "SST-102"
+  jira_write_authorized: false
+
+identity_decisions:
+  canonical_coordinator:
+    request_id: "CR-SST-0222"
+    replaces_unpublished_label: "CR-SST-0177"
+    reason: "CR-SST-0177 was never published in the canonical request tree, although SST-102 mirrors that historical label."
+  historical_slices:
+    - historical_label: "CR-SST-0210"
+      intent: "kind API server host-port stabilization and restart-durable localhost:8088 recovery"
+      canonical_collision: "memory identity scope"
+      owner_repository: "sst-4uentes-infra"
+      runtime_mutation_observed: true
+      jira_issue_key: "SST-119"
+      disposition: "reserve a distinct retroactive request after this plan is canonical"
+    - historical_label: "CR-SST-0211"
+      intent: "public landing WCAG color-contrast remediation"
+      canonical_collision: "chat retention facade in Auth"
+      owner_repository: "sst-fend"
+      runtime_mutation_observed: false
+      jira_issue_key: null
+      disposition: "reserve a distinct retroactive request after the infrastructure slice"
+    - historical_label: "CR-SST-0212"
+      intent: "local frontend-auth readiness gate"
+      canonical_collision: "SST Phinance facade Swagger"
+      owner_repository: "sst-fend"
+      runtime_mutation_observed: false
+      jira_issue_key: null
+      disposition: "reserve a distinct retroactive request after the contrast slice"
+  future_identity_rule: >
+    No numeric ID is assigned by this plan. Each slice must run a fresh global
+    Git/worktree/Jira preflight and publish its own inbox reservation first.
+
+impact_analysis:
+  required: true
+  current_plan_affected_services:
+    - service_id: "4uentes-orchestor"
+      via: "initiative, planned lifecycle and reconciliation evidence"
+  historical_affected_services:
+    - service_id: "sst-4uentes-infra"
+      via: "already completed kind bootstrap, cluster recreation and restart validation"
+    - service_id: "sst-fend"
+      via: "already completed contrast and readiness changes"
+  current_child_repo_mutation_required: false
+  current_runtime_mutation_required: false
+  risks:
+    - id: "CANONICAL_IDENTITY_REWRITE"
+      severity: "critical"
+      control: "Preserve published identities and relabel only through new retroactive lifecycles."
+    - id: "DIRTY_WORKTREE_SCOPE_MIX"
+      severity: "high"
+      control: "Do not clean, commit or publish either historical dirty checkout as a unit."
+    - id: "JIRA_FALSE_AUTHORITY"
+      severity: "high"
+      control: "Read existing mirrors only until an exact correction batch is authorized."
+    - id: "QUALITY_FALSE_POSITIVE"
+      severity: "high"
+      control: "Separate runtime availability, local frontend QA, deployed artifact QA and owner test evidence."
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "REQUEST_IDENTITY_COLLISION"
+    - "RETROACTIVE_CHILD_AND_RUNTIME_MUTATION"
+    - "HISTORICAL_EXTERNAL_JIRA_WRITES"
+    - "DIRTY_WORKTREE_RECOVERY"
+
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5"
+  fallback_reasoning_effort: "high"
+  reason: "Canonical identity recovery spans historical child/runtime mutation and external tracker references."
+
+subagent_deployment_plan:
+  mode: "none"
+  reason: "Current runtime policy prohibits delegation without an explicit user request; the primary agent retains identity decisions."
+
+atomized_plan:
+  - order: 1
+    id: "publish-initiative-and-plan"
+    objective: "Publish INIT-SST-0009, this identity map and read-only Jira evidence."
+    output: "Canonical plan merged and read back before any additional mutation."
+    risk: "medium"
+    validation: "Full control-plane check and remote readback pass."
+  - order: 2
+    id: "reserve-retroactive-infra-request"
+    objective: "Reserve a new identity for the completed kind API-port stabilization and its owner evidence."
+    output: "One retroactive owner-scoped request with explicit ordering deviation."
+    risk: "high"
+    validation: "Fresh identity preflight passes; no cluster or owner mutation is repeated."
+  - order: 3
+    id: "reserve-retroactive-contrast-request"
+    objective: "Reserve a new identity for the completed public-landing contrast remediation."
+    output: "One retroactive sst-fend request linked to preserved browser evidence."
+    risk: "medium"
+    validation: "Owner files and validation facts are attributable without importing unrelated dirty changes."
+  - order: 4
+    id: "reserve-retroactive-readiness-request"
+    objective: "Reserve a new identity for the completed frontend-auth readiness gate."
+    output: "One retroactive sst-fend request with host/container and negative-path evidence."
+    risk: "medium"
+    validation: "No auth contract or producer repo change is inferred."
+  - order: 5
+    id: "prepare-jira-identity-correction"
+    objective: "Prepare an exact, separately authorized correction batch for SST-102 and SST-119."
+    output: "Before/after payload preview without writes."
+    risk: "high"
+    validation: "New request IDs are canonical first; hierarchy and protected fields remain unchanged."
+  - order: 6
+    id: "assess-critical-journey-baselines"
+    objective: "Inventory owner tests and select critical integration/E2E journeys."
+    output: "Evidence-backed matrix that distinguishes test files from covered journeys."
+    risk: "medium"
+    validation: "Each coverage claim maps to an executable owner command or is marked TODO."
+
+execution:
+  requires_human_approval: true
+  approval_status: "plan-publication-authorized-execution-not-authorized"
+  approval_source: "Operator instructions on 2026-08-28: avancemos; ok autorizo"
+  control_plane_mutation_allowed: true
+  child_repo_mutation_allowed: false
+  runtime_mutation_allowed: false
+  infrastructure_mutation_allowed: false
+  git_plan_publication_allowed: true
+  jira_write_allowed: false
+  secret_or_datastore_access_allowed: false
+  future_publication_policy:
+    policy_ref: "execution-publication-and-tracker-closure-policy"
+    adoption_gate: "Add the normative execution_publication_rule block only when one running lifecycle exists."
+    plan_merge_required_before_external_mutation: true
+    terminal_merge_and_remote_readback_required: true
+    tracker_issue_key: "SST-102"
+
+owner_documentation:
+  required: false
+  status: "not-applicable-control-plane-planning-only"
+  note: >
+    Historical owner documentation is evidence input. Each future retroactive
+    owner request must prove its own owner-documentation gate before closure.
+
+validation:
+  - "4uentes-orchestor npm run check."
+  - "4uentes-orchestor git diff --check."
+  - "Canonical initiative index and initiative validator pass."
+  - "Jira readback proves SST-101/SST-102 hierarchy and the stale labels without writing."
+  - "No child repository, runtime, infrastructure, datastore, secret or Jira mutation occurs."
+
+acceptance:
+  - "INIT-SST-0009 is indexed and valid with CR-SST-0222 as its canonical coordinating request."
+  - "CR-SST-0177 and collided CR-SST-0210 through CR-SST-0212 remain explicit historical provenance only."
+  - "Infrastructure, contrast and readiness are separate future retroactive request slices."
+  - "No future numeric request ID is claimed before its own reservation preflight."
+  - "robots.txt and llms.txt remain excluded from SST product scope."
+  - "Jira corrections remain unexecuted until a separate enumerated authorization."
+
+decision:
+  status: "approved-for-plan-publication"
+  approver: "4uentes"
+  decided_at: "2026-08-28"
+  approval_text: "ok autorizo"
