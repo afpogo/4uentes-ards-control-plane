@@ -29,6 +29,10 @@ control_plane_context:
   fend_development_workflow_run: 33128193119
   fend_development_image_tag: "develop-bd9b8d2aa52a"
   infra_development_commit: "e7f6ada7a4f906856816aaa54907a232fd5d3451"
+  fend_checkpoint_pr: 143
+  fend_checkpoint_head_commit: "671813673b5a4c27b9f88d70da26fcadd66a08f3"
+  fend_checkpoint_merge_commit: "6d9d320ae7f256ab354b5757e0e71578434a5d0d"
+  fend_checkpoint_readback_at: "2026-08-27"
   jira_role: "mirror"
   jira_source_of_truth: false
   jira_issue_key: "SST-121"
@@ -53,7 +57,7 @@ subagent_deployment_plan:
   reason: "Proactive delegation is disabled and the primary agent retains the producer-consumer contract decision."
 
 execution:
-  approval_status: "approved-running-owner-publication-consumed-qa-pending"
+  approval_status: "approved-running-integrated-qa-passed-terminal-publication-pending"
   approval_source: "Operator instruction on 2026-08-24: 'Ok autorizo, avancemos con el proximo gate'."
   continuation_source: "Operator instruction on 2026-08-27: 'ok sigamos con el proximo paso'."
   activation_gate: "Both owner merges and the automatic development publication are read back; integrated QA remains gated by publication of this Fend checkpoint."
@@ -68,6 +72,9 @@ execution:
   feature_flag_changes_allowed: false
   direct_infra_or_gitops_mutation_allowed: false
   production_mutation_allowed: false
+  synthetic_runtime_test_data_allowed: true
+  synthetic_conversation_cleanup: "completed-through-product-contract"
+  synthetic_identity_cleanup: "blocked-no-product-contract"
   development_publication_allowed: true
   development_publication_mode: "Existing owner CI and GitOps automation triggered by approved develop merges only."
   jira_write_allowed: "Start batch consumed by SST-121 readback in En curso; no further Jira write is allowed until a separate terminal batch is explicitly authorized."
@@ -168,11 +175,21 @@ validation:
   - "4uentes-orchestor npm run check after owner publication and before closure."
   - "Owner documentation validator and secret-safe diff review."
 
+validation_results:
+  localhost_runtime_preflight: "PASS: Argo Synced/Healthy; root and JWKS returned 200 through Host localhost."
+  deployed_bend_image: "ghcr.io/afpogo/sst-bend:develop-9faae46cd2af"
+  deployed_fend_image: "ghcr.io/afpogo/sst-fend:develop-bd9b8d2aa52a"
+  temporary_terminal_event: "PASS: temporary_finished reached both active sockets once with the exact two-field payload; history and rejoin returned not found."
+  saved_delete_active_turn_race: "PASS: saved_deleted reached both active sockets once; the accepted turn was cancelled, no assistant completion followed, history returned 404 and the saved list did not resurrect the conversation."
+  privacy: "PASS: evidence contains no token, cookie, credential, message body, conversation ID or private URL."
+  cleanup: "PASS for both synthetic conversations through product APIs; the one synthetic Auth identity has no product deletion contract and is recorded as residue without direct datastore mutation."
+  control_plane_check: "PASS: full gate completed; execution publication, owner documentation and visual documentation passed with 0 FAIL."
+
 decision:
-  status: "approved-running-owner-publication-consumed-qa-pending"
+  status: "approved-running-integrated-qa-passed-terminal-publication-pending"
   approver: "4uentes"
   decided_at: "2026-08-24"
-  next_gate: "Publish and read back the Fend merge checkpoint; then rerun only the CR-SST-0207 terminal and active-turn race rows on localhost with synthetic data."
+  next_gate: "Publish and read back the integrated QA checkpoint; then prepare the terminal lifecycle and request separate exact authorization for the SST-121 terminal Jira batch."
 
 evidence_refs:
   - "evidence/requests/CR-SST-0207/integrated-matrix-checkpoint-2026-08-24.md"
@@ -181,3 +198,4 @@ evidence_refs:
   - "evidence/requests/CR-SST-0218/jira-start-batch-authorization-2026-08-24.md"
   - "evidence/requests/CR-SST-0218/bend-owner-merge-readback-2026-08-27.md"
   - "evidence/requests/CR-SST-0218/fend-owner-merge-readback-2026-08-27.md"
+  - "evidence/requests/CR-SST-0218/integrated-terminal-race-qa-2026-08-27.md"
