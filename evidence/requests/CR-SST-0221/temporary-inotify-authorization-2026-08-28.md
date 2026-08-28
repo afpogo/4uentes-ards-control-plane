@@ -33,7 +33,7 @@ cifrado de Secrets de `CR-SST-0221` y habilita:
 - No se autoriza exponer claves, valores de Secret o payloads crudos de etcd.
 - No se autoriza migrar el clúster compartido ni escribir en Jira.
 
-## Gatas de ejecución
+## Puertas de ejecución
 
 - Esta autorización debe estar publicada y leída desde `main` antes del cambio
   temporal.
