@@ -2,7 +2,7 @@
 
 Fecha: 2026-08-28  
 Autorizante: `4uentes`  
-Estado: `approved-pending-publication-readback`
+Estado: `published-read-back-and-consumed`
 
 ## Texto recibido
 
@@ -39,3 +39,7 @@ Estado: `approved-pending-publication-readback`
 
 Esta autorización debe estar fusionada y leída desde `main` antes de instalar
 software, crear el worktree owner o modificar `sst-4uentes-infra`.
+
+Readback satisfecho por el PR `#169`, merge
+`7e059abdc329c9b83b82042a17716600ea449e68`. El resultado ejecutado queda en
+`evidence/requests/CR-SST-0228/lot-a-execution-proof-2026-08-28.md`.
