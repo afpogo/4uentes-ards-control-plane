@@ -65,6 +65,11 @@ source_evidence_refs:
   - "evidence/requests/CR-SST-0220/jira-create-start-result-2026-08-28.md"
   - "evidence/requests/CR-SST-0220/reservation-and-jira-manual-review-2026-08-28.md"
   - "evidence/requests/CR-SST-0220/owner-request-allocation-preflight-2026-08-27.md"
+  - "evidence/requests/CR-SST-0223/plan-publication-readback-2026-08-28.md"
+  - "evidence/requests/CR-SST-0223/owner-readonly-preflight-2026-08-28.md"
+  - "evidence/requests/CR-SST-0223/implementation-plan.md"
+  - "evidence/requests/CR-SST-0223/jira-readonly-preflight-2026-08-28.md"
+  - "evidence/requests/CR-SST-0223/execution-authorization-preview-2026-08-28.md"
 model_refs:
   - "specs/initiatives/initiative-model.yaml"
   - "docs/requests/initiative-model.md"
@@ -162,7 +167,7 @@ paragraph_derivation_adoption:
   owner_execution_status: "control-plane-only-approved; child-owner-execution-not-authorized"
   next_gate: "publish and read back the validated contract, then perform final human QA"
 article_processing_adoption:
-  status: "contract-published-and-human-approved-pending-owner-allocation-and-tracker"
+  status: "contract-and-owner-plans-published; cr-sst-0223-execution-preview-pending-authorization"
   request_id: "CR-SST-0220"
   feature_state_id: "article-agent-processing"
   predecessor_contract_request_id: "CR-SST-0219"
@@ -181,8 +186,10 @@ article_processing_adoption:
   control_plane_manual_review: "passed-2026-08-27"
   visual_documentation_rule: "future owner requests must evaluate and publish policy-compliant maps with textual fallback when applicable"
   owner_request_ids: ["CR-SST-0223", "CR-SST-0224", "CR-SST-0225", "CR-SST-0226", "CR-SST-0227"]
-  owner_allocation_status: "planned-lifecycles-created-locally; pending-merge-and-readback"
-  next_gate: "publish and read back the five planned owner lifecycles; owner execution remains separately gated"
+  owner_allocation_status: "planned-lifecycles-merged-and-read-back-pr-167"
+  first_owner_request_id: "CR-SST-0223"
+  first_owner_preflight_status: "owner-and-jira-readonly-preflights-passed; execution-and-writes-not-authorized"
+  next_gate: "publish the CR-SST-0223 execution preview, then separately authorize its running/owner execution and Jira create-and-start batch"
 relationships:
   depends_on:
     - {initiative_id: "INIT-SST-0007", role: "authenticated realtime chat and internal chatbot runtime"}
@@ -249,9 +256,9 @@ progress:
     - "CR-SST-0226"
     - "CR-SST-0227"
   next_recommended_request: >
-    Execute and read back the authorized CR-SST-0220 Jira mirror batch. Then
-    publish and read back the five planned owner lifecycles; each owner remains
-    blocked until its own running authorization.
+    Publish and read back the CR-SST-0223 execution preview. Then obtain two
+    exact approvals: the running/owner Bend gate and the one-use Jira Subtask
+    create-and-start batch. Do not reuse the dirty owner checkout.
   current_runtime_status: >
     CR-SST-0193 canonical persistence and API are implemented, merged and
     validated in local/dev. CR-SST-0210 supplies the merged tenant,
@@ -264,7 +271,10 @@ progress:
     but has no owner-runtime implementation yet. CR-SST-0220 now plans the
     article-facing generalization with full-document and sequential modes. Its
     V1 control-plane contract is published and human-approved under the
-    running gate, but it does not change runtime or owner repositories.
+    running gate. Owner discovery found a legacy document-agent job and
+    deterministic agent_summary projection, but not a contract-compliant V1
+    aggregate. CR-SST-0223 therefore plans compatible evolution rather than a
+    parallel job model; no owner mutation is authorized yet.
   manual_qa_status: >
     Contract walkthrough, focused functional API QA, normal identity-path QA
     and conversational proposal/recall QA are complete for the published
@@ -273,5 +283,7 @@ progress:
     manual QA review. CR-SST-0220 records a Chrome DevTools-only QA plan and a
     sanitized discovery blocker for unhealthy article APIs. Its documentary
     contract review passed and confirms policy-compliant maps for later owner
-    documentation. User-visible QA starts after the required owner integration
-    and the initiative closes only through terminal evidence.
+    documentation. CR-SST-0223 now has owner/Jira read-only preflights and a
+    policy-compliant persistence map; its runtime QA remains blocked until an
+    explicit owner execution gate. User-visible QA starts after the required
+    owner integration and the initiative closes only through terminal evidence.
