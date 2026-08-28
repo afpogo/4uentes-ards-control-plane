@@ -1,0 +1,72 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0222"
+title: "Reconcile stale SST integrated-quality identities"
+status: "inbox"
+created_at: "2026-08-27"
+requester: "4uentes"
+
+business_context: >
+  The localhost recovery and quality run produced useful owner changes and
+  validation evidence from a control-plane branch that was 325 commits behind
+  the refreshed canonical ref. Its local CR-SST-0210, CR-SST-0211 and
+  CR-SST-0212 labels collide with different request identities already
+  published on origin/main, so those labels cannot be promoted as canonical.
+
+requested_change: >
+  Reconcile the stale-branch integrated-quality artifacts without rewriting
+  published history: establish the missing SST quality initiative, classify
+  every collided local artifact, reserve new request identities sequentially
+  for valid owner work, and preserve explicit evidence that child-repository
+  mutation preceded the canonical lifecycle.
+
+expected_outcome: >
+  Every retained localhost, accessibility and readiness fact is attributable
+  to one non-colliding canonical request; invalid stale labels remain only as
+  historical provenance; and the critical-journey/test-baseline assessment can
+  start from a clean current control-plane baseline.
+
+initial_scope:
+  solution: "sst"
+  control_repository: "4uentes-orchestor"
+  historical_owner_repository: "sst-fend"
+  proposed_initiative_id: "INIT-SST-0009"
+  stale_labels_to_reconcile:
+    - "CR-SST-0210"
+    - "CR-SST-0211"
+    - "CR-SST-0212"
+  first_free_identity_observed: "CR-SST-0222"
+
+ordering_deviation: >
+  The sst-fend presentation and readiness changes, owner documentation and
+  browser validation were executed before a lifecycle was published on the
+  canonical control-plane baseline. This request records that deviation and
+  does not treat the stale untracked lifecycles as canonical authorization.
+
+constraints:
+  - "Do not modify, clean, commit or publish the dirty stale control-plane branch as a unit."
+  - "Do not modify or clean the dirty sst-fend owner worktree during identity reconciliation."
+  - "Do not reuse any canonical CR-SST-0210 through CR-SST-0221 identity."
+  - "Reserve each follow-up identity from a refreshed canonical ref before further child mutation."
+  - "Keep robots.txt and llms.txt outside SST scope."
+  - "Do not write Jira without a separate enumerated authorization and a successful read-only preflight."
+  - "Do not claim that a local branch or worktree reserves CR-SST-0222 before merge and canonical readback."
+
+execution:
+  requires_human_approval: true
+  approval_source: "Operator instructions on 2026-08-27: ok avancemos; listo autorizo siguiendo las policies"
+  approval_consumed_for: "local intake plus reservation commit, push, PR, merge and canonical readback only"
+  child_repo_mutation_allowed: false
+  git_publication_allowed: true
+  jira_write_allowed: false
+  runtime_mutation_allowed: false
+
+requested_next_step: >
+  Validate this minimal reservation locally, then obtain authorization to
+  publish and read it back before opening the planned reconciliation lifecycle.
+
+decision:
+  status: "approved-for-reservation-publication"
+  approver: "4uentes"
+  approved_at: "2026-08-27"
+  approval_text: "listo autorizo siguiendo las policies"
