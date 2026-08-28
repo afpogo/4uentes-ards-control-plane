@@ -154,12 +154,22 @@ execution:
   git_plan_publication_allowed: true
   jira_write_allowed: false
   secret_or_datastore_access_allowed: false
-  future_publication_policy:
-    policy_ref: "execution-publication-and-tracker-closure-policy"
-    adoption_gate: "Add the normative execution_publication_rule block only when one running lifecycle exists."
-    plan_merge_required_before_external_mutation: true
-    terminal_merge_and_remote_readback_required: true
-    tracker_issue_key: "SST-102"
+
+execution_publication_rule:
+  rule_id: "execution-publication-and-tracker-closure-rule"
+  adoption_status: "adopted"
+  git_publication:
+    applicable: true
+    plan_merge_required: true
+    terminal_merge_required: true
+  tracker_mirror:
+    applicable: true
+    provider: "jira"
+    project_key: "SST"
+    parent_issue_key: "SST-101"
+    issue_key: "SST-102"
+  cleanup:
+    remote_readback_required: true
 
 owner_documentation:
   required: false

@@ -1,0 +1,108 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-SST-0222"
+title: "Reconcile stale SST integrated-quality identities"
+status: "running"
+source_request: "requests/inbox/CR-SST-0222-reconcile-stale-integrated-quality-identities.yaml"
+planned_request: "requests/planned/CR-SST-0222-reconcile-stale-integrated-quality-identities.yaml"
+created_at: "2026-08-27"
+started_at: "2026-08-28"
+requester: "4uentes"
+
+control_plane_context:
+  initiative_id: "INIT-SST-0009"
+  reservation_pr: 155
+  reservation_merge_commit: "af0560dea03aae6df18d7a08e88f5b4cd5e2146e"
+  plan_pr: 161
+  plan_head_commit: "521e8868955ac7bde07ecacec5be889feeae2ea5"
+  plan_merge_commit: "f193215a0ac72b67bbca0b67e60bc251df381da7"
+  plan_readback_status: "merged-and-reachable-from-origin-main"
+  running_base: "origin/main@7a5934cb52d6916678dcd721bb2113e07f182dd1"
+
+execution:
+  approval_status: "approved-running-publication-and-first-retroactive-readonly-preflight"
+  approval_source: "Operator instruction on 2026-08-28: ok avancemos"
+  control_plane_mutation_allowed: true
+  child_repo_mutation_allowed: false
+  runtime_mutation_allowed: false
+  infrastructure_mutation_allowed: false
+  jira_write_allowed: false
+  git_running_publication_allowed: true
+  secret_or_datastore_access_allowed: false
+  current_step: "publish running lifecycle, then execute a fresh global identity preflight for the infrastructure reconciliation reservation"
+
+identity_reconciliation:
+  canonical_coordinator_request: "CR-SST-0222"
+  coordinator_historical_label: "CR-SST-0177"
+  pending_retroactive_slices:
+    - historical_label: "CR-SST-0210"
+      owner_repository: "sst-4uentes-infra"
+      purpose: "kind API host-port and restart-durable localhost:8088 reconciliation"
+      canonical_request_id: null
+      status: "awaiting-fresh-reservation-preflight"
+    - historical_label: "CR-SST-0211"
+      owner_repository: "sst-fend"
+      purpose: "public landing contrast reconciliation"
+      canonical_request_id: null
+      status: "blocked-by-prior-infrastructure-reservation"
+    - historical_label: "CR-SST-0212"
+      owner_repository: "sst-fend"
+      purpose: "local frontend-auth readiness reconciliation"
+      canonical_request_id: null
+      status: "blocked-by-prior-contrast-reservation"
+  allocation_rule: >
+    Numeric IDs remain null until each slice passes a fresh canonical Git,
+    refs, worktree and Jira preflight and publishes its own inbox reservation.
+
+jira:
+  role: "mirror"
+  source_of_truth: false
+  read_status: "available"
+  epic_key: "SST-101"
+  coordinating_issue_key: "SST-102"
+  infrastructure_issue_key: "SST-119"
+  write_status: "not-authorized-no-write"
+  pending_identity_corrections:
+    - "SST-102: historical CR-SST-0177 to canonical CR-SST-0222"
+    - "SST-119: historical CR-SST-0210 to the future published infrastructure reconciliation ID"
+
+owner_documentation:
+  required: false
+  status: "not-applicable-control-plane-reconciliation-only"
+  future_gate: >
+    Each retroactive owner request must independently prove owner documentation
+    and the full control-plane owner-documentation validator before closure.
+
+validation:
+  plan_publication_readback: "PASS"
+  control_plane_check: "PASS; full gate including request identities, initiatives, owner documentation and visual documentation"
+  diff_check: "PASS"
+  jira_readonly_preflight: "PASS; no writes"
+
+execution_publication_rule:
+  rule_id: "execution-publication-and-tracker-closure-rule"
+  adoption_status: "adopted"
+  git_publication:
+    applicable: true
+    plan_merge_required: true
+    terminal_merge_required: true
+  tracker_mirror:
+    applicable: true
+    provider: "jira"
+    project_key: "SST"
+    parent_issue_key: "SST-101"
+    issue_key: "SST-102"
+  cleanup:
+    remote_readback_required: true
+
+decision:
+  status: "approved-for-running-publication"
+  approver: "4uentes"
+  decided_at: "2026-08-28"
+  approval_text: "ok avancemos"
+
+evidence_refs:
+  - "evidence/requests/CR-SST-0222/identity-preflight-2026-08-27.md"
+  - "evidence/requests/CR-SST-0222/reconciliation-plan-2026-08-28.md"
+  - "evidence/requests/CR-SST-0222/plan-publication-readback-2026-08-28.md"
+  - "evidence/initiatives/INIT-SST-0009/jira-readonly-preflight.md"
