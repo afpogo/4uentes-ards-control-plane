@@ -37,6 +37,7 @@ known_change_requests:
   - "CR-SST-0003"
   - "CR-SST-0020"
   - "CR-SST-0152"
+  - "CR-SST-0229"
 candidate_change_requests:
   - id: "CR-SST-0152"
     title: "Govern minimal SST development release train"
@@ -65,7 +66,8 @@ candidate_change_requests:
   - id: "CR-SST-TODO"
     title: "Define production public endpoint, TLS, and domain strategy"
     status: "candidate"
-discovered_change_requests: []
+discovered_change_requests:
+  - "CR-SST-0229"
 tracking:
   jira:
     role: "mirror"
