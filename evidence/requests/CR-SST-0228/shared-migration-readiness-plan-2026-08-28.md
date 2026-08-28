@@ -37,6 +37,8 @@ inferencia válida.
 
 También debe corregirse el cliente operativo: el host tiene `kubectl v1.29.2`
 y el servidor `v1.32.0`, fuera del skew soportado de una versión menor.
+El nodo control-plane sí contiene `kubectl v1.32.0`; el futuro playbook puede
+usarlo y mantener el cliente dentro del skew permitido.
 
 ## Mapa de gates de ejecución
 
@@ -105,6 +107,8 @@ Si falla API, cardinalidad, nodo, Argo o un workload, el flujo se detiene y ejec
 - Pérdida de datos aceptable.
 - Período de retención de `v1` después de promover `v2`.
 - Aceptación del camino in-place recomendado o alternativa explícita.
+- Herramienta de cifrado autenticado para backups; se recomienda `age`, que no
+  está instalado actualmente.
 
 Hasta resolverlas y publicar una autorización enumerada, no se debe crear
 backup, leer Secrets, generar claves, modificar el static pod, reescribir
