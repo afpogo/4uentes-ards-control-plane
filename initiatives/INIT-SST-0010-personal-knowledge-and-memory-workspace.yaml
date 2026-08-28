@@ -3,7 +3,7 @@ kind: "initiative"
 id: "INIT-SST-0010"
 title: "SST Personal Knowledge and Memory Workspace V1"
 status: "active"
-updated_at: "2026-08-27"
+updated_at: "2026-08-28"
 owner_repository: "4uentes-orchestor"
 objective: >
   Deliver the first governed SST personal knowledge and user-memory workspace:
@@ -59,6 +59,9 @@ source_evidence_refs:
   - "docs/projects/sst/contrato-procesamiento-articulos-con-agente-v1.md"
   - "evidence/requests/CR-SST-0220/manual-contract-review.md"
   - "evidence/requests/CR-SST-0220/running-contract-readback-2026-08-27.md"
+  - "evidence/requests/CR-SST-0220/jira-readonly-preflight-2026-08-28.md"
+  - "evidence/requests/CR-SST-0220/jira-exact-batch-preview-2026-08-28.md"
+  - "evidence/requests/CR-SST-0220/owner-request-allocation-preflight-2026-08-27.md"
 model_refs:
   - "specs/initiatives/initiative-model.yaml"
   - "docs/requests/initiative-model.md"
@@ -174,7 +177,7 @@ article_processing_adoption:
   product_surface: "Persisted article detail action: Process with agent."
   processing_modes: ["full_document", "sequential_paragraphs"]
   deferred_mode: "hybrid"
-  jira_status: "not-preflighted-and-not-authorized"
+  jira_status: "readonly-preflight-passed; exact-create-and-start-batch-ready-not-authorized"
   owner_execution_status: "control-plane-plan-only; child-owner-execution-not-authorized"
   browser_discovery_status: "article APIs unhealthy; final QA not ready"
   plan_publication: "merged-and-read-back-pr-144"
@@ -182,7 +185,9 @@ article_processing_adoption:
   running_publication: "merged-and-read-back-pr-149"
   control_plane_manual_review: "passed-2026-08-27"
   visual_documentation_rule: "future owner requests must evaluate and publish policy-compliant maps with textual fallback when applicable"
-  next_gate: "authorize read-only Jira preflight and separately authorize numeric owner request allocation"
+  owner_candidate_ids: ["CR-SST-0223", "CR-SST-0224", "CR-SST-0225", "CR-SST-0226", "CR-SST-0227"]
+  owner_allocation_status: "namespace-passed-non-reserving; creation-not-authorized"
+  next_gate: "separately authorize the exact Jira create-and-start batch and the five numeric owner lifecycles"
 relationships:
   depends_on:
     - {initiative_id: "INIT-SST-0007", role: "authenticated realtime chat and internal chatbot runtime"}
@@ -244,9 +249,9 @@ progress:
     - "CR-SST-0197"
     - "CR-SST-0198"
   next_recommended_request: >
-    Run a read-only Jira duplicate and hierarchy preflight, then request exact
-    authorization for the tracker mirror and a separate authorization to
-    reserve ordered Bend, chatbot, integration, Fend and E2E lifecycles.
+    Publish the passed Jira and namespace preflights. Then separately authorize
+    the exact Jira create-and-start batch and the five candidate owner
+    lifecycles after one final namespace check.
   current_runtime_status: >
     CR-SST-0193 canonical persistence and API are implemented, merged and
     validated in local/dev. CR-SST-0210 supplies the merged tenant,

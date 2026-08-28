@@ -74,7 +74,7 @@ execution_publication_rule:
 execution_status:
   running_publication: "merged-and-read-back-pr-149"
   contract_materialization: "published-and-human-approved"
-  jira_mirror: "not-preflighted-and-not-authorized"
+  jira_mirror: "readonly-preflight-passed; exact-create-and-start-batch-ready-not-authorized"
   control_plane_manual_review: "passed-2026-08-27"
   downstream_browser_qa: "deferred-to-owner-integration; plan-published"
   owner_repo_execution: "not-authorized"
@@ -112,6 +112,28 @@ future_owner_visual_documentation:
     - "article-agent-processing-data-v1"
     - "article-agent-processing-sequence-v1"
 
+owner_request_allocation_preflight:
+  status: "passed-non-reserving"
+  observed_at: "2026-08-27"
+  candidate_ids: ["CR-SST-0223", "CR-SST-0224", "CR-SST-0225", "CR-SST-0226", "CR-SST-0227"]
+  reservation_allowed: false
+  evidence_ref: "evidence/requests/CR-SST-0220/owner-request-allocation-preflight-2026-08-27.md"
+
+jira_readonly_preflight:
+  status: "passed"
+  observed_at: "2026-08-28"
+  reads_completed: true
+  writes_performed: false
+  duplicate_matches: 0
+  parent: "SST-105"
+  parent_type: "Epic"
+  issue_type: "Tarea"
+  issue_type_id: "10008"
+  required_fields: ["issuetype", "project", "reporter-default", "summary"]
+  start_transition_id: "21"
+  evidence_ref: "evidence/requests/CR-SST-0220/jira-readonly-preflight-2026-08-28.md"
+  exact_batch_ref: "evidence/requests/CR-SST-0220/jira-exact-batch-preview-2026-08-28.md"
+
 required_checks:
   - "npm run check"
   - "git diff --check"
@@ -128,3 +150,6 @@ evidence_refs:
   - "evidence/requests/CR-SST-0220/manual-contract-review.md"
   - "evidence/requests/CR-SST-0220/manual-qa-plan.md"
   - "evidence/requests/CR-SST-0220/jira-description-draft.md"
+  - "evidence/requests/CR-SST-0220/jira-readonly-preflight-2026-08-28.md"
+  - "evidence/requests/CR-SST-0220/jira-exact-batch-preview-2026-08-28.md"
+  - "evidence/requests/CR-SST-0220/owner-request-allocation-preflight-2026-08-27.md"
