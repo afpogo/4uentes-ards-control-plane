@@ -1,0 +1,264 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0230"
+title: "Enable product-safe chat cache-aside QA"
+status: "planned"
+source_request: "requests/inbox/CR-SST-0230-product-safe-chat-cache-qa.yaml"
+created_at: "2026-08-28"
+requester: "4uentes"
+depends_on: ["CR-SST-0204", "CR-SST-0211", "CR-SST-0217", "CR-SST-0218"]
+
+summary: >
+  Add one metadata-only history cache outcome produced by sst-bend and
+  strictly forwarded by 4uentes-auth so CR-SST-0207 can prove bounded
+  invalidation, PostgreSQL fallback and the following Redis hit without
+  direct cache access or an administrative eviction endpoint.
+
+control_plane_context:
+  initiative_id: "INIT-SST-0007"
+  parent_request_id: "CR-SST-0202"
+  source_qa_request_id: "CR-SST-0207"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  proposed_jira_issue_type: "Subtask"
+  proposed_jira_parent_issue_key: "SST-113"
+  jira_issue_key: null
+  jira_write_authorized: false
+
+impact_analysis:
+  required: true
+  affected_services: ["sst-bend", "4uentes-auth"]
+  intentionally_unaffected_services: ["sst-fend", "sst-chatbot", "sst-4uentes-infra"]
+  observed_baseline:
+    control_plane: "origin/main@c0880c2"
+    bend: "origin/develop@9faae46"
+    auth: "origin/develop@b9c38fc"
+    reservation_evidence: "evidence/requests/CR-SST-0230/identity-and-owner-preflight-2026-08-28.md"
+  ownership:
+    cache_and_durable_read_authority: "sst-bend"
+    authenticated_http_facade: "4uentes-auth"
+    lifecycle_and_evidence: "4uentes-orchestor"
+
+risk:
+  level: "high"
+  score: 8
+  drivers: ["CROSS_REPO_OBSERVABILITY_CONTRACT", "CACHE_AUTHORITY", "PRIVACY", "QA_DATA_MUTATION"]
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5"
+  fallback_reasoning_effort: "high"
+  reason: "The plan fixes a cross-repo HTTP observability contract around privacy-sensitive durable chat history and fail-open cache behavior."
+
+subagent_deployment_plan:
+  mode: "none"
+  reason: "No delegation was requested; cache authority, privacy and the Auth boundary remain on one auditable path."
+
+contract:
+  route:
+    bend: "GET /4uentes/v1/chat/conversations/:id/messages"
+    auth_facade: "GET /api/chat/conversations/:id/messages"
+  response_header:
+    name: "X-SST-Chat-History-Cache"
+    values: ["hit", "miss", "bypass"]
+    emission_scope: "successful 200 history responses only"
+    body_change: "none"
+  outcome_semantics:
+    hit: "Both saved-history partitions, messages and events, were served from the current Redis generation. An empty cached array still counts as a hit."
+    miss: "Redis was usable but at least one saved-history partition was absent for the current generation and PostgreSQL supplied that partition before cache fill."
+    bypass: "The conversation used the volatile path, Redis was not configured, or Redis was unavailable and PostgreSQL served saved history fail-open."
+    combined_precedence: "bypass over miss over hit"
+  bend_rules:
+    - "Compute the outcome from request-scoped read results; never store a last outcome in mutable process-global or singleton state."
+    - "Keep PostgreSQL ownership revalidation before history and preserve PostgreSQL as the durable authority."
+    - "Cache errors never alter the successful body/status and never become false hit or miss claims."
+    - "Do not emit the header on validation, authentication, authorization, not-found or other error responses."
+  auth_rules:
+    - "Forward the header only for successful history responses and only when its normalized value is exactly hit, miss or bypass."
+    - "Drop absent, repeated, malformed or unknown values and all other upstream cache or timing metadata."
+    - "Do not persist, log, reinterpret or synthesize a cache outcome in 4uentes-auth."
+  forbidden_metadata:
+    - "conversation ID"
+    - "tenant, account, user or session identity"
+    - "message or event content"
+    - "Redis key, host, URL or credential"
+    - "PostgreSQL query or private URL"
+    - "latency, key cardinality or datastore error detail"
+  invalidation_sequence:
+    - "Create a temporary conversation through the authenticated Auth facade."
+    - "Produce one synthetic turn through the existing protected Socket.IO product path."
+    - "Save the conversation explicitly through the Auth facade."
+    - "Read history twice through Auth to observe miss then hit and warm the current generation."
+    - "Produce another ordinary synthetic turn; its committed message/event append advances the existing cache generation."
+    - "Read history twice through Auth to observe miss then hit after bounded product-owned invalidation."
+    - "Delete the saved conversation through the Auth facade and verify the existing terminal behavior."
+
+execution:
+  requires_human_approval: true
+  approval_source: "Operator instruction on 2026-08-28: 'ok apruebo avanzar fuete, continuemos con proximos gates'."
+  approval_status: "approved-for-plan-publication"
+  approval_consumed_for: "planned lifecycle commit, push, PR and canonical readback only"
+  child_repo_mutation_allowed: false
+  planned_child_repo_mutation_targets: ["sst-bend", "4uentes-auth"]
+  runtime_mutation_allowed: false
+  deployment_allowed: false
+  production_mutation_allowed: false
+  datastore_mutation_allowed: false
+  secret_mutation_allowed: false
+  jira_write_allowed: false
+
+atomized_execution:
+  - order: 1
+    id: "publish-and-readback-plan"
+    objective: "Merge this planned lifecycle and read it back from canonical main before owner mutation."
+    inputs: ["canonical reservation", "fresh Bend/Auth owner refs", "living policies"]
+    output: "planned request and Spanish implementation plan"
+    files: ["requests/planned/CR-SST-0230-product-safe-chat-cache-qa.yaml", "evidence/requests/CR-SST-0230/implementation-plan-2026-08-28.md"]
+    risk: "medium"
+    suggested_profile: "gpt-5.6-sol/max"
+    validation: "Control-plane full check passes and the plan merge is reachable from origin/main."
+  - order: 2
+    id: "publish-running-lifecycle"
+    objective: "After explicit approval, publish running state with exact owner baselines and execution boundaries."
+    inputs: ["canonical planned lifecycle", "fresh owner refs", "operator authorization"]
+    output: "running lifecycle ready for owner worktrees"
+    files: ["requests/running/CR-SST-0230-product-safe-chat-cache-qa.yaml", "evidence/requests/CR-SST-0230/execution-start-2026-08-28.md"]
+    risk: "medium"
+    suggested_profile: "gpt-5.6-sol/max"
+    validation: "Control-plane full check and canonical running readback pass before child mutation."
+  - order: 3
+    id: "implement-bend-producer"
+    objective: "Produce the request-scoped header without changing cache authority, history body or fail-open behavior."
+    inputs: ["running lifecycle", "Bend owner contract", "isolated origin/develop worktree"]
+    output: "Bend runtime, tests, specs, capability and owner docs"
+    files: ["src/apps/sst/chat/saved-chat-cache.js", "src/apps/sst/chat/service.js", "src/apps/sst/chat/routes.js", "specs/api/chat-retention-v1.yaml", "specs/capabilities/outbound/chat-retention-v1.yaml", "docs/api/chat-retention.md", "docs/capabilities/outbound/chat-retention-v1.md"]
+    risk: "high"
+    suggested_profile: "gpt-5.6-sol/max"
+    validation: "Focused hit/miss/bypass, failure and concurrency tests plus sst-bend npm run check."
+  - order: 4
+    id: "implement-auth-forwarder"
+    objective: "Adopt and forward only the validated cache outcome on the history facade response."
+    inputs: ["published Bend capability", "isolated Auth origin/develop worktree"]
+    output: "Auth route, tests, inbound/outbound capabilities and owner docs"
+    files: ["src/presentation/chat/routes.ts", "specs/integrations-api.yaml", "specs/routing.yaml", "specs/capabilities/inbound/sst-bend--chat-retention-v1.yaml", "specs/capabilities/outbound/chat-retention-v1.yaml", "docs/bf/03-routing.md", "docs/bf/06-integrations-api.md", "docs/chat-sessions.md"]
+    risk: "high"
+    suggested_profile: "gpt-5.6-sol/max"
+    validation: "Facade tests prove exact allowlisting, malformed-value drop, no error-header forwarding and 4uentes-auth npm run check."
+  - order: 5
+    id: "publish-owner-changes"
+    objective: "Merge and read back Bend first, then Auth against the published producer contract."
+    inputs: ["green owner checks", "reviewed owner PRs"]
+    output: "canonical owner refs containing runtime and ARDS/SDD documentation"
+    files: ["owner PRs and merge-readback evidence"]
+    risk: "high"
+    suggested_profile: "gpt-5.6-sol/max"
+    validation: "Both owner refs contain reviewed commits and the worktrees remain clean."
+  - order: 6
+    id: "reconcile-jira-mirror"
+    objective: "Run fresh duplicate/hierarchy preflight and execute only a separately authorized Jira batch."
+    inputs: ["canonical running lifecycle", "Jira read-only preflight", "exact batch authorization"]
+    output: "one primary Jira mirror or reconciled existing identity"
+    files: ["sanitized Jira authorization, result and readback evidence"]
+    risk: "medium"
+    suggested_profile: "gpt-5.6-sol/max"
+    validation: "Issue, parent, type and status readback match with no extra writes."
+  - order: 7
+    id: "resume-integrated-cache-qa"
+    objective: "Rerun the CR-SST-0207 cache row through product contracts with synthetic secret-safe data."
+    inputs: ["published Bend/Auth owners", "development runtime", "CR-SST-0207 harness"]
+    output: "miss-hit, invalidation, fail-open and cleanup evidence"
+    files: ["CR-SST-0207/CR-SST-0230 evidence only; no message bodies or credentials"]
+    risk: "high"
+    suggested_profile: "gpt-5.6-sol/max"
+    validation: "First read after generation advance is miss, next is hit, durable history remains correct and cleanup uses DELETE /api/chat."
+  - order: 8
+    id: "publish-terminal-lifecycle"
+    objective: "Complete owner documentation/evidence, full checks and canonical done readback before cleanup."
+    inputs: ["owner merge readbacks", "integrated QA evidence", "Jira state if authorized"]
+    output: "done lifecycle and updated CR-SST-0207 matrix"
+    files: ["requests/done/CR-SST-0230-product-safe-chat-cache-qa.yaml", "terminal evidence and ARDS/SDD references"]
+    risk: "medium"
+    suggested_profile: "gpt-5.6-sol/max"
+    validation: "Owner checks, control-plane npm run check and remote terminal readback all pass."
+
+owner_documentation:
+  required: true
+  status: "planned"
+  rule: "Control-plane evidence does not replace owner specs, capabilities, docs or tests."
+  owner_repos:
+    sst-bend:
+      role: "cache outcome producer and durable read authority"
+      planned_surfaces:
+        - "specs/api/chat-retention-v1.yaml"
+        - "specs/capabilities/outbound/chat-retention-v1.yaml"
+        - "docs/api/chat-retention.md"
+        - "docs/capabilities/outbound/chat-retention-v1.md"
+        - "docs/tasks/TODO-cr-sst-0230-chat-cache-qa.md"
+        - "httpPruebas/sst.chat.http"
+    4uentes-auth:
+      role: "strict metadata forwarder on the authenticated history facade"
+      planned_surfaces:
+        - "specs/integrations-api.yaml"
+        - "specs/routing.yaml"
+        - "specs/capabilities/inbound/sst-bend--chat-retention-v1.yaml"
+        - "specs/capabilities/outbound/chat-retention-v1.yaml"
+        - "docs/bf/03-routing.md"
+        - "docs/bf/06-integrations-api.md"
+        - "docs/chat-sessions.md"
+        - "docs/capabilities/inbound/sst-bend--chat-retention-v1.md"
+        - "docs/capabilities/outbound/chat-retention-v1.md"
+        - "httpPruebas/sst_server.http"
+
+validation:
+  - "sst-bend focused unit/HTTP tests prove request-scoped hit, miss and bypass semantics, empty-array hit, mixed-partition precedence and Redis failure behavior."
+  - "sst-bend tests prove ordinary message/event append advances the generation and no stale fill can resurrect a previous generation."
+  - "sst-bend npm run check and git diff --check."
+  - "4uentes-auth tests prove the exact history-only enum allowlist, body/status parity, malformed header drop and absence on upstream errors."
+  - "4uentes-auth npm run check and git diff --check."
+  - "CR-SST-0207 integrated harness proves miss, hit, bounded invalidation, miss, hit and product-contract cleanup through the Auth facade."
+  - "Evidence contains no token, cookie, credential, message/event body, principal, conversation ID, Redis key, private URL or datastore error detail."
+  - "4uentes-orchestor npm run check before plan publication, running publication and closure."
+
+acceptance:
+  - "A successful saved-history response exposes exactly one X-SST-Chat-History-Cache value: hit, miss or bypass."
+  - "The first history read after an ordinary committed turn reports miss and the next identical read reports hit when Redis is available."
+  - "Redis unavailability reports bypass while returning the authoritative PostgreSQL body without a false deletion or failure claim."
+  - "Auth forwards only a valid outcome for successful history and never exposes other upstream cache/timing metadata."
+  - "History bodies, status codes, ownership checks, durable write ordering and the existing Socket.IO boundary remain unchanged."
+  - "QA never calls Redis directly, never receives cache keys and never uses an administrative eviction endpoint."
+  - "No change reaches sst-fend, sst-chatbot, Infra, schema, secrets, production or direct GitOps."
+
+proposed_jira_batch:
+  status: "not-authorized"
+  hierarchy_decision: "Use a Subtask because this is a bounded executable QA-enablement unit under the existing SST-113 program Task, despite spanning two owner repos."
+  prerequisites: ["planned merge/readback", "running publication", "fresh JQL duplicate search", "hierarchy readback", "exact operator authorization"]
+  candidate:
+    project: "SST"
+    issue_type: "Subtask"
+    parent: "SST-113"
+    summary: "[CR-SST-0230] Habilitar QA product-safe de cache del chat"
+  proposed_operations: ["create exactly one candidate if no compatible mirror exists", "transition only that issue to En curso"]
+  forbidden_operations: ["comments", "links", "assignee changes", "labels", "edits to SST-117 or any other issue"]
+
+rollback: >
+  Before execution, abandon the plan without child mutation. During owner
+  execution, revert Auth forwarding before or together with Bend production of
+  the header so consumers return to the previous response surface. Preserve
+  PostgreSQL rows and let Redis expire naturally; do not mutate either
+  datastore directly as rollback.
+
+decision:
+  status: "approved-for-plan-publication"
+  approver: "4uentes"
+  decided_at: "2026-08-28"
+  approval_text: "ok apruebo avanzar fuete, continuemos con proximos gates"
+  blocker: "Merge and read back this planned lifecycle, then obtain exact authorization for running publication, Bend/Auth mutation and any Jira write batch."
