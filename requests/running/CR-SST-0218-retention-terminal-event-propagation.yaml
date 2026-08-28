@@ -33,6 +33,10 @@ control_plane_context:
   fend_checkpoint_head_commit: "671813673b5a4c27b9f88d70da26fcadd66a08f3"
   fend_checkpoint_merge_commit: "6d9d320ae7f256ab354b5757e0e71578434a5d0d"
   fend_checkpoint_readback_at: "2026-08-27"
+  integrated_qa_pr: 148
+  integrated_qa_head_commit: "252817a7d05ccb78452868046f281124440094e4"
+  integrated_qa_merge_commit: "dc0f25f6803abbcf420c04e1c4c285eb32960025"
+  integrated_qa_readback_at: "2026-08-27"
   jira_role: "mirror"
   jira_source_of_truth: false
   jira_issue_key: "SST-121"
@@ -57,7 +61,7 @@ subagent_deployment_plan:
   reason: "Proactive delegation is disabled and the primary agent retains the producer-consumer contract decision."
 
 execution:
-  approval_status: "approved-running-integrated-qa-passed-terminal-publication-pending"
+  approval_status: "approved-running-integrated-qa-published-jira-terminal-preflight-blocked"
   approval_source: "Operator instruction on 2026-08-24: 'Ok autorizo, avancemos con el proximo gate'."
   continuation_source: "Operator instruction on 2026-08-27: 'ok sigamos con el proximo paso'."
   activation_gate: "Both owner merges and the automatic development publication are read back; integrated QA remains gated by publication of this Fend checkpoint."
@@ -152,6 +156,22 @@ jira_start_batch:
   window: "Consumed by successful SST-121 readback in En curso; no retry or additional start operation remains authorized."
   blocker: null
 
+jira_terminal_batch:
+  authorization_status: "not-authorized"
+  preflight_status: "blocked-oauth-callback-not-completed"
+  provider: "jira"
+  candidate_count: 1
+  candidate:
+    request_id: "CR-SST-0218"
+    issue_key: "SST-121"
+    operation: "transition-only"
+    expected_current_status: "En curso"
+    target_status_category: "Done"
+    transition_id: "TODO after successful read-only preflight"
+  allowed_operations_if_later_authorized: ["transition only SST-121 through the exact read-back terminal transition"]
+  forbidden_operations: ["comments", "links", "assignee changes", "labels", "summary edits", "description edits", "writes on any other issue"]
+  blocker: "Managed Atlassian refresh token is invalid; two isolated mcp-remote OAuth attempts opened the callback but received no authorization before 120s and 300s timeouts."
+
 execution_publication_rule:
   rule_id: "execution-publication-and-tracker-closure-rule"
   adoption_status: "adopted"
@@ -186,10 +206,10 @@ validation_results:
   control_plane_check: "PASS: full gate completed; execution publication, owner documentation and visual documentation passed with 0 FAIL."
 
 decision:
-  status: "approved-running-integrated-qa-passed-terminal-publication-pending"
+  status: "approved-running-integrated-qa-published-jira-terminal-preflight-blocked"
   approver: "4uentes"
   decided_at: "2026-08-24"
-  next_gate: "Publish and read back the integrated QA checkpoint; then prepare the terminal lifecycle and request separate exact authorization for the SST-121 terminal Jira batch."
+  next_gate: "Restore Atlassian OAuth, read back SST-121 and its available transitions, replace the TODO with the exact terminal transition, and request separate authorization before any Jira write or done lifecycle."
 
 evidence_refs:
   - "evidence/requests/CR-SST-0207/integrated-matrix-checkpoint-2026-08-24.md"
@@ -199,3 +219,5 @@ evidence_refs:
   - "evidence/requests/CR-SST-0218/bend-owner-merge-readback-2026-08-27.md"
   - "evidence/requests/CR-SST-0218/fend-owner-merge-readback-2026-08-27.md"
   - "evidence/requests/CR-SST-0218/integrated-terminal-race-qa-2026-08-27.md"
+  - "evidence/requests/CR-SST-0218/jira-mcp-project-verification.md"
+  - "evidence/requests/CR-SST-0218/jira-terminal-preflight-blocker-2026-08-28.md"
