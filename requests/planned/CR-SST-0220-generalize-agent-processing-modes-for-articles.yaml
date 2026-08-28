@@ -1,0 +1,165 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0220"
+title: "Generalize agent processing modes for articles"
+status: "planned"
+source_request: "requests/inbox/CR-SST-0220-generalize-agent-processing-modes-for-articles.yaml"
+created_at: "2026-08-27"
+requester: "4uentes"
+summary: >
+  Establish the article-centered ARDS/SDD contract and ordered adoption gates
+  for full-document and paragraph-sequential agent processing without mutating
+  functional repositories.
+depends_on: ["CR-SST-0192", "CR-SST-0194", "CR-SST-0210", "CR-SST-0219"]
+
+control_plane_context:
+  initiative_id: "INIT-SST-0010"
+  feature_state_id: "article-agent-processing"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  jira_project_key: "SST"
+  jira_issue_type: "Task"
+  jira_parent_issue_key: "SST-105"
+  jira_issue_key: "TODO-after-readonly-preflight"
+  jira_write_allowed: false
+
+risk:
+  level: "high"
+  score: 8
+  drivers: ["PRIVATE_ARTICLE_CONTENT", "PROMPT_INJECTION", "CROSS_REPO_CONTRACT", "DURABLE_MEMORY_BOUNDARY"]
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+
+model_selection:
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  task_class: "complex-high-risk-task"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5 high"
+  reason: "The contract governs private article content, prompt composition, cross-repo ownership and memory boundaries."
+
+subagent_deployment_plan:
+  required: false
+  mode: "sequential-main-agent"
+  reason: "No delegation was requested; architecture, security and ownership decisions remain with the primary agent."
+
+execution:
+  control_plane_mutation_allowed: true
+  child_repo_mutation_allowed: false
+  core_repo_mutation_allowed: false
+  runtime_mutation_allowed: false
+  deployment_allowed: false
+  production_data_allowed: false
+  jira_write_allowed: false
+  next_external_gate: "Merge and read back this planned lifecycle before promoting CR-SST-0220 to running."
+
+contract_boundary:
+  orchestration_authority: "4uentes-orchestor"
+  canonical_article_and_summary_authority: "sst-bend"
+  derivation_pipeline_owner: "sst-chatbot"
+  user_interaction_owner: "sst-fend"
+  sequential_contract_predecessor: "CR-SST-0219"
+  identity_and_scope_predecessor: "CR-SST-0210"
+  core_change_required: false
+  rule: >
+    This request defines orchestration, invariants and handoff boundaries.
+    Later owner requests must define local APIs, persistence, prompts and UI.
+
+contract_decisions:
+  entry_surface: "A persisted article exposes Process with agent."
+  aggregate_root: "DERIVATION_RUN"
+  required_processing_mode: ["full_document", "sequential_paragraphs"]
+  deferred_processing_mode: "hybrid"
+  immutable_run_inputs: ["article_id", "SOURCE_SNAPSHOT", "processing_mode", "prompt_profile", "user_analysis_instructions", "prompt_version"]
+  full_document_behavior: "Produce FINAL_DERIVATION from the complete immutable source; CONTEXT_CHAIN remains empty and no PARAGRAPH_DERIVATION is required."
+  sequential_behavior: "Reuse the CR-SST-0219 ordered PARAGRAPH_SEQUENCE, PARAGRAPH_DERIVATION and evolving CONTEXT_CHAIN contract before FINAL_DERIVATION."
+  result_rule: "ARTICLE_PROCESSING_RESULT records the immutable technical outcome and provenance of one run."
+  summary_rule: "ARTICLE_SUMMARY is a reviewable article-facing projection associated with its source run; publishing is explicit."
+  memory_rule: "A run may create DERIVATION_MEMORY_PROPOSAL in needs_review, but never adopts canonical memory automatically."
+  retry_rule: "A retry creates a new run or explicit fork and cannot duplicate or rewrite a completed run."
+  prompt_rule: "Changing processing mode, prompt profile or user instructions creates a new run with independent provenance."
+  oversize_rule: "The system never truncates silently; it reports the limit and offers sequential processing or an explicit bounded strategy."
+  trust_rule: "Article text is untrusted input and cannot override system guardrails, authorization, output schema or memory policy."
+  privacy_rule: "Credentials, raw private article content and raw custom prompts stay out of Jira, screenshots and operational logs."
+
+planned_lifecycle_states:
+  derivation_run: ["created", "running", "paused", "completed", "failed", "cancelled", "superseded"]
+  article_summary: ["draft", "published", "superseded", "rejected"]
+  memory_proposal: ["needs_review", "accepted", "corrected", "rejected", "superseded"]
+
+atomized_execution:
+  - order: 1
+    id: "publish-plan"
+    objective: "Merge and read back the CR-SST-0220 planned lifecycle, contract map and QA conditions."
+    output: "Canonical planned lifecycle."
+    risk: "medium"
+    validation: "npm run check, git diff --check and remote main readback."
+  - order: 2
+    id: "materialize-running-contract"
+    objective: "After explicit approval, publish the running lifecycle and versioned article-processing contract."
+    output: "Running request and normative contract evidence."
+    risk: "high"
+    validation: "Contract and visual-map review plus npm run check."
+  - order: 3
+    id: "allocate-owner-slices"
+    objective: "Reserve and publish separate Bend, chatbot, Fend, integration and E2E request lifecycles."
+    output: "Ordered owner requests with ARDS/SDD and handoff duties."
+    risk: "high"
+    validation: "Global namespace preflight and no child mutation before each approved plan."
+  - order: 4
+    id: "implement-owner-slices"
+    objective: "Implement the approved owner-local contracts in dependency order."
+    output: "Article processing runtime and UI behind governed owner contracts."
+    risk: "high"
+    validation: "Owner checks and full control-plane npm run check for every child mutation workflow."
+  - order: 5
+    id: "manual-qa-and-close"
+    objective: "Execute final user simulation exclusively with Chrome DevTools MCP and publish terminal evidence."
+    output: "Human-approved QA evidence and terminal lifecycle."
+    risk: "high"
+    validation: "No DB scripts or seeders; sanitized network/UI evidence, readback and explicit human result."
+
+owner_documentation:
+  required_for_this_request: false
+  reason: "This planned gate does not mutate child repositories or claim owner-local runtime contracts."
+  required_for_future_owner_slices: true
+  future_owner_repos: ["sst-bend", "sst-chatbot", "sst-fend"]
+  closure_rule: "Each mutated owner publishes local ARDS/SDD and passes the control-plane owner-documentation gate."
+
+manual_qa:
+  required: true
+  timing: "last-review-after-owner-integration"
+  mode: "Chrome DevTools MCP only"
+  fixture_rule: "Create all test articles and actions through the user interface; no database scripts or seeders."
+  plan_ref: "evidence/requests/CR-SST-0220/manual-qa-plan.md"
+
+required_checks:
+  - "npm run check"
+  - "git diff --check"
+  - "visual documentation validator through the full check"
+  - "remote main readback after publication"
+  - "final human Chrome DevTools walkthrough after runtime adoption"
+
+acceptance:
+  - "The article is persisted before Process with agent becomes actionable."
+  - "The user explicitly selects full_document or sequential_paragraphs."
+  - "Mode and prompt changes preserve prior runs and provenance."
+  - "Article summaries are reviewable and separate from durable-memory proposals."
+  - "No child repo, Jira, runtime or data write occurs in this planned gate."
+  - "Future owner slices update ARDS/SDD and finish with Chrome DevTools manual QA."
+
+decision:
+  status: "approved-for-plan-publication"
+  approver: "4uentes"
+  decided_at: "2026-08-27"
+  approval_text: "ok avancemos con el proximo gate"
+
+evidence_refs:
+  - "evidence/requests/CR-SST-0220/implementation-plan.md"
+  - "evidence/requests/CR-SST-0220/manual-qa-plan.md"
+  - "evidence/requests/CR-SST-0220/browser-discovery-2026-08-27.md"
+  - "evidence/requests/CR-SST-0220/jira-description-draft.md"

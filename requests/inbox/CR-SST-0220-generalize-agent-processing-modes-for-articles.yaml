@@ -1,0 +1,28 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0220"
+title: "Generalize agent processing modes for articles"
+status: "inbox"
+created_at: "2026-08-27"
+requester: "4uentes"
+summary: >
+  Generalize the existing paragraph-sequential derivation contract into an
+  article-centered processing contract where a persisted article can be
+  processed as one full document or sequentially by paragraph, producing
+  reviewable summaries without automatically adopting durable memory.
+requested_scope:
+  initiative_id: "INIT-SST-0010"
+  feature_state_id: "article-agent-processing"
+  owner_repository: "4uentes-orchestor"
+  predecessor_requests: ["CR-SST-0192", "CR-SST-0194", "CR-SST-0210", "CR-SST-0219"]
+  future_owner_repositories: ["sst-bend", "sst-chatbot", "sst-fend"]
+constraints:
+  - "This request changes control-plane artifacts only."
+  - "No child repository, runtime, deployment, production data or infrastructure mutation is authorized."
+  - "The article must exist before an agent-processing run can be requested."
+  - "A summary publication and a durable-memory proposal are separate review decisions."
+  - "Jira remains a mirror and requires a separate exact authorized batch after read-only preflight."
+  - "Future owner slices must update local ARDS/SDD and finish with Chrome DevTools manual QA."
+requested_next_step: >
+  Publish and read back the planned lifecycle, processing contract and manual
+  QA conditions, then request explicit authorization for the running gate.
