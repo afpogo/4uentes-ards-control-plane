@@ -269,12 +269,13 @@ Any recovery, API read or storage verification failure stops removal and keeps b
 | Superficie | Autoridad | Próximo gate |
 | --- | --- | --- |
 | Lifecycle, coordinación y evidencia | `4uentes-orchestor` | Publicar y leer estos mapas desde `main`. |
-| Bootstrap Kind y configuración del API server | `sst-4uentes-infra` | Nueva autorización y worktree limpio para el prototipo descartable. |
+| Bootstrap Kind y configuración del API server | `sst-4uentes-infra` | Publicar el gate autorizado y luego usar un worktree limpio para el prototipo descartable. |
 | Custodia y recuperación de claves | Operador humano autorizado | Definir custodio y probar una copia cifrada independiente. |
 | Consumo y readiness | Owner de cada workload | Inventario y validación por ondas, sin cambiar contratos funcionales. |
 | Entrega del valor fuente | Decisión posterior | Comparar SOPS+age, Sealed Secrets y External Secrets en otra CR. |
 | Jira | Mirror bajo `SST-89` | Preflight y batch exacto requieren autorización independiente. |
 
-La siguiente unidad ejecutable de `CR-SST-0221` será preparar un prototipo
-reproducible en un clúster Kind descartable. Ese paso no comienza por la sola
-publicación de este documento.
+La siguiente unidad ejecutable de `CR-SST-0221` es preparar un prototipo
+reproducible en un clúster Kind descartable. La autorización fue otorgada el
+2026-08-27, pero la mutación owner comienza sólo después de publicar y leer el
+gate correspondiente desde `main`.
