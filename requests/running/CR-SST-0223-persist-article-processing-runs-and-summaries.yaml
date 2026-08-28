@@ -1,0 +1,151 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-SST-0223"
+title: "Persist governed article processing runs and summaries"
+status: "running"
+source_request: "requests/inbox/CR-SST-0223-persist-article-processing-runs-and-summaries.yaml"
+planned_request: "requests/planned/CR-SST-0223-persist-article-processing-runs-and-summaries.yaml"
+created_at: "2026-08-28"
+started_at: "2026-08-28"
+requester: "4uentes"
+summary: >
+  Execute the authorized Bend owner adoption of the article-processing V1
+  persistence and authorization contract without enabling chatbot execution,
+  deployment, shared migrations or production-data mutation.
+depends_on: ["CR-SST-0210", "CR-SST-0220"]
+
+control_plane_context:
+  initiative_id: "INIT-SST-0010"
+  parent_request_id: "CR-SST-0220"
+  owner_repository: "sst-bend"
+  owner_integration_branch: "develop"
+  plan_pull_request: 172
+  plan_head_commit: "d1ec838c8ae1613889919964763de5e81925790f"
+  plan_merge_commit: "c0880c23da1847d549647bbc38981be03f29060a"
+  jira_role: "mirror"
+  jira_parent_issue_key: "SST-122"
+  jira_issue_key: "SST-123"
+
+authorization:
+  status: "approved-pending-publication"
+  approved_by: "4uentes"
+  approved_at: "2026-08-28"
+  approval_text: >
+    Autorizo ambos gates de CR-SST-0223: crear el running lifecycle y ejecutar
+    exclusivamente en un worktree limpio de sst-bend desde origin/develop,
+    conforme al implementation-plan, sin deployment, migraciones sobre
+    entornos compartidos ni datos productivos; y crear exactamente una
+    Subtask Jira bajo SST-122, validar el readback y aplicar únicamente la
+    transición 21 hacia En curso.
+  evidence_ref: "evidence/requests/CR-SST-0223/execution-authorization-2026-08-28.md"
+
+execution:
+  control_plane_mutation_allowed: true
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets: ["sst-bend"]
+  child_repo_mutation_scope: "Owner ARDS/SDD, reversible migrations, models, repositories, use cases, route adapters and focused tests defined by the merged implementation plan."
+  existing_dirty_checkout_allowed: false
+  clean_owner_worktree_required: true
+  runtime_code_mutation_allowed: true
+  local_test_execution_allowed: true
+  migration_files_allowed: true
+  migration_execution_allowed: false
+  shared_environment_mutation_allowed: false
+  production_data_allowed: false
+  deployment_allowed: false
+  infrastructure_mutation_allowed: false
+  chatbot_repo_mutation_allowed: false
+  fend_repo_mutation_allowed: false
+  jira_write_allowed: false
+  external_execution_gate: >
+    This running lifecycle and Jira result must be merged and read back before
+    creating or mutating the clean sst-bend owner worktree.
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  bounded_reason: "Private article content, durable persistence, account isolation and memory separation require one sequential owner path."
+
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5"
+  fallback_reasoning_effort: "high"
+
+subagent_deployment_plan:
+  mode: "none"
+  reason: "No delegation was requested; persistence, authorization and compatibility decisions remain on one auditable path."
+
+atomized_execution:
+  - {order: 1, id: "publish-running-and-jira", objective: "Publish this running lifecycle and the consumed Jira batch readback.", validation: "Full control-plane check, PR merge and main readback."}
+  - {order: 2, id: "create-clean-owner-worktree", objective: "Refresh sst-bend origin/develop and create one clean CR-SST-0223 worktree.", validation: "Clean status, exact base commit and owner policy readback."}
+  - {order: 3, id: "publish-owner-contract", objective: "Publish owner specs, docs, maps and reversible migration contract before runtime behavior.", validation: "Owner documentation review and npm run check."}
+  - {order: 4, id: "implement-owner-persistence", objective: "Evolve document_agent_jobs and add governed persistence, authorization and compatibility adapters.", validation: "Focused model, repository, scope, idempotency and route tests."}
+  - {order: 5, id: "publish-owner-and-reconcile", objective: "Publish owner PR, perform remote readback, update control plane and run final manual QA.", validation: "Owner CI, control-plane full check and human PASS."}
+
+execution_publication_rule:
+  rule_id: "execution-publication-and-tracker-closure-rule"
+  adoption_status: "adopted"
+  git_publication:
+    applicable: true
+    plan_merge_required: true
+    terminal_merge_required: true
+  tracker_mirror:
+    applicable: true
+    provider: "jira"
+    project_key: "SST"
+    epic_key: "SST-105"
+  cleanup:
+    remote_readback_required: true
+
+owner_documentation:
+  required: true
+  status: "pending-owner-execution"
+  owner_repo: "sst-bend"
+  required_surfaces:
+    - "normative article-processing API and persistence specs"
+    - "human-readable Spanish owner documentation"
+    - "policy-compliant data and lifecycle maps with textual fallback"
+    - "draft outbound capability and orchestrator_link metadata"
+
+jira_batch:
+  status: "passed-readback"
+  project_key: "SST"
+  issue_type: "Subtask"
+  issue_type_id: "10006"
+  parent_issue_key: "SST-122"
+  duplicate_query_identity: "CR-SST-0223"
+  summary: "[SST][CR-SST-0223] Persist governed article processing runs and summaries"
+  start_transition_id: "21"
+  issue_key: "SST-123"
+  initial_status: "Tareas por hacer"
+  initial_status_id: "10005"
+  applied_transition_ids: ["21"]
+  final_status: "En curso"
+  final_status_id: "10006"
+  final_resolution: null
+  authorization_consumed: true
+  authorization_ref: "evidence/requests/CR-SST-0223/execution-authorization-2026-08-28.md"
+  result_ref: "evidence/requests/CR-SST-0223/jira-create-start-result-2026-08-28.md"
+
+required_checks:
+  - "sst-bend npm run check"
+  - "focused owner persistence and authorization tests"
+  - "4uentes-orchestor npm run check"
+  - "git diff --check"
+  - "remote canonical readbacks"
+
+evidence_refs:
+  - "evidence/requests/CR-SST-0223/plan-publication-readback-2026-08-28.md"
+  - "evidence/requests/CR-SST-0223/owner-readonly-preflight-2026-08-28.md"
+  - "evidence/requests/CR-SST-0223/implementation-plan.md"
+  - "evidence/requests/CR-SST-0223/jira-readonly-preflight-2026-08-28.md"
+  - "evidence/requests/CR-SST-0223/jira-description-draft.md"
+  - "evidence/requests/CR-SST-0223/execution-authorization-preview-2026-08-28.md"
+  - "evidence/requests/CR-SST-0223/execution-authorization-2026-08-28.md"
+  - "evidence/requests/CR-SST-0223/jira-create-start-result-2026-08-28.md"
+  - "evidence/requests/CR-SST-0223/running-and-jira-manual-review-2026-08-28.md"
