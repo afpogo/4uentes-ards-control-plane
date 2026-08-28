@@ -1,22 +1,22 @@
-# Preflight de asignación de requests hijos
+# Reserva de requests hijos
 
 ## Resultado del namespace
 
 La primera búsqueda encontró libre el bloque desde `CR-SST-0222`, pero antes de publicar `origin/main` incorporó `CR-SST-0222` para una reconciliación de calidad. La propuesta se descartó sin reservar ni colisionar.
 
-La búsqueda repetida sobre `origin/main@af0560d`, nombres de ramas remotas y el historial alcanzable no encontró reservas para `CR-SST-0223`, `CR-SST-0224`, `CR-SST-0225`, `CR-SST-0226` ni `CR-SST-0227`.
+La búsqueda final sobre `origin/main@d71bd6d`, nombres de ramas remotas, el árbol canónico y el historial alcanzable no encontró reservas para `CR-SST-0223`, `CR-SST-0224`, `CR-SST-0225`, `CR-SST-0226` ni `CR-SST-0227`. El control incluyó la reserva posterior `CR-SST-0228`, cuya propia evidencia confirma que no tomó el rango `0223..0227`.
 
-La observación no reserva los IDs. Otra publicación puede ocuparlos antes del gate de creación; por eso el namespace debe repetirse inmediatamente antes de escribir los lifecycles.
+La autorización humana `autorizo ambos`, recibida el 2026-08-28, habilitó crear los cinco lifecycles únicamente en el control plane. Los archivos locales `inbox + planned` reservan la propuesta dentro de esta rama; la reserva será canónica sólo después de merge y readback remoto. Ningún lifecycle habilita mutaciones de owners, runtime, datos o Jira.
 
-## Asignación propuesta
+## Asignación reservada localmente
 
-| ID candidato | Slice | Owner principal | Dependencias propuestas |
+| ID | Slice | Owner principal | Dependencias |
 |---|---|---|---|
 | `CR-SST-0223` | Persistencia y autorización de runs, resultados, resúmenes y propuestas | `sst-bend` | `CR-SST-0220`, `CR-SST-0210` |
 | `CR-SST-0224` | Ejecución de ambos modos, prompts, límites y retries | `sst-chatbot` | `CR-SST-0220`, `CR-SST-0219` |
-| `CR-SST-0225` | Integración durable Bend–chatbot | cross-repo | candidatos `0223` y `0224` |
-| `CR-SST-0226` | Acción, selección, progreso y revisión del resumen | `sst-fend` | candidato `0225` |
-| `CR-SST-0227` | QA end-to-end por navegador y cierre de adopción | control plane + owners | candidatos `0225` y `0226` |
+| `CR-SST-0225` | Integración durable Bend–chatbot | cross-repo | `CR-SST-0223`, `CR-SST-0224` |
+| `CR-SST-0226` | Acción, selección, progreso y revisión del resumen | `sst-fend` | `CR-SST-0225` |
+| `CR-SST-0227` | QA end-to-end por navegador y cierre de adopción | control plane + owners | `CR-SST-0225`, `CR-SST-0226` |
 
 ## Mapa de dependencias
 
@@ -25,26 +25,37 @@ La observación no reserva los IDs. Otra publicación puede ocuparlos antes del 
 ```yaml
 visual_map:
   schema_version: "1.0"
-  id: "article-processing-owner-slice-proposal"
+  id: "article-processing-owner-slice-reservation"
   type: "dependency"
   question: "¿En qué orden deben adoptarse los owners del procesamiento de artículos?"
   abstraction_level: "Slices de adopción por owner para V1."
   source_refs:
     - "evidence/requests/CR-SST-0220/article-agent-processing-contract-v1.yaml"
     - "requests/running/CR-SST-0220-generalize-agent-processing-modes-for-articles.yaml"
-  observed_at: "2026-08-27"
-  authority_boundary: "Vista derivada y no reservante; el contrato V1 y futuros lifecycles publicados conservan autoridad."
+    - "requests/planned/CR-SST-0223-persist-article-processing-runs-and-summaries.yaml"
+    - "requests/planned/CR-SST-0224-implement-article-processing-agent-pipeline.yaml"
+    - "requests/planned/CR-SST-0225-integrate-article-processing-bend-chatbot.yaml"
+    - "requests/planned/CR-SST-0226-adopt-article-processing-user-experience.yaml"
+    - "requests/planned/CR-SST-0227-validate-article-processing-end-to-end.yaml"
+  request_ids:
+    - "CR-SST-0223"
+    - "CR-SST-0224"
+    - "CR-SST-0225"
+    - "CR-SST-0226"
+    - "CR-SST-0227"
+  observed_at: "2026-08-28"
+  authority_boundary: "Vista derivada de lifecycles locales planned; cada archivo publicado conserva autoridad y ninguna ejecución owner está autorizada."
   textual_fallback_required: true
 ```
 
 ```mermaid
 flowchart LR
     CONTRACT["Contrato de artículos V1 [validated]"]
-    BEND["Persistencia Bend [candidate]"]
-    BOT["Pipeline chatbot [candidate]"]
-    INTEGRATION["Integración durable [candidate]"]
-    FEND["Experiencia Fend [candidate]"]
-    E2E["QA navegador E2E [gate]"]
+    BEND["CR-SST-0223 Persistencia Bend [planned]"]
+    BOT["CR-SST-0224 Pipeline chatbot [planned]"]
+    INTEGRATION["CR-SST-0225 Integración durable [planned]"]
+    FEND["CR-SST-0226 Experiencia Fend [planned]"]
+    E2E["CR-SST-0227 QA navegador E2E [planned]"]
     CONTRACT -->|"habilita contrato owner"| BEND
     CONTRACT -->|"habilita contrato owner"| BOT
     BEND -->|"provee persistencia y autorización"| INTEGRATION
@@ -57,7 +68,7 @@ flowchart LR
 ### Fallback textual
 
 ```text
-El contrato V1 habilita dos candidatos paralelos: CR-SST-0223 para Bend y CR-SST-0224 para chatbot. Ambos deben completarse antes de CR-SST-0225, la integración durable. CR-SST-0226 adopta la experiencia Fend después de esa integración. CR-SST-0227 ejecuta el QA E2E únicamente cuando integración y Fend estén disponibles.
+El contrato V1 habilita dos lifecycles planned paralelos: CR-SST-0223 para Bend y CR-SST-0224 para chatbot. Ambos deben completarse antes de CR-SST-0225, la integración durable. CR-SST-0226 adopta la experiencia Fend después de esa integración. CR-SST-0227 ejecuta el QA E2E únicamente cuando integración y Fend estén disponibles.
 ```
 
 <!-- visual-map:end -->
@@ -74,4 +85,4 @@ El contrato V1 habilita dos candidatos paralelos: CR-SST-0223 para Bend y CR-SST
 
 ## Gate pendiente
 
-La creación de estos cinco lifecycles es una mutación separada. Requiere repetir el namespace y recibir autorización explícita que enumere los cinco IDs. Este preflight no permite cambios en repositorios hijos.
+Los cinco lifecycles están creados localmente bajo la autorización del 2026-08-28. El próximo gate es publicar esta rama y confirmar el readback canónico. Después, cada request requiere su propia autorización de ejecución; este gate no permite cambios en repositorios hijos.

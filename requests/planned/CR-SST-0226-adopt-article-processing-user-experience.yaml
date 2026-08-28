@@ -1,0 +1,64 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0226"
+title: "Adopt the article processing user experience"
+status: "planned"
+source_request: "requests/inbox/CR-SST-0226-adopt-article-processing-user-experience.yaml"
+created_at: "2026-08-28"
+requester: "4uentes"
+summary: "Plan the Fend owner adoption after durable Bend-chatbot integration publishes."
+depends_on: ["CR-SST-0225"]
+control_plane_context:
+  initiative_id: "INIT-SST-0010"
+  parent_request_id: "CR-SST-0220"
+  owner_repository: "sst-fend"
+risk:
+  level: "high"
+  drivers: ["PRIVATE_ARTICLE_UI", "USER_CONSENT", "ASYNC_PROGRESS", "ERROR_RECOVERY"]
+model_selection:
+  provider: "codex"
+  resource_level: "normal"
+  task_class: "complex-high-risk-task"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5 high"
+subagent_deployment_plan:
+  required: false
+  reason: "No delegation was requested; user-consent and interaction decisions remain with the primary agent."
+execution:
+  control_plane_reservation_allowed: true
+  child_repo_mutation_allowed: false
+  runtime_mutation_allowed: false
+  jira_write_allowed: false
+  predecessor_gate: "CR-SST-0225 must publish integrated runtime and contract readback."
+  next_gate: "Explicit running authorization for sst-fend after predecessor readback."
+owner_contract:
+  responsibilities:
+    - "Expose Process with agent only for a persisted and processable article."
+    - "Expose mode, default/custom prompt, progress, errors and immutable prior runs."
+    - "Keep summary publication and memory-proposal decisions visibly separate."
+  prohibited:
+    - "Persist private prompts, source text or tokens in browser storage."
+    - "Present partial or failed output as a completed summary."
+    - "Accept memory as a side effect of summary publication."
+owner_documentation:
+  required: true
+  minimum: ["frontend capability contract", "human-readable UX states", "sequence/state maps and accessible fallback"]
+visual_documentation:
+  policy_id: "visual-documentation-as-code-policy"
+  shared_map_ref: "evidence/requests/CR-SST-0220/owner-request-allocation-preflight-2026-08-27.md"
+  owner_map_expectation: "Map modal states, async progress, review decisions and failures with textual fallback."
+manual_qa:
+  required: true
+  mode: "Chrome DevTools MCP only"
+  fixture_rule: "UI-created synthetic article; no database scripts or seeders."
+atomized_execution:
+  - {order: 1, objective: "Publish Fend ARDS/SDD and interaction maps.", validation: "owner documentation review"}
+  - {order: 2, objective: "Implement article action and review states.", validation: "owner component and integration checks"}
+  - {order: 3, objective: "Publish owner PR and remote readback.", validation: "CI and canonical branch readback"}
+  - {order: 4, objective: "Execute final Fend manual QA and update control plane.", validation: "Chrome DevTools PASS and npm run check"}
+acceptance:
+  - "The user can choose both modes and prompt lens without overwriting prior runs."
+  - "Summary and memory controls are explicit and independent."
+  - "Owner ARDS/SDD, maps and Chrome-only QA are published before closure."
+  - "No implementation starts under this reservation gate."

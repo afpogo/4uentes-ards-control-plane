@@ -43,7 +43,7 @@ control_plane_context:
   jira_source_of_truth: false
   jira_project_key: "SST"
   jira_parent_issue_key: "SST-105"
-  jira_issue_key: "TODO-after-readonly-preflight"
+  jira_issue_key: "SST-122"
   jira_write_allowed: false
 
 execution:
@@ -74,7 +74,7 @@ execution_publication_rule:
 execution_status:
   running_publication: "merged-and-read-back-pr-149"
   contract_materialization: "published-and-human-approved"
-  jira_mirror: "readonly-preflight-passed; exact-create-and-start-batch-ready-not-authorized"
+  jira_mirror: "sst-122-en-curso-readback-passed; authorization-consumed"
   control_plane_manual_review: "passed-2026-08-27"
   downstream_browser_qa: "deferred-to-owner-integration; plan-published"
   owner_repo_execution: "not-authorized"
@@ -113,11 +113,40 @@ future_owner_visual_documentation:
     - "article-agent-processing-sequence-v1"
 
 owner_request_allocation_preflight:
-  status: "passed-non-reserving"
-  observed_at: "2026-08-27"
-  candidate_ids: ["CR-SST-0223", "CR-SST-0224", "CR-SST-0225", "CR-SST-0226", "CR-SST-0227"]
-  reservation_allowed: false
+  status: "reserved-locally-pending-publication"
+  observed_at: "2026-08-28"
+  reserved_request_ids: ["CR-SST-0223", "CR-SST-0224", "CR-SST-0225", "CR-SST-0226", "CR-SST-0227"]
+  reservation_allowed: true
+  authorization_text: "autorizo ambos"
   evidence_ref: "evidence/requests/CR-SST-0220/owner-request-allocation-preflight-2026-08-27.md"
+
+owner_request_allocation_authorization:
+  status: "consumed"
+  approved_at: "2026-08-28"
+  approved_by: "4uentes"
+  approval_text: "autorizo ambos"
+  scope: "Create control-plane inbox and planned lifecycles for CR-SST-0223 through CR-SST-0227 only."
+  child_repo_mutation_allowed: false
+
+jira_write_authorization:
+  status: "consumed"
+  approved_at: "2026-08-28"
+  approved_by: "4uentes"
+  approval_text: "autorizo ambos"
+  scope: "Create exactly one CR-SST-0220 Tarea under SST-105 and apply transition 21 after successful readback."
+  evidence_ref: "evidence/requests/CR-SST-0220/jira-create-start-authorization-2026-08-28.md"
+
+jira_create_start_result:
+  status: "passed"
+  issue_key: "SST-122"
+  issue_type: "Tarea"
+  parent_issue_key: "SST-105"
+  initial_status: "Tareas por hacer"
+  transition_id: "21"
+  final_status: "En curso"
+  resolution: null
+  authorization_consumed: true
+  evidence_ref: "evidence/requests/CR-SST-0220/jira-create-start-result-2026-08-28.md"
 
 jira_readonly_preflight:
   status: "passed"
@@ -152,4 +181,7 @@ evidence_refs:
   - "evidence/requests/CR-SST-0220/jira-description-draft.md"
   - "evidence/requests/CR-SST-0220/jira-readonly-preflight-2026-08-28.md"
   - "evidence/requests/CR-SST-0220/jira-exact-batch-preview-2026-08-28.md"
+  - "evidence/requests/CR-SST-0220/jira-create-start-authorization-2026-08-28.md"
+  - "evidence/requests/CR-SST-0220/jira-create-start-result-2026-08-28.md"
+  - "evidence/requests/CR-SST-0220/reservation-and-jira-manual-review-2026-08-28.md"
   - "evidence/requests/CR-SST-0220/owner-request-allocation-preflight-2026-08-27.md"

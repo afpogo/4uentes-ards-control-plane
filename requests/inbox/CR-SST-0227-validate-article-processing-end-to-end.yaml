@@ -1,0 +1,20 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0227"
+title: "Validate article processing end to end"
+status: "inbox"
+created_at: "2026-08-28"
+requester: "4uentes"
+summary: >
+  Validate both article processing modes, prompt changes, provenance, summary
+  review, memory separation, isolation and recovery through the real UI.
+requested_scope:
+  initiative_id: "INIT-SST-0010"
+  parent_request_id: "CR-SST-0220"
+  owner_repository: "4uentes-orchestor"
+  predecessor_requests: ["CR-SST-0225", "CR-SST-0226"]
+constraints:
+  - "This reservation changes control-plane artifacts only."
+  - "Final manual QA uses Chrome DevTools MCP exclusively, UI-created fixtures, no database scripts and no seeders."
+  - "Every mutated owner must publish ARDS/SDD and pass checks before E2E starts."
+requested_next_step: "Keep planned until integration and Fend adoption are published and ready for manual QA."

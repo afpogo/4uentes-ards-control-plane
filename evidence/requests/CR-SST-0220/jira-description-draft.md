@@ -4,7 +4,11 @@
 
 Generalizar el contrato de derivación secuencial para que un artículo persistido pueda procesarse con un agente mediante dos modos explícitos: documento completo o lectura secuencial por párrafos.
 
-## Alcance del plan
+## Contrato V1 aprobado
+
+El control plane publicó y aprobó manualmente `sst-article-agent-processing-v1@1.0.0`. El contrato separa resultado técnico, resumen visible y propuesta de memoria; mantiene una `CONTEXT_CHAIN` por `DERIVATION_RUN`; y admite `full_document` y `sequential_paragraphs` sin truncamiento silencioso.
+
+## Alcance de adopción
 
 - Incorporar `Procesar con agente` en el detalle del artículo persistido.
 - Registrar el modo, la fuente, la versión de prompt y las instrucciones como entradas inmutables de cada run.
@@ -13,12 +17,15 @@ Generalizar el contrato de derivación secuencial para que un artículo persisti
 - Crear nuevos runs al cambiar modo o prompt, preservando resultados anteriores.
 - Prohibir truncamiento silencioso y tratar el contenido del artículo como entrada no confiable.
 
-## Owners futuros
+## Lifecycles owner reservados
 
-- `sst-bend`: autorización, persistencia de runs, resultados, resúmenes y propuestas.
-- `sst-chatbot`: ejecución de ambos modos, composición de prompts y guardrails.
-- `sst-fend`: acción, selección, progreso y revisión del resumen.
-- integración y E2E: contratos de handoff y prueba final.
+- `CR-SST-0223`: autorización y persistencia en `sst-bend`.
+- `CR-SST-0224`: pipeline, prompts y guardrails en `sst-chatbot`.
+- `CR-SST-0225`: integración durable Bend–chatbot.
+- `CR-SST-0226`: acción, selección, progreso y revisión en `sst-fend`.
+- `CR-SST-0227`: QA end-to-end y gate de adopción.
+
+La reserva de estos lifecycles no autoriza todavía cambios en repositorios hijos.
 
 ## Validación
 
@@ -26,4 +33,4 @@ El QA final se ejecutará exclusivamente con Chrome DevTools MCP, creando el art
 
 ## Estado y límites
 
-Este ticket está en gate de planificación del control plane. No autoriza cambios en repositorios hijos, runtime, datos, infraestructura ni Jira. La descripción final incorporará links de PR, checks, QA manual y readback sólo cuando exista evidencia terminal.
+Este ticket espeja el contrato activo del control plane. No autoriza por sí mismo cambios en repositorios hijos, runtime, datos o infraestructura. Los links de PR owner, checks, QA manual y readbacks se incorporarán cuando cada lifecycle alcance evidencia terminal.

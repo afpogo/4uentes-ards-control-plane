@@ -1,0 +1,56 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0227"
+title: "Validate article processing end to end"
+status: "planned"
+source_request: "requests/inbox/CR-SST-0227-validate-article-processing-end-to-end.yaml"
+created_at: "2026-08-28"
+requester: "4uentes"
+summary: "Plan the final browser-only validation and adoption closure for both processing modes."
+depends_on: ["CR-SST-0225", "CR-SST-0226"]
+control_plane_context:
+  initiative_id: "INIT-SST-0010"
+  parent_request_id: "CR-SST-0220"
+  participating_repositories: ["sst-bend", "sst-chatbot", "sst-fend", "4uentes-orchestor"]
+risk:
+  level: "high"
+  drivers: ["END_TO_END_PRIVATE_FLOW", "PROMPT_INJECTION", "SCOPE_ISOLATION", "MANUAL_ACCEPTANCE"]
+model_selection:
+  provider: "codex"
+  resource_level: "normal"
+  task_class: "complex-high-risk-task"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5 high"
+subagent_deployment_plan:
+  required: false
+  reason: "No delegation was requested; final evidence and acceptance remain with the primary agent and human approver."
+execution:
+  control_plane_reservation_allowed: true
+  child_repo_mutation_allowed: false
+  runtime_mutation_allowed: false
+  jira_write_allowed: false
+  predecessor_gate: "CR-SST-0225 and CR-SST-0226 must publish and pass owner checks."
+  next_gate: "Explicit authorization for temporary local/dev QA using already-approved owner artifacts."
+qa_contract:
+  browser_control: "Chrome DevTools MCP exclusively"
+  fixture_creation: "Create and persist a synthetic article through the UI."
+  forbidden_shortcuts: ["database scripts", "seeders", "direct datastore writes", "direct API fixture creation"]
+  required_scenarios: ["persisted-article gate", "full-document mode", "sequential mode", "prompt change creates new run", "prompt injection isolation", "summary-memory separation", "retry idempotency", "explicit oversize behavior"]
+owner_documentation:
+  required: true
+  rule: "Every participating owner must already expose current ARDS/SDD; final evidence links their canonical versions."
+visual_documentation:
+  policy_id: "visual-documentation-as-code-policy"
+  shared_map_ref: "evidence/requests/CR-SST-0220/owner-request-allocation-preflight-2026-08-27.md"
+  final_map_expectation: "Publish the observed E2E sequence and outcome map with sources, authority and textual fallback."
+atomized_execution:
+  - {order: 1, objective: "Read back all owner publications and environment health.", validation: "canonical refs and UI-visible health"}
+  - {order: 2, objective: "Create the synthetic article through the UI.", validation: "persisted identity visible in browser"}
+  - {order: 3, objective: "Execute all positive and negative browser scenarios.", validation: "sanitized UI, network and console evidence"}
+  - {order: 4, objective: "Obtain human PASS and publish terminal evidence.", validation: "explicit approval, owner checks and npm run check"}
+acceptance:
+  - "Both modes, prompt changes, failures and scope isolation pass through the real UI."
+  - "No DB script, seeder or direct fixture API is used."
+  - "Final ARDS/SDD, maps and human QA evidence are published before closure."
+  - "No QA execution starts under this reservation gate."

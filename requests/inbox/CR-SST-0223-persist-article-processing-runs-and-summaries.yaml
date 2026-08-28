@@ -1,0 +1,20 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0223"
+title: "Persist governed article processing runs and summaries"
+status: "inbox"
+created_at: "2026-08-28"
+requester: "4uentes"
+summary: >
+  Adopt the Bend-owned persistence and authorization contract for article
+  processing runs, results, summaries and memory proposals.
+requested_scope:
+  initiative_id: "INIT-SST-0010"
+  parent_request_id: "CR-SST-0220"
+  owner_repository: "sst-bend"
+  predecessor_requests: ["CR-SST-0210", "CR-SST-0220"]
+constraints:
+  - "This reservation changes control-plane artifacts only."
+  - "No sst-bend mutation is authorized until this plan is merged, read back and promoted through an explicit running gate."
+  - "Owner ARDS/SDD, policy-compliant maps when applicable and owner checks are mandatory."
+requested_next_step: "Publish and read back this plan before requesting Bend execution authorization."
