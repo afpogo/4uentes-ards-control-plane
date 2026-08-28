@@ -1,7 +1,7 @@
 schema_version: "1.0"
 kind: "initiative_index"
 status: "active"
-updated_at: "2026-08-23"
+updated_at: "2026-08-28"
 model: "specs/initiatives/initiative-model.yaml"
 initiatives:
   - "initiatives/INIT-CP-0001-control-plane-lifecycle-enforcement.yaml"
@@ -22,6 +22,7 @@ initiatives:
   - "initiatives/INIT-SST-0006-auth-access-ui-resilience-and-rebranding.yaml"
   - "initiatives/INIT-SST-0007-sst-chatbot-first-connected-version.yaml"
   - "initiatives/INIT-SST-0008-cryptographic-security-and-secret-lifecycle-hardening.yaml"
+  - "initiatives/INIT-SST-0009-integrated-quality-and-client-bug-discovery.yaml"
   - "initiatives/INIT-SST-0010-personal-knowledge-and-memory-workspace.yaml"
 validation:
   command: "npm.cmd run check:initiatives"
