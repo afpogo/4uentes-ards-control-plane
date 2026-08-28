@@ -3,7 +3,7 @@ kind: "initiative"
 id: "INIT-SST-0007"
 title: "SST Chatbot First Connected Version"
 status: "active"
-updated_at: "2026-08-24"
+updated_at: "2026-08-28"
 owner_repository: "4uentes-orchestor"
 objective: >
   Deliver a governed SST chatbot with revocable identity, durable conversation
@@ -77,8 +77,8 @@ tracking:
       CR-SST-0207: "SST-117"
       CR-SST-0211: null
       CR-SST-0217: "SST-118"
-      CR-SST-0218: null
-    last_write_batch: "JIRA-SEC-PREPROD-03-consumed-2026-08-23"
+      CR-SST-0218: "SST-121"
+    last_write_batch: "CR-SST-0218-terminal-transition-consumed-2026-08-28"
 boundaries:
   control_plane_role: "lifecycle, coordination and evidence only"
   owner_documentation_authority: "functional child repositories"
@@ -98,7 +98,7 @@ current_read_model:
   active_retention_execution_request: "CR-SST-0207"
   retention_qa_enablement_request: "CR-SST-0217"
   retention_terminal_event_remediation_request: "CR-SST-0218"
-  retention_terminal_event_remediation_status: "authorized-running-publication"
+  retention_terminal_event_remediation_status: "complete-owner-published-integrated-qa-passed-jira-reconciled"
   namespace_reconciliation_request: "CR-SST-0208"
   auth_registration_session_request: "CR-SST-0209"
   auth_retention_facade_request: "CR-SST-0211"
@@ -117,7 +117,7 @@ gaps:
   - "CR-SST-0217 restored the development preflight: Argo is Synced/Healthy, localhost and the reserved edge are reachable, retention is enabled and TTL is bounded to 120 seconds; lifecycle/Jira closure remains separately gated."
   - "The CR-SST-0194 chatbot correction merged to main rather than develop; the current development image therefore predates that merge and the branch drift requires a separate lifecycle if promotion is needed."
   - "CR-SST-0207 localhost QA found no realtime terminal event after finish, no product-safe cache eviction hook, reserved-edge authentication blocking the public matrix and two saved synthetic residues from aborted attempts; remediation must use separate approved lifecycles."
-  - "CR-SST-0218 is authorized for scoped running execution, but Bend/Fend and the exact Jira start batch remain blocked until the running lifecycle is merged/read back; Jira additionally requires restored OAuth and duplicate/hierarchy preflight."
+  - "CR-SST-0218 completed the Bend/Fend terminal-event remediation, owner publication, development readback and integrated terminal/race QA; SST-121 was reconciled to Finalizada through the exact authorized transition-only batch. CR-SST-0207 remains independently running for its other matrix rows."
 namespace_reconciliation:
   request_id: "CR-SST-0208"
   status: "pr37-canonical-map-preserved"

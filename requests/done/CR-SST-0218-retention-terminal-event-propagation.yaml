@@ -1,12 +1,14 @@
 schema_version: "1.0"
-phase: 3
+phase: 4
 id: "CR-SST-0218"
 title: "Propagate chat retention terminal events to active sessions"
-status: "running"
+status: "done"
 source_request: "requests/inbox/CR-SST-0218-retention-terminal-event-propagation.yaml"
 planned_request: "requests/planned/CR-SST-0218-retention-terminal-event-propagation.yaml"
+running_request: "requests/running/CR-SST-0218-retention-terminal-event-propagation.yaml"
 created_at: "2026-08-24"
 started_at: "2026-08-24"
+completed_at: "2026-08-28"
 requester: "4uentes"
 
 control_plane_context:
@@ -41,6 +43,10 @@ control_plane_context:
   jira_terminal_blocker_head_commit: "180016ca4a59cc6a9a44dff99ee8759bf6f9edba"
   jira_terminal_blocker_merge_commit: "0b6eda3ae9efbf07268c22576e8cae954f5e4cfc"
   jira_terminal_blocker_readback_at: "2026-08-27"
+  jira_terminal_preflight_pr: 156
+  jira_terminal_preflight_head_commit: "f38278f1045f2fcef7b04b7839c3a073ecced10f"
+  jira_terminal_preflight_merge_commit: "0a339f263193ba8c5892cbdc4b27ba6b50cf2d47"
+  jira_terminal_preflight_readback_at: "2026-08-28"
   jira_role: "mirror"
   jira_source_of_truth: false
   jira_issue_key: "SST-121"
@@ -65,7 +71,7 @@ subagent_deployment_plan:
   reason: "Proactive delegation is disabled and the primary agent retains the producer-consumer contract decision."
 
 execution:
-  approval_status: "approved-running-integrated-qa-published-jira-terminal-preflight-ready"
+  approval_status: "approved-complete-jira-terminal-batch-consumed"
   approval_source: "Operator instruction on 2026-08-24: 'Ok autorizo, avancemos con el proximo gate'."
   continuation_source: "Operator instruction on 2026-08-27: 'ok sigamos con el proximo paso'."
   activation_gate: "Both owner merges and the automatic development publication are read back; integrated QA remains gated by publication of this Fend checkpoint."
@@ -85,7 +91,7 @@ execution:
   synthetic_identity_cleanup: "blocked-no-product-contract"
   development_publication_allowed: true
   development_publication_mode: "Existing owner CI and GitOps automation triggered by approved develop merges only."
-  jira_write_allowed: "Start batch consumed by SST-121 readback in En curso; no further Jira write is allowed until a separate terminal batch is explicitly authorized."
+  jira_write_allowed: "The separately authorized terminal batch was consumed by the one SST-121 transition; no further Jira write is allowed."
 
 contract:
   server_event: "chat:conversation:terminated"
@@ -161,7 +167,8 @@ jira_start_batch:
   blocker: null
 
 jira_terminal_batch:
-  authorization_status: "not-authorized"
+  authorization_status: "consumed"
+  authorization_source: "Operator instruction on 2026-08-28: 'ok autorizo'."
   preflight_status: "passed-read-only"
   provider: "jira"
   candidate_count: 1
@@ -178,6 +185,13 @@ jira_terminal_batch:
     target_status: "Finalizada"
   allowed_operations_if_later_authorized: ["transition only SST-121 through the exact read-back terminal transition"]
   forbidden_operations: ["comments", "links", "assignee changes", "labels", "summary edits", "description edits", "writes on any other issue"]
+  execution_status: "consumed-success-readback"
+  allowed_write_count: 1
+  actual_write_count: 1
+  readback_status: "Finalizada"
+  readback_status_category: "Done"
+  readback_resolution: "Listo"
+  readback_at: "2026-08-28T00:13:16.209-03:00"
   blocker: null
 
 execution_publication_rule:
@@ -195,6 +209,13 @@ execution_publication_rule:
     issue_key: "SST-121"
   cleanup:
     remote_readback_required: true
+  trial_result:
+    status: "passed"
+    plan_publication: "merged-and-read-back"
+    implementation_publication: "merged-and-read-back"
+    tracker_reconciliation: "merged-and-read-back"
+    terminal_publication_contract: "merge-and-readback-before-cleanup"
+    cleanup_gate: "remote-readback-required"
 
 validation:
   - "sst-bend npm run check and focused realtime/retention race tests."
@@ -214,10 +235,10 @@ validation_results:
   control_plane_check: "PASS: full gate completed; execution publication, owner documentation and visual documentation passed with 0 FAIL."
 
 decision:
-  status: "approved-running-integrated-qa-published-jira-terminal-preflight-ready"
+  status: "approved-closed-owner-published-integrated-qa-passed-jira-reconciled"
   approver: "4uentes"
   decided_at: "2026-08-24"
-  next_gate: "Publish and read back this exact terminal preflight; then request separate authorization for the one transition-only Jira write before any Jira mutation or done lifecycle."
+  next_gate: "Merge and read back this terminal lifecycle before cleaning temporary worktrees; no additional Jira write is authorized."
 
 evidence_refs:
   - "evidence/requests/CR-SST-0207/integrated-matrix-checkpoint-2026-08-24.md"
@@ -230,3 +251,18 @@ evidence_refs:
   - "evidence/requests/CR-SST-0218/jira-mcp-project-verification.md"
   - "evidence/requests/CR-SST-0218/jira-terminal-preflight-blocker-2026-08-28.md"
   - "evidence/requests/CR-SST-0218/jira-terminal-preflight-2026-08-28.md"
+  - "evidence/requests/CR-SST-0218/terminal-closure-2026-08-28.md"
+
+closure:
+  status: "complete-terminal-publication-pending"
+  completed_scope:
+    - "Bend producer and Fend consumer contracts, implementation and owner documentation are merged and read back."
+    - "Development publication is Synced/Healthy and integrated terminal/race QA passed."
+    - "SST-121 is reconciled to Finalizada/Done through the exact authorized transition-only batch."
+    - "Final ARDS/SDD evidence is recorded in the control plane."
+  remaining_operational_gate: "Merge/read back this done lifecycle, then retire temporary worktrees."
+  limits:
+    - "Closure does not authorize any additional Jira write."
+    - "Closure does not close CR-SST-0207 or its independent cache eviction, reserved-edge and historical cleanup rows."
+    - "Closure does not authorize production, direct datastore, secret, feature-flag or infrastructure mutation."
+    - "The synthetic Auth identity residue remains recorded because no product deletion contract exists."
