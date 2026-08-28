@@ -57,6 +57,21 @@ execution:
   jira_write_allowed: false
   next_external_gate: "Merge and read back this planned lifecycle before promoting CR-SST-0220 to running."
 
+execution_publication_rule:
+  rule_id: "execution-publication-and-tracker-closure-rule"
+  adoption_status: "adopted"
+  git_publication:
+    applicable: true
+    plan_merge_required: true
+    terminal_merge_required: true
+  tracker_mirror:
+    applicable: true
+    provider: "jira"
+    project_key: "SST"
+    epic_key: "SST-105"
+  cleanup:
+    remote_readback_required: true
+
 contract_boundary:
   orchestration_authority: "4uentes-orchestor"
   canonical_article_and_summary_authority: "sst-bend"

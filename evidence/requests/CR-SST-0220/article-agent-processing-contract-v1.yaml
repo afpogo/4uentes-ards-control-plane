@@ -1,0 +1,172 @@
+schema_version: "1.0"
+kind: "cross_repo_product_contract"
+id: "sst-article-agent-processing-v1"
+version: "1.0.0"
+status: "approved-for-owner-implementation"
+updated_at: "2026-08-27"
+initiative_id: "INIT-SST-0010"
+request_id: "CR-SST-0220"
+extends:
+  contract_id: "sst-paragraph-sequential-derivation-v1"
+  request_id: "CR-SST-0219"
+  rule: "Sequential behavior remains compatible; this contract adds the article surface, processing modes, results and summaries."
+purpose: >
+  Define how an authenticated user processes one persisted article as a full
+  document or sequentially by paragraph, reviews summaries and optionally
+  proposes memory without automatic adoption.
+
+authority:
+  cross_repo_contract_and_execution_lifecycle: "4uentes-orchestor"
+  article_scope_run_result_summary_and_memory_persistence: "sst-bend"
+  derivation_execution_prompt_adaptation_and_provider_boundary: "sst-chatbot"
+  article_action_mode_prompt_progress_and_review_experience: "sst-fend"
+  identity_scope_predecessor: "CR-SST-0210"
+  explicit_denials:
+    - "The frontend, chatbot and model provider are not article authorization or canonical persistence authorities."
+    - "A completed result or published summary does not become accepted memory automatically."
+    - "This control-plane contract does not authorize owner-repository or runtime mutation."
+
+entry_contract:
+  action_id: "process-article-with-agent"
+  display_intent: "Process with agent"
+  preconditions:
+    - "The article has a canonical persisted identity."
+    - "The authenticated principal can read and process the article in the active tenant, account and application scope."
+    - "The selected source version is materialized as an immutable SOURCE_SNAPSHOT before execution."
+  required_input: [article_id, processing_mode, prompt_profile_id, user_analysis_instructions, idempotency_key]
+  supported_processing_modes: [full_document, sequential_paragraphs]
+  deferred_processing_modes: [hybrid]
+
+aggregate:
+  root: "DERIVATION_RUN"
+  identity_fields: [derivation_run_id, tenant_id, account_id, user_id, application_id, article_id, source_snapshot_id]
+  required_fields: [processing_mode, prompt_snapshot_id, context_chain_id, status, idempotency_key, created_at, updated_at]
+  statuses: [created, running, paused, completed, failed, cancelled, superseded]
+  invariants:
+    - "One run references exactly one persisted article and one immutable source snapshot."
+    - "One run selects exactly one supported processing mode."
+    - "One run maintains exactly one versioned CONTEXT_CHAIN."
+    - "Mode, source, prompt profile, prompt version or user-instruction changes create a new run or explicit fork."
+    - "Completed, cancelled and superseded runs are never rewritten."
+
+entities:
+  source_snapshot:
+    cardinality_per_run: "exactly-one"
+    role: "Immutable evidence of the persisted article version processed by the run."
+    required_fields: [source_snapshot_id, article_id, article_version, content_hash, captured_at]
+  prompt_snapshot:
+    cardinality_per_run: "exactly-one"
+    role: "Immutable composition identity for guardrails, default prompt, selected profile and user instructions."
+    required_fields: [prompt_snapshot_id, default_prompt_version, selected_profile_id, selected_profile_version, user_instructions_hash, guardrails_version, output_schema_version]
+  context_chain:
+    cardinality_per_run: "exactly-one"
+    role: "Versioned bounded context owned by the run."
+    required_fields: [context_chain_id, derivation_run_id, version, entries, budget_policy_version]
+    rules:
+      - "full_document starts and ends with an empty chain at version 0 in V1."
+      - "sequential_paragraphs appends committed entries in paragraph order."
+      - "Budget enforcement may compact older entries while retaining evidence and policy provenance."
+  paragraph_derivation:
+    cardinality_per_run: "zero-or-more"
+    role: "Ordered interpretation of one paragraph in sequential mode."
+    required_fields: [paragraph_derivation_id, derivation_run_id, paragraph_ordinal, input_context_version, prompt_snapshot_id, status, idempotency_key]
+    statuses: [pending, running, completed, failed, skipped, superseded]
+    rules:
+      - "full_document produces zero paragraph derivations."
+      - "sequential_paragraphs follows the immutable CR-SST-0219 paragraph sequence and ordering rules."
+      - "A retry cannot duplicate a derivation with the same idempotency key."
+  final_derivation:
+    cardinality_per_run: "zero-or-one"
+    role: "Terminal synthesis for one successfully completed run."
+    required_fields: [final_derivation_id, derivation_run_id, processing_mode, prompt_snapshot_id, output_schema_version, provenance_refs, created_at]
+    rules:
+      - "Only a successfully completed run can produce a final derivation."
+      - "The full-document result cites the complete source snapshot; the sequential result also cites relevant paragraph derivations and the committed context version."
+  article_processing_result:
+    cardinality_per_run: "zero-or-one"
+    role: "Immutable technical outcome and provenance envelope exposed by Bend."
+    required_fields: [article_processing_result_id, derivation_run_id, article_id, final_derivation_id, processing_mode, provenance_refs, created_at]
+    rules:
+      - "Failure, pause, cancellation or supersession produces no successful result."
+  article_summary:
+    cardinality_per_result: "zero-or-more"
+    role: "Reviewable article-facing projection derived from one processing result."
+    required_fields: [article_summary_id, article_processing_result_id, article_id, summary_kind, ordinal, status, created_at, updated_at]
+    statuses: [draft, published, superseded, rejected]
+    summary_kinds: [overall, section, paragraph]
+    rules:
+      - "Creation starts in draft."
+      - "Publication, rejection and supersession require an authorized explicit action."
+      - "A summary retains its source run, result, source snapshot and prompt provenance."
+      - "Publishing a summary does not create or accept canonical memory."
+  derivation_memory_proposal:
+    cardinality_per_result: "zero-or-more"
+    role: "Optional governed memory candidate derived from a successful result."
+    required_fields: [proposal_id, article_processing_result_id, derivation_run_id, status, provenance_refs, created_at]
+    statuses: [needs_review, accepted, corrected, rejected, superseded]
+    rules:
+      - "Creation starts in needs_review."
+      - "Only a separate authorized user decision can accept, correct or reject the proposal."
+      - "Accepted memory remains governed by the canonical SST memory contract."
+
+mode_semantics:
+  full_document:
+    input: "The complete immutable SOURCE_SNAPSHOT under the declared size and token policy."
+    paragraph_derivations: "none"
+    context_chain: "empty version 0"
+    completion: "Create FINAL_DERIVATION and ARTICLE_PROCESSING_RESULT atomically after provider output validation."
+    oversize_behavior: "Fail before provider execution with a sanitized explicit limit response and offer sequential mode or an approved bounded alternative."
+  sequential_paragraphs:
+    input: "The immutable PARAGRAPH_SEQUENCE from CR-SST-0219."
+    paragraph_derivations: "ordered zero-or-more"
+    context_chain: "append and checkpoint after each committed paragraph derivation"
+    completion: "Create FINAL_DERIVATION and ARTICLE_PROCESSING_RESULT only after all required paragraphs reach allowed terminal states."
+    recovery: "Resume from the last committed ordinal and context-chain version with stable idempotency keys."
+
+prompt_contract:
+  default_profile_id: "open-general-analysis"
+  default_intent: "Allow broad interpretation while distinguishing evidence, inference, uncertainty and unresolved questions."
+  composition_order: [SYSTEM_GUARDRAILS, DEFAULT_DERIVATION_PROMPT, SELECTED_ANALYSIS_PROFILE, USER_ANALYSIS_INSTRUCTIONS, BOUNDED_CONTEXT_OR_FULL_SOURCE, OUTPUT_SCHEMA]
+  rules:
+    - "User instructions may bias the analytical lens but cannot replace guardrails, authorization, mode invariants or output schema."
+    - "Article content and accumulated context are untrusted data, never system instructions."
+    - "Raw private prompts are persisted only by an authorized owner and are excluded from Jira, screenshots and operational logs."
+
+execution_semantics:
+  command_idempotency: "The same principal, article, source version and idempotency key return the same run identity."
+  retry: "A failed attempt resumes or forks according to owner policy without duplicating successful results, summaries or proposals."
+  fork_reasons: [processing_mode_changed, prompt_changed, analysis_profile_changed, article_version_changed, user_requested_reanalysis]
+  source_change: "A new article version always creates a new SOURCE_SNAPSHOT and run."
+  failure_behavior: "Fail closed with a sanitized code; never publish a result, summary or memory proposal from invalid output."
+
+privacy_and_observability:
+  allowed_metadata: [derivation_run_id, article_id, processing_mode, status, duration, budget_counts, prompt_and_policy_versions, summary_count, correlation_id, sanitized_failure_code]
+  prohibited_metadata: [raw_article_content, raw_paragraph_content, raw_user_prompt, rendered_provider_prompt, raw_provider_response, credentials, tokens, cookies, private_urls]
+
+minimum_validation:
+  positive:
+    - "A persisted article processed in full_document creates one run, an empty context chain, zero paragraph derivations, one final derivation and one result."
+    - "The same article processed in sequential_paragraphs preserves paragraph order, checkpoints context and creates an independently traceable result."
+    - "A successful result may create draft summaries and needs_review memory proposals as independent projections."
+    - "Changing mode or prompt creates a new immutable run while preserving previous results."
+  negative:
+    - "An unsaved or unauthorized article cannot start a run."
+    - "Prompt injection inside article text cannot alter guardrails, scope or output schema."
+    - "Oversize full-document input cannot be silently truncated."
+    - "Retry cannot duplicate runs, successful results, summaries or proposals."
+    - "Publishing a summary cannot accept memory."
+    - "Cross-tenant, cross-account, cross-user and cross-application access fails closed."
+
+owner_adoption_sequence:
+  - {owner: "sst-bend", responsibility: "Authorize articles and persist scoped runs, results, summaries and proposals.", request_id: "TODO"}
+  - {owner: "sst-chatbot", responsibility: "Execute both modes, prompt composition, validation, limits and retries.", request_id: "TODO"}
+  - {owner: "cross-repo integration", responsibility: "Prove Bend-chatbot handoff and restart-safe orchestration.", request_id: "TODO"}
+  - {owner: "sst-fend", responsibility: "Expose the article action, mode/prompt selection, progress and summary review.", request_id: "TODO"}
+  - {owner: "end-to-end validation", responsibility: "Prove UI-only user flows, isolation, failure recovery and memory separation.", request_id: "TODO"}
+
+out_of_scope_v1:
+  - "Hybrid processing mode"
+  - "Automatic summary publication or memory acceptance"
+  - "Owner-repository implementation under CR-SST-0220"
+  - "Provider-managed conversation state as canonical context"
+  - "Unbounded article or cross-user context"
