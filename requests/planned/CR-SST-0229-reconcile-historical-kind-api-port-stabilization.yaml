@@ -1,0 +1,234 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0229"
+title: "Reconcile historical SST kind API-port stabilization"
+status: "planned"
+source_request: "requests/inbox/CR-SST-0229-reconcile-historical-kind-api-port-stabilization.yaml"
+created_at: "2026-08-28"
+requester: "4uentes"
+
+summary: >
+  Recover the valid kind API-port and durable ingress work from a dirty,
+  historical sst-4uentes-infra tree by porting only reviewed semantic hunks to
+  a future clean owner worktree. This plan is control-plane-only and does not
+  authorize owner, cluster, host, runtime or Jira mutation.
+
+control_plane_context:
+  initiative_ids: ["INIT-SST-0004", "INIT-SST-0009"]
+  coordinator_request_id: "CR-SST-0222"
+  reservation_pull_request: 168
+  reservation_head_commit: "c9ade569e1e380505fa3052afb55583751cab3bf"
+  reservation_merge_commit: "d6fea57b4f3930e2e3be9d1d1143157ccb7ad7a2"
+  planning_base: "origin/main@c0880c23da1847d549647bbc38981be03f29060a"
+  owner_repository: "sst-4uentes-infra"
+  historical_label: "CR-SST-0210"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  historical_jira_issue: "SST-119"
+  jira_write_authorized: false
+
+observed_owner_baseline:
+  observed_at: "2026-08-28"
+  historical_worktree:
+    branch: "fix/SST-26/CR-SST-0086/development-gitops-readiness"
+    head: "f3f273722a2d1d5f8d1735d7e8292de44374df06"
+    status: "dirty-with-staged-unstaged-and-untracked-changes"
+    historical_pull_request: 3
+    historical_pull_request_state: "merged-into-develop-on-2026-07-03"
+  github_branches:
+    default_branch: "main"
+    default_branch_head: "176f0f4a003770300e87d51657ebde6ead4e8b4e"
+    active_integration_branch: "develop"
+    active_integration_head_observed: "5a2193515020831fc813c7ccd7141608fe453d02"
+    selection_reason: >
+      Recent owner PRs merge to develop while main remains at the initial
+      commit. The live GitHub branch must be read again immediately before a
+      future owner worktree is created.
+  local_remote_tracking_warning: >
+    The local origin/develop ref was observed at a different commit from the
+    GitHub API result. It must not be used as proof of the remote baseline
+    without a fresh remote readback.
+
+historical_owner_artifacts:
+  overlap_with_current_develop:
+    - "argocd/argocd-project.yml"
+    - "docs/runbooks/argocd-kind-development.md"
+    - "specs/infra/clusters/sst-dev-kind.yaml"
+    - "specs/states/00-index.yaml"
+  no_upstream_change_observed_since_historical_head:
+    - "k8s-manifests/bootstrap/kind/sst-cluster-dev.kind.yml"
+    - "specs/infra/clusters/00-index.yaml"
+    - "docs/runbooks/ngrok-durable-development.md"
+    - "specs/states/stabilize-kind-api-server-port.yaml"
+  mixed_index_and_worktree_state:
+    - "docs/runbooks/argocd-kind-development.md"
+  explicitly_excluded_unrelated_dirty_paths:
+    - "docs/00-overview.md"
+    - "docs/environments/README.md"
+    - "docs/runbooks/ghcr-private-pull-development.md"
+    - "specs/00-index.yaml"
+    - "specs/infra/environments/00-index.yaml"
+    - "specs/infra/environments/development.yaml"
+    - "specs/infra/environments/production.yaml"
+    - "specs/infra/environments/test-demo.yaml"
+    - "specs/states/implement-durable-ngrok-edge.yaml"
+
+recovery_decision:
+  strategy: "selective-semantic-port-to-fresh-owner-worktree"
+  owner_base: "fresh-GitHub-develop-readback"
+  prohibited_shortcuts:
+    - "Do not commit, reset, clean, stash, rebase or switch the dirty historical owner worktree."
+    - "Do not merge or cherry-pick the historical branch as a whole."
+    - "Do not trust the local origin/develop ref without live remote confirmation."
+    - "Do not copy excluded unrelated dirty paths."
+    - "Do not replace the historical CR-SST-0210 label as if the original execution had used CR-SST-0229."
+  provenance_rule: >
+    New owner artifacts use CR-SST-0229 as the canonical orchestrator link and
+    retain CR-SST-0210 only in an explicit historical_execution_label or prose
+    note describing the lifecycle-ordering deviation.
+  sensitive_content_rule: >
+    Review every selected hunk before transport. Patch bodies, private URLs,
+    credentials, backup locations, Secret values and host-specific paths must
+    not enter control-plane evidence or Jira.
+
+historical_runtime_claims_requiring_future_revalidation:
+  - "kind API is bound at 127.0.0.1:16443 -> 6443."
+  - "Docker publishes 127.0.0.1:8088 -> nginx-ingress NodePort 32080."
+  - "Kubernetes and Argo CD recovered after the controlled host restart."
+  - "Root, health and JWKS routes returned 200 while the unauthenticated session route returned the expected non-success response."
+  - "The public edge recovered with its expected authentication redirects."
+
+atomized_plan:
+  - order: 1
+    id: "publish-control-plane-plan"
+    objective: "Publish this recovery decision and initiative links."
+    mutation_scope: "control-plane-only"
+    risk: "low"
+    validation: "Full control-plane check, PR merge and canonical readback."
+  - order: 2
+    id: "publish-running-owner-batch"
+    objective: "Enumerate the exact future owner paths and authorize selective porting only."
+    mutation_scope: "control-plane-only"
+    risk: "medium"
+    validation: "Running lifecycle is merged and read back before owner edits."
+  - order: 3
+    id: "create-clean-owner-worktree"
+    objective: "Read live GitHub develop, create one clean CR-SST-0229 owner branch and leave the historical tree untouched."
+    mutation_scope: "future separately authorized owner Git metadata"
+    risk: "medium"
+    validation: "Clean status, exact remote SHA and one active owner worktree for CR-SST-0229."
+  - order: 4
+    id: "classify-and-port-selected-hunks"
+    objective: "Manually reconcile the four overlapping paths and port only validated kind-port hunks from the four non-overlapping paths."
+    mutation_scope: "future separately authorized owner files"
+    risk: "high"
+    validation: "No excluded path changes; canonical and historical labels remain distinguishable."
+  - order: 5
+    id: "validate-owner-declarative-state"
+    objective: "Validate specs, runbooks, kind bootstrap and GitOps manifests without applying or recreating infrastructure."
+    mutation_scope: "non-mutating owner validation"
+    risk: "medium"
+    validation: "Owner npm run check and git diff --check pass; no kind create, kubectl apply without client dry-run, restart or host mutation occurs."
+  - order: 6
+    id: "publish-owner-change"
+    objective: "Commit, PR and merge the selective owner change into develop."
+    mutation_scope: "future exact owner Git publication batch"
+    risk: "medium"
+    validation: "Owner PR diff contains only approved paths and merge is read back from live develop."
+  - order: 7
+    id: "revalidate-runtime-read-only"
+    objective: "Recheck each historical runtime claim independently to avoid healthy-container false positives."
+    mutation_scope: "future bounded read-only host, Docker, Kubernetes, Argo and HTTP probes"
+    risk: "medium"
+    validation: "Binding, Service/Ingress, workload readiness and HTTP route layers are reported separately."
+  - order: 8
+    id: "reconcile-control-plane-and-jira"
+    objective: "Publish terminal sanitized evidence, then prepare the exact SST-119 correction as a separate Jira batch."
+    mutation_scope: "control-plane publication; Jira write remains separately gated"
+    risk: "medium"
+    validation: "Owner and control-plane remote readbacks pass before any Jira authorization is requested."
+
+runtime_false_positive_matrix:
+  - layer: "host-binding"
+    required_evidence: "Independent listeners for 16443 and 8088 with expected owning Docker process."
+  - layer: "container-publication"
+    required_evidence: "kind control-plane publishes 16443->6443 and 8088->32080."
+  - layer: "kubernetes-control-plane"
+    required_evidence: "cluster-info and /readyz succeed against 127.0.0.1:16443; nodes are Ready."
+  - layer: "ingress-routing"
+    required_evidence: "nginx Service NodePort, controller readiness and Ingress objects agree with the durable mapping."
+  - layer: "application-workloads"
+    required_evidence: "Required SST deployments/statefulsets are Ready and Argo is Synced/Healthy."
+  - layer: "http-contract"
+    required_evidence: "Root, health, JWKS and negative session routes return their independently expected status/content."
+
+rollback_and_preservation:
+  historical_tree: "Never mutate or retire until every selected hunk is integrated, rejected or preserved with explicit evidence."
+  owner_candidate_before_merge: "Drop only the clean candidate branch/worktree; the historical dirty tree remains the recovery source."
+  owner_after_merge: "Revert the owner commit through a reviewed PR; declarative publication alone does not authorize cluster recreation."
+  runtime: "No runtime rollback applies to the planning or owner-publication phases because neither applies manifests nor recreates kind."
+
+owner_documentation:
+  required: true
+  status: "planned-for-future-authorized-owner-mutation"
+  owner_repo: "sst-4uentes-infra"
+  planned_surfaces:
+    - "specs/infra/clusters/sst-dev-kind.yaml"
+    - "specs/infra/clusters/00-index.yaml"
+    - "specs/states/stabilize-kind-api-server-port.yaml"
+    - "specs/states/00-index.yaml"
+    - "docs/runbooks/ngrok-durable-development.md"
+    - "docs/runbooks/argocd-kind-development.md"
+  declarative_surfaces_requiring_semantic_justification:
+    - "k8s-manifests/bootstrap/kind/sst-cluster-dev.kind.yml"
+    - "argocd/argocd-project.yml"
+
+execution:
+  approval_source: "Operator instruction on 2026-08-28: ok avancemos con esto"
+  approval_consumed_for: "control-plane plan commit, push, PR, merge and canonical readback only"
+  approval_status: "plan-publication-authorized"
+  control_plane_mutation_allowed: true
+  git_plan_publication_allowed: true
+  child_repo_mutation_allowed: false
+  child_repo_git_publication_allowed: false
+  cluster_mutation_allowed: false
+  runtime_mutation_allowed: false
+  host_mutation_allowed: false
+  backup_or_secret_access_allowed: false
+  jira_write_allowed: false
+  next_gate: "After plan readback, publish a running lifecycle with an exact owner-path batch before any owner mutation."
+
+publication_governance:
+  policy_ref: "execution-publication-and-tracker-closure-policy"
+  current_phase: "planned-without-execution-state"
+  execution_rule_adoption: "required-when-running-is-published"
+  plan_merge_required: true
+  terminal_merge_required: true
+  remote_readback_required: true
+  tracker_mirror: "jira-project-SST-under-epic-SST-97"
+
+validation:
+  - "4uentes-orchestor npm run check."
+  - "4uentes-orchestor git diff --check."
+  - "Owner discovery remains read-only; no patch payload is persisted in control-plane evidence."
+  - "No owner, runtime, host or Jira mutation occurs during planning."
+
+acceptance:
+  - "CR-SST-0229 is linked to INIT-SST-0004, INIT-SST-0009 and CR-SST-0222."
+  - "The dirty historical tree, live GitHub develop and local remote-tracking divergence are distinct facts."
+  - "Every historical owner path is classified as overlapping, non-overlapping or excluded."
+  - "The recovery path uses a clean owner worktree and preserves historical provenance."
+  - "Runtime evidence is decomposed by layer so one healthy signal cannot close the request."
+  - "No external mutation or Jira correction is authorized by this plan."
+
+decision:
+  status: "approved-for-plan-publication-only"
+  approver: "4uentes"
+  decided_at: "2026-08-28"
+  approval_text: "ok avancemos con esto"
+  blocker: "Plan publication, owner mutation, runtime probes and Jira correction each require their own later gate."
+
+evidence_refs:
+  - "evidence/requests/CR-SST-0229/identity-and-owner-preflight-2026-08-28.md"
+  - "evidence/requests/CR-SST-0229/owner-recovery-plan-2026-08-28.md"
+  - "evidence/requests/CR-SST-0222/reconciliation-plan-2026-08-28.md"

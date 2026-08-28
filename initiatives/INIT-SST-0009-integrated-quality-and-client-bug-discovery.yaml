@@ -26,10 +26,8 @@ model_refs:
   - "docs/requests/initiative-model.md"
 known_change_requests:
   - "CR-SST-0222"
+  - "CR-SST-0229"
 candidate_change_requests:
-  - title: "Reconcile the completed kind API-port stabilization under a new identity"
-    identity_status: "unreserved-requires-fresh-global-preflight"
-    historical_label: "CR-SST-0210"
   - title: "Reconcile the completed public-landing contrast remediation under a new identity"
     identity_status: "unreserved-requires-fresh-global-preflight"
     historical_label: "CR-SST-0211"
