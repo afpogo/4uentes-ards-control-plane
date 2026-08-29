@@ -22,12 +22,19 @@ control_plane_context:
   plan_pull_request: 172
   plan_head_commit: "d1ec838c8ae1613889919964763de5e81925790f"
   plan_merge_commit: "c0880c23da1847d549647bbc38981be03f29060a"
+  running_pull_request: 175
+  running_head_commit: "ecf9f4514f1bc2dd35195e8a7655a55252f94bd2"
+  running_merge_commit: "267600a682ef30079d3cadd4aa2dc21e01192a03"
+  owner_pull_request: 30
+  owner_head_commit: "dc23c45caae7f533412c7a8943e6e3f52bf677f6"
+  owner_merge_commit: "dc67203c77bb91804db888ad57c4f2a174b3d6b8"
+  owner_merge_readback_at: "2026-08-29"
   jira_role: "mirror"
   jira_parent_issue_key: "SST-122"
   jira_issue_key: "SST-123"
 
 authorization:
-  status: "approved-pending-publication"
+  status: "approved-owner-execution-consumed"
   approved_by: "4uentes"
   approved_at: "2026-08-28"
   approval_text: >
@@ -104,13 +111,52 @@ execution_publication_rule:
 
 owner_documentation:
   required: true
-  status: "pending-owner-execution"
+  status: "satisfied"
   owner_repo: "sst-bend"
-  required_surfaces:
-    - "normative article-processing API and persistence specs"
-    - "human-readable Spanish owner documentation"
-    - "policy-compliant data and lifecycle maps with textual fallback"
-    - "draft outbound capability and orchestrator_link metadata"
+  publication_status: "merged-and-read-back"
+  owner_pull_request: 30
+  owner_head_commit: "dc23c45caae7f533412c7a8943e6e3f52bf677f6"
+  owner_merge_commit: "dc67203c77bb91804db888ad57c4f2a174b3d6b8"
+  owner_surfaces:
+    - "specs/api/article-agent-processing.yaml"
+    - "docs/api/30-article-agent-processing.md"
+    - "specs/capabilities/outbound/article-agent-processing-v1.yaml"
+    - "docs/capabilities/outbound/article-agent-processing-v1.md"
+    - "docs/tasks/2026-08-28-cr-sst-0223-article-processing-persistence.md"
+    - "docs/tasks/2026-08-28-cr-sst-0223-manual-review.md"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0223/owner-publication-readback-and-manual-review-2026-08-29.md"
+
+owner_execution_result:
+  status: "merged-and-read-back"
+  base_ref: "sst-bend/origin/develop@3751d383451b790569fbbfa6421ff00eda5105eb"
+  pull_request: 30
+  head_commit: "dc23c45caae7f533412c7a8943e6e3f52bf677f6"
+  merge_commit: "dc67203c77bb91804db888ad57c4f2a174b3d6b8"
+  canonical_ref: "sst-bend/origin/develop@dc67203c77bb91804db888ad57c4f2a174b3d6b8"
+  checks: ["npm run check: pass", "npm run build: pass", "Node 18 CI: pass", "Node 20 CI: pass", "pull-request image build with push false: pass"]
+  deployment: "not-executed; merge commit contained [skip ci] and had zero associated workflow runs"
+  migration_execution: "not-executed"
+  production_data_mutation: "not-executed"
+  manual_review: "passed"
+
+jira_terminal_batch:
+  authorization_status: "pending-explicit-authorization"
+  preflight_status: "passed-read-only"
+  issue_key: "SST-123"
+  expected_current_status: "En curso"
+  expected_current_status_id: "10006"
+  expected_parent_issue_key: "SST-122"
+  expected_resolution: null
+  description_source: "evidence/requests/CR-SST-0223/jira-terminal-description-draft-2026-08-29.md"
+  transition_id: "41"
+  transition_name: "Listo"
+  target_status: "Finalizada"
+  target_status_id: "10008"
+  allowed_write_count: 2
+  allowed_operations: ["replace only SST-123 description with the exact approved draft", "transition only SST-123 through transition 41"]
+  forbidden_operations: ["comments", "links", "summary edits", "assignee edits", "label edits", "parent edits", "writes on any other issue"]
+  evidence_ref: "evidence/requests/CR-SST-0223/jira-terminal-preflight-2026-08-29.md"
 
 jira_batch:
   status: "passed-readback"
@@ -149,3 +195,6 @@ evidence_refs:
   - "evidence/requests/CR-SST-0223/execution-authorization-2026-08-28.md"
   - "evidence/requests/CR-SST-0223/jira-create-start-result-2026-08-28.md"
   - "evidence/requests/CR-SST-0223/running-and-jira-manual-review-2026-08-28.md"
+  - "evidence/requests/CR-SST-0223/owner-publication-readback-and-manual-review-2026-08-29.md"
+  - "evidence/requests/CR-SST-0223/jira-terminal-description-draft-2026-08-29.md"
+  - "evidence/requests/CR-SST-0223/jira-terminal-preflight-2026-08-29.md"
