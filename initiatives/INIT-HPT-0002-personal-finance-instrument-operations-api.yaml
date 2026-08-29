@@ -3,7 +3,7 @@ kind: "initiative"
 id: "INIT-HPT-0002"
 title: "Personal Economic Resources and Instrument Operations API"
 status: "hypothesis"
-updated_at: "2026-08-25"
+updated_at: "2026-08-29"
 owner_repository: "4uentes-orchestor"
 objective: >
   Evolve Phinance-API from personal cash-flow tracking toward an auditable
@@ -52,6 +52,7 @@ source_evidence_refs:
   - "evidence/requests/CR-SST-0212/owner-publication-readback-2026-08-23.md"
   - "evidence/requests/CR-HPT-0020/identity-worktree-and-source-preflight-2026-08-25.md"
   - "evidence/requests/CR-HPT-0020/read-model-reconciliation-2026-08-25.md"
+  - "evidence/requests/CR-HPT-0027/sst-bend-owner-publication-readback-2026-08-29.md"
 model_refs:
   - "specs/initiatives/initiative-model.yaml"
   - "docs/requests/initiative-model.md"
@@ -73,6 +74,7 @@ known_change_requests:
   - "CR-HPT-0018"
   - "CR-HPT-0019"
   - "CR-HPT-0020"
+  - "CR-HPT-0027"
 candidate_change_requests: []
 discovered_change_requests: []
 tracking:
@@ -81,7 +83,7 @@ tracking:
     source_of_truth: false
     project_key: "HPT"
     epic_key: "HPT-5"
-    write_status: "hpt-5-refreshed-hpt-7-reconciled-cr-hpt-0020-not-applicable"
+    write_status: "hpt-19-running-sst-bend-owner-slice-validated-local"
 boundaries:
   mutates_child_repositories: false
   promotes_runtime: false
