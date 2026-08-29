@@ -36,12 +36,23 @@ authorization:
   consumed_for: "running lifecycle authoring, validation, commit, push, PR, merge and canonical readback only"
   evidence: "evidence/requests/CR-SST-0229/running-owner-batch-2026-08-28.md"
 
+owner_execution_authorization:
+  status: "executed-within-exact-batch"
+  approved_by: "4uentes"
+  approved_at: "2026-08-28"
+  approval_text: "ok apruebo y continuemos"
+  consumed_for: "one clean owner worktree, selective eight-path review, seven-path delta, owner validation, commit, PR, merge and develop readback"
+  prohibited_actions_preserved: ["cluster mutation", "runtime probes", "host or Docker restart", "Secret or backup access", "Jira write"]
+  evidence: "evidence/requests/CR-SST-0229/owner-publication-proof-2026-08-28.md"
+
 execution:
   control_plane_mutation_allowed: true
   git_running_publication_allowed: true
-  child_repo_mutation_allowed: false
-  child_repo_git_publication_allowed: false
-  owner_worktree_creation_allowed: false
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets: ["sst-4uentes-infra"]
+  child_repo_mutation_scope: "selective declarative and owner-documentation reconciliation within the published eight-path batch"
+  child_repo_git_publication_allowed: true
+  owner_worktree_creation_allowed: true
   cluster_mutation_allowed: false
   runtime_mutation_allowed: false
   runtime_read_probe_allowed: false
@@ -50,9 +61,8 @@ execution:
   backup_or_secret_access_allowed: false
   jira_write_allowed: false
   external_execution_gate: >
-    Merge and read back this running lifecycle, then obtain a new exact
-    authorization before creating the clean owner worktree or modifying any
-    sst-4uentes-infra file.
+    The owner batch is merged and read back. Runtime read probes, cluster or
+    host mutation and Jira remain blocked until their own exact authorization.
 
 owner_baseline_readback:
   observed_at: "2026-08-28"
@@ -62,6 +72,7 @@ owner_baseline_readback:
   historical_worktree_status: "dirty-preserved"
   overlap_recheck: "same-four-path-overlap"
   refresh_rule: "Read GitHub develop again immediately before any future owner worktree creation."
+  owner_develop_after_merge: "d672fc463d268b99049f87373d5d2439b1fa38b9"
 
 owner_path_batch:
   future_selective_port_allowed_only_after_later_authorization:
@@ -154,8 +165,11 @@ execution_publication_rule:
 
 owner_documentation:
   required: true
-  status: "blocked-pending-owner-mutation-authorization"
+  status: "owner-merged-and-read-back"
   owner_repo: "sst-4uentes-infra"
+  owner_pull_request: 21
+  owner_head_commit: "2b5a9bb8edd6df06a73a32554550d2ddbfb9d3ae"
+  owner_merge_commit: "d672fc463d268b99049f87373d5d2439b1fa38b9"
   planned_surfaces:
     - "specs/infra/clusters/sst-dev-kind.yaml"
     - "specs/infra/clusters/00-index.yaml"
@@ -187,10 +201,10 @@ subagent_deployment_plan:
   reason: "No delegation was requested; owner-boundary and provenance decisions remain on one sequential auditable path."
 
 execution_status:
-  running_publication: "authorized-pending-merge-and-readback"
-  owner_worktree: "not-authorized-not-created"
-  owner_port: "not-authorized-not-started"
-  owner_publication: "not-authorized-not-started"
+  running_publication: "merged-and-read-back-pr-177"
+  owner_worktree: "created-clean-from-develop-620c42c-and-retired-after-readback"
+  owner_port: "seven-path-delta-merged; argocd-project-networkpolicy-already-present-upstream"
+  owner_publication: "merged-and-read-back-pr-21-develop-d672fc4"
   runtime_readback: "not-authorized-not-started"
   jira_mirror: "not-authorized-no-write"
 
@@ -209,4 +223,5 @@ evidence_refs:
   - "evidence/requests/CR-SST-0229/identity-and-owner-preflight-2026-08-28.md"
   - "evidence/requests/CR-SST-0229/owner-recovery-plan-2026-08-28.md"
   - "evidence/requests/CR-SST-0229/running-owner-batch-2026-08-28.md"
+  - "evidence/requests/CR-SST-0229/owner-publication-proof-2026-08-28.md"
   - "evidence/requests/CR-SST-0222/reconciliation-plan-2026-08-28.md"
