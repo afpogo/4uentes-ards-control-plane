@@ -20,16 +20,28 @@ control_plane_context:
   running_base: "origin/main@7a5934cb52d6916678dcd721bb2113e07f182dd1"
 
 execution:
-  approval_status: "approved-running-publication-and-first-retroactive-readonly-preflight"
+  approval_status: "approved-running-publication-and-sst-119-exact-jira-batch-consumed"
   approval_source: "Operator instruction on 2026-08-28: ok avancemos"
   control_plane_mutation_allowed: true
   child_repo_mutation_allowed: false
   runtime_mutation_allowed: false
   infrastructure_mutation_allowed: false
   jira_write_allowed: false
+  jira_exact_batch_executed: true
   git_running_publication_allowed: true
   secret_or_datastore_access_allowed: false
-  current_step: "publish running lifecycle, then execute a fresh global identity preflight for the infrastructure reconciliation reservation"
+  current_step: "publish the SST-119 Jira correction readback; all further Jira writes remain blocked pending a new enumerated authorization"
+
+agent_execution_profile:
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  task_weight: "short-defined-task"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "low"
+  fallback_profile: "gpt-5.3-spark"
+  reason: "Small auditable control-plane evidence update with mandatory full validation."
+  subagent_deployment_plan: "none; delegation was not requested and the unit is already atomic"
 
 identity_reconciliation:
   canonical_coordinator_request: "CR-SST-0222"
@@ -39,7 +51,7 @@ identity_reconciliation:
       owner_repository: "sst-4uentes-infra"
       purpose: "kind API host-port and restart-durable localhost:8088 reconciliation"
       canonical_request_id: "CR-SST-0229"
-      status: "canonical-done-owner-runtime-and-terminal-publication"
+      status: "canonical-done-jira-corrected-and-read-back"
     - historical_label: "CR-SST-0211"
       owner_repository: "sst-fend"
       purpose: "public landing contrast reconciliation"
@@ -61,10 +73,29 @@ jira:
   epic_key: "SST-101"
   coordinating_issue_key: "SST-102"
   infrastructure_issue_key: "SST-119"
-  write_status: "not-authorized-no-write"
+  write_status: "sst-119-exact-correction-complete-read-back; no-further-write-authorized"
+  completed_identity_corrections:
+    - issue_key: "SST-119"
+      historical_label: "CR-SST-0210"
+      canonical_request_id: "CR-SST-0229"
+      result: "PASS; exactly one canonical match and zero historical matches after readback"
   pending_identity_corrections:
     - "SST-102: historical CR-SST-0177 to canonical CR-SST-0222"
-    - "SST-119: historical CR-SST-0210 to canonical CR-SST-0229 after owner reconciliation and an exact Jira batch"
+  exact_batch_authorization:
+    request_id: "CR-SST-0222"
+    provider: "jira"
+    project_key: "SST"
+    issue_keys: ["SST-119"]
+    approved_by: "4uentes"
+    approved_at: "2026-08-29"
+    approval_text: "ok sigamos con el proximo gate"
+    allowed_operations: ["edit"]
+    allowed_fields: ["summary", "description", "labels"]
+    prohibited_fields: ["status", "resolution", "parent", "priority", "assignee", "comments"]
+    execution_window: "single batch in the approving operator session"
+    actual_write_count: 1
+    consumed: true
+    readback_result: "PASS; SST-119 is the only CR-SST-0229 match and CR-SST-0210 returns zero matches"
 
 owner_documentation:
   required: false
@@ -78,6 +109,8 @@ validation:
   control_plane_check: "PASS; full gate including request identities, initiatives, owner documentation and visual documentation"
   diff_check: "PASS"
   jira_readonly_preflight: "PASS; no writes"
+  jira_sst_119_exact_write: "PASS; one edit limited to summary, description and labels"
+  jira_sst_119_readback: "PASS; canonical identity unique, historical identity absent and protected fields preserved"
 
 execution_publication_rule:
   rule_id: "execution-publication-and-tracker-closure-rule"
@@ -105,4 +138,5 @@ evidence_refs:
   - "evidence/requests/CR-SST-0222/identity-preflight-2026-08-27.md"
   - "evidence/requests/CR-SST-0222/reconciliation-plan-2026-08-28.md"
   - "evidence/requests/CR-SST-0222/plan-publication-readback-2026-08-28.md"
+  - "evidence/requests/CR-SST-0222/sst-119-canonical-identity-jira-readback-2026-08-29.md"
   - "evidence/initiatives/INIT-SST-0009/jira-readonly-preflight.md"

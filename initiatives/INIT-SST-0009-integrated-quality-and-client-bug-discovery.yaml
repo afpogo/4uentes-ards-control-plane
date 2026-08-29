@@ -3,7 +3,7 @@ kind: "initiative"
 id: "INIT-SST-0009"
 title: "SST Integrated Quality and Client-Like Bug Discovery"
 status: "active"
-updated_at: "2026-08-28"
+updated_at: "2026-08-29"
 owner_repository: "4uentes-orchestor"
 objective: >
   Establish a repeatable SST quality cycle that combines repository-owned unit
@@ -21,6 +21,7 @@ source_evidence_refs:
   - "evidence/initiatives/INIT-SST-0009/jira-readonly-preflight.md"
   - "evidence/requests/CR-SST-0222/identity-preflight-2026-08-27.md"
   - "evidence/requests/CR-SST-0222/reconciliation-plan-2026-08-28.md"
+  - "evidence/requests/CR-SST-0222/sst-119-canonical-identity-jira-readback-2026-08-29.md"
 model_refs:
   - "specs/initiatives/initiative-model.yaml"
   - "docs/requests/initiative-model.md"
@@ -49,7 +50,7 @@ tracking:
     issue_key: "SST-101"
     current_status_observed: "Tareas por hacer"
     read_status: "available-readback-2026-08-28"
-    write_status: "existing-mirror-readback-only-correction-not-authorized"
+    write_status: "sst-119-canonical-correction-complete; further-writes-not-authorized"
     evidence_ref: "evidence/initiatives/INIT-SST-0009/jira-readonly-preflight.md"
     coordinating_issue_key: "SST-102"
     coordinating_issue_status_observed: "Tareas por hacer"
@@ -76,7 +77,6 @@ boundaries:
 open_gaps:
   - "Two completed frontend owner/runtime slices still need distinct retroactive canonical requests."
   - "SST-102 still references the unpublished CR-SST-0177 label."
-  - "SST-119 still references the collided CR-SST-0210 label and requires a later exact correction batch."
   - "The first critical-journey matrix and owner-repository test baseline remain to be assessed."
   - "Every Jira write requires a new enumerated authorization."
 coordination:
