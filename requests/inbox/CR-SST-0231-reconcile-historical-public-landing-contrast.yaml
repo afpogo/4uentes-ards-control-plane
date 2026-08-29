@@ -1,0 +1,115 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0231"
+title: "Reconcile historical SST public-landing contrast remediation"
+status: "inbox"
+created_at: "2026-08-29"
+requester: "4uentes"
+
+business_context: >
+  Historical browser QA found and remediated WCAG AA color-contrast failures
+  on the unauthenticated SST public landing. That work was recorded only in a
+  dirty local control-plane checkout under CR-SST-0211, which collides with the
+  canonical Auth chat-retention facade request already published under that
+  identity. The related sst-fend owner checkout also remains dirty and mixed
+  with unrelated changes.
+
+requested_change: >
+  Reconcile the completed historical landing-contrast work under the unique
+  canonical identity CR-SST-0231 without rewriting its provenance: inventory
+  the exact owner artifacts and prior validation, determine their publication
+  state, prepare an owner-scoped recovery plan, and keep any future Jira mirror
+  operation behind a separate exact authorization.
+
+expected_outcome: >
+  The historical public-landing contrast remediation is attributable to
+  CR-SST-0231, CR-SST-0211 remains canonical only for the Auth retention
+  facade, owner changes are not mistaken for published state, and later
+  recovery and validation proceed through explicit ARDS/SDD gates.
+
+initial_scope:
+  solution: "sst"
+  primary_initiative_id: "INIT-SST-0009"
+  coordinator_request_id: "CR-SST-0222"
+  control_repository: "4uentes-orchestor"
+  owner_repository: "sst-fend"
+  historical_label: "CR-SST-0211"
+  affected_surface: "unauthenticated public landing presentation"
+
+ordering_deviation: >
+  Owner-repository edits, local and deployed-artifact browser validation, an
+  ephemeral development image load and pod recycle occurred before this
+  canonical request was reserved. CR-SST-0231 records that deviation; it does
+  not convert the collided label into valid authority or prove that the dirty
+  owner artifacts were published.
+
+constraints:
+  - "This inbox reserves identity and supports planning only."
+  - "Do not modify, clean, stage, commit, publish or retire the dirty sst-fend checkout during reservation."
+  - "Do not modify, clean, stage, commit or discard the dirty historical control-plane checkout."
+  - "Do not build or load images, restart containers or pods, or mutate Docker, Kubernetes or runtime state."
+  - "Revalidate historical 4090 local and 8088 deployed-artifact evidence before any terminal claim."
+  - "Do not reuse CR-SST-0211 as a canonical identity for landing contrast; it belongs to the published Auth retention facade."
+  - "Do not add robots.txt, llms.txt or public agent-discovery content; they are excluded SST requirements."
+  - "Do not change authentication, routing, API, Redux, session or infrastructure contracts."
+  - "Jira is a mirror; no create, edit, comment or transition is authorized by this reservation."
+  - "Do not expose secrets, credentials, private URLs, account identifiers or private content in evidence."
+
+identity_preflight:
+  canonical_ref: "origin/main@394dd1ff5609f78705fbdede811f0ae34957616a"
+  canonical_tree_match: false
+  branch_or_worktree_match: false
+  jira_historical_identity_match: false
+  jira_candidate_identity_match: false
+  jira_topic_match: false
+  canonical_collision:
+    historical_label: "CR-SST-0211"
+    canonical_title: "Adopt chat retention facade in Auth"
+    canonical_status: "done"
+  evidence: "evidence/requests/CR-SST-0231/identity-and-owner-preflight-2026-08-29.md"
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "RETROACTIVE_CHILD_REPOSITORY_RECONCILIATION"
+    - "DIRTY_OWNER_CHECKOUT_WITH_MIXED_CHANGES"
+    - "HISTORICAL_RUNTIME_MUTATION"
+    - "COLLIDED_REQUEST_IDENTITY"
+
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5"
+  fallback_reasoning_effort: "high"
+  reason: "The plan must separate mixed dirty owner state from historical browser and runtime evidence without creating false publication claims."
+
+subagent_deployment_plan:
+  mode: "none"
+  reason: "No delegation was requested; identity, owner-state and authorization decisions remain on one auditable path."
+
+execution:
+  approval_source: "Operator instruction on 2026-08-29: ok avancemos con el proximo gate"
+  approval_consumed_for: "reservation commit, push, PR, merge and canonical readback only"
+  control_plane_mutation_allowed: true
+  git_reservation_publication_allowed: true
+  child_repo_mutation_allowed: false
+  runtime_mutation_allowed: false
+  infrastructure_mutation_allowed: false
+  secret_or_datastore_access_allowed: false
+  jira_write_allowed: false
+
+requested_next_step: >
+  Publish and read back this minimal reservation, then create a fresh planning
+  worktree from refreshed origin/main. Planning does not authorize owner or
+  runtime mutation.
+
+decision:
+  status: "approved-for-reservation-publication"
+  approver: "4uentes"
+  approved_at: "2026-08-29"
+  approval_text: "ok avancemos con el proximo gate"
