@@ -1,0 +1,243 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0232"
+title: "Define the governed Learning Workspace source contract"
+status: "planned"
+source_request: "requests/inbox/CR-SST-0232-define-learning-workspace-source-contract.yaml"
+created_at: "2026-08-29"
+requester: "4uentes"
+summary: >
+  Establish the cross-repository contract and adoption gates that let
+  Learning Workspace resolve manual text, persisted articles, article
+  documents and agent outputs into immutable review snapshots without
+  duplicating article processing or canonical memory authority.
+depends_on: ["CR-SST-0210", "CR-SST-0193", "CR-SST-0194", "CR-SST-0220", "CR-SST-0223"]
+
+control_plane_context:
+  initiative_id: "INIT-SST-0010"
+  feature_state_id: "learning-workspace-source-contract"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  jira_project_key: "SST"
+  jira_issue_type: "Task"
+  jira_parent_issue_key: "SST-105"
+  jira_issue_key: "TODO-after-separate-readonly-preflight"
+  jira_write_allowed: false
+
+risk:
+  level: "high"
+  score: 8
+  drivers: ["PRIVATE_SOURCE_CONTENT", "CROSS_REPO_CONTRACT", "AUTHORIZATION_AND_PROVENANCE", "DURABLE_MEMORY_BOUNDARY"]
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  task_class: "complex-high-risk-task"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5 high"
+  reason: >
+    The contract governs private content references, authorization,
+    provenance, source integrity and the boundary to canonical memory.
+
+subagent_deployment_plan:
+  required: false
+  mode: "sequential-main-agent"
+  reason: >
+    No delegation was requested; architecture, privacy and cross-repository
+    ownership decisions remain with the primary agent.
+
+execution:
+  approval_source: "Operator instruction on 2026-08-29: OK AUTORIZO"
+  approval_consumed_for: "planned lifecycle commit, push, PR, merge and canonical readback only"
+  approval_status: "plan-publication-authorized"
+  control_plane_mutation_allowed: true
+  child_repo_mutation_allowed: false
+  core_repo_mutation_allowed: false
+  runtime_mutation_allowed: false
+  deployment_allowed: false
+  production_data_allowed: false
+  secret_or_datastore_access_allowed: false
+  jira_write_allowed: false
+  next_external_gate: >
+    Obtain explicit approval to publish this planned lifecycle, merge it and
+    read it back before promoting CR-SST-0232 to running or materializing the
+    versioned contract.
+
+publication_gate:
+  policy_id: "execution-publication-and-tracker-closure-policy"
+  activation: "The enforceable execution_publication_rule block is added when a separately authorized running state exists."
+  git_publication:
+    applicable: true
+    plan_merge_required: true
+    terminal_merge_required: true
+  tracker_mirror:
+    applicable: true
+    provider: "jira"
+    project_key: "SST"
+    epic_key: "SST-105"
+  cleanup:
+    remote_readback_required: true
+
+contract_boundary:
+  orchestration_authority: "4uentes-orchestor"
+  source_authorization_and_resolution_owner: "sst-bend"
+  learning_workspace_interaction_owner: "sst-fend"
+  article_processing_authority: "sst-bend under CR-SST-0220 and owner slices"
+  memory_proposal_and_record_authority: "sst-bend under CR-SST-0192 and CR-SST-0194"
+  identity_and_scope_predecessor: "CR-SST-0210"
+  core_change_required: false
+  rule: >
+    This request defines cross-repository invariants and handoff boundaries.
+    Later owner requests define and implement local APIs, persistence and UI.
+
+contract_decisions:
+  descriptor_rule: >
+    SOURCE_DESCRIPTOR is a discriminated reference envelope. It contains only
+    the fields required to identify and request one source; it is not the
+    canonical source body or an authorization grant.
+  resolver_rule: >
+    SOURCE_RESOLVER runs server-side, reconstructs trusted principal scope,
+    authorizes the referenced owner object and creates one immutable
+    LEARNING_SOURCE_SNAPSHOT.
+  snapshot_rule: >
+    A snapshot freezes source kind, owner references, source version, content
+    hash, captured time and sanitized provenance before preview generation.
+  browser_rule: >
+    The browser may submit manual text, but it must use stable references for
+    owner-persisted articles, documents and agent outputs instead of copying
+    their private bodies across client state.
+  staleness_rule: >
+    A changed, deleted, unavailable or unauthorized source fails closed. A
+    changed version requires a new snapshot and never mutates an accepted one.
+  learning_rule: >
+    Preview, accept and reject remain LearningContext decisions associated
+    with the immutable source snapshot.
+  memory_rule: >
+    Accepting LearningContext never creates or accepts UserMemory. A future
+    explicit action may create a UserMemoryProposal in needs_review through
+    the canonical memory port.
+  tag_rule: >
+    Source resolution does not redefine ArticleTag, Learning content tags or
+    canonical memory classification; annotations are applied after snapshot
+    resolution under their owner contracts.
+  secret_rule: >
+    Secret values and credentialed acquisition are excluded. A future
+    security request may introduce an opaque SecretRef flow without exposing
+    the value to the browser, LearningContext, memory, logs or Jira.
+
+source_kinds:
+  manual_text:
+    required_reference_fields: ["client_source_id"]
+    content_input: "explicit user text"
+    compatibility: "preserve the current manual Learning Workspace path"
+  article:
+    required_reference_fields: ["article_id"]
+    optional_integrity_fields: ["article_version", "content_hash"]
+  article_document:
+    required_reference_fields: ["article_id", "document_id"]
+    optional_integrity_fields: ["document_version", "content_hash"]
+  agent_output:
+    required_reference_fields: ["article_id", "article_processing_result_id"]
+    optional_provenance_fields: ["derivation_run_id", "document_id", "agent_job_id"]
+    compatibility_rule: >
+      Legacy document-agent references may be adapted server-side, but the
+      canonical descriptor must resolve to one stable processing result or
+      immutable output document.
+
+minimum_failure_contract:
+  sanitized_codes:
+    - "source_not_found"
+    - "source_not_ready"
+    - "source_unauthorized"
+    - "source_scope_mismatch"
+    - "source_version_conflict"
+    - "source_hash_mismatch"
+    - "source_deleted"
+    - "source_kind_unsupported"
+    - "source_reference_invalid"
+  disclosure_rule: >
+    Cross-scope and unauthorized failures do not reveal whether the referenced
+    source exists or expose source content in error details.
+
+atomized_execution:
+  - order: 1
+    id: "publish-plan"
+    objective: "Merge and read back the CR-SST-0232 planned lifecycle and adoption map."
+    inputs: ["canonical inbox reservation", "current memory and article contracts"]
+    output: "Canonical planned lifecycle."
+    files: ["requests/planned/", "evidence/requests/CR-SST-0232/", "initiatives/INIT-SST-0010-personal-knowledge-and-memory-workspace.yaml"]
+    risk: "medium"
+    validation: "npm run check, git diff --check and remote main readback."
+  - order: 2
+    id: "materialize-running-contract"
+    objective: "After separate approval, publish the versioned SourceDescriptor and SourceResolver contract."
+    inputs: ["published plan", "owner read-only discovery"]
+    output: "Running lifecycle, normative YAML contract and Spanish derived documentation."
+    risk: "high"
+    validation: "contract review, policy-compliant maps and npm run check."
+  - order: 3
+    id: "allocate-owner-slices"
+    objective: "Reserve separate Bend resolver, Fend workspace and E2E lifecycles."
+    inputs: ["approved versioned contract", "live global namespace"]
+    output: "Owner-scoped requests with explicit dependencies and documentation duties."
+    risk: "high"
+    validation: "Git and Jira read-only preflight; no child mutation."
+  - order: 4
+    id: "implement-bend-resolver"
+    objective: "Authorize and resolve stable source references into immutable Learning snapshots."
+    output: "Owner-published Bend contract and runtime."
+    risk: "high"
+    validation: "owner checks, negative scope tests and control-plane full check."
+  - order: 5
+    id: "adopt-learning-workspace-ux"
+    objective: "Expose the source inbox, snapshot identity, preview states and independent memory-proposal action."
+    output: "Owner-published Fend UX and interaction maps."
+    risk: "high"
+    validation: "owner checks, accessibility and browser QA."
+  - order: 6
+    id: "integrated-learning-validation"
+    objective: "Prove article or agent output to LearningContext and explicit UserMemoryProposal review end to end."
+    output: "Sanitized browser evidence and terminal owner readbacks."
+    risk: "high"
+    validation: "UI-created fixtures, cross-scope denial, stale-source handling and explicit human PASS."
+
+owner_documentation:
+  required_for_this_request: false
+  reason: "This planned gate does not mutate child repositories or claim owner-local runtime contracts."
+  required_for_future_owner_slices: true
+  future_owner_repos: ["sst-bend", "sst-fend"]
+  closure_rule: >
+    Each mutated owner must publish its local ARDS/SDD, relevant visual maps
+    and validation evidence before its lifecycle closes.
+
+required_checks:
+  - "npm run check"
+  - "git diff --check"
+  - "visual documentation validator through the full check"
+  - "remote main readback after publication"
+
+acceptance:
+  - "The contract defines one extensible descriptor and server-side resolver boundary."
+  - "manual_text remains compatible while owner-persisted sources use stable references."
+  - "Article and agent-processing authority are reused rather than duplicated."
+  - "Snapshot identity, version, hash, provenance, idempotency and stale-source behavior are explicit."
+  - "LearningContext acceptance and UserMemoryProposal review remain separate decisions."
+  - "Secrets and credentialed source acquisition remain explicitly excluded."
+  - "No child repository, Jira, runtime or data mutation occurs in this planned gate."
+
+decision:
+  status: "approved-for-plan-publication"
+  approver: "4uentes"
+  approved_at: "2026-08-29"
+  approval_text: "OK AUTORIZO"
+
+evidence_refs:
+  - "evidence/requests/CR-SST-0232/reservation-readback-2026-08-29.md"
+  - "evidence/requests/CR-SST-0232/implementation-plan.md"
