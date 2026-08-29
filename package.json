@@ -37,7 +37,8 @@
     "jira:writer:apply": "node scripts/jira-writer/apply-correction-plan.js",
     "mcp:auth:list": "node scripts/mcp-auth/bootstrap-remotes.js --list",
     "mcp:auth:connect": "node scripts/mcp-auth/bootstrap-remotes.js --connect --continue-on-error",
-    "plan:change": "node scripts/plan-change.js"
+    "plan:change": "node scripts/plan-change.js",
+    "qa:cr-sst-0230:cache": "node scripts/qa-cr-sst-0230-cache.js"
   },
   "license": "UNLICENSED"
 }
