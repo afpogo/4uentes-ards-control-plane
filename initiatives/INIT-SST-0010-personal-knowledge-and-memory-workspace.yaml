@@ -73,6 +73,8 @@ source_evidence_refs:
   - "evidence/requests/CR-SST-0223/execution-authorization-2026-08-28.md"
   - "evidence/requests/CR-SST-0223/jira-create-start-result-2026-08-28.md"
   - "evidence/requests/CR-SST-0223/running-and-jira-manual-review-2026-08-28.md"
+  - "evidence/requests/CR-SST-0232/reservation-readback-2026-08-29.md"
+  - "evidence/requests/CR-SST-0232/implementation-plan.md"
 model_refs:
   - "specs/initiatives/initiative-model.yaml"
   - "docs/requests/initiative-model.md"
@@ -92,6 +94,7 @@ known_change_requests:
   - "CR-SST-0225"
   - "CR-SST-0226"
   - "CR-SST-0227"
+  - "CR-SST-0232"
 candidate_change_requests:
   - id: "CR-SST-TODO"
     title: "Implement encrypted offline device replica and conflict resolution"
@@ -199,6 +202,15 @@ article_processing_adoption:
   first_owner_publication: "sst-bend-pr-30-merged-and-read-back-develop-dc67203"
   first_owner_manual_review: "passed-2026-08-29"
   next_gate: "publish and read back the Bend owner reconciliation, then request exact authorization to update the SST-123 description and apply transition 41"
+learning_workspace_source_adoption:
+  status: "reserved-plan-publication-authorized"
+  request_id: "CR-SST-0232"
+  predecessor_requests: ["CR-SST-0210", "CR-SST-0193", "CR-SST-0194", "CR-SST-0220", "CR-SST-0223"]
+  source_kinds: ["manual_text", "article", "article_document", "agent_output"]
+  reservation_publication: "merged-and-read-back-pr-191"
+  owner_execution_status: "not-authorized"
+  jira_status: "read-only-preflight-passed-no-mirror-write-authorized"
+  next_gate: "publish and read back the planned lifecycle before requesting the running contract gate"
 relationships:
   depends_on:
     - {initiative_id: "INIT-SST-0007", role: "authenticated realtime chat and internal chatbot runtime"}
@@ -265,6 +277,7 @@ progress:
     - "CR-SST-0225"
     - "CR-SST-0226"
     - "CR-SST-0227"
+    - "CR-SST-0232"
   next_recommended_request: >
     Publish and read back the CR-SST-0223 Bend owner merge evidence. Then, and
     only with a new exact authorization, replace the SST-123 description with
