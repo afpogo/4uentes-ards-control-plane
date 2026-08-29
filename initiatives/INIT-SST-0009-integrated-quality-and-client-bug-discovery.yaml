@@ -22,16 +22,15 @@ source_evidence_refs:
   - "evidence/requests/CR-SST-0222/identity-preflight-2026-08-27.md"
   - "evidence/requests/CR-SST-0222/reconciliation-plan-2026-08-28.md"
   - "evidence/requests/CR-SST-0222/sst-119-canonical-identity-jira-readback-2026-08-29.md"
+  - "evidence/requests/CR-SST-0222/jira-progress-mirror-readback-2026-08-29.md"
 model_refs:
   - "specs/initiatives/initiative-model.yaml"
   - "docs/requests/initiative-model.md"
 known_change_requests:
   - "CR-SST-0222"
   - "CR-SST-0229"
+  - "CR-SST-0231"
 candidate_change_requests:
-  - title: "Reconcile the completed public-landing contrast remediation under a new identity"
-    identity_status: "unreserved-requires-fresh-global-preflight"
-    historical_label: "CR-SST-0211"
   - title: "Reconcile the completed local frontend-auth readiness gate under a new identity"
     identity_status: "unreserved-requires-fresh-global-preflight"
     historical_label: "CR-SST-0212"
@@ -48,12 +47,12 @@ tracking:
     project_key: "SST"
     issue_type: "Epic"
     issue_key: "SST-101"
-    current_status_observed: "Tareas por hacer"
-    read_status: "available-readback-2026-08-28"
-    write_status: "sst-119-canonical-correction-complete; further-writes-not-authorized"
-    evidence_ref: "evidence/initiatives/INIT-SST-0009/jira-readonly-preflight.md"
+    current_status_observed: "En curso"
+    read_status: "direct-readback-pass-2026-08-29; jql-index-readback-degraded"
+    write_status: "sst-101-and-sst-102-progress-mirror-complete; further-writes-not-authorized"
+    evidence_ref: "evidence/requests/CR-SST-0222/jira-progress-mirror-readback-2026-08-29.md"
     coordinating_issue_key: "SST-102"
-    coordinating_issue_status_observed: "Tareas por hacer"
+    coordinating_issue_status_observed: "En curso"
     qa_lead_display_name: "Brenda"
 historical_identity_reconciliation:
   canonical_coordinator_request: "CR-SST-0222"
@@ -75,8 +74,8 @@ boundaries:
     - "Treat a Jira bug or stale lifecycle as implementation authority."
     - "Attach credentials, tokens, personal data or private production content to QA evidence."
 open_gaps:
-  - "Two completed frontend owner/runtime slices still need distinct retroactive canonical requests."
-  - "SST-102 still references the unpublished CR-SST-0177 label."
+  - "One completed frontend-auth owner/runtime slice still needs a distinct retroactive canonical request."
+  - "CR-SST-0231 is reserved for the public-landing contrast reconciliation but still requires planning."
   - "The first critical-journey matrix and owner-repository test baseline remain to be assessed."
   - "Every Jira write requires a new enumerated authorization."
 coordination:

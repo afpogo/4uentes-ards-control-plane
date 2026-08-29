@@ -20,7 +20,7 @@ control_plane_context:
   running_base: "origin/main@7a5934cb52d6916678dcd721bb2113e07f182dd1"
 
 execution:
-  approval_status: "approved-running-publication-and-sst-119-exact-jira-batch-consumed"
+  approval_status: "approved-running-publication-and-progress-mirror-exact-jira-batch-consumed"
   approval_source: "Operator instruction on 2026-08-28: ok avancemos"
   control_plane_mutation_allowed: true
   child_repo_mutation_allowed: false
@@ -28,9 +28,10 @@ execution:
   infrastructure_mutation_allowed: false
   jira_write_allowed: false
   jira_exact_batch_executed: true
+  jira_progress_batch_executed: true
   git_running_publication_allowed: true
   secret_or_datastore_access_allowed: false
-  current_step: "publish the SST-119 Jira correction readback; all further Jira writes remain blocked pending a new enumerated authorization"
+  current_step: "plan CR-SST-0231 from its canonical inbox reservation; all further Jira writes remain blocked pending a new enumerated authorization"
 
 agent_execution_profile:
   provider: "codex"
@@ -55,13 +56,13 @@ identity_reconciliation:
     - historical_label: "CR-SST-0211"
       owner_repository: "sst-fend"
       purpose: "public landing contrast reconciliation"
-      canonical_request_id: null
-      status: "blocked-by-prior-infrastructure-reconciliation"
+      canonical_request_id: "CR-SST-0231"
+      status: "canonical-inbox-reserved-planning-pending"
     - historical_label: "CR-SST-0212"
       owner_repository: "sst-fend"
       purpose: "local frontend-auth readiness reconciliation"
       canonical_request_id: null
-      status: "blocked-by-prior-contrast-reservation"
+      status: "blocked-by-prior-contrast-planning"
   allocation_rule: >
     Numeric IDs remain null until each slice passes a fresh canonical Git,
     refs, worktree and Jira preflight and publishes its own inbox reservation.
@@ -69,18 +70,21 @@ identity_reconciliation:
 jira:
   role: "mirror"
   source_of_truth: false
-  read_status: "available"
+  read_status: "direct-readback-pass-jql-index-readback-degraded"
   epic_key: "SST-101"
   coordinating_issue_key: "SST-102"
   infrastructure_issue_key: "SST-119"
-  write_status: "sst-119-exact-correction-complete-read-back; no-further-write-authorized"
+  write_status: "sst-101-and-sst-102-progress-mirror-complete-read-back; no-further-write-authorized"
   completed_identity_corrections:
     - issue_key: "SST-119"
       historical_label: "CR-SST-0210"
       canonical_request_id: "CR-SST-0229"
-      result: "PASS; exactly one canonical match and zero historical matches after readback"
-  pending_identity_corrections:
-    - "SST-102: historical CR-SST-0177 to canonical CR-SST-0222"
+      result: "PASS; canonical summary and label corrected; historical provenance remains intentionally searchable in description and comments"
+    - issue_key: "SST-102"
+      historical_label: "CR-SST-0177"
+      canonical_request_id: "CR-SST-0222"
+      result: "PASS; summary, description and label corrected; issue transitioned to En curso"
+  pending_identity_corrections: []
   exact_batch_authorization:
     request_id: "CR-SST-0222"
     provider: "jira"
@@ -96,6 +100,32 @@ jira:
     actual_write_count: 1
     consumed: true
     readback_result: "PASS; SST-119 is the only CR-SST-0229 match and CR-SST-0210 returns zero matches"
+  progress_mirror_exact_batch:
+    request_id: "CR-SST-0222"
+    initiative_id: "INIT-SST-0009"
+    provider: "jira"
+    project_key: "SST"
+    issue_keys: ["SST-101", "SST-102"]
+    approved_by: "4uentes"
+    approved_at: "2026-08-29"
+    approval_text: "ok autorizo ejecutrar escritura"
+    expected_pre_state:
+      SST-101: "Epic; Tareas por hacer; no parent; Brenda; description present; zero comments"
+      SST-102: "Task; Tareas por hacer; parent SST-101; Brenda; stale CR-SST-0177 identity; description present; zero comments"
+    allowed_operations:
+      - "SST-101: transition to En curso and add exactly two comments"
+      - "SST-102: edit summary, description and labels; transition to En curso; add exactly two comments"
+    prohibited_operations:
+      - "create or delete issues"
+      - "change parent, issue type, assignee, priority or resolution"
+      - "transition SST-119 or any other issue"
+      - "write any comment or field outside SST-101 and SST-102"
+    execution_window: "single batch in the approving operator session"
+    actual_write_count: 7
+    consumed: true
+    direct_readback: "PASS; fields, hierarchy, transitions and ordered comments match the approved batch"
+    jql_index_readback: "DEGRADED; even key = SST-102 returned no nodes while direct getJiraIssue readback returned the updated issue"
+    evidence: "evidence/requests/CR-SST-0222/jira-progress-mirror-readback-2026-08-29.md"
 
 owner_documentation:
   required: false
@@ -110,7 +140,10 @@ validation:
   diff_check: "PASS"
   jira_readonly_preflight: "PASS; no writes"
   jira_sst_119_exact_write: "PASS; one edit limited to summary, description and labels"
-  jira_sst_119_readback: "PASS; canonical identity unique, historical identity absent and protected fields preserved"
+  jira_sst_119_readback: "PASS; canonical identity fields corrected, protected fields preserved and historical provenance retained in narrative fields"
+  jira_progress_mirror_exact_write: "PASS; seven authorized writes across SST-101 and SST-102"
+  jira_progress_mirror_direct_readback: "PASS; both issues En curso with expected descriptions, identity, hierarchy and two ordered comments each"
+  jira_progress_mirror_jql_readback: "DEGRADED; empty results including an exact key query; no false absence claim adopted"
 
 execution_publication_rule:
   rule_id: "execution-publication-and-tracker-closure-rule"
@@ -139,4 +172,5 @@ evidence_refs:
   - "evidence/requests/CR-SST-0222/reconciliation-plan-2026-08-28.md"
   - "evidence/requests/CR-SST-0222/plan-publication-readback-2026-08-28.md"
   - "evidence/requests/CR-SST-0222/sst-119-canonical-identity-jira-readback-2026-08-29.md"
+  - "evidence/requests/CR-SST-0222/jira-progress-mirror-readback-2026-08-29.md"
   - "evidence/initiatives/INIT-SST-0009/jira-readonly-preflight.md"
