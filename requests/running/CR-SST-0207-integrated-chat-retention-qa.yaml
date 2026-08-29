@@ -24,6 +24,8 @@ control_plane_context:
   jira_start_readback: "SST-117 is En curso without resolution, remains a Subtask of SST-113, and received no comment or field edit."
   jira_blocker_comment_batch_status: "consumed-2026-08-23"
   jira_blocker_comment_readback: "SST-117 remains En curso without resolution and retains parent SST-113 after one blocker comment referencing PR #102."
+  jira_conservative_reconciliation_batch_status: "consumed-2026-08-29"
+  jira_conservative_reconciliation_readback: "SST-117 label is cr-sst-0207 and comment 10388 records the current CR-SST-0217, CR-SST-0218 and CR-SST-0230 checkpoint; status remains En curso without resolution under SST-113."
 
 risk:
   level: "high"
@@ -59,7 +61,7 @@ execution:
   cluster_direct_mutation_allowed: false
   production_mutation_allowed: false
   feature_flag_mutation_allowed: false
-  jira_write_allowed: "Consumed: one blocker comment was added to SST-117 after PR #102 merged; no further Jira write is authorized."
+  jira_write_allowed: "Consumed: the 2026-08-29 conservative reconciliation corrected the SST-117 label and added exactly one checkpoint comment; no further Jira write is authorized."
 
 qa_scope:
   target_environment: "development"
@@ -113,6 +115,7 @@ evidence_refs:
   - "evidence/requests/CR-SST-0217/owner-and-runtime-readback-2026-08-24.md"
   - "evidence/requests/CR-SST-0207/integrated-matrix-checkpoint-2026-08-24.md"
   - "evidence/requests/CR-SST-0218/integrated-terminal-race-qa-2026-08-27.md"
+  - "evidence/requests/CR-SST-0230/jira-conservative-reconciliation-readback-2026-08-29.md"
 
 closure_limits:
   - "Every QA matrix row must pass on localhost and reserved ngrok before complete closure."

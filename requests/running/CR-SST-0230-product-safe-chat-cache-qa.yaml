@@ -53,8 +53,10 @@ control_plane_context:
   source_qa_jira_issue_key: "SST-117"
   jira_role: "mirror"
   jira_source_of_truth: false
-  jira_issue_key: null
+  jira_issue_key: "SST-124"
   jira_write_authorized: false
+  jira_conservative_reconciliation_batch_status: "consumed-2026-08-29"
+  jira_conservative_reconciliation_readback: "SST-124 is an En curso Subtask of SST-113 without resolution; labels and description match CR-SST-0230."
 
 contract:
   bend_route: "GET /4uentes/v1/chat/conversations/:id/messages"
@@ -84,7 +86,7 @@ execution:
   datastore_mutation_allowed: false
   schema_mutation_allowed: false
   secret_mutation_allowed: false
-  jira_write_allowed: false
+  jira_write_allowed: "Consumed: create SST-124, transition it to En curso, correct SST-114 through SST-117 labels, finalize SST-114 and add one SST-117 checkpoint comment; no further Jira write is authorized."
 
 workspace_isolation:
   canonical_roots_eligible_for_mutation: false
@@ -186,7 +188,7 @@ execution_status:
   running_publication: "merged-and-read-back-pr-176-main-3779f33"
   bend_owner_execution: "merged-and-read-back-pr-29-develop-3751d38; full-owner-check-pass"
   auth_owner_execution: "merged-and-read-back-pr-14-develop-13ebe6f; full-owner-check-pass"
-  jira_mirror: "not-authorized"
+  jira_mirror: "created-and-read-back-sst-124-en-curso; conservative-reconciliation-batch-consumed"
   deployment: "automatic Bend and Auth development image plus Infra tag publications observed after user merges; no direct deployment action; cluster reconciliation unverified"
   production: "not-authorized"
 
@@ -232,3 +234,4 @@ evidence_refs:
   - "evidence/requests/CR-SST-0230/execution-start-2026-08-28.md"
   - "evidence/requests/CR-SST-0230/bend-owner-publication-readback-2026-08-29.md"
   - "evidence/requests/CR-SST-0230/auth-owner-publication-readback-2026-08-29.md"
+  - "evidence/requests/CR-SST-0230/jira-conservative-reconciliation-readback-2026-08-29.md"

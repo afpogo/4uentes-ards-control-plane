@@ -20,6 +20,8 @@ control_plane_context:
   jira_source_of_truth: false
   jira_issue_key: "SST-115"
   jira_write_allowed: false
+  jira_conservative_reconciliation_batch_status: "consumed-2026-08-29"
+  jira_conservative_reconciliation_readback: "SST-115 retained Finalizada/Listo and its shifted label was corrected to cr-sst-0205."
 
 scope:
   owner_repo_modified: "sst-4uentes-infra"
@@ -93,6 +95,7 @@ evidence_refs:
   - "evidence/requests/CR-SST-0205/runtime-reconciliation-closure-2026-08-23.md"
   - "evidence/requests/CR-SST-0205/jira-close-and-next-lifecycle-batch-authorization-2026-08-23.md"
   - "evidence/requests/CR-SST-0206/jira-transition-readback-2026-08-23.md"
+  - "evidence/requests/CR-SST-0230/jira-conservative-reconciliation-readback-2026-08-29.md"
 
 closure:
   status: "complete-owner-published-development-reconciled"
