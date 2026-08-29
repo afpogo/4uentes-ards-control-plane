@@ -39,7 +39,7 @@ identity_reconciliation:
       owner_repository: "sst-4uentes-infra"
       purpose: "kind API host-port and restart-durable localhost:8088 reconciliation"
       canonical_request_id: "CR-SST-0229"
-      status: "running-publication-authorized-pending-readback"
+      status: "owner-merged-awaiting-runtime-readback-and-terminal-reconciliation"
     - historical_label: "CR-SST-0211"
       owner_repository: "sst-fend"
       purpose: "public landing contrast reconciliation"
