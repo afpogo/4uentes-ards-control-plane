@@ -1,17 +1,20 @@
 schema_version: "1.0"
-phase: 3
+phase: 4
 id: "CR-SST-0223"
 title: "Persist governed article processing runs and summaries"
-status: "running"
+status: "done"
 source_request: "requests/inbox/CR-SST-0223-persist-article-processing-runs-and-summaries.yaml"
 planned_request: "requests/planned/CR-SST-0223-persist-article-processing-runs-and-summaries.yaml"
+running_request: "requests/running/CR-SST-0223-persist-article-processing-runs-and-summaries.yaml"
 created_at: "2026-08-28"
 started_at: "2026-08-28"
+completed_at: "2026-08-29"
 requester: "4uentes"
 summary: >
-  Execute the authorized Bend owner adoption of the article-processing V1
-  persistence and authorization contract without enabling chatbot execution,
-  deployment, shared migrations or production-data mutation.
+  Bend owner persistence, authorization, compatibility and ARDS/SDD were
+  merged and read back without deployment or migration execution. The Jira
+  mirror received the exact terminal description and transition batch and was
+  read back as Finalizada with resolution Listo.
 depends_on: ["CR-SST-0210", "CR-SST-0220"]
 
 control_plane_context:
@@ -29,6 +32,10 @@ control_plane_context:
   owner_head_commit: "dc23c45caae7f533412c7a8943e6e3f52bf677f6"
   owner_merge_commit: "dc67203c77bb91804db888ad57c4f2a174b3d6b8"
   owner_merge_readback_at: "2026-08-29"
+  owner_reconciliation_pull_request: 181
+  owner_reconciliation_head_commit: "e658ebb94fa8aa097b98aa709410ff5c216571c3"
+  owner_reconciliation_merge_commit: "534bcfca9044771541a8c6c6435034be623bc782"
+  owner_reconciliation_readback_at: "2026-08-29"
   jira_role: "mirror"
   jira_parent_issue_key: "SST-122"
   jira_issue_key: "SST-123"
@@ -45,6 +52,15 @@ authorization:
     Subtask Jira bajo SST-122, validar el readback y aplicar únicamente la
     transición 21 hacia En curso.
   evidence_ref: "evidence/requests/CR-SST-0223/execution-authorization-2026-08-28.md"
+
+terminal_jira_authorization:
+  status: "consumed"
+  approved_by: "4uentes"
+  approved_at: "2026-08-29"
+  approval_text: "autorizo"
+  approved_batch: "Replace only the SST-123 description with the published terminal draft, apply only transition 41, then perform read-only terminal readback."
+  actual_write_count: 2
+  evidence_ref: "evidence/requests/CR-SST-0223/jira-terminal-result-2026-08-29.md"
 
 execution:
   control_plane_mutation_allowed: true
@@ -63,10 +79,11 @@ execution:
   infrastructure_mutation_allowed: false
   chatbot_repo_mutation_allowed: false
   fend_repo_mutation_allowed: false
-  jira_write_allowed: false
+  jira_write_allowed: "terminal two-write batch consumed; no additional Jira write is authorized"
   external_execution_gate: >
-    This running lifecycle and Jira result must be merged and read back before
-    creating or mutating the clean sst-bend owner worktree.
+    Owner implementation and tracker reconciliation are complete. Merge and
+    read back this done lifecycle before retiring temporary worktrees or
+    starting CR-SST-0224 owner execution.
 
 task_weight:
   classification: "complex-high-risk-task"
@@ -106,8 +123,17 @@ execution_publication_rule:
     provider: "jira"
     project_key: "SST"
     epic_key: "SST-105"
+    parent_issue_key: "SST-122"
+    issue_key: "SST-123"
   cleanup:
     remote_readback_required: true
+  trial_result:
+    status: "passed"
+    plan_publication: "merged-and-read-back"
+    implementation_publication: "merged-and-read-back"
+    tracker_reconciliation: "merged-and-read-back"
+    terminal_publication_contract: "merge-and-readback-before-cleanup"
+    cleanup_gate: "remote-readback-required"
 
 owner_documentation:
   required: true
@@ -141,7 +167,7 @@ owner_execution_result:
   manual_review: "passed"
 
 jira_terminal_batch:
-  authorization_status: "pending-explicit-authorization"
+  authorization_status: "consumed"
   preflight_status: "passed-read-only"
   issue_key: "SST-123"
   expected_current_status: "En curso"
@@ -156,9 +182,20 @@ jira_terminal_batch:
   allowed_write_count: 2
   allowed_operations: ["replace only SST-123 description with the exact approved draft", "transition only SST-123 through transition 41"]
   forbidden_operations: ["comments", "links", "summary edits", "assignee edits", "label edits", "parent edits", "writes on any other issue"]
-  evidence_ref: "evidence/requests/CR-SST-0223/jira-terminal-preflight-2026-08-29.md"
+  execution_status: "consumed-success-readback"
+  actual_write_count: 2
+  description_update_readback_at: "2026-08-29T02:00:18.334-03:00"
+  final_status: "Finalizada"
+  final_status_id: "10008"
+  final_status_category: "Done"
+  final_resolution: "Listo"
+  final_resolution_id: "10000"
+  terminal_readback_at: "2026-08-29T02:00:27.883-03:00"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0223/jira-terminal-preflight-2026-08-29.md"
+    - "evidence/requests/CR-SST-0223/jira-terminal-result-2026-08-29.md"
 
-jira_batch:
+jira_start_batch:
   status: "passed-readback"
   project_key: "SST"
   issue_type: "Subtask"
@@ -185,6 +222,36 @@ required_checks:
   - "git diff --check"
   - "remote canonical readbacks"
 
+validation_results:
+  owner_check: "PASS"
+  owner_build: "PASS"
+  owner_ci: "PASS for Node 18, Node 20 and pull-request image build"
+  owner_manual_review: "PASS"
+  owner_publication: "merged-and-read-back"
+  deployment: "not-executed"
+  migration_execution: "not-executed"
+  jira_terminal_batch: "PASS: exact two writes and terminal readback"
+  control_plane_check: "PASS before terminal publication with 0 FAIL"
+
+decision:
+  status: "ready-for-terminal-publication-owner-and-jira-complete"
+  approver: "4uentes"
+  decided_at: "2026-08-29"
+  next_gate: "Publish and read back this done lifecycle, then retire the CR-SST-0223 worktrees through the controlled cleanup gate."
+
+closure:
+  status: "complete-terminal-publication-pending"
+  completed_scope:
+    - "Bend implementation, owner ARDS/SDD and compatibility adapters are merged and read back."
+    - "No deployment, shared migration execution or production-data mutation occurred."
+    - "Backend manual review and all required owner/control-plane checks passed."
+    - "SST-123 contains the final description and is Finalizada with resolution Listo."
+  remaining_operational_gate: "Merge and read back this done lifecycle before controlled worktree retirement."
+  limits:
+    - "No additional Jira write is authorized."
+    - "Chatbot execution, Bend-chatbot integration, Fend UX and E2E QA remain CR-SST-0224 through CR-SST-0227."
+    - "User-visible QA remains Chrome DevTools MCP-only and forbids DB scripts and seeders."
+
 evidence_refs:
   - "evidence/requests/CR-SST-0223/plan-publication-readback-2026-08-28.md"
   - "evidence/requests/CR-SST-0223/owner-readonly-preflight-2026-08-28.md"
@@ -198,3 +265,4 @@ evidence_refs:
   - "evidence/requests/CR-SST-0223/owner-publication-readback-and-manual-review-2026-08-29.md"
   - "evidence/requests/CR-SST-0223/jira-terminal-description-draft-2026-08-29.md"
   - "evidence/requests/CR-SST-0223/jira-terminal-preflight-2026-08-29.md"
+  - "evidence/requests/CR-SST-0223/jira-terminal-result-2026-08-29.md"
