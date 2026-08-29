@@ -1,0 +1,116 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0232"
+title: "Define the governed Learning Workspace source contract"
+status: "inbox"
+created_at: "2026-08-29"
+requester: "4uentes"
+
+business_context: >
+  The existing /learning surface can preview and accept manually supplied
+  text, but it does not expose a governed source inbox or a stable contract for
+  importing persisted articles, article documents or agent-processing
+  results. The canonical memory, identity-scope and article-processing tracks
+  now provide the predecessors needed to define that boundary without
+  duplicating their persistence or execution models.
+
+requested_change: >
+  Define the cross-repository SourceDescriptor and SourceResolver contract for
+  Learning Workspace. The contract must cover manual_text, article,
+  article_document and agent_output references; immutable snapshot identity,
+  version and content hash; authorization and idempotency; provenance; source
+  deletion or staleness; and sanitized failure semantics.
+
+expected_outcome: >
+  /learning has one extensible, owner-governed source boundary that can later
+  resolve an authorized article or agent output into a reviewable Learning
+  snapshot without copying private source blobs through the browser, accepting
+  memory automatically or exposing secrets.
+
+initial_scope:
+  solution: "sst"
+  primary_initiative_id: "INIT-SST-0010"
+  control_repository: "4uentes-orchestor"
+  future_owner_repositories: ["sst-bend", "sst-fend"]
+  predecessor_requests:
+    - "CR-SST-0210"
+    - "CR-SST-0193"
+    - "CR-SST-0194"
+    - "CR-SST-0220"
+    - "CR-SST-0223"
+  source_kinds:
+    - "manual_text"
+    - "article"
+    - "article_document"
+    - "agent_output"
+
+constraints:
+  - "This inbox reserves identity and supports control-plane planning only."
+  - "Do not modify sst-bend, sst-fend, sst-chatbot, 4uentes-auth or infrastructure under this reservation."
+  - "Do not create endpoints, migrations, UI behavior, provider calls or runtime adapters under this reservation."
+  - "Do not duplicate the DERIVATION_RUN, ARTICLE_PROCESSING_RESULT, ARTICLE_SUMMARY or UserMemoryProposal authority already established by predecessor contracts."
+  - "Accepting LearningContext must not accept canonical UserMemory as a side effect."
+  - "The browser must not transport or persist private source blobs when a stable owner reference is available."
+  - "SecretRef and credentialed source acquisition remain out of scope until a separate security request and threat model are approved."
+  - "Jira is a mirror; no create, edit, comment or transition is authorized by this reservation."
+  - "Do not expose source content, prompts, secrets, tokens, private URLs or user identifiers in Git, Jira, logs or screenshots."
+
+identity_preflight:
+  observed_at: "2026-08-29"
+  canonical_ref: "origin/main@2e1049fd88c43686a1d052915eecb2606c0b4c24"
+  canonical_tree_match: false
+  reachable_git_ref_match: false
+  jira_exact_text_match: false
+  jira_preflight_mode: "read-only"
+  decision: "CR-SST-0232 is available for this unique intent at reservation time."
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "PRIVATE_ARTICLE_CONTENT"
+    - "CROSS_REPO_CONTRACT"
+    - "AUTHORIZATION_AND_PROVENANCE"
+    - "DURABLE_MEMORY_BOUNDARY"
+
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5"
+  fallback_reasoning_effort: "high"
+  reason: >
+    The future contract governs private content references, authorization,
+    provenance and the boundary between LearningContext and canonical memory.
+
+subagent_deployment_plan:
+  mode: "none"
+  reason: >
+    No delegation was requested; cross-repository ownership, privacy and
+    memory-boundary decisions remain on one auditable path.
+
+execution:
+  approval_source: "Operator instruction on 2026-08-29: ok avancemos con lo siguiente autorizo avance"
+  approval_consumed_for: "reservation commit, push, PR, merge and canonical readback only"
+  control_plane_mutation_allowed: true
+  git_reservation_publication_allowed: true
+  child_repo_mutation_allowed: false
+  runtime_mutation_allowed: false
+  infrastructure_mutation_allowed: false
+  secret_or_datastore_access_allowed: false
+  jira_write_allowed: false
+
+requested_next_step: >
+  Publish and read back this minimal reservation, then create a fresh planning
+  worktree from refreshed origin/main. The planning gate will define the
+  contract, owner handoffs, visual maps and validation scenarios; it will not
+  authorize owner or runtime mutation.
+
+decision:
+  status: "approved-for-reservation-publication"
+  approver: "4uentes"
+  approved_at: "2026-08-29"
+  approval_text: "ok avancemos con lo siguiente autorizo avance"
