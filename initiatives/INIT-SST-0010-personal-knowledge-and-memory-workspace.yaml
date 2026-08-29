@@ -172,7 +172,7 @@ paragraph_derivation_adoption:
   owner_execution_status: "control-plane-only-approved; child-owner-execution-not-authorized"
   next_gate: "publish and read back the validated contract, then perform final human QA"
 article_processing_adoption:
-  status: "contract-and-owner-plans-published; cr-sst-0223-jira-started-running-pending-publication"
+  status: "cr-sst-0223-bend-owner-merged; terminal-control-plane-and-jira-gates-pending"
   request_id: "CR-SST-0220"
   feature_state_id: "article-agent-processing"
   predecessor_contract_request_id: "CR-SST-0219"
@@ -183,7 +183,7 @@ article_processing_adoption:
   processing_modes: ["full_document", "sequential_paragraphs"]
   deferred_mode: "hybrid"
   jira_status: "sst-122-en-curso-readback-passed; authorization-consumed"
-  owner_execution_status: "authorized; blocked-until-cr-sst-0223-running-merge-and-readback"
+  owner_execution_status: "cr-sst-0223-bend-merged-and-read-back; no-deployment-or-migration-execution"
   browser_discovery_status: "article APIs unhealthy; final QA not ready"
   plan_publication: "merged-and-read-back-pr-144"
   contract_version: "sst-article-agent-processing-v1@1.0.0"
@@ -196,7 +196,9 @@ article_processing_adoption:
   first_owner_preflight_status: "owner-and-jira-readonly-preflights-passed; owner gate authorized; jira batch passed and consumed"
   first_owner_jira_status: "sst-123-en-curso-readback-passed; resolution-empty; authorization-consumed"
   first_owner_control_plane_review: "passed-2026-08-28"
-  next_gate: "publish and read back CR-SST-0223 running before creating or mutating the clean owner worktree"
+  first_owner_publication: "sst-bend-pr-30-merged-and-read-back-develop-dc67203"
+  first_owner_manual_review: "passed-2026-08-29"
+  next_gate: "publish and read back the Bend owner reconciliation, then request exact authorization to update the SST-123 description and apply transition 41"
 relationships:
   depends_on:
     - {initiative_id: "INIT-SST-0007", role: "authenticated realtime chat and internal chatbot runtime"}
@@ -264,9 +266,10 @@ progress:
     - "CR-SST-0226"
     - "CR-SST-0227"
   next_recommended_request: >
-    Publish and read back the CR-SST-0223 running lifecycle and consumed Jira
-    result. Only then refresh sst-bend origin/develop and create the authorized
-    clean owner worktree. Do not reuse the dirty owner checkout.
+    Publish and read back the CR-SST-0223 Bend owner merge evidence. Then, and
+    only with a new exact authorization, replace the SST-123 description with
+    the reviewed terminal draft and apply transition 41. Keep CR-SST-0224 as
+    the next independent owner execution gate.
   current_runtime_status: >
     CR-SST-0193 canonical persistence and API are implemented, merged and
     validated in local/dev. CR-SST-0210 supplies the merged tenant,
@@ -282,9 +285,12 @@ progress:
     running gate. Owner discovery found a legacy document-agent job and
     deterministic agent_summary projection, but not a contract-compliant V1
     aggregate. CR-SST-0223 therefore plans compatible evolution rather than a
-    parallel job model. Its owner execution is authorized but remains blocked
-    until the running lifecycle is merged and read back; Jira mirror SST-123
-    is already in progress and its one-use authorization is consumed.
+    parallel job model. CR-SST-0223 is now merged in sst-bend/develop with
+    owner ARDS/SDD, reversible migration, persistence aggregate, compatibility
+    adapters and tests. The merge intentionally triggered no deployment and
+    no migration was executed. Jira mirror SST-123 remains in progress; its
+    previous authorization is consumed and the terminal batch is only a
+    reviewed proposal.
   manual_qa_status: >
     Contract walkthrough, focused functional API QA, normal identity-path QA
     and conversational proposal/recall QA are complete for the published
@@ -294,7 +300,8 @@ progress:
     sanitized discovery blocker for unhealthy article APIs. Its documentary
     contract review passed and confirms policy-compliant maps for later owner
     documentation. CR-SST-0223 now has owner/Jira read-only preflights and a
-    policy-compliant persistence map. Its owner gate is authorized, but runtime
-    execution remains blocked until the running lifecycle is merged and read
-    back. User-visible QA starts after the required owner integration and the
-    initiative closes only through terminal evidence.
+    policy-compliant persistence map. Its owner publication and final backend
+    walkthrough passed on 2026-08-29. This is not user-visible QA: Chrome
+    DevTools-only QA starts after chatbot integration and Fend adoption under
+    the later owner requests. The initiative closes only through terminal
+    evidence.
