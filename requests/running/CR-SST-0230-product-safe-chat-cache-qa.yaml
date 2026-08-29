@@ -141,11 +141,15 @@ execution_publication_rule:
 
 owner_documentation:
   required: true
-  status: "authorized-pending-owner-execution"
+  status: "bend-merged-and-read-back; auth-pending-owner-execution"
   rule: "Runtime and observable contract changes must update owner specs, capabilities, docs, HTTP examples and tests; central evidence cannot substitute them."
   owner_repos:
     sst-bend:
       role: "cache outcome producer and durable read authority"
+      publication_status: "merged-and-read-back"
+      owner_pull_request: 29
+      owner_head_commit: "330cf6f30e42fc54bb14815a7d15743c57e7e127"
+      owner_merge_commit: "3751d383451b790569fbbfa6421ff00eda5105eb"
       required_surfaces:
         - "specs/api/chat-retention-v1.yaml"
         - "specs/capabilities/outbound/chat-retention-v1.yaml"
@@ -175,12 +179,24 @@ required_checks:
   - "remote canonical readback after every merged lifecycle or owner PR"
 
 execution_status:
-  running_publication: "pending-merge-and-readback"
-  bend_owner_execution: "authorized-not-started"
-  auth_owner_execution: "authorized-not-started-after-bend"
+  running_publication: "merged-and-read-back-pr-176-main-3779f33"
+  bend_owner_execution: "merged-and-read-back-pr-29-develop-3751d38; full-owner-check-pass"
+  auth_owner_execution: "authorized-ready-after-bend-readback"
   jira_mirror: "not-authorized"
-  deployment: "not-authorized"
+  deployment: "automatic-development-image-and-infra-tag-publication-observed-after-user-merge; no direct deployment action; cluster reconciliation unverified"
   production: "not-authorized"
+
+automatic_development_publication_observation:
+  ordering_deviation: true
+  cause: "The user merged Bend PR 29; the pre-existing push-to-develop workflow then executed automatically."
+  bend_image_tag: "develop-3751d383451b"
+  bend_workflow_run: 33224267192
+  infra_commit: "1e229dd51df0e713ed5e5d98d7dd5fc47d2d4645"
+  infra_change: "updated the development sst-bend image tag"
+  infra_ci_result: "pass"
+  infra_cd_observed_behavior: "rendered and validated desired state; no kubectl apply step observed"
+  external_gitops_reconciliation: "not verified and not authorized for this gate"
+  agent_direct_actions: "no image publication, Infra write, cluster command, deployment or production action was initiated directly by the agent"
 
 rollback: >
   Before owner publication, abandon the isolated owner branch. After Bend or
@@ -189,12 +205,13 @@ rollback: >
   or production directly as rollback.
 
 decision:
-  status: "approved-running-pending-publication"
+  status: "bend-published-auth-owner-gate-ready"
   approver: "4uentes"
   decided_at: "2026-08-28"
-  next_gate: "Merge and read back this running lifecycle, then refresh and create the isolated Bend owner worktree."
+  next_gate: "Record this Bend checkpoint, then create a fresh isolated 4uentes-auth worktree from develop@b9c38fc and implement the strict metadata forwarder without merging it."
 
 evidence_refs:
   - "evidence/requests/CR-SST-0230/identity-and-owner-preflight-2026-08-28.md"
   - "evidence/requests/CR-SST-0230/implementation-plan-2026-08-28.md"
   - "evidence/requests/CR-SST-0230/execution-start-2026-08-28.md"
+  - "evidence/requests/CR-SST-0230/bend-owner-publication-readback-2026-08-29.md"
