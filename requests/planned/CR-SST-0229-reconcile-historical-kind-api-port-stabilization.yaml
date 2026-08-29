@@ -198,14 +198,21 @@ execution:
   jira_write_allowed: false
   next_gate: "After plan readback, publish a running lifecycle with an exact owner-path batch before any owner mutation."
 
-publication_governance:
-  policy_ref: "execution-publication-and-tracker-closure-policy"
-  current_phase: "planned-without-execution-state"
-  execution_rule_adoption: "required-when-running-is-published"
-  plan_merge_required: true
-  terminal_merge_required: true
-  remote_readback_required: true
-  tracker_mirror: "jira-project-SST-under-epic-SST-97"
+execution_publication_rule:
+  rule_id: "execution-publication-and-tracker-closure-rule"
+  adoption_status: "adopted"
+  git_publication:
+    applicable: true
+    plan_merge_required: true
+    terminal_merge_required: true
+  tracker_mirror:
+    applicable: true
+    provider: "jira"
+    project_key: "SST"
+    epic_key: "SST-97"
+    issue_key: "SST-119"
+  cleanup:
+    remote_readback_required: true
 
 validation:
   - "4uentes-orchestor npm run check."
