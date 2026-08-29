@@ -31,6 +31,20 @@ execution:
   runtime_mutation_allowed: false
   jira_write_allowed: false
   next_gate: "Publish this execution preview, then obtain explicit running and Jira batch authorizations."
+execution_publication_rule:
+  rule_id: "execution-publication-and-tracker-closure-rule"
+  adoption_status: "adopted"
+  git_publication:
+    applicable: true
+    plan_merge_required: true
+    terminal_merge_required: true
+  tracker_mirror:
+    applicable: true
+    provider: "jira"
+    project_key: "SST"
+    epic_key: "SST-105"
+  cleanup:
+    remote_readback_required: true
 plan_publication:
   status: "merged-and-read-back"
   pull_request: 167
