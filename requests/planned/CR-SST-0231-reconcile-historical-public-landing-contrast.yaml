@@ -1,0 +1,233 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0231"
+title: "Reconcile historical SST public-landing contrast remediation"
+status: "planned"
+source_request: "requests/inbox/CR-SST-0231-reconcile-historical-public-landing-contrast.yaml"
+created_at: "2026-08-29"
+requester: "4uentes"
+
+summary: >
+  Recover the historical WCAG AA public-landing contrast remediation from a
+  mixed dirty sst-fend checkout by porting only twelve reviewed semantic paths
+  to a future clean owner worktree. This plan is control-plane-only and does
+  not authorize owner, runtime, infrastructure or Jira mutation.
+
+control_plane_context:
+  initiative_id: "INIT-SST-0009"
+  coordinator_request_id: "CR-SST-0222"
+  reservation_pull_request: 184
+  reservation_head_commit: "9198d20c68d4d441ff5763e8d8648767088db8c7"
+  reservation_merge_commit: "9d7e36ffd056e829d86ff1ef4e92989defe148e5"
+  planning_base: "origin/main@8960b1cfcfd6a5ff389004c32adbf70dea843f3e"
+  owner_repository: "sst-fend"
+  historical_label: "CR-SST-0211"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  jira_issue_key: null
+  jira_write_authorized: false
+
+observed_owner_baseline:
+  observed_at: "2026-08-29"
+  dirty_checkout:
+    branch: "fix/SST-26/CR-SST-0086/dictionary-secrets-panel"
+    head: "9148580390d187f78d147eb75ef1441beba75f63"
+    status: "dirty-with-mixed-modified-and-untracked-files"
+    relationship_to_develop: "HEAD is an ancestor of develop by 39 commits"
+  canonical_remote:
+    branch: "develop"
+    live_head: "bd9b8d2aa52aab2346b7bf94b0db05ed188c09a3"
+    local_tracking_head: "bd9b8d2aa52aab2346b7bf94b0db05ed188c09a3"
+    verification: "PASS; git ls-remote and local origin/develop agree without mutating the owner repo"
+  scoped_delta:
+    files: 12
+    additions: 75
+    deletions: 23
+    diff_check: "PASS"
+    provenance_check: "PASS; dirty-worktree-to-HEAD and dirty-worktree-to-develop deltas are identical for all twelve paths"
+
+historical_owner_artifacts:
+  runtime_style_paths:
+    - "src/assets/styles/sass/base/_colors.scss"
+    - "src/assets/styles/sass/lib/_settings.scss"
+    - "src/components/Clock/styles.module.scss"
+    - "src/components/Header/Header.module.scss"
+    - "src/components/SstButton/styles.module.scss"
+    - "src/components/SstSignalTag/styles.module.scss"
+    - "src/pages/Landing/styles.module.scss"
+  owner_documentation_paths:
+    - "specs/21-design-tokens.yml"
+    - "specs/36-public-landing-frontend.yml"
+    - "specs/37-branding-frontend.yml"
+    - "docs/36-public-landing-frontend.md"
+    - "docs/37-branding-frontend.md"
+  explicitly_excluded_scope:
+    - "Every dirty or untracked sst-fend path outside the twelve paths above."
+    - "Authentication, routing, API, Redux, session, extension and infrastructure contracts."
+    - "robots.txt, llms.txt and public agent-discovery files."
+
+semantic_change_set:
+  - id: "accessible-semantic-tokens"
+    paths:
+      - "src/assets/styles/sass/base/_colors.scss"
+      - "src/assets/styles/sass/lib/_settings.scss"
+    intent: "Add a bounded success foreground token without changing the canonical logo palette."
+  - id: "landing-and-shared-component-contrast"
+    paths:
+      - "src/components/Clock/styles.module.scss"
+      - "src/components/Header/Header.module.scss"
+      - "src/components/SstButton/styles.module.scss"
+      - "src/components/SstSignalTag/styles.module.scss"
+      - "src/pages/Landing/styles.module.scss"
+    intent: "Use accessible existing or bounded semantic foreground/background combinations for the reproduced landing failures."
+    blast_radius: "SstButton and SstSignalTag are shared; authenticated Home, Auth, Articles and Learning Workspace require regression review."
+  - id: "owner-contract-and-validation-order"
+    paths:
+      - "specs/21-design-tokens.yml"
+      - "specs/36-public-landing-frontend.yml"
+      - "specs/37-branding-frontend.yml"
+      - "docs/36-public-landing-frontend.md"
+      - "docs/37-branding-frontend.md"
+    intent: "Publish WCAG AA pairing rules, correct Sass source paths and require 4090 local validation before build and 8088 deployed-artifact validation."
+
+recovery_decision:
+  strategy: "selective-semantic-port-to-fresh-owner-worktree"
+  owner_base: "fresh-live-develop-readback"
+  prohibited_shortcuts:
+    - "Do not commit, reset, clean, stash, rebase, switch or retire the dirty historical owner checkout."
+    - "Do not copy the dirty checkout or any of the twelve files wholesale into the clean owner worktree."
+    - "Do not merge or cherry-pick the historical branch as a whole."
+    - "Do not include any path outside the exact twelve-path allowlist."
+    - "Do not claim that the historical CR-SST-0211 execution used CR-SST-0231 authority."
+  provenance_rule: >
+    Future owner documentation uses CR-SST-0231 as the canonical orchestrator
+    link and retains CR-SST-0211 only as an explicit historical execution label
+    describing the ordering deviation.
+  sensitive_content_rule: >
+    Review each semantic hunk before transport. Credentials, tokens, cookies,
+    private URLs, personal data and host-specific paths must not enter owner or
+    control-plane evidence.
+
+historical_claims_requiring_revalidation:
+  - "The original desktop and mobile Lighthouse runs reproduced 13 color-contrast failures."
+  - "The historical corrected local runtime at localhost:4090 reported accessibility 100 and zero contrast failures."
+  - "The historical deployed artifact at localhost:8088 reported accessibility 100 and zero contrast failures."
+  - "The owner npm run check historically passed 33 suites and 212 tests."
+  - "The production artifact console was clean while the local development console retained known React compatibility warnings."
+
+atomized_plan:
+  - order: 1
+    id: "publish-control-plane-plan"
+    objective: "Publish this exact owner-delta classification and recovery decision."
+    mutation_scope: "control-plane-only"
+    risk: "low"
+    validation: "Full control-plane check, PR merge and canonical readback."
+  - order: 2
+    id: "publish-running-owner-batch"
+    objective: "Publish a running lifecycle that enumerates the exact twelve owner paths and validations."
+    mutation_scope: "control-plane-only"
+    risk: "medium"
+    validation: "Running lifecycle is merged and read back before owner edits."
+  - order: 3
+    id: "create-clean-owner-worktree"
+    objective: "Re-read live develop and create one clean CR-SST-0231 owner branch/worktree while preserving the dirty source."
+    mutation_scope: "future separately authorized owner Git metadata"
+    risk: "medium"
+    validation: "Clean status, exact remote SHA and only one active owner worktree for CR-SST-0231."
+  - order: 4
+    id: "port-semantic-hunks"
+    objective: "Apply only reviewed contrast and owner-contract hunks within the twelve-path allowlist."
+    mutation_scope: "future separately authorized owner files"
+    risk: "high"
+    validation: "No excluded path changes; CR-SST-0231 and historical CR-SST-0211 provenance remain distinct."
+  - order: 5
+    id: "validate-owner"
+    objective: "Run the owner baseline and inspect the exact diff without runtime deployment."
+    mutation_scope: "owner validation"
+    risk: "medium"
+    validation: "npm run check and scoped/full git diff --check pass; specs and docs remain aligned."
+  - order: 6
+    id: "validate-local-4090"
+    objective: "Validate the owner-mounted local frontend first on desktop and mobile."
+    mutation_scope: "future separately authorized local browser/runtime readback; restart only if separately authorized and proven necessary"
+    risk: "medium"
+    validation: "4090 renders, expected requests pass, contrast failures are zero and shared-component regressions are assessed separately from console warnings."
+  - order: 7
+    id: "publish-owner-change"
+    objective: "Commit, PR and merge the exact owner change into develop."
+    mutation_scope: "future exact owner Git publication batch"
+    risk: "medium"
+    validation: "Remote PR contains only approved paths and merge is read back from live develop."
+  - order: 8
+    id: "validate-deployed-8088"
+    objective: "Build and validate the deployed artifact only after local acceptance."
+    mutation_scope: "future separately authorized build/image-load/pod-recycle and browser gate"
+    risk: "high"
+    validation: "8088 serves the newly built artifact; desktop/mobile contrast and console/network results pass without substituting for 4090 evidence."
+  - order: 9
+    id: "publish-terminal-evidence"
+    objective: "Publish owner and runtime readbacks, then decide whether a Jira mirror is needed."
+    mutation_scope: "control-plane publication; Jira remains separately gated"
+    risk: "medium"
+    validation: "Owner and control-plane remote readbacks pass before any Jira authorization is requested."
+
+false_positive_controls:
+  - "A healthy 8088 response does not prove that the local 4090 source consumed the current styles."
+  - "A successful build does not prove WCAG contrast or shared-component visual correctness."
+  - "Zero Lighthouse contrast failures on the landing do not prove authenticated surfaces are regression-free."
+  - "Historical screenshots and scores do not replace fresh readback after selective recovery."
+  - "Development-only React warnings are reported separately from production console errors."
+
+owner_documentation:
+  required: true
+  status: "planned-for-future-authorized-owner-mutation"
+  owner_repo: "sst-fend"
+  planned_surfaces:
+    - "specs/21-design-tokens.yml"
+    - "specs/36-public-landing-frontend.yml"
+    - "specs/37-branding-frontend.yml"
+    - "docs/36-public-landing-frontend.md"
+    - "docs/37-branding-frontend.md"
+  control_plane_gate: "Full npm run check including verify-owner-documentation.js is mandatory before closure."
+
+execution:
+  approval_source: "Operator instruction on 2026-08-29: ok avancemos"
+  approval_consumed_for: "control-plane plan commit, push, PR, merge and canonical readback only"
+  approval_status: "plan-publication-authorized"
+  control_plane_mutation_allowed: true
+  git_plan_publication_allowed: true
+  child_repo_mutation_allowed: false
+  child_repo_git_publication_allowed: false
+  runtime_mutation_allowed: false
+  infrastructure_mutation_allowed: false
+  secret_or_datastore_access_allowed: false
+  jira_write_allowed: false
+  next_gate: "After plan readback, publish a running lifecycle with the exact twelve-path owner batch before any owner mutation."
+
+validation:
+  - "4uentes-orchestor npm run check."
+  - "4uentes-orchestor git diff --check."
+  - "Owner discovery and scoped comparison remain read-only."
+  - "No patch payload, secret or private runtime data is persisted in control-plane evidence."
+  - "No owner, runtime, infrastructure or Jira mutation occurs during planning."
+
+acceptance:
+  - "CR-SST-0231 is linked to INIT-SST-0009 and CR-SST-0222."
+  - "The dirty owner checkout, historical HEAD and live develop baseline remain distinct facts."
+  - "All twelve selected paths have identical dirty-to-HEAD and dirty-to-develop deltas."
+  - "Every owner path outside the twelve-path allowlist remains excluded."
+  - "Local 4090 validation precedes build and deployed 8088 validation."
+  - "Shared-component blast radius receives explicit regression review."
+  - "No external mutation or Jira operation is authorized by this plan."
+
+decision:
+  status: "approved-for-plan-publication-only"
+  approver: "4uentes"
+  decided_at: "2026-08-29"
+  approval_text: "ok avancemos"
+  blocker: "Plan publication, running publication, owner mutation, runtime deployment and Jira mirroring each require their own gate."
+
+evidence_refs:
+  - "evidence/requests/CR-SST-0231/identity-and-owner-preflight-2026-08-29.md"
+  - "evidence/requests/CR-SST-0231/owner-recovery-plan-2026-08-29.md"
+  - "evidence/requests/CR-SST-0222/jira-progress-mirror-readback-2026-08-29.md"

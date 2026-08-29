@@ -31,7 +31,7 @@ execution:
   jira_progress_batch_executed: true
   git_running_publication_allowed: true
   secret_or_datastore_access_allowed: false
-  current_step: "plan CR-SST-0231 from its canonical inbox reservation; all further Jira writes remain blocked pending a new enumerated authorization"
+  current_step: "publish and read back the CR-SST-0231 plan, then request a separate running owner-path batch; all Jira writes remain blocked"
 
 agent_execution_profile:
   provider: "codex"
@@ -57,12 +57,12 @@ identity_reconciliation:
       owner_repository: "sst-fend"
       purpose: "public landing contrast reconciliation"
       canonical_request_id: "CR-SST-0231"
-      status: "canonical-inbox-reserved-planning-pending"
+      status: "canonical-planned-owner-mutation-not-authorized"
     - historical_label: "CR-SST-0212"
       owner_repository: "sst-fend"
       purpose: "local frontend-auth readiness reconciliation"
       canonical_request_id: null
-      status: "blocked-by-prior-contrast-planning"
+      status: "blocked-by-prior-contrast-running-gate"
   allocation_rule: >
     Numeric IDs remain null until each slice passes a fresh canonical Git,
     refs, worktree and Jira preflight and publishes its own inbox reservation.
@@ -173,4 +173,5 @@ evidence_refs:
   - "evidence/requests/CR-SST-0222/plan-publication-readback-2026-08-28.md"
   - "evidence/requests/CR-SST-0222/sst-119-canonical-identity-jira-readback-2026-08-29.md"
   - "evidence/requests/CR-SST-0222/jira-progress-mirror-readback-2026-08-29.md"
+  - "evidence/requests/CR-SST-0231/owner-recovery-plan-2026-08-29.md"
   - "evidence/initiatives/INIT-SST-0009/jira-readonly-preflight.md"
