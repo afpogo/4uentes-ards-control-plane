@@ -249,6 +249,21 @@ proposed_jira_batch:
   proposed_operations: ["create exactly one candidate if no compatible mirror exists", "transition only that issue to En curso"]
   forbidden_operations: ["comments", "links", "assignee changes", "labels", "edits to SST-117 or any other issue"]
 
+execution_publication_rule:
+  rule_id: "execution-publication-and-tracker-closure-rule"
+  adoption_status: "adopted"
+  git_publication:
+    applicable: true
+    plan_merge_required: true
+    terminal_merge_required: true
+  tracker_mirror:
+    applicable: true
+    provider: "jira"
+    project_key: "SST"
+    epic_key: "SST-86"
+  cleanup:
+    remote_readback_required: true
+
 rollback: >
   Before execution, abandon the plan without child mutation. During owner
   execution, revert Auth forwarding before or together with Bend production of
