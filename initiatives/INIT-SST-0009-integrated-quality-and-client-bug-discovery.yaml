@@ -23,6 +23,7 @@ source_evidence_refs:
   - "evidence/requests/CR-SST-0222/reconciliation-plan-2026-08-28.md"
   - "evidence/requests/CR-SST-0222/sst-119-canonical-identity-jira-readback-2026-08-29.md"
   - "evidence/requests/CR-SST-0222/jira-progress-mirror-readback-2026-08-29.md"
+  - "evidence/requests/CR-SST-0231/owner-recovery-plan-2026-08-29.md"
 model_refs:
   - "specs/initiatives/initiative-model.yaml"
   - "docs/requests/initiative-model.md"
@@ -75,7 +76,7 @@ boundaries:
     - "Attach credentials, tokens, personal data or private production content to QA evidence."
 open_gaps:
   - "One completed frontend-auth owner/runtime slice still needs a distinct retroactive canonical request."
-  - "CR-SST-0231 is reserved for the public-landing contrast reconciliation but still requires planning."
+  - "CR-SST-0231 has a bounded recovery plan but still requires a separately published running owner-path gate."
   - "The first critical-journey matrix and owner-repository test baseline remain to be assessed."
   - "Every Jira write requires a new enumerated authorization."
 coordination:
