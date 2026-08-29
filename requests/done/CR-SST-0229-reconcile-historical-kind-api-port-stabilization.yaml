@@ -1,19 +1,21 @@
 schema_version: "1.0"
-phase: 3
+phase: 4
 id: "CR-SST-0229"
 title: "Reconcile historical SST kind API-port stabilization"
-status: "running"
+status: "done"
 source_request: "requests/inbox/CR-SST-0229-reconcile-historical-kind-api-port-stabilization.yaml"
 planned_request: "requests/planned/CR-SST-0229-reconcile-historical-kind-api-port-stabilization.yaml"
 created_at: "2026-08-28"
 started_at: "2026-08-28"
+closed_at: "2026-08-29"
 requester: "4uentes"
 
 summary: >
-  Start the governed execution phase by publishing the exact owner recovery
-  boundary. This running lifecycle authorizes control-plane publication only;
-  it does not yet authorize creating an owner worktree, porting files,
-  publishing owner changes, probing runtime or correcting Jira.
+  Reconcile the historical kind API-port work through separately authorized
+  owner publication and current layered runtime readback. Owner and runtime
+  gates passed, owner runtime documentation was refreshed and the canonical
+  lifecycle reached terminal publication. Any Jira correction remains a
+  separately authorized coordinator concern.
 
 control_plane_context:
   initiative_ids: ["INIT-SST-0004", "INIT-SST-0009"]
@@ -45,6 +47,36 @@ owner_execution_authorization:
   prohibited_actions_preserved: ["cluster mutation", "runtime probes", "host or Docker restart", "Secret or backup access", "Jira write"]
   evidence: "evidence/requests/CR-SST-0229/owner-publication-proof-2026-08-28.md"
 
+runtime_read_authorization:
+  status: "executed-read-only"
+  approved_by: "4uentes"
+  approved_at: "2026-08-28"
+  approval_text: "ok avancemos al proximo gate"
+  consumed_for: "host listeners, Docker publications, kind and Kubernetes readiness, Ingress, workloads, Argo CD, local HTTP contracts and browser readback"
+  prohibited_actions_preserved: ["cluster mutation", "runtime mutation", "host or Docker restart", "Secret or backup access", "Jira write"]
+  evidence: "evidence/requests/CR-SST-0229/runtime-readback-2026-08-28.md"
+
+owner_runtime_documentation_authorization:
+  status: "merged-and-read-back"
+  approved_by: "4uentes"
+  approved_at: "2026-08-29"
+  approval_text: "ok avancemos al proximo gate"
+  consumed_for: "one clean owner worktree, exact two-YAML runtime documentation update, validation, commit, PR, merge and develop readback"
+  exact_paths: ["specs/infra/clusters/sst-dev-kind.yaml", "specs/states/stabilize-kind-api-server-port.yaml"]
+  prohibited_actions_preserved: ["cluster mutation", "runtime mutation", "host or Docker restart", "Secret or backup access", "Jira write"]
+  owner_pull_request: 22
+  owner_head_commit: "ef51235460d6bf36b656e16511a44fd0201f1416"
+  owner_merge_commit: "0d4ba889b856819257af652050da37cd38bdd122"
+  evidence: "evidence/requests/CR-SST-0229/runtime-readback-2026-08-28.md"
+
+terminal_publication_authorization:
+  status: "approved-for-terminal-publication"
+  approved_by: "4uentes"
+  approved_at: "2026-08-29"
+  approval_text: "ok avancemos con el siguiente gate"
+  consumed_for: "done lifecycle, runtime evidence, coordinator and initiative reconciliation, validation, commit, PR, merge, canonical readback and clean worktree retirement"
+  prohibited_actions_preserved: ["child repository mutation", "cluster or runtime mutation", "host or Docker restart", "Secret or backup access", "Jira write"]
+
 execution:
   control_plane_mutation_allowed: true
   git_running_publication_allowed: true
@@ -55,14 +87,15 @@ execution:
   owner_worktree_creation_allowed: true
   cluster_mutation_allowed: false
   runtime_mutation_allowed: false
-  runtime_read_probe_allowed: false
+  runtime_read_probe_allowed: true
   host_mutation_allowed: false
   docker_mutation_allowed: false
   backup_or_secret_access_allowed: false
   jira_write_allowed: false
   external_execution_gate: >
-    The owner batch is merged and read back. Runtime read probes, cluster or
-    host mutation and Jira remain blocked until their own exact authorization.
+    CR-SST-0229 is terminal after canonical merge and readback. Any Jira
+    correction or future runtime and owner mutation requires a separate
+    approved request or exact batch.
 
 owner_baseline_readback:
   observed_at: "2026-08-28"
@@ -124,27 +157,27 @@ atomized_execution:
   - order: 2
     id: "authorize-owner-port"
     objective: "Obtain a separately enumerated authorization for clean owner worktree creation and eight-path selective porting."
-    mutation_scope: "human authorization only"
+    mutation_scope: "completed-exact-owner-authorization"
     validation: "Authorization names the owner repo, path batch, exclusions and prohibited runtime actions."
   - order: 3
     id: "execute-owner-port"
     objective: "Create a clean owner worktree from live develop and port reviewed semantic hunks only."
-    mutation_scope: "blocked-pending-step-2"
+    mutation_scope: "completed-clean-owner-worktree"
     validation: "Owner diff contains no excluded or implicit paths."
   - order: 4
     id: "validate-and-publish-owner"
     objective: "Run owner checks and publish through a reviewed PR to develop."
-    mutation_scope: "blocked-pending-step-2"
+    mutation_scope: "completed-owner-pr-21-and-pr-22"
     validation: "Owner npm run check, diff check, PR diff audit and remote readback pass."
   - order: 5
     id: "revalidate-runtime-layers"
     objective: "Run bounded read-only host, Docker, Kubernetes, Argo, ingress, workload and HTTP probes."
-    mutation_scope: "blocked-pending-separate-runtime-read-authorization"
+    mutation_scope: "executed-read-only"
     validation: "Each layer reports its own expected result without inferring closure from another layer."
   - order: 6
     id: "publish-terminal-and-reconcile-jira"
     objective: "Publish sanitized terminal evidence before any separately authorized SST-119 correction."
-    mutation_scope: "future control-plane and exact Jira batch"
+    mutation_scope: "terminal-control-plane-publication; Jira deferred to separate coordinator batch"
     validation: "Owner and control-plane readbacks pass; Jira remains a mirror."
 
 execution_publication_rule:
@@ -155,21 +188,31 @@ execution_publication_rule:
     plan_merge_required: true
     terminal_merge_required: true
   tracker_mirror:
-    applicable: true
-    provider: "jira"
-    project_key: "SST"
-    epic_key: "SST-97"
-    issue_key: "SST-119"
+    applicable: false
+    not_applicable_reason: "CR-SST-0229 performs no Jira write; the stale SST-119 identity correction remains separately gated under coordinator CR-SST-0222."
   cleanup:
     remote_readback_required: true
+  trial_result:
+    status: "passed"
+    plan_publication: "merged-and-read-back"
+    implementation_publication: "merged-and-read-back"
+    tracker_reconciliation: "not-applicable"
+    terminal_publication_contract: "merge-and-readback-before-cleanup"
+    cleanup_gate: "remote-readback-required"
 
 owner_documentation:
   required: true
-  status: "owner-merged-and-read-back"
+  status: "satisfied"
   owner_repo: "sst-4uentes-infra"
   owner_pull_request: 21
   owner_head_commit: "2b5a9bb8edd6df06a73a32554550d2ddbfb9d3ae"
   owner_merge_commit: "d672fc463d268b99049f87373d5d2439b1fa38b9"
+  runtime_readback_owner_update_status: "merged-and-read-back-pr-22"
+  runtime_readback_owner_head_commit: "ef51235460d6bf36b656e16511a44fd0201f1416"
+  runtime_readback_owner_merge_commit: "0d4ba889b856819257af652050da37cd38bdd122"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0229/owner-publication-proof-2026-08-28.md"
+    - "evidence/requests/CR-SST-0229/runtime-readback-2026-08-28.md"
   planned_surfaces:
     - "specs/infra/clusters/sst-dev-kind.yaml"
     - "specs/infra/clusters/00-index.yaml"
@@ -205,7 +248,11 @@ execution_status:
   owner_worktree: "created-clean-from-develop-620c42c-and-retired-after-readback"
   owner_port: "seven-path-delta-merged; argocd-project-networkpolicy-already-present-upstream"
   owner_publication: "merged-and-read-back-pr-21-develop-d672fc4"
-  runtime_readback: "not-authorized-not-started"
+  runtime_readback: "passed-layered-read-only-2026-08-28"
+  browser_readback: "localhost-8088-rendered-eight-of-eight-initial-requests-200-empty-console"
+  local_development_observation: "localhost-4090-rendered-seven-of-seven-initial-requests-200-with-react-development-console-warnings"
+  owner_runtime_documentation: "merged-and-read-back-pr-22-develop-0d4ba88"
+  terminal_publication: "merge-and-readback-before-cleanup"
   jira_mirror: "not-authorized-no-write"
 
 required_checks:
@@ -214,14 +261,17 @@ required_checks:
   - "Remote canonical readback after running merge"
 
 decision:
-  status: "approved-for-running-publication-only"
+  status: "closed-owner-and-runtime-reconciliation-complete"
   approver: "4uentes"
-  decided_at: "2026-08-28"
-  approval_text: "comencemos la fase de ejcucion"
+  decided_at: "2026-08-29"
+  approval_text: "ok avancemos con el siguiente gate"
+  blocker: "none"
+  next_gate: "CR-SST-0222 may request a separate exact Jira correction batch for SST-119; no Jira write is part of this closure."
 
 evidence_refs:
   - "evidence/requests/CR-SST-0229/identity-and-owner-preflight-2026-08-28.md"
   - "evidence/requests/CR-SST-0229/owner-recovery-plan-2026-08-28.md"
   - "evidence/requests/CR-SST-0229/running-owner-batch-2026-08-28.md"
   - "evidence/requests/CR-SST-0229/owner-publication-proof-2026-08-28.md"
+  - "evidence/requests/CR-SST-0229/runtime-readback-2026-08-28.md"
   - "evidence/requests/CR-SST-0222/reconciliation-plan-2026-08-28.md"
