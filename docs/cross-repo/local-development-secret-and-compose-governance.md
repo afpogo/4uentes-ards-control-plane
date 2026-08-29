@@ -85,7 +85,7 @@ Phinance hasta que cada owner publique su adopción.
 | --- | --- | --- |
 | SST Bend | `validated-local` | `sst-bend#31`, merge `28ce139`; sin validación live |
 | Phinance | pendiente de slice separado | `CR-HPT-0021` conserva autoridad owner |
-| 4uentes Automation | bloqueado por onboarding/gate propio | no autorizado por este slice |
+| 4uentes Automation | bloqueado por lifecycle/provenance | `CR-CP-0021` no está en main y el owner local no tiene Git observable |
 | Infraestructura SST | no autorizado | workflow automático contenido antes de checkout/update infra |
 
 ## Secuencia gobernada
@@ -155,7 +155,8 @@ sanitizados. No podrá leer, copiar ni transportar valores secretos.
 
 ## Compuertas pendientes
 
-- Publicar y releer el onboarding canónico de `4uentes-automation`.
+- Recuperar y releer primero la reserva inbox de `CR-CP-0021`; no portar en
+  bloque el worktree legacy ni sus assertions M2M.
 - Autorizar por separado los slices de Automation y Phinance; SST Bend ya fue
   adoptado y validado localmente.
 - Auditar efectos automáticos de workflows `push` antes de fusionar otro owner;
