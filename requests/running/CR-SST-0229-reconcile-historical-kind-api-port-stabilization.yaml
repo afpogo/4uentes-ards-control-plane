@@ -1,0 +1,212 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-SST-0229"
+title: "Reconcile historical SST kind API-port stabilization"
+status: "running"
+source_request: "requests/inbox/CR-SST-0229-reconcile-historical-kind-api-port-stabilization.yaml"
+planned_request: "requests/planned/CR-SST-0229-reconcile-historical-kind-api-port-stabilization.yaml"
+created_at: "2026-08-28"
+started_at: "2026-08-28"
+requester: "4uentes"
+
+summary: >
+  Start the governed execution phase by publishing the exact owner recovery
+  boundary. This running lifecycle authorizes control-plane publication only;
+  it does not yet authorize creating an owner worktree, porting files,
+  publishing owner changes, probing runtime or correcting Jira.
+
+control_plane_context:
+  initiative_ids: ["INIT-SST-0004", "INIT-SST-0009"]
+  coordinator_request_id: "CR-SST-0222"
+  reservation_pull_request: 168
+  reservation_merge_commit: "d6fea57b4f3930e2e3be9d1d1143157ccb7ad7a2"
+  plan_pull_request: 173
+  plan_head_commit: "dfd475fdeb71694d594803776de5a4a8f7a9b60f"
+  plan_merge_commit: "0a69777243e9b1797c76d4dd85d3eaa66d19feeb"
+  plan_readback_status: "merged-and-reachable-from-origin-main"
+  running_base: "origin/main@267600a682ef30079d3cadd4aa2dc21e01192a03"
+  owner_repository: "sst-4uentes-infra"
+  historical_label: "CR-SST-0210"
+
+authorization:
+  status: "approved-for-running-publication-only"
+  approved_by: "4uentes"
+  approved_at: "2026-08-28"
+  approval_text: "comencemos la fase de ejcucion"
+  consumed_for: "running lifecycle authoring, validation, commit, push, PR, merge and canonical readback only"
+  evidence: "evidence/requests/CR-SST-0229/running-owner-batch-2026-08-28.md"
+
+execution:
+  control_plane_mutation_allowed: true
+  git_running_publication_allowed: true
+  child_repo_mutation_allowed: false
+  child_repo_git_publication_allowed: false
+  owner_worktree_creation_allowed: false
+  cluster_mutation_allowed: false
+  runtime_mutation_allowed: false
+  runtime_read_probe_allowed: false
+  host_mutation_allowed: false
+  docker_mutation_allowed: false
+  backup_or_secret_access_allowed: false
+  jira_write_allowed: false
+  external_execution_gate: >
+    Merge and read back this running lifecycle, then obtain a new exact
+    authorization before creating the clean owner worktree or modifying any
+    sst-4uentes-infra file.
+
+owner_baseline_readback:
+  observed_at: "2026-08-28"
+  live_github_develop: "620c42ce9f1e2b7f2dfc81180a0409ec31d032a6"
+  latest_owner_pull_request: 20
+  historical_worktree_head: "f3f273722a2d1d5f8d1735d7e8292de44374df06"
+  historical_worktree_status: "dirty-preserved"
+  overlap_recheck: "same-four-path-overlap"
+  refresh_rule: "Read GitHub develop again immediately before any future owner worktree creation."
+
+owner_path_batch:
+  future_selective_port_allowed_only_after_later_authorization:
+    - "argocd/argocd-project.yml"
+    - "k8s-manifests/bootstrap/kind/sst-cluster-dev.kind.yml"
+    - "specs/infra/clusters/sst-dev-kind.yaml"
+    - "specs/infra/clusters/00-index.yaml"
+    - "specs/states/stabilize-kind-api-server-port.yaml"
+    - "specs/states/00-index.yaml"
+    - "docs/runbooks/ngrok-durable-development.md"
+    - "docs/runbooks/argocd-kind-development.md"
+  manual_semantic_merge_required:
+    - "argocd/argocd-project.yml"
+    - "docs/runbooks/argocd-kind-development.md"
+    - "specs/infra/clusters/sst-dev-kind.yaml"
+    - "specs/states/00-index.yaml"
+  currently_non_overlapping_but_review_required:
+    - "k8s-manifests/bootstrap/kind/sst-cluster-dev.kind.yml"
+    - "specs/infra/clusters/00-index.yaml"
+    - "specs/states/stabilize-kind-api-server-port.yaml"
+    - "docs/runbooks/ngrok-durable-development.md"
+  explicitly_excluded:
+    - "docs/00-overview.md"
+    - "docs/environments/README.md"
+    - "docs/runbooks/ghcr-private-pull-development.md"
+    - "specs/00-index.yaml"
+    - "specs/infra/environments/00-index.yaml"
+    - "specs/infra/environments/development.yaml"
+    - "specs/infra/environments/production.yaml"
+    - "specs/infra/environments/test-demo.yaml"
+    - "specs/states/implement-durable-ngrok-edge.yaml"
+  implicit_path_expansion_allowed: false
+
+recovery_guards:
+  - "Do not mutate, clean, stash, reset, switch, rebase or retire the historical dirty owner worktree."
+  - "Do not merge or cherry-pick the historical branch as a whole."
+  - "Use a fresh GitHub develop readback, not a stale local remote-tracking ref, for the future owner base."
+  - "Review every selected hunk for scope and sensitive content before transport."
+  - "Use CR-SST-0229 as the canonical orchestrator link and preserve CR-SST-0210 only as explicit historical provenance."
+  - "Do not apply manifests, recreate kind, restart Docker/host/workloads or access backups and Secrets."
+  - "Keep robots.txt and llms.txt outside SST scope."
+
+atomized_execution:
+  - order: 1
+    id: "publish-running-boundary"
+    objective: "Merge and read back this lifecycle and exact path batch."
+    mutation_scope: "control-plane-only"
+    validation: "Full control-plane check, PR merge and canonical main readback."
+  - order: 2
+    id: "authorize-owner-port"
+    objective: "Obtain a separately enumerated authorization for clean owner worktree creation and eight-path selective porting."
+    mutation_scope: "human authorization only"
+    validation: "Authorization names the owner repo, path batch, exclusions and prohibited runtime actions."
+  - order: 3
+    id: "execute-owner-port"
+    objective: "Create a clean owner worktree from live develop and port reviewed semantic hunks only."
+    mutation_scope: "blocked-pending-step-2"
+    validation: "Owner diff contains no excluded or implicit paths."
+  - order: 4
+    id: "validate-and-publish-owner"
+    objective: "Run owner checks and publish through a reviewed PR to develop."
+    mutation_scope: "blocked-pending-step-2"
+    validation: "Owner npm run check, diff check, PR diff audit and remote readback pass."
+  - order: 5
+    id: "revalidate-runtime-layers"
+    objective: "Run bounded read-only host, Docker, Kubernetes, Argo, ingress, workload and HTTP probes."
+    mutation_scope: "blocked-pending-separate-runtime-read-authorization"
+    validation: "Each layer reports its own expected result without inferring closure from another layer."
+  - order: 6
+    id: "publish-terminal-and-reconcile-jira"
+    objective: "Publish sanitized terminal evidence before any separately authorized SST-119 correction."
+    mutation_scope: "future control-plane and exact Jira batch"
+    validation: "Owner and control-plane readbacks pass; Jira remains a mirror."
+
+execution_publication_rule:
+  rule_id: "execution-publication-and-tracker-closure-rule"
+  adoption_status: "adopted"
+  git_publication:
+    applicable: true
+    plan_merge_required: true
+    terminal_merge_required: true
+  tracker_mirror:
+    applicable: true
+    provider: "jira"
+    project_key: "SST"
+    epic_key: "SST-97"
+    issue_key: "SST-119"
+  cleanup:
+    remote_readback_required: true
+
+owner_documentation:
+  required: true
+  status: "blocked-pending-owner-mutation-authorization"
+  owner_repo: "sst-4uentes-infra"
+  planned_surfaces:
+    - "specs/infra/clusters/sst-dev-kind.yaml"
+    - "specs/infra/clusters/00-index.yaml"
+    - "specs/states/stabilize-kind-api-server-port.yaml"
+    - "specs/states/00-index.yaml"
+    - "docs/runbooks/ngrok-durable-development.md"
+    - "docs/runbooks/argocd-kind-development.md"
+    - "k8s-manifests/bootstrap/kind/sst-cluster-dev.kind.yml"
+    - "argocd/argocd-project.yml"
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers: ["DIRTY_OWNER_RECOVERY", "CONCURRENT_OWNER_DEVELOP", "HISTORICAL_SHARED_CLUSTER_MUTATION", "REQUEST_IDENTITY_COLLISION"]
+
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5"
+  fallback_reasoning_effort: "high"
+  reason: "Selective recovery must preserve a mixed dirty tree while resolving concurrent owner changes and historical infrastructure evidence."
+
+subagent_deployment_plan:
+  mode: "none"
+  reason: "No delegation was requested; owner-boundary and provenance decisions remain on one sequential auditable path."
+
+execution_status:
+  running_publication: "authorized-pending-merge-and-readback"
+  owner_worktree: "not-authorized-not-created"
+  owner_port: "not-authorized-not-started"
+  owner_publication: "not-authorized-not-started"
+  runtime_readback: "not-authorized-not-started"
+  jira_mirror: "not-authorized-no-write"
+
+required_checks:
+  - "4uentes-orchestor npm run check"
+  - "4uentes-orchestor git diff --check"
+  - "Remote canonical readback after running merge"
+
+decision:
+  status: "approved-for-running-publication-only"
+  approver: "4uentes"
+  decided_at: "2026-08-28"
+  approval_text: "comencemos la fase de ejcucion"
+
+evidence_refs:
+  - "evidence/requests/CR-SST-0229/identity-and-owner-preflight-2026-08-28.md"
+  - "evidence/requests/CR-SST-0229/owner-recovery-plan-2026-08-28.md"
+  - "evidence/requests/CR-SST-0229/running-owner-batch-2026-08-28.md"
+  - "evidence/requests/CR-SST-0222/reconciliation-plan-2026-08-28.md"

@@ -74,7 +74,8 @@ boundaries:
     - "Treat a Jira bug or stale lifecycle as implementation authority."
     - "Attach credentials, tokens, personal data or private production content to QA evidence."
 open_gaps:
-  - "Three completed historical owner/runtime slices need distinct retroactive canonical requests."
+  - "CR-SST-0229 is the canonical running reconciliation for the historical kind API-port slice; owner mutation remains separately gated."
+  - "Two completed frontend owner/runtime slices still need distinct retroactive canonical requests."
   - "SST-102 still references the unpublished CR-SST-0177 label."
   - "SST-119 still references the collided CR-SST-0210 label and requires a later exact correction batch."
   - "The first critical-journey matrix and owner-repository test baseline remain to be assessed."

@@ -38,13 +38,13 @@ identity_reconciliation:
     - historical_label: "CR-SST-0210"
       owner_repository: "sst-4uentes-infra"
       purpose: "kind API host-port and restart-durable localhost:8088 reconciliation"
-      canonical_request_id: null
-      status: "awaiting-fresh-reservation-preflight"
+      canonical_request_id: "CR-SST-0229"
+      status: "running-publication-authorized-pending-readback"
     - historical_label: "CR-SST-0211"
       owner_repository: "sst-fend"
       purpose: "public landing contrast reconciliation"
       canonical_request_id: null
-      status: "blocked-by-prior-infrastructure-reservation"
+      status: "blocked-by-prior-infrastructure-reconciliation"
     - historical_label: "CR-SST-0212"
       owner_repository: "sst-fend"
       purpose: "local frontend-auth readiness reconciliation"
@@ -64,7 +64,7 @@ jira:
   write_status: "not-authorized-no-write"
   pending_identity_corrections:
     - "SST-102: historical CR-SST-0177 to canonical CR-SST-0222"
-    - "SST-119: historical CR-SST-0210 to the future published infrastructure reconciliation ID"
+    - "SST-119: historical CR-SST-0210 to canonical CR-SST-0229 after owner reconciliation and an exact Jira batch"
 
 owner_documentation:
   required: false
