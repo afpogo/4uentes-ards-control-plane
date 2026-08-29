@@ -1,0 +1,182 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-SST-0231"
+title: "Reconcile historical SST public-landing contrast remediation"
+status: "running"
+source_request: "requests/inbox/CR-SST-0231-reconcile-historical-public-landing-contrast.yaml"
+planned_request: "requests/planned/CR-SST-0231-reconcile-historical-public-landing-contrast.yaml"
+created_at: "2026-08-29"
+started_at: "2026-08-29"
+requester: "4uentes"
+
+control_plane_context:
+  initiative_id: "INIT-SST-0009"
+  coordinator_request_id: "CR-SST-0222"
+  owner_repository: "sst-fend"
+  historical_label: "CR-SST-0211"
+  plan_pull_request: 189
+  plan_head_commit: "12c7fde7d5a272791b9a34b49c9760e91b3165fb"
+  plan_merge_commit: "2e1049fd88c43686a1d052915eecb2606c0b4c24"
+  plan_readback_status: "merged-and-reachable-from-origin-main"
+  running_base: "origin/main@4e66a69522ca60d6867b1ccabd0d37b68b0268e6"
+
+execution:
+  approval_status: "approved-running-publication-only"
+  approval_source: "Operator instruction on 2026-08-29: ok avancemos al proximo gate"
+  approval_consumed_for: "control-plane running lifecycle, evidence, coordinator and initiative publication only"
+  control_plane_mutation_allowed: true
+  git_running_publication_allowed: true
+  child_repo_mutation_allowed: false
+  child_repo_git_publication_allowed: false
+  runtime_mutation_allowed: false
+  infrastructure_mutation_allowed: false
+  jira_write_allowed: false
+  secret_or_datastore_access_allowed: false
+  current_step: "Publish and read back this running gate, then request separate authorization for a fresh owner worktree and selective semantic port."
+
+agent_execution_profile:
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  task_weight: "short-defined-task"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "low"
+  fallback_profile: "gpt-5.3-spark"
+  reason: "Bounded control-plane lifecycle publication with exact paths, mandatory validation and no external mutation."
+  subagent_deployment_plan: "none; delegation was not requested and this gate is already atomic"
+
+owner_baseline:
+  canonical_branch: "develop"
+  observed_live_head: "bd9b8d2aa52aab2346b7bf94b0db05ed188c09a3"
+  dirty_source_checkout:
+    branch: "fix/SST-26/CR-SST-0086/dictionary-secrets-panel"
+    head: "9148580390d187f78d147eb75ef1441beba75f63"
+    status: "dirty-with-mixed-modified-and-untracked-files"
+    preservation: "required-no-commit-clean-stash-reset-rebase-switch-or-retirement"
+  provenance_status: "PASS; the twelve-path dirty-to-HEAD and dirty-to-develop deltas were identical at planning time"
+  freshness_gate: "Re-read live owner develop before creating the future clean owner worktree; this running artifact does not freeze develop."
+
+owner_mutation_batch:
+  authorization_status: "not-authorized"
+  strategy: "future-selective-semantic-port-to-fresh-owner-worktree"
+  exact_path_count: 12
+  runtime_style_paths:
+    - "src/assets/styles/sass/base/_colors.scss"
+    - "src/assets/styles/sass/lib/_settings.scss"
+    - "src/components/Clock/styles.module.scss"
+    - "src/components/Header/Header.module.scss"
+    - "src/components/SstButton/styles.module.scss"
+    - "src/components/SstSignalTag/styles.module.scss"
+    - "src/pages/Landing/styles.module.scss"
+  owner_documentation_paths:
+    - "specs/21-design-tokens.yml"
+    - "specs/36-public-landing-frontend.yml"
+    - "specs/37-branding-frontend.yml"
+    - "docs/36-public-landing-frontend.md"
+    - "docs/37-branding-frontend.md"
+  excluded_scope:
+    - "Every dirty or untracked sst-fend path outside the exact twelve-path allowlist."
+    - "Authentication, routing, API, Redux, session, extension and infrastructure contracts."
+    - "robots.txt, llms.txt and public agent-discovery files."
+    - "Whole-file copies, whole-branch merges and cherry-picks from the historical checkout."
+
+semantic_port_contract:
+  - id: "accessible-semantic-tokens"
+    paths:
+      - "src/assets/styles/sass/base/_colors.scss"
+      - "src/assets/styles/sass/lib/_settings.scss"
+    intent: "Add a bounded success foreground token without changing the canonical logo palette."
+  - id: "landing-and-shared-component-contrast"
+    paths:
+      - "src/components/Clock/styles.module.scss"
+      - "src/components/Header/Header.module.scss"
+      - "src/components/SstButton/styles.module.scss"
+      - "src/components/SstSignalTag/styles.module.scss"
+      - "src/pages/Landing/styles.module.scss"
+    intent: "Use accessible semantic foreground/background combinations for the historically reproduced landing failures."
+    regression_surfaces: ["Home", "Auth", "Articles", "Learning Workspace"]
+  - id: "owner-contract-and-validation-order"
+    paths:
+      - "specs/21-design-tokens.yml"
+      - "specs/36-public-landing-frontend.yml"
+      - "specs/37-branding-frontend.yml"
+      - "docs/36-public-landing-frontend.md"
+      - "docs/37-branding-frontend.md"
+    intent: "Publish WCAG AA pairing rules, correct Sass paths and preserve the 4090-before-build-before-8088 validation order."
+
+false_positive_controls:
+  - "Historical Lighthouse, console and test claims require fresh revalidation after the selective port."
+  - "A 200 response or clean render on localhost:8088 does not prove that localhost:4090 consumed current owner source."
+  - "A passing build does not prove WCAG contrast or visual correctness."
+  - "Zero landing contrast failures do not prove that shared authenticated surfaces are regression-free."
+  - "Development-only warnings and production console errors must be classified separately."
+
+validation_order:
+  - order: 1
+    gate: "owner-static-and-contract"
+    requirements: ["npm run check", "scoped and full git diff --check", "exact allowlist review"]
+  - order: 2
+    gate: "local-owner-runtime"
+    target: "localhost:4090"
+    requirements: ["desktop and mobile", "landing contrast", "shared-surface regression review"]
+  - order: 3
+    gate: "owner-publication"
+    requirements: ["owner PR merge", "canonical develop readback"]
+  - order: 4
+    gate: "deployed-artifact"
+    target: "localhost:8088"
+    requirements: ["separate runtime authorization", "new artifact identity", "desktop and mobile browser QA"]
+
+owner_documentation:
+  required: true
+  status: "planned-owner-mutation-not-authorized"
+  owner_repo: "sst-fend"
+  planned_surfaces:
+    - "specs/21-design-tokens.yml"
+    - "specs/36-public-landing-frontend.yml"
+    - "specs/37-branding-frontend.yml"
+    - "docs/36-public-landing-frontend.md"
+    - "docs/37-branding-frontend.md"
+  closure_gate: "Full control-plane npm run check including verify-owner-documentation.js remains mandatory before closure."
+
+jira:
+  role: "mirror"
+  source_of_truth: false
+  primary_issue_key: null
+  write_authorized: false
+  readback_status: "PASS; SST-101 and SST-102 remain En curso, SST-119 remains Finalizada, and exact JQL readback returned all three issues"
+  cr_sst_0231_search_status: "PASS; no issue with CR-SST-0231 summary or label was observed"
+
+control_plane_validation:
+  diff_check: "PASS"
+  full_check: "PASS; 758 lifecycle files scanned with one frozen historical warning and zero failures"
+  execution_publication_rule: "PASS; 30 opted-in lifecycle files"
+  owner_documentation: "PASS; 144 gates"
+  visual_documentation: "PASS; 28 documents and 35 maps"
+  external_mutation: "none"
+
+execution_publication_rule:
+  rule_id: "execution-publication-and-tracker-closure-rule"
+  adoption_status: "adopted"
+  git_publication:
+    applicable: true
+    plan_merge_required: true
+    terminal_merge_required: true
+  tracker_mirror:
+    applicable: false
+    not_applicable_reason: "CR-SST-0231 has no primary Jira issue and this lifecycle does not authorize tracker creation or writes."
+  cleanup:
+    remote_readback_required: true
+
+decision:
+  status: "approved-for-running-publication-only"
+  approver: "4uentes"
+  decided_at: "2026-08-29"
+  approval_text: "ok avancemos al proximo gate"
+  next_authorization_required: "Create one fresh sst-fend worktree from re-read live develop and selectively port only the exact twelve paths."
+
+evidence_refs:
+  - "evidence/requests/CR-SST-0231/identity-and-owner-preflight-2026-08-29.md"
+  - "evidence/requests/CR-SST-0231/owner-recovery-plan-2026-08-29.md"
+  - "evidence/requests/CR-SST-0231/running-owner-batch-2026-08-29.md"
+  - "evidence/requests/CR-SST-0222/jira-progress-mirror-readback-2026-08-29.md"

@@ -211,6 +211,19 @@ validation:
   - "No patch payload, secret or private runtime data is persisted in control-plane evidence."
   - "No owner, runtime, infrastructure or Jira mutation occurs during planning."
 
+execution_publication_rule:
+  rule_id: "execution-publication-and-tracker-closure-rule"
+  adoption_status: "adopted"
+  git_publication:
+    applicable: true
+    plan_merge_required: true
+    terminal_merge_required: true
+  tracker_mirror:
+    applicable: false
+    not_applicable_reason: "CR-SST-0231 has no primary Jira issue and this lifecycle does not authorize tracker creation or writes."
+  cleanup:
+    remote_readback_required: true
+
 acceptance:
   - "CR-SST-0231 is linked to INIT-SST-0009 and CR-SST-0222."
   - "The dirty owner checkout, historical HEAD and live develop baseline remain distinct facts."
