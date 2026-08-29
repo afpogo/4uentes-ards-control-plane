@@ -31,7 +31,7 @@ execution:
   jira_progress_batch_executed: true
   git_running_publication_allowed: true
   secret_or_datastore_access_allowed: false
-  current_step: "publish and read back the CR-SST-0231 plan, then request a separate running owner-path batch; all Jira writes remain blocked"
+  current_step: "publish and read back the CR-SST-0231 running owner-path gate, then request separate owner worktree and semantic-port authorization; all Jira writes remain blocked"
 
 agent_execution_profile:
   provider: "codex"
@@ -57,12 +57,12 @@ identity_reconciliation:
       owner_repository: "sst-fend"
       purpose: "public landing contrast reconciliation"
       canonical_request_id: "CR-SST-0231"
-      status: "canonical-planned-owner-mutation-not-authorized"
+      status: "canonical-running-owner-mutation-not-authorized"
     - historical_label: "CR-SST-0212"
       owner_repository: "sst-fend"
       purpose: "local frontend-auth readiness reconciliation"
       canonical_request_id: null
-      status: "blocked-by-prior-contrast-running-gate"
+      status: "blocked-by-prior-contrast-owner-reconciliation"
   allocation_rule: >
     Numeric IDs remain null until each slice passes a fresh canonical Git,
     refs, worktree and Jira preflight and publishes its own inbox reservation.
@@ -70,7 +70,7 @@ identity_reconciliation:
 jira:
   role: "mirror"
   source_of_truth: false
-  read_status: "direct-readback-pass-jql-index-readback-degraded"
+  read_status: "direct-and-jql-readback-pass-2026-08-29"
   epic_key: "SST-101"
   coordinating_issue_key: "SST-102"
   infrastructure_issue_key: "SST-119"
@@ -144,6 +144,7 @@ validation:
   jira_progress_mirror_exact_write: "PASS; seven authorized writes across SST-101 and SST-102"
   jira_progress_mirror_direct_readback: "PASS; both issues En curso with expected descriptions, identity, hierarchy and two ordered comments each"
   jira_progress_mirror_jql_readback: "DEGRADED; empty results including an exact key query; no false absence claim adopted"
+  jira_latest_readonly_readback: "PASS; exact JQL returned SST-101, SST-102 and SST-119, while CR-SST-0231 had no issue as expected"
 
 execution_publication_rule:
   rule_id: "execution-publication-and-tracker-closure-rule"
@@ -174,4 +175,5 @@ evidence_refs:
   - "evidence/requests/CR-SST-0222/sst-119-canonical-identity-jira-readback-2026-08-29.md"
   - "evidence/requests/CR-SST-0222/jira-progress-mirror-readback-2026-08-29.md"
   - "evidence/requests/CR-SST-0231/owner-recovery-plan-2026-08-29.md"
+  - "evidence/requests/CR-SST-0231/running-owner-batch-2026-08-29.md"
   - "evidence/initiatives/INIT-SST-0009/jira-readonly-preflight.md"
