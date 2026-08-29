@@ -141,7 +141,7 @@ execution_publication_rule:
 
 owner_documentation:
   required: true
-  status: "bend-merged-and-read-back; auth-pending-owner-execution"
+  status: "owners-merged-and-read-back"
   rule: "Runtime and observable contract changes must update owner specs, capabilities, docs, HTTP examples and tests; central evidence cannot substitute them."
   owner_repos:
     sst-bend:
@@ -159,6 +159,10 @@ owner_documentation:
         - "httpPruebas/sst.chat.http"
     4uentes-auth:
       role: "validated metadata forwarder and downstream facade publisher"
+      publication_status: "merged-and-read-back"
+      owner_pull_request: 14
+      owner_head_commit: "443aa7732403fe8c4ef386fdee93c4a7de39d11f"
+      owner_merge_commit: "13ebe6ffd57b909a01dceaf78e8d42698094f6a8"
       required_surfaces:
         - "specs/integrations-api.yaml"
         - "specs/routing.yaml"
@@ -181,9 +185,9 @@ required_checks:
 execution_status:
   running_publication: "merged-and-read-back-pr-176-main-3779f33"
   bend_owner_execution: "merged-and-read-back-pr-29-develop-3751d38; full-owner-check-pass"
-  auth_owner_execution: "authorized-ready-after-bend-readback"
+  auth_owner_execution: "merged-and-read-back-pr-14-develop-13ebe6f; full-owner-check-pass"
   jira_mirror: "not-authorized"
-  deployment: "automatic-development-image-and-infra-tag-publication-observed-after-user-merge; no direct deployment action; cluster reconciliation unverified"
+  deployment: "automatic Bend and Auth development image plus Infra tag publications observed after user merges; no direct deployment action; cluster reconciliation unverified"
   production: "not-authorized"
 
 automatic_development_publication_observation:
@@ -198,6 +202,18 @@ automatic_development_publication_observation:
   external_gitops_reconciliation: "not verified and not authorized for this gate"
   agent_direct_actions: "no image publication, Infra write, cluster command, deployment or production action was initiated directly by the agent"
 
+auth_automatic_development_publication_observation:
+  ordering_deviation: true
+  cause: "The user merged Auth PR 14; the pre-existing push-to-develop workflow then executed automatically."
+  auth_image_tag: "develop-13ebe6ffd57b"
+  auth_workflow_run: 33234116482
+  infra_commit: "ad777153a38851a13f41a5ea7794961facfbc88f"
+  infra_change: "updated the development 4uentes-auth image tag"
+  infra_ci_result: "pass"
+  infra_cd_observed_behavior: "rendered and validated desired state; no kubectl apply step observed"
+  external_gitops_reconciliation: "not verified and not authorized for this gate"
+  agent_direct_actions: "no image publication, Infra write, cluster command, deployment or production action was initiated directly by the agent"
+
 rollback: >
   Before owner publication, abandon the isolated owner branch. After Bend or
   Auth publication, use reviewed owner reverts in reverse consumer order and
@@ -205,13 +221,14 @@ rollback: >
   or production directly as rollback.
 
 decision:
-  status: "bend-published-auth-owner-gate-ready"
+  status: "owners-published-integrated-qa-gate-pending"
   approver: "4uentes"
   decided_at: "2026-08-28"
-  next_gate: "Record this Bend checkpoint, then create a fresh isolated 4uentes-auth worktree from develop@b9c38fc and implement the strict metadata forwarder without merging it."
+  next_gate: "Request a separate runtime gate before integrated miss-hit, product invalidation, miss-hit and cleanup QA; Jira, deployment, cluster and production remain unauthorized."
 
 evidence_refs:
   - "evidence/requests/CR-SST-0230/identity-and-owner-preflight-2026-08-28.md"
   - "evidence/requests/CR-SST-0230/implementation-plan-2026-08-28.md"
   - "evidence/requests/CR-SST-0230/execution-start-2026-08-28.md"
   - "evidence/requests/CR-SST-0230/bend-owner-publication-readback-2026-08-29.md"
+  - "evidence/requests/CR-SST-0230/auth-owner-publication-readback-2026-08-29.md"
