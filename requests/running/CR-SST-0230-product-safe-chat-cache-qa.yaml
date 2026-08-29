@@ -1,0 +1,200 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-SST-0230"
+title: "Enable product-safe chat cache-aside QA"
+status: "running"
+source_request: "requests/inbox/CR-SST-0230-product-safe-chat-cache-qa.yaml"
+planned_request: "requests/planned/CR-SST-0230-product-safe-chat-cache-qa.yaml"
+created_at: "2026-08-28"
+started_at: "2026-08-28"
+requester: "4uentes"
+depends_on: ["CR-SST-0204", "CR-SST-0211", "CR-SST-0217", "CR-SST-0218"]
+unblocks: ["CR-SST-0207"]
+
+summary: >
+  Execute the published CR-SST-0230 contract in isolated Bend and Auth owner
+  worktrees, beginning with the Bend producer and preserving PostgreSQL
+  authority, Redis fail-open behavior, the authenticated HTTP facade and
+  secret-safe evidence.
+
+authorization:
+  status: "approved-running-and-owner-mutation"
+  approved_by: "4uentes"
+  approved_at: "2026-08-28"
+  approval_text: "Autorizo publicar running de CR-SST-0230 y modificar sst-bend y 4uentes-auth en worktrees aislados, comenzando por Bend. No autorizo todavía Jira, deployment ni producción."
+  allowed:
+    - "Publish and read back this running lifecycle."
+    - "After running readback, create fresh isolated sst-bend and 4uentes-auth worktrees from their refreshed origin/develop refs."
+    - "Implement, validate and publish the Bend producer first."
+    - "After Bend merge/readback, implement, validate and publish the Auth forwarder against the published owner contract."
+    - "Update owner ARDS/SDD specs, capabilities, docs, HTTP examples and tests in both repositories."
+    - "Record sanitized control-plane execution evidence and run the full control-plane check."
+  exclusions:
+    - "No Jira create, transition, edit, comment, link, assignment, label or other write."
+    - "No deployment, direct GitOps, cluster, production, datastore, schema, secret or key mutation."
+    - "No direct Redis command, cache key exposure or administrative eviction endpoint."
+    - "No mutation of sst-fend, sst-chatbot, sst-4uentes-infra or 4uentes-ards-core."
+
+plan_publication:
+  status: "merged-and-read-back"
+  pull_request: 174
+  head_commit: "5443ffcea6870b2ee6a5af3ef777dbb1e444a1c6"
+  merge_commit: "c498620ce5746deeef4add8929cf83f3f9b2a827"
+  canonical_branch: "main"
+  contract_ref: "requests/planned/CR-SST-0230-product-safe-chat-cache-qa.yaml"
+  implementation_plan_ref: "evidence/requests/CR-SST-0230/implementation-plan-2026-08-28.md"
+
+control_plane_context:
+  initiative_id: "INIT-SST-0007"
+  initiative_jira_epic_key: "SST-86"
+  parent_request_id: "CR-SST-0202"
+  parent_jira_issue_key: "SST-113"
+  source_qa_request_id: "CR-SST-0207"
+  source_qa_jira_issue_key: "SST-117"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  jira_issue_key: null
+  jira_write_authorized: false
+
+contract:
+  bend_route: "GET /4uentes/v1/chat/conversations/:id/messages"
+  auth_route: "GET /api/chat/conversations/:id/messages"
+  response_header: "X-SST-Chat-History-Cache"
+  allowed_values: ["hit", "miss", "bypass"]
+  emission_scope: "successful 200 history responses only"
+  combined_precedence: "bypass over miss over hit"
+  body_or_status_change: "forbidden"
+  request_scoped_observation_required: true
+  mutable_global_last_outcome_forbidden: true
+  postgres_authority_preserved: true
+  redis_fail_open_preserved: true
+  auth_behavior: "Forward exactly one valid enum only; drop absent, repeated, malformed, unknown or unrelated upstream metadata."
+
+execution:
+  control_plane_mutation_allowed: true
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets: ["sst-bend", "4uentes-auth"]
+  child_repo_execution_order: ["sst-bend", "4uentes-auth"]
+  owner_mutation_gate: "Only after this running lifecycle is merged and read back from origin/main."
+  runtime_mutation_allowed: false
+  deployment_allowed: false
+  direct_gitops_allowed: false
+  cluster_mutation_allowed: false
+  production_mutation_allowed: false
+  datastore_mutation_allowed: false
+  schema_mutation_allowed: false
+  secret_mutation_allowed: false
+  jira_write_allowed: false
+
+workspace_isolation:
+  canonical_roots_eligible_for_mutation: false
+  rule: "Refresh owner origin/develop after running readback and create one new clean worktree per owner; preserve dirty canonical checkouts and unrelated worktrees."
+  planned_owner_bases:
+    sst-bend: "refresh origin/develop; planning observation was 9faae46"
+    4uentes-auth: "refresh origin/develop; planning observation was b9c38fc"
+  branch_rule: "One CR-SST-0230 branch per owner; never mix Bend and Auth commits."
+
+atomized_execution:
+  - order: 1
+    id: "publish-running"
+    objective: "Merge and read back this lifecycle before owner mutation."
+    validation: "Control-plane npm run check, PR merge and origin/main readback."
+  - order: 2
+    id: "implement-bend-producer"
+    objective: "Produce request-scoped hit, miss or bypass without changing history body/status or cache authority."
+    validation: "Focused cache, HTTP, failure and concurrency tests; owner docs/capability aligned; sst-bend npm run check."
+  - order: 3
+    id: "publish-bend"
+    objective: "Merge Bend and read its exact contract from canonical develop before Auth adoption."
+    validation: "Bend PR and owner commit are reachable from refreshed origin/develop."
+  - order: 4
+    id: "implement-auth-forwarder"
+    objective: "Forward only one valid history outcome through the authenticated facade."
+    validation: "Exact allowlist and negative tests; owner docs/capabilities aligned; 4uentes-auth npm run check."
+  - order: 5
+    id: "publish-auth"
+    objective: "Merge Auth and read back its adoption and outbound facade contract."
+    validation: "Auth PR and owner commit are reachable from refreshed origin/develop."
+  - order: 6
+    id: "resume-integrated-qa"
+    objective: "After a separate runtime gate if needed, prove miss-hit, product invalidation, miss-hit and cleanup through product contracts."
+    validation: "Secret-safe CR-SST-0207 evidence; no direct Redis or unauthorized deployment."
+  - order: 7
+    id: "publish-terminal"
+    objective: "Reconcile owner documentation/evidence and publish done before cleanup."
+    validation: "Both owner checks, control-plane npm run check, terminal merge and remote readback pass."
+
+execution_publication_rule:
+  rule_id: "execution-publication-and-tracker-closure-rule"
+  adoption_status: "adopted"
+  git_publication:
+    applicable: true
+    plan_merge_required: true
+    terminal_merge_required: true
+  tracker_mirror:
+    applicable: true
+    provider: "jira"
+    project_key: "SST"
+    epic_key: "SST-86"
+  cleanup:
+    remote_readback_required: true
+
+owner_documentation:
+  required: true
+  status: "authorized-pending-owner-execution"
+  rule: "Runtime and observable contract changes must update owner specs, capabilities, docs, HTTP examples and tests; central evidence cannot substitute them."
+  owner_repos:
+    sst-bend:
+      role: "cache outcome producer and durable read authority"
+      required_surfaces:
+        - "specs/api/chat-retention-v1.yaml"
+        - "specs/capabilities/outbound/chat-retention-v1.yaml"
+        - "docs/api/chat-retention.md"
+        - "docs/capabilities/outbound/chat-retention-v1.md"
+        - "docs/tasks/TODO-cr-sst-0230-chat-cache-qa.md"
+        - "httpPruebas/sst.chat.http"
+    4uentes-auth:
+      role: "validated metadata forwarder and downstream facade publisher"
+      required_surfaces:
+        - "specs/integrations-api.yaml"
+        - "specs/routing.yaml"
+        - "specs/capabilities/inbound/sst-bend--chat-retention-v1.yaml"
+        - "specs/capabilities/outbound/chat-retention-v1.yaml"
+        - "docs/bf/03-routing.md"
+        - "docs/bf/06-integrations-api.md"
+        - "docs/chat-sessions.md"
+        - "docs/capabilities/inbound/sst-bend--chat-retention-v1.md"
+        - "docs/capabilities/outbound/chat-retention-v1.md"
+        - "httpPruebas/sst_server.http"
+
+required_checks:
+  - "sst-bend focused cache/HTTP/concurrency tests and npm run check"
+  - "4uentes-auth focused facade allowlist/error tests and npm run check"
+  - "git diff --check in each changed repository"
+  - "4uentes-orchestor npm run check before running publication and closure"
+  - "remote canonical readback after every merged lifecycle or owner PR"
+
+execution_status:
+  running_publication: "pending-merge-and-readback"
+  bend_owner_execution: "authorized-not-started"
+  auth_owner_execution: "authorized-not-started-after-bend"
+  jira_mirror: "not-authorized"
+  deployment: "not-authorized"
+  production: "not-authorized"
+
+rollback: >
+  Before owner publication, abandon the isolated owner branch. After Bend or
+  Auth publication, use reviewed owner reverts in reverse consumer order and
+  preserve PostgreSQL data; do not mutate Redis, PostgreSQL, MongoDB, cluster
+  or production directly as rollback.
+
+decision:
+  status: "approved-running-pending-publication"
+  approver: "4uentes"
+  decided_at: "2026-08-28"
+  next_gate: "Merge and read back this running lifecycle, then refresh and create the isolated Bend owner worktree."
+
+evidence_refs:
+  - "evidence/requests/CR-SST-0230/identity-and-owner-preflight-2026-08-28.md"
+  - "evidence/requests/CR-SST-0230/implementation-plan-2026-08-28.md"
+  - "evidence/requests/CR-SST-0230/execution-start-2026-08-28.md"
