@@ -24,6 +24,8 @@ control_plane_context:
   jira_close_scope: "Transition only SST-116 to Finalizada with resolution Listo after this closure lifecycle is merged."
   jira_close_batch_status: "consumed-2026-08-23"
   jira_close_readback: "SST-116 is Finalizada with resolution Listo, remains a Subtask of SST-113, and received no comment or field edit."
+  jira_conservative_reconciliation_batch_status: "consumed-2026-08-29"
+  jira_conservative_reconciliation_readback: "SST-116 retained Finalizada/Listo and its shifted label was corrected to cr-sst-0206."
 
 scope:
   owner_repo_modified: "sst-fend"
@@ -93,6 +95,7 @@ evidence_refs:
   - "evidence/requests/CR-SST-0206/owner-merge-and-closure-2026-08-23.md"
   - "evidence/requests/CR-SST-0206/jira-close-authorization-2026-08-23.md"
   - "evidence/requests/CR-SST-0206/jira-close-readback-2026-08-23.md"
+  - "evidence/requests/CR-SST-0230/jira-conservative-reconciliation-readback-2026-08-29.md"
 
 closure:
   status: "complete-owner-merged-development-artifacts-published"

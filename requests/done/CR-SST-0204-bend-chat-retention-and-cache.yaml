@@ -19,6 +19,8 @@ control_plane_context:
   jira_source_of_truth: false
   jira_issue_key: "SST-114"
   jira_write_allowed: false
+  jira_conservative_reconciliation_batch_status: "consumed-2026-08-29"
+  jira_conservative_reconciliation_readback: "SST-114 label is cr-sst-0204 and the issue is Finalizada with resolution Listo under SST-113."
 scope:
   owner_repo_modified: "sst-bend"
   auth_modified: false
@@ -57,6 +59,7 @@ evidence_refs:
   - "evidence/requests/CR-SST-0204/cache-pagination-checkpoint-2026-08-22.md"
   - "evidence/requests/CR-SST-0204/integrated-validation-2026-08-22.md"
   - "evidence/requests/CR-SST-0204/publication-closure-2026-08-23.md"
+  - "evidence/requests/CR-SST-0230/jira-conservative-reconciliation-readback-2026-08-29.md"
 closure:
   status: "complete-owner-published"
   next_request_id: "CR-SST-0211"
