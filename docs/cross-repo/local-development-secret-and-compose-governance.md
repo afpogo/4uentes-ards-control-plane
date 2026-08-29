@@ -75,8 +75,18 @@ Cada repo owner conserva su playbook, documentación y credenciales.
 | Phinance | PostgreSQL | no aplica | interno | red Compose propia |
 | 4uentes Automation | PostgreSQL | no aplica | interno | red Compose propia |
 
-Los defaults son una propuesta contractual de `CR-HPT-0027`; no están activos
-hasta que cada owner publique y valide su adopción.
+Los defaults son una propuesta contractual de `CR-HPT-0027`. SST Bend ya los
+publicó y validó localmente en `sst-bend#31`; siguen inactivos para Automation y
+Phinance hasta que cada owner publique su adopción.
+
+## Estado de adopción
+
+| Owner | Estado | Evidencia |
+| --- | --- | --- |
+| SST Bend | `validated-local` | `sst-bend#31`, merge `28ce139`; sin validación live |
+| Phinance | pendiente de slice separado | `CR-HPT-0021` conserva autoridad owner |
+| 4uentes Automation | bloqueado por onboarding/gate propio | no autorizado por este slice |
+| Infraestructura SST | no autorizado | workflow automático contenido antes de checkout/update infra |
 
 ## Secuencia gobernada
 
@@ -146,7 +156,10 @@ sanitizados. No podrá leer, copiar ni transportar valores secretos.
 ## Compuertas pendientes
 
 - Publicar y releer el onboarding canónico de `4uentes-automation`.
-- Autorizar por separado los slices de SST Bend, Automation y Phinance.
+- Autorizar por separado los slices de Automation y Phinance; SST Bend ya fue
+  adoptado y validado localmente.
+- Auditar efectos automáticos de workflows `push` antes de fusionar otro owner;
+  no basta con limitar los archivos del PR.
 - Resolver el cifrado del clúster compartido o aceptar explícitamente el riesgo
   temporal antes de aprovisionar `phinance-postgres-secret`.
 - Autorizar explícitamente cualquier inicio de contenedores o cambio de una
