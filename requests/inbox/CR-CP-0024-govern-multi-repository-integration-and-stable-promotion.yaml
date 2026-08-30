@@ -1,0 +1,128 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-CP-0024"
+title: "Govern multi-repository integration and stable promotion"
+status: "inbox"
+created_at: "2026-08-30"
+requester: "4uentes"
+
+business_context: >
+  The local 4uentes workspace contains many historical branches, worktrees,
+  backups and mixed owner deltas. Selected active or approved requests need a
+  controlled path into owner development branches and, only after a global
+  gate, into actual stable branches without promoting unrelated snapshots,
+  secrets, binaries or lifecycle-free changes.
+
+requested_change: >
+  Govern a two-phase integration program: first publish explicit worktree
+  dispositions and promotion path allowlists and recompose approved owner
+  changes onto current development baselines; then evaluate stable promotion
+  through repository-specific release manifests, validation and human merge
+  gates.
+
+expected_outcome: >
+  Every promoted commit maps to an approved or closed request, dirty worktrees
+  remain preserved until remote integration readback, owner documentation and
+  validation stay authoritative, and no stable branch, deployment, Jira issue
+  or child repository is mutated outside an explicit gate.
+
+initial_scope:
+  primary_initiative_id: "INIT-CP-0003"
+  related_initiative_ids:
+    - "INIT-HPT-0003"
+    - "INIT-PORTFOLIO-0003"
+    - "INIT-SST-0007"
+    - "INIT-SST-0008"
+    - "INIT-SST-0009"
+    - "INIT-SST-0010"
+  control_repository: "4uentes-orchestor"
+  candidate_owner_repositories:
+    - "4uentes-ards-core"
+    - "4uentes-auth"
+    - "sst-bend"
+    - "sst-fend"
+    - "sst-extension"
+    - "sst-chatbot"
+    - "sst-4uentes-infra"
+    - "4uentes_PortFolio"
+    - "phinance"
+    - "4uentes-automation"
+  phases:
+    - "development-integration"
+    - "global-gate-and-stable-promotion"
+
+constraints:
+  - "This inbox reserves identity and supports control-plane planning only."
+  - "Do not modify child repositories, runtime, infrastructure, stable branches or deployment workflows under this reservation."
+  - "Do not merge a dirty or historical branch wholesale; future candidates must use an immutable source SHA and an explicit promotion path allowlist or a reviewed single-request branch."
+  - "Preserve every dirty worktree; do not stash, clean, reset, delete, force-push or rewrite history."
+  - "Keep .worktrees, temporary files, screenshots, credentials, local environment files, persistent data and unapproved binaries outside promotion candidates."
+  - "Core and Infra remain development-canonical unless a separate approved lifecycle defines another destination."
+  - "CR-SST-0233 must be published before any earlier migration delta can be considered for owner integration."
+  - "Auth and SST Backend merges require explicit human authorization because their workflows can publish images and update the Infra pin."
+  - "Jira remains read-only until an exact, enumerated and time-bounded write batch is approved; existing comments or transitions must not be repeated."
+  - "A commit without an approved or closed lifecycle blocks stable promotion."
+
+identity_preflight:
+  observed_at: "2026-08-30"
+  canonical_ref: "origin/main@abb9048777f55e6e18caaebdcf3a48e1a9268c4d"
+  canonical_tree_match: false
+  reachable_git_ref_match: false
+  jira_exact_text_search: "no-match"
+  jira_preflight_mode: "read-only"
+  decision: "CR-CP-0024 is available for this unique intent at reservation time."
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "MULTI_REPOSITORY_PROMOTION"
+    - "AUTH_AND_MIGRATION_BOUNDARIES"
+    - "AUTOMATED_IMAGE_AND_GITOPS_SIDE_EFFECTS"
+    - "DIRTY_WORKTREE_PRESERVATION"
+    - "PRIVATE_ASSET_AND_SECRET_EXCLUSION"
+
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5"
+  fallback_reasoning_effort: "high"
+  reason: >
+    The future execution crosses repository ownership, authentication,
+    migrations, protected data, automated publication and stable release
+    boundaries.
+
+subagent_deployment_plan:
+  mode: "none"
+  reason: >
+    No delegation was requested; cross-repository ownership, security,
+    migration and release decisions remain on one auditable path.
+
+execution:
+  approval_source: "Operator supplied and requested implementation of the governed surgical integration plan on 2026-08-30."
+  approval_consumed_for: "reservation commit, branch publication, PR and canonical readback only"
+  control_plane_mutation_allowed: true
+  git_reservation_publication_allowed: true
+  child_repo_mutation_allowed: false
+  runtime_mutation_allowed: false
+  infrastructure_mutation_allowed: false
+  stable_branch_mutation_allowed: false
+  deployment_allowed: false
+  jira_write_allowed: false
+
+requested_next_step: >
+  Publish and read back this minimal reservation, then create a fresh planning
+  worktree from refreshed origin/main. Planning must inventory worktrees with
+  sanitized evidence, define per-repository disposition and promotion path
+  manifests, publish the CR-SST-0233 lifecycle, enumerate owner gates and run
+  the complete control-plane check before any child repository mutation.
+
+decision:
+  status: "approved-for-reservation-publication"
+  approver: "4uentes"
+  approved_at: "2026-08-30"
+  approval_text: "Implement the governed surgical integration plan."
