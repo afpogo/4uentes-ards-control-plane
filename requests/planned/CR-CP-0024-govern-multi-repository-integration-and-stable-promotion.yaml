@@ -1,0 +1,201 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-CP-0024"
+title: "Govern multi-repository integration and stable promotion"
+status: "planned"
+source_request: "requests/inbox/CR-CP-0024-govern-multi-repository-integration-and-stable-promotion.yaml"
+created_at: "2026-08-30"
+requester: "4uentes"
+summary: >
+  Recompose only request-governed deltas onto current owner development
+  baselines, preserve all ambiguous or dirty sources, and defer stable release
+  until every selected integration PR passes its owner gate and a global
+  release manifest maps every commit to an approved or closed lifecycle.
+
+control_plane_context:
+  initiative_id: "INIT-CP-0003"
+  reservation_merge_sha: "30953a13612f68ae91929aa71b761d13ac29d869"
+  predecessor_pr: 197
+  predecessor_merge_sha: "abb9048777f55e6e18caaebdcf3a48e1a9268c4d"
+  worktree_inventory_ref: "evidence/requests/CR-CP-0024/worktree-inventory-2026-08-30.json"
+  disposition_manifest_ref: "evidence/requests/CR-CP-0024/promotion-disposition-manifest.yaml"
+  implementation_plan_ref: "evidence/requests/CR-CP-0024/implementation-plan.md"
+
+risk:
+  level: "high"
+  score: 10
+  drivers:
+    - "MULTI_REPOSITORY_PROMOTION"
+    - "AUTH_AND_RBAC"
+    - "DATABASE_MIGRATIONS"
+    - "AUTOMATED_IMAGE_PUBLICATION"
+    - "GITOPS_PIN_MUTATION"
+    - "PRIVATE_ASSETS_AND_SECRETS"
+    - "DIRTY_WORKTREE_PRESERVATION"
+
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  task_class: "complex-high-risk-task"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5 high"
+  reason: "The work crosses owner, authentication, migration, release and protected-data boundaries."
+  subagent_deployment_plan: "none; no delegation was requested and sensitive decisions remain on the primary path"
+
+execution:
+  approval_source: "Operator-provided governed surgical integration plan and approval to implement it."
+  approval_consumed_for: "control-plane planning publication only"
+  approval_status: "plan-publication-authorized"
+  control_plane_mutation_allowed: true
+  child_repo_mutation_allowed: false
+  runtime_mutation_allowed: false
+  deployment_allowed: false
+  stable_branch_mutation_allowed: false
+  jira_write_allowed: false
+  next_external_gate: >
+    Merge and read back this plan and CR-SST-0233. Then request the first
+    explicitly enumerated owner execution gate; Auth and Backend merge remain
+    separate human approvals because they can publish images and mutate Infra.
+
+observed_inventory:
+  observed_at: "2026-08-30"
+  total_registered_worktrees: 159
+  preexisting_worktrees: 156
+  governed_support_worktrees: 3
+  dirty_worktrees: 24
+  clean_worktrees: 134
+  unavailable_registrations: 1
+  dirty_rule: "quarantine-preserve"
+  unavailable_rule: "preserve-registration-pending-explicit-review"
+  cleanup_authorized: false
+
+phase_1_development_integration:
+  entry_gate:
+    - "This planned lifecycle and CR-SST-0233 are merged and read back from origin/main."
+    - "The owner base and immutable source SHA are refreshed immediately before creating each candidate."
+    - "Every promotion path allowlist expands to at least one reviewed path; mixed files use explicit hunk rules."
+    - "Owner documentation paths or an approved exception are included before child mutation."
+  owner_order:
+    - "control-plane-independent-recoveries"
+    - "auth"
+    - "sst-bend"
+    - "sst-chatbot"
+    - "sst-extension"
+    - "sst-fend"
+    - "portfolio"
+    - "phinance"
+    - "infra-readback-only"
+    - "automation-private-baseline"
+  rollout_rule: >
+    Auth, Backend and Fend use one integration PR per owner with request-scoped
+    commits. Historical or dirty branches are never merged wholesale.
+
+phase_2_stable_promotion:
+  entry_gate:
+    - "Every selected development integration PR is green and remotely read back."
+    - "Every release manifest maps every commit to an approved or closed request."
+    - "Secret scan, git diff --check, owner checks and the complete control-plane npm run check pass."
+    - "No repository silently expands its promotion path allowlist."
+  destinations:
+    control_plane: "main"
+    core: "none; keep develop canonical"
+    auth: "main after reconciling main-only commits into develop"
+    sst_fend: "master through a release branch and full QA"
+    sst_bend: "master only after unsafe deploy workflow removal and migration proof"
+    sst_extension: "main after MV3 and Auth compatibility QA"
+    sst_chatbot: "main only when main-to-develop reconciliation is non-empty and governed"
+    infra: "none; keep develop canonical"
+    portfolio: "main after CR-4UENTES-0039 and CV/asset gates"
+    phinance: "main through governed PR"
+    automation: "main in the new private repository after sanitization"
+
+atomized_execution:
+  - order: 1
+    id: "publish-plan-and-migration-lifecycle"
+    objective: "Merge and read back CR-CP-0024 planning plus the independent CR-SST-0233 lifecycle."
+    risk: "medium"
+    validation: "npm run check, git diff --check, secret-safe review and origin/main readback."
+  - order: 2
+    id: "publish-control-plane-recoveries"
+    objective: "Publish only missing governed control-plane commits through independent PRs."
+    risk: "medium"
+    validation: "Commit-to-CR mapping and full control-plane check per PR."
+  - order: 3
+    id: "recompose-auth"
+    objective: "Recompose CR-CP-0021, CR-HPT-0016 and CR-HPT-0022 on current Auth develop with Spanish human docs and complete harness."
+    risk: "high"
+    validation: "Auth full check, HTTP matrix and explicit merge authorization."
+  - order: 4
+    id: "recompose-backend"
+    objective: "Recompose the governed HPT chain plus CR-SST-0233 on current Backend develop."
+    risk: "high"
+    validation: "Fresh install, historical upgrade, down/up, schema parity, HTTP and role regression."
+  - order: 5
+    id: "recompose-clients"
+    objective: "Build governed Chatbot, Extension and Fend candidates without private or lifecycle-free deltas."
+    risk: "high"
+    validation: "Owner checks plus integration-specific browser, MV3, auth and streaming QA."
+  - order: 6
+    id: "sanitize-portfolio-and-automation"
+    objective: "Execute CV removal before Portfolio features and create a secret-free private Automation baseline."
+    risk: "high"
+    validation: "CV 404, binary allowlist, builds, secret/PII scan and inactive workflow review."
+  - order: 7
+    id: "recompose-phinance-and-audit-infra"
+    objective: "Adopt additive contracts on Phinance main and preserve Infra HPT-0024 as canonical develop."
+    risk: "high"
+    validation: "Contract checks, auth compatibility and no ungoverned production overlays."
+  - order: 8
+    id: "global-stable-gate"
+    objective: "Evaluate repository-specific stable releases without broadening destinations or lifecycle scope."
+    risk: "high"
+    validation: "All release manifests, owner gates, readbacks and rollback paths complete."
+
+owner_documentation:
+  required_for_this_gate: false
+  reason: "This plan records control-plane governance and does not mutate child owners."
+  required_for_owner_execution: true
+  closure_rule: >
+    Every owner mutation must update its stable ARDS/SDD documentation or
+    publish an approved exception, and the complete control-plane check remains
+    mandatory before local closure.
+
+jira:
+  role: "mirror"
+  source_of_truth: false
+  read_only_until_exact_batch: true
+  write_allowed: false
+  duplicate_rule: "Exact JQL and live readback precede every enumerated batch."
+  preservation_rule: "Do not recreate or repeat HPT-8 through HPT-19 comments or transitions."
+
+required_checks:
+  - "git diff --check"
+  - "secret-safe scan"
+  - "promotion path allowlist expansion"
+  - "owner repository full checks"
+  - "owner documentation gate"
+  - "4uentes-orchestor npm run check"
+  - "remote ref and automated side-effect readback"
+
+acceptance:
+  - "All 156 preexisting worktrees remain preserved and the 24 dirty trees remain untouched."
+  - "Only commits tied to approved or closed requests enter release candidates."
+  - "CR-SST-0233 is canonical before any earlier migration delta is considered."
+  - "Auth and Backend automated image/Infra effects are explicitly approved and read back."
+  - "Portfolio no longer publishes the CV and uses an explicit public asset allowlist."
+  - "Automation contains no worktrees, environment secrets, volumes, credential IDs or persistent n8n data."
+  - "No CR or Jira issue becomes terminal solely because Git promotion completed."
+
+decision:
+  status: "ready-for-plan-publication"
+  approver: "4uentes"
+  next_gate: "Merge and read back this plan; owner execution remains separately gated."
+
+evidence_refs:
+  - "evidence/requests/CR-CP-0024/worktree-inventory-2026-08-30.json"
+  - "evidence/requests/CR-CP-0024/promotion-disposition-manifest.yaml"
+  - "evidence/requests/CR-CP-0024/promotion-allowlist-validation-2026-08-30.md"
+  - "evidence/requests/CR-CP-0024/implementation-plan.md"

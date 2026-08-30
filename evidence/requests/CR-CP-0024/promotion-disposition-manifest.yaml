@@ -1,0 +1,292 @@
+schema_version: "1.0"
+kind: "governed_promotion_disposition_manifest"
+request_id: "CR-CP-0024"
+observed_at: "2026-08-30"
+inventory_ref: "evidence/requests/CR-CP-0024/worktree-inventory-2026-08-30.json"
+
+global_rules:
+  source_identity: "repository + base SHA + immutable source SHA + request ID"
+  dirty_source_rule: "blocked until request-scoped extraction is committed on a clean branch"
+  allowlist_rule: "Every pattern must expand against the declared base/source diff; zero matches fail the gate."
+  hunk_rule: "Mixed files require an explicit request-scoped hunk review."
+  implicit_dependency_rule: "Dependencies never enter silently; amend and republish the manifest first."
+  exclusions:
+    - ".worktrees/**"
+    - "worktrees/**"
+    - "**/.env"
+    - "**/.env.*"
+    - "**/credentials/**"
+    - "**/*credential-id*"
+    - "**/node_modules/**"
+    - "**/.pnpm-store/**"
+    - "**/.sst7-local-deploy/**"
+    - "**/volumes/**"
+    - "**/n8n-data/**"
+    - "**/*.log"
+    - "**/request_id-TODO/**"
+    - "private screenshots and unapproved binary assets"
+
+worktree_disposition:
+  complete_manifest_ref: "evidence/requests/CR-CP-0024/worktree-inventory-2026-08-30.json#/worktrees"
+  coverage: "all 159 registered worktrees and their listed branches"
+  preexisting_coverage: 156
+  dirty_quarantine_count: 24
+  governed_support_count: 3
+  unavailable_registration_count: 1
+  destructive_cleanup_allowed: false
+  rule: >
+    Every inventory entry already carries its disposition. Dirty entries are
+    quarantine-preserve, governed support entries remain until readback, all
+    other clean entries await an explicit disposition, and the unavailable
+    Core registration remains preserved pending review.
+
+repositories:
+  - repository: "4uentes-ards-control-plane"
+    service_id: "4uentes-ards-control-plane"
+    destination_ref: "origin/main"
+    observed_base_sha: "30953a13612f68ae91929aa71b761d13ac29d869"
+    status: "planning-in-progress"
+    canonical_commits:
+      - {request_id: "CR-SST-0178", source_sha: "ef8948eb3239d957ece54d557d4ca9070becb464", disposition: "already-reachable"}
+      - {request_id: "CR-SST-0214", source_sha: "afb3934764f15a7fe8549726b05f198d4dbb44a5", disposition: "already-reachable"}
+      - {request_id: "CR-SST-0220", source_sha: "c95772cd734a534e140a4437c3499290ed0ff53d", disposition: "already-reachable"}
+      - {request_id: "CR-SST-0231", source_sha: "b87f035c0bdf68fa47a743ce13405df4576aab5f", disposition: "already-reachable"}
+      - {request_id: "CR-SST-0232", source_sha: "80d31d90fffdd4b9b69191124b288fad42110def", disposition: "already-reachable"}
+    pending_commits:
+      - request_id: "CR-SST-0224"
+        source_sha: "69b41f1fbf61293d2688322572e1494c62a89089"
+        disposition: "publish-through-independent-pr-after-this-plan-readback"
+    dirty_root:
+      head_sha: "fee50cf9e7b9e9bb45957e743bdabaefd97d9627"
+      sanitized_status_sha256: "d16c9ec426371e71c601a249c13a49dcaa555f47f07b7468c1e7f29a620726f4"
+      disposition: "quarantine-preserve-selective-recovery-only"
+    exclusions:
+      - "the complete agent/cr-sst-0152-sst-fend-evidence branch or dirty root"
+      - "policy, validator or catalog regressions"
+      - "all generated and local directories"
+
+  - repository: "4uentes-ards-core"
+    service_id: "4uentes-ards-core"
+    destination_ref: "origin/develop"
+    observed_base_sha: "ded8c466dc3c02a02f7b24642ce99de6cebcc91c"
+    status: "canonical-no-promotion"
+    accepted_sources:
+      - {request_id: "CR-CP-0020", source_sha: "3764d341dfaa1b10bb78115778c0d6fc469f11e0", disposition: "already-merged"}
+      - {request_id: "CR-CP-0023", source_sha: "b2a4f63c35fb87b6441586b5502e4a5f8693816d", disposition: "already-merged"}
+    stable_destination: null
+    unavailable_registration_rule: "preserve; do not prune under CR-CP-0024"
+
+  - repository: "4uentes-auth"
+    service_id: "4uentes-auth"
+    destination_ref: "origin/develop"
+    observed_base_sha: "13ebe6ffd57b909a01dceaf78e8d42698094f6a8"
+    immutable_source_ref: "agent/cr-hpt-0022-promotion-ready"
+    source_sha: "f9fe6b523c4946d96360d280c6420956faba3690"
+    request_ids: ["CR-CP-0021", "CR-HPT-0016", "CR-HPT-0022"]
+    status: "source-immutable-recomposition-not-authorized"
+    promotion_path_allowlist:
+      - ".env.example"
+      - "docs/capabilities/outbound/automation-receipt-intake-service-token-grant-v1.md"
+      - "docs/capabilities/outbound/automation-receipt-object-service-token-grant-v1.md"
+      - "docs/capabilities/outbound/automation-service-token-grant-v1.md"
+      - "docs/security/service-token-lifecycle.md"
+      - "docs/tasks/2026-08-23-cr-cp-0021-automation-service-grant.md"
+      - "docs/tasks/2026-08-27-cr-hpt-0016-automation-receipt-intake-grant.md"
+      - "docs/tasks/2026-08-28-cr-hpt-0022-automation-receipt-object-grant.md"
+      - "package.json"
+      - "scripts/ards-check.js"
+      - "scripts/test-automation-receipt-intake-service-grant.js"
+      - "scripts/test-automation-receipt-object-service-grant.js"
+      - "scripts/test-automation-service-grant.js"
+      - "specs/auth.yaml"
+      - "specs/capabilities/outbound/00-index.yaml"
+      - "specs/capabilities/outbound/automation-receipt-intake-service-token-grant-v1.yaml"
+      - "specs/capabilities/outbound/automation-receipt-object-service-token-grant-v1.yaml"
+      - "specs/capabilities/outbound/automation-service-token-grant-v1.yaml"
+      - "src/configs/env.ts"
+      - "src/domain/services/service-credentials.ts"
+    hunk_rules:
+      - path: "package.json"
+        rule: "Preserve all existing scripts and add each request-scoped harness once; reject duplicate keys."
+      - path: "docs/**/*.md"
+        rule: "Human-facing prose must be Spanish; stable technical identifiers and contracts remain unchanged."
+    contract_invariants:
+      - "finance:receipt-intake:create and finance:receipt-object:create remain separate grants"
+      - "RS256, audience sst-api and maximum TTL 300 seconds"
+      - "reject composite, wildcard, user and wrong-principal tokens"
+    merge_gate: "explicit human authorization because merge can publish an image and update the Infra pin"
+
+  - repository: "sst-bend"
+    service_id: "sst-bend"
+    destination_ref: "origin/develop"
+    observed_base_sha: "28ce139fa079b89fbccfca2bab566b5bf1e50b6e"
+    source_merge_base_sha: "dc67203c77bb91804db888ad57c4f2a174b3d6b8"
+    immutable_source_ref: "agent/cr-hpt-0023-promotion-ready"
+    source_sha: "2a0de56bdfadbbfdd6f586e97b5300f5fc7e9bdf"
+    request_ids: ["CR-CP-0021", "CR-HPT-0019", "CR-HPT-0023", "CR-SST-0233"]
+    status: "blocked-until-cr-sst-0233-readback-and-owner-gate"
+    promotion_path_allowlist:
+      - ".env.example"
+      - "db/migrations/20260827120000-create-receipt-intake-boundary.js"
+      - "db/migrations/20260828100000-add-receipt-binding-provisioning.js"
+      - "db/models/index.js"
+      - "db/models/receipt-intake-binding.js"
+      - "db/models/receipt-intake-candidate.js"
+      - "db/models/receipt-intake-object.js"
+      - "docs/api/28-automation-receipt-intake.md"
+      - "docs/api/30-receipt-intake-binding.md"
+      - "docs/api/README.md"
+      - "docs/capabilities/00-overview.md"
+      - "docs/capabilities/inbound/4uentes-auth--automation-service-token-grant-v1.md"
+      - "docs/capabilities/outbound/automation-receipt-intake-acceptance-v0.1.md"
+      - "docs/capabilities/outbound/receipt-intake-binding-provisioning-v1.md"
+      - "docs/tasks/2026-08-23-cr-cp-0021-automation-token-consumer.md"
+      - "docs/tasks/2026-08-27-cr-hpt-0019-receipt-intake-acceptance.md"
+      - "docs/tasks/2026-08-28-cr-hpt-0023-receipt-binding-provisioning.md"
+      - "docs/tasks/README.md"
+      - "httpPruebas/automation-receipt-intake-v0.1.http"
+      - "httpPruebas/receipt-intake-binding.http"
+      - "package.json"
+      - "scripts/ards-check.js"
+      - "scripts/protected-coverage.config.js"
+      - "scripts/smoke-test.js"
+      - "scripts/test-automation-service-token-provider.js"
+      - "scripts/test-receipt-binding-provisioning.js"
+      - "scripts/test-receipt-intake.js"
+      - "specs/api/00-index.yaml"
+      - "specs/api/automation-receipt-intake-v0.1.yaml"
+      - "specs/api/receipt-intake-binding-v1.yaml"
+      - "specs/capabilities/00-index.yaml"
+      - "specs/capabilities/inbound/00-index.yaml"
+      - "specs/capabilities/inbound/4uentes-auth--automation-service-token-grant-v1.yaml"
+      - "specs/capabilities/outbound/00-index.yaml"
+      - "specs/capabilities/outbound/automation-receipt-intake-acceptance-v0.1.yaml"
+      - "specs/capabilities/outbound/receipt-intake-binding-provisioning-v1.yaml"
+      - "src/apps/sst/application/receipt-intake/accept-receipt-intake.service.js"
+      - "src/apps/sst/application/receipt-intake/manage-receipt-binding.service.js"
+      - "src/apps/sst/domain/receipt-intake/receipt-binding.policy.js"
+      - "src/apps/sst/domain/receipt-intake/receipt-intake.errors.js"
+      - "src/apps/sst/domain/receipt-intake/receipt-intake.policy.js"
+      - "src/apps/sst/infrastructure/db/postgres/receipt-intake/sequelize-receipt-binding.repository.js"
+      - "src/apps/sst/infrastructure/db/postgres/receipt-intake/sequelize-receipt-intake.repository.js"
+      - "src/apps/sst/infrastructure/integrations/automation/automation-service-token-provider.js"
+      - "src/apps/sst/presentation/controllers/receipt-binding.controller.js"
+      - "src/apps/sst/presentation/controllers/receipt-intake.controller.js"
+      - "src/apps/sst/presentation/middlewares/require-account-role.middleware.js"
+      - "src/apps/sst/presentation/middlewares/verify-automation-receipt-intake-service.middleware.js"
+      - "src/apps/sst/presentation/routes/index.js"
+      - "src/apps/sst/presentation/routes/integrations.routes.js"
+      - "src/apps/sst/presentation/routes/receipt-intake.routes.js"
+    cr_sst_0233_future_paths:
+      status: "not-yet-authorized-no-immutable-owner-source"
+      required_paths:
+        - "db/migrations/20260524120000-create-document-agent-jobs.js"
+        - "db/migrations/20260829010000-adopt-article-agent-processing-v1.js"
+        - "migration regression tests"
+        - "owner task documentation"
+    hunk_rules:
+      - {path: "package.json", rule: "Unify all HPT and local-compose scripts and reject duplicate test:automation-service-token keys."}
+      - {path: "src/apps/sst/presentation/middlewares/require-account-role.middleware.js", rule: "Preserve current role hardening and execute regression for every affected route."}
+      - {path: "db/migrations/20260524120000-create-document-agent-jobs.js", rule: "Freeze only the historical original schema; never import the mutable runtime model."}
+    merge_gate: "explicit human authorization plus complete disposable PostgreSQL proof"
+
+  - repository: "sst-chatbot"
+    service_id: "sst-chatbot"
+    destination_ref: "origin/develop"
+    observed_base_sha: "5b96bbb"
+    immutable_source_ref: "origin/main"
+    source_sha: "99ecc162b101e36ee7d91dbff485d4008c5e8bb7"
+    request_ids: ["CR-SST-0178", "CR-SST-0194"]
+    status: "main-to-develop-reconciliation-required"
+    promotion_path_allowlist:
+      - "docs/00-overview.md"
+      - "docs/architecture/governed-user-memory-rag.md"
+      - "scripts/serve_user_memory_smoke.py"
+      - "specs/integration/capability-links.yaml"
+      - "specs/integrations/sst-chatbot-core-orchestrator-sync.yaml"
+      - "specs/states/sst-user-governed-rag-v1.yaml"
+    dirty_snapshot_rule: "CR-SST-0178-chatbot remains quarantined and is not a source."
+
+  - repository: "sst-extension"
+    service_id: "sst-extension"
+    destination_ref: "origin/develop"
+    observed_base_sha: "6d0b512172068595c68399168bdcc30d62dbe4a5"
+    source_sha: null
+    dirty_source_head_sha: "2cd6ad495eaf15668ccbb586911ceaf9ac24b344"
+    sanitized_status_sha256: "7a60025fd84cb945cacb852d8b060acafed2f027ff1b8c5f273c7d36661dcf7b"
+    request_ids: ["CR-SST-0098", "CR-SST-0100", "CR-SST-0101", "CR-SST-0119", "CR-SST-0121", "CR-SST-0131", "CR-SST-0132"]
+    status: "blocked-dirty-source-needs-request-scoped-extraction"
+    required_order: ["capture", "modes", "temporary-permissions", "diagnostics", "metadata", "credentialed-source", "previews"]
+    invariants: ["preserve legacy/raw-v2 selector", "preserve current race guards", "exclude private PNG permanently"]
+
+  - repository: "sst-fend"
+    service_id: "sst-fend"
+    destination_ref: "origin/develop"
+    observed_base_sha: "bd9b8d2aa52aab2346b7bf94b0db05ed188c09a3"
+    source_sha: null
+    dirty_source_head_sha: "bd9b8d2aa52aab2346b7bf94b0db05ed188c09a3"
+    sanitized_status_sha256: "2368fdac3c1837cb4a554d8beda9a0ed3ac8836057f230d83d4155f8c04fbb34"
+    request_ids: ["CR-SST-0231", "CR-SST-0147", "CR-SST-0159"]
+    status: "blocked-dirty-source-needs-request-scoped-extraction"
+    required_commits: ["CR-SST-0231", "CR-SST-0147 evidence/tests", "CR-SST-0159 documentation reconciliation", "readiness"]
+    exclusions: ["scroll/focus delta with request_id TODO", "2024 regex", "temporary worktree deletions"]
+
+  - repository: "4uentes-portfolio"
+    service_id: "4uentes-portfolio"
+    destination_ref: "origin/main"
+    observed_base_sha: "72a1d2072a5c838c3320b2d983d50e0c66d3fa99"
+    source_sha: null
+    dirty_source_head_sha: "5227ef7d0c902b197dd1c016245b6cc78281d7bd"
+    sanitized_status_sha256: "a43d067d9d695bd484a1e73bbea9d7b64f86b91abd83043e9052672c2714fa6d"
+    request_ids: ["CR-4UENTES-0039"]
+    status: "blocked-until-cv-removal-and-public-asset-allowlist"
+    mandatory_first_slice:
+      - "Remove afpogo_cv.pdf from the tip and build artifact without rewriting history."
+      - "Replace recursive src/assets/resources copying with an explicit public allowlist."
+      - "Review all 60 binary candidates before feature promotion."
+      - "Prove CV returns 404 in build/preview."
+
+  - repository: "phinance"
+    service_id: "phinance"
+    destination_ref: "origin/main"
+    observed_base_sha: "228b192b01ca065b34263cae8534df30b0ed8667"
+    source_sha: null
+    dirty_source_head_sha: "daa66e5c1a083d01e03f5f5d973f19dccfc838cf"
+    sanitized_status_sha256: "6bb92d67424e09322887b6324a706dda734294bed18bc562951819056ccb212c"
+    request_ids: ["CR-HPT-0007", "CR-HPT-0017", "CR-HPT-0021"]
+    status: "blocked-until-cr-hpt-0007-canonical-recovery-and-clean-extraction"
+    invariants:
+      - "Five new contracts are additive."
+      - "check-contracts.js and README preserve CR-HPT-0017/0021 checks and authentication."
+
+  - repository: "sst-4uentes-infra"
+    service_id: "sst-4uentes-infra"
+    destination_ref: "origin/develop"
+    observed_base_sha: "60589676f4dc2f74e0ec6b9dd3b20a324b4eb7cc"
+    request_ids: ["CR-HPT-0024"]
+    status: "canonical-preserve-no-recomposition"
+    dirty_root_head_sha: "f3f273722a2d1d5f8d1735d7e8292de44374df06"
+    dirty_root_status_sha256: "f715cfe1a1a38ebee85af1eb68437360b1af895261c024a64aa85c8a7859dce2"
+    exclusions:
+      - "production.yaml without its own lifecycle"
+      - "test-demo.yaml without its own lifecycle"
+      - "all 17 dirty-root changes until classified by their own requests"
+    stable_destination: null
+
+  - repository: "4uentes-automation"
+    service_id: "4uentes-automation"
+    destination_ref: "main"
+    observed_base_sha: null
+    source_sha: null
+    request_ids: ["CR-CP-0021", "CR-HPT-0027"]
+    status: "repository-not-yet-created-external-gate-required"
+    required_repository: "afpogo/4uentes-automation private"
+    initial_branch: "main"
+    forbidden_paths:
+      - ".worktrees/**"
+      - ".env*"
+      - "volumes/**"
+      - "n8n persistent data"
+      - "credential IDs"
+      - "exports containing secrets"
+    ownership_invariant: "SST owns custody; Phinance remains prohibited from receipt-object custody."
