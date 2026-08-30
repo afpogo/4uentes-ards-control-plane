@@ -37,7 +37,7 @@ authorization:
     - "No mutation of sst-fend, sst-chatbot, sst-4uentes-infra or 4uentes-ards-core."
 
 runtime_gate_authorization:
-  status: "approved-pending-publication-readback"
+  status: "consumed-2026-08-29-single-localhost-run"
   approved_by: "4uentes"
   approved_at: "2026-08-29"
   approval_text: "Autorizo el gate runtime localhost de CR-SST-0230 con datos sintéticos y cleanup por contratos de producto. No autorizo Redis directo, Jira adicional, deployment, cluster ni producción."
@@ -96,8 +96,8 @@ execution:
   child_repo_mutation_targets: ["sst-bend", "4uentes-auth"]
   child_repo_execution_order: ["sst-bend", "4uentes-auth"]
   owner_mutation_gate: "Only after this running lifecycle is merged and read back from origin/main."
-  runtime_mutation_allowed: true
-  runtime_mutation_scope: "One localhost-only synthetic identity and conversation; authenticated product requests and one normal Socket.IO turn; conversation cleanup through the product API."
+  runtime_mutation_allowed: false
+  runtime_mutation_scope: "Consumed: one localhost-only synthetic identity and conversation, authenticated product requests, one normal Socket.IO turn and conversation cleanup through the product API. No rerun is authorized."
   deployment_allowed: false
   direct_gitops_allowed: false
   cluster_mutation_allowed: false
@@ -208,7 +208,7 @@ execution_status:
   bend_owner_execution: "merged-and-read-back-pr-29-develop-3751d38; full-owner-check-pass"
   auth_owner_execution: "merged-and-read-back-pr-14-develop-13ebe6f; full-owner-check-pass"
   jira_mirror: "created-and-read-back-sst-124-en-curso; conservative-reconciliation-batch-consumed"
-  localhost_runtime_qa: "authorized-pending-subgate-publication-and-readback"
+  localhost_runtime_qa: "pass-single-run-miss-hit-normal-turn-miss-hit-product-api-cleanup"
   deployment: "automatic Bend and Auth development image plus Infra tag publications observed after user merges; no direct deployment action; cluster reconciliation unverified"
   production: "not-authorized"
 
@@ -243,10 +243,10 @@ rollback: >
   or production directly as rollback.
 
 decision:
-  status: "localhost-runtime-qa-authorized-pending-publication"
+  status: "localhost-runtime-qa-pass-terminal-publication-pending"
   approver: "4uentes"
   decided_at: "2026-08-28"
-  next_gate: "Merge and read back this localhost runtime subgate, then execute the sanitized CR-SST-0230 harness exactly once; Jira, Redis direct access, deployment, cluster and production remain unauthorized."
+  next_gate: "Merge and read back the sanitized localhost runtime result, then prepare terminal ARDS/SDD reconciliation; Jira closure requires a separate exact authorization."
 
 evidence_refs:
   - "evidence/requests/CR-SST-0230/identity-and-owner-preflight-2026-08-28.md"
@@ -256,3 +256,4 @@ evidence_refs:
   - "evidence/requests/CR-SST-0230/auth-owner-publication-readback-2026-08-29.md"
   - "evidence/requests/CR-SST-0230/jira-conservative-reconciliation-readback-2026-08-29.md"
   - "evidence/requests/CR-SST-0230/runtime-gate-authorization-2026-08-29.md"
+  - "evidence/requests/CR-SST-0230/localhost-cache-qa-result-2026-08-29.md"
