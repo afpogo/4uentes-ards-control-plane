@@ -1,7 +1,9 @@
 # Resultado de QA localhost del cache de historial
 
-Fecha: 2026-08-29  
-Request: `CR-SST-0230`  
+Fecha: 2026-08-29
+
+Request: `CR-SST-0230`
+
 Resultado: `PASS`
 
 ## Gate consumido
