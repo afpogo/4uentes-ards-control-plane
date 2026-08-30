@@ -77,14 +77,42 @@ function sha256(value) {
   return createHash('sha256').update(value, 'utf8').digest('hex');
 }
 
-function worktreePaths(repoPath) {
+function worktreeRecords(repoPath) {
   return git(repoPath, ['worktree', 'list', '--porcelain']).stdout
-    .split('\n')
-    .filter((line) => line.startsWith('worktree '))
-    .map((line) => normalizePath(line.slice('worktree '.length)));
+    .split(/\n\n+/)
+    .filter(Boolean)
+    .map((record) => {
+      const fields = record.split('\n');
+      const valueFor = (prefix) => {
+        const line = fields.find((candidate) => candidate.startsWith(prefix));
+        return line ? line.slice(prefix.length) : null;
+      };
+      return {
+        path: normalizePath(valueFor('worktree ')),
+        listedHead: valueFor('HEAD '),
+        listedBranch: (valueFor('branch ') || 'DETACHED').replace(/^refs\/heads\//, ''),
+        prunableReason: valueFor('prunable '),
+      };
+    });
 }
 
-function inspectWorktree(repository, worktreePath, governedWorktrees) {
+function inspectWorktree(repository, record, governedWorktrees) {
+  const worktreePath = record.path;
+  if (record.prunableReason) {
+    return {
+      repository,
+      worktree_path: worktreePath,
+      head_sha: record.listedHead,
+      branch: record.listedBranch,
+      dirty: null,
+      status_entry_count: null,
+      sanitized_status_sha256: null,
+      registration_state: 'prunable-path-unavailable',
+      prunable_reason: record.prunableReason,
+      disposition: 'preserve-registration-pending-explicit-review',
+    };
+  }
+
   const head = git(worktreePath, ['rev-parse', 'HEAD']).stdout;
   const branchResult = git(worktreePath, ['symbolic-ref', '-q', 'HEAD'], true);
   const branch = branchResult.ok
@@ -103,6 +131,7 @@ function inspectWorktree(repository, worktreePath, governedWorktrees) {
     dirty,
     status_entry_count: statusEntries,
     sanitized_status_sha256: sha256(status),
+    registration_state: 'available',
     disposition: dirty
       ? 'quarantine-preserve'
       : governedSupport
@@ -116,11 +145,11 @@ const seen = new Set();
 const worktrees = [];
 
 for (const repository of options.repos) {
-  for (const worktreePath of worktreePaths(repository.path)) {
-    const key = worktreePath.toLowerCase();
+  for (const record of worktreeRecords(repository.path)) {
+    const key = record.path.toLowerCase();
     if (seen.has(key)) continue;
     seen.add(key);
-    worktrees.push(inspectWorktree(repository.alias, worktreePath, options.governedWorktrees));
+    worktrees.push(inspectWorktree(repository.alias, record, options.governedWorktrees));
   }
 }
 
@@ -133,6 +162,7 @@ const governedSupportCount = worktrees.filter((item) =>
   item.disposition === 'governed-support-preserve-until-readback',
 ).length;
 const dirtyCount = worktrees.filter((item) => item.dirty).length;
+const unavailableCount = worktrees.filter((item) => item.registration_state !== 'available').length;
 const manifest = {
   schema_version: '1.0',
   kind: 'sanitized_worktree_inventory',
@@ -149,7 +179,8 @@ const manifest = {
     preexisting_worktrees: worktrees.length - governedSupportCount,
     governed_support_worktrees: governedSupportCount,
     dirty_worktrees: dirtyCount,
-    clean_worktrees: worktrees.length - dirtyCount,
+    clean_worktrees: worktrees.length - dirtyCount - unavailableCount,
+    unavailable_registrations: unavailableCount,
   },
   repository_summary: options.repos.map(({ alias }) => {
     const repositoryWorktrees = worktrees.filter((item) => item.repository === alias);
@@ -157,6 +188,9 @@ const manifest = {
       repository: alias,
       worktrees: repositoryWorktrees.length,
       dirty: repositoryWorktrees.filter((item) => item.dirty).length,
+      unavailable_registrations: repositoryWorktrees.filter(
+        (item) => item.registration_state !== 'available',
+      ).length,
     };
   }),
   worktrees,
