@@ -1,0 +1,98 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0233"
+title: "Reconcile the SST fresh-database migration baseline"
+status: "inbox"
+created_at: "2026-08-30"
+requester: "4uentes"
+
+business_context: >
+  A disposable PostgreSQL validation of the current sst-bend development line
+  reached the article-processing migration and failed because the historical
+  document_agent_jobs creation migration imports the mutable current runtime
+  model. That model now contains columns owned by the later adoption migration.
+
+requested_change: >
+  Restore a deterministic sst-bend migration chain without changing the
+  published article-processing contract: freeze the historical table schema at
+  its original shape, keep the adoption migration as the sole owner of the new
+  columns, add reproducible migration regression coverage and document owner
+  authority and rollback behavior.
+
+expected_outcome: >
+  Empty and representative historical PostgreSQL schemas reach the same target
+  without duplicate columns, data loss or implicit schema synchronization, and
+  the relevant rollback/reapplication path is proven on synthetic disposable data.
+
+initial_scope:
+  solution: "sst"
+  primary_initiative_id: "INIT-SST-0010"
+  parent_request_id: "CR-SST-0220"
+  corrective_predecessor_request_id: "CR-SST-0223"
+  coordinator_request_id: "CR-CP-0024"
+  owner_repository: "sst-bend"
+  observed_owner_ref: "sst-bend@2a0de56bdfadbbfdd6f586e97b5300f5fc7e9bdf"
+  affected_migrations:
+    - "db/migrations/20260524120000-create-document-agent-jobs.js"
+    - "db/migrations/20260829010000-adopt-article-agent-processing-v1.js"
+
+constraints:
+  - "This intake and its plan mutate only the control plane."
+  - "All CR-SST-0233 deltas created before canonical publication remain quarantined and are not an owner source."
+  - "Do not modify sst-bend before a separately published running lifecycle and explicit owner authorization."
+  - "Do not reopen or rewrite CR-SST-0223 terminal evidence."
+  - "Do not change the article-processing API, capability ownership or functional contract."
+  - "Do not run migrations against shared, development, staging or production databases."
+  - "Use only disposable PostgreSQL with synthetic fixtures; do not use seeders, dumps or private data."
+  - "Jira is a mirror and no create, edit, comment or transition is authorized by this intake."
+
+identity_preflight:
+  observed_at: "2026-08-30"
+  canonical_ref: "origin/main@30953a13612f68ae91929aa71b761d13ac29d869"
+  canonical_tree_match: false
+  historical_dirty_worktree_match: true
+  historical_dirty_worktree_disposition: "quarantined-pre-publication-delta"
+  jira_exact_text_match: false
+  jira_preflight_mode: "read-only-evidence-reused; repeat-live-JQL-before-any-write"
+  decision: "CR-SST-0233 remains available canonically for this corrective intent."
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers: ["MIGRATION_CHAIN_INTEGRITY", "DURABLE_SCHEMA_COMPATIBILITY", "PRIVATE_ARTICLE_PERSISTENCE", "ROLLBACK_SAFETY"]
+
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5"
+  fallback_reasoning_effort: "high"
+  reason: "Historical migration semantics and durable schema compatibility require the strongest available path."
+
+subagent_deployment_plan:
+  mode: "none"
+  reason: "No delegation was requested and migration compatibility is a high-risk owner boundary."
+
+execution:
+  approval_source: "Operator-provided CR-CP-0024 integration plan on 2026-08-30."
+  approval_consumed_for: "control-plane intake and planned lifecycle publication only"
+  control_plane_mutation_allowed: true
+  git_publication_allowed: true
+  child_repo_mutation_allowed: false
+  migration_file_mutation_allowed: false
+  migration_execution_allowed: false
+  shared_environment_mutation_allowed: false
+  jira_write_allowed: false
+
+requested_next_step: >
+  Publish and read back this lifecycle. Only afterward may CR-CP-0024 request a
+  bounded sst-bend owner execution gate and a separately enumerated Jira batch.
+
+decision:
+  status: "approved-for-plan-publication"
+  approver: "4uentes"
+  approved_at: "2026-08-30"
+  approval_text: "Publish CR-SST-0233 before considering any earlier migration delta."

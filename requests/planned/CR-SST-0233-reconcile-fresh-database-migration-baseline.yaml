@@ -1,0 +1,152 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0233"
+title: "Reconcile the SST fresh-database migration baseline"
+status: "planned"
+source_request: "requests/inbox/CR-SST-0233-reconcile-fresh-database-migration-baseline.yaml"
+created_at: "2026-08-30"
+requester: "4uentes"
+summary: >
+  Separate the immutable historical document_agent_jobs schema from the mutable
+  runtime model and prove fresh-install, historical-upgrade and relevant
+  rollback/reapplication paths on disposable PostgreSQL.
+depends_on: ["CR-SST-0210", "CR-SST-0220", "CR-SST-0223", "CR-CP-0024"]
+
+control_plane_context:
+  initiative_id: "INIT-SST-0010"
+  parent_request_id: "CR-SST-0220"
+  corrective_predecessor_request_id: "CR-SST-0223"
+  coordinator_request_id: "CR-CP-0024"
+  owner_repository: "sst-bend"
+  feature_state_id: "article-agent-processing"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  jira_project_key: "SST"
+  jira_epic_key: "SST-105"
+  jira_issue_type: "Subtask"
+  jira_parent_issue_key: "SST-122"
+  jira_related_issue_key: "SST-123"
+  jira_issue_key: "TODO-after-authorized-create-readback"
+  jira_write_allowed: false
+
+risk:
+  level: "high"
+  score: 9
+  drivers: ["MIGRATION_CHAIN_INTEGRITY", "DURABLE_SCHEMA_COMPATIBILITY", "PRIVATE_ARTICLE_PERSISTENCE", "ROLLBACK_SAFETY"]
+
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  task_class: "complex-high-risk-task"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5 high"
+  reason: "Historical migration ownership and rollback compatibility require reproducible high-confidence evidence."
+  subagent_deployment_plan: "none; critical migration decisions remain with the primary agent"
+
+execution:
+  approval_source: "Operator-provided CR-CP-0024 integration plan on 2026-08-30."
+  approval_consumed_for: "planned lifecycle publication only"
+  approval_status: "plan-publication-authorized"
+  control_plane_mutation_allowed: true
+  child_repo_mutation_allowed: false
+  runtime_mutation_allowed: false
+  migration_file_mutation_allowed: false
+  migration_execution_allowed: false
+  deployment_allowed: false
+  production_data_allowed: false
+  shared_environment_mutation_allowed: false
+  jira_write_allowed: false
+
+publication_gate:
+  policy_id: "execution-publication-and-tracker-closure-policy"
+  git_publication:
+    applicable: true
+    plan_merge_required: true
+    terminal_merge_required: true
+  tracker_mirror:
+    applicable: true
+    provider: "jira"
+    project_key: "SST"
+    epic_key: "SST-105"
+    parent_issue_key: "SST-122"
+    issue_type: "Subtask"
+  cleanup:
+    remote_readback_required: true
+
+root_cause_boundary:
+  historical_migration: "20260524120000-create-document-agent-jobs"
+  adoption_migration: "20260829010000-adopt-article-agent-processing-v1"
+  observed_failure: "duplicate document_agent_jobs.tenant_id on a fresh database"
+  cause: >
+    The historical creation migration imports the current DocumentAgentJob
+    runtime schema, which now includes the later adoption fields.
+  authority_rule: >
+    Historical migrations describe schema at their own point in time; runtime
+    models describe the current target and must not change historical behavior.
+
+preferred_correction:
+  strategy: "freeze-historical-create-schema"
+  requirements:
+    - "Freeze the historical migration to its original document_agent_jobs table shape."
+    - "Keep 20260829010000-adopt-article-agent-processing-v1 as sole owner of the new columns."
+    - "Preserve databases where the historical migration already ran."
+    - "Do not hide drift with broad catch-and-ignore behavior."
+    - "Add a complete empty-PostgreSQL migration regression."
+    - "Validate relevant down/up behavior or document and approve any residual."
+
+atomized_execution:
+  - {order: 1, id: "publish-control-plane-plan", objective: "Merge and read back this lifecycle.", risk: "medium", validation: "Control-plane full check and remote readback."}
+  - {order: 2, id: "publish-running-owner-plan", objective: "Refresh sst-bend develop and publish exact owner paths before editing.", risk: "high", validation: "Owner boundary review and control-plane full check."}
+  - {order: 3, id: "freeze-historical-schema", objective: "Remove mutable runtime-schema ownership from the historical creation migration.", risk: "high", validation: "Static review, migration tests and owner docs."}
+  - {order: 4, id: "prove-database-paths", objective: "Prove fresh up, historical upgrade, relevant down/up and target schema parity.", risk: "high", validation: "Disposable PostgreSQL with synthetic fixtures only."}
+  - {order: 5, id: "publish-and-reconcile", objective: "Publish owner correction and reconcile control-plane/Jira through later exact gates.", risk: "high", validation: "Owner CI, both full checks and canonical readbacks."}
+
+owner_documentation:
+  required_for_this_gate: false
+  reason: "This planning gate does not mutate sst-bend."
+  required_for_owner_execution: true
+  owner_repo: "sst-bend"
+  minimum_owner_surfaces:
+    - "docs/tasks/TODO-cr-sst-0233-migration-baseline.md"
+    - "migration regression documentation or an existing stable equivalent"
+
+jira_create_batch:
+  authorization_status: "not-authorized"
+  provider: "jira"
+  project_key: "SST"
+  request_id: "CR-SST-0233"
+  candidate_key: "create-one-new-issue"
+  issue_type: "Subtask"
+  parent_issue_key: "SST-122"
+  epic_key: "SST-105"
+  summary: "[SST][CR-SST-0233] Reconcile fresh-database migration baseline"
+  expected_initial_status: "Tareas por hacer"
+  allowed_operations: ["create exactly one approved Subtask", "read back the created issue"]
+  forbidden_operations: ["comments", "transitions", "links", "edits after creation", "writes to any other issue"]
+  execution_window: "one tool turn after fresh explicit approval"
+
+required_checks:
+  - "complete fresh PostgreSQL migration chain"
+  - "representative historical upgrade with synthetic data"
+  - "relevant down/up or approved documented residual"
+  - "final schema parity and Sequelize initialization"
+  - "sst-bend npm run check"
+  - "4uentes-orchestor npm run check"
+  - "git diff --check and secret-safe review"
+  - "remote canonical readbacks"
+
+acceptance:
+  - "A fresh database applies the complete migration chain without duplicate columns."
+  - "Historical migration behavior is independent from future runtime-model evolution."
+  - "The upgrade path reaches the same target schema without destructive rewrite."
+  - "The article-processing API and capability contracts remain unchanged."
+  - "Owner ARDS/SDD records migration authority, checks and residual risk."
+  - "No owner, Jira, runtime, deployment or shared-data mutation occurs in this planning gate."
+
+decision:
+  status: "ready-for-plan-publication"
+  approver: "4uentes"
+  next_gate: "Merge and read back this lifecycle before any sst-bend mutation."

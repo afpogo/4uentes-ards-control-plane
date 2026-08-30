@@ -75,6 +75,7 @@ source_evidence_refs:
   - "evidence/requests/CR-SST-0223/running-and-jira-manual-review-2026-08-28.md"
   - "evidence/requests/CR-SST-0232/reservation-readback-2026-08-29.md"
   - "evidence/requests/CR-SST-0232/implementation-plan.md"
+  - "evidence/requests/CR-SST-0233/implementation-plan.md"
 model_refs:
   - "specs/initiatives/initiative-model.yaml"
   - "docs/requests/initiative-model.md"
@@ -95,6 +96,7 @@ known_change_requests:
   - "CR-SST-0226"
   - "CR-SST-0227"
   - "CR-SST-0232"
+  - "CR-SST-0233"
 candidate_change_requests:
   - id: "CR-SST-TODO"
     title: "Implement encrypted offline device replica and conflict resolution"
@@ -211,6 +213,22 @@ learning_workspace_source_adoption:
   owner_execution_status: "not-authorized"
   jira_status: "read-only-preflight-passed-no-mirror-write-authorized"
   next_gate: "publish and read back the planned lifecycle before requesting the running contract gate"
+migration_baseline_reconciliation:
+  status: "planned-publication-pending"
+  request_id: "CR-SST-0233"
+  coordinator_request_id: "CR-CP-0024"
+  defect: >
+    The historical document_agent_jobs creation migration imports the mutable
+    runtime model and therefore claims columns owned by the later article-agent
+    adoption migration during a fresh PostgreSQL installation.
+  correction: >
+    Freeze the historical creation schema at its original shape and preserve
+    20260829010000-adopt-article-agent-processing-v1 as the sole owner of the
+    later columns.
+  quarantined_source: "pre-publication dirty worktree; preserve and do not promote"
+  owner_execution_status: "not-authorized"
+  jira_status: "read-only-preflight-passed-no-mirror-write-authorized"
+  next_gate: "merge and read back this planned lifecycle before any sst-bend mutation"
 relationships:
   depends_on:
     - {initiative_id: "INIT-SST-0007", role: "authenticated realtime chat and internal chatbot runtime"}
@@ -278,6 +296,7 @@ progress:
     - "CR-SST-0226"
     - "CR-SST-0227"
     - "CR-SST-0232"
+    - "CR-SST-0233"
   next_recommended_request: >
     Publish and read back the CR-SST-0223 done lifecycle, then retire its
     temporary worktrees only after proving clean status and canonical
