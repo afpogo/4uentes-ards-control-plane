@@ -1,0 +1,121 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-CP-0024"
+title: "Govern multi-repository integration and stable promotion"
+status: "running"
+source_request: "requests/inbox/CR-CP-0024-govern-multi-repository-integration-and-stable-promotion.yaml"
+planned_request: "requests/planned/CR-CP-0024-govern-multi-repository-integration-and-stable-promotion.yaml"
+created_at: "2026-08-30"
+started_at: "2026-08-30"
+requester: "4uentes"
+
+summary: >
+  Execute only the authorized 4uentes-auth development-integration slice.
+  Historical labels remain provenance, CR-CP-0024 is the retroactive execution
+  authority, and the owner pull request must not be merged under this gate.
+
+control_plane_context:
+  initiative_id: "INIT-CP-0003"
+  planning_merge_sha: "a7f00f8b8cf634ccb96ed3fe0e0b6d1dd3833979"
+  recovery_merge_sha: "71de402ea05c31e9b70cb41d32dd472cb44907a0"
+  auth_preflight_merge_sha: "e0ab936c9db56c1b682be0c729b73619ee560bb9"
+  disposition_manifest_ref: "evidence/requests/CR-CP-0024/promotion-disposition-manifest.yaml"
+  auth_preflight_ref: "evidence/requests/CR-CP-0024/auth-owner-execution-preflight-2026-08-30.md"
+
+authorization:
+  status: "auth-owner-pr-publication-approved"
+  approved_by: "4uentes"
+  approved_at: "2026-08-30"
+  approval_text: "Autorizo el gate owner Auth de CR-CP-0024 hasta publicar el PR, sin fusionarlo."
+  evidence: "evidence/requests/CR-CP-0024/auth-owner-execution-authorization-2026-08-30.md"
+
+execution:
+  current_unit: "recompose-auth-development-candidate"
+  completed_units:
+    - "publish-plan-and-migration-lifecycle"
+    - "publish-control-plane-recoveries"
+    - "publish-auth-owner-execution-preflight"
+  control_plane_mutation_allowed: true
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets: ["4uentes-auth"]
+  child_repo_mutation_scope: "The 20 validated allowlist paths on a clean branch from the refreshed Auth development base."
+  owner_pr_publication_allowed: true
+  owner_pr_merge_allowed: false
+  image_publication_allowed: false
+  infra_mutation_allowed: false
+  runtime_mutation_allowed: false
+  deployment_allowed: false
+  stable_branch_mutation_allowed: false
+  jira_write_allowed: false
+  external_execution_gate: "Merge and read back this running lifecycle before creating the Auth owner worktree."
+
+source_identity:
+  repository: "afpogo/4uentes-auth"
+  destination_ref: "origin/develop"
+  observed_base_sha: "13ebe6ffd57b909a01dceaf78e8d42698094f6a8"
+  immutable_source_ref: "agent/cr-hpt-0022-promotion-ready"
+  source_sha: "f9fe6b523c4946d96360d280c6420956faba3690"
+  validated_path_count: 20
+  historical_source_labels: ["CR-CP-0021", "CR-HPT-0016", "CR-HPT-0022"]
+  lifecycle_resolution: >
+    Preserve historical labels as provenance only. CR-HPT-0016 is already a
+    different canonical request, while CR-CP-0021 and CR-HPT-0022 have no
+    independent published lifecycle for these Auth deltas. CR-CP-0024 governs
+    the selective retroactive recovery.
+
+contract_invariants:
+  - "finance:receipt-intake:create and finance:receipt-object:create remain separate grants"
+  - "tokens use RS256, audience sst-api and maximum TTL 300 seconds"
+  - "composite, wildcard, user and wrong-principal tokens are rejected"
+  - "human Markdown is Spanish while YAML, contracts and technical harness remain English"
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  bounded_reason: "Auth capability changes and an automatic post-merge image/Infra workflow require separate execution and merge gates."
+
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5"
+  fallback_reasoning_effort: "high"
+
+subagent_deployment_plan:
+  mode: "none"
+  reason: "No delegation was requested and the security-sensitive owner slice remains sequential."
+
+owner_documentation:
+  required: true
+  owner_repository: "4uentes-auth"
+  language_rule: "Human-facing Markdown in Spanish; technical contracts and harness in English."
+  minimum_surfaces:
+    - "docs/capabilities/outbound/automation-service-token-grant-v1.md"
+    - "docs/capabilities/outbound/automation-receipt-intake-service-token-grant-v1.md"
+    - "docs/capabilities/outbound/automation-receipt-object-service-token-grant-v1.md"
+    - "docs/security/service-token-lifecycle.md"
+    - "request-scoped owner task documentation"
+
+required_checks:
+  - "4uentes-auth full check"
+  - "service-token harness positive and negative matrices"
+  - "git diff --check"
+  - "secret-safe scan"
+  - "exact 20-path allowlist comparison"
+  - "4uentes-orchestor npm run check"
+  - "owner branch and pull request remote readback"
+
+decision:
+  status: "running-auth-owner-pr-publication-authorized"
+  approver: "4uentes"
+  next_gate: "Merge and read back this lifecycle, then publish but do not merge the Auth owner PR."
+
+evidence_refs:
+  - "evidence/requests/CR-CP-0024/implementation-plan.md"
+  - "evidence/requests/CR-CP-0024/promotion-disposition-manifest.yaml"
+  - "evidence/requests/CR-CP-0024/promotion-allowlist-validation-2026-08-30.md"
+  - "evidence/requests/CR-CP-0024/auth-owner-execution-preflight-2026-08-30.md"
+  - "evidence/requests/CR-CP-0024/auth-owner-execution-authorization-2026-08-30.md"
