@@ -23,23 +23,25 @@ control_plane_context:
   auth_preflight_ref: "evidence/requests/CR-CP-0024/auth-owner-execution-preflight-2026-08-30.md"
 
 authorization:
-  status: "auth-owner-pr-publication-approved"
+  status: "consumed-by-auth-pr-publication; subsequent merge was outside gate"
   approved_by: "4uentes"
   approved_at: "2026-08-30"
   approval_text: "Autorizo el gate owner Auth de CR-CP-0024 hasta publicar el PR, sin fusionarlo."
   evidence: "evidence/requests/CR-CP-0024/auth-owner-execution-authorization-2026-08-30.md"
 
 execution:
-  current_unit: "recompose-auth-development-candidate"
+  current_unit: "reconcile-auth-merge-deviation"
   completed_units:
     - "publish-plan-and-migration-lifecycle"
     - "publish-control-plane-recoveries"
     - "publish-auth-owner-execution-preflight"
+    - "publish-auth-owner-pull-request"
+    - "contain-unauthorized-auth-push-workflow"
   control_plane_mutation_allowed: true
-  child_repo_mutation_allowed: true
+  child_repo_mutation_allowed: false
   child_repo_mutation_targets: ["4uentes-auth"]
   child_repo_mutation_scope: "The 20 validated allowlist paths on a clean branch from the refreshed Auth development base."
-  owner_pr_publication_allowed: true
+  owner_pr_publication_allowed: false
   owner_pr_merge_allowed: false
   image_publication_allowed: false
   infra_mutation_allowed: false
@@ -47,7 +49,28 @@ execution:
   deployment_allowed: false
   stable_branch_mutation_allowed: false
   jira_write_allowed: false
-  external_execution_gate: "Merge and read back this running lifecycle before creating the Auth owner worktree."
+  external_execution_gate: "Record and read back an explicit disposition for the existing Auth merge before advancing to another owner."
+
+observed_auth_merge_deviation:
+  disposition_status: "awaiting-explicit-merge-disposition"
+  pull_request: 15
+  authorized_head_sha: "4b20fe5dfbc0484178abb988abda7578f4e30962"
+  observed_merge_sha: "ff5605c67d412e3e363d58de14a5b6b98b38c4ad"
+  observed_at: "2026-08-31"
+  deviation: "The owner PR was merged although the consumed gate authorized publication only."
+  containment:
+    workflow_run_id: 33452558381
+    workflow_conclusion: "cancelled"
+    cancelled_during_step: "Build image"
+    infra_checkout: "skipped"
+    infra_update: "skipped"
+    infra_develop_readback_sha: "60589676f4dc2f74e0ec6b9dd3b20a324b4eb7cc"
+    package_manifest_readback: "inconclusive-token-lacks-read-packages; no completed manifest push appears in workflow log"
+  prohibited_until_new_gate:
+    - "rerun the Auth push workflow"
+    - "publish or retag the Auth image"
+    - "update the Infra Auth pin"
+    - "promote Auth to main"
 
 source_identity:
   repository: "afpogo/4uentes-auth"
@@ -109,9 +132,9 @@ required_checks:
   - "owner branch and pull request remote readback"
 
 decision:
-  status: "running-auth-owner-pr-publication-authorized"
+  status: "running-auth-merge-deviation-awaiting-disposition"
   approver: "4uentes"
-  next_gate: "Merge and read back this lifecycle, then publish but do not merge the Auth owner PR."
+  next_gate: "Explicitly accept the existing Auth code merge without rollout, or authorize a normal revert PR."
 
 evidence_refs:
   - "evidence/requests/CR-CP-0024/implementation-plan.md"
@@ -119,3 +142,4 @@ evidence_refs:
   - "evidence/requests/CR-CP-0024/promotion-allowlist-validation-2026-08-30.md"
   - "evidence/requests/CR-CP-0024/auth-owner-execution-preflight-2026-08-30.md"
   - "evidence/requests/CR-CP-0024/auth-owner-execution-authorization-2026-08-30.md"
+  - "evidence/requests/CR-CP-0024/auth-merge-deviation-and-containment-2026-08-31.md"
