@@ -111,6 +111,7 @@ policy_application:
     The runtime must not become autonomous authority. It audits, gates, records
     evidence, and proposes follow-up work under Control Plane governance.
 open_gaps:
+  - "Backend image and exact Infra pin were published, but CR-HPT-0024 receipt-clamav is CrashLoopBackOff; previous pod preserves availability while remediation or rollback awaits authorization."
   - "CR-CP-0024 has one-time authorization to merge sst-bend PR 32 and verify only its Backend image publication plus bounded Infra pin update."
   - "sst-bend PR 32 is green and open; merge, image publication and the automatic Infra pin update await an explicit CR-CP-0024 gate."
   - "CR-CP-0024 added an exact two-path Backend inbound capability amendment; owner PR merge and rollout remain blocked."
