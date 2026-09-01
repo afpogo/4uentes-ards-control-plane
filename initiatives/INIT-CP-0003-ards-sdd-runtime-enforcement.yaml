@@ -35,6 +35,7 @@ source_evidence_refs:
   - "evidence/requests/CR-CP-0024/auth-owner-execution-preflight-2026-08-30.md"
   - "evidence/requests/CR-CP-0024/auth-owner-execution-authorization-2026-08-30.md"
   - "evidence/requests/CR-CP-0024/auth-merge-deviation-and-containment-2026-08-31.md"
+  - "evidence/requests/CR-CP-0024/auth-merge-disposition-2026-08-31.md"
   - "evidence/requests/CR-CP-0024/worktree-inventory-2026-08-30.json"
 model_refs:
   - "specs/initiatives/initiative-model.yaml"
