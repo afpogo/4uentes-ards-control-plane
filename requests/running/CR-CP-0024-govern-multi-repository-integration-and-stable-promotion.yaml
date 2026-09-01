@@ -30,7 +30,7 @@ authorization:
   evidence: "evidence/requests/CR-CP-0024/auth-owner-execution-authorization-2026-08-30.md"
 
 execution:
-  current_unit: "await-backend-owner-merge-and-rollout-authorization"
+  current_unit: "merge-backend-and-verify-bounded-rollout"
   completed_units:
     - "publish-plan-and-migration-lifecycle"
     - "publish-control-plane-recoveries"
@@ -42,18 +42,26 @@ execution:
     - "publish-backend-inbound-capability-allowlist-amendment"
     - "publish-backend-owner-pull-request"
   control_plane_mutation_allowed: true
-  child_repo_mutation_allowed: false
-  child_repo_mutation_targets: ["sst-bend"]
-  child_repo_mutation_scope: "The 51 validated HPT paths, four explicitly enumerated CR-SST-0233 paths and two explicitly enumerated Auth receipt-intake inbound capability paths on a clean branch from current Backend develop."
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets: ["sst-bend", "sst-4uentes-infra"]
+  child_repo_mutation_scope: "Merge validated sst-bend PR 32 at de19c14 and allow only its automatic Backend image publication plus the exact Backend pin update in Infra develop."
   owner_pr_publication_allowed: false
-  owner_pr_merge_allowed: false
-  image_publication_allowed: false
-  infra_mutation_allowed: false
+  owner_pr_merge_allowed: true
+  image_publication_allowed: true
+  infra_mutation_allowed: true
   runtime_mutation_allowed: false
   deployment_allowed: false
   stable_branch_mutation_allowed: false
   jira_write_allowed: false
-  external_execution_gate: "Obtain explicit authorization to merge sst-bend PR 32 and accept image publication plus the bounded automatic Infra pin update."
+  external_execution_gate: "Merge and read back this authorization before merging sst-bend PR 32; stop if its head/checks/base or the expected Infra pre-merge SHA changed."
+
+backend_merge_authorization:
+  status: "authorized-once-for-validated-head"
+  approved_by: "4uentes"
+  approved_at: "2026-08-31"
+  approval_text: "Autorizo fusionar sst-bend PR #32 y verificar la publicación de imagen y el cambio acotado del pin Backend en Infra."
+  authorized_head_sha: "de19c14f95c077a2b85a1bbdd205d01a512cbd00"
+  evidence: "evidence/requests/CR-CP-0024/backend-owner-merge-authorization-2026-08-31.md"
 
 observed_backend_owner_pr:
   pull_request: 32
@@ -152,9 +160,9 @@ required_checks:
   - "owner branch and pull request remote readback"
 
 decision:
-  status: "running-backend-owner-pr-green-awaiting-merge-authorization"
+  status: "running-backend-owner-merge-and-bounded-rollout-authorized"
   approver: "4uentes"
-  next_gate: "Authorize or reject merge of sst-bend PR 32 with its enumerated image and Infra side effects."
+  next_gate: "Merge and verify sst-bend PR 32, image publication and exact Infra Backend pin diff; do not deploy or promote master."
 
 evidence_refs:
   - "evidence/requests/CR-CP-0024/implementation-plan.md"
@@ -168,3 +176,4 @@ evidence_refs:
   - "evidence/requests/CR-CP-0024/backend-owner-execution-authorization-2026-08-31.md"
   - "evidence/requests/CR-CP-0024/backend-inbound-capability-allowlist-amendment-2026-08-31.md"
   - "evidence/requests/CR-CP-0024/backend-owner-pr-publication-readback-2026-08-31.md"
+  - "evidence/requests/CR-CP-0024/backend-owner-merge-authorization-2026-08-31.md"
