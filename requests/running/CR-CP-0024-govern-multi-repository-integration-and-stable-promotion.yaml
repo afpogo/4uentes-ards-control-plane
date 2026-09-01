@@ -30,13 +30,14 @@ authorization:
   evidence: "evidence/requests/CR-CP-0024/auth-owner-execution-authorization-2026-08-30.md"
 
 execution:
-  current_unit: "reconcile-auth-merge-deviation"
+  current_unit: "preflight-next-owner-after-auth-integration"
   completed_units:
     - "publish-plan-and-migration-lifecycle"
     - "publish-control-plane-recoveries"
     - "publish-auth-owner-execution-preflight"
     - "publish-auth-owner-pull-request"
     - "contain-unauthorized-auth-push-workflow"
+    - "accept-auth-development-merge-without-rollout"
   control_plane_mutation_allowed: true
   child_repo_mutation_allowed: false
   child_repo_mutation_targets: ["4uentes-auth"]
@@ -52,7 +53,7 @@ execution:
   external_execution_gate: "Record and read back an explicit disposition for the existing Auth merge before advancing to another owner."
 
 observed_auth_merge_deviation:
-  disposition_status: "awaiting-explicit-merge-disposition"
+  disposition_status: "accepted-as-integrated-without-rollout"
   pull_request: 15
   authorized_head_sha: "4b20fe5dfbc0484178abb988abda7578f4e30962"
   observed_merge_sha: "ff5605c67d412e3e363d58de14a5b6b98b38c4ad"
@@ -71,6 +72,10 @@ observed_auth_merge_deviation:
     - "publish or retag the Auth image"
     - "update the Infra Auth pin"
     - "promote Auth to main"
+  disposition:
+    decided_at: "2026-08-31"
+    decision: "retain the desired Auth develop merge; do not rerun rollout"
+    evidence: "evidence/requests/CR-CP-0024/auth-merge-disposition-2026-08-31.md"
 
 source_identity:
   repository: "afpogo/4uentes-auth"
@@ -132,9 +137,9 @@ required_checks:
   - "owner branch and pull request remote readback"
 
 decision:
-  status: "running-auth-merge-deviation-awaiting-disposition"
+  status: "running-auth-integrated-without-rollout"
   approver: "4uentes"
-  next_gate: "Explicitly accept the existing Auth code merge without rollout, or authorize a normal revert PR."
+  next_gate: "Publish a separately enumerated preflight and authorization for the next owner; all Auth rollout effects remain blocked."
 
 evidence_refs:
   - "evidence/requests/CR-CP-0024/implementation-plan.md"
@@ -143,3 +148,4 @@ evidence_refs:
   - "evidence/requests/CR-CP-0024/auth-owner-execution-preflight-2026-08-30.md"
   - "evidence/requests/CR-CP-0024/auth-owner-execution-authorization-2026-08-30.md"
   - "evidence/requests/CR-CP-0024/auth-merge-deviation-and-containment-2026-08-31.md"
+  - "evidence/requests/CR-CP-0024/auth-merge-disposition-2026-08-31.md"
