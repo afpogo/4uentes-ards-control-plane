@@ -30,7 +30,7 @@ authorization:
   evidence: "evidence/requests/CR-CP-0024/auth-owner-execution-authorization-2026-08-30.md"
 
 execution:
-  current_unit: "merge-backend-and-verify-bounded-rollout"
+  current_unit: "backend-rollout-health-blocked-await-owner-disposition"
   completed_units:
     - "publish-plan-and-migration-lifecycle"
     - "publish-control-plane-recoveries"
@@ -41,22 +41,25 @@ execution:
     - "publish-backend-owner-execution-preflight"
     - "publish-backend-inbound-capability-allowlist-amendment"
     - "publish-backend-owner-pull-request"
+    - "merge-backend-owner-pull-request"
+    - "publish-backend-image-and-update-infra-pin"
+    - "verify-backend-rollout-and-preserve-service-availability"
   control_plane_mutation_allowed: true
-  child_repo_mutation_allowed: true
+  child_repo_mutation_allowed: false
   child_repo_mutation_targets: ["sst-bend", "sst-4uentes-infra"]
   child_repo_mutation_scope: "Merge validated sst-bend PR 32 at de19c14 and allow only its automatic Backend image publication plus the exact Backend pin update in Infra develop."
   owner_pr_publication_allowed: false
-  owner_pr_merge_allowed: true
-  image_publication_allowed: true
-  infra_mutation_allowed: true
+  owner_pr_merge_allowed: false
+  image_publication_allowed: false
+  infra_mutation_allowed: false
   runtime_mutation_allowed: false
   deployment_allowed: false
   stable_branch_mutation_allowed: false
   jira_write_allowed: false
-  external_execution_gate: "Merge and read back this authorization before merging sst-bend PR 32; stop if its head/checks/base or the expected Infra pre-merge SHA changed."
+  external_execution_gate: "Choose and authorize either a CR-HPT-0024 Infra remediation PR or a normal GitOps pin rollback; no other owner may advance while the new Backend pod is unhealthy."
 
 backend_merge_authorization:
-  status: "authorized-once-for-validated-head"
+  status: "consumed-by-observed-merge-and-bounded-rollout-verification"
   approved_by: "4uentes"
   approved_at: "2026-08-31"
   approval_text: "Autorizo fusionar sst-bend PR #32 y verificar la publicación de imagen y el cambio acotado del pin Backend en Infra."
@@ -67,12 +70,23 @@ observed_backend_owner_pr:
   pull_request: 32
   base_sha: "28ce139fa079b89fbccfca2bab566b5bf1e50b6e"
   head_sha: "de19c14f95c077a2b85a1bbdd205d01a512cbd00"
-  state: "open-green-not-merged"
+  state: "merged-image-published-infra-pinned-health-blocked"
   path_readback: "57-authorized-57-observed-0-extra"
   node_ci_run_id: 33454714533
   image_build_run_id: 33454714576
-  image_published: false
-  infra_mutated: false
+  image_published: true
+  infra_mutated: true
+  merge_sha: "5db4dd868f3348f95d6376519be1534be1710d75"
+  push_workflow_run_id: 33458294010
+  image_tag: "develop-5db4dd868f33"
+  image_digest: "sha256:9da19da8150152ae9b4616cfa9754386cfa9922d785da08f4f1428a7adb8ac10"
+  infra_before_sha: "60589676f4dc2f74e0ec6b9dd3b20a324b4eb7cc"
+  infra_after_sha: "7e488e542f0242fffcf9d1e71672e72c79bd3b39"
+  infra_diff: "one Backend newTag line only"
+  gitops_sync: "Synced"
+  gitops_health: "Progressing"
+  availability: "preserved-by-previous-ready-pod"
+  blocker: "receipt-clamav CrashLoopBackOff: chown /var/lib/clamav permission denied"
 
 observed_auth_merge_deviation:
   disposition_status: "accepted-as-integrated-without-rollout"
@@ -160,9 +174,9 @@ required_checks:
   - "owner branch and pull request remote readback"
 
 decision:
-  status: "running-backend-owner-merge-and-bounded-rollout-authorized"
+  status: "running-backend-integrated-rollout-health-blocked"
   approver: "4uentes"
-  next_gate: "Merge and verify sst-bend PR 32, image publication and exact Infra Backend pin diff; do not deploy or promote master."
+  next_gate: "Authorize CR-HPT-0024 Infra remediation or normal GitOps rollback; keep the integration wave stopped."
 
 evidence_refs:
   - "evidence/requests/CR-CP-0024/implementation-plan.md"
@@ -177,3 +191,4 @@ evidence_refs:
   - "evidence/requests/CR-CP-0024/backend-inbound-capability-allowlist-amendment-2026-08-31.md"
   - "evidence/requests/CR-CP-0024/backend-owner-pr-publication-readback-2026-08-31.md"
   - "evidence/requests/CR-CP-0024/backend-owner-merge-authorization-2026-08-31.md"
+  - "evidence/requests/CR-CP-0024/backend-merge-rollout-and-health-readback-2026-08-31.md"
