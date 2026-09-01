@@ -111,6 +111,7 @@ policy_application:
     The runtime must not become autonomous authority. It audits, gates, records
     evidence, and proposes follow-up work under Control Plane governance.
 open_gaps:
+  - "CR-CP-0024 added an exact two-path Backend inbound capability amendment; owner PR merge and rollout remain blocked."
   - "Define exact local path for audit packs before implementation."
   - "Confirm in Jira UI that ARDS-7 through ARDS-12 render under ARDS-13 as intended."
   - "CR-CP-0023 promoted and locally adopted the execution publication and tracker closure policy; any child rollout remains request-driven."

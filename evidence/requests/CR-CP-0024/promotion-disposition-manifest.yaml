@@ -124,7 +124,7 @@ repositories:
     immutable_source_ref: "agent/cr-hpt-0023-promotion-ready"
     source_sha: "2a0de56bdfadbbfdd6f586e97b5300f5fc7e9bdf"
     request_ids: ["CR-CP-0021", "CR-HPT-0019", "CR-HPT-0023", "CR-SST-0233"]
-    status: "blocked-until-cr-sst-0233-readback-and-owner-gate"
+    status: "authorized-for-owner-pr-publication-without-merge"
     promotion_path_allowlist:
       - ".env.example"
       - "db/migrations/20260827120000-create-receipt-intake-boundary.js"
@@ -185,6 +185,15 @@ repositories:
         - "scripts/test-migration-chain-postgres.js"
         - "docs/tasks/2026-08-31-cr-sst-0233-migration-baseline.md"
       preserved_owner_path: "db/migrations/20260829010000-adopt-article-agent-processing-v1.js"
+    inbound_capability_amendment:
+      status: "authorized-after-explicit-control-plane-readback"
+      required_paths:
+        - "specs/capabilities/inbound/4uentes-auth--automation-receipt-intake-service-token-grant-v1.yaml"
+        - "docs/capabilities/inbound/4uentes-auth--automation-receipt-intake-service-token-grant-v1.md"
+      existing_index_paths:
+        - "specs/capabilities/inbound/00-index.yaml"
+        - "docs/capabilities/00-overview.md"
+        - "scripts/ards-check.js"
     hunk_rules:
       - {path: "package.json", rule: "Unify all HPT and local-compose scripts and reject duplicate test:automation-service-token keys."}
       - {path: "src/apps/sst/presentation/middlewares/require-account-role.middleware.js", rule: "Preserve current role hardening and execute regression for every affected route."}

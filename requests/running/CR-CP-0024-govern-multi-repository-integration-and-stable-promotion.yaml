@@ -39,10 +39,11 @@ execution:
     - "contain-unauthorized-auth-push-workflow"
     - "accept-auth-development-merge-without-rollout"
     - "publish-backend-owner-execution-preflight"
+    - "publish-backend-inbound-capability-allowlist-amendment"
   control_plane_mutation_allowed: true
   child_repo_mutation_allowed: true
   child_repo_mutation_targets: ["sst-bend"]
-  child_repo_mutation_scope: "The 51 validated HPT paths plus four explicitly enumerated CR-SST-0233 paths on a clean branch from current Backend develop."
+  child_repo_mutation_scope: "The 51 validated HPT paths, four explicitly enumerated CR-SST-0233 paths and two explicitly enumerated Auth receipt-intake inbound capability paths on a clean branch from current Backend develop."
   owner_pr_publication_allowed: true
   owner_pr_merge_allowed: false
   image_publication_allowed: false
@@ -152,3 +153,4 @@ evidence_refs:
   - "evidence/requests/CR-CP-0024/auth-merge-disposition-2026-08-31.md"
   - "evidence/requests/CR-CP-0024/backend-owner-execution-preflight-2026-08-31.md"
   - "evidence/requests/CR-CP-0024/backend-owner-execution-authorization-2026-08-31.md"
+  - "evidence/requests/CR-CP-0024/backend-inbound-capability-allowlist-amendment-2026-08-31.md"
