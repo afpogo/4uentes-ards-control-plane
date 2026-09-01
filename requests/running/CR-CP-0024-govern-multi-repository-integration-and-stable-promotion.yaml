@@ -10,9 +10,9 @@ started_at: "2026-08-30"
 requester: "4uentes"
 
 summary: >
-  Execute only the authorized 4uentes-auth development-integration slice.
-  Historical labels remain provenance, CR-CP-0024 is the retroactive execution
-  authority, and the owner pull request must not be merged under this gate.
+  Backend owner PR 32 is published and green without merge. Historical labels
+  remain provenance, CR-CP-0024 is the retroactive execution authority, and
+  image publication plus Infra mutation require the next explicit gate.
 
 control_plane_context:
   initiative_id: "INIT-CP-0003"
@@ -30,7 +30,7 @@ authorization:
   evidence: "evidence/requests/CR-CP-0024/auth-owner-execution-authorization-2026-08-30.md"
 
 execution:
-  current_unit: "recompose-backend-development-candidate"
+  current_unit: "await-backend-owner-merge-and-rollout-authorization"
   completed_units:
     - "publish-plan-and-migration-lifecycle"
     - "publish-control-plane-recoveries"
@@ -40,11 +40,12 @@ execution:
     - "accept-auth-development-merge-without-rollout"
     - "publish-backend-owner-execution-preflight"
     - "publish-backend-inbound-capability-allowlist-amendment"
+    - "publish-backend-owner-pull-request"
   control_plane_mutation_allowed: true
-  child_repo_mutation_allowed: true
+  child_repo_mutation_allowed: false
   child_repo_mutation_targets: ["sst-bend"]
   child_repo_mutation_scope: "The 51 validated HPT paths, four explicitly enumerated CR-SST-0233 paths and two explicitly enumerated Auth receipt-intake inbound capability paths on a clean branch from current Backend develop."
-  owner_pr_publication_allowed: true
+  owner_pr_publication_allowed: false
   owner_pr_merge_allowed: false
   image_publication_allowed: false
   infra_mutation_allowed: false
@@ -52,7 +53,18 @@ execution:
   deployment_allowed: false
   stable_branch_mutation_allowed: false
   jira_write_allowed: false
-  external_execution_gate: "Merge and read back this Backend authorization before creating the owner worktree; publish but do not merge the owner PR."
+  external_execution_gate: "Obtain explicit authorization to merge sst-bend PR 32 and accept image publication plus the bounded automatic Infra pin update."
+
+observed_backend_owner_pr:
+  pull_request: 32
+  base_sha: "28ce139fa079b89fbccfca2bab566b5bf1e50b6e"
+  head_sha: "de19c14f95c077a2b85a1bbdd205d01a512cbd00"
+  state: "open-green-not-merged"
+  path_readback: "57-authorized-57-observed-0-extra"
+  node_ci_run_id: 33454714533
+  image_build_run_id: 33454714576
+  image_published: false
+  infra_mutated: false
 
 observed_auth_merge_deviation:
   disposition_status: "accepted-as-integrated-without-rollout"
@@ -130,18 +142,19 @@ owner_documentation:
     - "request-scoped owner task documentation"
 
 required_checks:
-  - "4uentes-auth full check"
-  - "service-token harness positive and negative matrices"
+  - "sst-bend full check"
+  - "PostgreSQL fresh, historical upgrade, down/up and schema parity"
+  - "automation token, receipt intake, receipt binding and 44 owner-route guard regressions"
   - "git diff --check"
   - "secret-safe scan"
-  - "exact 20-path allowlist comparison"
+  - "exact 57-path allowlist comparison"
   - "4uentes-orchestor npm run check"
   - "owner branch and pull request remote readback"
 
 decision:
-  status: "running-backend-owner-pr-publication-authorized"
+  status: "running-backend-owner-pr-green-awaiting-merge-authorization"
   approver: "4uentes"
-  next_gate: "Merge and read back this gate, then publish but do not merge the Backend owner PR."
+  next_gate: "Authorize or reject merge of sst-bend PR 32 with its enumerated image and Infra side effects."
 
 evidence_refs:
   - "evidence/requests/CR-CP-0024/implementation-plan.md"
@@ -154,3 +167,4 @@ evidence_refs:
   - "evidence/requests/CR-CP-0024/backend-owner-execution-preflight-2026-08-31.md"
   - "evidence/requests/CR-CP-0024/backend-owner-execution-authorization-2026-08-31.md"
   - "evidence/requests/CR-CP-0024/backend-inbound-capability-allowlist-amendment-2026-08-31.md"
+  - "evidence/requests/CR-CP-0024/backend-owner-pr-publication-readback-2026-08-31.md"
