@@ -178,12 +178,13 @@ repositories:
       - "src/apps/sst/presentation/routes/integrations.routes.js"
       - "src/apps/sst/presentation/routes/receipt-intake.routes.js"
     cr_sst_0233_future_paths:
-      status: "not-yet-authorized-no-immutable-owner-source"
+      status: "authorized-for-clean-owner-recomposition-after-running-readback"
       required_paths:
+        - ".github/workflows/node.js.yml"
         - "db/migrations/20260524120000-create-document-agent-jobs.js"
-        - "db/migrations/20260829010000-adopt-article-agent-processing-v1.js"
-        - "migration regression tests"
-        - "owner task documentation"
+        - "scripts/test-migration-chain-postgres.js"
+        - "docs/tasks/2026-08-31-cr-sst-0233-migration-baseline.md"
+      preserved_owner_path: "db/migrations/20260829010000-adopt-article-agent-processing-v1.js"
     hunk_rules:
       - {path: "package.json", rule: "Unify all HPT and local-compose scripts and reject duplicate test:automation-service-token keys."}
       - {path: "src/apps/sst/presentation/middlewares/require-account-role.middleware.js", rule: "Preserve current role hardening and execute regression for every affected route."}

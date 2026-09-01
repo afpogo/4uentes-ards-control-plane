@@ -30,7 +30,7 @@ authorization:
   evidence: "evidence/requests/CR-CP-0024/auth-owner-execution-authorization-2026-08-30.md"
 
 execution:
-  current_unit: "preflight-next-owner-after-auth-integration"
+  current_unit: "recompose-backend-development-candidate"
   completed_units:
     - "publish-plan-and-migration-lifecycle"
     - "publish-control-plane-recoveries"
@@ -38,11 +38,12 @@ execution:
     - "publish-auth-owner-pull-request"
     - "contain-unauthorized-auth-push-workflow"
     - "accept-auth-development-merge-without-rollout"
+    - "publish-backend-owner-execution-preflight"
   control_plane_mutation_allowed: true
-  child_repo_mutation_allowed: false
-  child_repo_mutation_targets: ["4uentes-auth"]
-  child_repo_mutation_scope: "The 20 validated allowlist paths on a clean branch from the refreshed Auth development base."
-  owner_pr_publication_allowed: false
+  child_repo_mutation_allowed: true
+  child_repo_mutation_targets: ["sst-bend"]
+  child_repo_mutation_scope: "The 51 validated HPT paths plus four explicitly enumerated CR-SST-0233 paths on a clean branch from current Backend develop."
+  owner_pr_publication_allowed: true
   owner_pr_merge_allowed: false
   image_publication_allowed: false
   infra_mutation_allowed: false
@@ -50,7 +51,7 @@ execution:
   deployment_allowed: false
   stable_branch_mutation_allowed: false
   jira_write_allowed: false
-  external_execution_gate: "Record and read back an explicit disposition for the existing Auth merge before advancing to another owner."
+  external_execution_gate: "Merge and read back this Backend authorization before creating the owner worktree; publish but do not merge the owner PR."
 
 observed_auth_merge_deviation:
   disposition_status: "accepted-as-integrated-without-rollout"
@@ -137,9 +138,9 @@ required_checks:
   - "owner branch and pull request remote readback"
 
 decision:
-  status: "running-auth-integrated-without-rollout"
+  status: "running-backend-owner-pr-publication-authorized"
   approver: "4uentes"
-  next_gate: "Publish a separately enumerated preflight and authorization for the next owner; all Auth rollout effects remain blocked."
+  next_gate: "Merge and read back this gate, then publish but do not merge the Backend owner PR."
 
 evidence_refs:
   - "evidence/requests/CR-CP-0024/implementation-plan.md"
@@ -149,3 +150,5 @@ evidence_refs:
   - "evidence/requests/CR-CP-0024/auth-owner-execution-authorization-2026-08-30.md"
   - "evidence/requests/CR-CP-0024/auth-merge-deviation-and-containment-2026-08-31.md"
   - "evidence/requests/CR-CP-0024/auth-merge-disposition-2026-08-31.md"
+  - "evidence/requests/CR-CP-0024/backend-owner-execution-preflight-2026-08-31.md"
+  - "evidence/requests/CR-CP-0024/backend-owner-execution-authorization-2026-08-31.md"
