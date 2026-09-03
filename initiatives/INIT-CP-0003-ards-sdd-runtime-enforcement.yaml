@@ -57,6 +57,7 @@ known_change_requests:
   - "CR-CP-0022"
   - "CR-CP-0023"
   - "CR-CP-0024"
+  - "CR-CP-0025"
 candidate_change_requests:
   - id: "CR-CP-0014"
     title: "Promote policy audit runtime pack to core canon"

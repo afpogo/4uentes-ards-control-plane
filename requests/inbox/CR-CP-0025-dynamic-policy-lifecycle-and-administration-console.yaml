@@ -1,0 +1,38 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-CP-0025"
+title: "Define dynamic policy lifecycle and privileged administration console architecture"
+status: "inbox"
+created_at: "2026-09-03"
+requester: "4uentes"
+business_context: >
+  ARDS/SDD policies include durable governance rules and temporary controls
+  introduced to contain functional, structural or infrastructure gaps. A
+  future administration console must expose their effective status, history,
+  configuration and audit trail without becoming an authority parallel to the
+  Git-governed control plane.
+requested_change: >
+  Document the distinction between immutable policy revisions, contextual
+  overlays, exceptions and request constraints; define how effective policy is
+  resolved for a new worktree; and propose a privileged administration console
+  linked to a specially authorized SST identity.
+expected_outcome: >
+  Reviewers can understand how a temporary policy overlay acts, how policy
+  changes remain historically reproducible, and how a future ROOT principal
+  may administer the control plane through bounded, audited operations.
+initial_scope:
+  initiative_id: "INIT-CP-0003"
+  origin_repository: "4uentes-orchestor"
+  delivery: "documentation-as-code architecture proposal"
+  runtime_implementation: false
+constraints:
+  - "The control-plane Git artifacts remain authoritative; the console is a governed command and read-model surface."
+  - "No child repository, Auth runtime, SST runtime, database or deployment is modified by this request."
+  - "ROOT is proposed as a control-plane principal linked to an SST identity, not as an unrestricted SST domain user."
+  - "No credential, token, private identifier or production topology may appear in diagrams or examples."
+  - "Runtime identity binding and privileged authorization require a separate security-reviewed CR."
+decision:
+  status: "accepted-for-documentation-design"
+  approver: "4uentes"
+  approved_at: "2026-09-03"
+  approval_text: "Documentar como codigo el sistema dinamico de policies, sus overlays y una futura consola administrativa vinculada a un usuario especial ROOT de SST."
