@@ -1,0 +1,60 @@
+schema_version: "1.0"
+phase: 4
+id: "CR-CP-0025"
+title: "Define dynamic policy lifecycle and privileged administration console architecture"
+status: "done"
+source_request: "requests/inbox/CR-CP-0025-dynamic-policy-lifecycle-and-administration-console.yaml"
+planned_request: "requests/planned/CR-CP-0025-dynamic-policy-lifecycle-and-administration-console.yaml"
+closed_at: "2026-09-03"
+requester: "4uentes"
+summary: >
+  Published the reviewed documentation-as-code architecture for versioned
+  policies, contextual overlays, deterministic resolution, auditable console
+  commands and a bounded future ROOT control-plane principal.
+control_plane_context:
+  initiative_id: "INIT-CP-0003"
+  jira_sync_status: "not-applicable-not-authorized"
+execution:
+  control_plane_documentation_performed: true
+  child_repo_mutation_performed: false
+  core_repo_mutation_performed: false
+  auth_runtime_mutation_performed: false
+  sst_runtime_mutation_performed: false
+  deployment_performed: false
+  jira_write_performed: false
+delivered_scope:
+  architecture_ref: "docs/platform/ards-sdd-dynamic-policy-administration-console.md"
+  platform_index_ref: "docs/platform/README.md"
+  initiative_ref: "initiatives/INIT-CP-0003-ards-sdd-runtime-enforcement.yaml"
+  runtime_status: "not-implemented-separate-cr-required"
+publication_evidence:
+  design_pr: 212
+  design_head_commit: "953c9f80e04f65803aa9b2146a44bf8f03c03869"
+  design_merge_commit: "6f714f66b7ce2c766668e7edc0916019d79eed16"
+  canonical_branch: "origin/main"
+  canonical_readback: "verified"
+validation:
+  result: "passed"
+  checks:
+    - "node scripts/verify-visual-documentation.js: 6 maps in the new document, 0 failures"
+    - "npm run check: 0 failures"
+    - "git diff --check: passed"
+    - "origin/main merge readback: 6f714f66b7ce2c766668e7edc0916019d79eed16"
+  remote_checks: "not-configured-no-checks-reported"
+review:
+  status: "operator-reviewed"
+  reviewed_by: "4uentes"
+  reviewed_at: "2026-09-03"
+  review_text: "ok avancemos, revise los documentos"
+authorization:
+  status: "publication-and-terminal-closure-authorized"
+  approved_by: "4uentes"
+  approved_at: "2026-09-03"
+  approval_text: "ok si autorizo los siguientes pasos descritos"
+decision:
+  status: "closed-documentation-design"
+  approver: "4uentes"
+  blocker: "none"
+  next_gate: >
+    Use separate security-reviewed requests for the machine-readable lifecycle
+    schema/resolver, console runtime and SST-to-ARDS ROOT identity binding.
