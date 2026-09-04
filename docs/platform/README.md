@@ -15,6 +15,7 @@ plataforma.
 
 ## Docs Canonicos Actuales
 
+- [ards-sdd-dynamic-policy-administration-console.md](ards-sdd-dynamic-policy-administration-console.md)
 - [argocd-self-heal-tutorial.md](argocd-self-heal-tutorial.md)
 - [argocd-prune-vs-self-heal.md](argocd-prune-vs-self-heal.md)
 - [sst-development-infra-write-token-runbook.md](sst-development-infra-write-token-runbook.md)

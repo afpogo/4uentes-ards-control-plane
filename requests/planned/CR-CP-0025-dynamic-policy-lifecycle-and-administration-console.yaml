@@ -1,0 +1,75 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-CP-0025"
+title: "Define dynamic policy lifecycle and privileged administration console architecture"
+status: "planned"
+source_request: "requests/inbox/CR-CP-0025-dynamic-policy-lifecycle-and-administration-console.yaml"
+created_at: "2026-09-03"
+requester: "4uentes"
+summary: >
+  Publish a documentation-only architecture proposal for dynamic policy
+  lifecycle, contextual overlays, deterministic policy resolution, real-time
+  administration projections and a bounded ROOT control-plane principal.
+control_plane_context:
+  initiative_id: "INIT-CP-0003"
+  initiative_epic: "ARDS-13"
+  origin_repo: "4uentes-orchestor"
+  current_policy_model: "specs/policies/ards-sdd-policy-component-model.yaml"
+risk:
+  level: "high"
+  score: 8
+  drivers:
+    - "GOVERNANCE_AUTHORITY"
+    - "PRIVILEGED_IDENTITY"
+    - "DYNAMIC_ENFORCEMENT"
+    - "AUDIT_INTEGRITY"
+model_selection:
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  task_class: "complex-high-risk-task"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5 high"
+  reason: "The proposal affects policy authority, privileged identity and future enforcement boundaries."
+  subagent_deployment_plan: "none; architecture, authorization and ROOT boundary decisions remain in the primary agent"
+execution:
+  control_plane_mutation_allowed: true
+  child_repo_mutation_allowed: false
+  core_repo_mutation_allowed: false
+  auth_runtime_mutation_allowed: false
+  sst_runtime_mutation_allowed: false
+  deployment_allowed: false
+  jira_write_allowed: false
+atomized_execution:
+  - order: 1
+    id: "clarify-overlay"
+    objective: "Define overlay semantics and distinguish overlays from revisions, exceptions and request constraints."
+  - order: 2
+    id: "model-effective-resolution"
+    objective: "Describe deterministic policy resolution and immutable execution snapshots."
+  - order: 3
+    id: "model-console"
+    objective: "Describe a Git-first command/query architecture for the future administration console."
+  - order: 4
+    id: "bound-root-principal"
+    objective: "Define the proposed SST identity link and the non-bypassable ROOT authorization boundary."
+  - order: 5
+    id: "validate-documentation"
+    objective: "Validate Mermaid maps, textual fallbacks, request lifecycle and the full control-plane gate."
+planned_artifacts:
+  - "docs/platform/ards-sdd-dynamic-policy-administration-console.md"
+  - "docs/platform/README.md"
+  - "initiatives/INIT-CP-0003-ards-sdd-runtime-enforcement.yaml"
+  - "requests/inbox/CR-CP-0025-dynamic-policy-lifecycle-and-administration-console.yaml"
+  - "requests/planned/CR-CP-0025-dynamic-policy-lifecycle-and-administration-console.yaml"
+required_checks:
+  - "node scripts/verify-visual-documentation.js"
+  - "npm run check"
+  - "git diff --check"
+decision:
+  status: "approved-for-documentation-only"
+  approver: "4uentes"
+  blocker: >
+    Runtime implementation, Auth integration, SST ROOT provisioning and any
+    write-capable console require follow-up CRs and explicit security review.
