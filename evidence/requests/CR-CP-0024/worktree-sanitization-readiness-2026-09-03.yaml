@@ -1,0 +1,106 @@
+schema_version: "1.0"
+kind: "worktree_sanitization_readiness"
+request_id: "CR-CP-0024"
+observed_at: "2026-09-03"
+policy_ref: "docs/policies/worktree-request-lifecycle-policy.md"
+authority:
+  control_plane_ref: "origin/main"
+  control_plane_sha: "d1452ea1130fbf69d1bebf028b10e137c6ea3d08"
+  authorization_status: "policy-application-and-sanitization-authorized"
+  approved_by: "4uentes"
+  approval_text: >
+    Apply the existing policy, keep clean worktrees ready for new features and
+    retire the temporary remediation control after historical branches are
+    sanitized.
+
+remediation_control:
+  status: "active"
+  nature: "request-scoped-operational-control"
+  base_policy_status: "active-and-durable"
+  dissolution_semantics: >
+    Fulfil and close this remediation control after every historical checkout
+    has a verified disposition. Do not deprecate or remove the base policy.
+  exit_conditions:
+    - "every dirty checkout has no unique information only on disk"
+    - "every local-only commit is published, integrated, superseded or explicitly preserved"
+    - "every generated artifact removal has an exact authorized allowlist"
+    - "every retired worktree is clean, unused and reachable from a canonical or preservation ref"
+    - "canonical refs and terminal request evidence have remote readback"
+
+feature_baselines:
+  root: "C:/Users/andre/Desktop/4uentes/apps/worktrees/current"
+  usage_rule: >
+    Treat each detached checkout as a verified seed. A feature gets its own
+    request-scoped branch and worktree from the refreshed remote canonical ref;
+    concurrent features never share the seed checkout.
+  repositories:
+    - {repository: "4uentes-ards-control-plane", path: "current/control-plane", canonical_ref: "origin/main", sha: "d1452ea1130fbf69d1bebf028b10e137c6ea3d08", status: "ready"}
+    - {repository: "4uentes-auth", path: "current/auth", canonical_ref: "origin/develop", sha: "ff5605c67d412e3e363d58de14a5b6b98b38c4ad", status: "ready"}
+    - {repository: "sst-bend", path: "current/backend", canonical_ref: "origin/develop", sha: "5db4dd868f3348f95d6376519be1534be1710d75", status: "ready"}
+    - {repository: "sst-4uentes-infra", path: "current/infra", canonical_ref: "origin/develop", sha: "7e488e542f0242fffcf9d1e71672e72c79bd3b39", status: "ready"}
+    - {repository: "sst-fend", path: "current/fend", canonical_ref: "origin/develop", sha: "bd9b8d2aa52aab2346b7bf94b0db05ed188c09a3", status: "ready"}
+    - {repository: "sst-extension", path: "current/extension", canonical_ref: "origin/develop", sha: "6d0b512172068595c68399168bdcc30d62dbe4a5", status: "ready"}
+    - {repository: "4uentes-portfolio", path: "current/portfolio", canonical_ref: "origin/develop", sha: "877b528fab491382806ced0de8c3d376226e02f2", status: "blocked-for-feature-use-until-cr-4uentes-0039"}
+    - {repository: "phinance", path: "current/phinance", canonical_ref: "origin/main", sha: "228b192b01ca065b34263cae8534df30b0ed8667", status: "ready-for-unrelated-work-cr-hpt-0007-dependent-work-blocked"}
+    - {repository: "4uentes-ards-core", path: "current/core", canonical_ref: "origin/develop", sha: "ded8c466dc3c02a02f7b24642ce99de6cebcc91c", status: "ready-root-fast-forwarded"}
+    - {repository: "sst-chatbot", path: "current/chatbot", canonical_ref: "origin/develop", sha: "5b96bbb4c087af80c41875823acf87823166958d", status: "ready-root-fast-forwarded"}
+
+historical_checkout_disposition:
+  - repository: "4uentes-ards-control-plane"
+    dirty: {tracked_entries: 34, untracked_status_entries: 279}
+    local_commit_count: 15
+    disposition: "preserve-dirty-selective-recovery"
+    blocker: "mixed requests, evidence, policy artifacts and generated directories"
+  - repository: "4uentes-auth"
+    dirty: {tracked_entries: 38, untracked_entries: 10}
+    local_commit_count_against_canonical: 1
+    disposition: "preserve-dirty"
+    blocker: "45 divergent paths and missing canonical lifecycle for CR-SST-0158/0159"
+    generated_candidates_requiring_authorization: ["tmp-bf-dev.err", "tmp-bf-dev.log"]
+  - repository: "sst-bend"
+    dirty: {tracked_entries: 26, untracked_entries: 11}
+    local_commit_count_against_canonical: 2
+    disposition: "preserve-dirty"
+    blocker: "local-only efa955b has CR-SST-0207 content on a CR-SST-0086-named branch"
+  - repository: "sst-4uentes-infra"
+    dirty: {tracked_entries: 14, untracked_entries: 3}
+    local_commit_count_against_canonical: 0
+    disposition: "preserve-dirty"
+    blocker: "15 divergent paths; CR-SST-0175/0176 lifecycle missing and environment manifests excluded"
+  - repository: "sst-fend"
+    dirty: {tracked_entries: 35, untracked_entries: 8}
+    local_commit_count_against_canonical: 0
+    disposition: "preserve-dirty"
+    blocker: "12 collision paths and request-mixed unique paths; CR-SST-0231 has only a bounded 12-path allowlist"
+  - repository: "sst-extension"
+    dirty: {tracked_entries: 49, untracked_entries: 19}
+    local_commit_count_against_canonical: 0
+    disposition: "preserve-dirty"
+    blocker: "11 collision paths and 57 unique paths require request-scoped reconstruction"
+    permanent_exclusion:
+      path: "docs/resources/Screenshot 2026-07-23 230415.png"
+      sha256: "1f2a12a31ecd55d7572d296252cb0fcd54bfab2c9739aa7cb6e36e4c4282b04f"
+      content_opened: false
+  - repository: "4uentes-portfolio"
+    dirty: {tracked_entries: 81, untracked_file_count: 32}
+    local_commit_count_against_canonical: 0
+    disposition: "preserve-dirty"
+    blocker: "CR-4UENTES-0039 must remove the CV and recursive resource copying before any feature"
+  - repository: "phinance"
+    dirty: {tracked_entries: 10, untracked_entries: 5}
+    local_commits_patch_equivalent_to_canonical: 6
+    disposition: "preserve-dirty"
+    blocker: "15 CR-HPT-0007 paths require lifecycle publication and additive reconstruction"
+  - repository: "4uentes-ards-core"
+    dirty: {tracked_entries: 0, untracked_entries: 0}
+    disposition: "sanitized-fast-forwarded"
+  - repository: "sst-chatbot"
+    dirty: {tracked_entries: 0, untracked_entries: 0}
+    disposition: "sanitized-fast-forwarded"
+
+cleanup_gate:
+  remove_now: []
+  destructive_cleanup_allowed: false
+  next_required_authorization: >
+    Enumerate a request-scoped recovery or generated-file removal batch. No
+    dirty historical checkout can be reset, switched, removed or cleaned yet.
