@@ -31,6 +31,7 @@ authorization:
 
 execution:
   current_unit: "backend-rollout-health-blocked-await-owner-disposition"
+  parallel_unit: "worktree-sanitization-disposition-and-selective-recovery"
   completed_units:
     - "publish-plan-and-migration-lifecycle"
     - "publish-control-plane-recoveries"
@@ -44,6 +45,9 @@ execution:
     - "merge-backend-owner-pull-request"
     - "publish-backend-image-and-update-infra-pin"
     - "verify-backend-rollout-and-preserve-service-availability"
+    - "retire-thirteen-clean-cr-cp-0024-worktrees-after-readback"
+    - "establish-ten-clean-current-feature-baselines"
+    - "fast-forward-clean-core-and-chatbot-roots"
   control_plane_mutation_allowed: true
   child_repo_mutation_allowed: false
   child_repo_mutation_targets: ["sst-bend", "sst-4uentes-infra"]
@@ -57,6 +61,23 @@ execution:
   stable_branch_mutation_allowed: false
   jira_write_allowed: false
   external_execution_gate: "Choose and authorize either a CR-HPT-0024 Infra remediation PR or a normal GitOps pin rollback; no other owner may advance while the new Backend pod is unhealthy."
+
+worktree_sanitization:
+  policy_id: "worktree-request-lifecycle-policy"
+  remediation_control_status: "active"
+  base_policy_status: "active-and-durable"
+  authorization:
+    approved_by: "4uentes"
+    approved_at: "2026-09-03"
+    approval_text: "Apply the policy, keep a worktree ready for new features and dissolve the temporary control after branches are sanitized."
+  clean_feature_baselines: 10
+  sanitized_historical_roots: ["4uentes-ards-core", "sst-chatbot"]
+  preserved_dirty_roots: ["4uentes-ards-control-plane", "4uentes-auth", "sst-bend", "sst-4uentes-infra", "sst-fend", "sst-extension", "4uentes-portfolio", "phinance"]
+  destructive_cleanup_allowed: false
+  dissolution_rule: "Close only the request-scoped remediation control after complete disposition; retain the durable policy."
+  evidence:
+    - "evidence/requests/CR-CP-0024/worktree-sanitization-readiness-2026-09-03.yaml"
+    - "evidence/requests/CR-CP-0024/worktree-sanitization-policy-application-2026-09-03.md"
 
 backend_merge_authorization:
   status: "consumed-by-observed-merge-and-bounded-rollout-verification"
@@ -192,3 +213,5 @@ evidence_refs:
   - "evidence/requests/CR-CP-0024/backend-owner-pr-publication-readback-2026-08-31.md"
   - "evidence/requests/CR-CP-0024/backend-owner-merge-authorization-2026-08-31.md"
   - "evidence/requests/CR-CP-0024/backend-merge-rollout-and-health-readback-2026-08-31.md"
+  - "evidence/requests/CR-CP-0024/worktree-sanitization-readiness-2026-09-03.yaml"
+  - "evidence/requests/CR-CP-0024/worktree-sanitization-policy-application-2026-09-03.md"
