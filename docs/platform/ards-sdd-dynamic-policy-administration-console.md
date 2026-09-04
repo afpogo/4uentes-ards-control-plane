@@ -54,8 +54,9 @@ cambia.
 | Constraint de CR | Restringe una única ejecución | No | Vida del request |
 | Advisory | Informa sin bloquear | No | Revisable |
 
-Un overlay normal puede agregar restricciones o reducir alcance. No puede
-debilitar una policy superior. Si se necesita una desviación, debe existir un
+Un overlay normal puede agregar restricciones, reducir permisos o limitar su
+propio alcance de aplicabilidad. No puede reducir la cobertura ni debilitar una
+policy superior. Si se necesita una desviación, debe existir un
 `policy_exception_manifest` aprobado.
 
 ### Ejemplo machine-readable
@@ -65,7 +66,9 @@ schema_version: "1.0"
 kind: "policy_overlay"
 overlay_id: "dirty-worktree-preservation-cr-cp-0024"
 policy_id: "worktree-request-lifecycle-policy"
-policy_revision: "2026-08-22"
+policy_source:
+  ref: "docs/policies/worktree-request-lifecycle-policy.md"
+  git_sha: "f3465b97efee5d363122942520a3614d62459aad"
 lifecycle_mode: "remediation"
 status: "active"
 authority:
@@ -76,12 +79,25 @@ validity:
   review_at: "2026-09-10T00:00:00Z"
   expires_at: "2026-09-30T00:00:00Z"
   expiry_behavior: "block-and-review"
+  time_source: "control-plane-trusted-clock"
 scope:
   operations: ["worktree-bootstrap", "worktree-cleanup"]
 activation:
-  all: ["dirty-worktrees-exist", "disposition-incomplete"]
+  all:
+    - fact_ref: "evidence/requests/CR-CP-0024/promotion-disposition-manifest.yaml"
+      evaluator: "worktree-disposition-validator"
+      evaluator_version: "1"
+      expected: "incomplete"
 deactivation:
-  any: ["disposition-validator-passes", "request-is-closed"]
+  all:
+    - fact_ref: "evidence/requests/CR-CP-0024/promotion-disposition-manifest.yaml"
+      evaluator: "worktree-disposition-validator"
+      evaluator_version: "1"
+      expected: "complete"
+    - fact_ref: "requests/done/CR-CP-0024-govern-multi-repository-integration-and-stable-promotion.yaml"
+      evaluator: "request-lifecycle-validator"
+      evaluator_version: "1"
+      expected: "closed"
 rules:
   - {effect: "deny", operation: "reset-dirty-worktree"}
   - {effect: "require", operation: "create-clean-isolated-worktree"}
@@ -200,6 +216,13 @@ expired --mandatory review--> needs-review
 
 <!-- visual-map:end -->
 
+`status` representa el estado publicado del artefacto. `effective_status` es
+calculado por el resolvedor usando una fuente de tiempo declarada, la revisión
+del evaluador y los facts fijados por SHA. Alcanzar `effective_from`,
+`review_at` o `expires_at` no reescribe el archivo. Si vence un overlay
+mandatory, el resolvedor bloquea solamente las operaciones declaradas en su
+scope y exige revisión; nunca falla abierto ni desactiva la policy base.
+
 ## Resolución al iniciar un worktree
 
 Cada ejecución debe recibir un snapshot reproducible de las policies vigentes.
@@ -230,7 +253,7 @@ sequenceDiagram
     participant B as Worktree bootstrap [proposed]
     participant P as Policy resolver [proposed]
     participant G as Git policy sources [authoritative]
-    participant L as Audit ledger [append-only]
+    participant L as Audit ledger [append-only requirement]
     participant A as AI agent [bounded]
 
     U->>B: Request new worktree with CR and repo context
@@ -296,7 +319,7 @@ flowchart LR
     CMD["Governed command service [bounded]"]
     GIT["Git policies, requests and state [authoritative]"]
     RES["Policy resolver and gate engine [proposed]"]
-    AUD["Append-only audit ledger [proposed]"]
+    AUD["Tamper-evident audit ledger requirement [proposed]"]
     EVT["Real-time event stream [derived]"]
     AG["Agent bootstrap adapter [bounded]"]
 
@@ -304,7 +327,7 @@ flowchart LR
     API -->|"verify privileged session"| ID
     API -->|"read status"| Q
     API -->|"submit proposal"| CMD
-    CMD -->|"publish only through approved CR or PR"| GIT
+    CMD -->|"publish through approved CR lifecycle and governed commit or PR"| GIT
     GIT -->|"versioned policy inputs"| RES
     RES -->|"effective decisions"| AG
     CMD -->|"record intent and result"| AUD
@@ -319,14 +342,19 @@ flowchart LR
 ```text
 La consola usa una API de comandos y consultas y valida la sesión privilegiada.
 Las consultas leen proyecciones derivadas.
-Los comandos crean propuestas gobernadas y publican sólo mediante CR o PR aprobado.
+Los comandos crean propuestas gobernadas y publican sólo mediante un lifecycle CR aprobado y su commit o PR gobernado.
 Git conserva policies, requests y state como fuente autoritativa.
 El resolvedor consume Git y entrega decisiones efectivas al bootstrap de agentes.
-Comandos y resoluciones se registran en un ledger append-only.
+Comandos y resoluciones deben registrarse en un ledger con evidencia de integridad.
 El stream en tiempo real refresca la UI, pero no tiene autoridad de escritura.
 ```
 
 <!-- visual-map:end -->
+
+`append-only` es un requisito de seguridad pendiente, no una garantía ya
+implementada. El CR de runtime deberá definir writers autorizados, orden y
+fuente de tiempo, retención, detección de alteraciones, disponibilidad,
+reconciliación y anclaje verificable con Git.
 
 ## Principal especial ROOT vinculado a SST
 
@@ -337,8 +365,9 @@ credencial compartida.
 
 Modelo propuesto:
 
-- `sst_subject_id`: referencia estable al sujeto autenticado; no contiene datos
-  personales en manifests o logs.
+- `sst_subject_id`: identificador personal pseudónimo y correlacionable. Debe
+  minimizarse, cifrarse o tokenizarse según el storage, tener acceso y retención
+  restringidos y salir redactado de exportaciones generales.
 - `control_plane_principal_id`: identidad administrativa independiente.
 - `role: ards.root`: rol privilegiado del control plane.
 - Sesión corta con MFA resistente a phishing y reautenticación para comandos.
@@ -346,8 +375,9 @@ Modelo propuesto:
 - Motivo, CR, diff esperado y resultado obligatorios para cada acción.
 - ROOT no puede editar el ledger, borrar evidencia ni evitar policies
   invariantes.
-- Una acción de emergencia genera un overlay `emergency`, con TTL corto y
-  revisión posterior obligatoria.
+- Antes de una acción de emergencia debe publicarse y autorizarse un overlay
+  `emergency`, con TTL corto y revisión posterior obligatoria. Una excepción
+  break-glass atómica requeriría un contrato separado y no se infiere aquí.
 - Operaciones críticas pueden exigir segundo aprobador aunque el iniciador sea
   ROOT.
 
@@ -378,9 +408,9 @@ sequenceDiagram
     actor R as SST-linked ROOT [privileged]
     participant I as Identity broker [proposed]
     participant C as Admin console [proposed]
-    participant P as Policy and approval gate [authoritative decision]
+    participant P as Policy and approval gate [proposed enforcement]
     participant G as Git publication workflow [bounded]
-    participant A as Audit ledger [append-only]
+    participant A as Audit ledger [append-only requirement]
 
     R->>I: Authenticate with strong MFA
     I-->>C: Issue short privileged session with control-plane principal
@@ -432,16 +462,16 @@ visual_map:
 ```mermaid
 erDiagram
     POLICY_DEFINITION ||--|{ POLICY_REVISION : "has immutable [authoritative]"
-    POLICY_REVISION ||--o{ POLICY_BINDING : "is selected by [confirmed]"
+    POLICY_REVISION ||--o{ POLICY_BINDING : "is selected by [proposed adoption mapping]"
     POLICY_REVISION ||--o{ POLICY_OVERLAY : "is constrained by [proposed]"
     POLICY_REVISION ||--o{ POLICY_EXCEPTION : "may allow [bounded]"
     POLICY_BINDING }o--o{ RESOLUTION_MANIFEST : "contributes to [proposed]"
     POLICY_OVERLAY }o--o{ RESOLUTION_MANIFEST : "contributes to [proposed]"
     POLICY_EXCEPTION }o--o{ RESOLUTION_MANIFEST : "contributes to [bounded]"
     ADMIN_PRINCIPAL ||--o{ ADMIN_COMMAND : "submits [privileged]"
-    RESOLUTION_MANIFEST ||--o{ ADMIN_COMMAND : "governs [authoritative decision]"
-    ADMIN_COMMAND ||--|{ AUDIT_EVENT : "produces [append-only]"
-    ADMIN_PRINCIPAL ||--o{ AUDIT_EVENT : "is referenced by [privacy-bounded]"
+    RESOLUTION_MANIFEST ||--o{ ADMIN_COMMAND : "constrains [proposed enforcement]"
+    ADMIN_COMMAND ||--|{ AUDIT_EVENT : "produces [tamper-evident requirement]"
+    ADMIN_PRINCIPAL ||--o{ AUDIT_EVENT : "is pseudonymously referenced by [privacy-bounded]"
 ```
 
 ### Fallback textual del modelo de datos
@@ -452,8 +482,8 @@ PolicyBinding selecciona una revisión para un alcance.
 PolicyOverlay restringe una revisión bajo condiciones.
 PolicyException representa una desviación aprobada.
 Binding, overlay y excepción contribuyen al ResolutionManifest.
-AdminPrincipal presenta AdminCommand, gobernado por un ResolutionManifest.
-El comando produce AuditEvent append-only que referencia al principal sin copiar datos personales.
+AdminPrincipal presenta AdminCommand, restringido por un ResolutionManifest propuesto.
+El comando produce AuditEvent con evidencia de integridad y una referencia pseudónima sensible al principal.
 ```
 
 <!-- visual-map:end -->
@@ -464,7 +494,8 @@ El resolvedor propuesto aplica estas reglas:
 
 1. Un `deny` aplicable prevalece sobre un `allow`.
 2. Una policy local no contradice una policy canónica.
-3. Un overlay normal puede endurecer, acotar o activar; no puede debilitar.
+3. Un overlay normal puede endurecer, reducir permisos, activar o acotar su
+   propia aplicabilidad; no puede reducir la cobertura de la policy base.
 4. Una excepción sólo opera si la policy base declara un camino de excepción.
 5. Policies incompatibles producen un conflicto bloqueante, no una elección
    silenciosa.
@@ -496,7 +527,8 @@ El resolvedor propuesto aplica estas reglas:
 - Qué policy resolution gobernó cada acción.
 - Qué fuentes y SHAs se usaron.
 - Resultado, evidencia, readback y rollback/revert asociado.
-- Exportación reproducible sin secretos ni datos personales.
+- Exportación reproducible sin secretos y con identificadores personales
+  pseudónimos redactados o sujetos a acceso privilegiado.
 
 ## Límites de este diseño
 
