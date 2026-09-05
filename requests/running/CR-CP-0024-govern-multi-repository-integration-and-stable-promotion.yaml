@@ -10,9 +10,12 @@ started_at: "2026-08-30"
 requester: "4uentes"
 
 summary: >
-  Backend owner PR 32 is published and green without merge. Historical labels
-  remain provenance, CR-CP-0024 is the retroactive execution authority, and
-  image publication plus Infra mutation require the next explicit gate.
+  Backend owner PR 32 is integrated and its image is pinned in Infra. The new
+  Backend pod exposed a receipt-clamav capability failure while the previous
+  ready pod preserved availability. Infra PR 24 was published with green
+  checks, then merged outside the agent gate and applied by Argo CD autosync.
+  The CAP_CHOWN-only remediation was insufficient; availability remains
+  preserved by the previous pod while a second owner remediation is gated.
 
 control_plane_context:
   initiative_id: "INIT-CP-0003"
@@ -30,7 +33,7 @@ authorization:
   evidence: "evidence/requests/CR-CP-0024/auth-owner-execution-authorization-2026-08-30.md"
 
 execution:
-  current_unit: "backend-rollout-health-blocked-await-owner-disposition"
+  current_unit: "contain-ineffective-infra-remediation-and-plan-owner-follow-up"
   parallel_unit: "worktree-sanitization-disposition-and-selective-recovery"
   completed_units:
     - "publish-plan-and-migration-lifecycle"
@@ -48,6 +51,9 @@ execution:
     - "retire-thirteen-clean-cr-cp-0024-worktrees-after-readback"
     - "establish-ten-clean-current-feature-baselines"
     - "fast-forward-clean-core-and-chatbot-roots"
+    - "publish-cr-hpt-0024-infra-remediation-pr"
+    - "read-back-unexpected-infra-merge-and-automatic-gitops-sync"
+    - "confirm-cap-chown-remediation-insufficient"
   control_plane_mutation_allowed: true
   child_repo_mutation_allowed: false
   child_repo_mutation_targets: ["sst-bend", "sst-4uentes-infra"]
@@ -60,7 +66,69 @@ execution:
   deployment_allowed: false
   stable_branch_mutation_allowed: false
   jira_write_allowed: false
-  external_execution_gate: "Choose and authorize either a CR-HPT-0024 Infra remediation PR or a normal GitOps pin rollback; no other owner may advance while the new Backend pod is unhealthy."
+  external_execution_gate: "Authorize a second bounded CR-HPT-0024 owner remediation with entrypoint/configuration parity tests; manual cluster changes and terminal Jira transitions remain prohibited."
+
+infra_remediation_pr:
+  authorization_status: "consumed-by-branch-and-pr-publication"
+  approved_by: "4uentes"
+  approved_at: "2026-09-05"
+  approval_text: "ok avancemos con el siguiente gate"
+  repository: "afpogo/sst-4uentes-infra"
+  branch: "fix/CR-HPT-0024/clamav-volume-permissions"
+  base_ref: "develop"
+  base_sha: "7e488e542f0242fffcf9d1e71672e72c79bd3b39"
+  head_sha: "3526a1d336f635a48220048e0837e8e1efcce19a"
+  pull_request: 24
+  pull_request_url: "https://github.com/afpogo/sst-4uentes-infra/pull/24"
+  publication_readback_state: "OPEN"
+  publication_readback_mergeable: "MERGEABLE"
+  publication_readback_merge_state_status: "CLEAN"
+  current_state: "MERGED"
+  merged_at: "2026-09-05T03:21:42Z"
+  merged_by: "afpogo"
+  merge_sha: "55097809b069703af2049ab7769db6b83a95d021"
+  merge_executed_by_agent: false
+  merge_gate_status: "not-issued-before-observed-merge"
+  changed_files: 8
+  additions: 96
+  deletions: 2
+  checks:
+    validate_repository: "SUCCESS"
+    validate_desired_state: "SUCCESS"
+    validate_sst_bend_manifests: "SUCCESS"
+    validate_sst_fend_manifests: "SUCCESS"
+  post_merge_checks:
+    revision: "55097809b069703af2049ab7769db6b83a95d021"
+    validate_repository_run: 33941638588
+    validate_desired_state_run: 33941638539
+    validate_sst_bend_manifests_run: 33941638747
+    validate_sst_fend_manifests_run: 33941638540
+    conclusion: "SUCCESS"
+  jira:
+    issue: "HPT-16"
+    status: "En curso"
+    publication_comment_id: "10424"
+    merge_and_runtime_readback_comment_id: "10425"
+  automatic_gitops_observation:
+    application: "sst-app"
+    automated_prune: true
+    automated_self_heal: true
+    sync: "Synced"
+    revision: "55097809b069703af2049ab7769db6b83a95d021"
+    health: "Progressing"
+    operation_phase: "Succeeded"
+    operation_finished_at: "2026-09-05T03:22:27Z"
+    deployment: "sst-bend"
+    ready_replicas: 1
+    total_replicas: 2
+    unavailable_replicas: 1
+    new_pod_readiness: "1/2"
+    scanner_state: "CrashLoopBackOff"
+    scanner_error: "chown: cannot read directory '/var/lib/clamav': Permission denied"
+    availability: "preserved-by-previous-ready-pod"
+  remediation_result: "ineffective-cap-chown-insufficient-for-recursive-directory-traversal"
+  runtime_mutation_performed_by_agent: false
+  evidence: "evidence/requests/CR-CP-0024/infra-remediation-pr-publication-readback-2026-09-05.md"
 
 worktree_sanitization:
   policy_id: "worktree-request-lifecycle-policy"
@@ -195,9 +263,9 @@ required_checks:
   - "owner branch and pull request remote readback"
 
 decision:
-  status: "running-backend-integrated-rollout-health-blocked"
+  status: "running-infra-remediation-merged-autosynced-still-unhealthy"
   approver: "4uentes"
-  next_gate: "Authorize CR-HPT-0024 Infra remediation or normal GitOps rollback; keep the integration wave stopped."
+  next_gate: "Authorize a second bounded Infra owner remediation and its pre-publication parity test; do not mutate the cluster manually."
 
 evidence_refs:
   - "evidence/requests/CR-CP-0024/implementation-plan.md"
@@ -215,3 +283,4 @@ evidence_refs:
   - "evidence/requests/CR-CP-0024/backend-merge-rollout-and-health-readback-2026-08-31.md"
   - "evidence/requests/CR-CP-0024/worktree-sanitization-readiness-2026-09-03.yaml"
   - "evidence/requests/CR-CP-0024/worktree-sanitization-policy-application-2026-09-03.md"
+  - "evidence/requests/CR-CP-0024/infra-remediation-pr-publication-readback-2026-09-05.md"
