@@ -36,28 +36,30 @@ policy_application:
     - "Do not add capability links or claim runtime, M2M, deployment or secret readiness."
 
 authorization:
-  status: "persistent-owner-secret-generation-approved"
+  status: "stable-owner-custody-migration-approved"
   approved_by: "4uentes"
   approved_at: "2026-09-05"
-  approval_text: "ok avancemos"
+  approval_text: "perfecto, la correccion recomendada es optima, implementemos este plan."
   approval_consumed_for: >
-    Publish the persistent-generation gate and then execute the already merged
-    playbook once inside the retained owner worktree. Create only the four new
-    .secrets files; do not read existing secrets or configuration and do not
-    start runtime.
+    Publish the custody-correction gate, preserve the open documentation branch,
+    reconcile the clean owner root checkout to origin/main, copy the four secret
+    files without reading them, validate metadata, remove the worktree copies
+    and retire the clean owner worktree. Runtime remains excluded.
 
 execution:
-  current_unit: "persistent-owner-secret-generation"
+  current_unit: "stable-owner-custody-migration"
   completed_units:
     - "recover-canonical-inbox-identity"
     - "publish-current-onboarding-plan"
     - "publish-control-plane-discovery"
     - "publish-owner-local-secret-and-port-contract"
     - "read-back-owner-local-secret-and-port-contract"
+    - "generate-persistent-owner-secrets-in-retained-worktree"
   control_plane_exact_paths:
     - "requests/running/CR-CP-0021-onboard-4uentes-automation-n8n.yaml"
     - "evidence/requests/CR-CP-0021/automation-owner-local-secret-port-authorization-2026-09-05.md"
     - "evidence/requests/CR-CP-0021/persistent-secret-generation-authorization-2026-09-05.md"
+    - "evidence/requests/CR-CP-0021/stable-owner-secret-custody-migration-2026-09-05.md"
   owner_exact_paths:
     - ".gitignore"
     - ".env.example"
@@ -152,6 +154,41 @@ persistent_secret_generation_gate:
     Do not retire or prune this owner worktree while it is the only custody
     location for generated secrets. Relocation or rotation requires a separate
     approved gate.
+
+stable_custody_migration_gate:
+  status: "approved-pending-publication"
+  repository: "afpogo/4uentes-automation"
+  canonical_ref: "origin/main"
+  source: ".worktrees/cr-cp-0021-local-secrets-ports/.secrets"
+  target: ".secrets"
+  exact_secret_names:
+    - "n8n_encryption_key"
+    - "postgres_password"
+    - "pgadmin_default_password"
+    - "productivity_db_password"
+  required_sequence:
+    - "Verify root and source worktree state without reading secret content."
+    - "Verify docs/1-trunk-based-agent-flow is preserved remotely by open PR 2."
+    - "Switch the clean owner root to local main and fast-forward to origin/main."
+    - "Verify target .secrets is absent and ignored by the canonical checkout."
+    - "Copy exactly four files without content output and apply private ACLs."
+    - "Compare only names and byte lengths between source and target."
+    - "Remove exactly the four source files and their now-empty source directory."
+    - "Confirm the owner worktree is clean, unused and its commit is integrated."
+    - "Retire the owner worktree while preserving its branch."
+  stop_conditions:
+    - "owner root is dirty"
+    - "documentation branch is not remotely preserved"
+    - "local main cannot fast-forward to origin/main"
+    - "any target secret already exists"
+    - "source names or lengths differ from the exact contract"
+    - "a process, mount or container depends on the owner worktree"
+  forbidden_actions:
+    - "read or print secret values"
+    - "overwrite target secrets"
+    - "read or modify .env"
+    - "delete the documentation branch or owner implementation branch"
+    - "start, stop or restart runtime"
   exact_targets:
     - ".secrets/n8n_encryption_key"
     - ".secrets/postgres_password"
@@ -230,16 +267,17 @@ required_checks:
   - "origin/main integration readback"
 
 decision:
-  status: "persistent-secret-generation-approved-pending-publication"
+  status: "stable-custody-migration-approved-pending-publication"
   approver: "4uentes"
   next_gate: >
-    After publishing this gate, generate the four persistent local files once,
-    verify only metadata and record a sanitized result. Runtime startup remains
-    a separate explicit gate, as do productivity migration, capabilities, M2M,
-    Jira and infrastructure.
+    After publishing this gate, migrate custody to the canonical owner root,
+    retire the clean source worktree and record sanitized readback. Runtime
+    startup and .env reconciliation remain separate gates, as do productivity
+    migration, capabilities, M2M, Jira and infrastructure.
 
 evidence_refs:
   - "evidence/requests/CR-CP-0021/implementation-plan-2026-09-05.md"
   - "evidence/requests/CR-CP-0021/automation-owner-local-secret-port-authorization-2026-09-05.md"
   - "evidence/requests/CR-CP-0021/persistent-secret-generation-authorization-2026-09-05.md"
+  - "evidence/requests/CR-CP-0021/stable-owner-secret-custody-migration-2026-09-05.md"
   - "docs/cross-repo/local-development-secret-and-compose-governance.md"
