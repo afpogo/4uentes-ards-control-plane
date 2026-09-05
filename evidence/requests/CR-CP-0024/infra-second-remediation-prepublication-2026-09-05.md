@@ -65,6 +65,22 @@ registrar el inicio de este subgate falló porque Atlassian no pudo refrescar el
 OAuth y devolvió `unauthorized_client`; el comentario queda pendiente de
 reconciliación y Jira continúa siendo mirror, no autoridad.
 
-La autorización vigente permite publicar sólo la rama y abrir un PR. No permite
-merge, autosync intencional, `kubectl apply`, restart, rollback, cambios de
-Secrets ni transición terminal en Jira.
+La autorización vigente permitió publicar sólo la rama y abrir un PR. El
+readback remoto confirmó:
+
+- `develop` sin cambios en
+  `55097809b069703af2049ab7769db6b83a95d021`;
+- rama remota en `80eaf394218b0c45e5cb22dc661978116f86cf8a`;
+- [Infra PR #25](https://github.com/afpogo/sst-4uentes-infra/pull/25)
+  `OPEN`, `MERGEABLE`, `CLEAN` y sin auto-merge;
+- un commit, once archivos, 179 adiciones y 47 eliminaciones;
+- cuatro checks `SUCCESS`: repository, desired state y ambos validadores de
+  manifests SST.
+
+El OAuth de Atlassian falló en tres puntos: preflight, retry previo a publicar
+y escritura posterior a publicar. El comentario Jira queda pendiente y no se
+usó una vía alternativa que eludiera su autorización.
+
+El gate consumido no permite merge, autosync intencional, `kubectl apply`,
+restart, rollback, cambios de Secrets ni transición terminal en Jira. El merge
+del PR #25 requiere una autorización separada.

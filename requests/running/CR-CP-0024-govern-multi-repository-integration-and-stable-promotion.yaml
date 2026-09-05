@@ -33,7 +33,7 @@ authorization:
   evidence: "evidence/requests/CR-CP-0024/auth-owner-execution-authorization-2026-08-30.md"
 
 execution:
-  current_unit: "publish-validated-unprivileged-clamav-owner-remediation"
+  current_unit: "infra-second-remediation-pr-green-await-merge-authorization"
   parallel_unit: "worktree-sanitization-disposition-and-selective-recovery"
   completed_units:
     - "publish-plan-and-migration-lifecycle"
@@ -55,11 +55,12 @@ execution:
     - "read-back-unexpected-infra-merge-and-automatic-gitops-sync"
     - "confirm-cap-chown-remediation-insufficient"
     - "implement-and-validate-unprivileged-clamav-remediation"
+    - "publish-unprivileged-clamav-owner-pr"
   control_plane_mutation_allowed: true
-  child_repo_mutation_allowed: true
+  child_repo_mutation_allowed: false
   child_repo_mutation_targets: ["sst-bend", "sst-4uentes-infra"]
   child_repo_mutation_scope: "Merge validated sst-bend PR 32 at de19c14 and allow only its automatic Backend image publication plus the exact Backend pin update in Infra develop."
-  owner_pr_publication_allowed: true
+  owner_pr_publication_allowed: false
   owner_pr_merge_allowed: false
   image_publication_allowed: false
   infra_mutation_allowed: false
@@ -67,7 +68,7 @@ execution:
   deployment_allowed: false
   stable_branch_mutation_allowed: false
   jira_write_allowed: false
-  external_execution_gate: "Publish only fix/CR-HPT-0024/clamav-directory-traversal at owner commit 80eaf39 and open a PR to develop; merge, manual cluster changes and terminal Jira transitions remain prohibited."
+  external_execution_gate: "Authorize merge of Infra PR 25 separately; runtime observation and any manual cluster mutation remain separately gated."
 
 infra_remediation_pr:
   authorization_status: "consumed-by-branch-and-pr-publication"
@@ -132,7 +133,7 @@ infra_remediation_pr:
   evidence: "evidence/requests/CR-CP-0024/infra-remediation-pr-publication-readback-2026-09-05.md"
 
 infra_second_remediation:
-  authorization_status: "active-through-owner-pr-publication"
+  authorization_status: "consumed-by-owner-pr-publication"
   approved_by: "4uentes"
   approved_at: "2026-09-05"
   approval_text: "ok avancemos apegados a la politica del worktree"
@@ -146,7 +147,7 @@ infra_second_remediation:
   base_ref: "origin/develop"
   base_sha: "55097809b069703af2049ab7769db6b83a95d021"
   branch: "fix/CR-HPT-0024/clamav-directory-traversal"
-  local_head_sha: "80eaf39"
+  local_head_sha: "80eaf394218b0c45e5cb22dc661978116f86cf8a"
   design:
     image_entrypoint: "/init-unprivileged"
     uid_gid: "1000:1000"
@@ -170,15 +171,32 @@ infra_second_remediation:
     diff_check: "PASS"
     secret_scan: "PASS"
   publication:
-    branch_push: "pending"
-    pull_request: "pending"
+    branch_push: "published-and-read-back"
+    remote_head_sha: "80eaf394218b0c45e5cb22dc661978116f86cf8a"
+    develop_readback_sha: "55097809b069703af2049ab7769db6b83a95d021"
+    pull_request: 25
+    pull_request_url: "https://github.com/afpogo/sst-4uentes-infra/pull/25"
+    pull_request_state: "OPEN"
+    mergeable: "MERGEABLE"
+    merge_state_status: "CLEAN"
+    commits: 1
+    changed_files: 11
+    additions: 179
+    deletions: 47
+    auto_merge: false
+    checks:
+      validate_repository: "SUCCESS"
+      validate_desired_state: "SUCCESS"
+      validate_sst_bend_manifests: "SUCCESS"
+      validate_sst_fend_manifests: "SUCCESS"
     merge_allowed: false
     runtime_mutation_allowed: false
   jira:
     issue: "HPT-16"
     expected_status: "En curso"
-    start_comment: "pending-oauth-reconnection"
-    blocker: "Atlassian OAuth refresh returned unauthorized_client after the latest successful readback."
+    progress_comment: "pending-oauth-reconnection"
+    attempts: 3
+    blocker: "Atlassian OAuth refresh returned unauthorized_client on preflight, prepublication retry and postpublication write."
   evidence: "evidence/requests/CR-CP-0024/infra-second-remediation-prepublication-2026-09-05.md"
 
 worktree_sanitization:
@@ -314,9 +332,9 @@ required_checks:
   - "owner branch and pull request remote readback"
 
 decision:
-  status: "running-infra-second-remediation-validated-await-publication"
+  status: "running-infra-second-remediation-pr-green-await-merge-authorization"
   approver: "4uentes"
-  next_gate: "Publish the exact owner branch and open a PR without merge; reconcile the Jira progress comment when OAuth is available."
+  next_gate: "Reconnect Atlassian to mirror the published progress, then authorize merge of Infra PR 25 separately; keep runtime mutation prohibited."
 
 evidence_refs:
   - "evidence/requests/CR-CP-0024/implementation-plan.md"
