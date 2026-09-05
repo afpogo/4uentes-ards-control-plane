@@ -3,7 +3,7 @@ kind: "initiative"
 id: "INIT-SST-0010"
 title: "SST Personal Knowledge and Memory Workspace V1"
 status: "active"
-updated_at: "2026-08-28"
+updated_at: "2026-09-05"
 owner_repository: "4uentes-orchestor"
 objective: >
   Deliver the first governed SST personal knowledge and user-memory workspace:
@@ -76,6 +76,11 @@ source_evidence_refs:
   - "evidence/requests/CR-SST-0232/reservation-readback-2026-08-29.md"
   - "evidence/requests/CR-SST-0232/implementation-plan.md"
   - "evidence/requests/CR-SST-0233/implementation-plan.md"
+  - "evidence/requests/CR-SST-0232/owner-readonly-discovery-2026-08-29.md"
+  - "evidence/requests/CR-SST-0232/learning-workspace-source-contract-v1.yaml"
+  - "evidence/requests/CR-SST-0232/contract-validation-2026-08-29.md"
+  - "evidence/requests/CR-SST-0232/publication-authorization-2026-09-05.md"
+  - "docs/projects/sst/contrato-fuentes-learning-workspace-v1.md"
 model_refs:
   - "specs/initiatives/initiative-model.yaml"
   - "docs/requests/initiative-model.md"
@@ -205,14 +210,18 @@ article_processing_adoption:
   first_owner_manual_review: "passed-2026-08-29"
   next_gate: "publish and read back the CR-SST-0223 done lifecycle, retire its worktrees safely, then evaluate CR-SST-0224 as the next independent owner gate"
 learning_workspace_source_adoption:
-  status: "reserved-plan-publication-authorized"
+  status: "running-contract-prepared-awaiting-publication"
   request_id: "CR-SST-0232"
   predecessor_requests: ["CR-SST-0210", "CR-SST-0193", "CR-SST-0194", "CR-SST-0220", "CR-SST-0223"]
   source_kinds: ["manual_text", "article", "article_document", "agent_output"]
   reservation_publication: "merged-and-read-back-pr-191"
+  plan_publication: "merged-and-read-back-pr-192"
+  contract_version: "sst-learning-workspace-source-v1@1.0.0"
+  owner_readonly_discovery: "completed-on-locally-available-origin-develop-refs"
+  running_publication: "exact-git-batch-authorized-2026-09-05-pending-execution"
   owner_execution_status: "not-authorized"
   jira_status: "read-only-preflight-passed-no-mirror-write-authorized"
-  next_gate: "publish and read back the planned lifecycle before requesting the running contract gate"
+  next_gate: "execute the authorized control-plane commit, push, PR, merge and canonical readback batch"
 migration_baseline_reconciliation:
   status: "planned-publication-pending"
   request_id: "CR-SST-0233"
@@ -284,6 +293,7 @@ progress:
   active_requests:
     - "CR-SST-0219"
     - "CR-SST-0220"
+    - "CR-SST-0232"
   quarantined_request_artifacts:
     - "CR-SST-0202 local memory reconciliation artifacts collide with Jira SST-113"
   planned_requests:
@@ -295,7 +305,6 @@ progress:
     - "CR-SST-0225"
     - "CR-SST-0226"
     - "CR-SST-0227"
-    - "CR-SST-0232"
     - "CR-SST-0233"
   next_recommended_request: >
     Publish and read back the CR-SST-0223 done lifecycle, then retire its

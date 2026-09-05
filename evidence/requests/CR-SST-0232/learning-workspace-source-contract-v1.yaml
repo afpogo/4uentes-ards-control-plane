@@ -1,0 +1,202 @@
+schema_version: "1.0"
+kind: "cross_repo_product_contract"
+id: "sst-learning-workspace-source-v1"
+version: "1.0.0"
+status: "approved-for-owner-allocation-planning"
+updated_at: "2026-08-29"
+initiative_id: "INIT-SST-0010"
+request_id: "CR-SST-0232"
+purpose: >
+  Define how Learning Workspace identifies, authorizes and freezes manual text,
+  persisted articles, article documents and successful agent outputs before
+  preview, annotation and explicit acceptance as LearningContext.
+
+authority:
+  cross_repo_contract_and_lifecycle: "4uentes-orchestor"
+  source_authorization_resolution_snapshot_and_learning_context: "sst-bend"
+  source_selection_preview_and_decision_experience: "sst-fend through the authorized BFF boundary"
+  article_and_article_document_authority: "sst-bend"
+  article_processing_result_authority: "sst-bend under CR-SST-0220 and CR-SST-0223"
+  canonical_memory_authority: "sst-bend under CR-SST-0192 and CR-SST-0194"
+  identity_scope_predecessor: "CR-SST-0210"
+  explicit_denials:
+    - "SOURCE_DESCRIPTOR is neither a source body for persisted kinds nor an authorization grant."
+    - "The browser cannot resolve or authorize owner-persisted private content."
+    - "LearningContext acceptance cannot create or accept UserMemory."
+    - "This contract does not authorize owner repository or runtime mutation."
+
+source_descriptor:
+  kind: "discriminated_union"
+  contract_version: "sst-learning-source-descriptor.v1"
+  common_required_fields: ["contract_version", "source_kind", "client_source_id", "idempotency_key"]
+  common_optional_fields: ["expected_version", "expected_content_hash", "display_title"]
+  common_rules:
+    - "client_source_id is a caller-stable correlation identity, not an owner-object identity."
+    - "idempotency_key is scoped to the authenticated principal, source kind and normalized descriptor."
+    - "expected_content_hash uses lowercase SHA-256 hexadecimal when supplied."
+    - "Unknown fields fail validation unless an owner contract explicitly declares a compatibility adapter."
+  variants:
+    manual_text:
+      required_fields: ["text"]
+      optional_fields: ["display_title"]
+      limits: {media_type: "text/plain; charset=utf-8", max_utf8_bytes: 524288}
+      rules:
+        - "The authenticated user explicitly supplies the text."
+        - "The resolver computes the authoritative version and content hash."
+    article:
+      required_fields: ["article_id"]
+      optional_fields: ["expected_version", "expected_content_hash"]
+      prohibited_fields: ["text", "html", "article_body"]
+    article_document:
+      required_fields: ["article_id", "document_id"]
+      optional_fields: ["expected_version", "expected_content_hash"]
+      prohibited_fields: ["text", "binary", "document_body"]
+    agent_output:
+      required_fields: ["article_id", "article_processing_result_id"]
+      optional_fields: ["derivation_run_id", "expected_version", "expected_content_hash"]
+      compatibility_reference_fields: ["document_id", "agent_job_id"]
+      rules:
+        - "The canonical reference resolves exactly one successful immutable ARTICLE_PROCESSING_RESULT."
+        - "Legacy document or agent-job references may be accepted only by a server-side adapter that normalizes them to one stable result."
+        - "Incomplete, failed, cancelled or superseded processing does not resolve as importable output."
+
+source_resolver:
+  owner: "sst-bend"
+  inputs: ["authenticated_principal_context", "SOURCE_DESCRIPTOR"]
+  output: "LEARNING_SOURCE_SNAPSHOT"
+  ordered_rules:
+    - "Reconstruct tenant_id, account_id, user_id and application_id from trusted server context."
+    - "Validate descriptor shape and normalize only declared compatibility fields."
+    - "Authorize the referenced owner object and its relationship chain before reading private content."
+    - "Resolve one stable source version and compute or verify its content hash."
+    - "Freeze bounded content and sanitized provenance into one immutable snapshot."
+    - "Return only the review representation and metadata allowed by the Learning Workspace owner contract."
+  fail_closed_rules:
+    - "A missing, deleted, unavailable, cross-scope or unauthorized reference produces no snapshot."
+    - "A supplied expected version or hash mismatch produces no snapshot."
+    - "Authorization failures do not disclose whether a cross-scope source exists."
+    - "The resolver never fetches arbitrary URLs or consumes credentials in V1."
+
+learning_source_snapshot:
+  immutability: "append-only; never rewritten after creation"
+  required_fields:
+    - "learning_source_snapshot_id"
+    - "source_kind"
+    - "owner_reference"
+    - "source_version"
+    - "content_hash"
+    - "content_media_type"
+    - "content_utf8_bytes"
+    - "captured_at"
+    - "principal_scope_fingerprint"
+    - "provenance_refs"
+  rules:
+    - "content_hash is computed from the normalized bounded content consumed by preview."
+    - "owner_reference contains stable identifiers, never private source bodies or credentials."
+    - "provenance_refs identify the article, document, processing result and derivation run when applicable."
+    - "A later owner-source change creates a new snapshot; it never mutates an existing preview or accepted context."
+    - "Operational responses and logs expose metadata only; raw content is returned solely through the authorized review contract."
+
+lifecycle:
+  statuses: ["requested", "resolving", "resolved", "previewed", "accepted", "rejected", "failed"]
+  allowed_transitions:
+    requested: ["resolving", "failed"]
+    resolving: ["resolved", "failed"]
+    resolved: ["previewed", "failed"]
+    previewed: ["accepted", "rejected", "failed"]
+    accepted: []
+    rejected: []
+    failed: []
+  terminal_rules:
+    - "accepted and rejected decisions are immutable for that preview identity."
+    - "Retry after failure creates or reuses an idempotent resolution attempt; it does not mutate terminal history."
+
+preview_and_decision:
+  preview_identity: >
+    Deterministic over principal scope, learning_source_snapshot_id, snapshot
+    content hash, normalized annotations and contract version.
+  preview_rule: "Preview is review-only and cannot appear in accepted LearningContext."
+  accept_rule: "Accept persists LearningContext references to the exact snapshot and accepted annotations."
+  reject_rule: "Reject records the decision without promoting content to accepted context."
+  staleness_rule: >
+    Once a snapshot exists, later source changes do not invalidate its evidence;
+    requesting the current owner version creates a new snapshot and preview.
+
+tag_boundaries:
+  order: ["resolve_snapshot", "preview_content", "apply_learning_annotations", "explicit_accept_or_reject"]
+  rules:
+    - "ArticleTag describes the canonical article and remains owned by the article contract."
+    - "Learning contentTags classify selected snapshot ranges and remain previewed until explicit acceptance."
+    - "TagDefinition is not auto-created by resolution, preview or acceptance."
+    - "Memory classification occurs only inside a separate UserMemoryProposal workflow."
+
+memory_boundary:
+  learning_context_acceptance_effect: "accepted LearningContext only"
+  prohibited_effects: ["create UserMemory", "accept UserMemory", "publish ArticleSummary", "modify source article"]
+  optional_future_action: >
+    A separately authorized user action may create UserMemoryProposal in
+    needs_review with snapshot provenance through the canonical memory port.
+
+privacy_and_observability:
+  allowed_metadata: ["correlation_id", "source_kind", "snapshot_id", "owner_ids", "source_version", "content_hash", "byte_count", "status", "duration", "sanitized_failure_code"]
+  prohibited_metadata: ["raw_private_content", "selected_text", "credentials", "secret_values", "tokens", "cookies", "private_urls", "raw_agent_prompt", "raw_provider_response"]
+  retention_rule: "Snapshot and accepted-context retention must be defined by the Bend owner slice before runtime adoption."
+
+failure_contract:
+  sanitized_codes:
+    - "source_not_found"
+    - "source_not_ready"
+    - "source_unauthorized"
+    - "source_scope_mismatch"
+    - "source_version_conflict"
+    - "source_hash_mismatch"
+    - "source_deleted"
+    - "source_kind_unsupported"
+    - "source_reference_invalid"
+    - "source_too_large"
+  disclosure_rule: "Unauthorized and cross-scope responses share a non-enumerating external shape."
+
+compatibility:
+  current_preview_contract: "sst-learning-workspace.preview.v1"
+  transition_rules:
+    - "Existing standalone manual_text sourceText maps to the manual_text descriptor text field."
+    - "Existing sourceType=article plus originArticleId and sourceText is transitional; the owner adapter must prefer article_id and ignore caller content after authoritative resolution."
+    - "Existing article_draft remains manual_text until the article has a persisted owner identity."
+    - "Existing sourceRef remains display/correlation metadata unless it is normalized into a declared owner reference."
+    - "The transition adapter must emit deprecation observability without logging source bodies."
+
+secret_boundary:
+  v1_status: "excluded"
+  prohibited: ["secret values in descriptors", "browser-visible credentials", "credentialed source acquisition", "secret values in snapshots", "secret values in memory, logs, Jira or maps"]
+  future_extension: >
+    A separate security request may introduce opaque SecretRef resolution on
+    the server, with least privilege and no value disclosure to Learning Workspace.
+
+minimum_validation:
+  positive:
+    - "Manual text resolves once and repeated idempotent requests return the same resolution identity."
+    - "An authorized article resolves from article_id without caller-supplied body content."
+    - "An article document preserves both article and document provenance."
+    - "A successful agent output resolves from article_processing_result_id and preserves derivation provenance."
+    - "Learning annotations and accept/reject operate on the exact immutable snapshot."
+  negative:
+    - "Cross-tenant, cross-account, cross-user and cross-application references fail closed."
+    - "A changed expected version or content hash cannot silently resolve newer content."
+    - "A failed or incomplete agent run cannot be imported as agent_output."
+    - "Caller-supplied article or agent-output bodies cannot override owner content."
+    - "Acceptance cannot create TagDefinition or accepted UserMemory."
+    - "Secret values cannot enter descriptors, snapshots, logs or evidence."
+
+owner_adoption_sequence:
+  - {order: 1, owner: "sst-bend", responsibility: "Publish and implement descriptor validation, resolver authorization, immutable snapshots and compatibility adapters.", request_id: "TODO-after-contract-publication"}
+  - {order: 2, owner: "authorized BFF boundary", responsibility: "Relay the versioned contract without authorizing or resolving private sources.", request_id: "TODO-after-bend-capability"}
+  - {order: 3, owner: "sst-fend", responsibility: "Expose a source inbox, stable reference selection, snapshot identity, preview state and separate memory-proposal action.", request_id: "TODO-after-bend-capability"}
+  - {order: 4, owner: "end-to-end validation", responsibility: "Prove all source kinds, isolation, stale-source behavior, tags and memory separation through the user-visible flow.", request_id: "TODO-after-owner-adoption"}
+
+out_of_scope_v1:
+  - "Secret-backed or credentialed source acquisition"
+  - "Arbitrary URL fetch or filesystem traversal"
+  - "Automatic article publication, TagDefinition creation or memory acceptance"
+  - "Owner repository implementation under CR-SST-0232"
+  - "Agent execution or reprocessing inside Learning Workspace"
+  - "Cross-user, cross-account or cross-application source sharing"

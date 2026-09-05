@@ -58,6 +58,7 @@ features:
   - "state/features/sst-stakeholder-metrics-rag.current.yaml"
   - "state/features/paragraph-sequential-derivation.current.yaml"
   - "state/features/article-agent-processing.current.yaml"
+  - "state/features/learning-workspace-source-contract.current.yaml"
 bugfixes:
   - "state/bugfixes/login-504-proxy-timeout.current.yaml"
   - "state/bugfixes/sst-bend-emfile-watchers.current.yaml"
