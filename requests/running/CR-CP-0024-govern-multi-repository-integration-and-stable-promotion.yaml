@@ -41,7 +41,7 @@ authorization:
   evidence: "evidence/requests/CR-CP-0024/auth-owner-execution-authorization-2026-08-30.md"
 
 execution:
-  current_unit: "infra-human-docs-authority-clarification-authorized"
+  current_unit: "infra-human-docs-authority-clarification-await-new-pr-authorization"
   parallel_unit: "worktree-sanitization-disposition-and-selective-recovery"
   completed_units:
     - "publish-plan-and-migration-lifecycle"
@@ -72,10 +72,10 @@ execution:
     - "publish-infra-human-documentation-owner-pr"
     - "reconcile-cr-sst-0233-retroactive-running-lifecycle"
   control_plane_mutation_allowed: true
-  child_repo_mutation_allowed: true
+  child_repo_mutation_allowed: false
   child_repo_mutation_targets: ["sst-bend", "sst-4uentes-infra"]
   child_repo_mutation_scope: "Amend the existing CR-HPT-0024 Infra documentation branch and PR 26 so Learning, playbooks, runbooks and their validator are explicitly scoped as owner-local conventions; link control-plane rollout governance and leave formal knowledge-to-execution policy adoption pending a published versioned source."
-  owner_pr_publication_allowed: true
+  owner_pr_publication_allowed: false
   owner_pr_merge_allowed: false
   image_publication_allowed: false
   infra_mutation_allowed: false
@@ -83,7 +83,7 @@ execution:
   deployment_allowed: false
   stable_branch_mutation_allowed: false
   jira_write_allowed: false
-  external_execution_gate: "Authorization is limited to updating the existing Infra branch and PR 26 with the documentation-authority clarification. Merge, runtime mutation, stable-branch mutation and Jira closure remain prohibited."
+  external_execution_gate: "PR 26 merged externally at its prior head before the clarification push. Opening a new corrective PR from the existing branch requires a separate authorization; merge, runtime mutation, stable-branch mutation and Jira closure remain prohibited."
 
 infra_remediation_pr:
   authorization_status: "consumed-by-branch-and-pr-publication"
@@ -338,6 +338,31 @@ infra_second_remediation:
       runtime_mutation_allowed: false
       runtime_readback: "unavailable-due-local-kubernetes-api-tls-handshake-timeout"
       runtime_inference: "develop unchanged; no GitOps revision change caused by this publication"
+    authority_clarification:
+      authorization_status: "consumed-by-owner-commit-and-branch-push-before-unexpected-merge-readback"
+      control_plane_authorization_commit: "ed5f3cc"
+      owner_commit: "83bac64d5a7323276af4b691b666890c9cda81fe"
+      changed_files: 5
+      owner_full_check: "PASS"
+      focused_human_docs_check: "PASS"
+      branch_push: "published-over-https"
+      observed_pull_request_state: "MERGED"
+      observed_pull_request_head: "67c4874b2404235d70dc56ce143343954f5c707e"
+      observed_merge_commit: "4ab3e7e9f0869c7c035d75a85149977994aa0af9"
+      observed_merged_at: "2026-09-05T18:36:52Z"
+      observed_merged_by: "afpogo"
+      merge_executed_by_agent: false
+      merge_authorized: false
+      remote_branch_head: "83bac64d5a7323276af4b691b666890c9cda81fe"
+      develop_head: "4ab3e7e9f0869c7c035d75a85149977994aa0af9"
+      compare_to_develop:
+        status: "diverged"
+        ahead_by: 1
+        behind_by: 1
+        changed_files: 5
+        runtime_files_changed: 0
+      disposition: "Preserve the branch and owner commit; require a new authorization before opening a corrective PR."
+      evidence: "evidence/requests/CR-CP-0024/infra-pr26-unexpected-merge-and-adoption-disposition-2026-09-05.md"
   jira:
     issue: "HPT-16"
     expected_status: "En curso"
@@ -479,9 +504,9 @@ required_checks:
   - "owner branch and pull request remote readback"
 
 decision:
-  status: "running-infra-human-documentation-authority-clarification-authorized"
+  status: "running-infra-human-documentation-authority-clarification-await-new-pr-authorization"
   approver: "4uentes"
-  next_gate: "Amend and validate Infra PR 26 at the authorized documentation-only scope; merge and runtime mutation remain prohibited."
+  next_gate: "Authorize opening one corrective Infra PR from the preserved branch at 83bac64; merge and runtime mutation remain prohibited."
 
 program_progress:
   status: "current-derived-view"
@@ -522,5 +547,6 @@ evidence_refs:
   - "evidence/requests/CR-CP-0024/infra-human-documentation-foundation-2026-09-05.md"
   - "evidence/requests/CR-CP-0024/infra-human-documentation-publication-authorization-2026-09-05.md"
   - "evidence/requests/CR-CP-0024/infra-documentation-authority-clarification-authorization-2026-09-05.md"
+  - "evidence/requests/CR-CP-0024/infra-pr26-unexpected-merge-and-adoption-disposition-2026-09-05.md"
   - "requests/running/CR-SST-0233-reconcile-fresh-database-migration-baseline.yaml"
   - "evidence/requests/CR-SST-0233/retroactive-running-reconciliation-2026-09-05.md"
