@@ -1,0 +1,111 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-CP-0028"
+title: "Promote knowledge-to-execution documentation policy to Core"
+status: "planned"
+source_request: "requests/inbox/CR-CP-0028-promote-knowledge-to-execution-documentation-policy-to-core.yaml"
+created_at: "2026-09-05"
+requester: "4uentes"
+
+summary: >
+  Prepare the owner handoff to promote the local knowledge-to-execution policy
+  into 4uentes-ards-core as core-profile-scoped. Core mutation remains blocked
+  until the Core owner explicitly accepts this request and works in its own
+  isolated worktree.
+
+control_plane_context:
+  initiative_id: "INIT-CP-0003"
+  predecessor_requests: ["CR-CP-0026", "CR-CP-0027"]
+  source_repo: "4uentes-orchestor"
+  source_revision: "7a8ea96"
+  source_policy_path: "docs/policies/knowledge-to-execution-documentation-policy.md"
+  source_policy_class: "origin-repo-policy"
+  target_repo: "4uentes-ards-core"
+  target_base_ref: "develop@ded8c466dc3c02a02f7b24642ce99de6cebcc91c"
+  target_policy_class: "core-profile-scoped"
+
+impact_analysis:
+  required: true
+  affected_services:
+    - service_id: "4uentes-orchestor"
+      via: "source policy, local registry, policy links and promotion handoff"
+    - service_id: "4uentes-ards-core"
+      via: "future canonical policy registry, human policy document and source validation"
+    - service_id: "sst-4uentes-infra"
+      via: "existing origin-policy adoption remains pinned; Core revision adoption is a later request"
+  affected_ards:
+    - "policy-governance"
+    - "owner-documentation"
+    - "child-policy-adoption"
+    - "source-validation"
+
+risk:
+  level: "high"
+  score: 8
+  drivers:
+    - "shared canonical policy changes future child-repo semantics"
+    - "Core must validate source provenance before accepting canon"
+    - "existing Infra adoption must not be silently relabeled as Core adoption"
+
+required_context:
+  - "4uentes-orchestor@7a8ea96: docs/policies/knowledge-to-execution-documentation-policy.md"
+  - "4uentes-orchestor: specs/integration/policies.yaml"
+  - "4uentes-orchestor: evidence/requests/CR-CP-0026/"
+  - "4uentes-orchestor: requests/done/CR-CP-0027-adopt-knowledge-to-execution-policy-in-sst-infra.yaml"
+  - "4uentes-ards-core: AGENTS.md"
+  - "4uentes-ards-core: governance/source-validation.md"
+  - "4uentes-ards-core: specs/integration/policies.yaml"
+  - "4uentes-ards-core: docs/policies/README.md"
+  - "4uentes-ards-core: docs/reference-sources.md"
+  - "4uentes-ards-core: templates/specs/policies/policy-adoption.template.yaml"
+
+core_owner_handoff:
+  owner_repo: "4uentes-ards-core"
+  owner_base_ref: "develop@ded8c466dc3c02a02f7b24642ce99de6cebcc91c"
+  required_owner_files:
+    - "governance/source-validation.md"
+    - "docs/reference-sources.md"
+    - "docs/policies/knowledge-to-execution-documentation-policy.md"
+    - "docs/policies/README.md"
+    - "specs/integration/policies.yaml"
+  proposed_canonical_shape:
+    policy_id: "knowledge-to-execution-documentation-policy"
+    policy_class: "core-profile-scoped"
+    canonical_owner: "4uentes-ards-core"
+    source_provenance: "4uentes-orchestor@7a8ea96 / CR-CP-0026"
+    adoption_artifact: "policy_adoption_manifest or policy_exception_manifest"
+    required_profiles: ["control-plane"]
+    optional_profiles: ["child-repo", "infra-gitops", "backend-api", "backend-bff", "frontend-web", "frontend-extension"]
+  acceptance_criteria:
+    - "Core owner validates source provenance and records it in Core-owned source validation artifacts."
+    - "Core policy text preserves Learning, playbook, runbook, technical authority, external authorization and governed feedback boundaries."
+    - "Core registry marks the policy core-profile-scoped without reclassifying existing local history."
+    - "Core validation passes in the Core owner worktree."
+    - "A Core PR is merged and read back before any follow-up child migration."
+    - "Infra remains on its origin-policy manifest until a separate adoption or exception request chooses the Core revision."
+
+execution:
+  requires_human_approval: true
+  approval_source: "User authorized control-plane planning only on 2026-09-05."
+  control_plane_mutation_allowed: true
+  core_repo_mutation_allowed: false
+  child_repo_mutation_allowed: false
+  runtime_mutation_allowed: false
+  jira_write_allowed: false
+  branch_strategy: "separate-core-owner-worktree-after-approval"
+  implementation_boundary: >
+    This plan may update only control-plane request, policy-link and handoff
+    evidence. It must not edit 4uentes-ards-core, Infra or any runtime repo.
+
+validation:
+  required_checks:
+    - "4uentes-orchestor: npm run check"
+    - "Core owner: npm run check after accepted handoff"
+    - "Core owner: source validation, policy registry and link checks"
+    - "remote merge/readback before terminal Core closure"
+
+decision:
+  status: "planned-awaiting-core-owner-approval"
+  approver: "4uentes"
+  blocker: "Core owner approval and Core-owned execution worktree"
+  next_gate: "Core owner accepts CR-CP-0028 and authorizes an isolated Core implementation"
