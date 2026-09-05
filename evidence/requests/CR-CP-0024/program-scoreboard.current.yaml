@@ -8,7 +8,7 @@ observed_at: "2026-09-05"
 authority:
   repository: "afpogo/4uentes-ards-control-plane"
   ref: "origin/main"
-  sha: "4d661d440db2688d3b2b98fa97fe46bc80a4867a"
+  sha: "b8a81958512a128a5000ab267dcb74b0332c6414"
   lifecycle_ref: "requests/running/CR-CP-0024-govern-multi-repository-integration-and-stable-promotion.yaml"
   plan_ref: "evidence/requests/CR-CP-0024/implementation-plan.md"
   disposition_ref: "evidence/requests/CR-CP-0024/promotion-disposition-manifest.yaml"
@@ -35,9 +35,9 @@ calculation:
 summary:
   current_phase: "phase-1-owner-development-integration"
   overall_status: "blocked"
-  earned_points: 44
+  earned_points: 46
   total_points: 100
-  progress_percent: 44
+  progress_percent: 46
   phase_1_status: "active"
   phase_2_status: "not-started"
   phase_2_progress_percent: 0
@@ -45,7 +45,6 @@ summary:
   clean_seed_readiness_percent: 100
   historical_root_sanitization_percent: 20
   blocking_checkpoint_ids:
-    - "migration-lifecycle-running"
     - "backend-rollout-healthy"
     - "infra-rollout-healthy"
     - "portfolio-feature-readiness"
@@ -62,8 +61,8 @@ phases:
   - id: "governance-and-control-plane"
     order: 0
     weight_points: 15
-    earned_points: 13
-    status: "blocked"
+    earned_points: 15
+    status: "satisfied"
     checkpoints:
       - {id: "plan-and-running-lifecycle", points: 4, status: "satisfied", earned_points: 4}
       - {id: "initial-disposition-manifest", points: 3, status: "satisfied", earned_points: 3}
@@ -71,9 +70,11 @@ phases:
       - {id: "control-plane-validation-baseline", points: 2, status: "satisfied", earned_points: 2}
       - id: "migration-lifecycle-running"
         points: 2
-        status: "blocked"
-        earned_points: 0
-        blocker_ids: ["cr-sst-0233-lifecycle-gap"]
+        status: "satisfied"
+        earned_points: 2
+        evidence_refs:
+          - "requests/running/CR-SST-0233-reconcile-fresh-database-migration-baseline.yaml"
+          - "evidence/requests/CR-SST-0233/retroactive-running-reconciliation-2026-09-05.md"
 
   - id: "owner-development-integration"
     order: 1
@@ -201,13 +202,6 @@ blockers:
       Infra PR 25 removed the prior permission failure, but the replacement
       receipt-clamav container was observed OOMKilled during signature update.
     blocks: ["backend-rollout-healthy", "infra-rollout-healthy", "global-gate-and-stable-promotion"]
-  - id: "cr-sst-0233-lifecycle-gap"
-    severity: "governance"
-    status: "open"
-    description: >
-      CR-SST-0233 remains in inbox and planned only even though Backend PR 32
-      contains work attributed to its migration correction.
-    blocks: ["migration-lifecycle-running", "global-gate-and-stable-promotion"]
   - id: "portfolio-readiness-gaps"
     severity: "owner"
     status: "open"
@@ -225,9 +219,17 @@ drift:
     - "Automation discovery does not create an eleventh clean feature seed without a separate readback."
     - "Later Portfolio and Automation work advanced while the lifecycle external gate said no other owner could advance; this is recorded as governance drift, not retroactive authorization."
 
+resolved_gaps:
+  - id: "cr-sst-0233-lifecycle-gap"
+    status: "reconciled-retroactively"
+    evidence_refs:
+      - "requests/running/CR-SST-0233-reconcile-fresh-database-migration-baseline.yaml"
+      - "evidence/requests/CR-SST-0233/retroactive-running-reconciliation-2026-09-05.md"
+
 evidence_refs:
   - "evidence/requests/CR-CP-0024/program-scoreboard.md"
   - "evidence/requests/CR-CP-0024/promotion-disposition-manifest.yaml"
   - "evidence/requests/CR-CP-0024/worktree-sanitization-readiness-2026-09-03.yaml"
   - "requests/running/CR-4UENTES-0039-portfolio-publication-base-reconciliation.yaml"
   - "requests/running/CR-CP-0021-onboard-4uentes-automation-n8n.yaml"
+  - "requests/running/CR-SST-0233-reconcile-fresh-database-migration-baseline.yaml"
