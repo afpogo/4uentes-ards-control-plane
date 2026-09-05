@@ -1,0 +1,243 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-CP-0021"
+title: "Onboard the shared 4uentes automation service powered by n8n"
+status: "planned"
+source_request: "requests/inbox/CR-CP-0021-onboard-4uentes-automation-n8n.yaml"
+created_at: "2026-08-23"
+planned_at: "2026-09-05"
+requester: "4uentes"
+
+summary: >
+  Reconcile the existing private 4uentes-automation owner repository with the
+  canonical control plane through request-scoped slices. Publish discovery
+  before owner mutation, replace hard-coded local port and environment-secret
+  handling only under a later owner gate, and revalidate historical M2M claims
+  before any capability or runtime status is adopted.
+
+control_plane_context:
+  initiative_id: "INIT-HPT-0002"
+  coordinating_request: "CR-HPT-0027"
+  reservation_pull_request: 216
+  reservation_merge_sha: "2b56b79adbbafb760d562a30a6fee744bf961ec3"
+  planning_base_ref: "origin/main"
+  planning_base_sha: "c2c270a54f4e97d144727e0adf41590da444a13d"
+  implementation_plan_ref: "evidence/requests/CR-CP-0021/implementation-plan-2026-09-05.md"
+
+policy_application:
+  base_policy: "worktree-request-lifecycle-policy"
+  formal_policy_overlay_status: "absent"
+  policy_resolution_manifest_status: "not-implemented"
+  dynamic_runtime_ref: "requests/done/CR-CP-0025-dynamic-policy-lifecycle-and-administration-console.yaml"
+  dynamic_runtime_status: "not-implemented-separate-cr-required"
+  operational_control_ref: "evidence/requests/CR-CP-0024/worktree-sanitization-readiness-2026-09-03.yaml"
+  resolution_mode: "manual-canonical-policy-and-operational-review"
+  effective_rules:
+    - "Preserve the legacy worktree as a read-only historical source."
+    - "Use one clean request-scoped worktree from a refreshed canonical ref for each approved mutation slice."
+    - "Do not bulk merge or bulk cherry-pick the legacy snapshot."
+    - "Do not retire dirty, ambiguous or unreviewed historical checkouts."
+    - "Re-resolve canonical policy and operational controls before every future mutation and merge."
+
+owner_provenance:
+  logical_service_id: "4uentes-automation"
+  implementation: "n8n"
+  repository: "afpogo/4uentes-automation"
+  visibility: "private"
+  canonical_branch: "main"
+  observed_main_sha: "32055ab77f0c1b898eb77a6fe232b965c54f137d"
+  observed_working_branch: "docs/1-trunk-based-agent-flow"
+  observed_working_sha: "bfd206e46757388435023692c5d96d52b1a51946"
+  remote_readback: "passed"
+  root_status: "clean"
+  local_binding_name: "n8n-local"
+  decision: >
+    Reconcile the existing private repository; do not create another owner
+    repository and do not treat the local directory name as the stable service
+    identity. Future owner work starts from refreshed owner origin/main in its
+    own worktree, never from the current documentation branch or persistent
+    runtime directories.
+
+owner_baseline_observation:
+  authority: "owner repository"
+  observed_on_owner_main:
+    - "AGENTS.md"
+    - ".env.example"
+    - ".gitignore"
+    - "docker-compose.yml"
+    - "docs/00-overview.md"
+    - "scripts/check.ps1"
+    - "specs/ards/contract-binding.yaml"
+    - "specs/integration/control-plane-link.yaml"
+    - "specs/integration/policies.yaml"
+  advisory_claims_requiring_revalidation:
+    - "implemented-local control-plane link status"
+    - "historical automation M2M progress"
+    - "historical owner and cross-repository validation evidence"
+  adoption_rule: >
+    Owner files are valid discovery inputs, but the control plane must not mark
+    catalog, capabilities, M2M, runtime or deployment as implemented solely
+    from advisory owner status hints.
+
+proposed_identity:
+  service_id: "4uentes-automation"
+  kind: "automation-runtime"
+  ards_profile: "backend-api"
+  implementation: "n8n"
+  shared: true
+  initial_solution_id: "finanzas-personales"
+  initial_control_plane_status: "discovered"
+  identity_rule: "The logical identity remains stable if the automation engine changes."
+
+trust_boundary:
+  initial_rule: "4uentes-automation must not call Phinance directly."
+  preferred_future_direction: "sst-bend to authenticated idempotent automation webhook"
+  reverse_direction_status: "deferred-pending-capability-and-m2m-revalidation"
+  m2m_status: "historical-owner-claims-observed-not-canonical"
+  prohibited:
+    - "reuse chatbot, SST, user-session or existing local credentials"
+    - "direct Phinance database or API access"
+    - "wildcard scopes or composite principals"
+    - "runtime activation from documentation-only evidence"
+
+local_development_observation:
+  compose_binding: "loopback"
+  current_ports:
+    n8n: "127.0.0.1:5678"
+    pgadmin: "127.0.0.1:5050"
+    postgres: "internal-only"
+  current_secret_transport: "environment variables loaded from ignored .env"
+  env_content_read: false
+  persistent_data_inspected: false
+  current_collision_result: >
+    No collision exists with the adopted SST defaults: SST pgAdmin uses 5051,
+    SST API uses 3005, SST scrapper uses 3200 and Automation PostgreSQL is not
+    published. Hard-coded Automation bindings still require parameterization
+    to support multiple local instances and future allocations safely.
+
+planned_local_contract:
+  host_port_variables:
+    n8n: {name: "N8N_HOST_PORT", default: 5678, binding: "loopback"}
+    pgadmin: {name: "N8N_PGADMIN_HOST_PORT", default: 5050, binding: "loopback"}
+  secret_classes_for_future_generation:
+    - "N8N_ENCRYPTION_KEY"
+    - "POSTGRES_PASSWORD"
+    - "PGADMIN_DEFAULT_PASSWORD"
+    - "PRODUCTIVITY_DB_PASSWORD"
+  non_secret_configuration:
+    - "POSTGRES_USER"
+    - "POSTGRES_DB"
+    - "PGADMIN_DEFAULT_EMAIL"
+  excluded_existing_credentials:
+    - "N8N_SMTP_PASS"
+    - "all existing .env values"
+    - "all n8n credential records and credential IDs"
+  owner_playbook_requirements:
+    - "CSPRNG generation without stdout secret values"
+    - "ignored owner-local files with restrictive ACLs"
+    - "no overwrite by default"
+    - "loopback port preflight before Compose start"
+    - "sanitized Compose render validation"
+    - "database-aware rotation with separately authorized runtime steps"
+    - "no reuse or transport to Kubernetes, GitHub Actions or another owner"
+
+atomized_execution:
+  - order: 1
+    id: "publish-current-plan"
+    objective: "Publish this planned lifecycle and evidence only."
+    mutation_scope: "4uentes-orchestor planning artifacts"
+    risk: "medium"
+    validation: "git diff --check, secret-safe review, npm.cmd run check, PR merge and origin/main readback"
+  - order: 2
+    id: "control-plane-discovery"
+    objective: "Register the logical service, initial solution membership and a discovered onboarding state."
+    mutation_scope: "future separately approved control-plane slice"
+    risk: "medium"
+    validation: "catalog, solution, state, owner-documentation and full control-plane checks"
+  - order: 3
+    id: "owner-local-secret-and-port-contract"
+    objective: "Adopt parameterized ports and owner-local secret generation without starting runtime."
+    mutation_scope: "future separately approved 4uentes-automation owner slice"
+    risk: "high"
+    validation: "owner full check, synthetic generation, static secret scan and Compose config without runtime"
+  - order: 4
+    id: "capability-and-m2m-revalidation"
+    objective: "Revalidate webhook, Auth grant and SST consumer contracts from current owner refs."
+    mutation_scope: "future independent owner requests for Automation, Auth and SST"
+    risk: "high"
+    validation: "exact scopes, negative token matrix, protected-route coverage and owner documentation"
+  - order: 5
+    id: "synthetic-runtime-pilot"
+    objective: "Run a reversible automation scenario with synthetic data."
+    mutation_scope: "future explicitly authorized development runtime"
+    risk: "high"
+    validation: "isolation, idempotency, redaction, rollback and sanitized runtime evidence"
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "private owner repository reconciliation"
+    - "financial trust boundary"
+    - "local secret custody and persistent databases"
+    - "future cross-repository M2M"
+
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5"
+  fallback_reasoning_effort: "high"
+  reason: "The plan separates ownership, secrets, financial authorization and runtime gates."
+
+subagent_deployment_plan:
+  mode: "none"
+  reason: "No delegation was requested; provenance and security boundaries remain on one auditable path."
+
+execution:
+  approval_source: "Operator authorized the next enumerated gate on 2026-09-05."
+  approval_text: "avancemos con el siguiente gate"
+  approval_consumed_for: "control-plane planning commit, publication, PR, merge and canonical readback only"
+  control_plane_mutation_allowed: true
+  planning_publication_allowed: true
+  running_publication_allowed: false
+  catalog_mutation_allowed: false
+  solution_mutation_allowed: false
+  state_or_capability_mutation_allowed: false
+  child_repo_mutation_allowed: false
+  owner_git_mutation_allowed: false
+  secret_or_data_access_allowed: false
+  runtime_mutation_allowed: false
+  infrastructure_mutation_allowed: false
+  deployment_allowed: false
+  jira_write_allowed: false
+
+owner_documentation:
+  required_for_this_gate: false
+  reason: "This gate records control-plane planning and performs no owner mutation."
+  required_for_future_owner_slices: true
+
+required_checks:
+  - "git diff --check"
+  - "secret-safe changed-file review"
+  - "4uentes-orchestor npm.cmd run check"
+  - "pull request scope readback"
+  - "origin/main integration readback"
+
+decision:
+  status: "ready-for-plan-publication"
+  approver: "4uentes"
+  approved_at: "2026-09-05"
+  approval_text: "avancemos con el siguiente gate"
+  next_gate: >
+    After merge and canonical readback, request explicit authorization for the
+    control-plane-discovery slice only. Owner, secret, runtime, M2M, Jira and
+    infrastructure changes remain prohibited.
+
+evidence_refs:
+  - "evidence/requests/CR-CP-0021/implementation-plan-2026-09-05.md"
+  - "evidence/requests/CR-HPT-0027/automation-onboarding-recovery-preflight-2026-08-29.md"
+  - "docs/cross-repo/local-development-secret-and-compose-governance.md"
