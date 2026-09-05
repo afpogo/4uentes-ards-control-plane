@@ -21,9 +21,9 @@ control_plane_context:
   running_base: "origin/main@4e66a69522ca60d6867b1ccabd0d37b68b0268e6"
 
 execution:
-  approval_status: "approved-running-publication-only"
-  approval_source: "Operator instruction on 2026-08-29: ok avancemos al proximo gate"
-  approval_consumed_for: "control-plane running lifecycle, evidence, coordinator and initiative publication only"
+  approval_status: "owner-port-and-local-qa-authorizations-consumed-corrective-mutation-not-authorized"
+  approval_source: "Operator instructions after the running publication authorized the clean owner port, owner checks and localhost:4090 QA one gate at a time."
+  approval_consumed_for: "One clean owner worktree, the exact twelve-path semantic port, owner/control-plane checks and localhost:4090 QA."
   control_plane_mutation_allowed: true
   git_running_publication_allowed: true
   child_repo_mutation_allowed: false
@@ -32,7 +32,7 @@ execution:
   infrastructure_mutation_allowed: false
   jira_write_allowed: false
   secret_or_datastore_access_allowed: false
-  current_step: "Publish and read back this running gate, then request separate authorization for a fresh owner worktree and selective semantic port."
+  current_step: "Reconcile the consumed owner/QA gates and publish an exact corrective allowlist before any further child-repo mutation."
 
 agent_execution_profile:
   provider: "codex"
@@ -57,8 +57,13 @@ owner_baseline:
   freshness_gate: "Re-read live owner develop before creating the future clean owner worktree; this running artifact does not freeze develop."
 
 owner_mutation_batch:
-  authorization_status: "not-authorized"
-  strategy: "future-selective-semantic-port-to-fresh-owner-worktree"
+  authorization_status: "executed-locally-under-later-operator-authorizations"
+  strategy: "selective-semantic-port-to-fresh-owner-worktree"
+  execution_worktree: "worktrees/CR-SST-0231-sst-fend-owner"
+  execution_branch: "agent/cr-sst-0231-public-landing-contrast"
+  execution_baseline: "develop@bd9b8d2aa52aab2346b7bf94b0db05ed188c09a3"
+  execution_status: "twelve-path-delta-present-uncommitted"
+  publication_status: "not-committed-not-pushed-no-owner-pr"
   exact_path_count: 12
   runtime_style_paths:
     - "src/assets/styles/sass/base/_colors.scss"
@@ -111,6 +116,56 @@ false_positive_controls:
   - "Zero landing contrast failures do not prove that shared authenticated surfaces are regression-free."
   - "Development-only warnings and production console errors must be classified separately."
 
+qa_observations:
+  acceptance_status: "not-approved"
+  first_clean_worktree_gate:
+    date: "2026-08-29"
+    source: "agent/cr-sst-0231-public-landing-contrast@bd9b8d2 with the exact twelve uncommitted paths"
+    result: "FAIL; four normal-text contrast pairs were below 4.5:1 and the onboarding login CTA opened the header-anchored form outside the viewport."
+  repeated_development_gate:
+    date: "2026-09-05"
+    target: "localhost:4090"
+    source: "Docker service sst-fend bind-mounted from the preserved historical mixed checkout, not from the clean owner worktree"
+    source_acceptance: "not-valid-as-owner-branch-acceptance-evidence"
+    runtime_result: "HTTP 200 after Webpack compilation; five final probes returned 200 in 4-12 ms without container restart or OOM."
+    desktop:
+      viewport: "1440x900"
+      horizontal_overflow: false
+      rendered_paragraph_contrast: [4.37, 4.17, 4.05, 4.06]
+    mobile:
+      viewport: "390x844"
+      horizontal_overflow: false
+      rendered_paragraph_contrast: [4.49, 4.24, 4.05, 4.05]
+      primary_control_height_px: 44
+    shared_controls: "PASS; buttons and signal tags had a measured minimum contrast of 5.26:1."
+    walkthrough: "PASS; the secondary CTA scrolled the onboarding heading into view."
+    onboarding_login: "FAIL; after the walkthrough, Sign in to start created the form at top=-1071.8px desktop and top=-1416.8px mobile."
+    header_login: "PASS; the header Sign in control opened the form visibly on mobile."
+    console: "Development warnings remain for React Router future flags, fetchPriority casing and findDOMNode deprecation. One hot-reload WebSocket disconnect coincided with a long recompilation and recovered without container restart."
+    network: "Application document and static resources returned 200 or 304; no public-page API failure was observed."
+  anti_false_positive_result: "Rendered-pixel sampling was retained because the aggregate accessibility audit can skip text painted over CSS gradients."
+
+corrective_owner_batch:
+  authorization_status: "not-authorized"
+  purpose: "Correct the remaining landing copy contrast and make the onboarding login form visible from the scrolled walkthrough position."
+  total_final_owner_path_count: 14
+  new_paths_added_to_existing_allowlist:
+    - "src/pages/Landing/index.tsx"
+    - "src/pages/Landing/__tests__/Landing.test.tsx"
+  exact_corrective_mutation_paths:
+    - "src/pages/Landing/styles.module.scss"
+    - "src/pages/Landing/index.tsx"
+    - "src/pages/Landing/__tests__/Landing.test.tsx"
+    - "specs/36-public-landing-frontend.yml"
+    - "docs/36-public-landing-frontend.md"
+  stop_condition: "Do not modify the owner again until this reconciliation is validated and a later operator authorization explicitly approves this five-path corrective batch."
+  validation_requirements:
+    - "Add an owner regression test for the onboarding login visibility behavior."
+    - "Run the full sst-fend npm run check and git diff --check."
+    - "Serve the clean owner worktree on localhost:4090 and verify source identity before QA."
+    - "Measure normal text over the rendered gradient at desktop and mobile; every pair must be at least 4.5:1."
+    - "Run the full control-plane npm run check including owner-documentation validation."
+
 validation_order:
   - order: 1
     gate: "owner-static-and-contract"
@@ -129,7 +184,7 @@ validation_order:
 
 owner_documentation:
   required: true
-  status: "planned-owner-mutation-not-authorized"
+  status: "updated-locally-in-owner-worktree-pending-corrective-amendment-and-publication"
   owner_repo: "sst-fend"
   planned_surfaces:
     - "specs/21-design-tokens.yml"
@@ -169,14 +224,15 @@ execution_publication_rule:
     remote_readback_required: true
 
 decision:
-  status: "approved-for-running-publication-only"
+  status: "qa-failed-corrective-batch-planned-not-authorized"
   approver: "4uentes"
   decided_at: "2026-08-29"
   approval_text: "ok avancemos al proximo gate"
-  next_authorization_required: "Create one fresh sst-fend worktree from re-read live develop and selectively port only the exact twelve paths."
+  next_authorization_required: "After this control-plane reconciliation is validated, explicitly authorize the five-path corrective owner batch; publication, Jira and localhost:8088 remain separate gates."
 
 evidence_refs:
   - "evidence/requests/CR-SST-0231/identity-and-owner-preflight-2026-08-29.md"
   - "evidence/requests/CR-SST-0231/owner-recovery-plan-2026-08-29.md"
   - "evidence/requests/CR-SST-0231/running-owner-batch-2026-08-29.md"
+  - "evidence/requests/CR-SST-0231/local-qa-reconciliation-2026-09-05.md"
   - "evidence/requests/CR-SST-0222/jira-progress-mirror-readback-2026-08-29.md"
