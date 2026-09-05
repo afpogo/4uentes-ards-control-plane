@@ -46,3 +46,25 @@ contenido funcional de la base.
 Registrar únicamente salud del servicio, resultado de la sentencia, readiness,
 SHAs y disposición. No registrar valores, argumentos sensibles ni contenido de
 base o workflows.
+
+## Resultado observado
+
+El gate se publicó mediante
+`https://github.com/afpogo/4uentes-ards-control-plane/pull/265` y se releyó en
+`main@fae07a4ade874c47eac8bfa8809f3b8612ac761e`. Se inició únicamente
+PostgreSQL y se esperó hasta estado saludable.
+
+La sentencia puntual se completó para el rol configurado actual. PostgreSQL
+leyó el password desde el secreto montado; el valor no se colocó en argumentos
+y toda salida cruda fue suprimida. No se consultaron schemas, tablas, filas,
+otros roles ni hashes.
+
+Después de la rotación se inició el Compose base sin túnel. El check
+`scripts/check.ps1 -Runtime` pasó completo: los tres servicios están activos,
+PostgreSQL está saludable, `/healthz` de n8n responde y pgAdmin responde por
+loopback en `5060`. No se accedió a workflows ni datos y no se imprimieron
+secretos. El runtime local queda levantado.
+
+La clave n8n generada y no utilizada continúa en custodia rollback privada. Su
+disposición final requiere un gate separado; no es necesaria para la operación
+del runtime reconciliado.
