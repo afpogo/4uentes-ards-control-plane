@@ -172,7 +172,8 @@ owner_publication:
   tree_equivalence: "owner head and merge commit resolve to tree 524296244113a491eb339bdaceb79a511212e3df"
   stable_promotion_status: "blocked"
   stable_promotion_blockers:
-    - "79 tracked binary candidates require a separate metadata-only review and explicit public allowlist"
+    - "78 current image candidates require an enumerated path-plus-blob review and explicit human approval; the historical 79th binary was the CV already removed"
+    - "Webpack still recursively publishes src/assets/images/**; no public image allowlist is enforced"
     - "Vite and Sass publication-base deltas remain mixed in the historical dirty checkout"
     - "pre-existing mobile text and footer overflow requires a governed UI unit"
     - "inherited dependency audit reports 3 critical, 24 high, 13 moderate and 6 low findings"
@@ -199,12 +200,50 @@ rollback: >
   restore the CV through an unreviewed binary copy.
 
 decision:
-  status: "owner-publication-safety-slice-merged-stable-promotion-blocked"
-  blocker: "Do not promote develop to main until binary, Vite/Sass, mobile and inherited dependency gates have governed dispositions."
-  next_gate: "Publish this owner readback, then define a metadata-only review unit for the 79 tracked binary candidates without opening or republishing private artifacts."
+  status: "binary-metadata-audit-complete-stable-promotion-blocked"
+  blocker: "Do not mutate the owner or promote develop to main until an enumerated path-plus-blob image batch receives explicit human approval and the remaining Vite/Sass, mobile and dependency gates have governed dispositions."
+  next_gate: "Publish an enumerated decision batch for the 78 images. Default deny certificates, employment evidence and personal photos; require license review for logos/icons and confidentiality review for screenshots."
+
+binary_publication_constraint:
+  status: "promotion-blocking"
+  audit_tree: "4uentes-portfolio origin/develop@056b6e4ede90854685c48ff9880d475e54b8db84"
+  historical_candidate_count: 79
+  removed_cv_count: 1
+  current_image_count: 78
+  current_unique_blob_count: 78
+  current_total_bytes: 17182570
+  public_image_allowlist: []
+  owner_mutation_allowed_before_enumerated_approval: false
+  prohibited_actions:
+    - "open, render or OCR a binary"
+    - "copy, publish, rename, replace or delete a binary"
+    - "treat current exposure or a textual reference as publication approval"
+    - "expand the owner path allowlist silently"
+  approval_requirements:
+    - "exact repository path and Git blob SHA"
+    - "demonstrable public purpose and textual consumer"
+    - "provenance plus license or right to publish"
+    - "explicit privacy approval for personal or employment data"
+    - "expected extension, signature and size"
+    - "deterministic non-recursive artifact copy rule"
+    - "explicit human approval of the enumerated batch"
+  fail_closed_categories:
+    - "src/assets/images/certs-images/**"
+    - "src/assets/images/constancias/**"
+    - "src/assets/images/old_certs/**"
+    - "personal profile photos"
+  known_exceptions:
+    - path: "src/assets/images/knowledge_img/logo-platzi-sin-fondo.png"
+      blob: "c81419317606a4ecf958a1b4cc78c14ffe9742e6"
+      issue: "PNG extension with JPEG signature"
+    - path: "src/assets/images/apogo2.jpg"
+      blob: "0e602829e0be07f722ac40fa52278bf2daea00cf"
+      issue: "unreferenced and larger than 1 MiB"
+  evidence_ref: "evidence/requests/CR-4UENTES-0039/binary-metadata-audit-2026-09-05.md"
 
 evidence_refs:
   - "evidence/requests/CR-4UENTES-0039/changed-files-summary.md"
   - "evidence/requests/CR-4UENTES-0039/child-validation-results.md"
   - "evidence/requests/CR-4UENTES-0039/visual-qa-results.md"
   - "evidence/requests/CR-4UENTES-0039/control-plane-validation-results.md"
+  - "evidence/requests/CR-4UENTES-0039/binary-metadata-audit-2026-09-05.md"
