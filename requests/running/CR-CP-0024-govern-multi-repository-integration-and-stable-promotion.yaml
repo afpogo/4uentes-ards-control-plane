@@ -19,7 +19,7 @@ summary: >
   explicit gate. Its autosync removed the permission failure but exposed a
   repeatable ClamAV OOM during signature update; the previous pod still
   preserves availability while a bounded memory remediation is gated. The
-  governed program scoreboard records 44 of 100 evidence-backed points, keeps
+  governed program scoreboard records 46 of 100 evidence-backed points, keeps
   phase 2 at zero and contains later Portfolio and Automation documentation
   drift without treating it as retroactive authorization.
 
@@ -41,7 +41,7 @@ authorization:
   evidence: "evidence/requests/CR-CP-0024/auth-owner-execution-authorization-2026-08-30.md"
 
 execution:
-  current_unit: "infra-human-docs-foundation-validated-await-publication-authorization"
+  current_unit: "infra-human-docs-foundation-publication-authorized-await-owner-pr"
   parallel_unit: "worktree-sanitization-disposition-and-selective-recovery"
   completed_units:
     - "publish-plan-and-migration-lifecycle"
@@ -69,6 +69,7 @@ execution:
     - "read-back-infra-pr25-automatic-gitops-sync"
     - "reconcile-program-scoreboard-after-infra-readback"
     - "establish-infra-human-learning-playbook-runbook-foundation"
+    - "reconcile-cr-sst-0233-retroactive-running-lifecycle"
   control_plane_mutation_allowed: true
   child_repo_mutation_allowed: false
   child_repo_mutation_targets: ["sst-bend", "sst-4uentes-infra"]
@@ -275,7 +276,7 @@ infra_second_remediation:
       - "linked technical runbook"
       - "documentation information architecture"
       - "Mermaid maps, legends and textual fallbacks"
-    publication_allowed: false
+    publication_allowed: true
     merge_allowed: false
     runtime_mutation_allowed: false
     jira_write_allowed: false
@@ -301,6 +302,20 @@ infra_second_remediation:
       secret_scan: "PASS"
       worktree_clean: true
     evidence: "evidence/requests/CR-CP-0024/infra-human-documentation-foundation-2026-09-05.md"
+    publication_authorization:
+      status: "authorized-for-exact-push-and-pr-without-merge"
+      approved_by: "4uentes"
+      approved_at: "2026-09-05"
+      approval_text: "ok avancemos con el siguiente gate"
+      authorized_commit: "67c4874b2404235d70dc56ce143343954f5c707e"
+      authorized_base_sha: "a4d120061d0d4d53352b1de766858602ff759750"
+      authorized_branch: "docs/CR-HPT-0024/human-receipt-custody-guides"
+      push_allowed: true
+      pull_request_publication_allowed: true
+      merge_allowed: false
+      runtime_mutation_allowed: false
+      jira_write_allowed: false
+      evidence: "evidence/requests/CR-CP-0024/infra-human-documentation-publication-authorization-2026-09-05.md"
   jira:
     issue: "HPT-16"
     expected_status: "En curso"
@@ -442,16 +457,16 @@ required_checks:
   - "owner branch and pull request remote readback"
 
 decision:
-  status: "running-infra-human-documentation-foundation-local-validated"
+  status: "running-infra-human-documentation-publication-authorized"
   approver: "4uentes"
-  next_gate: "Authorize publication of the exact owner documentation commit and open an Infra PR without merge; then return to the bounded ClamAV memory remediation."
+  next_gate: "Publish commit 67c4874, open and read back its Infra PR without merge, then return to a separately authorized bounded ClamAV memory remediation."
 
 program_progress:
   status: "current-derived-view"
   observed_at: "2026-09-05"
-  earned_points: 44
+  earned_points: 46
   total_points: 100
-  progress_percent: 44
+  progress_percent: 46
   current_phase: "phase-1-owner-development-integration"
   phase_2_status: "not-started"
   stable_gate_open: false
@@ -482,3 +497,7 @@ evidence_refs:
   - "evidence/requests/CR-CP-0024/infra-pr25-merge-and-runtime-readback-2026-09-05.md"
   - "evidence/requests/CR-CP-0024/program-scoreboard.current.yaml"
   - "evidence/requests/CR-CP-0024/program-scoreboard.md"
+  - "evidence/requests/CR-CP-0024/infra-human-documentation-foundation-2026-09-05.md"
+  - "evidence/requests/CR-CP-0024/infra-human-documentation-publication-authorization-2026-09-05.md"
+  - "requests/running/CR-SST-0233-reconcile-fresh-database-migration-baseline.yaml"
+  - "evidence/requests/CR-SST-0233/retroactive-running-reconciliation-2026-09-05.md"

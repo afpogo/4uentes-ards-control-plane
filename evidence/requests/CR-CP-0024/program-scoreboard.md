@@ -2,12 +2,12 @@
 
 ## Resultado actual
 
-Al 5 de septiembre de 2026, `CR-CP-0024` registra **44 de 100 puntos
+Al 5 de septiembre de 2026, `CR-CP-0024` registra **46 de 100 puntos
 gobernados satisfechos**. El programa continúa en la fase 1, integración owner
 en ramas de desarrollo. La fase 2, promoción estable, no comenzó y conserva
 `0%`.
 
-El `44%` no mide líneas de código ni producto terminado. Es una vista derivada
+El `46%` no mide líneas de código ni producto terminado. Es una vista derivada
 de checkpoints binarios respaldados por evidencia: un checkpoint obtiene todos
 sus puntos sólo cuando sus criterios están demostrados; `pending`, `active` y
 `blocked` obtienen cero. El lifecycle y sus evidencias siguen siendo la fuente
@@ -15,11 +15,11 @@ de autoridad y este scoreboard no autoriza merges, despliegues ni cierres.
 
 | Dimensión | Puntos satisfechos | Puntos totales | Lectura |
 | --- | ---: | ---: | --- |
-| Gobierno y control plane | 13 | 15 | Bloqueado por el gap de lifecycle de `CR-SST-0233` |
+| Gobierno y control plane | 15 | 15 | Lifecycle `running` de `CR-SST-0233` reconciliado retroactivamente |
 | Integración owner | 24 | 55 | Auth integrado; Backend integrado pero rollout bloqueado; clientes pendientes |
 | Saneamiento histórico | 7 | 15 | Diez seeds listos y dos de diez raíces históricas saneadas |
 | Gate global y promoción estable | 0 | 15 | No iniciado |
-| **Total** | **44** | **100** | **Fase 1 activa; gate global cerrado** |
+| **Total** | **46** | **100** | **Fase 1 activa; gate global cerrado** |
 
 Los diez seeds limpios representan `100%` de la baseline ya declarada. Esto no
 equivale a tener saneadas las raíces históricas: allí hay 2 de 10 repositorios
@@ -47,7 +47,7 @@ visual_map:
 
 ```mermaid
 flowchart LR
-    P0["CR-CP-0024 gobierno y recoveries 13/15 [running]"]
+    P0["CR-CP-0024 gobierno y recoveries 15/15 [validated]"]
     P1["Fase 1 integración owner 24/55 [running]"]
     WS["Saneamiento histórico 7/15 [blocked]"]
     G["Gate global cerrado [gate]"]
@@ -83,7 +83,7 @@ Contención y preservación --preserva raíces pendientes--> Saneamiento histór
 
 | Repositorio | Desarrollo / integración | Destino estable | Estado gobernado |
 | --- | --- | --- | --- |
-| Control plane | `main@4d661d4` al iniciar la observación | `main` | Activo; este scoreboard reconcilia drift posterior |
+| Control plane | `main@b8a8195` al iniciar la observación | `main` | Activo; lifecycle `running` de CR-SST-0233 reconciliado |
 | Core | `develop@ded8c466` | Ninguno | Canónico; raíz histórica saneada |
 | Auth | `develop@ff5605c` | `main` | Integración owner aceptada; promoción estable bloqueada |
 | Backend | `develop@5db4dd8` | `master` | Merge, imagen y pin demostrados; rollout ClamAV no sano |
@@ -97,22 +97,19 @@ Contención y preservación --preserva raíces pendientes--> Saneamiento histór
 
 Los SHAs de repositorios funcionales son los documentados por sus readbacks; no
 se presentan como un nuevo `fetch` global. El SHA de autoridad usado para
-construir la vista es `origin/main@4d661d440db2688d3b2b98fa97fe46bc80a4867a`.
+construir la vista es `origin/main@b8a81958512a128a5000ab267dcb74b0332c6414`.
 
 ## Bloqueos que gobiernan el siguiente avance
 
 1. `receipt-clamav` dejó atrás el error de permisos tras Infra PR 25, pero el
    nuevo contenedor fue observado `OOMKilled` durante la actualización de
    firmas. Backend e Infra no cumplen salud y el gate global permanece cerrado.
-2. `CR-SST-0233` sólo tiene lifecycle `inbox/planned`, aunque Backend PR 32
-   integró trabajo atribuido a su corrección de migraciones. Debe reconciliarse
-   el lifecycle; el scoreboard no lo considera satisfecho.
-3. Portfolio todavía requiere separación Vite/Sass, corrección del overflow
+2. Portfolio todavía requiere separación Vite/Sass, corrección del overflow
    móvil, disposición de vulnerabilidades heredadas y CI owner antes de una
    promoción estable.
-4. Chatbot, Extension, Fend y Phinance aún no tienen su integración owner de
+3. Chatbot, Extension, Fend y Phinance aún no tienen su integración owner de
    esta ola demostrada.
-5. Ocho raíces históricas sucias permanecen preservadas. No se borran, resetean
+4. Ocho raíces históricas sucias permanecen preservadas. No se borran, resetean
    ni reutilizan como base de features.
 
 ## Drift documental contenido

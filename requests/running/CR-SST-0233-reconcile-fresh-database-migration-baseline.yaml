@@ -1,0 +1,154 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-SST-0233"
+title: "Reconcile the SST fresh-database migration baseline"
+status: "running"
+source_request: "requests/inbox/CR-SST-0233-reconcile-fresh-database-migration-baseline.yaml"
+planned_request: "requests/planned/CR-SST-0233-reconcile-fresh-database-migration-baseline.yaml"
+created_at: "2026-08-30"
+started_at: "2026-09-05"
+requester: "4uentes"
+
+summary: >
+  Reconcile retroactively the migration correction already integrated through
+  sst-bend PR 32. The owner change preceded this running lifecycle, so this
+  record preserves the ordering deviation without creating retroactive
+  authorization or permitting additional owner, runtime or Jira mutation.
+
+control_plane_context:
+  initiative_id: "INIT-SST-0010"
+  parent_request_id: "CR-SST-0220"
+  corrective_predecessor_request_id: "CR-SST-0223"
+  coordinator_request_id: "CR-CP-0024"
+  owner_repository: "sst-bend"
+  feature_state_id: "article-agent-processing"
+  planning_commit: "c28f9ce"
+  execution_base_ref: "origin/main"
+  execution_base_sha: "b8a81958512a128a5000ab267dcb74b0332c6414"
+
+authorization:
+  status: "retroactive-reconciliation-only"
+  approved_by: "4uentes"
+  approved_at: "2026-09-05"
+  approval_text: "ok avancemos"
+  control_plane_publication_allowed: true
+  retroactive_owner_authorization_created: false
+
+ordering_deviation:
+  status: "observed-and-contained"
+  description: >
+    The planned lifecycle was canonical before owner integration, but the
+    required running publication did not occur before sst-bend PR 32 was
+    implemented and merged under the coordinating CR-CP-0024 gate.
+  effect: >
+    Preserve the owner result and its readbacks, record the missing lifecycle
+    transition and prohibit treating this reconciliation as a new execution
+    grant.
+  evidence:
+    - "evidence/requests/CR-CP-0024/backend-owner-pr-publication-readback-2026-08-31.md"
+    - "evidence/requests/CR-CP-0024/backend-merge-rollout-and-health-readback-2026-08-31.md"
+    - "evidence/requests/CR-SST-0233/retroactive-running-reconciliation-2026-09-05.md"
+
+worktree_exception:
+  policy_id: "worktree-request-lifecycle-policy"
+  status: "active-bounded-exception"
+  reason: >
+    The pre-existing CR-SST-0233 worktree contains uncommitted request evidence
+    and initiative edits. Policy requires preserving it and opening a clean
+    tree instead of resetting, deleting or reusing it.
+  legacy_worktree: "worktrees/CR-SST-0233-migration-reconciliation"
+  legacy_branch: "agent/cr-sst-0233-migration-reconciliation"
+  legacy_head: "799b7d5383af7f8cca35b99319a0c9b6a7c59e87"
+  legacy_status_observed: "one tracked modification and three untracked status entries"
+  legacy_ownership: "read-only provenance pending selective disposition"
+  execution_worktree: "worktrees/CR-SST-0233-retroactive-running"
+  execution_branch: "agent/cr-sst-0233-retroactive-running"
+  execution_ownership: "control-plane-only retroactive lifecycle publication"
+  cleanup_allowed: false
+  dissolution_rule: >
+    Retire the clean execution worktree only after canonical merge readback.
+    Preserve the legacy dirty worktree until every unique entry is classified.
+
+execution:
+  current_unit: "publish-retroactive-running-lifecycle-and-readback"
+  completed_units:
+    - "publish-control-plane-plan"
+    - "freeze-historical-schema-in-owner-pr-32"
+    - "prove-disposable-postgresql-migration-paths"
+    - "merge-owner-pr-32-under-cr-cp-0024"
+  control_plane_mutation_allowed: true
+  child_repo_mutation_allowed: false
+  owner_git_mutation_allowed: false
+  migration_file_mutation_allowed: false
+  migration_execution_allowed: false
+  runtime_mutation_allowed: false
+  deployment_allowed: false
+  production_data_allowed: false
+  shared_environment_mutation_allowed: false
+  jira_write_allowed: false
+
+owner_integration_readback:
+  repository: "afpogo/sst-bend"
+  pull_request: 32
+  pull_request_url: "https://github.com/afpogo/sst-bend/pull/32"
+  state: "MERGED"
+  base_sha: "28ce139fa079b89fbccfca2bab566b5bf1e50b6e"
+  head_sha: "de19c14f95c077a2b85a1bbdd205d01a512cbd00"
+  merge_sha: "5db4dd868f3348f95d6376519be1534be1710d75"
+  merged_at: "2026-09-01T01:19:36Z"
+  request_paths:
+    - "db/migrations/20260524120000-create-document-agent-jobs.js"
+    - "docs/tasks/2026-08-31-cr-sst-0233-migration-baseline.md"
+    - "scripts/test-migration-chain-postgres.js"
+  validation_readback:
+    fresh_install: "PASS"
+    historical_upgrade_with_data: "PASS"
+    relevant_down_up: "PASS"
+    final_schema_parity: "PASS"
+    owner_full_check: "PASS"
+  scope_boundary: >
+    These facts are readbacks of the already merged owner PR. They do not
+    authorize a new commit, migration run, deployment or stable promotion.
+
+residual_blockers:
+  - id: "backend-clamav-rollout-health"
+    status: "open"
+    effect: "Blocks global release health but does not invalidate the migration-chain proof."
+  - id: "jira-mirror-not-reconciled"
+    status: "open"
+    effect: "No Jira create, comment or transition is authorized by this lifecycle publication."
+  - id: "legacy-worktree-dirty-provenance"
+    status: "open"
+    effect: "Blocks removal of the legacy CR-SST-0233 worktree."
+
+publication_gate:
+  policy_id: "execution-publication-and-tracker-closure-policy"
+  git_publication:
+    applicable: true
+    running_merge_required: true
+    terminal_merge_required: true
+  tracker_mirror:
+    applicable: true
+    provider: "jira"
+    write_status: "not-authorized"
+  cleanup:
+    remote_readback_required: true
+
+owner_documentation:
+  required_for_this_gate: false
+  reason: "This reconciliation does not mutate sst-bend."
+  existing_owner_document: "docs/tasks/2026-08-31-cr-sst-0233-migration-baseline.md"
+
+decision:
+  status: "ready-for-retroactive-running-publication"
+  approver: "4uentes"
+  next_gate: >
+    Merge and read back this control-plane lifecycle, then keep CR-SST-0233
+    running until residual release health, Jira disposition and terminal
+    evidence receive separate gates.
+
+evidence_refs:
+  - "evidence/requests/CR-SST-0233/implementation-plan.md"
+  - "evidence/requests/CR-SST-0233/retroactive-running-reconciliation-2026-09-05.md"
+  - "evidence/requests/CR-CP-0024/backend-owner-pr-publication-readback-2026-08-31.md"
+  - "evidence/requests/CR-CP-0024/backend-merge-rollout-and-health-readback-2026-08-31.md"

@@ -10,10 +10,10 @@ started_at: "2026-09-05"
 requester: "4uentes"
 
 summary: >
-  Publish the first current control-plane discovery slice for the existing
-  private 4uentes-automation owner. Register only logical identity, initial
-  solution membership and a discovered state; historical capability, M2M and
-  runtime assertions remain excluded pending owner-specific revalidation.
+  Authorize the bounded 4uentes-automation owner slice that introduces a
+  fail-closed local secret bootstrap and parameterized loopback ports. The
+  slice may use synthetic temporary material for validation, but must not read,
+  overwrite or generate persistent local secrets and must not start runtime.
 
 control_plane_context:
   initiative_id: "INIT-HPT-0002"
@@ -36,38 +36,110 @@ policy_application:
     - "Do not add capability links or claim runtime, M2M, deployment or secret readiness."
 
 authorization:
-  status: "control-plane-discovery-approved"
+  status: "owner-local-secrets-and-ports-approved"
   approved_by: "4uentes"
   approved_at: "2026-09-05"
-  approval_text: "autorizo retirar y avanzar con el proximo gate"
+  approval_text: "ok avancemos con la recomendacion, necesito el playbook para generar los secretos"
   approval_consumed_for: >
-    Publish and read back the running lifecycle, logical service catalog entry,
-    initial finanzas-personales shared membership, discovered feature state and
-    state index update only.
+    Publish this B4 authorization, then implement and statically validate the
+    owner-local secret bootstrap and port contract in an isolated clean
+    4uentes-automation worktree. Runtime and persistent secret generation remain
+    outside this authorization.
 
 execution:
-  current_unit: "control-plane-discovery"
+  current_unit: "owner-local-secrets-and-ports-readback-complete"
   completed_units:
     - "recover-canonical-inbox-identity"
     - "publish-current-onboarding-plan"
-  exact_paths:
+    - "publish-control-plane-discovery"
+    - "publish-owner-local-secret-and-port-contract"
+  control_plane_exact_paths:
     - "requests/running/CR-CP-0021-onboard-4uentes-automation-n8n.yaml"
-    - "catalog/services/4uentes-automation.yaml"
-    - "solutions/finanzas-personales.yaml"
-    - "state/features/shared-automation-control-plane-onboarding.current.yaml"
-    - "state/00-index.yaml"
+    - "evidence/requests/CR-CP-0021/automation-owner-local-secret-port-authorization-2026-09-05.md"
+  owner_exact_paths:
+    - ".gitignore"
+    - ".env.example"
+    - "docker-compose.yml"
+    - "scripts/bootstrap-local-secrets.ps1"
+    - "scripts/n8n-secret-entrypoint.sh"
+    - "scripts/check.ps1"
+    - "specs/system/local-stack.yaml"
+    - "docs/operations/local-stack.md"
+    - "docs/tasks/2026-09-05-cr-cp-0021-local-secrets-and-ports.md"
   control_plane_mutation_allowed: true
-  catalog_mutation_allowed: true
-  solution_mutation_allowed: true
-  discovered_state_mutation_allowed: true
+  catalog_mutation_allowed: false
+  solution_mutation_allowed: false
+  discovered_state_mutation_allowed: false
   capability_mutation_allowed: false
-  child_repo_mutation_allowed: false
-  owner_git_mutation_allowed: false
+  child_repo_mutation_allowed: true
+  owner_git_mutation_allowed: true
   secret_or_data_access_allowed: false
   runtime_mutation_allowed: false
   infrastructure_mutation_allowed: false
   deployment_allowed: false
   jira_write_allowed: false
+
+owner_slice_contract:
+  repository: "afpogo/4uentes-automation"
+  base_ref: "origin/main"
+  base_sha_observed: "32055ab77f0c1b898eb77a6fe232b965c54f137d"
+  worktree_policy: "clean request-scoped owner worktree from refreshed origin/main"
+  secret_directory: ".secrets"
+  generated_secret_files:
+    - "n8n_encryption_key"
+    - "postgres_password"
+    - "pgadmin_default_password"
+    - "productivity_db_password"
+  secret_generation_rules:
+    - "Use a cryptographically secure random number generator."
+    - "Never print generated values."
+    - "Fail before mutation when any target file already exists."
+    - "Create files without a trailing newline and restrict local permissions."
+    - "Validation may generate only ephemeral synthetic material under an isolated temporary directory."
+  port_contract:
+    n8n: "127.0.0.1:${N8N_HOST_PORT:-5678}:5678"
+    pgadmin: "127.0.0.1:${N8N_PGADMIN_HOST_PORT:-5050}:80"
+  compose_secret_contract:
+    - "Grant each file-backed secret only to services that consume it."
+    - "Use POSTGRES_PASSWORD_FILE and DB_POSTGRESDB_PASSWORD_FILE where supported."
+    - "Load N8N_ENCRYPTION_KEY inside the n8n container through the owner-controlled entrypoint adapter."
+    - "Do not wire PRODUCTIVITY_DB_PASSWORD to a consumer that does not yet own a contract."
+  allowed_commands:
+    - "read-only owner discovery that excludes .env, .secrets, workflows and persistent data"
+    - "PowerShell bootstrap validation with an isolated temporary output directory"
+    - "docker compose config with synthetic temporary secret files"
+    - "owner scripts/check.ps1 when its inspected behavior remains static and secret-safe"
+    - "git diff --check, exact-path diff review and secret-pattern scan"
+  prohibited_actions:
+    - "read or copy existing .env or .secrets content"
+    - "overwrite or rotate any existing secret"
+    - "inspect workflow exports, credential identifiers or persistent data directories"
+    - "start, stop, restart or rebuild containers"
+    - "connect to or mutate databases"
+    - "publish runtime, capability or M2M readiness"
+    - "write Jira or mutate Kubernetes, GitOps or infrastructure"
+
+owner_execution_result:
+  status: "merged-and-read-back"
+  repository: "afpogo/4uentes-automation"
+  pull_request: 3
+  merge_method: "squash"
+  merge_sha: "9c1e75dcd1e39adf9a6ce3b1dcd850a2b998825d"
+  branch_commit: "fa22d989a1f3454acc9d258989dd1f16828c443e"
+  changed_path_count: 9
+  validation:
+    - "PowerShell syntax validation passed."
+    - "Plan mode completed without creating .secrets."
+    - "Synthetic generation produced four ephemeral files with private Windows ACLs and no trailing newline."
+    - "A second generation attempt failed and all pre-existing synthetic hashes remained unchanged."
+    - "scripts/check.ps1 -LocalStackOnly passed with a synthetic fixture and alternate ports."
+    - "docker compose config and tunnel override config passed without runtime startup."
+    - "No persistent .secrets directory or high-entropy literal was present in the owner change."
+  explicit_gaps:
+    - "Persistent local secret generation was not executed."
+    - "Runtime validation was not executed."
+    - "Legacy productivity playbooks still consume PRODUCTIVITY_DB_PASSWORD from .env and require a separate owner request to migrate."
+    - "Jira, Kubernetes, GitOps, infrastructure, capabilities and M2M were not mutated."
 
 discovery_contract:
   service_id: "4uentes-automation"
@@ -110,9 +182,12 @@ subagent_deployment_plan:
   reason: "No delegation was requested; identity and boundary decisions remain sequential."
 
 owner_documentation:
-  required_for_this_gate: false
-  reason: "No owner repository is mutated in this control-plane-only discovery slice."
-  required_for_future_owner_slice: true
+  required_for_this_gate: true
+  reason: "This gate authorizes owner Compose, scripts, specification and runbook changes."
+  expected_paths:
+    - "specs/system/local-stack.yaml"
+    - "docs/operations/local-stack.md"
+    - "docs/tasks/2026-09-05-cr-cp-0021-local-secrets-and-ports.md"
 
 required_checks:
   - "git diff --check"
@@ -122,13 +197,14 @@ required_checks:
   - "origin/main integration readback"
 
 decision:
-  status: "running-control-plane-discovery"
+  status: "owner-slice-merged-and-read-back"
   approver: "4uentes"
   next_gate: >
-    After this slice is merged and read back, request explicit authorization
-    for the 4uentes-automation owner local secret and port contract without
-    runtime startup. Capabilities, M2M, Jira and infrastructure remain separate.
+    Request a separate explicit gate before generating persistent local secrets
+    or starting the Automation runtime. The productivity password consumer
+    migration, capabilities, M2M, Jira and infrastructure remain separate.
 
 evidence_refs:
   - "evidence/requests/CR-CP-0021/implementation-plan-2026-09-05.md"
+  - "evidence/requests/CR-CP-0021/automation-owner-local-secret-port-authorization-2026-09-05.md"
   - "docs/cross-repo/local-development-secret-and-compose-governance.md"
