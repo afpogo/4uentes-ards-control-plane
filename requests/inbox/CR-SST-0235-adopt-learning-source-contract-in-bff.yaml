@@ -1,0 +1,18 @@
+schema_version: '1.0'
+phase: 1
+id: 'CR-SST-0235'
+title: 'Adopt the Learning source contract in the authorized BFF'
+status: 'inbox'
+created_at: '2026-09-05'
+requester: '4uentes'
+summary: 'Reserve the 4uentes-auth BFF relay for versioned Learning descriptors and snapshot results.'
+requested_scope:
+  initiative_id: 'INIT-SST-0010'
+  parent_request_id: 'CR-SST-0232'
+  owner_repository: '4uentes-auth'
+  predecessor_requests: ['CR-SST-0232', 'CR-SST-0234']
+constraints:
+  - 'This reservation changes control-plane artifacts only.'
+  - 'No 4uentes-auth mutation is authorized until CR-SST-0234 is canonical and this request receives running approval.'
+  - 'The BFF may relay but may not resolve private sources, persist snapshots or accept memory.'
+requested_next_step: 'Keep planned until CR-SST-0234 publishes its owner capability and readback.'

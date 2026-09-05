@@ -1,0 +1,18 @@
+schema_version: '1.0'
+phase: 1
+id: 'CR-SST-0234'
+title: 'Implement Learning source resolver and immutable snapshots'
+status: 'inbox'
+created_at: '2026-09-05'
+requester: '4uentes'
+summary: 'Reserve the sst-bend capability that authorizes source resolution and persists immutable snapshots.'
+requested_scope:
+  initiative_id: 'INIT-SST-0010'
+  parent_request_id: 'CR-SST-0232'
+  owner_repository: 'sst-bend'
+  predecessor_requests: ['CR-SST-0210', 'CR-SST-0223', 'CR-SST-0232']
+constraints:
+  - 'This reservation changes control-plane artifacts only.'
+  - 'No sst-bend mutation is authorized until merge/readback and an explicit running approval.'
+  - 'Owner ARDS/SDD, secret exclusion and trust-boundary maps are mandatory.'
+requested_next_step: 'Publish and read back this plan, then request a separate sst-bend running gate.'

@@ -23,6 +23,8 @@ request_ids:
   - CR-SST-0106
   - CR-SST-0174
   - CR-CP-0026
+  - CR-CP-0027
+  - CR-CP-0028
 spec_refs:
   - "specs/policies/00-index.yaml"
   - "specs/policies/ards-sdd-policy-component-model.yaml"
@@ -77,6 +79,10 @@ evidence_refs:
   - "evidence/requests/CR-SST-0174/validation-results.md"
   - "evidence/requests/CR-CP-0026/policy-analysis.md"
   - "evidence/requests/CR-CP-0026/promotion-readiness-audit-2026-09-05.md"
+  - "requests/done/CR-CP-0027-adopt-knowledge-to-execution-policy-in-sst-infra.yaml"
+  - "evidence/requests/CR-CP-0027/infra-policy-adoption-merge-readback-2026-09-05.md"
+  - "requests/inbox/CR-CP-0028-promote-knowledge-to-execution-documentation-policy-to-core.yaml"
+  - "evidence/requests/CR-CP-0028/reservation-preflight-2026-09-05.md"
 open_gaps:
   - "Handoff `human-doc-language` to 4uentes-ards-core as a reusable policy template while preserving the now-active orchestrator registry entry and local source docs."
   - "Resolve canonical identity for 4uentes-core versus 4uentes-ards-core."
@@ -85,4 +91,5 @@ open_gaps:
   - "Continue broader lifecycle promotion gates beyond owner documentation and state evidence reconciliation."
   - "CR-SST-0174 refreshes sst-fend through request-driven manifests and local enforcement; publication remains pending."
   - "sst-fend keeps a time-bounded http-qa-harness-policy exception until a versioned .http harness is added."
-  - "Promote knowledge-to-execution-documentation-policy to Core only through a separate approved request; Infra is pattern provenance, not an adopted child under CR-CP-0026."
+  - "sst-4uentes-infra adopted knowledge-to-execution-documentation-policy through CR-CP-0027 at merge 8efb13e, pinned to 4uentes-orchestor@7a8ea96."
+  - "CR-CP-0028 reserves promotion of knowledge-to-execution-documentation-policy to Core; planning, owner handoff and Core mutation remain pending and separately gated."

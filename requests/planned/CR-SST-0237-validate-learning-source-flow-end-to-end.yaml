@@ -1,0 +1,48 @@
+schema_version: '1.0'
+phase: 2
+id: 'CR-SST-0237'
+title: 'Validate the Learning source flow end to end'
+status: 'planned'
+source_request: 'requests/inbox/CR-SST-0237-validate-learning-source-flow-end-to-end.yaml'
+created_at: '2026-09-05'
+requester: '4uentes'
+summary: 'Plan final integrated acceptance of the V1 Learning source and snapshot flow.'
+depends_on: ['CR-SST-0232', 'CR-SST-0234', 'CR-SST-0235', 'CR-SST-0236']
+predecessor_requests: ['CR-SST-0232', 'CR-SST-0234', 'CR-SST-0235', 'CR-SST-0236']
+control_plane_context:
+  initiative_id: 'INIT-SST-0010'
+  parent_request_id: 'CR-SST-0232'
+  participating_repositories: ['sst-bend', '4uentes-auth', 'sst-fend', '4uentes-orchestor']
+risk: {level: 'high', drivers: ['END_TO_END_PRIVATE_FLOW', 'SCOPE_ISOLATION', 'SECRET_LEAKAGE', 'MEMORY_CONSENT', 'MANUAL_ACCEPTANCE']}
+model_selection: {provider: 'codex', resource_level: 'normal', task_class: 'complex-high-risk-task', primary_profile: 'gpt-5.6-sol', reasoning_effort: 'max', fallback_profile: 'gpt-5.5 high'}
+subagent_deployment_plan: {required: false, reason: 'No delegation was requested; integrated evidence remains with the primary agent and human approver.'}
+execution:
+  control_plane_reservation_allowed: true
+  child_repo_mutation_allowed: false
+  runtime_mutation_allowed: false
+  jira_write_allowed: false
+  predecessor_gate: 'CR-SST-0234, CR-SST-0235 and CR-SST-0236 must publish and pass owner checks.'
+  next_gate: 'Explicit authorization for temporary local/dev integrated QA using approved owner artifacts.'
+qa_contract:
+  browser_control: 'Chrome DevTools MCP exclusively for user-visible acceptance'
+  fixture_creation: 'Create sanitized synthetic sources through approved product interfaces.'
+  forbidden_shortcuts: ['database scripts', 'seeders', 'direct datastore writes', 'real credentials or secrets']
+  required_scenarios: ['manual text', 'article reference', 'article document', 'agent output', 'snapshot identity', 'stale source', 'scope isolation', 'tag semantics', 'memory separation', 'secret rejection']
+owner_documentation:
+  required: true
+  rule: 'Every owner must expose current ARDS/SDD, runbook and canonical readback before integrated validation.'
+knowledge_to_execution_documentation: {policy_id: 'knowledge-to-execution-documentation-policy', current_role: 'playbook', runbook_required_for_current_gate: false, runbook_required_before_owner_execution: true}
+visual_documentation:
+  policy_id: 'visual-documentation-as-code-policy'
+  shared_map_ref: 'evidence/requests/CR-SST-0232/owner-request-allocation-plan-2026-09-05.md'
+  final_map_expectation: 'Publish observed E2E outcomes with source metadata, authority boundary and textual fallback.'
+atomized_execution:
+  - {order: 1, objective: 'Read back owner publications and health.', validation: 'canonical refs and UI-visible health'}
+  - {order: 2, objective: 'Create sanitized synthetic sources.', validation: 'stable source and snapshot identities'}
+  - {order: 3, objective: 'Execute positive and negative scenarios.', validation: 'sanitized UI, network, console and owner evidence'}
+  - {order: 4, objective: 'Obtain human PASS and publish evidence.', validation: 'explicit approval and npm run check'}
+acceptance:
+  - 'All four source kinds pass through the authorized user-visible flow.'
+  - 'Isolation, secret rejection, stale behavior, tags and memory separation fail closed.'
+  - 'Final ARDS/SDD, maps, runbooks and human QA evidence are canonical before closure.'
+  - 'No integrated QA starts under this reservation gate.'

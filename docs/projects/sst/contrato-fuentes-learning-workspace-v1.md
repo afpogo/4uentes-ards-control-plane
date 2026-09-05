@@ -187,9 +187,11 @@ V1 no permite adquirir fuentes usando credenciales ni colocar secretos en descri
 
 ## Adopción posterior
 
-Este documento no implementa runtime. Después de publicar y revisar el contrato, el control plane debe reservar gates separados para:
+Este documento no implementa runtime. El control plane asigna cuatro lifecycles separados, documentados en `evidence/requests/CR-SST-0232/owner-request-allocation-plan-2026-09-05.md`:
 
-1. Bend: resolver, autorizar, persistir snapshots y publicar capability.
-2. BFF: retransmitir el contrato versionado sin asumir autoridad.
-3. Fend: crear inbox de fuentes, selección por referencia, estados de snapshot y acción independiente de propuesta de memoria.
-4. E2E: probar los cuatro tipos, aislamiento, stale source, tags y separación de memoria desde el flujo visible.
+1. `CR-SST-0234`, Bend: resolver, autorizar, persistir snapshots y publicar capability.
+2. `CR-SST-0235`, `4uentes-auth`: retransmitir el contrato versionado sin asumir autoridad.
+3. `CR-SST-0236`, Fend: crear inbox de fuentes, selección por referencia, estados de snapshot y acción independiente de propuesta de memoria.
+4. `CR-SST-0237`, E2E: probar los cuatro tipos, aislamiento, stale source, tags y separación de memoria desde el flujo visible.
+
+Los cuatro estados comienzan en `planned`. Su publicación no autoriza ejecución: cada owner requiere un gate `running` posterior, documentación owner y runbook verificable.

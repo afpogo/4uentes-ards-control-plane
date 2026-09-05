@@ -1,0 +1,48 @@
+schema_version: '1.0'
+phase: 4
+id: 'CR-CP-0027'
+title: 'Adopt knowledge-to-execution documentation policy in sst-4uentes-infra'
+status: 'done'
+source_request: 'requests/inbox/CR-CP-0027-adopt-knowledge-to-execution-policy-in-sst-infra.yaml'
+planned_request: 'requests/planned/CR-CP-0027-adopt-knowledge-to-execution-policy-in-sst-infra.yaml'
+closed_at: '2026-09-05'
+requester: '4uentes'
+summary: 'Infra adopted the versioned origin-repo policy through its manifest, owner documentation and validation guardrail; no runtime behavior changed.'
+control_plane_context:
+  initiative_id: 'INIT-CP-0003'
+  coordinated_by_request_id: 'CR-CP-0024'
+  predecessor_request_id: 'CR-CP-0026'
+  source_policy_revision: '4uentes-orchestor@7a8ea96'
+  target_repo: 'sst-4uentes-infra'
+execution:
+  control_plane_mutation_performed: true
+  child_repo_mutation_performed: true
+  child_repo: 'sst-4uentes-infra'
+  core_repo_mutation_performed: false
+  runtime_mutation_performed: false
+  infrastructure_mutation_performed: false
+  jira_write_performed: false
+policy_result:
+  policy_id: 'knowledge-to-execution-documentation-policy'
+  policy_class: 'origin-repo-policy'
+  source_revision: '7a8ea96'
+  child_adoption_status: 'adopted'
+  child_manifest: 'specs/policies/adoptions/knowledge-to-execution-documentation-policy.yaml'
+  core_promotion: 'not-performed-reservation-published-under-cr-cp-0028'
+owner_publication:
+  repository: 'afpogo/sst-4uentes-infra'
+  pull_request: 28
+  head_sha: '7663b8f4fe2daf49c9816718833029842156ffb2'
+  merge_commit: '8efb13ed5724cc52aa3e98db114bc07122229f12'
+  develop_head_after_merge: '8efb13ed5724cc52aa3e98db114bc07122229f12'
+  merged_at: '2026-09-05T21:34:31Z'
+  checks: {owner_full_check: 'PASS', validate_repository: 'SUCCESS'}
+validation:
+  result: 'passed'
+  checks: ['sst-4uentes-infra: npm run check', '4uentes-orchestor: npm run check', 'git diff --check', 'owner PR remote readback']
+  evidence_refs: ['evidence/requests/CR-CP-0027/infra-policy-adoption-merge-readback-2026-09-05.md']
+decision:
+  status: 'closed-local-child-policy-adoption'
+  approver: '4uentes'
+  blocker: 'none'
+  next_gate: 'CR-CP-0028 is reserved; its separate plan and Core owner handoff remain pending and do not authorize Core mutation.'
