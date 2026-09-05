@@ -1,12 +1,14 @@
 schema_version: "1.0"
-phase: 3
+phase: 4
 id: "CR-SST-0230"
 title: "Enable product-safe chat cache-aside QA"
-status: "running"
+status: "done"
 source_request: "requests/inbox/CR-SST-0230-product-safe-chat-cache-qa.yaml"
 planned_request: "requests/planned/CR-SST-0230-product-safe-chat-cache-qa.yaml"
+running_request: "requests/running/CR-SST-0230-product-safe-chat-cache-qa.yaml"
 created_at: "2026-08-28"
 started_at: "2026-08-28"
+closed_at: "2026-09-05"
 requester: "4uentes"
 depends_on: ["CR-SST-0204", "CR-SST-0211", "CR-SST-0217", "CR-SST-0218"]
 unblocks: ["CR-SST-0207"]
@@ -81,14 +83,15 @@ control_plane_context:
   jira_role: "mirror"
   jira_source_of_truth: false
   jira_issue_key: "SST-124"
-  jira_write_authorized: false
+  jira_write_authorized: "consumed-terminal-single-transition-2026-09-05"
   jira_conservative_reconciliation_batch_status: "consumed-2026-08-29"
   jira_conservative_reconciliation_readback: "SST-124 is an En curso Subtask of SST-113 without resolution; labels and description match CR-SST-0230."
   jira_terminal_preflight_status: "passed-read-only-2026-09-05"
-  jira_terminal_write_authorized: false
+  jira_terminal_write_authorized: "consumed-2026-09-05"
 
 jira_terminal_batch:
-  authorization_status: "pending-separate-exact-authorization"
+  authorization_status: "consumed"
+  authorization_source: "Operator authorization on 2026-09-05: Autorizo para CR-SST-0230 una unica escritura Jira."
   preflight_status: "passed-read-only"
   issue_key: "SST-124"
   expected_current_status: "En curso"
@@ -101,6 +104,14 @@ jira_terminal_batch:
   target_status_id: "10008"
   allowed_write_count_if_authorized: 1
   proposed_operation: "Transition only SST-124 through transition 41."
+  actual_write_count: 1
+  execution_status: "consumed-success-readback"
+  final_status: "Finalizada"
+  final_status_id: "10008"
+  final_status_category: "Done"
+  final_resolution: "Listo"
+  final_parent_issue_key: "SST-113"
+  terminal_readback_at: "2026-09-05T18:50:15.560-03:00"
   forbidden_operations:
     - "comments"
     - "field edits"
@@ -108,6 +119,7 @@ jira_terminal_batch:
     - "assignment changes"
     - "writes on SST-113, SST-117, SST-118 or any other issue"
   evidence_ref: "evidence/requests/CR-SST-0230/terminal-readiness-and-jira-preflight-2026-09-05.md"
+  result_evidence_ref: "evidence/requests/CR-SST-0230/jira-terminal-result-2026-09-05.md"
 
 contract:
   bend_route: "GET /4uentes/v1/chat/conversations/:id/messages"
@@ -138,7 +150,7 @@ execution:
   datastore_mutation_allowed: false
   schema_mutation_allowed: false
   secret_mutation_allowed: false
-  jira_write_allowed: "Consumed: create SST-124, transition it to En curso, correct SST-114 through SST-117 labels, finalize SST-114 and add one SST-117 checkpoint comment; no further Jira write is authorized."
+  jira_write_allowed: "Consumed: the earlier conservative batch and the separately authorized single SST-124 transition 41/Listo; no further Jira write is authorized."
 
 workspace_isolation:
   canonical_roots_eligible_for_mutation: false
@@ -192,11 +204,22 @@ execution_publication_rule:
     epic_key: "SST-86"
   cleanup:
     remote_readback_required: true
+  trial_result:
+    status: "passed"
+    plan_publication: "merged-and-read-back"
+    implementation_publication: "merged-and-read-back"
+    tracker_reconciliation: "merged-and-read-back"
+    terminal_publication_contract: "merge-and-readback-before-cleanup"
+    cleanup_gate: "remote-readback-required"
 
 owner_documentation:
   required: true
-  status: "owners-merged-and-read-back"
+  status: "satisfied"
   rule: "Runtime and observable contract changes must update owner specs, capabilities, docs, HTTP examples and tests; central evidence cannot substitute them."
+  evidence_refs:
+    - "evidence/requests/CR-SST-0230/bend-owner-publication-readback-2026-08-29.md"
+    - "evidence/requests/CR-SST-0230/auth-owner-publication-readback-2026-08-29.md"
+    - "evidence/requests/CR-SST-0230/terminal-closure-2026-09-05.md"
   owner_repos:
     sst-bend:
       role: "cache outcome producer and durable read authority"
@@ -240,10 +263,10 @@ execution_status:
   running_publication: "merged-and-read-back-pr-176-main-3779f33"
   bend_owner_execution: "merged-and-read-back-pr-29-develop-3751d38; full-owner-check-pass"
   auth_owner_execution: "merged-and-read-back-pr-14-develop-13ebe6f; full-owner-check-pass"
-  jira_mirror: "created-and-read-back-sst-124-en-curso; conservative-reconciliation-batch-consumed"
+  jira_mirror: "terminal-transition-consumed-and-read-back-sst-124-finalizada-resolution-listo"
   localhost_runtime_qa: "pass-single-run-miss-hit-normal-turn-miss-hit-product-api-cleanup"
   runtime_result_publication: "merged-and-read-back-pr-197-main-abb9048"
-  terminal_jira_gate: "read-only-preflight-pass; exact one-transition authorization pending"
+  terminal_jira_gate: "pass-single-transition-41-consumed-and-read-back"
   deployment: "automatic Bend and Auth development image plus Infra tag publications observed after user merges; no direct deployment action; cluster reconciliation unverified"
   production: "not-authorized"
 
@@ -278,10 +301,36 @@ rollback: >
   or production directly as rollback.
 
 decision:
-  status: "runtime-result-published-terminal-jira-authorization-pending"
+  status: "complete-owner-runtime-and-jira-terminal-publication-pending"
   approver: "4uentes"
   decided_at: "2026-09-05"
-  next_gate: "Publish and read back this terminal preflight, then obtain separate exact authorization for the single SST-124 transition before preparing the done lifecycle."
+  next_gate: "Merge and read back this done lifecycle before controlled worktree retirement; no additional Jira write is authorized."
+
+knowledge_to_execution_documentation:
+  policy_id: "knowledge-to-execution-documentation-policy"
+  primary_role: "execution-evidence"
+  owner: "4uentes-ards-control-plane"
+  status: "terminal-record"
+  applicability: "This lifecycle and its evidence record authorized execution and validation; they do not replace owner specs, manifests or operational runbooks."
+  technical_sources:
+    - "requests/planned/CR-SST-0230-product-safe-chat-cache-qa.yaml"
+    - "sst-bend owner ARDS/SDD at merge 3751d383451b790569fbbfa6421ff00eda5105eb"
+    - "4uentes-auth owner ARDS/SDD at merge 13ebe6ffd57b909a01dceaf78e8d42698094f6a8"
+  runbook_required: false
+  runbook_not_applicable_reason: "The reusable localhost HTTP QA harness and owner HTTP examples already operationalize the bounded check; this terminal record does not introduce a new operation."
+
+closure:
+  status: "complete-terminal-publication-pending"
+  completed_scope:
+    - "Bend cache outcome producer and Auth allowlisted forwarder are merged and read back with owner documentation."
+    - "One authorized localhost run proved miss-hit, normal product invalidation, miss-hit and conversation cleanup without direct Redis access."
+    - "The Jira mirror SST-124 is Finalizada with resolution Listo after exactly one terminal write."
+  remaining_operational_gate: "Merge and read back this done lifecycle before controlled worktree retirement."
+  limits:
+    - "No additional Jira write is authorized."
+    - "CR-SST-0207 remains running for its independent reserved-ngrok and cleanup limits."
+    - "No runtime rerun, Redis direct access, deployment, cluster or production action is authorized."
+    - "One synthetic Auth identity remains because no product identity deletion contract exists."
 
 evidence_refs:
   - "evidence/requests/CR-SST-0230/identity-and-owner-preflight-2026-08-28.md"
@@ -293,3 +342,5 @@ evidence_refs:
   - "evidence/requests/CR-SST-0230/runtime-gate-authorization-2026-08-29.md"
   - "evidence/requests/CR-SST-0230/localhost-cache-qa-result-2026-08-29.md"
   - "evidence/requests/CR-SST-0230/terminal-readiness-and-jira-preflight-2026-09-05.md"
+  - "evidence/requests/CR-SST-0230/jira-terminal-result-2026-09-05.md"
+  - "evidence/requests/CR-SST-0230/terminal-closure-2026-09-05.md"
