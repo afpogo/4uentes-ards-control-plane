@@ -19,7 +19,7 @@ summary: >
   explicit gate. Its autosync removed the permission failure but exposed a
   repeatable ClamAV OOM during signature update; the previous pod still
   preserves availability while a bounded memory remediation is gated. The
-  governed program scoreboard records 44 of 100 evidence-backed points, keeps
+  governed program scoreboard records 46 of 100 evidence-backed points, keeps
   phase 2 at zero and contains later Portfolio and Automation documentation
   drift without treating it as retroactive authorization.
 
@@ -41,7 +41,7 @@ authorization:
   evidence: "evidence/requests/CR-CP-0024/auth-owner-execution-authorization-2026-08-30.md"
 
 execution:
-  current_unit: "contain-infra-pr25-clamav-oom-and-reconcile-program-scoreboard"
+  current_unit: "contain-infra-pr25-clamav-oom-after-cr-sst-0233-running-reconciliation"
   parallel_unit: "worktree-sanitization-disposition-and-selective-recovery"
   completed_units:
     - "publish-plan-and-migration-lifecycle"
@@ -67,6 +67,7 @@ execution:
     - "publish-infra-receipt-custody-plan-as-code"
     - "merge-infra-pr25-at-authorized-head"
     - "read-back-infra-pr25-automatic-gitops-sync"
+    - "reconcile-cr-sst-0233-retroactive-running-lifecycle"
   control_plane_mutation_allowed: true
   child_repo_mutation_allowed: false
   child_repo_mutation_targets: ["sst-bend", "sst-4uentes-infra"]
@@ -402,9 +403,9 @@ decision:
 program_progress:
   status: "current-derived-view"
   observed_at: "2026-09-05"
-  earned_points: 44
+  earned_points: 46
   total_points: 100
-  progress_percent: 44
+  progress_percent: 46
   current_phase: "phase-1-owner-development-integration"
   phase_2_status: "not-started"
   stable_gate_open: false
@@ -435,3 +436,5 @@ evidence_refs:
   - "evidence/requests/CR-CP-0024/infra-pr25-merge-and-runtime-readback-2026-09-05.md"
   - "evidence/requests/CR-CP-0024/program-scoreboard.current.yaml"
   - "evidence/requests/CR-CP-0024/program-scoreboard.md"
+  - "requests/running/CR-SST-0233-reconcile-fresh-database-migration-baseline.yaml"
+  - "evidence/requests/CR-SST-0233/retroactive-running-reconciliation-2026-09-05.md"
