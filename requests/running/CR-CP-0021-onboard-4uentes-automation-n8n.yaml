@@ -36,19 +36,17 @@ policy_application:
     - "Do not add capability links or claim runtime, M2M, deployment or secret readiness."
 
 authorization:
-  status: "local-pgadmin-port-remediation-consumed"
+  status: "historical-n8n-key-custody-reconciliation-approved"
   approved_by: "4uentes"
   approved_at: "2026-09-05"
-  approval_text: >
-    ok, no, mejor hagamos por ahora para no mezclar, que este pgadmin de n8n
-    lo maneje en otro puerto 5060
+  approval_text: "ok avancemos"
   approval_consumed_for: >
-    Atomically change only N8N_PGADMIN_HOST_PORT in the stable local .env to
-    5060, revalidate the base Compose configuration and retry postgres, n8n and
-    pgAdmin without the tunnel override.
+    Read only the historical n8n encryptionKey field without output, migrate it
+    atomically into file-backed local custody, quarantine the unused generated
+    key for rollback, and revalidate the base runtime without a public tunnel.
 
 execution:
-  current_unit: "blocked-by-n8n-historical-encryption-key-mismatch"
+  current_unit: "historical-n8n-key-custody-reconciliation"
   completed_units:
     - "recover-canonical-inbox-identity"
     - "publish-current-onboarding-plan"
@@ -70,6 +68,7 @@ execution:
     - "evidence/requests/CR-CP-0021/owner-env-reconciliation-authorization-2026-09-05.md"
     - "evidence/requests/CR-CP-0021/local-runtime-start-authorization-2026-09-05.md"
     - "evidence/requests/CR-CP-0021/local-pgadmin-port-remediation-authorization-2026-09-05.md"
+    - "evidence/requests/CR-CP-0021/historical-n8n-key-custody-authorization-2026-09-05.md"
   owner_exact_paths:
     - ".gitignore"
     - ".env.example"
@@ -87,9 +86,9 @@ execution:
   capability_mutation_allowed: false
   child_repo_mutation_allowed: true
   owner_git_mutation_allowed: true
-  existing_secret_or_data_access_allowed: false
-  new_secret_generation_allowed: true
-  runtime_mutation_allowed: false
+  existing_secret_or_data_access_allowed: true
+  new_secret_generation_allowed: false
+  runtime_mutation_allowed: true
   infrastructure_mutation_allowed: false
   deployment_allowed: false
   jira_write_allowed: false
@@ -393,6 +392,47 @@ local_pgadmin_port_remediation_gate:
     volumes_or_bind_data_removed: false
     local_port_configuration_retained: "5060"
 
+historical_n8n_key_custody_gate:
+  status: "approved-pending-publication"
+  repository: "afpogo/4uentes-automation"
+  execution_checkout: "stable-owner-root-main"
+  source:
+    path: "n8n_data/config"
+    exact_field: "encryptionKey"
+    access: "internal-read-without-output"
+  target:
+    path: ".secrets/n8n_encryption_key"
+    update: "atomic-replacement"
+  rollback_custody:
+    path: ".secrets/.rollback/n8n_encryption_key.generated-unused-2026-09-05"
+    status: "private-local-quarantine-pending-separate-disposition"
+  preconditions:
+    - "Automation Compose has no active services"
+    - "source config is valid JSON with one non-empty encryptionKey string"
+    - "target secret exists and satisfies minimum length"
+    - "source and current target differ, compared only by internal digests"
+    - "rollback target does not already exist and private ACL can be enforced"
+  allowed_actions:
+    - "read only the exact historical encryptionKey field without output"
+    - "move the unused generated target into private rollback custody"
+    - "write and atomically promote a private staged file with the historical key"
+    - "verify equality by internal digest without printing either digest or value"
+    - "run LocalStackOnly, base docker compose up -d, ps and Runtime checks"
+  stop_conditions:
+    - "source JSON or field is absent, duplicated, empty or malformed"
+    - "target or rollback custody preconditions fail"
+    - "private ACL, atomic promotion or digest verification fails"
+    - "Compose configuration or runtime readiness fails"
+  rollback_or_compensation:
+    - "before verified promotion, restore the generated target from quarantine on any failure"
+    - "after verified equality with historical config, retain the historical target as authoritative"
+    - "on runtime failure, run docker compose down without -v and retain both secret files for diagnosis"
+    - "delete neither the historical config nor the quarantined generated key in this gate"
+  forbidden_actions:
+    - "print, log, export or copy secret values outside the declared private paths"
+    - "modify or delete n8n_data, workflows, credentials, executions or database rows"
+    - "use a tunnel or change versioned owner files, SST, Jira, Kubernetes or infrastructure"
+
 discovery_contract:
   service_id: "4uentes-automation"
   owner_repository: "afpogo/4uentes-automation"
@@ -449,13 +489,13 @@ required_checks:
   - "origin/main integration readback"
 
 decision:
-  status: "pgadmin-port-remediated-n8n-key-reconciliation-required"
+  status: "historical-n8n-key-custody-reconciliation-approved-pending-publication"
   approver: "4uentes"
   next_gate: >
-    Choose and authorize preservation of the historical n8n encryption key into
-    file-backed custody, or destructive reinitialization of n8n data. Preserving
-    the existing state is recommended. Any secret read or overwrite requires an
-    explicit high-risk runbook and evidence that never records the value.
+    Publish and read back the high-risk gate, migrate the historical key without
+    output, validate the local base runtime and record sanitized evidence. The
+    quarantined unused generated key requires separate disposition after stable
+    runtime readback.
 
 evidence_refs:
   - "evidence/requests/CR-CP-0021/implementation-plan-2026-09-05.md"
@@ -465,4 +505,5 @@ evidence_refs:
   - "evidence/requests/CR-CP-0021/owner-env-reconciliation-authorization-2026-09-05.md"
   - "evidence/requests/CR-CP-0021/local-runtime-start-authorization-2026-09-05.md"
   - "evidence/requests/CR-CP-0021/local-pgadmin-port-remediation-authorization-2026-09-05.md"
+  - "evidence/requests/CR-CP-0021/historical-n8n-key-custody-authorization-2026-09-05.md"
   - "docs/cross-repo/local-development-secret-and-compose-governance.md"
