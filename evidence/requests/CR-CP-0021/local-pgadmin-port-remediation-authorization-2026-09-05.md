@@ -39,3 +39,23 @@ ejecutar `docker compose down` sin `-v`. Nunca borrar datos, `.env` o
 
 Registrar únicamente estados, puertos no sensibles, checks, SHAs y rollback.
 No registrar contenido de `.env`, secretos, workflows ni filas de bases.
+
+## Resultado observado
+
+El gate se publicó mediante
+`https://github.com/afpogo/4uentes-ards-control-plane/pull/249` y se releyó en
+`main@3159e67b435a9dc8e5c378d277f46ae5a94b730a`. La sustitución atómica dejó
+`N8N_PGADMIN_HOST_PORT=5060`, conservó todas las demás líneas y no dejó temporal.
+El check `-LocalStackOnly` pasó y el puerto permaneció libre antes del arranque.
+
+En el reintento, PostgreSQL alcanzó estado saludable y pgAdmin respondió por
+loopback en `5060`. n8n no alcanzó readiness: los logs acotados y sanitizados
+indicaron que la clave de cifrado histórica de `n8n_data/config` no coincide
+con la clave file-backed generada. El agente no leyó ni imprimió valores.
+
+Se ejecutó el rollback `docker compose down` sin `-v`; no se eliminaron
+volúmenes, bind mounts, `.env`, `.secrets` ni datos. El puerto `5060` queda como
+configuración local válida. Para preservar workflows y credenciales existentes,
+el siguiente gate recomendado debe migrar la clave histórica a custodia
+file-backed sin exponerla. Reinicializar `n8n_data` sería destructivo y requiere
+una decisión distinta y explícita.

@@ -36,7 +36,7 @@ policy_application:
     - "Do not add capability links or claim runtime, M2M, deployment or secret readiness."
 
 authorization:
-  status: "local-pgadmin-port-remediation-approved"
+  status: "local-pgadmin-port-remediation-consumed"
   approved_by: "4uentes"
   approved_at: "2026-09-05"
   approval_text: >
@@ -48,7 +48,7 @@ authorization:
     pgAdmin without the tunnel override.
 
 execution:
-  current_unit: "local-pgadmin-port-remediation-and-base-runtime-retry"
+  current_unit: "blocked-by-n8n-historical-encryption-key-mismatch"
   completed_units:
     - "recover-canonical-inbox-identity"
     - "publish-current-onboarding-plan"
@@ -60,6 +60,8 @@ execution:
     - "publish-and-read-back-owner-env-migration-tool"
     - "reconcile-stable-owner-env-and-validate-compose-without-runtime"
     - "attempt-local-base-runtime-start-and-rollback-on-port-conflict"
+    - "remediate-local-pgadmin-port-to-5060-and-revalidate"
+    - "retry-base-runtime-and-rollback-on-n8n-key-mismatch"
   control_plane_exact_paths:
     - "requests/running/CR-CP-0021-onboard-4uentes-automation-n8n.yaml"
     - "evidence/requests/CR-CP-0021/automation-owner-local-secret-port-authorization-2026-09-05.md"
@@ -87,7 +89,7 @@ execution:
   owner_git_mutation_allowed: true
   existing_secret_or_data_access_allowed: false
   new_secret_generation_allowed: true
-  runtime_mutation_allowed: true
+  runtime_mutation_allowed: false
   infrastructure_mutation_allowed: false
   deployment_allowed: false
   jira_write_allowed: false
@@ -344,7 +346,7 @@ local_runtime_start_gate:
     secret_values_printed_or_recorded: false
 
 local_pgadmin_port_remediation_gate:
-  status: "approved-pending-publication"
+  status: "port-remediated-runtime-retry-rolled-back"
   repository: "afpogo/4uentes-automation"
   execution_checkout: "stable-owner-root-main"
   local_file: ".env"
@@ -372,6 +374,24 @@ local_pgadmin_port_remediation_gate:
     - "use docker-compose.tunnel.yml or publish a tunnel"
     - "read or mutate workflows, executions, database rows or credentials"
     - "print, export or copy any secret value"
+  result:
+    authorization_pull_request: "https://github.com/afpogo/4uentes-ards-control-plane/pull/249"
+    authorization_main_readback_sha: "3159e67b435a9dc8e5c378d277f46ae5a94b730a"
+    atomic_local_env_replacement: true
+    configured_pgadmin_host_port: "5060"
+    unrelated_env_lines_preserved: true
+    temporary_candidate_absent: true
+    local_stack_check_after_change: "passed"
+    postgres_reached_healthy: true
+    pgadmin_loopback_http_responded: true
+    n8n_health_endpoint_responded: false
+    blocker: "historical n8n settings encryption key does not match file-backed key"
+    bounded_sanitized_logs_used: true
+    secret_values_read_or_printed_by_agent: false
+    runtime_rollback_command: "docker compose down"
+    runtime_rollback_completed: true
+    volumes_or_bind_data_removed: false
+    local_port_configuration_retained: "5060"
 
 discovery_contract:
   service_id: "4uentes-automation"
@@ -429,13 +449,13 @@ required_checks:
   - "origin/main integration readback"
 
 decision:
-  status: "local-pgadmin-port-remediation-approved-pending-publication"
+  status: "pgadmin-port-remediated-n8n-key-reconciliation-required"
   approver: "4uentes"
   next_gate: >
-    Publish and read back this gate, change only the local pgAdmin host port to
-    5060, revalidate and retry the base stack. Any tunnel, workflow/data
-    operation, productivity migration, capability, M2M, Jira or infrastructure
-    work remains separately gated.
+    Choose and authorize preservation of the historical n8n encryption key into
+    file-backed custody, or destructive reinitialization of n8n data. Preserving
+    the existing state is recommended. Any secret read or overwrite requires an
+    explicit high-risk runbook and evidence that never records the value.
 
 evidence_refs:
   - "evidence/requests/CR-CP-0021/implementation-plan-2026-09-05.md"
