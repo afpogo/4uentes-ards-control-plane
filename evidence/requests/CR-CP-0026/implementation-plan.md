@@ -84,10 +84,15 @@ Despues del readback de este plan se revisaran y portaran solamente:
 - `docs/policies/knowledge-to-execution-documentation-policy.md`;
 - las entradas correspondientes en `docs/policies/README.md`, `AGENTS.md` y
   `specs/integration/policies.yaml`;
-- `state/features/knowledge-to-execution-documentation-policy.current.yaml`;
-- las entradas correspondientes en `state/00-index.yaml` y
-  `state/policy-links.yaml`;
+- las entradas correspondientes en `state/policy-links.yaml` y en el estado
+  existente `state/features/ards-sdd-policy-unification.current.yaml`;
 - evidencia CR-CP-0026 todavia pertinente.
+
+La revision preimplementacion descarto el feature state SST inicialmente
+previsto y su entrada en `state/00-index.yaml`: habrian confundido la
+procedencia del patron en Infra con una adopcion child. Esta sustitucion
+mantiene el enlace en el estado existente de unificacion de policies del
+control plane.
 
 Se descartan como fuente el `done` prematuro y cualquier delta no relacionado
 del worktree raiz. El arbol dirty queda preservado; no se fusiona, rebasa,

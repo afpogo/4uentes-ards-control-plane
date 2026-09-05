@@ -3,7 +3,7 @@ kind: "feature_state"
 id: "ards-sdd-policy-unification"
 title: "ARDS/SDD Policy Unification"
 status: "validated-local"
-updated_at: "2026-07-02"
+updated_at: "2026-09-05"
 solution_id: "sst"
 affected_services:
   - 4uentes-auth
@@ -22,6 +22,7 @@ request_ids:
   - CR-SST-0105
   - CR-SST-0106
   - CR-SST-0174
+  - CR-CP-0026
 spec_refs:
   - "specs/policies/00-index.yaml"
   - "specs/policies/ards-sdd-policy-component-model.yaml"
@@ -39,6 +40,7 @@ spec_refs:
   - "docs/policies/agent-context-management-policy.md"
   - "docs/policies/agent-architecture-boundary-policy.md"
   - "docs/policies/owner-documentation-authority-policy.md"
+  - "docs/policies/knowledge-to-execution-documentation-policy.md"
   - "docs/cross-repo/child-repo-orchestrator-link-rule.md"
   - "docs/requests/capability-state-linkage.md"
 capability_refs:
@@ -73,6 +75,8 @@ evidence_refs:
   - "evidence/requests/CR-SST-0106/validation-results.md"
   - "evidence/requests/CR-SST-0174/policy-adoption-summary.md"
   - "evidence/requests/CR-SST-0174/validation-results.md"
+  - "evidence/requests/CR-CP-0026/policy-analysis.md"
+  - "evidence/requests/CR-CP-0026/promotion-readiness-audit-2026-09-05.md"
 open_gaps:
   - "Handoff `human-doc-language` to 4uentes-ards-core as a reusable policy template while preserving the now-active orchestrator registry entry and local source docs."
   - "Resolve canonical identity for 4uentes-core versus 4uentes-ards-core."
@@ -81,3 +85,4 @@ open_gaps:
   - "Continue broader lifecycle promotion gates beyond owner documentation and state evidence reconciliation."
   - "CR-SST-0174 refreshes sst-fend through request-driven manifests and local enforcement; publication remains pending."
   - "sst-fend keeps a time-bounded http-qa-harness-policy exception until a versioned .http harness is added."
+  - "Promote knowledge-to-execution-documentation-policy to Core only through a separate approved request; Infra is pattern provenance, not an adopted child under CR-CP-0026."

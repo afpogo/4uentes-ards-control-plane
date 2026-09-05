@@ -22,6 +22,9 @@ El registry machine-readable esta en:
   control-plane.
 - `worktree-request-lifecycle-policy` nace como policy local del control plane;
   su promoción al canon compartido requiere un request/handoff a Core.
+- `knowledge-to-execution-documentation-policy` se incuba localmente como
+  policy durable; su procedencia en Infra no implica adopción del child y su
+  promoción `core-profile-scoped` requiere otro request/handoff.
 - La policy core-owned `http-qa-harness-policy` queda adoptada localmente y se
   rastrea desde `specs/integration/policies.yaml`, `AGENTS.md` y
   `state/policy-links.yaml`.
@@ -47,6 +50,7 @@ El registry machine-readable esta en:
 - [owner-documentation-authority-policy.md](owner-documentation-authority-policy.md)
 - [work-tracker-control-plane-authority-policy.md](work-tracker-control-plane-authority-policy.md)
 - [worktree-request-lifecycle-policy.md](worktree-request-lifecycle-policy.md)
+- [knowledge-to-execution-documentation-policy.md](knowledge-to-execution-documentation-policy.md)
 - [visual-documentation-as-code-policy.md](visual-documentation-as-code-policy.md)
 - [execution-publication-and-tracker-closure-policy.md](execution-publication-and-tracker-closure-policy.md)
 

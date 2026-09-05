@@ -514,6 +514,72 @@ policies:
     gaps:
       - "Any child rollout requires a separate approved request and owner manifest."
 
+  - id: "knowledge-to-execution-documentation-policy"
+    name: "Knowledge to Execution Documentation Policy"
+    type: "ards-sdd-governance-policy"
+    policy_class: "origin-repo-policy"
+    origin_repo: "4uentes-orchestor"
+    canonical_owner: "4uentes-ards-control-plane"
+    applicability: "new or materially modified human guidance linked to technical authority"
+    adoption_mode: "local-required-and-request-driven-child-adoption"
+    required_for_profiles:
+      - "control-plane"
+    optional_for_profiles:
+      - "functional-repo"
+      - "child-repo"
+      - "infra-gitops"
+    template_binding: null
+    local_aliases: []
+    status: "active-local"
+    scope:
+      - "learning-purpose"
+      - "playbook-decision-guidance"
+      - "runbook-operationalization"
+      - "technical-authority-linkage"
+      - "external-execution-authorization"
+      - "governed-evidence-feedback"
+    owner: "4uentes-ards-control-plane"
+    human_doc: "docs/policies/knowledge-to-execution-documentation-policy.md"
+    pattern_provenance:
+      repo: "sst-4uentes-infra"
+      request_id: "CR-HPT-0024"
+      origin_commit: "67c4874b2404235d70dc56ce143343954f5c707e"
+      integration_commit: "4ab3e7e9f0869c7c035d75a85149977994aa0af9"
+    typed_relations:
+      learning_to_playbook: "informs"
+      playbook_to_decision: "recommends-or-selects"
+      approved_decision_to_runbook: "authorizes"
+      runbook_to_execution: "operationalizes"
+      canonical_specs_and_manifests_to_guidance: "constrains"
+      evidence_to_knowledge: "validates-and-feeds-back-through-owner-lifecycle"
+    authority_conditions:
+      technical_source: "owner-published, active, applicable, canonical and revisioned"
+      authorization: "approved request, human decision, applicable policy and safety gate"
+      generated_projection: "must link its canonical source lineage"
+    enforcement:
+      expected: "Declare document role and owner; preserve typed authority relations; block silent reconciliation; and require external authorization for mutation."
+      mode: "operational-review"
+      failure_behavior: "record-gap-or-block-acceptance"
+    promotion_candidate:
+      target_repo: "4uentes-ards-core"
+      target_class: "core-profile-scoped"
+      status: "not-started-separate-request-required"
+    evidence:
+      - "requests/running/CR-CP-0026-define-knowledge-to-execution-documentation-policy.yaml"
+      - "evidence/requests/CR-CP-0026/promotion-readiness-audit-2026-09-05.md"
+      - "evidence/requests/CR-CP-0026/implementation-plan.md"
+      - "evidence/requests/CR-CP-0026/policy-analysis.md"
+    gaps:
+      - "Promotion to Core requires a separate approved request and owner handoff."
+      - "Child adoption requires a request plus policy_adoption_manifest or policy_exception_manifest."
+      - "A declarative chain manifest and structural validator remain a separate increment."
+      - "No policy_overlay kind, schema or resolver is active; CR-CP-0025 remains architecture-only."
+    relates_to:
+      - "owner-documentation-authority-policy"
+      - "human-doc-language"
+      - "visual-documentation-as-code-policy"
+      - "execution-publication-and-tracker-closure-policy"
+
 core_owned_adoptions:
   - id: "http-qa-harness-policy"
     name: "HTTP QA Harness Policy"
