@@ -10,9 +10,18 @@ started_at: "2026-08-30"
 requester: "4uentes"
 
 summary: >
-  Backend owner PR 32 is published and green without merge. Historical labels
-  remain provenance, CR-CP-0024 is the retroactive execution authority, and
-  image publication plus Infra mutation require the next explicit gate.
+  Backend owner PR 32 is integrated and its image is pinned in Infra. The new
+  Backend pod exposed a receipt-clamav capability failure while the previous
+  ready pod preserved availability. Infra PR 24 was published with green
+  checks, then merged outside the agent gate and applied by Argo CD autosync.
+  The CAP_CHOWN-only remediation was insufficient. Infra PR 25 replaced the
+  root entrypoint, added the governed delivery plan and was merged under an
+  explicit gate. Its autosync removed the permission failure but exposed a
+  repeatable ClamAV OOM during signature update; the previous pod still
+  preserves availability while a bounded memory remediation is gated. The
+  governed program scoreboard records 44 of 100 evidence-backed points, keeps
+  phase 2 at zero and contains later Portfolio and Automation documentation
+  drift without treating it as retroactive authorization.
 
 control_plane_context:
   initiative_id: "INIT-CP-0003"
@@ -21,6 +30,8 @@ control_plane_context:
   auth_preflight_merge_sha: "e0ab936c9db56c1b682be0c729b73619ee560bb9"
   disposition_manifest_ref: "evidence/requests/CR-CP-0024/promotion-disposition-manifest.yaml"
   auth_preflight_ref: "evidence/requests/CR-CP-0024/auth-owner-execution-preflight-2026-08-30.md"
+  program_scoreboard_ref: "evidence/requests/CR-CP-0024/program-scoreboard.current.yaml"
+  program_scoreboard_human_ref: "evidence/requests/CR-CP-0024/program-scoreboard.md"
 
 authorization:
   status: "consumed-by-auth-pr-publication; subsequent merge was outside gate"
@@ -30,7 +41,7 @@ authorization:
   evidence: "evidence/requests/CR-CP-0024/auth-owner-execution-authorization-2026-08-30.md"
 
 execution:
-  current_unit: "backend-rollout-health-blocked-await-owner-disposition"
+  current_unit: "contain-infra-pr25-clamav-oom-and-reconcile-program-scoreboard"
   parallel_unit: "worktree-sanitization-disposition-and-selective-recovery"
   completed_units:
     - "publish-plan-and-migration-lifecycle"
@@ -48,6 +59,14 @@ execution:
     - "retire-thirteen-clean-cr-cp-0024-worktrees-after-readback"
     - "establish-ten-clean-current-feature-baselines"
     - "fast-forward-clean-core-and-chatbot-roots"
+    - "publish-cr-hpt-0024-infra-remediation-pr"
+    - "read-back-unexpected-infra-merge-and-automatic-gitops-sync"
+    - "confirm-cap-chown-remediation-insufficient"
+    - "implement-and-validate-unprivileged-clamav-remediation"
+    - "publish-unprivileged-clamav-owner-pr"
+    - "publish-infra-receipt-custody-plan-as-code"
+    - "merge-infra-pr25-at-authorized-head"
+    - "read-back-infra-pr25-automatic-gitops-sync"
   control_plane_mutation_allowed: true
   child_repo_mutation_allowed: false
   child_repo_mutation_targets: ["sst-bend", "sst-4uentes-infra"]
@@ -60,7 +79,188 @@ execution:
   deployment_allowed: false
   stable_branch_mutation_allowed: false
   jira_write_allowed: false
-  external_execution_gate: "Choose and authorize either a CR-HPT-0024 Infra remediation PR or a normal GitOps pin rollback; no other owner may advance while the new Backend pod is unhealthy."
+  external_execution_gate: "Authorize a bounded Infra owner remediation for the repeatable receipt-clamav OOMKilled during signature update; manual cluster mutation and Jira closure remain prohibited."
+
+infra_remediation_pr:
+  authorization_status: "consumed-by-branch-and-pr-publication"
+  approved_by: "4uentes"
+  approved_at: "2026-09-05"
+  approval_text: "ok avancemos con el siguiente gate"
+  repository: "afpogo/sst-4uentes-infra"
+  branch: "fix/CR-HPT-0024/clamav-volume-permissions"
+  base_ref: "develop"
+  base_sha: "7e488e542f0242fffcf9d1e71672e72c79bd3b39"
+  head_sha: "3526a1d336f635a48220048e0837e8e1efcce19a"
+  pull_request: 24
+  pull_request_url: "https://github.com/afpogo/sst-4uentes-infra/pull/24"
+  publication_readback_state: "OPEN"
+  publication_readback_mergeable: "MERGEABLE"
+  publication_readback_merge_state_status: "CLEAN"
+  current_state: "MERGED"
+  merged_at: "2026-09-05T03:21:42Z"
+  merged_by: "afpogo"
+  merge_sha: "55097809b069703af2049ab7769db6b83a95d021"
+  merge_executed_by_agent: false
+  merge_gate_status: "not-issued-before-observed-merge"
+  changed_files: 8
+  additions: 96
+  deletions: 2
+  checks:
+    validate_repository: "SUCCESS"
+    validate_desired_state: "SUCCESS"
+    validate_sst_bend_manifests: "SUCCESS"
+    validate_sst_fend_manifests: "SUCCESS"
+  post_merge_checks:
+    revision: "55097809b069703af2049ab7769db6b83a95d021"
+    validate_repository_run: 33941638588
+    validate_desired_state_run: 33941638539
+    validate_sst_bend_manifests_run: 33941638747
+    validate_sst_fend_manifests_run: 33941638540
+    conclusion: "SUCCESS"
+  jira:
+    issue: "HPT-16"
+    status: "En curso"
+    publication_comment_id: "10424"
+    merge_and_runtime_readback_comment_id: "10425"
+  automatic_gitops_observation:
+    application: "sst-app"
+    automated_prune: true
+    automated_self_heal: true
+    sync: "Synced"
+    revision: "55097809b069703af2049ab7769db6b83a95d021"
+    health: "Progressing"
+    operation_phase: "Succeeded"
+    operation_finished_at: "2026-09-05T03:22:27Z"
+    deployment: "sst-bend"
+    ready_replicas: 1
+    total_replicas: 2
+    unavailable_replicas: 1
+    new_pod_readiness: "1/2"
+    scanner_state: "CrashLoopBackOff"
+    scanner_error: "chown: cannot read directory '/var/lib/clamav': Permission denied"
+    availability: "preserved-by-previous-ready-pod"
+  remediation_result: "ineffective-cap-chown-insufficient-for-recursive-directory-traversal"
+  runtime_mutation_performed_by_agent: false
+  evidence: "evidence/requests/CR-CP-0024/infra-remediation-pr-publication-readback-2026-09-05.md"
+
+infra_second_remediation:
+  authorization_status: "consumed-by-owner-pr-publication"
+  approved_by: "4uentes"
+  approved_at: "2026-09-05"
+  approval_text: "ok avancemos apegados a la politica del worktree"
+  repository: "afpogo/sst-4uentes-infra"
+  worktree: "worktrees/CR-HPT-0024-infra-owner"
+  worktree_policy:
+    reused_existing_worktree: true
+    previous_head_reachable_from_base: true
+    second_worktree_created: false
+    remote_branch_collision: false
+  base_ref: "origin/develop"
+  base_sha: "55097809b069703af2049ab7769db6b83a95d021"
+  branch: "fix/CR-HPT-0024/clamav-directory-traversal"
+  local_head_sha: "2105e775f11de068fbcfaae0eb36a0e52db446ea"
+  design:
+    image_entrypoint: "/init-unprivileged"
+    uid_gid: "1000:1000"
+    added_capabilities: []
+    dropped_capabilities: ["ALL"]
+    clamd_configuration: "generated ConfigMap mounted read-only"
+    scanner_transport: "shared Unix socket only"
+    staging: "memory-backed emptyDir"
+    probes: "clamdscan ping over Unix socket"
+  validation:
+    root_entrypoint_chown_only_reproduced: true
+    root_entrypoint_slash_substitution_failure_reproduced: true
+    unprivileged_entrypoint_pong: true
+    clean_stream_exit: 0
+    eicar_stream_exit: 1
+    eicar_verdict: "FOUND"
+    owner_check: "PASS"
+    receipt_custody_check: "PASS"
+    kustomize_render: "PASS"
+    server_dry_run: "PASS"
+    diff_check: "PASS"
+    secret_scan: "PASS"
+  publication:
+    branch_push: "published-and-read-back"
+    remote_head_sha: "2105e775f11de068fbcfaae0eb36a0e52db446ea"
+    develop_readback_sha: "55097809b069703af2049ab7769db6b83a95d021"
+    pull_request: 25
+    pull_request_url: "https://github.com/afpogo/sst-4uentes-infra/pull/25"
+    pull_request_state: "MERGED"
+    mergeable: "MERGEABLE"
+    merge_state_status: "CLEAN"
+    commits: 2
+    changed_files: 13
+    additions: 376
+    deletions: 48
+    auto_merge: false
+    checks:
+      validate_repository: "SUCCESS"
+      validate_desired_state: "SUCCESS"
+      validate_sst_bend_manifests: "SUCCESS"
+      validate_sst_fend_manifests: "SUCCESS"
+    merge_commit: "a4d120061d0d4d53352b1de766858602ff759750"
+    merged_at: "2026-09-05T15:22:54Z"
+    merged_by: "afpogo"
+    merge_allowed: false
+    runtime_mutation_allowed: false
+    post_merge_checks:
+      revision: "a4d120061d0d4d53352b1de766858602ff759750"
+      validate_repository: "SUCCESS"
+      validate_desired_state: "SUCCESS"
+      validate_sst_bend_manifests: "SUCCESS"
+      validate_sst_fend_manifests: "SUCCESS"
+  documentation_as_code:
+    commit: "2105e775f11de068fbcfaae0eb36a0e52db446ea"
+    plan: "docs/infra/receipt-custody-delivery-plan.md"
+    maps: ["gate-roadmap", "gitops-deployment-sequence"]
+    language: "es"
+    textual_fallbacks: true
+    owner_check: "PASS"
+    remote_checks: "SUCCESS"
+  merge_authorization:
+    status: "consumed-by-exact-merge-and-read-only-runtime-readback"
+    approved_by: "4uentes"
+    approved_at: "2026-09-05"
+    approval_text: "Autorizoa fusionar infra, ademas necesito conoceer el plan que estamos desarrollando en infra. realiza un docs as a code con mapas mermaid."
+    authorized_pr: 25
+    authorized_head_sha: "2105e775f11de068fbcfaae0eb36a0e52db446ea"
+    automatic_gitops_sync_accepted_from_prior_disclosed_effect: true
+    read_only_runtime_readback_allowed: true
+    manual_cluster_mutation_allowed: false
+    jira_terminal_transition_allowed: false
+    evidence: "evidence/requests/CR-CP-0024/infra-pr25-merge-authorization-2026-09-05.md"
+  automatic_gitops_observation:
+    application: "sst-app"
+    sync: "Synced"
+    health: "Progressing"
+    revision: "a4d120061d0d4d53352b1de766858602ff759750"
+    operation_phase: "Succeeded"
+    deployment: "sst-bend"
+    ready_replicas: 1
+    total_replicas: 2
+    updated_replicas: 1
+    unavailable_replicas: 1
+    new_pod: "sst-bend-58498cc978-rxdlq"
+    backend_container_ready: true
+    scanner_container_ready: false
+    scanner_restart_count_observed: 3
+    scanner_last_reason: "OOMKilled"
+    scanner_exit_code: 137
+    scanner_limit: "1536Mi"
+    scanner_phase: "freshclam testing updated daily database before clamd socket readiness"
+    previous_permission_error_observed: false
+    availability: "preserved-by-previous-ready-pod"
+    manual_cluster_mutation_performed: false
+    evidence: "evidence/requests/CR-CP-0024/infra-pr25-merge-and-runtime-readback-2026-09-05.md"
+  jira:
+    issue: "HPT-16"
+    expected_status: "En curso"
+    progress_comment: "pending-oauth-reconnection"
+    attempts: 3
+    blocker: "Atlassian OAuth refresh returned unauthorized_client on preflight, prepublication retry and postpublication write."
+  evidence: "evidence/requests/CR-CP-0024/infra-second-remediation-prepublication-2026-09-05.md"
 
 worktree_sanitization:
   policy_id: "worktree-request-lifecycle-policy"
@@ -195,9 +395,23 @@ required_checks:
   - "owner branch and pull request remote readback"
 
 decision:
-  status: "running-backend-integrated-rollout-health-blocked"
+  status: "running-infra-pr25-merged-clamav-oom-blocker-contained"
   approver: "4uentes"
-  next_gate: "Authorize CR-HPT-0024 Infra remediation or normal GitOps rollback; keep the integration wave stopped."
+  next_gate: "Plan and authorize a bounded owner remediation for ClamAV signature-update memory; keep the previous pod serving, avoid manual cluster changes, and reconcile Jira after OAuth is restored."
+
+program_progress:
+  status: "current-derived-view"
+  observed_at: "2026-09-05"
+  earned_points: 44
+  total_points: 100
+  progress_percent: 44
+  current_phase: "phase-1-owner-development-integration"
+  phase_2_status: "not-started"
+  stable_gate_open: false
+  authorization_effect: "none"
+  evidence:
+    - "evidence/requests/CR-CP-0024/program-scoreboard.current.yaml"
+    - "evidence/requests/CR-CP-0024/program-scoreboard.md"
 
 evidence_refs:
   - "evidence/requests/CR-CP-0024/implementation-plan.md"
@@ -215,3 +429,9 @@ evidence_refs:
   - "evidence/requests/CR-CP-0024/backend-merge-rollout-and-health-readback-2026-08-31.md"
   - "evidence/requests/CR-CP-0024/worktree-sanitization-readiness-2026-09-03.yaml"
   - "evidence/requests/CR-CP-0024/worktree-sanitization-policy-application-2026-09-03.md"
+  - "evidence/requests/CR-CP-0024/infra-remediation-pr-publication-readback-2026-09-05.md"
+  - "evidence/requests/CR-CP-0024/infra-second-remediation-prepublication-2026-09-05.md"
+  - "evidence/requests/CR-CP-0024/infra-pr25-merge-authorization-2026-09-05.md"
+  - "evidence/requests/CR-CP-0024/infra-pr25-merge-and-runtime-readback-2026-09-05.md"
+  - "evidence/requests/CR-CP-0024/program-scoreboard.current.yaml"
+  - "evidence/requests/CR-CP-0024/program-scoreboard.md"
