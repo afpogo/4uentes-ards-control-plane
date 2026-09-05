@@ -1,0 +1,134 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-CP-0021"
+title: "Onboard the shared 4uentes automation service powered by n8n"
+status: "running"
+source_request: "requests/inbox/CR-CP-0021-onboard-4uentes-automation-n8n.yaml"
+planned_request: "requests/planned/CR-CP-0021-onboard-4uentes-automation-n8n.yaml"
+created_at: "2026-08-23"
+started_at: "2026-09-05"
+requester: "4uentes"
+
+summary: >
+  Publish the first current control-plane discovery slice for the existing
+  private 4uentes-automation owner. Register only logical identity, initial
+  solution membership and a discovered state; historical capability, M2M and
+  runtime assertions remain excluded pending owner-specific revalidation.
+
+control_plane_context:
+  initiative_id: "INIT-HPT-0002"
+  coordinating_request: "CR-HPT-0027"
+  reservation_merge_sha: "2b56b79adbbafb760d562a30a6fee744bf961ec3"
+  planning_merge_sha: "54fa1a8c0d4aa9533364fea12d6b706a6ebdf5aa"
+  execution_base_ref: "origin/main"
+  execution_base_sha: "54fa1a8c0d4aa9533364fea12d6b706a6ebdf5aa"
+
+policy_application:
+  base_policy: "worktree-request-lifecycle-policy"
+  formal_policy_overlay_status: "absent"
+  dynamic_resolver_status: "not-implemented"
+  operational_control_ref: "evidence/requests/CR-CP-0024/worktree-sanitization-readiness-2026-09-03.yaml"
+  resolution_mode: "manual-canonical-policy-and-operational-review"
+  effective_rules:
+    - "Use the clean request-scoped B3 worktree created from refreshed origin/main."
+    - "Preserve the legacy worktree as read-only provenance."
+    - "Reconstruct current artifacts; do not copy the legacy snapshot wholesale."
+    - "Do not add capability links or claim runtime, M2M, deployment or secret readiness."
+
+authorization:
+  status: "control-plane-discovery-approved"
+  approved_by: "4uentes"
+  approved_at: "2026-09-05"
+  approval_text: "autorizo retirar y avanzar con el proximo gate"
+  approval_consumed_for: >
+    Publish and read back the running lifecycle, logical service catalog entry,
+    initial finanzas-personales shared membership, discovered feature state and
+    state index update only.
+
+execution:
+  current_unit: "control-plane-discovery"
+  completed_units:
+    - "recover-canonical-inbox-identity"
+    - "publish-current-onboarding-plan"
+  exact_paths:
+    - "requests/running/CR-CP-0021-onboard-4uentes-automation-n8n.yaml"
+    - "catalog/services/4uentes-automation.yaml"
+    - "solutions/finanzas-personales.yaml"
+    - "state/features/shared-automation-control-plane-onboarding.current.yaml"
+    - "state/00-index.yaml"
+  control_plane_mutation_allowed: true
+  catalog_mutation_allowed: true
+  solution_mutation_allowed: true
+  discovered_state_mutation_allowed: true
+  capability_mutation_allowed: false
+  child_repo_mutation_allowed: false
+  owner_git_mutation_allowed: false
+  secret_or_data_access_allowed: false
+  runtime_mutation_allowed: false
+  infrastructure_mutation_allowed: false
+  deployment_allowed: false
+  jira_write_allowed: false
+
+discovery_contract:
+  service_id: "4uentes-automation"
+  owner_repository: "afpogo/4uentes-automation"
+  owner_visibility: "private"
+  owner_main_observed: "32055ab77f0c1b898eb77a6fe232b965c54f137d"
+  implementation: "n8n"
+  ards_profile: "backend-api"
+  solution_id: "finanzas-personales"
+  shared: true
+  state: "discovered"
+  trust_boundary: "No direct Automation to Phinance access."
+
+excluded_legacy_assertions:
+  - "validated-local onboarding status"
+  - "automation command capability readiness"
+  - "Auth grant or SST consumer availability"
+  - "private network, secrets, verifier, workflow or runtime activation"
+
+task_weight:
+  classification: "bounded-control-plane-execution"
+  risk_level: "medium"
+  bounded_reason: >
+    This slice changes only control-plane discovery artifacts, while preserving
+    security and runtime claims for later high-risk owner gates.
+
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5"
+  fallback_reasoning_effort: "high"
+  reason: "The service identity participates in a future financial and M2M trust boundary."
+
+subagent_deployment_plan:
+  mode: "none"
+  reason: "No delegation was requested; identity and boundary decisions remain sequential."
+
+owner_documentation:
+  required_for_this_gate: false
+  reason: "No owner repository is mutated in this control-plane-only discovery slice."
+  required_for_future_owner_slice: true
+
+required_checks:
+  - "git diff --check"
+  - "secret-safe changed-file review"
+  - "4uentes-orchestor npm.cmd run check"
+  - "pull request exact-path readback"
+  - "origin/main integration readback"
+
+decision:
+  status: "running-control-plane-discovery"
+  approver: "4uentes"
+  next_gate: >
+    After this slice is merged and read back, request explicit authorization
+    for the 4uentes-automation owner local secret and port contract without
+    runtime startup. Capabilities, M2M, Jira and infrastructure remain separate.
+
+evidence_refs:
+  - "evidence/requests/CR-CP-0021/implementation-plan-2026-09-05.md"
+  - "docs/cross-repo/local-development-secret-and-compose-governance.md"

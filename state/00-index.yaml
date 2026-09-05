@@ -1,7 +1,7 @@
 schema_version: "1.0"
 kind: "state_index"
 status: "active"
-updated_at: "2026-08-27"
+updated_at: "2026-09-05"
 machine: "state/state-machine.yaml"
 capability_links: "state/capability-links.yaml"
 features:
@@ -11,6 +11,7 @@ features:
   - "state/features/cluster-publication-ngrok-domain.current.yaml"
   - "state/features/multi-solution-scope-partition.current.yaml"
   - "state/features/finanzas-personales-control-plane-onboarding.current.yaml"
+  - "state/features/shared-automation-control-plane-onboarding.current.yaml"
   - "state/features/phinance-sst-trust-chain.current.yaml"
   - "state/features/portfolio-local-stabilization-baseline.current.yaml"
   - "state/features/portfolio-browser-smoke-baseline.current.yaml"

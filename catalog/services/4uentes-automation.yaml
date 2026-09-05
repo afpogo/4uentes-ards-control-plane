@@ -1,0 +1,45 @@
+service_id: 4uentes-automation
+canonical_identity: 4uentes-automation
+kind: automation-runtime
+status: discovered
+shared: true
+solution_ids:
+  - finanzas-personales
+legacy_aliases:
+  - n8n-local
+repo:
+  canonical_repo: 4uentes-automation
+  remote: git@github.com:afpogo/4uentes-automation.git
+  branch_observed: main
+  head_observed: 32055ab77f0c1b898eb77a6fe232b965c54f137d
+  working_tree_observed: clean-owner-checkout
+  observed_at: 2026-09-05
+package:
+  name: n8n
+  runtime: docker-compose-n8n-postgresql
+ards:
+  kind: backend-api
+  status: discovered
+  agents_md: true
+  specs_index: true
+  docs_overview: true
+  docs_ai_policy: true
+validation:
+  check_command: "powershell -ExecutionPolicy Bypass -File .\\scripts\\check.ps1"
+  current_status: not-executed-under-this-control-plane-slice
+orchestrator_link_contract:
+  required: true
+  status: adopted
+  rule_ref: "docs/cross-repo/child-repo-orchestrator-link-rule.md"
+  template_ref: "templates/child-orchestrator-link-rule.md"
+  metadata_key: "orchestrator_link"
+  owner_ref: "4uentes-automation:specs/integration/control-plane-link.yaml"
+  capability_state_map: "state/capability-links.yaml"
+deployment_targets_observed:
+  - local-docker-compose-not-activated-by-this-request
+notes:
+  - Logical shared automation identity; n8n is its current replaceable implementation.
+  - The private owner repository and canonical main ref were read back before discovery.
+  - Discovery does not adopt historical capability, M2M, secret, network, workflow, runtime or deployment claims.
+  - Direct access from Automation to Phinance remains prohibited.
+  - Future owner mutation requires a separate request-scoped worktree, owner documentation and validation.

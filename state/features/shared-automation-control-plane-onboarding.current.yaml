@@ -1,0 +1,37 @@
+schema_version: "1.0"
+kind: "feature_state"
+id: "shared-automation-control-plane-onboarding"
+title: "Shared Automation Control Plane Onboarding"
+status: "discovered"
+updated_at: "2026-09-05"
+solution_id: "finanzas-personales"
+affected_services:
+  - 4uentes-automation
+request_ids:
+  - CR-CP-0021
+spec_refs:
+  - "requests/inbox/CR-CP-0021-onboard-4uentes-automation-n8n.yaml"
+  - "requests/planned/CR-CP-0021-onboard-4uentes-automation-n8n.yaml"
+  - "requests/running/CR-CP-0021-onboard-4uentes-automation-n8n.yaml"
+  - "initiatives/INIT-HPT-0002-personal-finance-instrument-operations-api.yaml"
+evidence_refs:
+  - "evidence/requests/CR-CP-0021/implementation-plan-2026-09-05.md"
+owner_refs:
+  - "4uentes-automation:specs/ards/contract-binding.yaml"
+  - "4uentes-automation:specs/integration/control-plane-link.yaml"
+  - "4uentes-automation:specs/integration/policies.yaml"
+read_model:
+  service_identity: "4uentes-automation"
+  implementation: "n8n"
+  owner_repository: "afpogo/4uentes-automation"
+  owner_provenance: "verified-private-main"
+  control_plane_adoption: "discovered-only"
+  capability_status: "not-adopted"
+  m2m_status: "historical-claims-require-current-owner-revalidation"
+  runtime_status: "not-authorized"
+  direct_phinance_access: "prohibited"
+open_gaps:
+  - "Authorize and publish the owner local secret and port contract without starting runtime."
+  - "Revalidate the automation webhook capability from current owner refs."
+  - "Revalidate Auth and SST M2M contracts through separate owner lifecycles."
+  - "Keep runtime, private network, real secrets and infrastructure activation separately gated."
