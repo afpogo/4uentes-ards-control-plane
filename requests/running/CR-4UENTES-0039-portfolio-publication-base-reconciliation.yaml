@@ -102,7 +102,9 @@ promotion_manifest:
   path_allowlist:
     - "src/assets/resources/afpogo_cv.pdf"
     - "src/pages/Home/components/Hero/index.tsx"
+    - "src/pages/Home/components/UserProfilePhoto/constants.ts"
     - "src/pages/Home/Home.i18n.ts"
+    - "src/context/UIContext.tsx"
     - "webpack.config.js"
     - "webpack.config.dev.js"
     - "config/public-resources.json"
@@ -120,6 +122,10 @@ promotion_manifest:
       rule: "Replace recursive src/assets/images copying with exact expansion from config/public-images.json; preserve unrelated development behavior."
     - path: "package.json"
       rule: "Add check:public-assets and compose it into check without adding or changing dependencies."
+    - path: "src/context/UIContext.tsx"
+      rule: "Correct only the case-sensitive approved profile image reference from apogo1.jpeg to apogo1.jpg."
+    - path: "src/pages/Home/components/UserProfilePhoto/constants.ts"
+      rule: "Remove only the apogo2.JPG entry because its exact source blob is explicitly excluded from publication."
   explicit_exclusions:
     - {path: "src/assets/images/**", reason: "Binary contents are immutable in this unit; only the 74 approved path-plus-blob items may be selected by the new public image allowlist."}
     - {path: "src/assets/resources/*", reason: "No replacement PDF or downloadable resource is approved; only afpogo_cv.pdf may be deleted."}
