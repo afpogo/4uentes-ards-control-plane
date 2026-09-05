@@ -35,14 +35,23 @@ authorization:
     CR-SST-0234 as running without mutating the owner repository.
   evidence_ref: 'evidence/requests/CR-SST-0234/running-authorization-2026-09-05.md'
 
+owner_execution_authorization:
+  status: 'approved'
+  approved_by: '4uentes'
+  approved_at: '2026-09-05'
+  approval_text: 'ok avancemos al proximo gate, no olvidemos actualizar jira si es necesario para dar seguimiento y apeguemos a las politicas vivas'
+  evidence_ref: 'evidence/requests/CR-SST-0234/owner-execution-authorization-2026-09-05.md'
+  jira_scope: 'readonly-preflight-only-pending-exact-batch'
+
 execution:
-  current_unit: 'publish-running-readiness'
+  current_unit: 'owner-contract-and-implementation'
   control_plane_mutation_allowed: true
   git_publication_allowed: true
-  child_repo_mutation_allowed: false
-  owner_git_mutation_allowed: false
-  owner_worktree_creation_allowed: false
-  runtime_mutation_allowed: false
+  child_repo_mutation_allowed: true
+  owner_git_mutation_allowed: true
+  owner_worktree_creation_allowed: true
+  runtime_mutation_allowed: true
+  migration_definition_allowed: true
   deployment_allowed: false
   migration_execution_allowed: false
   shared_environment_mutation_allowed: false
@@ -50,8 +59,8 @@ execution:
   secret_or_datastore_access_allowed: false
   jira_write_allowed: false
   next_external_gate: >
-    After merge and canonical readback, request exact authorization to create a
-    clean sst-bend worktree, publish owner ARDS/SDD and implement CR-SST-0234.
+    Publish and read back the owner implementation if all checks pass. Jira
+    creation and transition remain a separate exact batch.
 
 owner_readonly_preflight:
   status: 'passed'
@@ -128,3 +137,6 @@ evidence_refs:
   - 'evidence/requests/CR-SST-0234/owner-readonly-preflight-2026-09-05.md'
   - 'evidence/requests/CR-SST-0234/running-authorization-2026-09-05.md'
   - 'evidence/requests/CR-SST-0234/control-plane-validation-2026-09-05.md'
+  - 'evidence/requests/CR-SST-0234/owner-execution-authorization-2026-09-05.md'
+  - 'evidence/requests/CR-SST-0234/owner-execution-plan-2026-09-05.md'
+  - 'evidence/requests/CR-SST-0234/jira-readonly-preflight-2026-09-05.md'

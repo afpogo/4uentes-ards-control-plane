@@ -86,6 +86,9 @@ source_evidence_refs:
   - "evidence/requests/CR-SST-0234/owner-readonly-preflight-2026-09-05.md"
   - "evidence/requests/CR-SST-0234/running-authorization-2026-09-05.md"
   - "evidence/requests/CR-SST-0234/control-plane-validation-2026-09-05.md"
+  - "evidence/requests/CR-SST-0234/owner-execution-authorization-2026-09-05.md"
+  - "evidence/requests/CR-SST-0234/owner-execution-plan-2026-09-05.md"
+  - "evidence/requests/CR-SST-0234/jira-readonly-preflight-2026-09-05.md"
   - "docs/projects/sst/contrato-fuentes-learning-workspace-v1.md"
 model_refs:
   - "specs/initiatives/initiative-model.yaml"
@@ -220,7 +223,7 @@ article_processing_adoption:
   first_owner_manual_review: "passed-2026-08-29"
   next_gate: "publish and read back the CR-SST-0223 done lifecycle, retire its worktrees safely, then evaluate CR-SST-0224 as the next independent owner gate"
 learning_workspace_source_adoption:
-  status: "first-owner-running-prepared-awaiting-publication"
+  status: "first-owner-execution-authorized"
   request_id: "CR-SST-0232"
   predecessor_requests: ["CR-SST-0210", "CR-SST-0193", "CR-SST-0194", "CR-SST-0220", "CR-SST-0223"]
   source_kinds: ["manual_text", "article", "article_document", "agent_output"]
@@ -234,10 +237,11 @@ learning_workspace_source_adoption:
   owner_allocation_status: "merged-and-read-back-pr-250"
   owner_allocation_merge_commit: "2eec87077aa1a630fac36c4a86fbb9da5c554246"
   first_owner_request_id: "CR-SST-0234"
-  first_owner_running_status: "prepared-for-control-plane-publication"
-  owner_execution_status: "not-authorized-running-publication-only"
-  jira_status: "read-only-preflight-passed-no-mirror-write-authorized"
-  next_gate: "publish and read back CR-SST-0234 running, then request a separate exact sst-bend owner execution authorization"
+  first_owner_running_status: "merged-and-read-back-pr-256"
+  first_owner_running_merge_commit: "546c02865b4367740cbda4585c1a5d6db61a9cd4"
+  owner_execution_status: "authorized-pending-owner-publication"
+  jira_status: "readonly-preflight-passed-two-issue-batch-pending-exact-authorization"
+  next_gate: "publish owner ARDS/SDD and implementation in sst-bend; keep Jira write blocked until an exact batch is approved"
 migration_baseline_reconciliation:
   status: "planned-publication-pending"
   request_id: "CR-SST-0233"
