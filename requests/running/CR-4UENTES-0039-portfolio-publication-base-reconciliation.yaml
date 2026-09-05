@@ -183,11 +183,25 @@ owner_publication:
   tree_equivalence: "owner head and merge commit resolve to tree 524296244113a491eb339bdaceb79a511212e3df"
   stable_promotion_status: "blocked"
   stable_promotion_blockers:
-    - "78 current image candidates require an enumerated path-plus-blob review and explicit human approval; the historical 79th binary was the CV already removed"
-    - "Webpack still recursively publishes src/assets/images/**; no public image allowlist is enforced"
     - "Vite and Sass publication-base deltas remain mixed in the historical dirty checkout"
     - "pre-existing mobile text and footer overflow requires a governed UI unit"
     - "inherited dependency audit reports 3 critical, 24 high, 13 moderate and 6 low findings"
+    - "no GitHub CI checks are configured or reported for the owner PR"
+
+binary_allowlist_publication:
+  status: "merged-and-read-back"
+  repository: "4uentes-portfolio"
+  target_branch: "develop"
+  pull_request: 3
+  base_commit: "056b6e4ede90854685c48ff9880d475e54b8db84"
+  head_commit: "7a512c2e357e73065c0ec1fa50b96753fa7e1acb"
+  merge_commit: "f28b01683ea8191960452bf5a2a5d7c196628c1e"
+  tree_equivalence: "owner head and merge commit resolve to tree 6caa390502a456393ed998f4825eb2da9ae9ba73"
+  public_image_count: 74
+  excluded_image_count: 4
+  binary_source_changes: 0
+  github_checks_reported: 0
+  evidence_ref: "evidence/requests/CR-4UENTES-0039/image-allowlist-owner-readback-2026-09-05.md"
 
 execution_publication_rule:
   rule_id: "execution-publication-and-tracker-closure-rule"
@@ -211,9 +225,9 @@ rollback: >
   restore the CV through an unreviewed binary copy.
 
 decision:
-  status: "binary-metadata-audit-complete-stable-promotion-blocked"
-  blocker: "Do not mutate the owner or promote develop to main until an enumerated path-plus-blob image batch receives explicit human approval and the remaining Vite/Sass, mobile and dependency gates have governed dispositions."
-  next_gate: "Implement the approved 74-item allowlist from a fresh clean owner worktree, prove exact artifact composition, and record remote readback."
+  status: "binary-allowlist-merged-stable-promotion-blocked"
+  blocker: "Do not promote develop to main until Vite/Sass, mobile overflow, inherited dependency and owner CI gates have governed dispositions."
+  next_gate: "Select and publish the next bounded Portfolio gate without importing mixed deltas from the dirty historical checkout."
 
 binary_publication_constraint:
   status: "owner-implementation-authorized-stable-promotion-blocking"
@@ -263,3 +277,4 @@ evidence_refs:
   - "evidence/requests/CR-4UENTES-0039/binary-metadata-audit-2026-09-05.md"
   - "evidence/requests/CR-4UENTES-0039/binary-publication-decision-batch-2026-09-05.yaml"
   - "evidence/requests/CR-4UENTES-0039/binary-publication-authorization-2026-09-05.yaml"
+  - "evidence/requests/CR-4UENTES-0039/image-allowlist-owner-readback-2026-09-05.md"
