@@ -34,13 +34,13 @@ worktree_policy:
   dirty_control_plane_root: "preserve-no-mutation"
   clean_control_plane_worktree: "worktrees/CR-HPT-0024-control-plane-recovery"
   owner_worktree: "worktrees/CR-HPT-0024-infra-owner"
-  owner_worktree_status: "clean-with-documentation-pr-open"
+  owner_worktree_status: "clean-with-documentation-commit-merged-remotely"
   owner_worktree_reuse_required: true
   additional_owner_worktree_allowed: false
   cleanup_allowed: false
 
 execution:
-  current_unit: "owner-documentation-pr-open-awaiting-merge-authorization"
+  current_unit: "awaiting-clamav-memory-diagnosis-authorization"
   completed_units:
     - "integrate-private-receipt-custody-through-owner-pr-23"
     - "integrate-clamav-permission-remediation-through-owner-pr-24"
@@ -50,6 +50,7 @@ execution:
     - "recover-docker-desktop-and-kind-readiness"
     - "validate-owner-full-check"
     - "read-back-human-documentation-pr-26"
+    - "read-back-human-documentation-pr-26-merge"
   control_plane_mutation_allowed: true
   child_repo_mutation_allowed: false
   owner_git_mutation_allowed: false
@@ -61,7 +62,7 @@ execution:
 
 owner_history:
   repository: "afpogo/sst-4uentes-infra"
-  canonical_develop_sha: "a4d120061d0d4d53352b1de766858602ff759750"
+  canonical_develop_sha: "4ab3e7e9f0869c7c035d75a85149977994aa0af9"
   receipt_platform:
     pull_request: 23
     develop_promotion_sha: "60589676f4dc2f74e0ec6b9dd3b20a324b4eb7cc"
@@ -84,10 +85,29 @@ owner_history:
     local_commit: "67c4874b2404235d70dc56ce143343954f5c707e"
     pull_request: 26
     pull_request_url: "https://github.com/afpogo/sst-4uentes-infra/pull/26"
-    status: "published-open-clean-ci-passing-not-authorized-for-merge"
+    merge_sha: "4ab3e7e9f0869c7c035d75a85149977994aa0af9"
+    merged_at: "2026-09-05T18:36:52Z"
+    post_merge_workflow: "ARDS Infra Validation"
+    post_merge_workflow_result: "success"
+    status: "integrated-docs-only-no-deployment-workflow-observed"
+
+owner_merge_deviation:
+  status: "observed-and-contained"
+  description: >
+    Pull request 26 was merged externally before a canonical control-plane
+    authorization for the merge was recorded.
+  scope_readback: >
+    The merge has the expected base and head parents, contains the same twelve
+    authorized paths and triggered only the successful ARDS Infra Validation
+    workflow. No deployment workflow or runtime mutation was observed.
+  authority_effect: >
+    This readback records the remote fact and its bounded scope. It does not
+    grant retroactive authorization or authorize any later owner or runtime
+    mutation.
+  evidence: "evidence/requests/CR-HPT-0024/owner-documentation-pr26-merge-readback-2026-09-05.md"
 
 current_authorization:
-  status: "owner-documentation-publication-consumed"
+  status: "owner-documentation-publication-and-external-merge-observed"
   approved_by: "4uentes"
   approved_at: "2026-09-05"
   approval_text: "ok avancemos con el siguiente gate"
@@ -103,15 +123,15 @@ current_authorization:
 
 residual_gates:
   - id: "publish-human-documentation-pr"
-    status: "completed-pr-26-open"
+    status: "completed-pr-26-merged"
   - id: "merge-human-documentation-pr"
-    status: "not-authorized"
+    status: "completed-externally-without-prior-canonical-authorization"
   - id: "clamav-memory-diagnosis-and-ceiling-selection"
     status: "not-yet-authorized"
   - id: "clamav-memory-owner-pr"
     status: "not-yet-authorized"
   - id: "infra-owner-merge-with-automatic-gitops"
-    status: "not-authorized"
+    status: "not-applicable-to-docs-only-pr-26-no-deployment-workflow-observed"
   - id: "runtime-health-and-terminal-evidence"
     status: "blocked"
 
@@ -151,11 +171,11 @@ publication_gate:
     remote_readback_required: true
 
 decision:
-  status: "running-owner-documentation-pr-open"
+  status: "running-owner-documentation-integrated"
   next_gate: >
-    Obtain explicit authorization before merging Infra pull request 26. Runtime
-    mutation, the ClamAV memory remediation and Jira writes remain separate
-    gates and are not implied by documentation publication.
+    Obtain explicit authorization for the read-only ClamAV memory diagnosis and
+    numeric ceiling selection. An owner remediation PR, runtime mutation,
+    secrets, license acceptance and Jira writes remain separate gates.
 
 evidence_refs:
   - "evidence/requests/CR-HPT-0024/retroactive-running-reconciliation-2026-09-05.md"
@@ -166,3 +186,4 @@ evidence_refs:
   - "evidence/requests/CR-CP-0024/infra-human-documentation-publication-authorization-2026-09-05.md"
   - "evidence/requests/CR-HPT-0024/owner-documentation-publication-preflight-2026-09-05.md"
   - "evidence/requests/CR-HPT-0024/owner-documentation-pr-readback-2026-09-05.md"
+  - "evidence/requests/CR-HPT-0024/owner-documentation-pr26-merge-readback-2026-09-05.md"
