@@ -41,3 +41,29 @@ copias divergentes de comandos.
 Jira no puede recibir el comentario de inicio porque el OAuth de Atlassian sigue
 devolviendo `unauthorized_client`; la reconciliación queda pendiente y el
 control plane conserva la autoridad.
+
+## Resultado local
+
+Se reutilizó el worktree `worktrees/CR-HPT-0024-infra-owner`. La rama anterior
+estaba limpia, integrada y alcanzable desde
+`origin/develop@a4d120061d0d4d53352b1de766858602ff759750`. No existía
+colisión local ni remota para la nueva rama
+`docs/CR-HPT-0024/human-receipt-custody-guides`.
+
+El commit owner local
+`67c4874b2404235d70dc56ce143343954f5c707e` establece:
+
+- raíz `docs/learning/` y fundamentos humanos de custodia;
+- raíz `docs/playbooks/` y playbook de adopción;
+- vínculo explícito con el runbook técnico de development;
+- arquitectura de información `learning → playbook → runbook → specs`;
+- siete mapas Mermaid con autoridad, fuentes, leyenda y fallback textual;
+- `scripts/verify-human-documentation.js` y el gate
+  `npm run check:human-docs` dentro del check owner completo.
+
+Pasaron el check focalizado, `npm run check`, resolución de enlaces locales,
+`git diff --check`, búsqueda de whitespace y scan de material sensible. El
+worktree quedó limpio y un commit por delante de `origin/develop`.
+
+La autorización quedó consumida por el commit local. Push, PR y merge siguen
+prohibidos hasta un gate separado.
