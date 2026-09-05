@@ -14,8 +14,11 @@ summary: >
   Backend pod exposed a receipt-clamav capability failure while the previous
   ready pod preserved availability. Infra PR 24 was published with green
   checks, then merged outside the agent gate and applied by Argo CD autosync.
-  The CAP_CHOWN-only remediation was insufficient; availability remains
-  preserved by the previous pod while a second owner remediation is gated.
+  The CAP_CHOWN-only remediation was insufficient. Infra PR 25 replaced the
+  root entrypoint, added the governed delivery plan and was merged under an
+  explicit gate. Its autosync removed the permission failure but exposed a
+  repeatable ClamAV OOM during signature update; the previous pod still
+  preserves availability while a bounded memory remediation is gated.
 
 control_plane_context:
   initiative_id: "INIT-CP-0003"
@@ -33,7 +36,7 @@ authorization:
   evidence: "evidence/requests/CR-CP-0024/auth-owner-execution-authorization-2026-08-30.md"
 
 execution:
-  current_unit: "merge-infra-pr25-and-read-back-automatic-gitops-sync"
+  current_unit: "contain-infra-pr25-clamav-oom-readback-await-next-owner-gate"
   parallel_unit: "worktree-sanitization-disposition-and-selective-recovery"
   completed_units:
     - "publish-plan-and-migration-lifecycle"
@@ -57,19 +60,21 @@ execution:
     - "implement-and-validate-unprivileged-clamav-remediation"
     - "publish-unprivileged-clamav-owner-pr"
     - "publish-infra-receipt-custody-plan-as-code"
+    - "merge-infra-pr25-at-authorized-head"
+    - "read-back-infra-pr25-automatic-gitops-sync"
   control_plane_mutation_allowed: true
-  child_repo_mutation_allowed: true
+  child_repo_mutation_allowed: false
   child_repo_mutation_targets: ["sst-bend", "sst-4uentes-infra"]
   child_repo_mutation_scope: "Merge validated sst-bend PR 32 at de19c14 and allow only its automatic Backend image publication plus the exact Backend pin update in Infra develop."
   owner_pr_publication_allowed: false
-  owner_pr_merge_allowed: true
+  owner_pr_merge_allowed: false
   image_publication_allowed: false
-  infra_mutation_allowed: true
-  runtime_mutation_allowed: true
-  deployment_allowed: true
-  stable_branch_mutation_allowed: true
+  infra_mutation_allowed: false
+  runtime_mutation_allowed: false
+  deployment_allowed: false
+  stable_branch_mutation_allowed: false
   jira_write_allowed: false
-  external_execution_gate: "Merge only Infra PR 25 at 2105e775f11de068fbcfaae0eb36a0e52db446ea, accept its pre-existing Argo CD autosync effect and perform read-only health readback; manual apply, restart, rollback, Secret mutation and Jira closure remain prohibited."
+  external_execution_gate: "Authorize a bounded Infra owner remediation for the repeatable receipt-clamav OOMKilled during signature update; manual cluster mutation and Jira closure remain prohibited."
 
 infra_remediation_pr:
   authorization_status: "consumed-by-branch-and-pr-publication"
@@ -177,7 +182,7 @@ infra_second_remediation:
     develop_readback_sha: "55097809b069703af2049ab7769db6b83a95d021"
     pull_request: 25
     pull_request_url: "https://github.com/afpogo/sst-4uentes-infra/pull/25"
-    pull_request_state: "OPEN"
+    pull_request_state: "MERGED"
     mergeable: "MERGEABLE"
     merge_state_status: "CLEAN"
     commits: 2
@@ -190,8 +195,17 @@ infra_second_remediation:
       validate_desired_state: "SUCCESS"
       validate_sst_bend_manifests: "SUCCESS"
       validate_sst_fend_manifests: "SUCCESS"
-    merge_allowed: true
-    runtime_mutation_allowed: "automatic-gitops-sync-only"
+    merge_commit: "a4d120061d0d4d53352b1de766858602ff759750"
+    merged_at: "2026-09-05T15:22:54Z"
+    merged_by: "afpogo"
+    merge_allowed: false
+    runtime_mutation_allowed: false
+    post_merge_checks:
+      revision: "a4d120061d0d4d53352b1de766858602ff759750"
+      validate_repository: "SUCCESS"
+      validate_desired_state: "SUCCESS"
+      validate_sst_bend_manifests: "SUCCESS"
+      validate_sst_fend_manifests: "SUCCESS"
   documentation_as_code:
     commit: "2105e775f11de068fbcfaae0eb36a0e52db446ea"
     plan: "docs/infra/receipt-custody-delivery-plan.md"
@@ -201,7 +215,7 @@ infra_second_remediation:
     owner_check: "PASS"
     remote_checks: "SUCCESS"
   merge_authorization:
-    status: "active-for-exact-pr-head"
+    status: "consumed-by-exact-merge-and-read-only-runtime-readback"
     approved_by: "4uentes"
     approved_at: "2026-09-05"
     approval_text: "Autorizoa fusionar infra, ademas necesito conoceer el plan que estamos desarrollando en infra. realiza un docs as a code con mapas mermaid."
@@ -212,6 +226,29 @@ infra_second_remediation:
     manual_cluster_mutation_allowed: false
     jira_terminal_transition_allowed: false
     evidence: "evidence/requests/CR-CP-0024/infra-pr25-merge-authorization-2026-09-05.md"
+  automatic_gitops_observation:
+    application: "sst-app"
+    sync: "Synced"
+    health: "Progressing"
+    revision: "a4d120061d0d4d53352b1de766858602ff759750"
+    operation_phase: "Succeeded"
+    deployment: "sst-bend"
+    ready_replicas: 1
+    total_replicas: 2
+    updated_replicas: 1
+    unavailable_replicas: 1
+    new_pod: "sst-bend-58498cc978-rxdlq"
+    backend_container_ready: true
+    scanner_container_ready: false
+    scanner_restart_count_observed: 3
+    scanner_last_reason: "OOMKilled"
+    scanner_exit_code: 137
+    scanner_limit: "1536Mi"
+    scanner_phase: "freshclam testing updated daily database before clamd socket readiness"
+    previous_permission_error_observed: false
+    availability: "preserved-by-previous-ready-pod"
+    manual_cluster_mutation_performed: false
+    evidence: "evidence/requests/CR-CP-0024/infra-pr25-merge-and-runtime-readback-2026-09-05.md"
   jira:
     issue: "HPT-16"
     expected_status: "En curso"
@@ -353,9 +390,9 @@ required_checks:
   - "owner branch and pull request remote readback"
 
 decision:
-  status: "running-infra-pr25-merge-authorized-at-green-head"
+  status: "running-infra-pr25-merged-clamav-oom-blocker-contained"
   approver: "4uentes"
-  next_gate: "Merge Infra PR 25 at the authorized green head, observe the pre-existing autosync without manual cluster mutation, and reconcile Jira after OAuth is restored."
+  next_gate: "Plan and authorize a bounded owner remediation for ClamAV signature-update memory; keep the previous pod serving, avoid manual cluster changes, and reconcile Jira after OAuth is restored."
 
 evidence_refs:
   - "evidence/requests/CR-CP-0024/implementation-plan.md"
