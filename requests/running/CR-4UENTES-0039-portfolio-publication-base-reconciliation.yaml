@@ -187,4 +187,3 @@ decision:
   status: "running-publication-pending"
   blocker: "Merge and read back this running lifecycle before creating or mutating the Portfolio owner worktree."
   next_gate: "Publish running, refresh Portfolio origin/develop, create the isolated worktree and implement only the twelve-path allowlist."
-
