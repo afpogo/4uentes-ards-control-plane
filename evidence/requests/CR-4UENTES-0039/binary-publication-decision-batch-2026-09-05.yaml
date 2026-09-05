@@ -1,0 +1,813 @@
+schema_version: "1.0"
+request_id: "CR-4UENTES-0039"
+kind: "binary_publication_decision_batch"
+status: "pending-human"
+repository: "4uentes-portfolio"
+audit_ref: "origin/develop@056b6e4ede90854685c48ff9880d475e54b8db84"
+created_at: "2026-09-05"
+
+scope:
+  tracked_image_count: 78
+  unique_blob_count: 78
+  total_bytes: 17182570
+  opening_or_rendering_performed: false
+  owner_mutation_allowed: false
+  public_image_allowlist: []
+
+approval_semantics:
+  rule: "A path is not approved unless this manifest records its exact blob, resolved purpose and rights, and explicit human approval."
+  blob_change_effect: "A changed blob invalidates any prior approval for that path."
+  default: "deny"
+  recursive_copy_allowed: false
+
+batch_summary:
+  sensitive_course_certificates: 47
+  sensitive_legacy_certificates: 3
+  sensitive_employment_evidence: 1
+  sensitive_profile_photos: 3
+  confidentiality_product_screenshots: 2
+  license_or_trademark_review: 22
+  unreferenced_subset: 4
+
+items:
+  - path: "src/assets/images/GireSolucionesLogo.png"
+    blob: "8d88aa0c783008f52e83d0d8feda0b39d564a5b6"
+    bytes: 5130
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "license-trademark-review"
+    recommendation: "exclude-until-license-and-trademark-review"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/OracleMiddleware_img.jpg"
+    blob: "cef7b2875b353f5da0ec4faf015167005daa8edf"
+    bytes: 22835
+    detected_mime: "image/jpeg"
+    text_reference: true
+    review_group: "license-trademark-review"
+    recommendation: "exclude-until-license-and-trademark-review"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/apogo1.jpg"
+    blob: "0f5ccc7235830ed01a39869985c92a5ff66af50b"
+    bytes: 57858
+    detected_mime: "image/jpeg"
+    text_reference: true
+    review_group: "sensitive-profile-photo"
+    recommendation: "exclude-until-explicit-privacy-and-rights-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/apogo2.jpg"
+    blob: "0e602829e0be07f722ac40fa52278bf2daea00cf"
+    bytes: 2378502
+    detected_mime: "image/jpeg"
+    text_reference: false
+    review_group: "sensitive-profile-photo"
+    recommendation: "exclude-unreferenced"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/apogo3.jpg"
+    blob: "2d236b29b656c97417c07e352d4a27c6f7169e5b"
+    bytes: 571758
+    detected_mime: "image/jpeg"
+    text_reference: true
+    review_group: "sensitive-profile-photo"
+    recommendation: "exclude-until-explicit-privacy-and-rights-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/certs-images/diploma-arquitectura-alta-concurrencia.png"
+    blob: "43d77022dea5476a96a5d13ac251917b8a5171f8"
+    bytes: 273523
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "sensitive-course-certificate"
+    recommendation: "exclude-until-explicit-privacy-and-rights-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/certs-images/diploma-arrays-js.png"
+    blob: "196b0e00f74577bda3b99c69adcff9eba8492b06"
+    bytes: 267880
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "sensitive-course-certificate"
+    recommendation: "exclude-until-explicit-privacy-and-rights-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/certs-images/diploma-asincronismo-js-remaster.png"
+    blob: "4ea1f6c71a39f1e447082514a8b04ff446ed547b"
+    bytes: 281397
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "sensitive-course-certificate"
+    recommendation: "exclude-until-explicit-privacy-and-rights-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/certs-images/diploma-asincronismo-js.png"
+    blob: "2d5f6ac8c590a4cba613a5dbe23faad5f29f470f"
+    bytes: 298208
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "sensitive-course-certificate"
+    recommendation: "exclude-until-explicit-privacy-and-rights-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/certs-images/diploma-backend-nodejs.png"
+    blob: "7a34c07eb71b331da67dadfc91fc4a9ecd82d3d9"
+    bytes: 276944
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "sensitive-course-certificate"
+    recommendation: "exclude-until-explicit-privacy-and-rights-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/certs-images/diploma-basico-javascript.png"
+    blob: "8ae39b90b141dd92f1421f152cb556e5e7562e87"
+    bytes: 239117
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "sensitive-course-certificate"
+    recommendation: "exclude-until-explicit-privacy-and-rights-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/certs-images/diploma-bitcoin-blockchain.png"
+    blob: "244013ce1ff0ace57499ccc97479a2db1413c72c"
+    bytes: 245088
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "sensitive-course-certificate"
+    recommendation: "exclude-until-explicit-privacy-and-rights-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/certs-images/diploma-chatgpt.png"
+    blob: "e858b24b3819ffdc6c4e84fe5179019e0c013d56"
+    bytes: 210104
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "sensitive-course-certificate"
+    recommendation: "exclude-until-explicit-privacy-and-rights-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/certs-images/diploma-closures&scope-js.png"
+    blob: "3de53817ca149be90f301fe35fa0a4d7cbf117a0"
+    bytes: 268004
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "sensitive-course-certificate"
+    recommendation: "exclude-until-explicit-privacy-and-rights-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/certs-images/diploma-css-grid-layout-remaster.png"
+    blob: "d0c0a86dbc98ee3caa0cf921a2fcbcaf8d72adc0"
+    bytes: 252179
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "sensitive-course-certificate"
+    recommendation: "exclude-until-explicit-privacy-and-rights-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/certs-images/diploma-css-grid-layout.png"
+    blob: "3b66467cf51f6559c94ba94ba0b74a10b8d5d5ad"
+    bytes: 235310
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "sensitive-course-certificate"
+    recommendation: "exclude-until-explicit-privacy-and-rights-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/certs-images/diploma-dom.png"
+    blob: "55e6a0d12d091c987f62cc1b6619ba2f8bc5a2f1"
+    bytes: 243212
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "sensitive-course-certificate"
+    recommendation: "exclude-until-explicit-privacy-and-rights-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/certs-images/diploma-ecmascript-6.png"
+    blob: "85431187ee0c8bfd4a3e96a8a0913ebc754fcb66"
+    bytes: 298336
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "sensitive-course-certificate"
+    recommendation: "exclude-until-explicit-privacy-and-rights-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/certs-images/diploma-estructuras-datos.png"
+    blob: "23943693b32ece4626448f6305bf9f4f2bf3747f"
+    bytes: 281632
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "sensitive-course-certificate"
+    recommendation: "exclude-until-explicit-privacy-and-rights-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/certs-images/diploma-expresiones-regulares.png"
+    blob: "133f85b639f2b3875b1bba95745954b78ebe5699"
+    bytes: 238781
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "sensitive-course-certificate"
+    recommendation: "exclude-until-explicit-privacy-and-rights-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/certs-images/diploma-funcional-js.png"
+    blob: "4657afe2e4c4d79062fe2ae5869bc9bc95ac47ce"
+    bytes: 262653
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "sensitive-course-certificate"
+    recommendation: "exclude-until-explicit-privacy-and-rights-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/certs-images/diploma-fundamentos-javascript.png"
+    blob: "dcf912ceaf0b4ddad646f7c32a9b0ff7d8326fa6"
+    bytes: 300344
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "sensitive-course-certificate"
+    recommendation: "exclude-until-explicit-privacy-and-rights-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/certs-images/diploma-fundamentos-node.png"
+    blob: "19e60f92a219877d7219ae34ca0c922518f2073c"
+    bytes: 308163
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "sensitive-course-certificate"
+    recommendation: "exclude-until-explicit-privacy-and-rights-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/certs-images/diploma-fundamentos-web3.png"
+    blob: "b7de0b4ee844dce5934949df7577d0d62bef3d69"
+    bytes: 274041
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "sensitive-course-certificate"
+    recommendation: "exclude-until-explicit-privacy-and-rights-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/certs-images/diploma-gestion-criptoactivos.png"
+    blob: "d734378b6d157f8907e6231ed716b4b7b1edcf0b"
+    bytes: 259086
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "sensitive-course-certificate"
+    recommendation: "exclude-until-explicit-privacy-and-rights-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/certs-images/diploma-historia-bitcoin.png"
+    blob: "b20e76607fac6606fc676d6c9dc01b65bdd1b9be"
+    bytes: 288970
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "sensitive-course-certificate"
+    recommendation: "exclude-until-explicit-privacy-and-rights-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/certs-images/diploma-historia-ethereum.png"
+    blob: "ebe15de1f0df7d7e3a08fd6a5d0ff59bcb562f28"
+    bytes: 270548
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "sensitive-course-certificate"
+    recommendation: "exclude-until-explicit-privacy-and-rights-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/certs-images/diploma-html5-css3.png"
+    blob: "b6b2ea719c408c2649aa1e781f5eaababc786414"
+    bytes: 238160
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "sensitive-course-certificate"
+    recommendation: "exclude-until-explicit-privacy-and-rights-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/certs-images/diploma-ingles-basico-principiantes.png"
+    blob: "96e3022ab96c01e0b19434d332a677e14e60f429"
+    bytes: 220192
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "sensitive-course-certificate"
+    recommendation: "exclude-until-explicit-privacy-and-rights-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/certs-images/diploma-ingles-principiantes.png"
+    blob: "dbb2fe006aaeb7a76868f0ba0e5f590b56603037"
+    bytes: 211577
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "sensitive-course-certificate"
+    recommendation: "exclude-until-explicit-privacy-and-rights-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/certs-images/diploma-intro-startups-blockchain.png"
+    blob: "de26a8cb19aa75ddc2d7dda7596251f154b970a9"
+    bytes: 273170
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "sensitive-course-certificate"
+    recommendation: "exclude-until-explicit-privacy-and-rights-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/certs-images/diploma-java-oop.png"
+    blob: "9883df63535939cdd69ff213b388987af9202149"
+    bytes: 247297
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "sensitive-course-certificate"
+    recommendation: "exclude-until-explicit-privacy-and-rights-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/certs-images/diploma-java-persistencia.png"
+    blob: "41f7b45c8aaaa9c8872fb7f758b2b2ef4caa5023"
+    bytes: 246869
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "sensitive-course-certificate"
+    recommendation: "exclude-until-explicit-privacy-and-rights-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/certs-images/diploma-javascript-navegador.png"
+    blob: "14ffeb79030096e23e15a28fb685772649339618"
+    bytes: 273448
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "sensitive-course-certificate"
+    recommendation: "exclude-until-explicit-privacy-and-rights-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/certs-images/diploma-javascript-profesional.png"
+    blob: "737b998587030d4943d8a49c058425e4d1e28c06"
+    bytes: 319871
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "sensitive-course-certificate"
+    recommendation: "exclude-until-explicit-privacy-and-rights-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/certs-images/diploma-npm-js.png"
+    blob: "9dab2f122f6922f63d00af0b9c369fcbec8c6666"
+    bytes: 260594
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "sensitive-course-certificate"
+    recommendation: "exclude-until-explicit-privacy-and-rights-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/certs-images/diploma-practico-css.png"
+    blob: "c106c216830040d7c65f63051d74bb5b24c7a8ac"
+    bytes: 249225
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "sensitive-course-certificate"
+    recommendation: "exclude-until-explicit-privacy-and-rights-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/certs-images/diploma-preprocesador-sass.png"
+    blob: "020ba76ed8c52ed5e7639f637dbe7153b55e94c2"
+    bytes: 285628
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "sensitive-course-certificate"
+    recommendation: "exclude-until-explicit-privacy-and-rights-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/certs-images/diploma-programacion-estructurada.png"
+    blob: "4e3220bbf66c4fa661b700a83fe9a2b30d06aae7"
+    bytes: 252489
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "sensitive-course-certificate"
+    recommendation: "exclude-until-explicit-privacy-and-rights-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/certs-images/diploma-react-17.png"
+    blob: "f7b306c7f78069e0f33f93f830294eb6351b7dd6"
+    bytes: 256575
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "sensitive-course-certificate"
+    recommendation: "exclude-until-explicit-privacy-and-rights-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/certs-images/diploma-react-estado.png"
+    blob: "dbcc3b536eb348ef3d57de4a2b839faa5d6e4684"
+    bytes: 289054
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "sensitive-course-certificate"
+    recommendation: "exclude-until-explicit-privacy-and-rights-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/certs-images/diploma-react-patrones-render.png"
+    blob: "b09f1d294ef469bbc1eacd0f7c802e08d6754294"
+    bytes: 309049
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "sensitive-course-certificate"
+    recommendation: "exclude-until-explicit-privacy-and-rights-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/certs-images/diploma-responsive-design.png"
+    blob: "4b4932558cf8d1d014c0242501d67ff0a9fa27db"
+    bytes: 239579
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "sensitive-course-certificate"
+    recommendation: "exclude-until-explicit-privacy-and-rights-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/certs-images/diploma-singlepage-app.png"
+    blob: "8d397e32106133d3106d83d34d7ea44cf5ac90be"
+    bytes: 294211
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "sensitive-course-certificate"
+    recommendation: "exclude-until-explicit-privacy-and-rights-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/certs-images/diploma-taller-descripciones-personales.png"
+    blob: "003cebdc4c81c3e28a0967eda697038e58c4885d"
+    bytes: 204864
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "sensitive-course-certificate"
+    recommendation: "exclude-until-explicit-privacy-and-rights-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/certs-images/diploma-taller-elementos-trabajo.png"
+    blob: "d8bdd1a6d13fa7f2c3349ec5f2b13ea2e77db133"
+    bytes: 211443
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "sensitive-course-certificate"
+    recommendation: "exclude-until-explicit-privacy-and-rights-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/certs-images/diploma-terminal.png"
+    blob: "910e1e08609764e58b8b23a5561730ff39e29130"
+    bytes: 265544
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "sensitive-course-certificate"
+    recommendation: "exclude-until-explicit-privacy-and-rights-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/certs-images/diploma-transformaciones-transiciones-css.png"
+    blob: "78f2e56d0479c3d9525ce6b739fbc554667ca90c"
+    bytes: 298171
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "sensitive-course-certificate"
+    recommendation: "exclude-until-explicit-privacy-and-rights-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/certs-images/diploma-typescript-angular.png"
+    blob: "99ddabc2ba5a091df2ca7b6f5a9df46503738dce"
+    bytes: 254292
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "sensitive-course-certificate"
+    recommendation: "exclude-until-explicit-privacy-and-rights-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/certs-images/diploma-typescript-tipos-avanzados.png"
+    blob: "bde284c4ac6de89e1892952453cc0724653eea1f"
+    bytes: 268482
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "sensitive-course-certificate"
+    recommendation: "exclude-until-explicit-privacy-and-rights-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/certs-images/diploma-typescript.png"
+    blob: "51da0ce4a679c62dcb805134683aeabc7774633b"
+    bytes: 230855
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "sensitive-course-certificate"
+    recommendation: "exclude-until-explicit-privacy-and-rights-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/certs-images/diploma-webpack.png"
+    blob: "a17d57d5b98288709c09a265324c7aa4131b9468"
+    bytes: 240189
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "sensitive-course-certificate"
+    recommendation: "exclude-until-explicit-privacy-and-rights-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/constancias/job_certificate_gire_sa.png"
+    blob: "029cf616f8b8f844bf5bb5d983d4dd4c713e7258"
+    bytes: 95589
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "sensitive-employment-evidence"
+    recommendation: "exclude-until-explicit-privacy-and-rights-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/everis-ntt-data.jpg"
+    blob: "b24a31e083f8185b2ab3d2001564dff8ea353cce"
+    bytes: 57181
+    detected_mime: "image/jpeg"
+    text_reference: true
+    review_group: "license-trademark-review"
+    recommendation: "exclude-until-license-and-trademark-review"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/giresa.jpg"
+    blob: "b423b9eb82a822959215e5d55e972ec43e1bf4f8"
+    bytes: 59092
+    detected_mime: "image/jpeg"
+    text_reference: true
+    review_group: "license-trademark-review"
+    recommendation: "exclude-until-license-and-trademark-review"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/ibm_img.png"
+    blob: "729e8eb21e1a33a8f595a312822559fb22a7b003"
+    bytes: 648205
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "license-trademark-review"
+    recommendation: "exclude-until-license-and-trademark-review"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/knowledge_img/Linkedin-Learning-square.png"
+    blob: "12cd73b8802fd04f2e6f701eccf632edf606ecf1"
+    bytes: 15617
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "license-trademark-review"
+    recommendation: "exclude-until-license-and-trademark-review"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/knowledge_img/almirante-nelson-logo-web.png"
+    blob: "e23af54420d0918400518cfcb7daad85e15074f5"
+    bytes: 24168
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "license-trademark-review"
+    recommendation: "exclude-until-license-and-trademark-review"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/knowledge_img/gire_sa.png"
+    blob: "b07d7b969948af45b3f72f30785fafa1aaccb63d"
+    bytes: 4582
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "license-trademark-review"
+    recommendation: "exclude-until-license-and-trademark-review"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/knowledge_img/logo-platzi-sin-fondo.png"
+    blob: "c81419317606a4ecf958a1b4cc78c14ffe9742e6"
+    bytes: 62008
+    detected_mime: "image/jpeg"
+    text_reference: true
+    review_group: "license-trademark-review"
+    recommendation: "exclude-until-license-and-trademark-review"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/knowledge_img/logo_espol.png"
+    blob: "a8046bba6d73e55fc4f6cbc10fedaf5acc1b7245"
+    bytes: 114578
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "license-trademark-review"
+    recommendation: "exclude-until-license-and-trademark-review"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/old_certs/titulo_bachiller_informatica.jpeg"
+    blob: "2d7e0d55ce96c2122ab2f5ed177f74b68b0b91ad"
+    bytes: 211478
+    detected_mime: "image/jpeg"
+    text_reference: true
+    review_group: "sensitive-legacy-certificate"
+    recommendation: "exclude-until-explicit-privacy-and-rights-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/old_certs/titulo_cetae_arpc_arg.jpeg"
+    blob: "96ccce5252e390b09e7d0b4d754f30babd59c4ed"
+    bytes: 107812
+    detected_mime: "image/jpeg"
+    text_reference: false
+    review_group: "sensitive-legacy-certificate"
+    recommendation: "exclude-unreferenced"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/old_certs/titulo_cetae_redes_arg.jpeg"
+    blob: "c4fba4c876a4a8d01e6d04307ac3e6abb0e7a45a"
+    bytes: 130205
+    detected_mime: "image/jpeg"
+    text_reference: false
+    review_group: "sensitive-legacy-certificate"
+    recommendation: "exclude-unreferenced"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/portfolio_img/heroBands.png"
+    blob: "8e98effca4a180b2820f0988d1a26bcecfd5043d"
+    bytes: 44285
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "confidentiality-product-screenshot"
+    recommendation: "exclude-until-confidentiality-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/portfolio_img/minichat.png"
+    blob: "b50099f09f099b87269801475142fb0c8cbe8c92"
+    bytes: 9045
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "confidentiality-product-screenshot"
+    recommendation: "exclude-until-confidentiality-approval"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/rapipago_img.jpg"
+    blob: "f418ea86f53cefdb81027b74bf1c846d3f8e8901"
+    bytes: 19705
+    detected_mime: "image/jpeg"
+    text_reference: true
+    review_group: "license-trademark-review"
+    recommendation: "exclude-until-license-and-trademark-review"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/social_icons/bootstrap_icon.svg"
+    blob: "5902e6ece2696973dc80f17b8ace89d9c2e68f12"
+    bytes: 1168
+    detected_mime: "image/svg+xml"
+    text_reference: true
+    review_group: "license-trademark-review"
+    recommendation: "exclude-until-license-and-trademark-review"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/social_icons/css_icon.svg"
+    blob: "1b7f30d7c7df92604fd0465d3368cfa85210b8b6"
+    bytes: 1213
+    detected_mime: "image/svg+xml"
+    text_reference: true
+    review_group: "license-trademark-review"
+    recommendation: "exclude-until-license-and-trademark-review"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/social_icons/docker_icon.svg"
+    blob: "66002f59d780ec677b3e1803b2ff21025fc9e483"
+    bytes: 2198
+    detected_mime: "image/svg+xml"
+    text_reference: false
+    review_group: "license-trademark-review"
+    recommendation: "exclude-unreferenced"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/social_icons/html_icon.svg"
+    blob: "1def5a67f0ae660f8b2d71d25896fbeb6f754acd"
+    bytes: 1042
+    detected_mime: "image/svg+xml"
+    text_reference: true
+    review_group: "license-trademark-review"
+    recommendation: "exclude-until-license-and-trademark-review"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/social_icons/nodejs_icon.svg"
+    blob: "65c2963cdba6569e3092f5e48f67f5df890950cb"
+    bytes: 3631
+    detected_mime: "image/svg+xml"
+    text_reference: true
+    review_group: "license-trademark-review"
+    recommendation: "exclude-until-license-and-trademark-review"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/social_icons/react_icon.svg"
+    blob: "6ec770e626295b936592c1f47a617b0ad0d0486a"
+    bytes: 3965
+    detected_mime: "image/svg+xml"
+    text_reference: true
+    review_group: "license-trademark-review"
+    recommendation: "exclude-until-license-and-trademark-review"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/social_icons/sass_icon.svg"
+    blob: "8d3f7ff7f0beab1d609e8b651acacc908a696c6e"
+    bytes: 528
+    detected_mime: "image/svg+xml"
+    text_reference: true
+    review_group: "license-trademark-review"
+    recommendation: "exclude-until-license-and-trademark-review"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/social_icons/socketio_icon.svg"
+    blob: "26a5733494baa4424526e07209139b4c72122fa9"
+    bytes: 624
+    detected_mime: "image/svg+xml"
+    text_reference: true
+    review_group: "license-trademark-review"
+    recommendation: "exclude-until-license-and-trademark-review"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/social_icons/typescript_icon.svg"
+    blob: "b267713850fa514591326a9c5ed84e382bcebec2"
+    bytes: 1147
+    detected_mime: "image/svg+xml"
+    text_reference: true
+    review_group: "license-trademark-review"
+    recommendation: "exclude-until-license-and-trademark-review"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/tata_img.jpg"
+    blob: "d7216b118eba4a6592e0de8261de427c8b04d0d3"
+    bytes: 79954
+    detected_mime: "image/jpeg"
+    text_reference: true
+    review_group: "license-trademark-review"
+    recommendation: "exclude-until-license-and-trademark-review"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+  - path: "src/assets/images/telecom_img.png"
+    blob: "01888c263372bc2356add78bd5032880c3d241aa"
+    bytes: 133119
+    detected_mime: "image/png"
+    text_reference: true
+    review_group: "license-trademark-review"
+    recommendation: "exclude-until-license-and-trademark-review"
+    public_purpose: "TODO"
+    provenance_and_rights: "TODO"
+    human_approval: "pending"
+

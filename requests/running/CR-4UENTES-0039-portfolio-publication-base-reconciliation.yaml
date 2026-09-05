@@ -202,7 +202,7 @@ rollback: >
 decision:
   status: "binary-metadata-audit-complete-stable-promotion-blocked"
   blocker: "Do not mutate the owner or promote develop to main until an enumerated path-plus-blob image batch receives explicit human approval and the remaining Vite/Sass, mobile and dependency gates have governed dispositions."
-  next_gate: "Publish an enumerated decision batch for the 78 images. Default deny certificates, employment evidence and personal photos; require license review for logos/icons and confidentiality review for screenshots."
+  next_gate: "Obtain explicit human disposition for the enumerated path-plus-blob batch. Default deny remains effective until purpose, rights and privacy or confidentiality fields are resolved."
 
 binary_publication_constraint:
   status: "promotion-blocking"
@@ -240,6 +240,7 @@ binary_publication_constraint:
       blob: "0e602829e0be07f722ac40fa52278bf2daea00cf"
       issue: "unreferenced and larger than 1 MiB"
   evidence_ref: "evidence/requests/CR-4UENTES-0039/binary-metadata-audit-2026-09-05.md"
+  decision_batch_ref: "evidence/requests/CR-4UENTES-0039/binary-publication-decision-batch-2026-09-05.yaml"
 
 evidence_refs:
   - "evidence/requests/CR-4UENTES-0039/changed-files-summary.md"
@@ -247,3 +248,4 @@ evidence_refs:
   - "evidence/requests/CR-4UENTES-0039/visual-qa-results.md"
   - "evidence/requests/CR-4UENTES-0039/control-plane-validation-results.md"
   - "evidence/requests/CR-4UENTES-0039/binary-metadata-audit-2026-09-05.md"
+  - "evidence/requests/CR-4UENTES-0039/binary-publication-decision-batch-2026-09-05.yaml"
