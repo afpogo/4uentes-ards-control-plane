@@ -147,16 +147,37 @@ owner_execution_result:
     - "Jira, Kubernetes, GitOps, infrastructure, capabilities and M2M were not mutated."
 
 persistent_secret_generation_gate:
-  status: "approved-pending-publication"
+  status: "completed-and-superseded-by-stable-custody"
   target_worktree: "4uentes-automation/.worktrees/cr-cp-0021-local-secrets-ports"
   target_directory: ".secrets"
   worktree_retention_rule: >
     Do not retire or prune this owner worktree while it is the only custody
     location for generated secrets. Relocation or rotation requires a separate
     approved gate.
+  exact_targets:
+    - ".secrets/n8n_encryption_key"
+    - ".secrets/postgres_password"
+    - ".secrets/pgadmin_default_password"
+    - ".secrets/productivity_db_password"
+  allowed_commands:
+    - "scripts/bootstrap-local-secrets.ps1 -Mode Plan"
+    - "scripts/bootstrap-local-secrets.ps1 -Mode Generate"
+    - "metadata-only verification of file presence, length, ACL and Git ignore status"
+  forbidden_actions:
+    - "read or print secret file content"
+    - "read or modify .env"
+    - "overwrite, rotate, copy, export or back up secret material"
+    - "start, stop, restart or inspect containers"
+    - "inspect workflows, credentials or persistent data"
+    - "commit or publish .secrets"
+    - "write Jira or mutate Kubernetes, GitOps or infrastructure"
+  rollback: >
+    No automatic deletion is authorized after successful generation. If the
+    run fails, the playbook may remove only files it created during that failed
+    run. Any later deletion requires path verification and a separate approval.
 
 stable_custody_migration_gate:
-  status: "approved-pending-publication"
+  status: "completed-and-verified"
   repository: "afpogo/4uentes-automation"
   canonical_ref: "origin/main"
   source: ".worktrees/cr-cp-0021-local-secrets-ports/.secrets"
@@ -189,27 +210,17 @@ stable_custody_migration_gate:
     - "read or modify .env"
     - "delete the documentation branch or owner implementation branch"
     - "start, stop or restart runtime"
-  exact_targets:
-    - ".secrets/n8n_encryption_key"
-    - ".secrets/postgres_password"
-    - ".secrets/pgadmin_default_password"
-    - ".secrets/productivity_db_password"
-  allowed_commands:
-    - "scripts/bootstrap-local-secrets.ps1 -Mode Plan"
-    - "scripts/bootstrap-local-secrets.ps1 -Mode Generate"
-    - "metadata-only verification of file presence, length, ACL and Git ignore status"
-  forbidden_actions:
-    - "read or print secret file content"
-    - "read or modify .env"
-    - "overwrite, rotate, copy, export or back up secret material"
-    - "start, stop, restart or inspect containers"
-    - "inspect workflows, credentials or persistent data"
-    - "commit or publish .secrets"
-    - "write Jira or mutate Kubernetes, GitOps or infrastructure"
-  rollback: >
-    No automatic deletion is authorized after successful generation. If the
-    run fails, the playbook may remove only files it created during that failed
-    run. Any later deletion requires path verification and a separate approval.
+  result:
+    owner_root_branch: "main"
+    owner_root_sha: "9c1e75dcd1e39adf9a6ce3b1dcd850a2b998825d"
+    documentation_pr: "afpogo/4uentes-automation#2-open-and-preserved"
+    target_status: "four-files-present-private-acl-git-ignored"
+    target_file_lengths: "four-files-64-bytes-each"
+    source_status: "secret-copies-and-empty-source-directory-removed"
+    worktree_status: "retired"
+    branch_status: "local-and-remote-preserved"
+    runtime_dependency_check: "no-process-or-container-mount"
+    secret_content_access: "none"
 
 discovery_contract:
   service_id: "4uentes-automation"
@@ -267,13 +278,13 @@ required_checks:
   - "origin/main integration readback"
 
 decision:
-  status: "stable-custody-migration-approved-pending-publication"
+  status: "stable-custody-migration-completed"
   approver: "4uentes"
   next_gate: >
-    After publishing this gate, migrate custody to the canonical owner root,
-    retire the clean source worktree and record sanitized readback. Runtime
-    startup and .env reconciliation remain separate gates, as do productivity
-    migration, capabilities, M2M, Jira and infrastructure.
+    Reconcile the existing owner-root .env through a separate secret-safe gate,
+    then validate Compose without runtime. Runtime startup remains separately
+    gated, as do productivity migration, capabilities, M2M, Jira and
+    infrastructure.
 
 evidence_refs:
   - "evidence/requests/CR-CP-0021/implementation-plan-2026-09-05.md"

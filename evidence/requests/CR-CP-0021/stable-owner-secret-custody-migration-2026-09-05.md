@@ -47,3 +47,21 @@ custodia y no puede eliminarse automáticamente.
 Registrar SHAs, nombres, longitudes, ignore status, estado Git y retiro del
 worktree. No registrar valores, hashes o fingerprints. `.env`, runtime, datos,
 workflows, Jira, Kubernetes e infraestructura quedan fuera de alcance.
+
+## Resultado observado
+
+El gate fue publicado por el PR control-plane `#235` y releído en
+`93c168057d99a024fcded745d14e76918fdb1750`.
+
+- el checkout raíz owner quedó en `main@9c1e75d`;
+- el PR documental owner `#2` permaneció abierto y su branch preservada;
+- `.secrets` raíz contiene exactamente cuatro archivos de 64 bytes, con ACL
+  privada y exclusión Git;
+- no se leyó contenido ni se registraron hashes o fingerprints;
+- las cuatro copias source y el directorio source vacío fueron retirados;
+- no había procesos ni mounts de contenedores dependientes;
+- el worktree `cr-cp-0021-local-secrets-ports` fue retirado limpio;
+- sus branches local y remota permanecen preservadas.
+
+El `.env` owner fue preservado sin lectura ni modificación. Su reconciliación y
+la validación Compose sin runtime constituyen el siguiente gate.
