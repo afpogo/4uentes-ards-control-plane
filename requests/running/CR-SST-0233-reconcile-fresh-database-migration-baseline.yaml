@@ -12,8 +12,9 @@ requester: "4uentes"
 summary: >
   Reconcile retroactively the migration correction already integrated through
   sst-bend PR 32. The owner change preceded this running lifecycle, so this
-  record preserves the ordering deviation without creating retroactive
-  authorization or permitting additional owner, runtime or Jira mutation.
+  record preserves the ordering deviation. A later read-only runtime readback
+  proves the current Backend and Infra rollout healthy without creating
+  retroactive authorization or permitting owner, runtime or Jira mutation.
 
 control_plane_context:
   initiative_id: "INIT-SST-0010"
@@ -64,18 +65,29 @@ worktree_exception:
   execution_worktree: "worktrees/CR-SST-0233-retroactive-running"
   execution_branch: "agent/cr-sst-0233-retroactive-running"
   execution_ownership: "control-plane-only retroactive lifecycle publication"
+  continuation_worktree: ".worktrees/CR-SST-0233-health-readback"
+  continuation_branch: "agent/cr-sst-0233-health-readback"
+  continuation_base_sha: "532daf0db616a59cef9ecd37a227aca531bc9dd3"
+  continuation_ownership: "control-plane-only runtime health and Jira preflight reconciliation"
+  exception_extension_reason: >
+    The prior clean execution worktree is bound to the consumed running
+    publication and is behind the refreshed canonical ref. Reusing it would
+    mix publication history with this separately reviewable continuation gate.
   cleanup_allowed: false
   dissolution_rule: >
     Retire the clean execution worktree only after canonical merge readback.
     Preserve the legacy dirty worktree until every unique entry is classified.
 
 execution:
-  current_unit: "publish-retroactive-running-lifecycle-and-readback"
+  current_unit: "publish-health-and-jira-preflight-readbacks"
   completed_units:
     - "publish-control-plane-plan"
     - "freeze-historical-schema-in-owner-pr-32"
     - "prove-disposable-postgresql-migration-paths"
     - "merge-owner-pr-32-under-cr-cp-0024"
+    - "publish-retroactive-running-lifecycle-and-readback"
+    - "reconcile-backend-and-infra-runtime-health"
+    - "reconcile-jira-metadata-duplicates-and-hierarchy-read-only"
   control_plane_mutation_allowed: true
   child_repo_mutation_allowed: false
   owner_git_mutation_allowed: false
@@ -86,6 +98,27 @@ execution:
   production_data_allowed: false
   shared_environment_mutation_allowed: false
   jira_write_allowed: false
+
+task_weight:
+  classification: "short-defined-task"
+  risk_level: "low"
+  bounded_reason: >
+    The unit records sanitized read-only observations and updates existing
+    control-plane projections without mutating child repositories or runtime.
+
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "low"
+  fallback_profile: "gpt-5.3-spark"
+  fallback_reasoning_effort: "low"
+
+subagent_deployment_plan:
+  mode: "none"
+  reason: "The user did not request delegation and the bounded lifecycle update remains sequential."
 
 owner_integration_readback:
   repository: "afpogo/sst-bend"
@@ -110,13 +143,49 @@ owner_integration_readback:
     These facts are readbacks of the already merged owner PR. They do not
     authorize a new commit, migration run, deployment or stable promotion.
 
+runtime_health_readback:
+  observed_at: "2026-09-05T21:49:37Z"
+  observation_mode: "read-only-sanitized"
+  infra_develop_sha: "8efb13ed5724cc52aa3e98db114bc07122229f12"
+  argocd:
+    application: "sst-app"
+    sync: "Synced"
+    health: "Healthy"
+    revision: "8efb13ed5724cc52aa3e98db114bc07122229f12"
+    operation_phase: "Succeeded"
+  deployment:
+    namespace: "4uentes-sst"
+    name: "sst-bend"
+    desired_replicas: 1
+    updated_replicas: 1
+    ready_replicas: 1
+    available_replicas: 1
+    rollout_status: "successfully-rolled-out"
+  pod:
+    name: "sst-bend-58498cc978-rxdlq"
+    readiness: "2/2"
+    phase: "Running"
+    backend_image: "ghcr.io/afpogo/sst-bend:develop-5db4dd868f33"
+    backend_image_digest: "sha256:9da19da8150152ae9b4616cfa9754386cfa9922d785da08f4f1428a7adb8ac10"
+    clamav_image_digest: "sha256:967334b92d1782e4d1314ddf903ae537d26792d21c9a39adecb8ac9757980514"
+    containers_ready: true
+    running_since: "2026-09-05T18:35:48Z"
+    historical_clamav_restart_count: 23
+    historical_clamav_last_reason: "OOMKilled"
+    historical_clamav_last_exit_code: 137
+  disposition: >
+    Current runtime health satisfies the Backend and Infra rollout checkpoints.
+    Historical OOM evidence remains preserved and does not become proof of
+    permanent remediation or authorize stable promotion.
+  evidence: "evidence/requests/CR-SST-0233/runtime-health-reconciliation-2026-09-05.md"
+
 residual_blockers:
   - id: "backend-clamav-rollout-health"
-    status: "open"
-    effect: "Blocks global release health but does not invalidate the migration-chain proof."
+    status: "resolved-at-observation"
+    effect: "No longer blocks current Backend or Infra rollout health; historical OOM evidence remains preserved."
   - id: "jira-mirror-not-reconciled"
-    status: "open"
-    effect: "No Jira create, comment or transition is authorized by this lifecycle publication."
+    status: "ready-for-exact-create-authorization"
+    effect: "Read-only preflight passed; no Jira create, comment or transition is authorized yet."
   - id: "legacy-worktree-dirty-provenance"
     status: "open"
     effect: "Blocks removal of the legacy CR-SST-0233 worktree."
@@ -131,6 +200,11 @@ publication_gate:
     applicable: true
     provider: "jira"
     write_status: "not-authorized"
+    preflight_status: "passed-read-only"
+    preflight_observed_at: "2026-09-05T21:54:36Z"
+    candidate_operation: "create exactly one Subtask under SST-122 and read it back"
+    candidate_summary: "[SST][CR-SST-0233] Reconcile fresh-database migration baseline"
+    evidence: "evidence/requests/CR-SST-0233/jira-readonly-preflight-2026-09-05.md"
   cleanup:
     remote_readback_required: true
 
@@ -140,15 +214,17 @@ owner_documentation:
   existing_owner_document: "docs/tasks/2026-08-31-cr-sst-0233-migration-baseline.md"
 
 decision:
-  status: "ready-for-retroactive-running-publication"
+  status: "health-and-jira-preflight-reconciled-awaiting-publication"
   approver: "4uentes"
   next_gate: >
-    Merge and read back this control-plane lifecycle, then keep CR-SST-0233
-    running until residual release health, Jira disposition and terminal
-    evidence receive separate gates.
+    Publish and read back the runtime and Jira preflight evidence. Then request
+    a fresh exact authorization to create one Subtask under SST-122 and read it
+    back. Comments, transitions, links and other writes remain prohibited.
 
 evidence_refs:
   - "evidence/requests/CR-SST-0233/implementation-plan.md"
   - "evidence/requests/CR-SST-0233/retroactive-running-reconciliation-2026-09-05.md"
+  - "evidence/requests/CR-SST-0233/runtime-health-reconciliation-2026-09-05.md"
+  - "evidence/requests/CR-SST-0233/jira-readonly-preflight-2026-09-05.md"
   - "evidence/requests/CR-CP-0024/backend-owner-pr-publication-readback-2026-08-31.md"
   - "evidence/requests/CR-CP-0024/backend-merge-rollout-and-health-readback-2026-08-31.md"

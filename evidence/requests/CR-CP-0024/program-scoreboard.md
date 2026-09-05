@@ -2,12 +2,12 @@
 
 ## Resultado actual
 
-Al 5 de septiembre de 2026, `CR-CP-0024` registra **46 de 100 puntos
+Al 5 de septiembre de 2026, `CR-CP-0024` registra **49 de 100 puntos
 gobernados satisfechos**. El programa continúa en la fase 1, integración owner
 en ramas de desarrollo. La fase 2, promoción estable, no comenzó y conserva
 `0%`.
 
-El `46%` no mide líneas de código ni producto terminado. Es una vista derivada
+El `49%` no mide líneas de código ni producto terminado. Es una vista derivada
 de checkpoints binarios respaldados por evidencia: un checkpoint obtiene todos
 sus puntos sólo cuando sus criterios están demostrados; `pending`, `active` y
 `blocked` obtienen cero. El lifecycle y sus evidencias siguen siendo la fuente
@@ -16,10 +16,10 @@ de autoridad y este scoreboard no autoriza merges, despliegues ni cierres.
 | Dimensión | Puntos satisfechos | Puntos totales | Lectura |
 | --- | ---: | ---: | --- |
 | Gobierno y control plane | 15 | 15 | Lifecycle `running` de `CR-SST-0233` reconciliado retroactivamente |
-| Integración owner | 24 | 55 | Auth integrado; Backend integrado pero rollout bloqueado; clientes pendientes |
+| Integración owner | 27 | 55 | Auth y Backend integrados; rollout Backend/Infra saludable; clientes pendientes |
 | Saneamiento histórico | 7 | 15 | Diez seeds listos y dos de diez raíces históricas saneadas |
 | Gate global y promoción estable | 0 | 15 | No iniciado |
-| **Total** | **46** | **100** | **Fase 1 activa; gate global cerrado** |
+| **Total** | **49** | **100** | **Fase 1 activa; gate global cerrado** |
 
 Los diez seeds limpios representan `100%` de la baseline ya declarada. Esto no
 equivale a tener saneadas las raíces históricas: allí hay 2 de 10 repositorios
@@ -48,7 +48,7 @@ visual_map:
 ```mermaid
 flowchart LR
     P0["CR-CP-0024 gobierno y recoveries 15/15 [validated]"]
-    P1["Fase 1 integración owner 24/55 [running]"]
+    P1["Fase 1 integración owner 27/55 [running]"]
     WS["Saneamiento histórico 7/15 [blocked]"]
     G["Gate global cerrado [gate]"]
     P2["Fase 2 promoción estable 0/15 [planned]"]
@@ -83,33 +83,44 @@ Contención y preservación --preserva raíces pendientes--> Saneamiento histór
 
 | Repositorio | Desarrollo / integración | Destino estable | Estado gobernado |
 | --- | --- | --- | --- |
-| Control plane | `main@b8a8195` al iniciar la observación | `main` | Activo; lifecycle `running` de CR-SST-0233 reconciliado |
+| Control plane | `main@532daf0` al iniciar la observación | `main` | Activo; lifecycle `running` de CR-SST-0233 reconciliado |
 | Core | `develop@ded8c466` | Ninguno | Canónico; raíz histórica saneada |
 | Auth | `develop@ff5605c` | `main` | Integración owner aceptada; promoción estable bloqueada |
-| Backend | `develop@5db4dd8` | `master` | Merge, imagen y pin demostrados; rollout ClamAV no sano |
+| Backend | `develop@5db4dd8` | `master` | Merge, imagen y pin demostrados; rollout actual saludable |
 | Chatbot | `develop@5b96bbb` | `main` | Reconciliación `main → develop` pendiente |
 | Extension | `develop@6d0b512` | `main` | Extracción request-scoped pendiente; PNG privado excluido |
 | Fend | `develop@bd9b8d2` | `master` | Recomposición owner pendiente |
 | Portfolio | `develop@f28b016` | `main` | CV/allowlist resueltos; readiness funcional aún bloqueada |
 | Phinance | `main@228b192` | `main` | Integración aditiva pendiente |
-| Infra | `develop@a4d1200` | Ninguno | Remediaciones integradas; rollout ClamAV bloqueado |
+| Infra | `develop@8efb13e` | Ninguno | Revisión sincronizada por Argo CD; rollout actual saludable |
 | Automation | `main@32055ab` | `main` | Baseline privada descubierta; integración funcional pendiente |
 
 Los SHAs de repositorios funcionales son los documentados por sus readbacks; no
 se presentan como un nuevo `fetch` global. El SHA de autoridad usado para
-construir la vista es `origin/main@b8a81958512a128a5000ab267dcb74b0332c6414`.
+construir la vista es `origin/main@532daf0db616a59cef9ecd37a227aca531bc9dd3`.
+
+## Blocker runtime reconciliado
+
+El readback del `2026-09-05T21:49:37Z` observó `sst-app` en `Synced/Healthy`,
+la revisión Argo CD alineada con `sst-4uentes-infra/develop@8efb13e`, el
+Deployment `sst-bend` completamente desplegado y su pod `2/2 Running`. Esto
+satisface `backend-rollout-healthy` e `infra-rollout-healthy` y suma tres
+puntos gobernados.
+
+El último estado terminado de `receipt-clamav` todavía registra un
+`OOMKilled` histórico. El readback no borra esa evidencia ni afirma una
+garantía permanente: únicamente reemplaza el blocker de estado actual por una
+disposición `resolved-at-observation` respaldada por más de tres horas de ambos
+contenedores listos.
 
 ## Bloqueos que gobiernan el siguiente avance
 
-1. `receipt-clamav` dejó atrás el error de permisos tras Infra PR 25, pero el
-   nuevo contenedor fue observado `OOMKilled` durante la actualización de
-   firmas. Backend e Infra no cumplen salud y el gate global permanece cerrado.
-2. Portfolio todavía requiere separación Vite/Sass, corrección del overflow
+1. Portfolio todavía requiere separación Vite/Sass, corrección del overflow
    móvil, disposición de vulnerabilidades heredadas y CI owner antes de una
    promoción estable.
-3. Chatbot, Extension, Fend y Phinance aún no tienen su integración owner de
+2. Chatbot, Extension, Fend y Phinance aún no tienen su integración owner de
    esta ola demostrada.
-4. Ocho raíces históricas sucias permanecen preservadas. No se borran, resetean
+3. Ocho raíces históricas sucias permanecen preservadas. No se borran, resetean
    ni reutilizan como base de features.
 
 ## Drift documental contenido
