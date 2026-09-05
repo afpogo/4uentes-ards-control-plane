@@ -1,0 +1,134 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-HPT-0024"
+title: "Deploy private receipt-object platform"
+status: "running"
+source_request: "requests/inbox/CR-HPT-0024-deploy-private-receipt-object-platform.yaml"
+planned_request: "requests/planned/CR-HPT-0024-deploy-private-receipt-object-platform.yaml"
+started_at: "2026-08-29"
+requester: "4uentes"
+
+control_plane_context:
+  initiative_id: "INIT-HPT-0003"
+  predecessor_request_ids: ["CR-HPT-0020", "CR-HPT-0023"]
+  coordinator_request_id: "CR-CP-0024"
+  jira_epic_key: "HPT-8"
+  jira_task_key: "HPT-16"
+  owner_repository: "sst-4uentes-infra"
+  recovery_base_ref: "origin/main"
+  recovery_base_sha: "608991400018ebd497414774d61cf70afd178541"
+
+ordering_deviation:
+  status: "observed-and-contained"
+  description: >
+    Owner PR 23 and the later ClamAV PRs 24 and 25 were implemented, published
+    and merged while this request existed only as untracked lifecycle files in
+    the dirty control-plane root.
+  authority_effect: >
+    Canonical publication preserves attribution and current state. It does not
+    create retroactive authorization or validate any unreferenced local file.
+  evidence: "evidence/requests/CR-HPT-0024/retroactive-running-reconciliation-2026-09-05.md"
+
+worktree_policy:
+  policy_id: "worktree-request-lifecycle-policy"
+  dirty_control_plane_root: "preserve-no-mutation"
+  clean_control_plane_worktree: "worktrees/CR-HPT-0024-control-plane-recovery"
+  owner_worktree: "worktrees/CR-HPT-0024-infra-owner"
+  owner_worktree_status: "clean-with-unpublished-documentation-commit"
+  owner_worktree_reuse_required: true
+  additional_owner_worktree_allowed: false
+  cleanup_allowed: false
+
+execution:
+  current_unit: "recover-canonical-lifecycle-before-owner-documentation-publication"
+  completed_units:
+    - "integrate-private-receipt-custody-through-owner-pr-23"
+    - "integrate-clamav-permission-remediation-through-owner-pr-24"
+    - "integrate-unprivileged-clamav-remediation-through-owner-pr-25"
+    - "observe-clamav-signature-update-oom"
+    - "prepare-human-documentation-foundation-commit"
+  control_plane_mutation_allowed: true
+  child_repo_mutation_allowed: false
+  owner_git_mutation_allowed: false
+  runtime_mutation_allowed: false
+  deployment_allowed: false
+  secret_changes_allowed: false
+  license_acceptance_allowed: false
+  jira_write_allowed: false
+
+owner_history:
+  repository: "afpogo/sst-4uentes-infra"
+  canonical_develop_sha: "a4d120061d0d4d53352b1de766858602ff759750"
+  receipt_platform:
+    pull_request: 23
+    develop_promotion_sha: "60589676f4dc2f74e0ec6b9dd3b20a324b4eb7cc"
+    status: "integrated"
+  permission_remediation:
+    pull_request: 24
+    merge_sha: "55097809b069703af2049ab7769db6b83a95d021"
+    status: "integrated-ineffective"
+  unprivileged_remediation:
+    pull_request: 25
+    merge_sha: "a4d120061d0d4d53352b1de766858602ff759750"
+    status: "integrated-permission-fixed-memory-blocked"
+  runtime_observation:
+    scanner_status: "OOMKilled"
+    scanner_exit_code: 137
+    observed_limit: "1536Mi"
+    previous_ready_pod_preserved_availability: true
+  human_documentation:
+    branch: "docs/CR-HPT-0024/human-receipt-custody-guides"
+    local_commit: "67c4874b2404235d70dc56ce143343954f5c707e"
+    status: "validated-local-publication-authorized-by-cr-cp-0024-not-yet-published"
+
+current_authorization:
+  status: "control-plane-lifecycle-recovery-only"
+  approved_by: "4uentes"
+  approved_at: "2026-09-05"
+  approval_text: "ok avancemos con el siguiente gate"
+  effect: >
+    Publish and read back this lifecycle. The existing CR-CP-0024 gate for the
+    exact documentation commit becomes actionable only after this readback.
+  owner_push_allowed_before_readback: false
+  owner_merge_allowed: false
+  runtime_mutation_allowed: false
+  jira_write_allowed: false
+
+residual_gates:
+  - id: "publish-human-documentation-pr"
+    status: "authorized-in-cr-cp-0024-await-lifecycle-readback"
+  - id: "clamav-memory-diagnosis-and-ceiling-selection"
+    status: "not-yet-authorized"
+  - id: "clamav-memory-owner-pr"
+    status: "not-yet-authorized"
+  - id: "infra-owner-merge-with-automatic-gitops"
+    status: "not-authorized"
+  - id: "runtime-health-and-terminal-evidence"
+    status: "blocked"
+
+publication_gate:
+  policy_id: "execution-publication-and-tracker-closure-policy"
+  git_publication:
+    applicable: true
+    lifecycle_merge_required: true
+    terminal_merge_required: true
+  tracker_mirror:
+    applicable: true
+    provider: "jira"
+    write_status: "not-authorized"
+  cleanup:
+    remote_readback_required: true
+
+decision:
+  status: "ready-for-retroactive-running-publication"
+  next_gate: >
+    After canonical readback, publish commit 67c4874 and open its documentation
+    PR without merge under the already published CR-CP-0024 authorization.
+
+evidence_refs:
+  - "evidence/requests/CR-HPT-0024/retroactive-running-reconciliation-2026-09-05.md"
+  - "evidence/requests/CR-CP-0024/infra-remediation-pr-publication-readback-2026-09-05.md"
+  - "evidence/requests/CR-CP-0024/infra-second-remediation-prepublication-2026-09-05.md"
+  - "evidence/requests/CR-CP-0024/infra-pr25-merge-and-runtime-readback-2026-09-05.md"
+  - "evidence/requests/CR-CP-0024/infra-human-documentation-foundation-2026-09-05.md"
+  - "evidence/requests/CR-CP-0024/infra-human-documentation-publication-authorization-2026-09-05.md"
