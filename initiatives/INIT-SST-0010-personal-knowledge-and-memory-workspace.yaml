@@ -82,6 +82,10 @@ source_evidence_refs:
   - "evidence/requests/CR-SST-0232/publication-authorization-2026-09-05.md"
   - "evidence/requests/CR-SST-0232/owner-request-allocation-plan-2026-09-05.md"
   - "evidence/requests/CR-SST-0232/owner-request-allocation-validation-2026-09-05.md"
+  - "evidence/requests/CR-SST-0234/allocation-publication-readback-2026-09-05.md"
+  - "evidence/requests/CR-SST-0234/owner-readonly-preflight-2026-09-05.md"
+  - "evidence/requests/CR-SST-0234/running-authorization-2026-09-05.md"
+  - "evidence/requests/CR-SST-0234/control-plane-validation-2026-09-05.md"
   - "docs/projects/sst/contrato-fuentes-learning-workspace-v1.md"
 model_refs:
   - "specs/initiatives/initiative-model.yaml"
@@ -216,21 +220,24 @@ article_processing_adoption:
   first_owner_manual_review: "passed-2026-08-29"
   next_gate: "publish and read back the CR-SST-0223 done lifecycle, retire its worktrees safely, then evaluate CR-SST-0224 as the next independent owner gate"
 learning_workspace_source_adoption:
-  status: "owner-lifecycles-prepared-awaiting-publication"
+  status: "first-owner-running-prepared-awaiting-publication"
   request_id: "CR-SST-0232"
   predecessor_requests: ["CR-SST-0210", "CR-SST-0193", "CR-SST-0194", "CR-SST-0220", "CR-SST-0223"]
   source_kinds: ["manual_text", "article", "article_document", "agent_output"]
   reservation_publication: "merged-and-read-back-pr-191"
   plan_publication: "merged-and-read-back-pr-192"
   contract_version: "sst-learning-workspace-source-v1@1.0.0"
-  owner_readonly_discovery: "completed-on-locally-available-origin-develop-refs"
+  owner_readonly_discovery: "sst-bend-remote-develop-5db4dd8-confirmed-read-only"
   running_publication: "merged-and-read-back-pr-234"
   running_merge_commit: "eec2d5aff707a83d7b25cdae0577a6cbbe54d630"
   owner_request_ids: ["CR-SST-0234", "CR-SST-0235", "CR-SST-0236", "CR-SST-0237"]
-  owner_allocation_status: "prepared-control-plane-only-publication-pending"
-  owner_execution_status: "not-authorized"
+  owner_allocation_status: "merged-and-read-back-pr-250"
+  owner_allocation_merge_commit: "2eec87077aa1a630fac36c4a86fbb9da5c554246"
+  first_owner_request_id: "CR-SST-0234"
+  first_owner_running_status: "prepared-for-control-plane-publication"
+  owner_execution_status: "not-authorized-running-publication-only"
   jira_status: "read-only-preflight-passed-no-mirror-write-authorized"
-  next_gate: "publish and read back the four owner plans, then request a separate running authorization for CR-SST-0234 only"
+  next_gate: "publish and read back CR-SST-0234 running, then request a separate exact sst-bend owner execution authorization"
 migration_baseline_reconciliation:
   status: "planned-publication-pending"
   request_id: "CR-SST-0233"
@@ -303,6 +310,7 @@ progress:
     - "CR-SST-0219"
     - "CR-SST-0220"
     - "CR-SST-0232"
+    - "CR-SST-0234"
   quarantined_request_artifacts:
     - "CR-SST-0202 local memory reconciliation artifacts collide with Jira SST-113"
   planned_requests:
@@ -315,15 +323,14 @@ progress:
     - "CR-SST-0226"
     - "CR-SST-0227"
     - "CR-SST-0233"
-    - "CR-SST-0234"
     - "CR-SST-0235"
     - "CR-SST-0236"
     - "CR-SST-0237"
   next_recommended_request: >
-    Publish and read back the CR-SST-0234 through CR-SST-0237 allocation batch.
-    After canonical readback, CR-SST-0234 is the first independent Learning
-    source owner gate. Its planned lifecycle does not authorize child mutation;
-    CR-SST-0235 through CR-SST-0237 remain blocked by predecessor adoption.
+    Publish and read back the CR-SST-0234 running lifecycle. Only after that
+    canonical readback may a separate exact gate create a clean Bend worktree
+    and begin owner ARDS/SDD plus implementation. CR-SST-0235 through
+    CR-SST-0237 remain blocked by predecessor adoption.
   current_runtime_status: >
     CR-SST-0193 canonical persistence and API are implemented, merged and
     validated in local/dev. CR-SST-0210 supplies the merged tenant,

@@ -74,4 +74,4 @@ CR-SST-0232 define el contrato. CR-SST-0234 debe publicar primero el resolver y 
 
 ## Proximo gate
 
-Publicar y leer de vuelta este lote del control plane. Despues se podra solicitar un gate separado para promover solamente `CR-SST-0234` a `running`; `CR-SST-0235`, `CR-SST-0236` y `CR-SST-0237` seguirian bloqueados por sus predecesores.
+El lote fue publicado y leido de vuelta mediante PR #250 y merge `2eec870`. El gate siguiente autorizado prepara y publica solamente `CR-SST-0234` como `running`; `CR-SST-0235`, `CR-SST-0236` y `CR-SST-0237` siguen bloqueados por sus predecesores. El estado `running` tampoco autoriza por si solo una mutacion owner: esa ejecucion requiere otro gate exacto.
