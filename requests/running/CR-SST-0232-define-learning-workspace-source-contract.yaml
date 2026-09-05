@@ -1,0 +1,149 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-SST-0232"
+title: "Define the governed Learning Workspace source contract"
+status: "running"
+source_request: "requests/inbox/CR-SST-0232-define-learning-workspace-source-contract.yaml"
+planned_request: "requests/planned/CR-SST-0232-define-learning-workspace-source-contract.yaml"
+created_at: "2026-08-29"
+started_at: "2026-08-29"
+requester: "4uentes"
+summary: >
+  Materialize the control-plane V1 contract that resolves manual text,
+  persisted articles, article documents and agent outputs into immutable
+  Learning Workspace source snapshots. This gate does not modify owners,
+  runtime, Jira, shared environments or product data.
+depends_on: ["CR-SST-0210", "CR-SST-0193", "CR-SST-0194", "CR-SST-0220", "CR-SST-0223"]
+
+control_plane_context:
+  initiative_id: "INIT-SST-0010"
+  feature_state_id: "learning-workspace-source-contract"
+  owner_repositories: ["sst-bend", "sst-fend"]
+  plan_pull_request: 192
+  plan_head_commit: "45496be56659a35eaaea8d2045c455eadaff1a9c"
+  plan_merge_commit: "4e66a69522ca60d6867b1ccabd0d37b68b0268e6"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  jira_project_key: "SST"
+  jira_parent_issue_key: "SST-105"
+  jira_issue_key: "TODO-after-separate-readonly-preflight"
+
+authorization:
+  status: "approved-control-plane-contract-materialization"
+  approved_by: "4uentes"
+  approved_at: "2026-08-29"
+  approval_text: "ok avancemos"
+  interpreted_scope: >
+    Advance the separately proposed CR-SST-0232 running control-plane gate,
+    perform owner read-only discovery and prepare the versioned contract,
+    derived documentation, maps and lifecycle evidence.
+  publication_status: "authorized-for-exact-git-batch-on-2026-09-05"
+  publication_authorization_ref: "evidence/requests/CR-SST-0232/publication-authorization-2026-09-05.md"
+
+execution:
+  control_plane_mutation_allowed: true
+  child_repo_mutation_allowed: false
+  core_repo_mutation_allowed: false
+  runtime_mutation_allowed: false
+  deployment_allowed: false
+  migration_execution_allowed: false
+  shared_environment_mutation_allowed: false
+  production_data_allowed: false
+  secret_or_datastore_access_allowed: false
+  jira_write_allowed: false
+  owner_discovery_mode: "read-only against locally available origin/develop refs"
+  next_external_gate: >
+    Execute the authorized commit, push, pull request, merge and canonical
+    readback batch. Owner implementation and Jira still require later gates.
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  bounded_reason: >
+    Private content references, owner authorization, immutable provenance and
+    the separation from durable memory require one auditable contract path.
+
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5"
+  fallback_reasoning_effort: "high"
+
+subagent_deployment_plan:
+  mode: "none"
+  reason: "No delegation was requested; cross-owner and privacy decisions remain on one auditable path."
+
+atomized_execution:
+  - {order: 1, id: "owner-readonly-discovery", objective: "Read canonical owner contracts and code without mutating owner repositories.", validation: "Record exact refs and observed gaps."}
+  - {order: 2, id: "materialize-contract", objective: "Define SourceDescriptor, SourceResolver and immutable snapshot semantics.", validation: "YAML parse and manual contract walkthrough."}
+  - {order: 3, id: "publish-derived-documentation", objective: "Explain the contract in Spanish with policy-compliant maps and fallbacks.", validation: "Visual documentation validator."}
+  - {order: 4, id: "validate-control-plane", objective: "Validate lifecycle, state, initiative and owner-documentation boundaries.", validation: "npm run check and git diff --check."}
+  - {order: 5, id: "publish-after-approval", objective: "Commit, push, merge and remotely read back the exact reviewed batch.", validation: "Canonical origin/main readback."}
+
+execution_publication_rule:
+  rule_id: "execution-publication-and-tracker-closure-rule"
+  adoption_status: "adopted"
+  git_publication:
+    applicable: true
+    plan_merge_required: true
+    terminal_merge_required: true
+  tracker_mirror:
+    applicable: true
+    provider: "jira"
+    project_key: "SST"
+    epic_key: "SST-105"
+  cleanup:
+    remote_readback_required: true
+
+contract_materialization:
+  contract_id: "sst-learning-workspace-source-v1"
+  version: "1.0.0"
+  normative_ref: "evidence/requests/CR-SST-0232/learning-workspace-source-contract-v1.yaml"
+  derived_doc_ref: "docs/projects/sst/contrato-fuentes-learning-workspace-v1.md"
+  source_kinds: ["manual_text", "article", "article_document", "agent_output"]
+  status: "prepared-awaiting-publication"
+
+owner_readonly_discovery:
+  status: "completed"
+  sst_bend_ref: "origin/develop@dc67203c77bb91804db888ad57c4f2a174b3d6b8"
+  sst_fend_ref: "origin/develop@bd9b8d2aa52aab2346b7bf94b0db05ed188c09a3"
+  evidence_ref: "evidence/requests/CR-SST-0232/owner-readonly-discovery-2026-08-29.md"
+  owner_files_mutated: false
+
+owner_documentation:
+  required_for_this_gate: false
+  reason: "This gate defines the cross-repository contract in the control plane and does not mutate owner repositories."
+  required_for_future_owner_slices: true
+  future_owner_repos: ["sst-bend", "sst-fend"]
+  closure_rule: >
+    Each future owner slice must publish local normative specs, derived Spanish
+    documentation, applicable visual maps and validation evidence before closure.
+
+required_checks:
+  - "npm run check"
+  - "git diff --check"
+  - "visual documentation validator through the full check"
+  - "remote main readback after separately authorized publication"
+
+acceptance:
+  - "One discriminated descriptor covers all four V1 source kinds without granting authorization."
+  - "Persisted sources are resolved server-side under reconstructed principal scope."
+  - "Every successful resolution creates one immutable versioned and hashed source snapshot."
+  - "Current manual text remains compatible through a bounded transition adapter."
+  - "Learning annotations occur after resolution and remain separate from ArticleTag and memory classification."
+  - "Accepting LearningContext cannot create or accept UserMemory."
+  - "Secret values and credentialed source acquisition remain outside V1."
+  - "No child repository, Jira, runtime, migration, deployment or product-data mutation occurs."
+
+evidence_refs:
+  - "evidence/requests/CR-SST-0232/reservation-readback-2026-08-29.md"
+  - "evidence/requests/CR-SST-0232/implementation-plan.md"
+  - "evidence/requests/CR-SST-0232/owner-readonly-discovery-2026-08-29.md"
+  - "evidence/requests/CR-SST-0232/learning-workspace-source-contract-v1.yaml"
+  - "evidence/requests/CR-SST-0232/contract-validation-2026-08-29.md"
+  - "evidence/requests/CR-SST-0232/publication-authorization-2026-09-05.md"
+  - "docs/projects/sst/contrato-fuentes-learning-workspace-v1.md"

@@ -1,0 +1,29 @@
+schema_version: "1.0"
+kind: "feature_state"
+id: "learning-workspace-source-contract"
+title: "SST Learning Workspace Source Contract"
+status: "ards-documented"
+updated_at: "2026-08-29"
+solution_id: "sst"
+affected_services:
+  - "sst-bend"
+  - "sst-fend"
+request_ids:
+  - "CR-SST-0232"
+spec_refs:
+  - "requests/planned/CR-SST-0232-define-learning-workspace-source-contract.yaml"
+  - "requests/running/CR-SST-0232-define-learning-workspace-source-contract.yaml"
+  - "evidence/requests/CR-SST-0232/learning-workspace-source-contract-v1.yaml"
+evidence_refs:
+  - "evidence/requests/CR-SST-0232/reservation-readback-2026-08-29.md"
+  - "evidence/requests/CR-SST-0232/implementation-plan.md"
+  - "evidence/requests/CR-SST-0232/owner-readonly-discovery-2026-08-29.md"
+  - "evidence/requests/CR-SST-0232/contract-validation-2026-08-29.md"
+  - "evidence/requests/CR-SST-0232/publication-authorization-2026-09-05.md"
+  - "docs/projects/sst/contrato-fuentes-learning-workspace-v1.md"
+open_gaps:
+  - "The running lifecycle and V1 contract have exact Git publication authorization; canonical merge and readback remain to be executed."
+  - "No Bend resolver, immutable Learning source snapshot or owner capability exists yet."
+  - "Fend still sends caller-supplied sourceText and has no source inbox or snapshot identity UI."
+  - "BFF adoption and end-to-end validation require later owner-scoped requests."
+  - "Secret-backed source acquisition remains explicitly excluded from V1."
