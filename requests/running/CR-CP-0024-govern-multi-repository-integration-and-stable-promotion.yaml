@@ -33,7 +33,7 @@ authorization:
   evidence: "evidence/requests/CR-CP-0024/auth-owner-execution-authorization-2026-08-30.md"
 
 execution:
-  current_unit: "infra-second-remediation-pr-green-await-merge-authorization"
+  current_unit: "merge-infra-pr25-and-read-back-automatic-gitops-sync"
   parallel_unit: "worktree-sanitization-disposition-and-selective-recovery"
   completed_units:
     - "publish-plan-and-migration-lifecycle"
@@ -56,19 +56,20 @@ execution:
     - "confirm-cap-chown-remediation-insufficient"
     - "implement-and-validate-unprivileged-clamav-remediation"
     - "publish-unprivileged-clamav-owner-pr"
+    - "publish-infra-receipt-custody-plan-as-code"
   control_plane_mutation_allowed: true
-  child_repo_mutation_allowed: false
+  child_repo_mutation_allowed: true
   child_repo_mutation_targets: ["sst-bend", "sst-4uentes-infra"]
   child_repo_mutation_scope: "Merge validated sst-bend PR 32 at de19c14 and allow only its automatic Backend image publication plus the exact Backend pin update in Infra develop."
   owner_pr_publication_allowed: false
-  owner_pr_merge_allowed: false
+  owner_pr_merge_allowed: true
   image_publication_allowed: false
-  infra_mutation_allowed: false
-  runtime_mutation_allowed: false
-  deployment_allowed: false
-  stable_branch_mutation_allowed: false
+  infra_mutation_allowed: true
+  runtime_mutation_allowed: true
+  deployment_allowed: true
+  stable_branch_mutation_allowed: true
   jira_write_allowed: false
-  external_execution_gate: "Authorize merge of Infra PR 25 separately; runtime observation and any manual cluster mutation remain separately gated."
+  external_execution_gate: "Merge only Infra PR 25 at 2105e775f11de068fbcfaae0eb36a0e52db446ea, accept its pre-existing Argo CD autosync effect and perform read-only health readback; manual apply, restart, rollback, Secret mutation and Jira closure remain prohibited."
 
 infra_remediation_pr:
   authorization_status: "consumed-by-branch-and-pr-publication"
@@ -147,7 +148,7 @@ infra_second_remediation:
   base_ref: "origin/develop"
   base_sha: "55097809b069703af2049ab7769db6b83a95d021"
   branch: "fix/CR-HPT-0024/clamav-directory-traversal"
-  local_head_sha: "80eaf394218b0c45e5cb22dc661978116f86cf8a"
+  local_head_sha: "2105e775f11de068fbcfaae0eb36a0e52db446ea"
   design:
     image_entrypoint: "/init-unprivileged"
     uid_gid: "1000:1000"
@@ -172,25 +173,45 @@ infra_second_remediation:
     secret_scan: "PASS"
   publication:
     branch_push: "published-and-read-back"
-    remote_head_sha: "80eaf394218b0c45e5cb22dc661978116f86cf8a"
+    remote_head_sha: "2105e775f11de068fbcfaae0eb36a0e52db446ea"
     develop_readback_sha: "55097809b069703af2049ab7769db6b83a95d021"
     pull_request: 25
     pull_request_url: "https://github.com/afpogo/sst-4uentes-infra/pull/25"
     pull_request_state: "OPEN"
     mergeable: "MERGEABLE"
     merge_state_status: "CLEAN"
-    commits: 1
-    changed_files: 11
-    additions: 179
-    deletions: 47
+    commits: 2
+    changed_files: 13
+    additions: 376
+    deletions: 48
     auto_merge: false
     checks:
       validate_repository: "SUCCESS"
       validate_desired_state: "SUCCESS"
       validate_sst_bend_manifests: "SUCCESS"
       validate_sst_fend_manifests: "SUCCESS"
-    merge_allowed: false
-    runtime_mutation_allowed: false
+    merge_allowed: true
+    runtime_mutation_allowed: "automatic-gitops-sync-only"
+  documentation_as_code:
+    commit: "2105e775f11de068fbcfaae0eb36a0e52db446ea"
+    plan: "docs/infra/receipt-custody-delivery-plan.md"
+    maps: ["gate-roadmap", "gitops-deployment-sequence"]
+    language: "es"
+    textual_fallbacks: true
+    owner_check: "PASS"
+    remote_checks: "SUCCESS"
+  merge_authorization:
+    status: "active-for-exact-pr-head"
+    approved_by: "4uentes"
+    approved_at: "2026-09-05"
+    approval_text: "Autorizoa fusionar infra, ademas necesito conoceer el plan que estamos desarrollando en infra. realiza un docs as a code con mapas mermaid."
+    authorized_pr: 25
+    authorized_head_sha: "2105e775f11de068fbcfaae0eb36a0e52db446ea"
+    automatic_gitops_sync_accepted_from_prior_disclosed_effect: true
+    read_only_runtime_readback_allowed: true
+    manual_cluster_mutation_allowed: false
+    jira_terminal_transition_allowed: false
+    evidence: "evidence/requests/CR-CP-0024/infra-pr25-merge-authorization-2026-09-05.md"
   jira:
     issue: "HPT-16"
     expected_status: "En curso"
@@ -332,9 +353,9 @@ required_checks:
   - "owner branch and pull request remote readback"
 
 decision:
-  status: "running-infra-second-remediation-pr-green-await-merge-authorization"
+  status: "running-infra-pr25-merge-authorized-at-green-head"
   approver: "4uentes"
-  next_gate: "Reconnect Atlassian to mirror the published progress, then authorize merge of Infra PR 25 separately; keep runtime mutation prohibited."
+  next_gate: "Merge Infra PR 25 at the authorized green head, observe the pre-existing autosync without manual cluster mutation, and reconcile Jira after OAuth is restored."
 
 evidence_refs:
   - "evidence/requests/CR-CP-0024/implementation-plan.md"
