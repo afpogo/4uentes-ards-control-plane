@@ -49,6 +49,60 @@ y su [guía de troubleshooting](https://docs.clamav.net/faq/faq-troubleshoot.htm
 que identifica la recarga de bases como un problema frecuente de memoria en
 Docker/Kubernetes.
 
+## Avance de adopción ya existente
+
+La remediación de memoria todavía no tiene branch ni PR propios, pero el
+problema ya está tratado en la cadena documental del owner:
+
+| Capa | Avance publicado | Estado útil para este gate |
+| --- | --- | --- |
+| Learning, playbook y runbook | Infra PR #26, merge `4ab3e7e` | Explican custodia, gates y stop conditions. |
+| Autoridad documental local | Infra PR #27, merge `6379f5f` | Evita confundir guías humanas con manifests autoritativos. |
+| Adopción de policy | Infra PR #28, merge `8efb13e` | Publica `policy_adoption_manifest` bajo `CR-CP-0027`. |
+| Manifest runtime | `receipt-malware-scanner.patch.yml` | Aún conserva `768Mi/1536Mi`; requiere gate owner. |
+| Implementación de memoria | Sin PR abierto ni branch dedicada observada | Pendiente; no existe duplicación activa. |
+
+<!-- visual-map:start -->
+
+```yaml
+visual_map:
+  schema_version: "1.0"
+  id: "cr-hpt-0024-clamav-adoption-progress"
+  type: "lifecycle"
+  question: "Qué partes de la adopción ya existen y cuál es el próximo gate?"
+  abstraction_level: "Progreso documental y operativo de ClamAV en Infra."
+  source_refs:
+    - "requests/running/CR-HPT-0024-deploy-private-receipt-object-platform.yaml"
+    - "evidence/requests/CR-HPT-0024/clamav-memory-diagnosis-and-ceiling-2026-09-05.md"
+  request_ids:
+    - "CR-HPT-0024"
+  observed_at: "2026-09-05"
+  authority_boundary: "Vista derivada; Infra conserva autoridad sobre documentación owner y manifest runtime."
+  textual_fallback_required: true
+```
+
+```mermaid
+flowchart LR
+    A["PR 26<br/>Learning + playbook + runbook"] --> B["PR 27<br/>autoridad local aclarada"]
+    B --> C["PR 28<br/>adoption manifest owner"]
+    C --> D["CR-HPT-0024 diagnóstico CP<br/>3Gi request / 4Gi ceiling"]
+    D --> E{"¿Gate owner autorizado?"}
+    E -->|"no"| S["Detenerse<br/>sin mutación"]
+    E -->|"sí"| P["PR Infra acotado<br/>sin merge automático"]
+    P --> Q["QA firmas vigentes<br/>sin OOM"]
+```
+
+### Fallback textual
+
+```text
+Infra ya publicó la base humana, aclaró su autoridad y adoptó formalmente la
+policy. CR-HPT-0024 completa ahora la decisión numérica. Sin un gate owner
+explícito se detiene; con autorización se abre un PR acotado y la aceptación
+exige firmas vigentes sin OOM.
+```
+
+<!-- visual-map:end -->
+
 ## PR owner futuro y stop conditions
 
 El cambio autorizado en un gate posterior se limitará a:

@@ -193,6 +193,35 @@ clamav_memory_diagnosis:
     Jira write.
   evidence: "evidence/requests/CR-HPT-0024/clamav-memory-diagnosis-and-ceiling-2026-09-05.md"
 
+adoption_progress:
+  policy_id: "knowledge-to-execution-documentation-policy"
+  status: "owner-adopted-operational-remediation-pending"
+  owner_develop_sha: "8efb13ed5724cc52aa3e98db114bc07122229f12"
+  completed_layers:
+    - layer: "learning-playbook-runbook-foundation"
+      pull_request: 26
+      merge_sha: "4ab3e7e9f0869c7c035d75a85149977994aa0af9"
+    - layer: "local-documentation-authority-clarification"
+      pull_request: 27
+      merge_sha: "6379f5f54d0ef1623c9d58aeb222e290f8240db2"
+    - layer: "policy-adoption-manifest"
+      request_id: "CR-CP-0027"
+      pull_request: 28
+      merge_sha: "8efb13ed5724cc52aa3e98db114bc07122229f12"
+      manifest: "specs/policies/adoptions/knowledge-to-execution-documentation-policy.yaml"
+  already_treating_memory_gap:
+    owner_playbook: "declares OOMKilled as a stop condition and requires a bounded owner subgate"
+    owner_runbook: "blocks AIStor/KMS and manual adjustments until memory remediation is measured and authorized"
+    owner_manifest: "still declares request 768Mi and limit 1536Mi"
+  duplication_readback:
+    open_owner_pull_requests: 0
+    dedicated_memory_remediation_branch_observed: false
+    disposition: "The numeric ceiling evidence fills a pending decision and does not duplicate an active owner implementation."
+  remaining_adoption_step: >
+    Publish a separately authorized owner PR for the selected 3Gi request and
+    4Gi limit, update owner guidance, and validate real signature freshness.
+  authority_effect: "Progress recording does not authorize the remaining owner or runtime step."
+
 residual_gates:
   - id: "publish-human-documentation-pr"
     status: "completed-pr-26-merged"
