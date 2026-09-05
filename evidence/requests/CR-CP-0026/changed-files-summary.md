@@ -15,8 +15,9 @@ Fecha: 2026-09-05
 
 - `evidence/requests/CR-CP-0026/implementation-plan.md`: reconciliación de la
   allowlist para usar el estado existente de unificación y no un feature SST.
-- `requests/running/CR-CP-0026-define-knowledge-to-execution-documentation-policy.yaml`:
-  readback del plan y avance de la unidad de implementación.
+- `requests/done/CR-CP-0026-define-knowledge-to-execution-documentation-policy.yaml`:
+  cierre terminal construido después del readback de implementación; reemplaza
+  el estado `running` para conservar una única fase de ejecución.
 - `state/policy-links.yaml`: enlace de adopción local y handoff Core pendiente.
 - `state/features/ards-sdd-policy-unification.current.yaml`: enlace al request,
   human doc, evidencia y gap futuro sin declarar adopción child.
@@ -35,6 +36,7 @@ mezclado procedencia del patrón con adopción de `sst-4uentes-infra`.
 ## Exclusiones confirmadas
 
 - ninguna copia completa de archivos compartidos desde el root dirty;
-- ningún `requests/done/CR-CP-0026-*`;
+- ningún `done` prematuro del root dirty; el único `done` es el cierre terminal
+  construido después del readback de implementación;
 - ninguna modificación de Core, repos hijos, Jira, infraestructura o runtime;
 - ningún kind, schema, resolver o instancia de `policy_overlay`.

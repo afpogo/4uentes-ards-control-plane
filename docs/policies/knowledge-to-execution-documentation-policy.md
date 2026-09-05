@@ -90,7 +90,7 @@ visual_map:
   abstraction_level: "Relaciones normativas entre roles documentales y lifecycle."
   source_refs:
     - "specs/integration/policies.yaml"
-    - "requests/running/CR-CP-0026-define-knowledge-to-execution-documentation-policy.yaml"
+    - "requests/done/CR-CP-0026-define-knowledge-to-execution-documentation-policy.yaml"
   request_ids: []
   observed_at: "2026-09-05"
   authority_boundary: "Vista derivada; specs, manifests, decisiones aprobadas y lifecycles owner conservan su autoridad declarada."

@@ -565,7 +565,7 @@ policies:
       target_class: "core-profile-scoped"
       status: "not-started-separate-request-required"
     evidence:
-      - "requests/running/CR-CP-0026-define-knowledge-to-execution-documentation-policy.yaml"
+      - "requests/done/CR-CP-0026-define-knowledge-to-execution-documentation-policy.yaml"
       - "evidence/requests/CR-CP-0026/promotion-readiness-audit-2026-09-05.md"
       - "evidence/requests/CR-CP-0026/implementation-plan.md"
       - "evidence/requests/CR-CP-0026/policy-analysis.md"

@@ -3,9 +3,11 @@
 ## Resultado y alcance
 
 `CR-CP-0026` define una policy durable y local del control plane para explicar
-como se relacionan Learning, Playbook, Runbook y Specs/manifests. Este gate
-publica el plan y el estado `running`; todavia no publica la implementacion ni
-autoriza cambios en Core, repositorios hijos, Jira, infraestructura o runtime.
+como se relacionan Learning, Playbook, Runbook y Specs/manifests. En su
+publicacion inicial, este gate publico el plan y el estado `running` antes de
+implementar. La implementacion ya fue fusionada y releida; el estado actual es
+preparacion terminal. Ninguna etapa autoriza cambios en Core, repositorios
+hijos, Jira, infraestructura o runtime.
 
 La reserva fue fusionada mediante el commit
 `5b4fdb16c89b40e6e9a30e6cd69eac74d3f4a405`. La auditoria previa se preserva
@@ -45,7 +47,7 @@ visual_map:
   source_refs:
     - "requests/inbox/CR-CP-0026-define-knowledge-to-execution-documentation-policy.yaml"
     - "requests/planned/CR-CP-0026-define-knowledge-to-execution-documentation-policy.yaml"
-    - "requests/running/CR-CP-0026-define-knowledge-to-execution-documentation-policy.yaml"
+    - "requests/done/CR-CP-0026-define-knowledge-to-execution-documentation-policy.yaml"
     - "evidence/requests/CR-CP-0026/promotion-readiness-audit-2026-09-05.md"
   request_ids: ["CR-CP-0026", "CR-HPT-0024"]
   observed_at: "2026-09-05"
@@ -120,5 +122,6 @@ limpia ni retira como parte de este lifecycle.
 
 ## Proximo gate
 
-Fusionar y releer este plan. Solamente despues se habilita el port selectivo de
-la implementacion local.
+Fusionar el cierre terminal, releer `done` desde `origin/main`, comprobar la
+ausencia de `running` y retirar el worktree solamente cuando este limpio y el
+commit terminal sea alcanzable desde la ref canonica.

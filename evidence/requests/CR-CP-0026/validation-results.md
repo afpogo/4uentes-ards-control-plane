@@ -1,7 +1,7 @@
 # Resultados de validación de CR-CP-0026
 
 Fecha: 2026-09-05
-Estado: `validated-locally-pending-implementation-publication`
+Estado: `implementation-merged-and-read-back-terminal-publication-pending`
 
 ## Gates ejecutados
 
@@ -41,6 +41,8 @@ El full gate conservó dos advertencias preexistentes y no bloqueantes:
 ## Estado de publicación
 
 El plan/running fue fusionado y releído en
-`c286d54848caff419f80a1cc90e0ec43c719ad2c`. Esta validación prueba el estado
-local del candidato de implementación; no prueba todavía su merge/readback ni
-el cierre terminal.
+`c286d54848caff419f80a1cc90e0ec43c719ad2c`. La implementación fue fusionada
+mediante PR #242 y releída en
+`6ba7a046e71ca5525a011da2ea585ceb1bad2cb9`. El cierre terminal continúa
+pendiente hasta que el archivo `done` se fusione y sea leído desde
+`origin/main`.
