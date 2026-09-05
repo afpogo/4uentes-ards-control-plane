@@ -120,6 +120,21 @@ validation:
     - "control_plane_validation_results"
     - "visual_qa_results"
 
+execution_publication_rule:
+  rule_id: "execution-publication-and-tracker-closure-rule"
+  adoption_status: "adopted"
+  git_publication:
+    applicable: true
+    plan_merge_required: true
+    terminal_merge_required: true
+  tracker_mirror:
+    applicable: true
+    provider: "jira"
+    project_key: "PORT"
+    epic_key: "PORT-9"
+  cleanup:
+    remote_readback_required: true
+
 decision:
   status: "approved-for-local-execution"
   approver: "4uentes"

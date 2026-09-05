@@ -1,0 +1,189 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-4UENTES-0039"
+title: "Portfolio publication base reconciliation"
+status: "running"
+source_request: "requests/inbox/CR-4UENTES-0039-portfolio-publication-base-reconciliation.yaml"
+planned_request: "requests/planned/CR-4UENTES-0039-portfolio-publication-base-reconciliation.yaml"
+created_at: "2026-07-10"
+started_at: "2026-09-05"
+requester: "4uentes"
+
+summary: >
+  Execute the first bounded Portfolio publication-safety slice from the current
+  remote development baseline. Remove the public CV from the repository tip and
+  artifact, replace recursive resource copying with an explicit empty public
+  resource allowlist, and publish owner documentation and reproducible gates.
+
+authorization:
+  status: "approved-running-and-bounded-owner-mutation"
+  approved_by: "4uentes"
+  approved_at: "2026-09-05"
+  approval_text: "ok avancemos con el siguiente gate, pero avancemos con worktree y apegados a la policy y overlay"
+  child_repo_mutation_allowed: true
+  child_repo_mutation_target: "4uentes-portfolio"
+  jira_write_allowed: false
+  deployment_allowed: false
+  production_allowed: false
+
+control_plane_context:
+  initiative_id: "INIT-PORTFOLIO-0003"
+  parent_request_id: "CR-4UENTES-0036"
+  feature_id: "portfolio-publication-base-reconciliation"
+  coordinator_request_id: "CR-CP-0024"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  jira_issue_key: "PORT-20"
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5"
+  fallback_reasoning_effort: "high"
+  reason: "The slice changes public personal-data exposure, build artifact composition and a dirty-worktree recovery boundary."
+
+subagent_deployment_plan:
+  mode: "bounded-read-only-audits"
+  units:
+    - "lifecycle, base SHA, policy and gate audit"
+    - "dirty owner checkout path classification without opening binaries"
+  mutation_owner: "primary agent"
+
+effective_policy_context:
+  base_policy:
+    id: "worktree-request-lifecycle-policy"
+    ref: "docs/policies/worktree-request-lifecycle-policy.md"
+    status: "active-and-durable"
+  overlay:
+    model_status: "request-scoped-operational-control; formal policy_overlay kind remains proposed"
+    coordinator_request: "requests/running/CR-CP-0024-govern-multi-repository-integration-and-stable-promotion.yaml"
+    evidence_ref: "evidence/requests/CR-CP-0024/worktree-sanitization-readiness-2026-09-03.yaml"
+    status: "active"
+    effective_rules:
+      - "deny reset, clean, switch or removal of the dirty historical Portfolio checkout"
+      - "require a fresh isolated request-scoped owner worktree from the pinned remote SHA"
+      - "deny wholesale copy from the dirty checkout"
+      - "require exact promotion path allowlist and explicit exclusions"
+      - "require owner and control-plane checks plus remote readback before cleanup"
+  exception_manifest: null
+  resolution: "accepted-with-bounded-owner-mutation"
+  recheck_gates: ["before-child-mutation", "before-owner-pr", "before-owner-merge", "before-worktree-cleanup"]
+
+workspace_isolation:
+  historical_checkout: "preserve-dirty-quarantine"
+  canonical_roots_eligible_for_mutation: false
+  owner_repository: "4uentes-portfolio"
+  base:
+    ref: "origin/develop"
+    observed_sha: "877b528fab491382806ced0de8c3d376226e02f2"
+  stable_destination:
+    ref: "origin/main"
+    observed_sha: "72a1d2072a5c838c3320b2d983d50e0c66d3fa99"
+    promotion_status: "blocked-until-publication-safety-and-binary-review-gates-pass"
+  branch: "agent/cr-4uentes-0039-publication-safety"
+  worktree_rule: "Create only after this running lifecycle is merged and read back from origin/main."
+
+promotion_manifest:
+  repository: "4uentes-portfolio"
+  service_id: "4uentes-portfolio"
+  request_id: "CR-4UENTES-0039"
+  source_mode: "implement-on-clean-pinned-base; dirty checkout is evidence-only"
+  base:
+    ref: "origin/develop"
+    observed_sha: "877b528fab491382806ced0de8c3d376226e02f2"
+  path_allowlist:
+    - "src/assets/resources/afpogo_cv.pdf"
+    - "src/pages/Home/components/Hero/index.tsx"
+    - "src/pages/Home/Home.i18n.ts"
+    - "webpack.config.js"
+    - "webpack.config.dev.js"
+    - "config/public-resources.json"
+    - "scripts/check-public-assets.js"
+    - "package.json"
+    - "docs/portfolio-intent.md"
+    - "docs/architecture/README.md"
+    - "docs/qa/visual-checklist.md"
+    - "specs/features/00-index.yaml"
+  hunk_rules:
+    - path: "webpack.config.js"
+      rule: "Remove only recursive src/assets/resources copying; keep image behavior unchanged in this slice."
+    - path: "webpack.config.dev.js"
+      rule: "Remove only recursive src/assets/resources copying; keep image behavior unchanged in this slice."
+    - path: "package.json"
+      rule: "Add check:public-assets and compose it into check without adding or changing dependencies."
+  explicit_exclusions:
+    - {path: "src/assets/images/**", reason: "79 binary candidates require a separate bounded review; do not open, delete or publish them in this slice."}
+    - {path: "src/assets/resources/*", reason: "No replacement PDF or downloadable resource is approved; only afpogo_cv.pdf may be deleted."}
+    - {path: "package-lock.json", reason: "No dependency change is authorized."}
+    - {path: "vite.config.mts", reason: "Webpack-to-Vite migration is outside this slice."}
+    - {path: "src/assets/sass/**", reason: "Global Sass reconciliation remains a separate publication-base unit."}
+    - {path: "src/pages/{Projects,Experience,Skills,Contact}/**", reason: "Visible feature work is excluded until publication safety is established."}
+    - {path: ".env*", reason: "Local configuration and secrets are never promotion sources."}
+    - {path: ".worktrees/**", reason: "Nested worktree data is never promoted."}
+    - {path: "dist/**", reason: "Build output is validation evidence, not source."}
+
+owner_contract:
+  public_resource_allowlist: []
+  cv_download_status: "disabled"
+  expected_cv_get_status: 404
+  expected_cv_head_status: 404
+  history_rewrite_allowed: false
+  recursive_resource_copy_allowed: false
+  owner_documentation_required: true
+  owner_documentation_paths:
+    - "docs/portfolio-intent.md"
+    - "docs/architecture/README.md"
+    - "docs/qa/visual-checklist.md"
+    - "specs/features/00-index.yaml"
+
+required_checks:
+  pre_mutation:
+    - "control-plane origin/main contains this running lifecycle"
+    - "Portfolio origin/develop still resolves to the pinned base SHA"
+    - "new owner worktree is clean"
+  owner:
+    - "git diff --check"
+    - "sensitive-data pattern scan of the diff and artifact"
+    - "npm ci"
+    - "npm run check"
+    - "dist contains no PDF or afpogo_cv artifact"
+    - "GET and HEAD /pdfs/afpogo_cv.pdf return 404 without SPA fallback"
+    - "principal SPA routes remain reachable"
+    - "visual QA confirms the CV CTA is absent and navigation/mobile do not regress"
+  control_plane:
+    - "npm run check before running publication and after owner evidence reconciliation"
+    - "remote SHA and path readback after every merged PR"
+
+execution_publication_rule:
+  rule_id: "execution-publication-and-tracker-closure-rule"
+  adoption_status: "adopted"
+  git_publication:
+    applicable: true
+    plan_merge_required: true
+    terminal_merge_required: true
+  tracker_mirror:
+    applicable: true
+    provider: "jira"
+    project_key: "PORT"
+    epic_key: "PORT-9"
+  cleanup:
+    remote_readback_required: true
+
+rollback: >
+  Before owner publication, abandon only the clean isolated candidate while
+  preserving the dirty historical checkout. After owner publication, revert
+  the owner PR through the normal reviewed flow; never rewrite history or
+  restore the CV through an unreviewed binary copy.
+
+decision:
+  status: "running-publication-pending"
+  blocker: "Merge and read back this running lifecycle before creating or mutating the Portfolio owner worktree."
+  next_gate: "Publish running, refresh Portfolio origin/develop, create the isolated worktree and implement only the twelve-path allowlist."
