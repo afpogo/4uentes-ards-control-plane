@@ -126,3 +126,4 @@ evidence_refs:
   - "evidence/requests/CR-CP-0028/handoff-contract-and-boundary-2026-09-05.md"
   - "evidence/requests/CR-CP-0028/control-plane-handoff-validation-2026-09-05.md"
   - "evidence/requests/CR-CP-0028/control-plane-handoff-publication-readback-2026-09-05.md"
+  - "evidence/requests/CR-CP-0028/duplicate-work-analysis-2026-09-05.md"
