@@ -36,7 +36,7 @@ policy_application:
     - "Do not add capability links or claim runtime, M2M, deployment or secret readiness."
 
 authorization:
-  status: "historical-n8n-key-custody-reconciliation-approved"
+  status: "historical-n8n-key-custody-reconciliation-consumed"
   approved_by: "4uentes"
   approved_at: "2026-09-05"
   approval_text: "ok avancemos"
@@ -46,7 +46,7 @@ authorization:
     key for rollback, and revalidate the base runtime without a public tunnel.
 
 execution:
-  current_unit: "historical-n8n-key-custody-reconciliation"
+  current_unit: "blocked-by-postgres-historical-role-password-mismatch"
   completed_units:
     - "recover-canonical-inbox-identity"
     - "publish-current-onboarding-plan"
@@ -60,6 +60,8 @@ execution:
     - "attempt-local-base-runtime-start-and-rollback-on-port-conflict"
     - "remediate-local-pgadmin-port-to-5060-and-revalidate"
     - "retry-base-runtime-and-rollback-on-n8n-key-mismatch"
+    - "reconcile-historical-n8n-key-into-file-backed-custody"
+    - "retry-base-runtime-and-rollback-on-postgres-password-mismatch"
   control_plane_exact_paths:
     - "requests/running/CR-CP-0021-onboard-4uentes-automation-n8n.yaml"
     - "evidence/requests/CR-CP-0021/automation-owner-local-secret-port-authorization-2026-09-05.md"
@@ -86,9 +88,9 @@ execution:
   capability_mutation_allowed: false
   child_repo_mutation_allowed: true
   owner_git_mutation_allowed: true
-  existing_secret_or_data_access_allowed: true
+  existing_secret_or_data_access_allowed: false
   new_secret_generation_allowed: false
-  runtime_mutation_allowed: true
+  runtime_mutation_allowed: false
   infrastructure_mutation_allowed: false
   deployment_allowed: false
   jira_write_allowed: false
@@ -393,7 +395,7 @@ local_pgadmin_port_remediation_gate:
     local_port_configuration_retained: "5060"
 
 historical_n8n_key_custody_gate:
-  status: "approved-pending-publication"
+  status: "key-reconciled-runtime-retry-rolled-back"
   repository: "afpogo/4uentes-automation"
   execution_checkout: "stable-owner-root-main"
   source:
@@ -432,6 +434,22 @@ historical_n8n_key_custody_gate:
     - "print, log, export or copy secret values outside the declared private paths"
     - "modify or delete n8n_data, workflows, credentials, executions or database rows"
     - "use a tunnel or change versioned owner files, SST, Jira, Kubernetes or infrastructure"
+  result:
+    authorization_pull_request: "https://github.com/afpogo/4uentes-ards-control-plane/pull/259"
+    authorization_main_readback_sha: "3fa1a97e837fdf76305187627d6a5b7b885a01ae"
+    historical_key_promoted: true
+    target_matches_historical_config: true
+    generated_key_private_rollback_preserved: true
+    secret_values_or_digests_output: false
+    local_stack_check_after_promotion: "passed"
+    postgres_reached_healthy: true
+    pgadmin_loopback_http_responded_on_5060: true
+    n8n_health_endpoint_responded: false
+    blocker: "password authentication failed for historical PostgreSQL role n8n"
+    interpretation: "existing postgres_data retained its prior role password; image initialization variables do not rotate an initialized cluster"
+    runtime_rollback_command: "docker compose down"
+    runtime_rollback_completed: true
+    volumes_bind_data_or_secrets_removed: false
 
 discovery_contract:
   service_id: "4uentes-automation"
@@ -489,13 +507,13 @@ required_checks:
   - "origin/main integration readback"
 
 decision:
-  status: "historical-n8n-key-custody-reconciliation-approved-pending-publication"
+  status: "historical-key-reconciled-postgres-role-password-rotation-required"
   approver: "4uentes"
   next_gate: >
-    Publish and read back the high-risk gate, migrate the historical key without
-    output, validate the local base runtime and record sanitized evidence. The
-    quarantined unused generated key requires separate disposition after stable
-    runtime readback.
+    Authorize rotation of only the historical PostgreSQL n8n role password to
+    the existing file-backed postgres secret through a local in-container socket,
+    without placing the value in command arguments or evidence. Revalidate the
+    base runtime afterward. No database rows or schemas may be inspected.
 
 evidence_refs:
   - "evidence/requests/CR-CP-0021/implementation-plan-2026-09-05.md"
