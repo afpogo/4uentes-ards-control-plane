@@ -40,7 +40,7 @@ worktree_policy:
   cleanup_allowed: false
 
 execution:
-  current_unit: "awaiting-clamav-memory-diagnosis-authorization"
+  current_unit: "clamav-memory-ceiling-selected-awaiting-owner-pr-authorization"
   completed_units:
     - "integrate-private-receipt-custody-through-owner-pr-23"
     - "integrate-clamav-permission-remediation-through-owner-pr-24"
@@ -51,6 +51,8 @@ execution:
     - "validate-owner-full-check"
     - "read-back-human-documentation-pr-26"
     - "read-back-human-documentation-pr-26-merge"
+    - "diagnose-clamav-memory-without-runtime-mutation"
+    - "select-clamav-memory-ceiling"
   control_plane_mutation_allowed: true
   child_repo_mutation_allowed: false
   owner_git_mutation_allowed: false
@@ -79,6 +81,12 @@ owner_history:
     scanner_status: "OOMKilled"
     scanner_exit_code: 137
     observed_limit: "1536Mi"
+    observed_request: "768Mi"
+    observed_restarts: 23
+    current_cgroup_memory: "1079119872 bytes"
+    current_cgroup_peak: "1182822400 bytes"
+    current_cgroup_max: "1610612736 bytes"
+    signature_update_state: "daily database older than 7 days; DNS resolution for database.clamav.net failed"
     previous_ready_pod_preserved_availability: true
   human_documentation:
     branch: "docs/CR-HPT-0024/human-receipt-custody-guides"
@@ -121,13 +129,77 @@ current_authorization:
   runtime_mutation_allowed: false
   jira_write_allowed: false
 
+clamav_memory_diagnosis_authorization:
+  status: "consumed-read-only-diagnosis-and-ceiling-selection"
+  approved_by: "4uentes"
+  approved_at: "2026-09-05"
+  approval_text: "continua"
+  task_weight:
+    classification: "complex-high-risk-task"
+    risk_level: "high"
+    bounded_reason: "The decision affects a security scanner resource ceiling and an automatically synced Infra owner path."
+  model_selection:
+    provider: "codex"
+    resource_level: "normal"
+    resource_source: "default"
+    primary_profile: "gpt-5.6-sol"
+    reasoning_effort: "max"
+    fallback_profile: "gpt-5.5"
+    fallback_reasoning_effort: "high"
+  subagent_deployment_plan:
+    mode: "bounded-read-only-audits"
+    completed: ["runtime-audit"]
+    fallback: "manifest audit was completed by the primary agent after the delegated agent capacity failure"
+  scope: "Read-only runtime and manifest diagnosis plus numeric ceiling selection."
+  owner_git_mutation_allowed: false
+  runtime_mutation_allowed: false
+  deployment_allowed: false
+  secret_changes_allowed: false
+  jira_write_allowed: false
+
+clamav_memory_diagnosis:
+  selected_resources:
+    request_memory: "3Gi"
+    limit_memory: "4Gi"
+  selected_ceiling_rationale: >
+    ClamAV documents 3 GiB as minimum recommended RAM and recommends 3-4 GiB
+    for Docker or other constrained environments. The prior 1536Mi limit was
+    exceeded while FreshClam tested daily.cld; 4Gi supplies bounded reload
+    headroom while 3Gi reserves schedulable capacity instead of relying on
+    overcommit.
+  observed_evidence:
+    - "receipt-clamav last termination OOMKilled, exit 137, 23 restarts"
+    - "OOM occurred during Testing database for daily.cld version 28102 to 28114"
+    - "live cgroup measured 1079119872 bytes current and 1182822400 bytes peak after restart"
+    - "worker allocatable memory 12248696Ki; current declared requests 2322Mi and limits 6642Mi"
+  projected_worker_budget:
+    request_memory: "4626Mi (approximately 38 percent of allocatable)"
+    limit_memory: "9202Mi (approximately 75 percent of allocatable)"
+  authority_sources:
+    owner_manifest: "k8s-manifests/overlays/development/sst-bend/receipt-malware-scanner.patch.yml"
+    owner_playbook: "docs/playbooks/receipt-custody-adoption.md"
+    owner_runbook: "docs/runbooks/receipt-custody-development.md"
+    upstream_recommendations:
+      - "https://docs.clamav.net/Introduction.html"
+      - "https://docs.clamav.net/faq/faq-troubleshoot.html"
+  unresolved_separate_blocker: >
+    FreshClam currently cannot resolve database.clamav.net and the local daily
+    database is older than seven days. Socket readiness does not prove current
+    signatures. The future owner PR must prove an update and reload; it must not
+    close this blocker merely because the pod becomes Ready.
+  non_authorization: >
+    This ceiling selection does not authorize an Infra commit, pull request,
+    merge, Argo CD sync, manual resource change, DNS change, Secret change or
+    Jira write.
+  evidence: "evidence/requests/CR-HPT-0024/clamav-memory-diagnosis-and-ceiling-2026-09-05.md"
+
 residual_gates:
   - id: "publish-human-documentation-pr"
     status: "completed-pr-26-merged"
   - id: "merge-human-documentation-pr"
     status: "completed-externally-without-prior-canonical-authorization"
   - id: "clamav-memory-diagnosis-and-ceiling-selection"
-    status: "not-yet-authorized"
+    status: "completed-read-only"
   - id: "clamav-memory-owner-pr"
     status: "not-yet-authorized"
   - id: "infra-owner-merge-with-automatic-gitops"
@@ -173,9 +245,12 @@ publication_gate:
 decision:
   status: "running-owner-documentation-integrated"
   next_gate: >
-    Obtain explicit authorization for the read-only ClamAV memory diagnosis and
-    numeric ceiling selection. An owner remediation PR, runtime mutation,
-    secrets, license acceptance and Jira writes remain separate gates.
+    Obtain explicit authorization to publish, without merge, one Infra owner
+    PR that changes receipt-clamav request memory to 3Gi and limit memory to
+    4Gi, updates the linked owner playbook and runbook, and proves a successful
+    signature update/reload without OOM. Merge, automatic GitOps effects, DNS
+    remediation, secrets, license acceptance and Jira writes remain separate
+    gates.
 
 evidence_refs:
   - "evidence/requests/CR-HPT-0024/retroactive-running-reconciliation-2026-09-05.md"
@@ -187,3 +262,4 @@ evidence_refs:
   - "evidence/requests/CR-HPT-0024/owner-documentation-publication-preflight-2026-09-05.md"
   - "evidence/requests/CR-HPT-0024/owner-documentation-pr-readback-2026-09-05.md"
   - "evidence/requests/CR-HPT-0024/owner-documentation-pr26-merge-readback-2026-09-05.md"
+  - "evidence/requests/CR-HPT-0024/clamav-memory-diagnosis-and-ceiling-2026-09-05.md"
