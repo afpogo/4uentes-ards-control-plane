@@ -41,7 +41,7 @@ authorization:
   evidence: "evidence/requests/CR-CP-0024/auth-owner-execution-authorization-2026-08-30.md"
 
 execution:
-  current_unit: "infra-human-docs-corrective-pr-green-await-merge-authorization"
+  current_unit: "infra-human-docs-corrective-pr-merged-readback"
   parallel_unit: "worktree-sanitization-disposition-and-selective-recovery"
   completed_units:
     - "publish-plan-and-migration-lifecycle"
@@ -71,6 +71,7 @@ execution:
     - "establish-infra-human-learning-playbook-runbook-foundation"
     - "publish-infra-human-documentation-owner-pr"
     - "publish-infra-human-documentation-corrective-pr"
+    - "read-back-infra-human-documentation-corrective-pr-merge"
     - "reconcile-cr-sst-0233-retroactive-running-lifecycle"
   control_plane_mutation_allowed: true
   child_repo_mutation_allowed: false
@@ -84,7 +85,7 @@ execution:
   deployment_allowed: false
   stable_branch_mutation_allowed: false
   jira_write_allowed: false
-  external_execution_gate: "Corrective Infra PR 27 is open and green. A separate exact-head authorization is required for merge; runtime mutation, stable-branch mutation and Jira closure remain prohibited."
+  external_execution_gate: "Corrective Infra PR 27 was observed merged at its authorized head. Formal knowledge-to-execution policy promotion remains a separate request; runtime mutation and Jira closure remain prohibited."
 
 infra_remediation_pr:
   authorization_status: "consumed-by-branch-and-pr-publication"
@@ -383,7 +384,7 @@ infra_second_remediation:
         publication:
           pull_request: 27
           pull_request_url: "https://github.com/afpogo/sst-4uentes-infra/pull/27"
-          state: "OPEN"
+          state: "MERGED"
           is_draft: false
           head_sha: "83bac64d5a7323276af4b691b666890c9cda81fe"
           base_sha: "4ab3e7e9f0869c7c035d75a85149977994aa0af9"
@@ -394,9 +395,14 @@ infra_second_remediation:
           auto_merge: false
           checks:
             validate_repository: "SUCCESS"
-          develop_unchanged: true
+          merged_at: "2026-09-05T19:52:51Z"
+          merged_by: "afpogo"
+          merge_commit: "6379f5f54d0ef1623c9d58aeb222e290f8240db2"
+          merge_executed_by_agent: false
+          develop_unchanged: false
+          develop_head_after_merge: "6379f5f54d0ef1623c9d58aeb222e290f8240db2"
           runtime_mutation_performed: false
-          evidence: "evidence/requests/CR-CP-0024/infra-corrective-pr-publication-readback-2026-09-05.md"
+          evidence: "evidence/requests/CR-CP-0024/infra-corrective-pr-merge-readback-2026-09-05.md"
   jira:
     issue: "HPT-16"
     expected_status: "En curso"
@@ -538,9 +544,9 @@ required_checks:
   - "owner branch and pull request remote readback"
 
 decision:
-  status: "running-infra-human-documentation-corrective-pr-green-await-merge-authorization"
+  status: "running-infra-human-documentation-corrective-pr-merged-readback"
   approver: "4uentes"
-  next_gate: "Authorize merge of Infra PR 27 at exact head 83bac64 or leave it open; runtime mutation and Jira closure remain prohibited."
+  next_gate: "Create or advance a separately governed request for formal knowledge-to-execution policy promotion and Infra adoption manifest; no runtime or Jira transition is implied."
 
 program_progress:
   status: "current-derived-view"
@@ -584,5 +590,6 @@ evidence_refs:
   - "evidence/requests/CR-CP-0024/infra-pr26-unexpected-merge-and-adoption-disposition-2026-09-05.md"
   - "evidence/requests/CR-CP-0024/infra-corrective-pr-authorization-2026-09-05.md"
   - "evidence/requests/CR-CP-0024/infra-corrective-pr-publication-readback-2026-09-05.md"
+  - "evidence/requests/CR-CP-0024/infra-corrective-pr-merge-readback-2026-09-05.md"
   - "requests/running/CR-SST-0233-reconcile-fresh-database-migration-baseline.yaml"
   - "evidence/requests/CR-SST-0233/retroactive-running-reconciliation-2026-09-05.md"
