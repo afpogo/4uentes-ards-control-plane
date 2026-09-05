@@ -40,7 +40,7 @@ worktree_policy:
   cleanup_allowed: false
 
 execution:
-  current_unit: "recover-canonical-lifecycle-before-owner-documentation-publication"
+  current_unit: "owner-documentation-publication-blocked-by-local-api-timeout"
   completed_units:
     - "integrate-private-receipt-custody-through-owner-pr-23"
     - "integrate-clamav-permission-remediation-through-owner-pr-24"
@@ -82,14 +82,16 @@ owner_history:
     status: "validated-local-publication-authorized-by-cr-cp-0024-not-yet-published"
 
 current_authorization:
-  status: "control-plane-lifecycle-recovery-only"
+  status: "owner-documentation-publication-effective-but-validation-blocked"
   approved_by: "4uentes"
   approved_at: "2026-09-05"
   approval_text: "ok avancemos con el siguiente gate"
   effect: >
     Publish and read back this lifecycle. The existing CR-CP-0024 gate for the
     exact documentation commit becomes actionable only after this readback.
-  owner_push_allowed_before_readback: false
+  canonical_lifecycle_readback_sha: "9dc405972150b871a74a4cbb387830ba1adc2865"
+  owner_push_allowed: false
+  owner_push_blocker: "Required owner full check cannot reach the local Kubernetes API OpenAPI endpoint."
   owner_merge_allowed: false
   runtime_mutation_allowed: false
   jira_write_allowed: false
@@ -106,6 +108,22 @@ residual_gates:
   - id: "runtime-health-and-terminal-evidence"
     status: "blocked"
 
+publication_preflight:
+  status: "blocked-environment"
+  owner_commit: "67c4874b2404235d70dc56ce143343954f5c707e"
+  git_preconditions: "PASS"
+  human_documentation_check: "PASS"
+  diff_check: "PASS"
+  secret_scan: "PASS"
+  owner_full_check: "BLOCKED"
+  blocking_step: "check:dry-run:bootstrap:nginx"
+  blocker: "https://127.0.0.1:16443 OpenAPI and readyz return TLS handshake timeout"
+  attempts: 3
+  owner_push_performed: false
+  owner_pull_request_created: false
+  cluster_mutation_performed: false
+  evidence: "evidence/requests/CR-HPT-0024/owner-documentation-publication-preflight-2026-09-05.md"
+
 publication_gate:
   policy_id: "execution-publication-and-tracker-closure-policy"
   git_publication:
@@ -120,10 +138,11 @@ publication_gate:
     remote_readback_required: true
 
 decision:
-  status: "ready-for-retroactive-running-publication"
+  status: "running-owner-documentation-publication-blocked"
   next_gate: >
-    After canonical readback, publish commit 67c4874 and open its documentation
-    PR without merge under the already published CR-CP-0024 authorization.
+    Restore or otherwise make the local Kubernetes API reachable under a
+    separately authorized operational action, rerun the owner full check, then
+    publish commit 67c4874 and open its documentation PR without merge.
 
 evidence_refs:
   - "evidence/requests/CR-HPT-0024/retroactive-running-reconciliation-2026-09-05.md"
@@ -132,3 +151,4 @@ evidence_refs:
   - "evidence/requests/CR-CP-0024/infra-pr25-merge-and-runtime-readback-2026-09-05.md"
   - "evidence/requests/CR-CP-0024/infra-human-documentation-foundation-2026-09-05.md"
   - "evidence/requests/CR-CP-0024/infra-human-documentation-publication-authorization-2026-09-05.md"
+  - "evidence/requests/CR-HPT-0024/owner-documentation-publication-preflight-2026-09-05.md"

@@ -41,7 +41,7 @@ authorization:
   evidence: "evidence/requests/CR-CP-0024/auth-owner-execution-authorization-2026-08-30.md"
 
 execution:
-  current_unit: "infra-human-docs-foundation-publication-authorized-await-owner-pr"
+  current_unit: "infra-human-docs-publication-blocked-by-local-kubernetes-api-timeout"
   parallel_unit: "worktree-sanitization-disposition-and-selective-recovery"
   completed_units:
     - "publish-plan-and-migration-lifecycle"
@@ -304,7 +304,7 @@ infra_second_remediation:
       worktree_clean: true
     evidence: "evidence/requests/CR-CP-0024/infra-human-documentation-foundation-2026-09-05.md"
     publication_authorization:
-      status: "authorized-for-exact-push-and-pr-without-merge"
+      status: "authorized-but-blocked-by-required-owner-full-check"
       approved_by: "4uentes"
       approved_at: "2026-09-05"
       approval_text: "ok avancemos con el siguiente gate"
@@ -317,6 +317,16 @@ infra_second_remediation:
       runtime_mutation_allowed: false
       jira_write_allowed: false
       evidence: "evidence/requests/CR-CP-0024/infra-human-documentation-publication-authorization-2026-09-05.md"
+    publication_preflight:
+      status: "blocked-environment"
+      owner_commit: "67c4874b2404235d70dc56ce143343954f5c707e"
+      human_documentation_check: "PASS"
+      owner_full_check: "BLOCKED"
+      blocker: "Local Kubernetes API OpenAPI and readyz returned TLS handshake timeout on three observations."
+      owner_push_performed: false
+      owner_pull_request_created: false
+      cluster_mutation_performed: false
+      evidence: "evidence/requests/CR-HPT-0024/owner-documentation-publication-preflight-2026-09-05.md"
     owner_lifecycle_gate:
       request_id: "CR-HPT-0024"
       status: "recovery-published-locally-await-canonical-readback"
@@ -464,9 +474,9 @@ required_checks:
   - "owner branch and pull request remote readback"
 
 decision:
-  status: "running-infra-human-documentation-publication-authorized"
+  status: "running-infra-human-documentation-publication-validation-blocked"
   approver: "4uentes"
-  next_gate: "Publish commit 67c4874, open and read back its Infra PR without merge, then return to a separately authorized bounded ClamAV memory remediation."
+  next_gate: "Restore local Kubernetes API reachability through a separate operational authorization, rerun the full owner check, then publish commit 67c4874 and open its Infra PR without merge."
 
 program_progress:
   status: "current-derived-view"
@@ -508,5 +518,6 @@ evidence_refs:
   - "evidence/requests/CR-CP-0024/infra-human-documentation-publication-authorization-2026-09-05.md"
   - "requests/running/CR-HPT-0024-deploy-private-receipt-object-platform.yaml"
   - "evidence/requests/CR-HPT-0024/retroactive-running-reconciliation-2026-09-05.md"
+  - "evidence/requests/CR-HPT-0024/owner-documentation-publication-preflight-2026-09-05.md"
   - "requests/running/CR-SST-0233-reconcile-fresh-database-migration-baseline.yaml"
   - "evidence/requests/CR-SST-0233/retroactive-running-reconciliation-2026-09-05.md"
