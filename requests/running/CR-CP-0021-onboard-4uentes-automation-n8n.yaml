@@ -36,17 +36,17 @@ policy_application:
     - "Do not add capability links or claim runtime, M2M, deployment or secret readiness."
 
 authorization:
-  status: "historical-n8n-key-custody-reconciliation-consumed"
+  status: "postgres-n8n-role-password-rotation-approved"
   approved_by: "4uentes"
   approved_at: "2026-09-05"
-  approval_text: "ok avancemos"
+  approval_text: "ok autorizo los pasos recomendados"
   approval_consumed_for: >
-    Read only the historical n8n encryptionKey field without output, migrate it
-    atomically into file-backed local custody, quarantine the unused generated
-    key for rollback, and revalidate the base runtime without a public tunnel.
+    Rotate only the local PostgreSQL current n8n role password to the existing
+    file-backed postgres secret through the container-local socket, then
+    revalidate the base stack without exposing the value or reading data.
 
 execution:
-  current_unit: "blocked-by-postgres-historical-role-password-mismatch"
+  current_unit: "postgres-n8n-role-password-rotation-and-runtime-validation"
   completed_units:
     - "recover-canonical-inbox-identity"
     - "publish-current-onboarding-plan"
@@ -71,6 +71,7 @@ execution:
     - "evidence/requests/CR-CP-0021/local-runtime-start-authorization-2026-09-05.md"
     - "evidence/requests/CR-CP-0021/local-pgadmin-port-remediation-authorization-2026-09-05.md"
     - "evidence/requests/CR-CP-0021/historical-n8n-key-custody-authorization-2026-09-05.md"
+    - "evidence/requests/CR-CP-0021/postgres-role-password-rotation-authorization-2026-09-05.md"
   owner_exact_paths:
     - ".gitignore"
     - ".env.example"
@@ -88,9 +89,9 @@ execution:
   capability_mutation_allowed: false
   child_repo_mutation_allowed: true
   owner_git_mutation_allowed: true
-  existing_secret_or_data_access_allowed: false
+  existing_secret_or_data_access_allowed: true
   new_secret_generation_allowed: false
-  runtime_mutation_allowed: false
+  runtime_mutation_allowed: true
   infrastructure_mutation_allowed: false
   deployment_allowed: false
   jira_write_allowed: false
@@ -451,6 +452,44 @@ historical_n8n_key_custody_gate:
     runtime_rollback_completed: true
     volumes_bind_data_or_secrets_removed: false
 
+postgres_n8n_role_password_rotation_gate:
+  status: "approved-pending-publication"
+  repository: "afpogo/4uentes-automation"
+  database_scope:
+    compose_service: "postgres"
+    connection: "container-local-unix-socket"
+    database_role: "current POSTGRES_USER; observed runtime role n8n"
+    allowed_statement: "ALTER ROLE current_user PASSWORD <file-backed-secret>"
+    secret_source: "/run/secrets/postgres_password"
+  execution_rules:
+    - "start only the postgres Compose service before rotation"
+    - "read the mounted secret inside PostgreSQL; never place it in host or process arguments"
+    - "capture and suppress raw command output; publish status only"
+    - "do not query schemas, tables, rows, other roles or password hashes"
+    - "after success, start the base stack without tunnel and run Runtime checks"
+  preconditions:
+    - "Automation Compose has no active services before the gate"
+    - "LocalStackOnly passes and postgres secret exists with private custody"
+    - "postgres reaches healthy using the existing data directory"
+  stop_conditions:
+    - "postgres does not reach healthy"
+    - "the mounted secret cannot be read by the database server"
+    - "the exact ALTER ROLE command fails"
+    - "n8n or pgAdmin readiness fails after rotation"
+  rollback_or_compensation:
+    reversible_to_historical_password: false
+    reason: "the historical PostgreSQL role password is not recoverable from postgres_data"
+    compensation: >
+      Keep the role aligned with the existing file-backed secret. If later
+      runtime validation fails, stop Compose without -v and preserve all data
+      and secret custody for diagnosis.
+  forbidden_actions:
+    - "print, export, log or pass the postgres password in command arguments"
+    - "inspect or mutate database content, schemas, workflows or credentials"
+    - "change any role other than the current configured n8n role"
+    - "delete data, volumes, .env, .secrets or rollback custody"
+    - "use a tunnel or modify SST, Jira, Kubernetes, GitOps or infrastructure"
+
 discovery_contract:
   service_id: "4uentes-automation"
   owner_repository: "afpogo/4uentes-automation"
@@ -507,13 +546,12 @@ required_checks:
   - "origin/main integration readback"
 
 decision:
-  status: "historical-key-reconciled-postgres-role-password-rotation-required"
+  status: "postgres-n8n-role-password-rotation-approved-pending-publication"
   approver: "4uentes"
   next_gate: >
-    Authorize rotation of only the historical PostgreSQL n8n role password to
-    the existing file-backed postgres secret through a local in-container socket,
-    without placing the value in command arguments or evidence. Revalidate the
-    base runtime afterward. No database rows or schemas may be inspected.
+    Publish and read back the rotation gate, rotate the single local role,
+    validate n8n and pgAdmin readiness, and record sanitized evidence. No
+    functional workflow, data, tunnel or infrastructure operation is included.
 
 evidence_refs:
   - "evidence/requests/CR-CP-0021/implementation-plan-2026-09-05.md"
@@ -524,4 +562,5 @@ evidence_refs:
   - "evidence/requests/CR-CP-0021/local-runtime-start-authorization-2026-09-05.md"
   - "evidence/requests/CR-CP-0021/local-pgadmin-port-remediation-authorization-2026-09-05.md"
   - "evidence/requests/CR-CP-0021/historical-n8n-key-custody-authorization-2026-09-05.md"
+  - "evidence/requests/CR-CP-0021/postgres-role-password-rotation-authorization-2026-09-05.md"
   - "docs/cross-repo/local-development-secret-and-compose-governance.md"
