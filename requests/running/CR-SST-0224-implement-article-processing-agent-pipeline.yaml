@@ -1,0 +1,141 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-SST-0224"
+title: "Implement the governed article processing agent pipeline"
+status: "running"
+source_request: "requests/inbox/CR-SST-0224-implement-article-processing-agent-pipeline.yaml"
+planned_request: "requests/planned/CR-SST-0224-implement-article-processing-agent-pipeline.yaml"
+created_at: "2026-08-28"
+started_at: "2026-09-05"
+requester: "4uentes"
+
+summary: >
+  Prepare the governed sst-chatbot owner execution for full-document and
+  sequential-paragraph article analysis. This control-plane gate records the
+  canonical preflight, reconciles stale read models and defines the next
+  publication and owner gates without authorizing child-repository, Jira,
+  runtime, deployment or data mutation.
+
+control_plane_context:
+  initiative_id: "INIT-SST-0010"
+  parent_request_id: "CR-SST-0220"
+  predecessor_request_id: "CR-SST-0223"
+  feature_state_id: "article-agent-processing"
+  owner_repository: "sst-chatbot"
+  preflight_content_pull_request: 202
+  preflight_content_head_commit: "6637dc82e7a668694602fcb16000b09d10840c4b"
+  preflight_content_merge_commit: "71de402ea05c31e9b70cb41d32dd472cb44907a0"
+  reconciliation_pull_request: 245
+  reconciliation_head_commit: "69b41f1fbf61293d2688322572e1494c62a89089"
+  reconciliation_merge_commit: "532daf0db616a59cef9ecd37a227aca531bc9dd3"
+  execution_base_ref: "origin/main"
+  execution_base_sha: "3159e67b435a9dc8e5c378d277f46ae5a94b730a"
+
+authorization:
+  status: "approved-control-plane-running-preparation"
+  approved_by: "4uentes"
+  approved_at: "2026-09-05"
+  approval_text: "ok avancemos con el plan de forma ordenada, continuemos"
+  interpreted_scope: >
+    Retire the two clean and canonically reachable CR-SST-0224 preflight
+    worktrees, open one clean control-plane running worktree from refreshed
+    origin/main, prepare the running lifecycle and correct related read-model
+    drift. Git publication, Jira writes and sst-chatbot mutation remain later
+    exact gates.
+  git_publication_allowed: false
+  child_repo_mutation_allowed: false
+  jira_write_allowed: false
+
+execution:
+  current_unit: "prepare-running-lifecycle-publication"
+  control_plane_mutation_allowed: true
+  child_repo_mutation_allowed: false
+  owner_git_mutation_allowed: false
+  runtime_mutation_allowed: false
+  deployment_allowed: false
+  migration_execution_allowed: false
+  shared_environment_mutation_allowed: false
+  production_data_allowed: false
+  secret_or_datastore_access_allowed: false
+  jira_write_allowed: false
+
+worktree_lifecycle:
+  policy_id: "worktree-request-lifecycle-policy"
+  retired_preflight_worktrees:
+    - path: "worktrees/CR-SST-0224-running-preflight"
+      branch: "agent/cr-sst-0224-running-preflight"
+      head: "69b41f1fbf61293d2688322572e1494c62a89089"
+      canonical_merge: "532daf0db616a59cef9ecd37a227aca531bc9dd3"
+      remote_branch_preserved: true
+    - path: "worktrees/CR-SST-0224-preflight-recovery"
+      branch: "agent/cr-sst-0224-preflight-recovery"
+      head: "6637dc82e7a668694602fcb16000b09d10840c4b"
+      canonical_merge: "71de402ea05c31e9b70cb41d32dd472cb44907a0"
+      remote_branch_preserved: true
+  active_worktree:
+    path: "worktrees/CR-SST-0224-running-start"
+    branch: "agent/cr-sst-0224-running-start"
+    base_ref: "origin/main"
+    base_sha: "3159e67b435a9dc8e5c378d277f46ae5a94b730a"
+    initial_status: "clean-and-synchronized"
+
+owner_preflight:
+  status: "completed-read-only-refresh-required-before-owner-mutation"
+  observed_owner_ref: "origin/develop@5b96bbb4c08731785f007ecaabd9e8c03bc88283"
+  evidence_ref: "evidence/requests/CR-SST-0224/owner-readonly-preflight-2026-08-29.md"
+  owner_files_mutated: false
+  next_requirement: >
+    Refresh origin/develop and recheck owner policies, branch namespace and
+    current code before requesting an exact sst-chatbot mutation gate.
+
+jira_preflight:
+  status: "completed-read-only-refresh-required-before-write"
+  evidence_ref: "evidence/requests/CR-SST-0224/jira-readonly-preflight-2026-08-29.md"
+  issue_key: null
+  write_status: "not-authorized"
+  next_requirement: >
+    Repeat the exact JQL and parent/status readback before requesting the
+    separately enumerated create-and-transition batch.
+
+execution_publication_rule:
+  rule_id: "execution-publication-and-tracker-closure-rule"
+  adoption_status: "adopted"
+  git_publication:
+    applicable: true
+    plan_merge_required: true
+    terminal_merge_required: true
+  tracker_mirror:
+    applicable: true
+    provider: "jira"
+    project_key: "SST"
+    epic_key: "SST-105"
+  cleanup:
+    remote_readback_required: true
+
+owner_documentation:
+  required_for_this_gate: false
+  reason: "This gate changes only control-plane lifecycle, evidence and read models."
+  required_before_owner_closure: true
+  owner_repository: "sst-chatbot"
+  expected_surfaces:
+    - "normative article-processing pipeline and provider contract"
+    - "human-readable ARDS/SDD in the owner repository"
+    - "prompt-composition, mode and provider trust-boundary maps with textual fallback"
+
+required_checks:
+  - "npm run check"
+  - "git diff --check"
+  - "remote main readback after separately authorized publication"
+
+decision:
+  status: "ready-for-running-publication-authorization"
+  next_gate: >
+    Validate and commit this exact control-plane batch locally, then request
+    explicit authorization to push it and create the running lifecycle pull
+    request. Owner and Jira gates remain separate after canonical readback.
+
+evidence_refs:
+  - "evidence/requests/CR-SST-0224/owner-readonly-preflight-2026-08-29.md"
+  - "evidence/requests/CR-SST-0224/jira-readonly-preflight-2026-08-29.md"
+  - "evidence/requests/CR-SST-0224/execution-authorization-preview-2026-08-29.md"
+  - "evidence/requests/CR-SST-0224/preflight-publication-and-worktree-readback-2026-09-05.md"
