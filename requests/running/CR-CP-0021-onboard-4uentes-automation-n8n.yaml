@@ -36,18 +36,18 @@ policy_application:
     - "Do not add capability links or claim runtime, M2M, deployment or secret readiness."
 
 authorization:
-  status: "owner-env-reconciliation-consumed-and-completed"
+  status: "local-runtime-start-approved"
   approved_by: "4uentes"
   approved_at: "2026-09-05"
-  approval_text: "ok avancemos con el plan original"
+  approval_text: "ok avancemos con el proximo gate; continuemos"
   approval_consumed_for: >
-    Publish and merge a secret-safe .env migration tool through a temporary
-    owner worktree, retire that implementation worktree, execute the merged tool
-    against the stable owner-root .env and validate Docker Compose configuration
-    without starting runtime.
+    Start and validate only the local base Compose stack from the stable owner
+    root: postgres, n8n and pgAdmin. The tunnel override, workflow/data access,
+    productivity migration, capabilities, M2M, Jira and infrastructure remain
+    excluded.
 
 execution:
-  current_unit: "awaiting-separately-authorized-runtime-gate"
+  current_unit: "local-base-runtime-start-and-readiness"
   completed_units:
     - "recover-canonical-inbox-identity"
     - "publish-current-onboarding-plan"
@@ -64,6 +64,7 @@ execution:
     - "evidence/requests/CR-CP-0021/persistent-secret-generation-authorization-2026-09-05.md"
     - "evidence/requests/CR-CP-0021/stable-owner-secret-custody-migration-2026-09-05.md"
     - "evidence/requests/CR-CP-0021/owner-env-reconciliation-authorization-2026-09-05.md"
+    - "evidence/requests/CR-CP-0021/local-runtime-start-authorization-2026-09-05.md"
   owner_exact_paths:
     - ".gitignore"
     - ".env.example"
@@ -83,7 +84,7 @@ execution:
   owner_git_mutation_allowed: true
   existing_secret_or_data_access_allowed: false
   new_secret_generation_allowed: true
-  runtime_mutation_allowed: false
+  runtime_mutation_allowed: true
   infrastructure_mutation_allowed: false
   deployment_allowed: false
   jira_write_allowed: false
@@ -285,6 +286,41 @@ owner_env_reconciliation_gate:
     implementation_worktree_status: "retired"
     implementation_branch_status: "local-and-remote-preserved"
 
+local_runtime_start_gate:
+  status: "approved-pending-execution"
+  repository: "afpogo/4uentes-automation"
+  execution_checkout: "stable-owner-root-main"
+  compose_scope:
+    included_services: ["postgres", "n8n", "pgadmin"]
+    excluded_compose_files: ["docker-compose.tunnel.yml"]
+    host_exposure: "n8n-and-pgadmin-loopback-only; postgres-not-published"
+  preconditions:
+    - "owner root is clean and on the merged main containing the reconciled .env tool"
+    - "LocalStackOnly validation has passed after .env reconciliation"
+    - "Docker daemon and selected loopback ports are available"
+    - "no secret values, workflow payloads or database rows are read or printed"
+  allowed_actions:
+    - "docker compose up -d using only docker-compose.yml"
+    - "docker compose ps for service and health status"
+    - "scripts/check.ps1 -Runtime for loopback readiness"
+    - "bounded sanitized logs only if readiness fails"
+  stop_conditions:
+    - "Docker daemon is unavailable"
+    - "a required host port is occupied by an unrelated process"
+    - "a service fails to become healthy or its loopback readiness check fails"
+    - "the base Compose command requests a tunnel, non-loopback exposure or an unapproved mutation"
+  rollback:
+    command: "docker compose down"
+    constraints:
+      - "run only if this gate started the failing stack"
+      - "never add -v and never remove bind-mounted data"
+  forbidden_actions:
+    - "use docker-compose.tunnel.yml or create a public tunnel"
+    - "inspect or mutate workflows, executions, database rows or credentials"
+    - "run productivity migrations or access PRODUCTIVITY_DB_PASSWORD"
+    - "modify Jira, Kubernetes, GitOps, infrastructure or versioned owner files"
+    - "print, export or copy .env or secret-file values"
+
 discovery_contract:
   service_id: "4uentes-automation"
   owner_repository: "afpogo/4uentes-automation"
@@ -341,12 +377,12 @@ required_checks:
   - "origin/main integration readback"
 
 decision:
-  status: "owner-env-reconciliation-completed"
+  status: "local-runtime-start-approved-pending-execution"
   approver: "4uentes"
   next_gate: >
-    Request separate authorization before starting the local runtime. Runtime
-    inspection, productivity migration, capabilities, M2M, Jira and
-    infrastructure remain outside this completed gate.
+    Record readiness evidence after the bounded local base-stack start. Any
+    tunnel, workflow/data operation, productivity migration, capability, M2M,
+    Jira or infrastructure work remains separately gated.
 
 evidence_refs:
   - "evidence/requests/CR-CP-0021/implementation-plan-2026-09-05.md"
@@ -354,4 +390,5 @@ evidence_refs:
   - "evidence/requests/CR-CP-0021/persistent-secret-generation-authorization-2026-09-05.md"
   - "evidence/requests/CR-CP-0021/stable-owner-secret-custody-migration-2026-09-05.md"
   - "evidence/requests/CR-CP-0021/owner-env-reconciliation-authorization-2026-09-05.md"
+  - "evidence/requests/CR-CP-0021/local-runtime-start-authorization-2026-09-05.md"
   - "docs/cross-repo/local-development-secret-and-compose-governance.md"
