@@ -47,11 +47,12 @@ authorization:
     outside this authorization.
 
 execution:
-  current_unit: "owner-local-secrets-and-ports"
+  current_unit: "owner-local-secrets-and-ports-readback-complete"
   completed_units:
     - "recover-canonical-inbox-identity"
     - "publish-current-onboarding-plan"
     - "publish-control-plane-discovery"
+    - "publish-owner-local-secret-and-port-contract"
   control_plane_exact_paths:
     - "requests/running/CR-CP-0021-onboard-4uentes-automation-n8n.yaml"
     - "evidence/requests/CR-CP-0021/automation-owner-local-secret-port-authorization-2026-09-05.md"
@@ -118,6 +119,28 @@ owner_slice_contract:
     - "publish runtime, capability or M2M readiness"
     - "write Jira or mutate Kubernetes, GitOps or infrastructure"
 
+owner_execution_result:
+  status: "merged-and-read-back"
+  repository: "afpogo/4uentes-automation"
+  pull_request: 3
+  merge_method: "squash"
+  merge_sha: "9c1e75dcd1e39adf9a6ce3b1dcd850a2b998825d"
+  branch_commit: "fa22d989a1f3454acc9d258989dd1f16828c443e"
+  changed_path_count: 9
+  validation:
+    - "PowerShell syntax validation passed."
+    - "Plan mode completed without creating .secrets."
+    - "Synthetic generation produced four ephemeral files with private Windows ACLs and no trailing newline."
+    - "A second generation attempt failed and all pre-existing synthetic hashes remained unchanged."
+    - "scripts/check.ps1 -LocalStackOnly passed with a synthetic fixture and alternate ports."
+    - "docker compose config and tunnel override config passed without runtime startup."
+    - "No persistent .secrets directory or high-entropy literal was present in the owner change."
+  explicit_gaps:
+    - "Persistent local secret generation was not executed."
+    - "Runtime validation was not executed."
+    - "Legacy productivity playbooks still consume PRODUCTIVITY_DB_PASSWORD from .env and require a separate owner request to migrate."
+    - "Jira, Kubernetes, GitOps, infrastructure, capabilities and M2M were not mutated."
+
 discovery_contract:
   service_id: "4uentes-automation"
   owner_repository: "afpogo/4uentes-automation"
@@ -174,13 +197,12 @@ required_checks:
   - "origin/main integration readback"
 
 decision:
-  status: "owner-slice-authorized-pending-publication"
+  status: "owner-slice-merged-and-read-back"
   approver: "4uentes"
   next_gate: >
-    Publish and read back this authorization before owner mutation. After the
-    owner slice is merged and read back, request a separate explicit gate for
-    persistent local secret generation or runtime startup. Capabilities, M2M,
-    Jira and infrastructure remain separate.
+    Request a separate explicit gate before generating persistent local secrets
+    or starting the Automation runtime. The productivity password consumer
+    migration, capabilities, M2M, Jira and infrastructure remain separate.
 
 evidence_refs:
   - "evidence/requests/CR-CP-0021/implementation-plan-2026-09-05.md"
