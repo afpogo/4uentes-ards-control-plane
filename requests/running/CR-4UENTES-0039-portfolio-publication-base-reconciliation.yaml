@@ -106,6 +106,7 @@ promotion_manifest:
     - "webpack.config.js"
     - "webpack.config.dev.js"
     - "config/public-resources.json"
+    - "config/public-images.json"
     - "scripts/check-public-assets.js"
     - "package.json"
     - "docs/portfolio-intent.md"
@@ -114,13 +115,13 @@ promotion_manifest:
     - "specs/features/00-index.yaml"
   hunk_rules:
     - path: "webpack.config.js"
-      rule: "Remove only recursive src/assets/resources copying; keep image behavior unchanged in this slice."
+      rule: "Replace recursive src/assets/images copying with exact expansion from config/public-images.json; preserve unrelated bundling behavior."
     - path: "webpack.config.dev.js"
-      rule: "Remove only recursive src/assets/resources copying; keep image behavior unchanged in this slice."
+      rule: "Replace recursive src/assets/images copying with exact expansion from config/public-images.json; preserve unrelated development behavior."
     - path: "package.json"
       rule: "Add check:public-assets and compose it into check without adding or changing dependencies."
   explicit_exclusions:
-    - {path: "src/assets/images/**", reason: "79 binary candidates require a separate bounded review; do not open, delete or publish them in this slice."}
+    - {path: "src/assets/images/**", reason: "Binary contents are immutable in this unit; only the 74 approved path-plus-blob items may be selected by the new public image allowlist."}
     - {path: "src/assets/resources/*", reason: "No replacement PDF or downloadable resource is approved; only afpogo_cv.pdf may be deleted."}
     - {path: "package-lock.json", reason: "No dependency change is authorized."}
     - {path: "vite.config.mts", reason: "Webpack-to-Vite migration is outside this slice."}
@@ -132,6 +133,10 @@ promotion_manifest:
 
 owner_contract:
   public_resource_allowlist: []
+  public_image_allowlist:
+    status: "approved-74-exact-items"
+    authorization_ref: "evidence/requests/CR-4UENTES-0039/binary-publication-authorization-2026-09-05.yaml"
+    excluded_item_count: 4
   cv_download_status: "disabled"
   expected_cv_get_status: 404
   expected_cv_head_status: 404
@@ -202,21 +207,22 @@ rollback: >
 decision:
   status: "binary-metadata-audit-complete-stable-promotion-blocked"
   blocker: "Do not mutate the owner or promote develop to main until an enumerated path-plus-blob image batch receives explicit human approval and the remaining Vite/Sass, mobile and dependency gates have governed dispositions."
-  next_gate: "Obtain explicit human disposition for the enumerated path-plus-blob batch. Default deny remains effective until purpose, rights and privacy or confidentiality fields are resolved."
+  next_gate: "Implement the approved 74-item allowlist from a fresh clean owner worktree, prove exact artifact composition, and record remote readback."
 
 binary_publication_constraint:
-  status: "promotion-blocking"
+  status: "owner-implementation-authorized-stable-promotion-blocking"
   audit_tree: "4uentes-portfolio origin/develop@056b6e4ede90854685c48ff9880d475e54b8db84"
   historical_candidate_count: 79
   removed_cv_count: 1
   current_image_count: 78
   current_unique_blob_count: 78
   current_total_bytes: 17182570
-  public_image_allowlist: []
-  owner_mutation_allowed_before_enumerated_approval: false
+  public_image_allowlist: "74 exact referenced path-plus-blob items selected by the authorization evidence"
+  enumerated_approval_received: true
+  owner_mutation_allowed: true
   prohibited_actions:
-    - "open, render or OCR a binary"
-    - "copy, publish, rename, replace or delete a binary"
+    - "copy or publish an item outside the approved 74-item selector"
+    - "modify, rename, replace or delete binary source content"
     - "treat current exposure or a textual reference as publication approval"
     - "expand the owner path allowlist silently"
   approval_requirements:
@@ -241,6 +247,7 @@ binary_publication_constraint:
       issue: "unreferenced and larger than 1 MiB"
   evidence_ref: "evidence/requests/CR-4UENTES-0039/binary-metadata-audit-2026-09-05.md"
   decision_batch_ref: "evidence/requests/CR-4UENTES-0039/binary-publication-decision-batch-2026-09-05.yaml"
+  authorization_ref: "evidence/requests/CR-4UENTES-0039/binary-publication-authorization-2026-09-05.yaml"
 
 evidence_refs:
   - "evidence/requests/CR-4UENTES-0039/changed-files-summary.md"
@@ -249,3 +256,4 @@ evidence_refs:
   - "evidence/requests/CR-4UENTES-0039/control-plane-validation-results.md"
   - "evidence/requests/CR-4UENTES-0039/binary-metadata-audit-2026-09-05.md"
   - "evidence/requests/CR-4UENTES-0039/binary-publication-decision-batch-2026-09-05.yaml"
+  - "evidence/requests/CR-4UENTES-0039/binary-publication-authorization-2026-09-05.yaml"
