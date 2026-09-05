@@ -1,0 +1,135 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-CP-0021"
+title: "Onboard the shared 4uentes automation service powered by n8n"
+status: "inbox"
+created_at: "2026-08-23"
+recovered_at: "2026-09-05"
+requester: "4uentes"
+
+business_context: >
+  A historical control-plane worktree proposed onboarding a shared automation
+  service for the finanzas-personales solution, but its request identity was
+  never published in the canonical lifecycle. The identity must be recovered
+  before any current planning, catalog adoption, owner repository decision,
+  secret handling or runtime work can begin.
+
+requested_change: >
+  Recover only the CR-CP-0021 inbox identity in the canonical control plane,
+  preserving the historical worktree as provenance without adopting its
+  catalog, solution, state, capability, M2M or runtime assertions.
+
+expected_outcome: >
+  CR-CP-0021 has one canonical inbox reservation and an auditable provenance
+  link. Any planning or owner mutation remains blocked behind a later explicit
+  gate based on refreshed canonical and owner evidence.
+
+initial_scope:
+  coordinating_request: "CR-HPT-0027"
+  primary_initiative_id: "INIT-HPT-0002"
+  control_repository: "4uentes-orchestor"
+  candidate_solution: "finanzas-personales"
+  candidate_service: "4uentes-automation"
+  lifecycle_artifacts:
+    - "requests/inbox/CR-CP-0021-onboard-4uentes-automation-n8n.yaml"
+
+recovery_context:
+  reason: "The historical request exists only on a non-canonical legacy branch."
+  legacy_branch: "agent/cr-cp-0021-control-plane-links"
+  legacy_head_sha: "fc1896157e2c4eeb5c620099a75660bacc0e3300"
+  legacy_binding: "n8n-local/.worktrees/cr-cp-0021-control-plane"
+  legacy_disposition: "preserve-read-only-pending-request-scoped-revalidation"
+  bulk_merge_allowed: false
+  bulk_cherry_pick_allowed: false
+  recovered_content:
+    - "request identity"
+    - "historical intent and provenance"
+  excluded_legacy_content:
+    - "service catalog entry"
+    - "solution membership"
+    - "feature states and capability links"
+    - "M2M availability assertions"
+    - "runtime and deployment assertions"
+
+worktree_lifecycle:
+  policy_id: "worktree-request-lifecycle-policy"
+  recovery_worktree_role: "canonical-inbox-reservation-only"
+  legacy_worktree_role: "preserved-historical-source-read-only"
+  temporary_multiple_worktree_reason: >
+    The legacy worktree contains seven historical commits and cannot be reused
+    or retired safely. This clean recovery worktree owns only the canonical
+    inbox reservation and must not import the legacy snapshot wholesale.
+  maximum_new_execution_worktrees: 1
+  base_ref: "origin/main"
+  base_sha: "6e616db859953951255de751cc7d7bed527fc81b"
+
+identity_preflight:
+  observed_at: "2026-09-05"
+  canonical_ref: "origin/main@6e616db859953951255de751cc7d7bed527fc81b"
+  canonical_tree_match: false
+  local_recovery_branch_match_before_creation: false
+  remote_recovery_branch_match_before_creation: false
+  historical_ref_match: true
+  external_tracker_check: "not-performed; Jira writes are outside this gate and Jira is not identity authority"
+  decision: >
+    Preserve the historical CR-CP-0021 identifier and recover it as the same
+    intent. Do not allocate a new request ID and do not treat legacy content as
+    canonical implementation evidence.
+
+constraints:
+  - "This inbox reserves identity and provenance only."
+  - "Do not add catalog, solution, state, capability, policy-adoption or owner-link artifacts in this gate."
+  - "Do not initialize, connect, import or mutate Git metadata in n8n-local or another owner directory."
+  - "Do not modify Automation, Auth, SST, Phinance, Core or infrastructure repositories."
+  - "Do not read .env files, secrets, credentials, databases, payloads or persistent data."
+  - "Do not generate keys or secrets, start containers, allocate active ports, mutate Kubernetes or deploy runtime."
+  - "Do not write Jira under this gate."
+  - "Preserve the legacy worktree; do not clean, reset, switch, merge, rebase or remove it."
+
+task_weight:
+  classification: "bounded-governance-recovery"
+  risk_level: "medium"
+  bounded_reason: >
+    The change is one control-plane inbox file, but it recovers a historical
+    cross-repository identity whose legacy snapshot contains unvalidated owner
+    and security assertions.
+
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5"
+  fallback_reasoning_effort: "high"
+
+subagent_deployment_plan:
+  mode: "none"
+  reason: "No delegation was requested; identity recovery and boundary decisions remain sequential."
+
+execution:
+  approval_source: "Operator authorized the next enumerated gate on 2026-09-05."
+  approval_text: "ok avancemos con el siguiente gate"
+  approval_consumed_for: "inbox recovery commit, publication, pull request, merge and canonical readback only"
+  control_plane_mutation_allowed: true
+  git_reservation_publication_allowed: true
+  child_repo_mutation_allowed: false
+  owner_git_mutation_allowed: false
+  secret_or_data_access_allowed: false
+  runtime_mutation_allowed: false
+  infrastructure_mutation_allowed: false
+  deployment_allowed: false
+  jira_write_allowed: false
+
+requested_next_step: >
+  Publish and read back this inbox reservation. Then refresh origin/main and
+  present a separate planning gate that decides owner Git provenance and
+  revalidates catalog, solution, state, capability, local secret and port
+  assertions without adopting the legacy snapshot wholesale.
+
+decision:
+  status: "approved-for-inbox-recovery-publication"
+  approver: "4uentes"
+  approved_at: "2026-09-05"
+  approval_text: "ok avancemos con el siguiente gate"
