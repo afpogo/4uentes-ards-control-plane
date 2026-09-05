@@ -92,3 +92,26 @@ playbook no sobreescribe archivos, por lo que una corrida persistente futura se
 revierte eliminando exclusivamente los cuatro archivos recién creados, tras
 verificar su path absoluto y antes de cualquier arranque. Esa corrida requiere
 una autorización posterior.
+
+## Resultado y readback owner
+
+El owner publicó el cambio mediante el PR
+`afpogo/4uentes-automation#3`. El repositorio no admite merge commits, por lo
+que se aplicó el método `squash`. `origin/main` fue releído en
+`9c1e75dcd1e39adf9a6ce3b1dcd850a2b998825d` y contiene el playbook, los
+mappings file-backed y los puertos parametrizados.
+
+La validación usó únicamente un directorio efímero bajo `%TEMP%`:
+
+- se generaron cuatro archivos con CSPRNG, ACL privada y sin salto final;
+- la segunda corrida fue rechazada y los hashes internos permanecieron sin
+  cambios;
+- `scripts/check.ps1 -LocalStackOnly` pasó con un `.env` sintético y puertos
+  alternativos;
+- `docker compose config` y el override de túnel pasaron sin iniciar runtime;
+- no se creó `.secrets` persistente y el diff no incorporó literales secretos.
+
+No se leyó `.env`, no se inspeccionaron datos o workflows y no se ejecutó
+`docker compose up`, `down` o `restart`. La generación persistente, el smoke
+runtime y la migración de los playbooks legacy de productividad quedan sujetos
+a gates separados.
