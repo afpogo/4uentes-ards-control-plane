@@ -52,16 +52,17 @@ Docker/Kubernetes.
 ## Avance de adopción ya existente
 
 La remediación de memoria todavía no tiene branch ni PR propios, pero el
-problema ya está tratado en la cadena documental del owner. El lifecycle de
-adopción del control plane existe en un worktree limpio, aunque aún no está
-publicado ni integrado en `main`:
+problema ya está tratado en la cadena documental del owner. Durante este
+readback, el lifecycle de adopción del control plane alcanzó `main` mediante el
+PR #250. Ese PR declara otro lifecycle en su título, por lo que se conserva la
+desviación de publicación sin duplicar ni reescribir el contenido canónico:
 
 | Capa | Avance publicado | Estado útil para este gate |
 | --- | --- | --- |
 | Learning, playbook y runbook | Infra PR #26, merge `4ab3e7e` | Explican custodia, gates y stop conditions. |
 | Autoridad documental local | Infra PR #27, merge `6379f5f` | Evita confundir guías humanas con manifests autoritativos. |
 | Adopción de policy | Infra PR #28, merge `8efb13e` | Publica `policy_adoption_manifest` bajo `CR-CP-0027`. |
-| Lifecycle de adopción en control plane | Branch local limpia `agent/cr-cp-0027-infra-knowledge-policy-adoption@cac58bf` | No existe branch remota observada y `main` todavía no contiene el lifecycle; publicación pendiente. |
+| Lifecycle de adopción en control plane | `CR-CP-0027` ya está en `main@2eec870` mediante PR #250 | Canónico; el readback marca que llegó incluido en un PR cuyo título corresponde a otro lifecycle. |
 | Manifest runtime | `receipt-malware-scanner.patch.yml` | Aún conserva `768Mi/1536Mi`; requiere gate owner. |
 | Implementación de memoria | Sin PR abierto ni branch dedicada observada | Pendiente; no existe duplicación activa. |
 
@@ -77,8 +78,11 @@ visual_map:
   source_refs:
     - "requests/running/CR-HPT-0024-deploy-private-receipt-object-platform.yaml"
     - "evidence/requests/CR-HPT-0024/clamav-memory-diagnosis-and-ceiling-2026-09-05.md"
+    - "requests/done/CR-CP-0027-adopt-knowledge-to-execution-policy-in-sst-infra.yaml"
+    - "evidence/requests/CR-CP-0027/infra-policy-adoption-merge-readback-2026-09-05.md"
   request_ids:
     - "CR-HPT-0024"
+    - "CR-CP-0027"
   observed_at: "2026-09-05"
   authority_boundary: "Vista derivada; Infra conserva autoridad sobre documentación owner y manifest runtime."
   textual_fallback_required: true
@@ -88,7 +92,7 @@ visual_map:
 flowchart LR
     A["PR 26<br/>Learning + playbook + runbook"] --> B["PR 27<br/>autoridad local aclarada"]
     B --> C["PR 28<br/>adoption manifest owner"]
-    C --> L["Lifecycle CP local limpio<br/>publicación pendiente"]
+    C --> L["CR-CP-0027 canónico<br/>readback PR 250"]
     L --> D["CR-HPT-0024 diagnóstico CP<br/>3Gi request / 4Gi ceiling"]
     D --> E{"¿Gate owner autorizado?"}
     E -->|"no"| S["Detenerse<br/>sin mutación"]
@@ -100,10 +104,10 @@ flowchart LR
 
 ```text
 Infra ya publicó la base humana, aclaró su autoridad y adoptó formalmente la
-policy. El lifecycle correspondiente del control plane está limpio pero aún es
-local. CR-HPT-0024 completa la decisión numérica. Sin un gate owner explícito se
-detiene; con autorización se abre un PR acotado y la aceptación exige firmas
-vigentes sin OOM.
+policy. CR-CP-0027 ya está canónico, aunque el readback conserva que llegó por un
+PR titulado para otro lifecycle. CR-HPT-0024 completa la decisión numérica. Sin
+un gate owner explícito se detiene; con autorización se abre un PR acotado y la
+aceptación exige firmas vigentes sin OOM.
 ```
 
 <!-- visual-map:end -->

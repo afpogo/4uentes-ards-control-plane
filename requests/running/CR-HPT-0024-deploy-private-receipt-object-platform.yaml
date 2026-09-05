@@ -195,17 +195,20 @@ clamav_memory_diagnosis:
 
 adoption_progress:
   policy_id: "knowledge-to-execution-documentation-policy"
-  status: "owner-adopted-control-plane-publication-pending-operational-remediation-pending"
+  status: "owner-and-control-plane-adopted-operational-remediation-pending"
   owner_develop_sha: "8efb13ed5724cc52aa3e98db114bc07122229f12"
   control_plane_adoption_lifecycle:
     request_id: "CR-CP-0027"
     local_branch: "agent/cr-cp-0027-infra-knowledge-policy-adoption"
     local_head: "cac58bf70f1da69db84079841c39699de93f9ef8"
     worktree_status: "clean"
-    main_contains_lifecycle: false
+    main_contains_lifecycle: true
+    canonical_main_sha: "2eec87077aa1a630fac36c4a86fbb9da5c554246"
+    observed_via_pull_request: 250
     remote_branch_observed: false
-    publication_status: "local-only-publication-pending"
-    authority_effect: "The local lifecycle records completed owner adoption but is not canonical until separately published and merged."
+    publication_status: "canonical-via-bundled-pr-readback"
+    publication_deviation: "CR-CP-0027 reached main through PR 250, whose declared title belongs to a different lifecycle; retain this readback and require dedicated request-scoped publication paths in future gates."
+    authority_effect: "Canonical adoption records progress but does not authorize Core, Infra or runtime mutation."
   completed_layers:
     - layer: "learning-playbook-runbook-foundation"
       pull_request: 26
