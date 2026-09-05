@@ -14,6 +14,13 @@ downstream:
   repo_role: "ards-standard-source"
   adoption_status: "pending-core-owner-workflow"
 
+control_plane_publication:
+  status: "merged-and-read-back"
+  pull_request: 257
+  head_commit: "846bb596a0c674b6a29d9f244b428194e6870a76"
+  merge_commit: "94547f9d80aa99251b18e8eb2e2ee6befccea080"
+  canonical_branch: "main"
+
 usage:
   mode: "core-policy-promotion-proposal"
   summary: >
@@ -42,6 +49,7 @@ source_refs:
     - "evidence/requests/CR-CP-0028/implementation-plan.md"
     - "evidence/requests/CR-CP-0028/handoff-contract-and-boundary-2026-09-05.md"
     - "evidence/requests/CR-CP-0028/control-plane-handoff-validation-2026-09-05.md"
+    - "evidence/requests/CR-CP-0028/control-plane-handoff-publication-readback-2026-09-05.md"
 
 proposed_policy:
   id: "knowledge-to-execution-documentation-policy"

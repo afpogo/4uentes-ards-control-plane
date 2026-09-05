@@ -571,7 +571,7 @@ policies:
       target_repo: "4uentes-ards-core"
       target_class: "core-profile-scoped"
       request_id: "CR-CP-0028"
-      status: "plan-published-owner-handoff-draft"
+      status: "handoff-published-and-read-back-core-owner-workflow-pending"
       handoff_ref: "specs/capabilities/outbound/4uentes-orchestor--knowledge-to-execution-policy-core-promotion.yaml"
     evidence:
       - "requests/done/CR-CP-0026-define-knowledge-to-execution-documentation-policy.yaml"
@@ -587,9 +587,10 @@ policies:
       - "evidence/requests/CR-CP-0028/implementation-plan.md"
       - "evidence/requests/CR-CP-0028/handoff-contract-and-boundary-2026-09-05.md"
       - "evidence/requests/CR-CP-0028/control-plane-handoff-validation-2026-09-05.md"
+      - "evidence/requests/CR-CP-0028/control-plane-handoff-publication-readback-2026-09-05.md"
       - "specs/capabilities/outbound/4uentes-orchestor--knowledge-to-execution-policy-core-promotion.yaml"
     gaps:
-      - "CR-CP-0028 plan is published and its draft handoff awaits Core owner workflow acceptance."
+      - "CR-CP-0028 handoff is published and read back; Core owner workflow acceptance remains pending."
       - "Child adoption requires a request plus policy_adoption_manifest or policy_exception_manifest."
       - "A declarative chain manifest and structural validator remain a separate increment."
       - "No policy_overlay kind, schema or resolver is active; CR-CP-0025 remains architecture-only."

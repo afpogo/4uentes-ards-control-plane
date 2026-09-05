@@ -283,7 +283,7 @@ links:
     state_id: "ards-sdd-policy-unification"
     state_file: "state/features/ards-sdd-policy-unification.current.yaml"
     link_status: "linked-local-adoption"
-    handoff_status: "plan-published-owner-handoff-draft"
+    handoff_status: "handoff-published-read-back-core-owner-workflow-pending"
     handoff_ref: "specs/capabilities/outbound/4uentes-orchestor--knowledge-to-execution-policy-core-promotion.yaml"
     work_origin: "orchestrator-request"
     request_id: "CR-CP-0026"
