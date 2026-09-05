@@ -36,18 +36,18 @@ policy_application:
     - "Do not add capability links or claim runtime, M2M, deployment or secret readiness."
 
 authorization:
-  status: "stable-owner-custody-migration-approved"
+  status: "owner-env-reconciliation-approved"
   approved_by: "4uentes"
   approved_at: "2026-09-05"
-  approval_text: "perfecto, la correccion recomendada es optima, implementemos este plan."
+  approval_text: "ok avancemos con el plan original"
   approval_consumed_for: >
-    Publish the custody-correction gate, preserve the open documentation branch,
-    reconcile the clean owner root checkout to origin/main, copy the four secret
-    files without reading them, validate metadata, remove the worktree copies
-    and retire the clean owner worktree. Runtime remains excluded.
+    Publish and merge a secret-safe .env migration tool through a temporary
+    owner worktree, retire that implementation worktree, execute the merged tool
+    against the stable owner-root .env and validate Docker Compose configuration
+    without starting runtime.
 
 execution:
-  current_unit: "stable-owner-custody-migration"
+  current_unit: "owner-env-reconciliation-and-compose-config"
   completed_units:
     - "recover-canonical-inbox-identity"
     - "publish-current-onboarding-plan"
@@ -55,11 +55,13 @@ execution:
     - "publish-owner-local-secret-and-port-contract"
     - "read-back-owner-local-secret-and-port-contract"
     - "generate-persistent-owner-secrets-in-retained-worktree"
+    - "migrate-secrets-to-stable-owner-root-and-retire-worktree"
   control_plane_exact_paths:
     - "requests/running/CR-CP-0021-onboard-4uentes-automation-n8n.yaml"
     - "evidence/requests/CR-CP-0021/automation-owner-local-secret-port-authorization-2026-09-05.md"
     - "evidence/requests/CR-CP-0021/persistent-secret-generation-authorization-2026-09-05.md"
     - "evidence/requests/CR-CP-0021/stable-owner-secret-custody-migration-2026-09-05.md"
+    - "evidence/requests/CR-CP-0021/owner-env-reconciliation-authorization-2026-09-05.md"
   owner_exact_paths:
     - ".gitignore"
     - ".env.example"
@@ -222,6 +224,46 @@ stable_custody_migration_gate:
     runtime_dependency_check: "no-process-or-container-mount"
     secret_content_access: "none"
 
+owner_env_reconciliation_gate:
+  status: "approved-pending-publication"
+  repository: "afpogo/4uentes-automation"
+  canonical_ref: "origin/main"
+  versioned_paths:
+    - "scripts/migrate-local-env.ps1"
+    - "specs/system/local-stack.yaml"
+    - "docs/operations/local-stack.md"
+    - "docs/tasks/2026-09-05-cr-cp-0021-env-reconciliation.md"
+  local_path: ".env"
+  migration_contract:
+    remove_keys:
+      - "N8N_ENCRYPTION_KEY"
+      - "POSTGRES_PASSWORD"
+      - "PGADMIN_DEFAULT_PASSWORD"
+    preserve_without_output:
+      - "all unrelated configuration"
+      - "PRODUCTIVITY_DB_PASSWORD compatibility value"
+      - "SMTP configuration"
+    ensure_defaults:
+      LOCAL_SECRETS_DIR: ".secrets"
+      N8N_HOST_PORT: "5678"
+      N8N_PGADMIN_HOST_PORT: "5050"
+    require_non_empty:
+      - "POSTGRES_USER"
+      - "POSTGRES_DB"
+      - "PGADMIN_DEFAULT_EMAIL"
+  execution_rules:
+    - "Develop and validate the migration tool with synthetic temporary fixtures only."
+    - "Merge and read back the tool from owner main before touching the stable .env."
+    - "Perform an atomic replacement without a plaintext backup copy."
+    - "Print key names and status only; never print values."
+    - "Run scripts/check.ps1 -LocalStackOnly and docker compose config only."
+    - "Retire the clean implementation worktree after owner readback."
+  forbidden_actions:
+    - "print, export or copy .env values"
+    - "change PRODUCTIVITY_DB_PASSWORD or SMTP values"
+    - "start, stop, restart or inspect runtime containers"
+    - "modify workflows, data, Jira, Kubernetes, GitOps or infrastructure"
+
 discovery_contract:
   service_id: "4uentes-automation"
   owner_repository: "afpogo/4uentes-automation"
@@ -278,17 +320,18 @@ required_checks:
   - "origin/main integration readback"
 
 decision:
-  status: "stable-custody-migration-completed"
+  status: "owner-env-reconciliation-approved-pending-publication"
   approver: "4uentes"
   next_gate: >
-    Reconcile the existing owner-root .env through a separate secret-safe gate,
-    then validate Compose without runtime. Runtime startup remains separately
-    gated, as do productivity migration, capabilities, M2M, Jira and
-    infrastructure.
+    Publish the gate, implement and merge the migration tool, reconcile .env,
+    validate Compose without runtime and record sanitized readback. Runtime
+    startup remains separately gated, as do productivity migration,
+    capabilities, M2M, Jira and infrastructure.
 
 evidence_refs:
   - "evidence/requests/CR-CP-0021/implementation-plan-2026-09-05.md"
   - "evidence/requests/CR-CP-0021/automation-owner-local-secret-port-authorization-2026-09-05.md"
   - "evidence/requests/CR-CP-0021/persistent-secret-generation-authorization-2026-09-05.md"
   - "evidence/requests/CR-CP-0021/stable-owner-secret-custody-migration-2026-09-05.md"
+  - "evidence/requests/CR-CP-0021/owner-env-reconciliation-authorization-2026-09-05.md"
   - "docs/cross-repo/local-development-secret-and-compose-governance.md"
