@@ -21,6 +21,8 @@ source_evidence_refs:
   - "evidence/initiatives/INIT-SST-0010/jira-mirror-plan.md"
   - "evidence/initiatives/INIT-SST-0010/jira-readonly-preflight.md"
   - "evidence/initiatives/INIT-SST-0010/jira-write-batch-authorization.md"
+  - "evidence/requests/CR-SST-0233/jira-create-and-publication-readback-2026-09-05.md"
+  - "evidence/requests/CR-SST-0233/fresh-database-drift-observation-2026-08-29.md"
   - "evidence/initiatives/INIT-SST-0010/jira-write-summary.md"
   - "evidence/initiatives/INIT-SST-0010/jira-final-readback.md"
   - "evidence/initiatives/INIT-SST-0010/validation-results.md"
@@ -127,10 +129,10 @@ tracking:
     issue_type: "Epic"
     issue_key: "SST-105"
     current_status_observed: "Tareas por hacer"
-    write_status: "historical-batches-including-sst-120-sst-122-and-sst-123-start-consumed-no-current-authorization"
-    read_status: "sst-120-live-readback-passed-2026-08-25"
+    write_status: "historical-batches-plus-cr-sst-0233-sst-125-create-consumed-no-current-authorization"
+    read_status: "sst-125-create-readback-passed-2026-09-05"
     evidence_ref: "evidence/initiatives/INIT-SST-0010/jira-final-readback.md"
-    associated_issue_keys: ["SST-106", "SST-107", "SST-108", "SST-109", "SST-110", "SST-111", "SST-112", "SST-120", "SST-122", "SST-123"]
+    associated_issue_keys: ["SST-106", "SST-107", "SST-108", "SST-109", "SST-110", "SST-111", "SST-112", "SST-120", "SST-122", "SST-123", "SST-125"]
     request_issue_map:
       CR-SST-0192: "SST-106"
       CR-SST-0193: "SST-107"
@@ -142,6 +144,7 @@ tracking:
       CR-SST-0219: "SST-120"
       CR-SST-0220: "SST-122"
       CR-SST-0223: "SST-123"
+      CR-SST-0233: "SST-125"
     issue_status_observed_at: "2026-08-28"
     issue_status_observed:
       SST-105: "Tareas por hacer"
@@ -155,6 +158,15 @@ tracking:
       SST-120: "En curso"
       SST-122: "En curso"
       SST-123: "En curso"
+    latest_request_readback:
+      observed_at: "2026-09-05T23:34:25Z"
+      request_id: "CR-SST-0233"
+      issue_key: "SST-125"
+      issue_type: "Subtask"
+      status: "Tareas por hacer"
+      parent_issue_key: "SST-122"
+      epic_key: "SST-105"
+      write_authorization: "consumed-create-and-readback"
     reconciliation_request_candidate: "CR-SST-TODO-JIRA-RECONCILIATION"
     reconciliation_batch_status: "quarantined-after-local-cr-sst-0202-id-collision"
 identifier_reconciliation:
@@ -239,7 +251,7 @@ learning_workspace_source_adoption:
   jira_status: "read-only-preflight-passed-no-mirror-write-authorized"
   next_gate: "publish and read back CR-SST-0234 running, then request a separate exact sst-bend owner execution authorization"
 migration_baseline_reconciliation:
-  status: "planned-publication-pending"
+  status: "owner-integrated-runtime-healthy-jira-primary-created-terminal-pending"
   request_id: "CR-SST-0233"
   coordinator_request_id: "CR-CP-0024"
   defect: >
@@ -251,9 +263,10 @@ migration_baseline_reconciliation:
     20260829010000-adopt-article-agent-processing-v1 as the sole owner of the
     later columns.
   quarantined_source: "pre-publication dirty worktree; preserve and do not promote"
-  owner_execution_status: "not-authorized"
-  jira_status: "read-only-preflight-passed-no-mirror-write-authorized"
-  next_gate: "merge and read back this planned lifecycle before any sst-bend mutation"
+  owner_execution_status: "sst-bend-pr-32-merged-and-read-back-no-new-owner-mutation-authorized"
+  jira_status: "sst-125-tareas-por-hacer-create-and-readback-batch-consumed"
+  jira_issue_key: "SST-125"
+  next_gate: "publish the Jira readback, classify legacy worktree provenance and evaluate terminal lifecycle readiness"
 relationships:
   depends_on:
     - {initiative_id: "INIT-SST-0007", role: "authenticated realtime chat and internal chatbot runtime"}
@@ -273,7 +286,7 @@ boundaries:
   jira_writes_authorized: false
   jira_writes_were_authorized: true
   jira_write_authorization_consumed: true
-  jira_write_authorization_scope: "Historical creation batches, SST-108 closure, the SST-120/SST-122/SST-123 create-and-start batches, and the exact SST-123 terminal description-plus-transition batch are consumed; no current Jira write is authorized."
+  jira_write_authorization_scope: "Historical creation batches, SST-108 closure, the SST-120/SST-122/SST-123 create-and-start batches, the exact SST-123 terminal batch, and the CR-SST-0233 SST-125 create-and-readback batch are consumed; no current Jira write is authorized."
   child_repo_mutation_requires_later_execution_approval: false
   child_repo_mutation_requires_running_publication_readback: true
   canonical_memory_owner: "sst-bend"
