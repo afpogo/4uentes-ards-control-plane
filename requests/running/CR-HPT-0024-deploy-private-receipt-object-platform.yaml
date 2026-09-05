@@ -34,19 +34,22 @@ worktree_policy:
   dirty_control_plane_root: "preserve-no-mutation"
   clean_control_plane_worktree: "worktrees/CR-HPT-0024-control-plane-recovery"
   owner_worktree: "worktrees/CR-HPT-0024-infra-owner"
-  owner_worktree_status: "clean-with-unpublished-documentation-commit"
+  owner_worktree_status: "clean-with-documentation-pr-open"
   owner_worktree_reuse_required: true
   additional_owner_worktree_allowed: false
   cleanup_allowed: false
 
 execution:
-  current_unit: "owner-documentation-publication-blocked-by-local-api-timeout"
+  current_unit: "owner-documentation-pr-open-awaiting-merge-authorization"
   completed_units:
     - "integrate-private-receipt-custody-through-owner-pr-23"
     - "integrate-clamav-permission-remediation-through-owner-pr-24"
     - "integrate-unprivileged-clamav-remediation-through-owner-pr-25"
     - "observe-clamav-signature-update-oom"
     - "prepare-human-documentation-foundation-commit"
+    - "recover-docker-desktop-and-kind-readiness"
+    - "validate-owner-full-check"
+    - "read-back-human-documentation-pr-26"
   control_plane_mutation_allowed: true
   child_repo_mutation_allowed: false
   owner_git_mutation_allowed: false
@@ -79,10 +82,12 @@ owner_history:
   human_documentation:
     branch: "docs/CR-HPT-0024/human-receipt-custody-guides"
     local_commit: "67c4874b2404235d70dc56ce143343954f5c707e"
-    status: "validated-local-publication-authorized-by-cr-cp-0024-not-yet-published"
+    pull_request: 26
+    pull_request_url: "https://github.com/afpogo/sst-4uentes-infra/pull/26"
+    status: "published-open-clean-ci-passing-not-authorized-for-merge"
 
 current_authorization:
-  status: "owner-documentation-publication-effective-but-validation-blocked"
+  status: "owner-documentation-publication-consumed"
   approved_by: "4uentes"
   approved_at: "2026-09-05"
   approval_text: "ok avancemos con el siguiente gate"
@@ -91,14 +96,16 @@ current_authorization:
     exact documentation commit becomes actionable only after this readback.
   canonical_lifecycle_readback_sha: "9dc405972150b871a74a4cbb387830ba1adc2865"
   owner_push_allowed: false
-  owner_push_blocker: "Required owner full check cannot reach the local Kubernetes API OpenAPI endpoint."
+  owner_push_blocker: "none-publication-gate-consumed-by-existing-pr-26"
   owner_merge_allowed: false
   runtime_mutation_allowed: false
   jira_write_allowed: false
 
 residual_gates:
   - id: "publish-human-documentation-pr"
-    status: "authorized-in-cr-cp-0024-await-lifecycle-readback"
+    status: "completed-pr-26-open"
+  - id: "merge-human-documentation-pr"
+    status: "not-authorized"
   - id: "clamav-memory-diagnosis-and-ceiling-selection"
     status: "not-yet-authorized"
   - id: "clamav-memory-owner-pr"
@@ -109,20 +116,26 @@ residual_gates:
     status: "blocked"
 
 publication_preflight:
-  status: "blocked-environment"
+  status: "passed-after-local-engine-recovery"
   owner_commit: "67c4874b2404235d70dc56ce143343954f5c707e"
   git_preconditions: "PASS"
   human_documentation_check: "PASS"
   diff_check: "PASS"
   secret_scan: "PASS"
-  owner_full_check: "BLOCKED"
-  blocking_step: "check:dry-run:bootstrap:nginx"
-  blocker: "https://127.0.0.1:16443 OpenAPI and readyz return TLS handshake timeout"
-  attempts: 3
-  owner_push_performed: false
-  owner_pull_request_created: false
+  owner_full_check: "PASS"
+  blocking_step: "none"
+  blocker: "none"
+  attempts: 4
+  owner_push_performed: true
+  owner_pull_request_created: true
+  owner_pull_request: 26
   cluster_mutation_performed: false
-  evidence: "evidence/requests/CR-HPT-0024/owner-documentation-publication-preflight-2026-09-05.md"
+  operational_recovery: "Docker Desktop restart after stale process lock; no data reset or manifest mutation"
+  publication_ordering_deviation: >
+    Pull request 26 already existed when the recovered local full check passed.
+    The readback validates its exact authorized SHA and scope but does not make
+    the earlier publication order retroactively compliant.
+  evidence: "evidence/requests/CR-HPT-0024/owner-documentation-pr-readback-2026-09-05.md"
 
 publication_gate:
   policy_id: "execution-publication-and-tracker-closure-policy"
@@ -138,11 +151,11 @@ publication_gate:
     remote_readback_required: true
 
 decision:
-  status: "running-owner-documentation-publication-blocked"
+  status: "running-owner-documentation-pr-open"
   next_gate: >
-    Restore or otherwise make the local Kubernetes API reachable under a
-    separately authorized operational action, rerun the owner full check, then
-    publish commit 67c4874 and open its documentation PR without merge.
+    Obtain explicit authorization before merging Infra pull request 26. Runtime
+    mutation, the ClamAV memory remediation and Jira writes remain separate
+    gates and are not implied by documentation publication.
 
 evidence_refs:
   - "evidence/requests/CR-HPT-0024/retroactive-running-reconciliation-2026-09-05.md"
@@ -152,3 +165,4 @@ evidence_refs:
   - "evidence/requests/CR-CP-0024/infra-human-documentation-foundation-2026-09-05.md"
   - "evidence/requests/CR-CP-0024/infra-human-documentation-publication-authorization-2026-09-05.md"
   - "evidence/requests/CR-HPT-0024/owner-documentation-publication-preflight-2026-09-05.md"
+  - "evidence/requests/CR-HPT-0024/owner-documentation-pr-readback-2026-09-05.md"
