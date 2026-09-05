@@ -36,26 +36,28 @@ policy_application:
     - "Do not add capability links or claim runtime, M2M, deployment or secret readiness."
 
 authorization:
-  status: "owner-local-secrets-and-ports-approved"
+  status: "persistent-owner-secret-generation-approved"
   approved_by: "4uentes"
   approved_at: "2026-09-05"
-  approval_text: "ok avancemos con la recomendacion, necesito el playbook para generar los secretos"
+  approval_text: "ok avancemos"
   approval_consumed_for: >
-    Publish this B4 authorization, then implement and statically validate the
-    owner-local secret bootstrap and port contract in an isolated clean
-    4uentes-automation worktree. Runtime and persistent secret generation remain
-    outside this authorization.
+    Publish the persistent-generation gate and then execute the already merged
+    playbook once inside the retained owner worktree. Create only the four new
+    .secrets files; do not read existing secrets or configuration and do not
+    start runtime.
 
 execution:
-  current_unit: "owner-local-secrets-and-ports-readback-complete"
+  current_unit: "persistent-owner-secret-generation"
   completed_units:
     - "recover-canonical-inbox-identity"
     - "publish-current-onboarding-plan"
     - "publish-control-plane-discovery"
     - "publish-owner-local-secret-and-port-contract"
+    - "read-back-owner-local-secret-and-port-contract"
   control_plane_exact_paths:
     - "requests/running/CR-CP-0021-onboard-4uentes-automation-n8n.yaml"
     - "evidence/requests/CR-CP-0021/automation-owner-local-secret-port-authorization-2026-09-05.md"
+    - "evidence/requests/CR-CP-0021/persistent-secret-generation-authorization-2026-09-05.md"
   owner_exact_paths:
     - ".gitignore"
     - ".env.example"
@@ -73,7 +75,8 @@ execution:
   capability_mutation_allowed: false
   child_repo_mutation_allowed: true
   owner_git_mutation_allowed: true
-  secret_or_data_access_allowed: false
+  existing_secret_or_data_access_allowed: false
+  new_secret_generation_allowed: true
   runtime_mutation_allowed: false
   infrastructure_mutation_allowed: false
   deployment_allowed: false
@@ -141,6 +144,36 @@ owner_execution_result:
     - "Legacy productivity playbooks still consume PRODUCTIVITY_DB_PASSWORD from .env and require a separate owner request to migrate."
     - "Jira, Kubernetes, GitOps, infrastructure, capabilities and M2M were not mutated."
 
+persistent_secret_generation_gate:
+  status: "approved-pending-publication"
+  target_worktree: "4uentes-automation/.worktrees/cr-cp-0021-local-secrets-ports"
+  target_directory: ".secrets"
+  worktree_retention_rule: >
+    Do not retire or prune this owner worktree while it is the only custody
+    location for generated secrets. Relocation or rotation requires a separate
+    approved gate.
+  exact_targets:
+    - ".secrets/n8n_encryption_key"
+    - ".secrets/postgres_password"
+    - ".secrets/pgadmin_default_password"
+    - ".secrets/productivity_db_password"
+  allowed_commands:
+    - "scripts/bootstrap-local-secrets.ps1 -Mode Plan"
+    - "scripts/bootstrap-local-secrets.ps1 -Mode Generate"
+    - "metadata-only verification of file presence, length, ACL and Git ignore status"
+  forbidden_actions:
+    - "read or print secret file content"
+    - "read or modify .env"
+    - "overwrite, rotate, copy, export or back up secret material"
+    - "start, stop, restart or inspect containers"
+    - "inspect workflows, credentials or persistent data"
+    - "commit or publish .secrets"
+    - "write Jira or mutate Kubernetes, GitOps or infrastructure"
+  rollback: >
+    No automatic deletion is authorized after successful generation. If the
+    run fails, the playbook may remove only files it created during that failed
+    run. Any later deletion requires path verification and a separate approval.
+
 discovery_contract:
   service_id: "4uentes-automation"
   owner_repository: "afpogo/4uentes-automation"
@@ -197,14 +230,16 @@ required_checks:
   - "origin/main integration readback"
 
 decision:
-  status: "owner-slice-merged-and-read-back"
+  status: "persistent-secret-generation-approved-pending-publication"
   approver: "4uentes"
   next_gate: >
-    Request a separate explicit gate before generating persistent local secrets
-    or starting the Automation runtime. The productivity password consumer
-    migration, capabilities, M2M, Jira and infrastructure remain separate.
+    After publishing this gate, generate the four persistent local files once,
+    verify only metadata and record a sanitized result. Runtime startup remains
+    a separate explicit gate, as do productivity migration, capabilities, M2M,
+    Jira and infrastructure.
 
 evidence_refs:
   - "evidence/requests/CR-CP-0021/implementation-plan-2026-09-05.md"
   - "evidence/requests/CR-CP-0021/automation-owner-local-secret-port-authorization-2026-09-05.md"
+  - "evidence/requests/CR-CP-0021/persistent-secret-generation-authorization-2026-09-05.md"
   - "docs/cross-repo/local-development-secret-and-compose-governance.md"
