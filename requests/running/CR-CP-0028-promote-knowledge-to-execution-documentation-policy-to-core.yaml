@@ -23,6 +23,13 @@ control_plane_context:
   worktree: "worktrees/CR-CP-0028-knowledge-policy-core-promotion"
   branch: "agent/cr-cp-0028-knowledge-policy-core-promotion"
 
+plan_publication:
+  status: "merged-and-read-back"
+  pull_request: 255
+  head_commit: "3a40ede4b100f589e112bf909170a14ae856296c"
+  merge_commit: "572b79e80ce9e71a76295cb157b917938ae61da2"
+  canonical_branch: "main"
+
 authorization:
   status: "approved-control-plane-handoff-only"
   approved_by: "4uentes"
@@ -31,13 +38,14 @@ authorization:
   approval_consumed_for: "plan, running lifecycle, outbound handoff, control-plane validation and publication"
 
 execution:
-  current_unit: "publish-plan-and-running-before-handoff-materialization"
+  current_unit: "materialize-and-publish-core-owner-handoff"
   completed_units:
     - "global-identity-preflight"
     - "minimal-reservation-publication"
     - "reservation-canonical-readback"
     - "reservation-worktree-retirement"
     - "clean-execution-worktree-creation"
+    - "plan-and-running-publication-readback"
   control_plane_mutation_allowed: true
   core_repo_mutation_allowed: false
   child_repo_mutation_allowed: false
@@ -53,6 +61,8 @@ policy_target:
   overlay_status: "not-applicable"
   core_baseline_observed: "origin/develop@ded8c466dc3c02a02f7b24642ce99de6cebcc91c"
   core_policy_observed: false
+  handoff_ref: "specs/capabilities/outbound/4uentes-orchestor--knowledge-to-execution-policy-core-promotion.yaml"
+  handoff_status: "draft-pending-control-plane-publication"
 
 boundary_controls:
   - "Do not mutate 4uentes-ards-core from this worktree or workflow."
@@ -89,7 +99,7 @@ required_checks:
   - "canonical PR readback"
 
 decision:
-  status: "running-plan-publication"
+  status: "running-handoff-publication"
   approver: "4uentes"
   next_gate: >
     After canonical plan/readback, materialize and publish the draft outbound
@@ -99,3 +109,5 @@ decision:
 evidence_refs:
   - "evidence/requests/CR-CP-0028/reservation-preflight-2026-09-05.md"
   - "evidence/requests/CR-CP-0028/implementation-plan.md"
+  - "evidence/requests/CR-CP-0028/handoff-contract-and-boundary-2026-09-05.md"
+  - "evidence/requests/CR-CP-0028/control-plane-handoff-validation-2026-09-05.md"

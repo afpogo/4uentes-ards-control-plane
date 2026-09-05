@@ -1,0 +1,143 @@
+schema_version: "1.0"
+kind: "outbound_capability"
+id: "capability.outbound.knowledge-to-execution-policy-core-promotion"
+title: "Knowledge-to-execution policy Core promotion handoff"
+status: "draft"
+
+producer:
+  repo: "4uentes-orchestor"
+  ards_kind: "control-plane"
+  role: "origin-policy-and-promotion-handoff-producer"
+
+downstream:
+  repo: "4uentes-ards-core"
+  repo_role: "ards-standard-source"
+  adoption_status: "pending-core-owner-workflow"
+
+usage:
+  mode: "core-policy-promotion-proposal"
+  summary: >
+    Provide the validated origin policy, a provider-agnostic normative contract
+    and bounded acceptance criteria for Core to evaluate as
+    core-profile-scoped canon.
+
+runtime_boundary:
+  modifies_core_repo: false
+  modifies_child_repos: false
+  modifies_runtime: false
+  modifies_infrastructure: false
+  authorizes_external_execution: false
+  requires_core_owner_workflow: true
+
+source_refs:
+  human_policy: "docs/policies/knowledge-to-execution-documentation-policy.md"
+  local_registry: "specs/integration/policies.yaml"
+  origin_validation: "requests/done/CR-CP-0026-define-knowledge-to-execution-documentation-policy.yaml"
+  promotion_request: "requests/planned/CR-CP-0028-promote-knowledge-to-execution-documentation-policy-to-core.yaml"
+  promotion_execution: "requests/running/CR-CP-0028-promote-knowledge-to-execution-documentation-policy-to-core.yaml"
+  promotion_analysis:
+    - "evidence/requests/CR-CP-0026/policy-analysis.md"
+    - "evidence/requests/CR-CP-0026/promotion-readiness-audit-2026-09-05.md"
+    - "evidence/requests/CR-CP-0028/reservation-preflight-2026-09-05.md"
+    - "evidence/requests/CR-CP-0028/implementation-plan.md"
+    - "evidence/requests/CR-CP-0028/handoff-contract-and-boundary-2026-09-05.md"
+    - "evidence/requests/CR-CP-0028/control-plane-handoff-validation-2026-09-05.md"
+
+proposed_policy:
+  id: "knowledge-to-execution-documentation-policy"
+  type: "ards-sdd-governance-policy"
+  policy_class: "core-profile-scoped"
+  origin_repo: "4uentes-orchestor"
+  proposed_canonical_owner: "4uentes-ards-core"
+  provider_agnostic: true
+  applicability: "new or materially modified human guidance linked to technical authority and governed execution"
+  adoption_mode: "required-by-profile-or-request-driven"
+  required_for_profiles:
+    - "control-plane"
+  optional_for_profiles:
+    - "functional-repo"
+    - "child-repo"
+    - "infra-gitops"
+  overlay_status: "not-applicable-durable-shared-policy-not-contextual-delta"
+
+document_roles:
+  learning:
+    purpose: "Explain why, context, concepts and mental models."
+    authority: "informative unless a separate owner source explicitly grants a stronger role"
+  playbook:
+    purpose: "Guide what to decide by comparing options, tradeoffs and gates."
+    authority: "decision guidance; not technical authority or execution authorization by itself"
+  runbook:
+    purpose: "Explain how to execute an already authorized intent safely and reproducibly."
+    authority: "operational instructions constrained by the authorization and current owner sources"
+  specs_and_manifests:
+    purpose: "Define machine-readable or normative technical truth within an owner-declared scope."
+    authority: "owner-published, active, applicable, canonical and revisioned technical authority"
+
+typed_relations:
+  learning_to_playbook: "informs"
+  playbook_to_decision: "recommends-or-selects"
+  approved_decision_to_runbook: "authorizes"
+  runbook_to_execution: "operationalizes"
+  canonical_specs_and_manifests_to_guidance: "constrains"
+  evidence_to_knowledge: "validates-and-feeds-back-through-owner-lifecycle"
+
+normative_invariants:
+  - "The navigation path Learning -> Playbook -> Runbook -> Specs/manifests is not a universal chronology or authority-precedence chain."
+  - "Explanatory content does not become technical authority by proximity or linkage."
+  - "A Runbook never authorizes its own execution."
+  - "Execution requires an approved decision or request plus applicable policies and safety gates."
+  - "Runbooks and Playbooks must not silently override active owner Specs/manifests."
+  - "Observed evidence updates guidance or authority only through the owning lifecycle."
+  - "Generated projections must retain source lineage and must not impersonate their source."
+
+expected_core_artifacts:
+  - "docs/policies/knowledge-to-execution-documentation-policy.md"
+  - "specs/integration/policies.yaml"
+  - "docs/reference-sources.md"
+  - "docs/policies/README.md"
+  - "standard/ARDS_CONTROL_PLANE_CORE_PROFILE_v1.md"
+  - "templates/specs/integration/policies.template.yaml"
+  - "templates/docs/policies/README.template.md"
+  - "AGENTS.md"
+
+core_owner_acceptance:
+  - "Core explicitly accepts, adjusts or rejects the proposed class and profile applicability."
+  - "Core records the owner decision and origin validation in its reference sources."
+  - "Canonical wording contains no control-plane paths, request IDs, Jira keys or provider-specific mechanics."
+  - "Core registry, discovery, profile and reusable templates remain mutually consistent."
+  - "Core full validation, diff checks, publication and canonical readback pass."
+  - "Any omitted expected artifact is documented as not applicable rather than silently skipped."
+
+control_plane_reconciliation_after_core:
+  required: true
+  precondition: "canonical Core merge and readback evidence"
+  effects:
+    - "Change the local registry from origin-repo-policy to active adoption from canonical Core."
+    - "Preserve 4uentes-orchestor as origin_repo and CR-CP-0026 as provenance."
+    - "Record the Core commit and merge commit."
+    - "Reconcile the existing Infra adoption explicitly; do not infer retroactive adoption."
+    - "Publish and read back the terminal CR-CP-0028 lifecycle before cleanup."
+
+non_goals:
+  - "Do not modify Core from this control-plane workflow."
+  - "Do not change current local ownership before Core canonical readback."
+  - "Do not create a policy_overlay, declarative chain manifest or structural validator."
+  - "Do not propagate to additional child repos."
+  - "Do not mutate the completed CR-CP-0027 Infra adoption."
+  - "Do not authorize Jira, runtime, deployment or infrastructure changes."
+
+validation:
+  control_plane_checks:
+    - "npm.cmd run check"
+    - "git diff --check"
+    - "exact-path and authority-boundary review"
+  core_checks_after_owner_acceptance:
+    - "npm run check"
+    - "git diff --check"
+    - "canonical PR and merge readback"
+
+gaps:
+  - "Core owner acceptance and implementation have not started."
+  - "Core may refine optional profiles while preserving explicit applicability and request-driven adoption."
+  - "A structural chain manifest and validator remain a separate future increment."

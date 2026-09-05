@@ -485,6 +485,17 @@ links:
     work_origin: "orchestrator-request"
     source_ref: "specs/capabilities/outbound/4uentes-orchestor--core-agent-policy-governance-handoff.yaml"
 
+  - capability_id: "capability.outbound.knowledge-to-execution-policy-core-promotion"
+    producer_service: "4uentes-orchestor"
+    producer_repo: "4uentes-orchestor"
+    state_kind: "feature_state"
+    state_id: "ards-sdd-policy-unification"
+    state_file: "state/features/ards-sdd-policy-unification.current.yaml"
+    link_status: "linked"
+    downstream_adoption_status: "pending-core-owner-workflow"
+    work_origin: "orchestrator-request"
+    source_ref: "specs/capabilities/outbound/4uentes-orchestor--knowledge-to-execution-policy-core-promotion.yaml"
+
   - capability_id: "capability.platform.public-development-url"
     producer_service: "sst-4uentes-infra"
     producer_repo: "sst-4uentes-infra"

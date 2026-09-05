@@ -283,7 +283,8 @@ links:
     state_id: "ards-sdd-policy-unification"
     state_file: "state/features/ards-sdd-policy-unification.current.yaml"
     link_status: "linked-local-adoption"
-    handoff_status: "pending-separate-core-promotion-request"
+    handoff_status: "plan-published-owner-handoff-draft"
+    handoff_ref: "specs/capabilities/outbound/4uentes-orchestor--knowledge-to-execution-policy-core-promotion.yaml"
     work_origin: "orchestrator-request"
     request_id: "CR-CP-0026"
     promotion_request_id: "CR-CP-0028"
@@ -303,7 +304,7 @@ links:
     overlay_status: "not-used-no-active-kind-schema-or-resolver"
 
 rules:
-  - "knowledge-to-execution-documentation-policy is a local durable policy; Infra adoption is proven by CR-CP-0027, while CR-CP-0028 only reserves Core promotion and does not authorize owner mutation."
+  - "knowledge-to-execution-documentation-policy is a local durable policy; Infra adoption is proven by CR-CP-0027, while the CR-CP-0028 handoff does not authorize Core owner mutation."
   - "visual-documentation-as-code-policy is locally adopted from canonical Core develop; child rollout remains request-driven and requires an owner manifest."
   - "Policies are first-class ARDS/SDD governance components."
   - "Policies do not replace capabilities; they constrain or validate capabilities, states, requests, repos, and profiles."
