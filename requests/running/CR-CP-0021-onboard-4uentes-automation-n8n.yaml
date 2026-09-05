@@ -36,7 +36,7 @@ policy_application:
     - "Do not add capability links or claim runtime, M2M, deployment or secret readiness."
 
 authorization:
-  status: "owner-env-reconciliation-approved"
+  status: "owner-env-reconciliation-consumed-and-completed"
   approved_by: "4uentes"
   approved_at: "2026-09-05"
   approval_text: "ok avancemos con el plan original"
@@ -47,7 +47,7 @@ authorization:
     without starting runtime.
 
 execution:
-  current_unit: "owner-env-reconciliation-and-compose-config"
+  current_unit: "awaiting-separately-authorized-runtime-gate"
   completed_units:
     - "recover-canonical-inbox-identity"
     - "publish-current-onboarding-plan"
@@ -56,6 +56,8 @@ execution:
     - "read-back-owner-local-secret-and-port-contract"
     - "generate-persistent-owner-secrets-in-retained-worktree"
     - "migrate-secrets-to-stable-owner-root-and-retire-worktree"
+    - "publish-and-read-back-owner-env-migration-tool"
+    - "reconcile-stable-owner-env-and-validate-compose-without-runtime"
   control_plane_exact_paths:
     - "requests/running/CR-CP-0021-onboard-4uentes-automation-n8n.yaml"
     - "evidence/requests/CR-CP-0021/automation-owner-local-secret-port-authorization-2026-09-05.md"
@@ -225,7 +227,7 @@ stable_custody_migration_gate:
     secret_content_access: "none"
 
 owner_env_reconciliation_gate:
-  status: "approved-pending-publication"
+  status: "completed-and-verified"
   repository: "afpogo/4uentes-automation"
   canonical_ref: "origin/main"
   versioned_paths:
@@ -263,6 +265,25 @@ owner_env_reconciliation_gate:
     - "change PRODUCTIVITY_DB_PASSWORD or SMTP values"
     - "start, stop, restart or inspect runtime containers"
     - "modify workflows, data, Jira, Kubernetes, GitOps or infrastructure"
+  result:
+    owner_pull_request: "https://github.com/afpogo/4uentes-automation/pull/4"
+    owner_main_readback_sha: "5c2a24eeaaf957de1728ea601da668f78d19f63f"
+    execution_checkout: "stable-owner-root-main"
+    plan_read_only: true
+    atomic_migration_completed: true
+    removed_plaintext_secret_keys: true
+    required_identifiers_non_empty: true
+    local_secrets_directory_reference_valid: true
+    host_ports_valid: true
+    unrelated_configuration_preserved: true
+    temporary_candidates_absent: true
+    local_stack_check: "passed"
+    compose_base_config: "passed"
+    compose_tunnel_override_config: "passed"
+    runtime_started: false
+    secret_values_printed_or_recorded: false
+    implementation_worktree_status: "retired"
+    implementation_branch_status: "local-and-remote-preserved"
 
 discovery_contract:
   service_id: "4uentes-automation"
@@ -320,13 +341,12 @@ required_checks:
   - "origin/main integration readback"
 
 decision:
-  status: "owner-env-reconciliation-approved-pending-publication"
+  status: "owner-env-reconciliation-completed"
   approver: "4uentes"
   next_gate: >
-    Publish the gate, implement and merge the migration tool, reconcile .env,
-    validate Compose without runtime and record sanitized readback. Runtime
-    startup remains separately gated, as do productivity migration,
-    capabilities, M2M, Jira and infrastructure.
+    Request separate authorization before starting the local runtime. Runtime
+    inspection, productivity migration, capabilities, M2M, Jira and
+    infrastructure remain outside this completed gate.
 
 evidence_refs:
   - "evidence/requests/CR-CP-0021/implementation-plan-2026-09-05.md"

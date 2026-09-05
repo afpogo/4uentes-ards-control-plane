@@ -41,3 +41,21 @@ arrancar runtime.
 
 Registrar sólo estados, claves afectadas, SHAs, checks y disposición del
 worktree. Los valores de `.env` y `.secrets` no forman parte de Evidence.
+
+## Resultado sanitizado
+
+El playbook y su runbook se fusionaron mediante
+`https://github.com/afpogo/4uentes-automation/pull/4` y fueron releídos desde
+`main@5c2a24eeaaf957de1728ea601da668f78d19f63f`. El worktree de implementación
+se retiró limpio; sus ramas local y remota quedaron preservadas.
+
+La ejecución desde el checkout raíz estable confirmó que `Plan` no escribió.
+La migración atómica retiró las tres claves secretas file-backed del `.env`,
+conservó la configuración no administrada, mantuvo identificadores requeridos
+no vacíos y dejó referencias y puertos válidos. No quedaron candidatos
+temporales y no se imprimió ni registró ningún valor.
+
+`scripts/check.ps1 -LocalStackOnly` pasó, incluido `docker compose config
+--quiet` para la base y la validación del override de túnel. No se iniciaron,
+detuvieron, reiniciaron ni inspeccionaron contenedores. El arranque del runtime
+queda sujeto a una autorización separada.
