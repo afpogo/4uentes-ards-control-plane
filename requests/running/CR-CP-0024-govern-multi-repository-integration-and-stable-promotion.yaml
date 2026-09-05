@@ -41,7 +41,7 @@ authorization:
   evidence: "evidence/requests/CR-CP-0024/auth-owner-execution-authorization-2026-08-30.md"
 
 execution:
-  current_unit: "contain-infra-pr25-clamav-oom-after-cr-sst-0233-running-reconciliation"
+  current_unit: "infra-human-docs-foundation-publication-authorized-await-owner-pr"
   parallel_unit: "worktree-sanitization-disposition-and-selective-recovery"
   completed_units:
     - "publish-plan-and-migration-lifecycle"
@@ -67,11 +67,13 @@ execution:
     - "publish-infra-receipt-custody-plan-as-code"
     - "merge-infra-pr25-at-authorized-head"
     - "read-back-infra-pr25-automatic-gitops-sync"
+    - "reconcile-program-scoreboard-after-infra-readback"
+    - "establish-infra-human-learning-playbook-runbook-foundation"
     - "reconcile-cr-sst-0233-retroactive-running-lifecycle"
   control_plane_mutation_allowed: true
   child_repo_mutation_allowed: false
   child_repo_mutation_targets: ["sst-bend", "sst-4uentes-infra"]
-  child_repo_mutation_scope: "Merge validated sst-bend PR 32 at de19c14 and allow only its automatic Backend image publication plus the exact Backend pin update in Infra develop."
+  child_repo_mutation_scope: "Create Spanish human-learning and playbook roots for CR-HPT-0024 in the existing sst-4uentes-infra worktree, link the technical runbook, add Mermaid maps with textual fallbacks, and commit locally without publication or runtime mutation."
   owner_pr_publication_allowed: false
   owner_pr_merge_allowed: false
   image_publication_allowed: false
@@ -80,7 +82,7 @@ execution:
   deployment_allowed: false
   stable_branch_mutation_allowed: false
   jira_write_allowed: false
-  external_execution_gate: "Authorize a bounded Infra owner remediation for the repeatable receipt-clamav OOMKilled during signature update; manual cluster mutation and Jira closure remain prohibited."
+  external_execution_gate: "Authorize publication of docs/CR-HPT-0024/human-receipt-custody-guides and creation of an Infra PR separately; merge, runtime mutation and Jira closure remain prohibited."
 
 infra_remediation_pr:
   authorization_status: "consumed-by-branch-and-pr-publication"
@@ -255,6 +257,65 @@ infra_second_remediation:
     availability: "preserved-by-previous-ready-pod"
     manual_cluster_mutation_performed: false
     evidence: "evidence/requests/CR-CP-0024/infra-pr25-merge-and-runtime-readback-2026-09-05.md"
+  human_documentation_foundation:
+    authorization_status: "consumed-by-local-owner-commit"
+    approved_by: "4uentes"
+    approved_at: "2026-09-05"
+    approval_text: "Ok necesito generar una seccion de playbooks con una runbook atada si es necesario o no, todas estas explicaciones las quiero guardar en playbooks y si vienen con comandos o documentos tecnicos de aplicacion generemos su runbook atada y guardemos en seccion de apredizaje para humanos(docs). analicemos y centemos raices. Por lo general estos archivos tienen que ser docs as a code con mapas mermaid, etc. continua"
+    repository: "afpogo/sst-4uentes-infra"
+    worktree: "worktrees/CR-HPT-0024-infra-owner"
+    worktree_reuse_required: true
+    base_ref: "origin/develop"
+    base_sha: "a4d120061d0d4d53352b1de766858602ff759750"
+    planned_branch: "docs/CR-HPT-0024/human-receipt-custody-guides"
+    branch: "docs/CR-HPT-0024/human-receipt-custody-guides"
+    owner_commit: "67c4874b2404235d70dc56ce143343954f5c707e"
+    scope:
+      - "docs/learning human foundation"
+      - "docs/playbooks decision and adoption guidance"
+      - "linked technical runbook"
+      - "documentation information architecture"
+      - "Mermaid maps, legends and textual fallbacks"
+    publication_allowed: true
+    merge_allowed: false
+    runtime_mutation_allowed: false
+    jira_write_allowed: false
+    implementation:
+      changed_files: 12
+      additions: 781
+      deletions: 4
+      learning_root: "docs/learning/README.md"
+      learning_topic: "docs/learning/receipt-custody-foundations.md"
+      playbook_root: "docs/playbooks/README.md"
+      adoption_playbook: "docs/playbooks/receipt-custody-adoption.md"
+      linked_runbook: "docs/runbooks/receipt-custody-development.md"
+      information_architecture: "docs/documentation-information-architecture.md"
+      validator: "scripts/verify-human-documentation.js"
+      npm_gate: "check:human-docs"
+      mermaid_maps: 7
+      textual_fallbacks: 7
+    validation:
+      focused_human_docs_check: "PASS"
+      owner_full_check: "PASS"
+      local_links: "PASS"
+      diff_check: "PASS"
+      secret_scan: "PASS"
+      worktree_clean: true
+    evidence: "evidence/requests/CR-CP-0024/infra-human-documentation-foundation-2026-09-05.md"
+    publication_authorization:
+      status: "authorized-for-exact-push-and-pr-without-merge"
+      approved_by: "4uentes"
+      approved_at: "2026-09-05"
+      approval_text: "ok avancemos con el siguiente gate"
+      authorized_commit: "67c4874b2404235d70dc56ce143343954f5c707e"
+      authorized_base_sha: "a4d120061d0d4d53352b1de766858602ff759750"
+      authorized_branch: "docs/CR-HPT-0024/human-receipt-custody-guides"
+      push_allowed: true
+      pull_request_publication_allowed: true
+      merge_allowed: false
+      runtime_mutation_allowed: false
+      jira_write_allowed: false
+      evidence: "evidence/requests/CR-CP-0024/infra-human-documentation-publication-authorization-2026-09-05.md"
   jira:
     issue: "HPT-16"
     expected_status: "En curso"
@@ -396,9 +457,9 @@ required_checks:
   - "owner branch and pull request remote readback"
 
 decision:
-  status: "running-infra-pr25-merged-clamav-oom-blocker-contained"
+  status: "running-infra-human-documentation-publication-authorized"
   approver: "4uentes"
-  next_gate: "Plan and authorize a bounded owner remediation for ClamAV signature-update memory; keep the previous pod serving, avoid manual cluster changes, and reconcile Jira after OAuth is restored."
+  next_gate: "Publish commit 67c4874, open and read back its Infra PR without merge, then return to a separately authorized bounded ClamAV memory remediation."
 
 program_progress:
   status: "current-derived-view"
@@ -436,5 +497,7 @@ evidence_refs:
   - "evidence/requests/CR-CP-0024/infra-pr25-merge-and-runtime-readback-2026-09-05.md"
   - "evidence/requests/CR-CP-0024/program-scoreboard.current.yaml"
   - "evidence/requests/CR-CP-0024/program-scoreboard.md"
+  - "evidence/requests/CR-CP-0024/infra-human-documentation-foundation-2026-09-05.md"
+  - "evidence/requests/CR-CP-0024/infra-human-documentation-publication-authorization-2026-09-05.md"
   - "requests/running/CR-SST-0233-reconcile-fresh-database-migration-baseline.yaml"
   - "evidence/requests/CR-SST-0233/retroactive-running-reconciliation-2026-09-05.md"
