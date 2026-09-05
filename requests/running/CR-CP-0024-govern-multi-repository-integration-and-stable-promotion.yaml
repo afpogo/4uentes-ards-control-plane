@@ -33,7 +33,7 @@ authorization:
   evidence: "evidence/requests/CR-CP-0024/auth-owner-execution-authorization-2026-08-30.md"
 
 execution:
-  current_unit: "contain-ineffective-infra-remediation-and-plan-owner-follow-up"
+  current_unit: "publish-validated-unprivileged-clamav-owner-remediation"
   parallel_unit: "worktree-sanitization-disposition-and-selective-recovery"
   completed_units:
     - "publish-plan-and-migration-lifecycle"
@@ -54,11 +54,12 @@ execution:
     - "publish-cr-hpt-0024-infra-remediation-pr"
     - "read-back-unexpected-infra-merge-and-automatic-gitops-sync"
     - "confirm-cap-chown-remediation-insufficient"
+    - "implement-and-validate-unprivileged-clamav-remediation"
   control_plane_mutation_allowed: true
-  child_repo_mutation_allowed: false
+  child_repo_mutation_allowed: true
   child_repo_mutation_targets: ["sst-bend", "sst-4uentes-infra"]
   child_repo_mutation_scope: "Merge validated sst-bend PR 32 at de19c14 and allow only its automatic Backend image publication plus the exact Backend pin update in Infra develop."
-  owner_pr_publication_allowed: false
+  owner_pr_publication_allowed: true
   owner_pr_merge_allowed: false
   image_publication_allowed: false
   infra_mutation_allowed: false
@@ -66,7 +67,7 @@ execution:
   deployment_allowed: false
   stable_branch_mutation_allowed: false
   jira_write_allowed: false
-  external_execution_gate: "Authorize a second bounded CR-HPT-0024 owner remediation with entrypoint/configuration parity tests; manual cluster changes and terminal Jira transitions remain prohibited."
+  external_execution_gate: "Publish only fix/CR-HPT-0024/clamav-directory-traversal at owner commit 80eaf39 and open a PR to develop; merge, manual cluster changes and terminal Jira transitions remain prohibited."
 
 infra_remediation_pr:
   authorization_status: "consumed-by-branch-and-pr-publication"
@@ -129,6 +130,56 @@ infra_remediation_pr:
   remediation_result: "ineffective-cap-chown-insufficient-for-recursive-directory-traversal"
   runtime_mutation_performed_by_agent: false
   evidence: "evidence/requests/CR-CP-0024/infra-remediation-pr-publication-readback-2026-09-05.md"
+
+infra_second_remediation:
+  authorization_status: "active-through-owner-pr-publication"
+  approved_by: "4uentes"
+  approved_at: "2026-09-05"
+  approval_text: "ok avancemos apegados a la politica del worktree"
+  repository: "afpogo/sst-4uentes-infra"
+  worktree: "worktrees/CR-HPT-0024-infra-owner"
+  worktree_policy:
+    reused_existing_worktree: true
+    previous_head_reachable_from_base: true
+    second_worktree_created: false
+    remote_branch_collision: false
+  base_ref: "origin/develop"
+  base_sha: "55097809b069703af2049ab7769db6b83a95d021"
+  branch: "fix/CR-HPT-0024/clamav-directory-traversal"
+  local_head_sha: "80eaf39"
+  design:
+    image_entrypoint: "/init-unprivileged"
+    uid_gid: "1000:1000"
+    added_capabilities: []
+    dropped_capabilities: ["ALL"]
+    clamd_configuration: "generated ConfigMap mounted read-only"
+    scanner_transport: "shared Unix socket only"
+    staging: "memory-backed emptyDir"
+    probes: "clamdscan ping over Unix socket"
+  validation:
+    root_entrypoint_chown_only_reproduced: true
+    root_entrypoint_slash_substitution_failure_reproduced: true
+    unprivileged_entrypoint_pong: true
+    clean_stream_exit: 0
+    eicar_stream_exit: 1
+    eicar_verdict: "FOUND"
+    owner_check: "PASS"
+    receipt_custody_check: "PASS"
+    kustomize_render: "PASS"
+    server_dry_run: "PASS"
+    diff_check: "PASS"
+    secret_scan: "PASS"
+  publication:
+    branch_push: "pending"
+    pull_request: "pending"
+    merge_allowed: false
+    runtime_mutation_allowed: false
+  jira:
+    issue: "HPT-16"
+    expected_status: "En curso"
+    start_comment: "pending-oauth-reconnection"
+    blocker: "Atlassian OAuth refresh returned unauthorized_client after the latest successful readback."
+  evidence: "evidence/requests/CR-CP-0024/infra-second-remediation-prepublication-2026-09-05.md"
 
 worktree_sanitization:
   policy_id: "worktree-request-lifecycle-policy"
@@ -263,9 +314,9 @@ required_checks:
   - "owner branch and pull request remote readback"
 
 decision:
-  status: "running-infra-remediation-merged-autosynced-still-unhealthy"
+  status: "running-infra-second-remediation-validated-await-publication"
   approver: "4uentes"
-  next_gate: "Authorize a second bounded Infra owner remediation and its pre-publication parity test; do not mutate the cluster manually."
+  next_gate: "Publish the exact owner branch and open a PR without merge; reconcile the Jira progress comment when OAuth is available."
 
 evidence_refs:
   - "evidence/requests/CR-CP-0024/implementation-plan.md"
@@ -284,3 +335,4 @@ evidence_refs:
   - "evidence/requests/CR-CP-0024/worktree-sanitization-readiness-2026-09-03.yaml"
   - "evidence/requests/CR-CP-0024/worktree-sanitization-policy-application-2026-09-03.md"
   - "evidence/requests/CR-CP-0024/infra-remediation-pr-publication-readback-2026-09-05.md"
+  - "evidence/requests/CR-CP-0024/infra-second-remediation-prepublication-2026-09-05.md"
