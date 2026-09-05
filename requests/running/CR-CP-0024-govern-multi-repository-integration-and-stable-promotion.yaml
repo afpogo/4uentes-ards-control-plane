@@ -18,7 +18,10 @@ summary: >
   root entrypoint, added the governed delivery plan and was merged under an
   explicit gate. Its autosync removed the permission failure but exposed a
   repeatable ClamAV OOM during signature update; the previous pod still
-  preserves availability while a bounded memory remediation is gated.
+  preserves availability while a bounded memory remediation is gated. The
+  governed program scoreboard records 44 of 100 evidence-backed points, keeps
+  phase 2 at zero and contains later Portfolio and Automation documentation
+  drift without treating it as retroactive authorization.
 
 control_plane_context:
   initiative_id: "INIT-CP-0003"
@@ -27,6 +30,8 @@ control_plane_context:
   auth_preflight_merge_sha: "e0ab936c9db56c1b682be0c729b73619ee560bb9"
   disposition_manifest_ref: "evidence/requests/CR-CP-0024/promotion-disposition-manifest.yaml"
   auth_preflight_ref: "evidence/requests/CR-CP-0024/auth-owner-execution-preflight-2026-08-30.md"
+  program_scoreboard_ref: "evidence/requests/CR-CP-0024/program-scoreboard.current.yaml"
+  program_scoreboard_human_ref: "evidence/requests/CR-CP-0024/program-scoreboard.md"
 
 authorization:
   status: "consumed-by-auth-pr-publication; subsequent merge was outside gate"
@@ -36,7 +41,7 @@ authorization:
   evidence: "evidence/requests/CR-CP-0024/auth-owner-execution-authorization-2026-08-30.md"
 
 execution:
-  current_unit: "contain-infra-pr25-clamav-oom-readback-await-next-owner-gate"
+  current_unit: "contain-infra-pr25-clamav-oom-and-reconcile-program-scoreboard"
   parallel_unit: "worktree-sanitization-disposition-and-selective-recovery"
   completed_units:
     - "publish-plan-and-migration-lifecycle"
@@ -394,6 +399,20 @@ decision:
   approver: "4uentes"
   next_gate: "Plan and authorize a bounded owner remediation for ClamAV signature-update memory; keep the previous pod serving, avoid manual cluster changes, and reconcile Jira after OAuth is restored."
 
+program_progress:
+  status: "current-derived-view"
+  observed_at: "2026-09-05"
+  earned_points: 44
+  total_points: 100
+  progress_percent: 44
+  current_phase: "phase-1-owner-development-integration"
+  phase_2_status: "not-started"
+  stable_gate_open: false
+  authorization_effect: "none"
+  evidence:
+    - "evidence/requests/CR-CP-0024/program-scoreboard.current.yaml"
+    - "evidence/requests/CR-CP-0024/program-scoreboard.md"
+
 evidence_refs:
   - "evidence/requests/CR-CP-0024/implementation-plan.md"
   - "evidence/requests/CR-CP-0024/promotion-disposition-manifest.yaml"
@@ -412,3 +431,7 @@ evidence_refs:
   - "evidence/requests/CR-CP-0024/worktree-sanitization-policy-application-2026-09-03.md"
   - "evidence/requests/CR-CP-0024/infra-remediation-pr-publication-readback-2026-09-05.md"
   - "evidence/requests/CR-CP-0024/infra-second-remediation-prepublication-2026-09-05.md"
+  - "evidence/requests/CR-CP-0024/infra-pr25-merge-authorization-2026-09-05.md"
+  - "evidence/requests/CR-CP-0024/infra-pr25-merge-and-runtime-readback-2026-09-05.md"
+  - "evidence/requests/CR-CP-0024/program-scoreboard.current.yaml"
+  - "evidence/requests/CR-CP-0024/program-scoreboard.md"

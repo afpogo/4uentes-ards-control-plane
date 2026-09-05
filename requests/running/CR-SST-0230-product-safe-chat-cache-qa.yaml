@@ -62,6 +62,15 @@ plan_publication:
   contract_ref: "requests/planned/CR-SST-0230-product-safe-chat-cache-qa.yaml"
   implementation_plan_ref: "evidence/requests/CR-SST-0230/implementation-plan-2026-08-28.md"
 
+runtime_result_publication:
+  status: "merged-and-read-back"
+  pull_request: 197
+  head_commit: "14711b39ce7c573d2e48833713d51d3c1861d004"
+  merge_commit: "abb9048777f55e6e18caaebdcf3a48e1a9268c4d"
+  canonical_branch: "main"
+  readback_at: "2026-09-05"
+  evidence_ref: "evidence/requests/CR-SST-0230/localhost-cache-qa-result-2026-08-29.md"
+
 control_plane_context:
   initiative_id: "INIT-SST-0007"
   initiative_jira_epic_key: "SST-86"
@@ -75,6 +84,30 @@ control_plane_context:
   jira_write_authorized: false
   jira_conservative_reconciliation_batch_status: "consumed-2026-08-29"
   jira_conservative_reconciliation_readback: "SST-124 is an En curso Subtask of SST-113 without resolution; labels and description match CR-SST-0230."
+  jira_terminal_preflight_status: "passed-read-only-2026-09-05"
+  jira_terminal_write_authorized: false
+
+jira_terminal_batch:
+  authorization_status: "pending-separate-exact-authorization"
+  preflight_status: "passed-read-only"
+  issue_key: "SST-124"
+  expected_current_status: "En curso"
+  expected_current_status_id: "10006"
+  expected_parent_issue_key: "SST-113"
+  expected_resolution: null
+  transition_id: "41"
+  transition_name: "Listo"
+  target_status: "Finalizada"
+  target_status_id: "10008"
+  allowed_write_count_if_authorized: 1
+  proposed_operation: "Transition only SST-124 through transition 41."
+  forbidden_operations:
+    - "comments"
+    - "field edits"
+    - "links"
+    - "assignment changes"
+    - "writes on SST-113, SST-117, SST-118 or any other issue"
+  evidence_ref: "evidence/requests/CR-SST-0230/terminal-readiness-and-jira-preflight-2026-09-05.md"
 
 contract:
   bend_route: "GET /4uentes/v1/chat/conversations/:id/messages"
@@ -209,6 +242,8 @@ execution_status:
   auth_owner_execution: "merged-and-read-back-pr-14-develop-13ebe6f; full-owner-check-pass"
   jira_mirror: "created-and-read-back-sst-124-en-curso; conservative-reconciliation-batch-consumed"
   localhost_runtime_qa: "pass-single-run-miss-hit-normal-turn-miss-hit-product-api-cleanup"
+  runtime_result_publication: "merged-and-read-back-pr-197-main-abb9048"
+  terminal_jira_gate: "read-only-preflight-pass; exact one-transition authorization pending"
   deployment: "automatic Bend and Auth development image plus Infra tag publications observed after user merges; no direct deployment action; cluster reconciliation unverified"
   production: "not-authorized"
 
@@ -243,10 +278,10 @@ rollback: >
   or production directly as rollback.
 
 decision:
-  status: "localhost-runtime-qa-pass-terminal-publication-pending"
+  status: "runtime-result-published-terminal-jira-authorization-pending"
   approver: "4uentes"
-  decided_at: "2026-08-28"
-  next_gate: "Merge and read back the sanitized localhost runtime result, then prepare terminal ARDS/SDD reconciliation; Jira closure requires a separate exact authorization."
+  decided_at: "2026-09-05"
+  next_gate: "Publish and read back this terminal preflight, then obtain separate exact authorization for the single SST-124 transition before preparing the done lifecycle."
 
 evidence_refs:
   - "evidence/requests/CR-SST-0230/identity-and-owner-preflight-2026-08-28.md"
@@ -257,3 +292,4 @@ evidence_refs:
   - "evidence/requests/CR-SST-0230/jira-conservative-reconciliation-readback-2026-08-29.md"
   - "evidence/requests/CR-SST-0230/runtime-gate-authorization-2026-08-29.md"
   - "evidence/requests/CR-SST-0230/localhost-cache-qa-result-2026-08-29.md"
+  - "evidence/requests/CR-SST-0230/terminal-readiness-and-jira-preflight-2026-09-05.md"

@@ -4,7 +4,8 @@ status: planned
 services:
   core:
     - finanzas-personales-backend
-  shared: []
+  shared:
+    - 4uentes-automation
   optional: []
   infrastructure: []
 relationships:
@@ -32,3 +33,4 @@ notes:
   - Proposed Python, OCR and AI runtimes are not cataloged independently without implementation evidence.
   - Phinance-API isolates data by validated SST account scope plus stable subject through the owner-published trust chain.
   - The SST-to-Phinance proxy is published behind PHINANCE_PROXY_ENABLED=false by default; no persistent environment activation is claimed.
+  - 4uentes-automation is registered as a shared discovered service; no capability, M2M or runtime relationship is activated by this membership.

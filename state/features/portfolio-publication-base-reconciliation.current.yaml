@@ -2,8 +2,8 @@ schema_version: "1.0"
 kind: "feature_state"
 id: "portfolio-publication-base-reconciliation"
 title: "Portfolio Publication Base Reconciliation"
-status: "planned"
-updated_at: "2026-07-10"
+status: "validated-local"
+updated_at: "2026-09-05"
 solution_id: "4uentes"
 affected_services:
   - 4uentes-portfolio
@@ -13,11 +13,18 @@ capability_refs:
   - "portfolio-publication-base-reconciliation"
 spec_refs:
   - "requests/planned/CR-4UENTES-0039-portfolio-publication-base-reconciliation.yaml"
+  - "requests/running/CR-4UENTES-0039-portfolio-publication-base-reconciliation.yaml"
   - "initiatives/INIT-PORTFOLIO-0003-portfolio-professionalization.yaml"
 evidence_refs:
   - "evidence/requests/CR-4UENTES-0036/github-publication-readiness.md"
   - "evidence/requests/CR-4UENTES-0039/implementation-plan.md"
   - "evidence/requests/CR-4UENTES-0039/jira-port-20-start-transition-summary.md"
+  - "evidence/requests/CR-4UENTES-0039/changed-files-summary.md"
+  - "evidence/requests/CR-4UENTES-0039/child-validation-results.md"
+  - "evidence/requests/CR-4UENTES-0039/visual-qa-results.md"
+  - "evidence/requests/CR-4UENTES-0039/control-plane-validation-results.md"
 open_gaps:
-  - "Create or sync Jira mirror issue under PORT-9."
-  - "Reconcile Portfolio child repo publication base and validate build."
+  - "Review the 79 binary candidates in a separate bounded unit before stable promotion."
+  - "Recompose the Vite/Sass publication base from the dirty historical checkout through a separate allowlist."
+  - "Resolve pre-existing mobile text/footer overflow and inherited dependency audit findings before stable promotion."
+  - "Keep Jira read-only unless a new exact write batch is authorized."

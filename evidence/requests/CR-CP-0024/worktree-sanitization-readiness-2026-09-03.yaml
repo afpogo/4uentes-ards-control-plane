@@ -28,7 +28,7 @@ remediation_control:
     - "canonical refs and terminal request evidence have remote readback"
 
 feature_baselines:
-  root: "C:/Users/andre/Desktop/4uentes/apps/worktrees/current"
+  root: "<local-apps>/worktrees/current"
   usage_rule: >
     Treat each detached checkout as a verified seed. A feature gets its own
     request-scoped branch and worktree from the refreshed remote canonical ref;
@@ -49,8 +49,9 @@ historical_checkout_disposition:
   - repository: "4uentes-ards-control-plane"
     dirty: {tracked_entries: 34, untracked_status_entries: 279}
     local_commit_count: 15
-    disposition: "preserve-dirty-selective-recovery"
-    blocker: "mixed requests, evidence, policy artifacts and generated directories"
+    local_commit_disposition: "15-superseded-0-selective-port-0-unknown"
+    disposition: "preserve-dirty-uncommitted-audit"
+    blocker: "mixed uncommitted requests, evidence, policy artifacts and generated directories"
   - repository: "4uentes-auth"
     dirty: {tracked_entries: 38, untracked_entries: 10}
     local_commit_count_against_canonical: 1
@@ -60,8 +61,9 @@ historical_checkout_disposition:
   - repository: "sst-bend"
     dirty: {tracked_entries: 26, untracked_entries: 11}
     local_commit_count_against_canonical: 2
-    disposition: "preserve-dirty"
-    blocker: "local-only efa955b has CR-SST-0207 content on a CR-SST-0086-named branch"
+    local_commit_disposition: "efa955b-superseded-by-cr-sst-0212-parent-b47ca013-do-not-promote"
+    disposition: "preserve-dirty-uncommitted-audit"
+    blocker: "26 tracked and 11 untracked entries still require request-scoped classification"
   - repository: "sst-4uentes-infra"
     dirty: {tracked_entries: 14, untracked_entries: 3}
     local_commit_count_against_canonical: 0

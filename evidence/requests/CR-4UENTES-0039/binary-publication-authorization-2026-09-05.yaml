@@ -1,0 +1,50 @@
+schema_version: "1.0"
+request_id: "CR-4UENTES-0039"
+kind: "binary_publication_authorization"
+status: "approved"
+approved_at: "2026-09-05"
+approved_by: "4uentes"
+approval_text: "Autorizo"
+approval_context: >
+  Approval answers the immediately preceding enumerated gate: publish the 74
+  referenced assets in groups A, B and C, confirming publication rights and
+  acceptance of personal-data exposure, and exclude the four unreferenced
+  assets in group D.
+
+decision_batch_ref: "evidence/requests/CR-4UENTES-0039/binary-publication-decision-batch-2026-09-05.yaml"
+decision_batch_tree: "4uentes-portfolio origin/develop@056b6e4ede90854685c48ff9880d475e54b8db84"
+
+approved_selector:
+  rule: "Every exact path-plus-blob item in decision_batch_ref where text_reference is true."
+  count: 74
+  groups:
+    referenced_logos_icons_and_product_screenshots: 23
+    referenced_profile_photos: 2
+    referenced_certificates_and_employment_evidence: 49
+  rights_confirmation: true
+  personal_data_exposure_accepted: true
+
+excluded_items:
+  count: 4
+  artifact_status: "must-not-be-copied"
+  repository_deletion_authorized: false
+  items:
+    - path: "src/assets/images/apogo2.jpg"
+      blob: "0e602829e0be07f722ac40fa52278bf2daea00cf"
+    - path: "src/assets/images/old_certs/titulo_cetae_arpc_arg.jpeg"
+      blob: "96ccce5252e390b09e7d0b4d754f30babd59c4ed"
+    - path: "src/assets/images/old_certs/titulo_cetae_redes_arg.jpeg"
+      blob: "c4fba4c876a4a8d01e6d04307ac3e6abb0e7a45a"
+    - path: "src/assets/images/social_icons/docker_icon.svg"
+      blob: "66002f59d780ec677b3e1803b2ff21025fc9e483"
+
+implementation_boundary:
+  binary_content_mutation_allowed: false
+  owner_source_mutation_allowed: true
+  required_owner_changes:
+    - "Create an exact public image allowlist pinned to the approved paths."
+    - "Replace recursive Webpack image copying with deterministic allowlist expansion."
+    - "Extend the artifact checker to fail on missing, extra, duplicate or excluded images."
+    - "Keep the four excluded blobs in Git unless a separate deletion authorization is recorded."
+  stable_promotion_allowed: false
+  reason: "Vite/Sass, mobile overflow and inherited dependency gates remain unresolved."

@@ -16,8 +16,8 @@ worktrees.
 
 ## Baseline disponible para nuevas features
 
-Los checkouts detached bajo
-`C:/Users/andre/Desktop/4uentes/apps/worktrees/current` fueron refrescados desde
+Los checkouts detached bajo el binding lógico
+`<local-apps>/worktrees/current` fueron refrescados desde
 sus refs remotas canónicas y verifican `dirty=0`.
 
 Cada feature debe crear su propia branch y su propio worktree desde la ref
@@ -39,9 +39,9 @@ fast-forward hasta sus `origin/develop` observados y permanecen limpios.
 
 | Repositorio | Disposición | Motivo de preservación |
 | --- | --- | --- |
-| Control plane | `preserve-dirty-selective-recovery` | 15 commits locales y cientos de entradas mezcladas |
+| Control plane | `preserve-dirty-uncommitted-audit` | Los 15 commits locales fueron reemplazados canónicamente; quedan entradas sin commit por clasificar |
 | Auth | `preserve-dirty` | Deltas divergentes y lifecycle faltante para unidades de seguridad |
-| Backend | `preserve-dirty` | Commit local no publicado con identidad de CR incompatible con la branch |
+| Backend | `preserve-dirty-uncommitted-audit` | `efa955b` fue recompuesto como CR-SST-0212; quedan 26 tracked y 11 untracked por clasificar |
 | Infra | `preserve-dirty` | Ambientes y deltas sin lifecycle propio |
 | Fend | `preserve-dirty` | Colisiones con canonical y allowlist parcial CR-SST-0231 |
 | Extension | `preserve-dirty` | Reconstrucción por hunks y captura privada excluida |
@@ -102,9 +102,11 @@ Cerrar el control temporal no depreca ni elimina la policy base.
 ## Próximo gate
 
 El siguiente lote debe recuperar una unidad gobernada, no limpiar todo el
-checkout. La prioridad es preservar el commit Backend local `efa955b` bajo una
-identidad de request correcta; después pueden recomponerse Auth, Infra, Fend,
-Extension, Portfolio y Phinance por sus lifecycles y allowlists.
+checkout. `efa955b` y los 15 commits locales del control plane no deben
+cherry-pickearse: fueron reemplazados por integraciones canónicas. La siguiente
+ejecución owner habilitada es `CR-4UENTES-0039`; Auth, Infra y Phinance requieren
+publicar primero sus lifecycles faltantes. Los cambios sin commit deben
+clasificarse por allowlists antes de retirar cualquier checkout histórico.
 
 Antes de eliminar archivos o retirar un worktree se presentará una lista exacta
 de paths y se solicitará autorización separada.

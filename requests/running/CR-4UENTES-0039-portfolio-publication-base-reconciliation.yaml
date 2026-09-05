@@ -1,0 +1,280 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-4UENTES-0039"
+title: "Portfolio publication base reconciliation"
+status: "running"
+source_request: "requests/inbox/CR-4UENTES-0039-portfolio-publication-base-reconciliation.yaml"
+planned_request: "requests/planned/CR-4UENTES-0039-portfolio-publication-base-reconciliation.yaml"
+created_at: "2026-07-10"
+started_at: "2026-09-05"
+requester: "4uentes"
+
+summary: >
+  Execute the first bounded Portfolio publication-safety slice from the current
+  remote development baseline. Remove the public CV from the repository tip and
+  artifact, replace recursive resource copying with an explicit empty public
+  resource allowlist, and publish owner documentation and reproducible gates.
+
+authorization:
+  status: "approved-running-and-bounded-owner-mutation"
+  approved_by: "4uentes"
+  approved_at: "2026-09-05"
+  approval_text: "ok avancemos con el siguiente gate, pero avancemos con worktree y apegados a la policy y overlay"
+  child_repo_mutation_allowed: true
+  child_repo_mutation_target: "4uentes-portfolio"
+  jira_write_allowed: false
+  deployment_allowed: false
+  production_allowed: false
+
+control_plane_context:
+  initiative_id: "INIT-PORTFOLIO-0003"
+  parent_request_id: "CR-4UENTES-0036"
+  feature_id: "portfolio-publication-base-reconciliation"
+  coordinator_request_id: "CR-CP-0024"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  jira_issue_key: "PORT-20"
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5"
+  fallback_reasoning_effort: "high"
+  reason: "The slice changes public personal-data exposure, build artifact composition and a dirty-worktree recovery boundary."
+
+subagent_deployment_plan:
+  mode: "bounded-read-only-audits"
+  units:
+    - "lifecycle, base SHA, policy and gate audit"
+    - "dirty owner checkout path classification without opening binaries"
+  mutation_owner: "primary agent"
+
+effective_policy_context:
+  base_policy:
+    id: "worktree-request-lifecycle-policy"
+    ref: "docs/policies/worktree-request-lifecycle-policy.md"
+    status: "active-and-durable"
+  overlay:
+    model_status: "request-scoped-operational-control; formal policy_overlay kind remains proposed"
+    coordinator_request: "requests/running/CR-CP-0024-govern-multi-repository-integration-and-stable-promotion.yaml"
+    evidence_ref: "evidence/requests/CR-CP-0024/worktree-sanitization-readiness-2026-09-03.yaml"
+    status: "active"
+    effective_rules:
+      - "deny reset, clean, switch or removal of the dirty historical Portfolio checkout"
+      - "require a fresh isolated request-scoped owner worktree from the pinned remote SHA"
+      - "deny wholesale copy from the dirty checkout"
+      - "require exact promotion path allowlist and explicit exclusions"
+      - "require owner and control-plane checks plus remote readback before cleanup"
+  exception_manifest: null
+  resolution: "accepted-with-bounded-owner-mutation"
+  recheck_gates: ["before-child-mutation", "before-owner-pr", "before-owner-merge", "before-worktree-cleanup"]
+
+workspace_isolation:
+  historical_checkout: "preserve-dirty-quarantine"
+  canonical_roots_eligible_for_mutation: false
+  owner_repository: "4uentes-portfolio"
+  base:
+    ref: "origin/develop"
+    observed_sha: "877b528fab491382806ced0de8c3d376226e02f2"
+  stable_destination:
+    ref: "origin/main"
+    observed_sha: "72a1d2072a5c838c3320b2d983d50e0c66d3fa99"
+    promotion_status: "blocked-until-publication-safety-and-binary-review-gates-pass"
+  branch: "agent/cr-4uentes-0039-publication-safety"
+  worktree_rule: "Create only after this running lifecycle is merged and read back from origin/main."
+
+promotion_manifest:
+  repository: "4uentes-portfolio"
+  service_id: "4uentes-portfolio"
+  request_id: "CR-4UENTES-0039"
+  source_mode: "implement-on-clean-pinned-base; dirty checkout is evidence-only"
+  base:
+    ref: "origin/develop"
+    observed_sha: "877b528fab491382806ced0de8c3d376226e02f2"
+  path_allowlist:
+    - "src/assets/resources/afpogo_cv.pdf"
+    - "src/pages/Home/components/Hero/index.tsx"
+    - "src/pages/Home/components/UserProfilePhoto/constants.ts"
+    - "src/pages/Home/Home.i18n.ts"
+    - "src/context/UIContext.tsx"
+    - "webpack.config.js"
+    - "webpack.config.dev.js"
+    - "config/public-resources.json"
+    - "config/public-images.json"
+    - "scripts/check-public-assets.js"
+    - "package.json"
+    - "docs/portfolio-intent.md"
+    - "docs/architecture/README.md"
+    - "docs/qa/visual-checklist.md"
+    - "specs/features/00-index.yaml"
+  hunk_rules:
+    - path: "webpack.config.js"
+      rule: "Replace recursive src/assets/images copying with exact expansion from config/public-images.json; preserve unrelated bundling behavior."
+    - path: "webpack.config.dev.js"
+      rule: "Replace recursive src/assets/images copying with exact expansion from config/public-images.json; preserve unrelated development behavior."
+    - path: "package.json"
+      rule: "Add check:public-assets and compose it into check without adding or changing dependencies."
+    - path: "src/context/UIContext.tsx"
+      rule: "Correct only the case-sensitive approved profile image reference from apogo1.jpeg to apogo1.jpg."
+    - path: "src/pages/Home/components/UserProfilePhoto/constants.ts"
+      rule: "Remove only the apogo2.JPG entry because its exact source blob is explicitly excluded from publication."
+  explicit_exclusions:
+    - {path: "src/assets/images/**", reason: "Binary contents are immutable in this unit; only the 74 approved path-plus-blob items may be selected by the new public image allowlist."}
+    - {path: "src/assets/resources/*", reason: "No replacement PDF or downloadable resource is approved; only afpogo_cv.pdf may be deleted."}
+    - {path: "package-lock.json", reason: "No dependency change is authorized."}
+    - {path: "vite.config.mts", reason: "Webpack-to-Vite migration is outside this slice."}
+    - {path: "src/assets/sass/**", reason: "Global Sass reconciliation remains a separate publication-base unit."}
+    - {path: "src/pages/{Projects,Experience,Skills,Contact}/**", reason: "Visible feature work is excluded until publication safety is established."}
+    - {path: ".env*", reason: "Local configuration and secrets are never promotion sources."}
+    - {path: ".worktrees/**", reason: "Nested worktree data is never promoted."}
+    - {path: "dist/**", reason: "Build output is validation evidence, not source."}
+
+owner_contract:
+  public_resource_allowlist: []
+  public_image_allowlist:
+    status: "approved-74-exact-items"
+    authorization_ref: "evidence/requests/CR-4UENTES-0039/binary-publication-authorization-2026-09-05.yaml"
+    excluded_item_count: 4
+  cv_download_status: "disabled"
+  expected_cv_get_status: 404
+  expected_cv_head_status: 404
+  history_rewrite_allowed: false
+  recursive_resource_copy_allowed: false
+  owner_documentation_required: true
+  owner_documentation_paths:
+    - "docs/portfolio-intent.md"
+    - "docs/architecture/README.md"
+    - "docs/qa/visual-checklist.md"
+    - "specs/features/00-index.yaml"
+
+required_checks:
+  pre_mutation:
+    - "control-plane origin/main contains this running lifecycle"
+    - "Portfolio origin/develop still resolves to the pinned base SHA"
+    - "new owner worktree is clean"
+  owner:
+    - "git diff --check"
+    - "sensitive-data pattern scan of the diff and artifact"
+    - "npm ci"
+    - "npm run check"
+    - "dist contains no PDF or afpogo_cv artifact"
+    - "GET and HEAD /pdfs/afpogo_cv.pdf return 404 without SPA fallback"
+    - "principal SPA routes remain reachable"
+    - "visual QA confirms the CV CTA is absent and navigation/mobile do not regress"
+  control_plane:
+    - "npm run check before running publication and after owner evidence reconciliation"
+    - "remote SHA and path readback after every merged PR"
+
+owner_publication:
+  status: "merged-and-read-back"
+  repository: "4uentes-portfolio"
+  target_branch: "develop"
+  pull_request: 2
+  head_commit: "11b1f67a232944bb14bbe08d124a0e7b93a720ea"
+  merge_commit: "056b6e4ede90854685c48ff9880d475e54b8db84"
+  tree_equivalence: "owner head and merge commit resolve to tree 524296244113a491eb339bdaceb79a511212e3df"
+  stable_promotion_status: "blocked"
+  stable_promotion_blockers:
+    - "Vite and Sass publication-base deltas remain mixed in the historical dirty checkout"
+    - "pre-existing mobile text and footer overflow requires a governed UI unit"
+    - "inherited dependency audit reports 3 critical, 24 high, 13 moderate and 6 low findings"
+    - "no GitHub CI checks are configured or reported for the owner PR"
+
+binary_allowlist_publication:
+  status: "merged-and-read-back"
+  repository: "4uentes-portfolio"
+  target_branch: "develop"
+  pull_request: 3
+  base_commit: "056b6e4ede90854685c48ff9880d475e54b8db84"
+  head_commit: "7a512c2e357e73065c0ec1fa50b96753fa7e1acb"
+  merge_commit: "f28b01683ea8191960452bf5a2a5d7c196628c1e"
+  tree_equivalence: "owner head and merge commit resolve to tree 6caa390502a456393ed998f4825eb2da9ae9ba73"
+  public_image_count: 74
+  excluded_image_count: 4
+  binary_source_changes: 0
+  github_checks_reported: 0
+  evidence_ref: "evidence/requests/CR-4UENTES-0039/image-allowlist-owner-readback-2026-09-05.md"
+
+execution_publication_rule:
+  rule_id: "execution-publication-and-tracker-closure-rule"
+  adoption_status: "adopted"
+  git_publication:
+    applicable: true
+    plan_merge_required: true
+    terminal_merge_required: true
+  tracker_mirror:
+    applicable: true
+    provider: "jira"
+    project_key: "PORT"
+    epic_key: "PORT-9"
+  cleanup:
+    remote_readback_required: true
+
+rollback: >
+  Before owner publication, abandon only the clean isolated candidate while
+  preserving the dirty historical checkout. After owner publication, revert
+  the owner PR through the normal reviewed flow; never rewrite history or
+  restore the CV through an unreviewed binary copy.
+
+decision:
+  status: "binary-allowlist-merged-stable-promotion-blocked"
+  blocker: "Do not promote develop to main until Vite/Sass, mobile overflow, inherited dependency and owner CI gates have governed dispositions."
+  next_gate: "Select and publish the next bounded Portfolio gate without importing mixed deltas from the dirty historical checkout."
+
+binary_publication_constraint:
+  status: "owner-implementation-authorized-stable-promotion-blocking"
+  audit_tree: "4uentes-portfolio origin/develop@056b6e4ede90854685c48ff9880d475e54b8db84"
+  historical_candidate_count: 79
+  removed_cv_count: 1
+  current_image_count: 78
+  current_unique_blob_count: 78
+  current_total_bytes: 17182570
+  public_image_allowlist: "74 exact referenced path-plus-blob items selected by the authorization evidence"
+  enumerated_approval_received: true
+  owner_mutation_allowed: true
+  prohibited_actions:
+    - "copy or publish an item outside the approved 74-item selector"
+    - "modify, rename, replace or delete binary source content"
+    - "treat current exposure or a textual reference as publication approval"
+    - "expand the owner path allowlist silently"
+  approval_requirements:
+    - "exact repository path and Git blob SHA"
+    - "demonstrable public purpose and textual consumer"
+    - "provenance plus license or right to publish"
+    - "explicit privacy approval for personal or employment data"
+    - "expected extension, signature and size"
+    - "deterministic non-recursive artifact copy rule"
+    - "explicit human approval of the enumerated batch"
+  fail_closed_categories:
+    - "src/assets/images/certs-images/**"
+    - "src/assets/images/constancias/**"
+    - "src/assets/images/old_certs/**"
+    - "personal profile photos"
+  known_exceptions:
+    - path: "src/assets/images/knowledge_img/logo-platzi-sin-fondo.png"
+      blob: "c81419317606a4ecf958a1b4cc78c14ffe9742e6"
+      issue: "PNG extension with JPEG signature"
+    - path: "src/assets/images/apogo2.jpg"
+      blob: "0e602829e0be07f722ac40fa52278bf2daea00cf"
+      issue: "unreferenced and larger than 1 MiB"
+  evidence_ref: "evidence/requests/CR-4UENTES-0039/binary-metadata-audit-2026-09-05.md"
+  decision_batch_ref: "evidence/requests/CR-4UENTES-0039/binary-publication-decision-batch-2026-09-05.yaml"
+  authorization_ref: "evidence/requests/CR-4UENTES-0039/binary-publication-authorization-2026-09-05.yaml"
+
+evidence_refs:
+  - "evidence/requests/CR-4UENTES-0039/changed-files-summary.md"
+  - "evidence/requests/CR-4UENTES-0039/child-validation-results.md"
+  - "evidence/requests/CR-4UENTES-0039/visual-qa-results.md"
+  - "evidence/requests/CR-4UENTES-0039/control-plane-validation-results.md"
+  - "evidence/requests/CR-4UENTES-0039/binary-metadata-audit-2026-09-05.md"
+  - "evidence/requests/CR-4UENTES-0039/binary-publication-decision-batch-2026-09-05.yaml"
+  - "evidence/requests/CR-4UENTES-0039/binary-publication-authorization-2026-09-05.yaml"
+  - "evidence/requests/CR-4UENTES-0039/image-allowlist-owner-readback-2026-09-05.md"
