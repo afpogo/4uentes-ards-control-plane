@@ -36,18 +36,19 @@ policy_application:
     - "Do not add capability links or claim runtime, M2M, deployment or secret readiness."
 
 authorization:
-  status: "local-runtime-start-approved"
+  status: "local-pgadmin-port-remediation-approved"
   approved_by: "4uentes"
   approved_at: "2026-09-05"
-  approval_text: "ok avancemos con el proximo gate; continuemos"
+  approval_text: >
+    ok, no, mejor hagamos por ahora para no mezclar, que este pgadmin de n8n
+    lo maneje en otro puerto 5060
   approval_consumed_for: >
-    Start and validate only the local base Compose stack from the stable owner
-    root: postgres, n8n and pgAdmin. The tunnel override, workflow/data access,
-    productivity migration, capabilities, M2M, Jira and infrastructure remain
-    excluded.
+    Atomically change only N8N_PGADMIN_HOST_PORT in the stable local .env to
+    5060, revalidate the base Compose configuration and retry postgres, n8n and
+    pgAdmin without the tunnel override.
 
 execution:
-  current_unit: "local-base-runtime-start-and-readiness"
+  current_unit: "local-pgadmin-port-remediation-and-base-runtime-retry"
   completed_units:
     - "recover-canonical-inbox-identity"
     - "publish-current-onboarding-plan"
@@ -58,6 +59,7 @@ execution:
     - "migrate-secrets-to-stable-owner-root-and-retire-worktree"
     - "publish-and-read-back-owner-env-migration-tool"
     - "reconcile-stable-owner-env-and-validate-compose-without-runtime"
+    - "attempt-local-base-runtime-start-and-rollback-on-port-conflict"
   control_plane_exact_paths:
     - "requests/running/CR-CP-0021-onboard-4uentes-automation-n8n.yaml"
     - "evidence/requests/CR-CP-0021/automation-owner-local-secret-port-authorization-2026-09-05.md"
@@ -65,6 +67,7 @@ execution:
     - "evidence/requests/CR-CP-0021/stable-owner-secret-custody-migration-2026-09-05.md"
     - "evidence/requests/CR-CP-0021/owner-env-reconciliation-authorization-2026-09-05.md"
     - "evidence/requests/CR-CP-0021/local-runtime-start-authorization-2026-09-05.md"
+    - "evidence/requests/CR-CP-0021/local-pgadmin-port-remediation-authorization-2026-09-05.md"
   owner_exact_paths:
     - ".gitignore"
     - ".env.example"
@@ -287,7 +290,7 @@ owner_env_reconciliation_gate:
     implementation_branch_status: "local-and-remote-preserved"
 
 local_runtime_start_gate:
-  status: "approved-pending-execution"
+  status: "attempted-and-rolled-back-port-conflict"
   repository: "afpogo/4uentes-automation"
   execution_checkout: "stable-owner-root-main"
   compose_scope:
@@ -320,6 +323,55 @@ local_runtime_start_gate:
     - "run productivity migrations or access PRODUCTIVITY_DB_PASSWORD"
     - "modify Jira, Kubernetes, GitOps, infrastructure or versioned owner files"
     - "print, export or copy .env or secret-file values"
+  result:
+    preflight_owner_main_and_clean: true
+    preflight_secrets_and_configuration_valid: true
+    preflight_ports_free: true
+    compose_command: "docker compose up -d"
+    compose_scope_respected: true
+    postgres_reached_healthy: true
+    n8n_started_before_failure: true
+    pgadmin_started: false
+    blocker: "127.0.0.1:5050 already in use"
+    observed_port_owner: "sst-bend-pgadmin-1"
+    observed_port_owner_image: "dpage/pgadmin4"
+    rollback_command: "docker compose down"
+    rollback_completed: true
+    automation_compose_services_after_rollback: "none"
+    volumes_or_bind_data_removed: false
+    tunnel_used: false
+    workflow_or_database_content_accessed: false
+    secret_values_printed_or_recorded: false
+
+local_pgadmin_port_remediation_gate:
+  status: "approved-pending-publication"
+  repository: "afpogo/4uentes-automation"
+  execution_checkout: "stable-owner-root-main"
+  local_file: ".env"
+  exact_key: "N8N_PGADMIN_HOST_PORT"
+  target_value: "5060"
+  preflight:
+    target_port_free: true
+    docker_owner: "none"
+  allowed_actions:
+    - "atomically replace only N8N_PGADMIN_HOST_PORT in the ignored local .env"
+    - "run scripts/check.ps1 -LocalStackOnly and base docker compose config"
+    - "run docker compose up -d without the tunnel override"
+    - "run docker compose ps and scripts/check.ps1 -Runtime"
+  stop_conditions:
+    - "the key is absent, duplicated or its current value is not 5050"
+    - "port 5060 becomes occupied before replacement or startup"
+    - "any unrelated .env line changes"
+    - "Compose or runtime readiness fails"
+  rollback_or_compensation:
+    - "if replacement validation fails, restore the prior non-secret port value atomically"
+    - "if runtime startup fails, run docker compose down without -v"
+    - "never remove volumes, bind data, .env or .secrets"
+  forbidden_actions:
+    - "modify versioned owner files or the SST stack"
+    - "use docker-compose.tunnel.yml or publish a tunnel"
+    - "read or mutate workflows, executions, database rows or credentials"
+    - "print, export or copy any secret value"
 
 discovery_contract:
   service_id: "4uentes-automation"
@@ -377,12 +429,13 @@ required_checks:
   - "origin/main integration readback"
 
 decision:
-  status: "local-runtime-start-approved-pending-execution"
+  status: "local-pgadmin-port-remediation-approved-pending-publication"
   approver: "4uentes"
   next_gate: >
-    Record readiness evidence after the bounded local base-stack start. Any
-    tunnel, workflow/data operation, productivity migration, capability, M2M,
-    Jira or infrastructure work remains separately gated.
+    Publish and read back this gate, change only the local pgAdmin host port to
+    5060, revalidate and retry the base stack. Any tunnel, workflow/data
+    operation, productivity migration, capability, M2M, Jira or infrastructure
+    work remains separately gated.
 
 evidence_refs:
   - "evidence/requests/CR-CP-0021/implementation-plan-2026-09-05.md"
@@ -391,4 +444,5 @@ evidence_refs:
   - "evidence/requests/CR-CP-0021/stable-owner-secret-custody-migration-2026-09-05.md"
   - "evidence/requests/CR-CP-0021/owner-env-reconciliation-authorization-2026-09-05.md"
   - "evidence/requests/CR-CP-0021/local-runtime-start-authorization-2026-09-05.md"
+  - "evidence/requests/CR-CP-0021/local-pgadmin-port-remediation-authorization-2026-09-05.md"
   - "docs/cross-repo/local-development-secret-and-compose-governance.md"
