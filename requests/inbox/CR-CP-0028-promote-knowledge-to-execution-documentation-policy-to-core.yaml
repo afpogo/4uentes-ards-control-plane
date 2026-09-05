@@ -1,0 +1,112 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-CP-0028"
+title: "Promote knowledge-to-execution documentation policy to Core"
+status: "inbox"
+created_at: "2026-09-05"
+requester: "4uentes"
+
+business_context: >
+  CR-CP-0026 defined, validated and published the control-plane policy that
+  distinguishes Learning, Playbook, Runbook and Specs/manifests while keeping
+  technical authority, execution authorization and evidence feedback explicit.
+  Shared reuse now requires a Core-owned canon instead of copying the local
+  definition into adopters.
+
+requested_change: >
+  Promote knowledge-to-execution-documentation-policy to 4uentes-ards-core as
+  a provider-agnostic, core-profile-scoped policy through a separate Core owner
+  workflow and preserve the control plane as origin and handoff producer.
+
+expected_outcome: >
+  Core can become the canonical owner of the reusable policy after its own
+  validation and publication, while local adoption and every child rollout
+  remain explicit, profile-scoped and request-driven.
+
+initial_scope:
+  initiative_id: "INIT-CP-0003"
+  predecessor_request_id: "CR-CP-0026"
+  origin_policy_id: "knowledge-to-execution-documentation-policy"
+  origin_repository: "4uentes-orchestor"
+  target_repository: "4uentes-ards-core"
+  target_policy_class: "core-profile-scoped"
+  delivery: "control-plane reservation, promotion plan and owner handoff"
+
+constraints:
+  - "This inbox reserves identity and authorizes control-plane planning only."
+  - "Do not modify 4uentes-ards-core from this control-plane workflow."
+  - "A separate Core owner workflow must accept the handoff before any Core mutation."
+  - "Do not modify functional, Auth or infrastructure repositories under this request gate."
+  - "Do not reinterpret CR-CP-0027 as Core promotion; it is a distinct active Infra adoption lifecycle."
+  - "Do not use policy_overlay: the candidate is a durable shared policy, not a contextual delta."
+  - "Core publication alone must not prove child adoption."
+  - "Do not publish done state before owner publication, validation and canonical readback are evidenced."
+  - "Jira is a mirror; no create, edit, comment or transition is authorized by this reservation."
+  - "Preserve the dirty originating worktree and do not merge it wholesale."
+
+identity_preflight:
+  observed_at: "2026-09-05"
+  control_plane_canonical_ref: "origin/main@277d62f57a8104162c67220f91ce6f28aa0499e1"
+  core_canonical_ref: "origin/develop@ded8c466dc3c02a02f7b24642ce99de6cebcc91c"
+  canonical_tree_match: false
+  reachable_git_ref_match: false
+  active_worktree_match: false
+  github_pr_match: false
+  core_policy_match: false
+  adjacent_id_status: "CR-CP-0027 is occupied by a distinct Infra adoption intent."
+  decision: "CR-CP-0028 is available for this unique Core-promotion intent at reservation time."
+
+task_weight:
+  classification: "complex-cross-repo-governance-task"
+  risk_level: "high"
+  drivers:
+    - "CORE_CANON"
+    - "CROSS_REPO_OWNERSHIP"
+    - "DOCUMENT_AUTHORITY"
+    - "CHILD_ADOPTION_BOUNDARY"
+
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  provider: "codex"
+  resource_level: "degraded"
+  resource_source: "account-capacity"
+  primary_profile: "session-assigned"
+  requested_analysis_temperature: 0.5
+  temperature_control_available: false
+  reason: >
+    The runtime exposes no temperature control. Parallel read-only validation
+    was requested, but subagent execution degraded to a sequential primary-agent
+    audit after an unsupported inherited model and an account usage limit.
+
+subagent_deployment_plan:
+  requested_mode: "parallel-read-only-audit"
+  result: "degraded-to-sequential-primary-agent-audit"
+  attempted_scopes:
+    - "Core handoff contract review"
+    - "promotion identity and lifecycle review"
+  merge_authority: "primary agent"
+  fallback_policy: "agent-resource-degradation-policy"
+
+execution:
+  approval_source: >
+    Operator instructed advancing the next promotion gate and continuing on
+    2026-09-05 after authorizing policy-compliant worktrees and integration.
+  approval_consumed_for: "reservation commit, push, PR, merge and canonical readback only"
+  control_plane_mutation_allowed: true
+  git_reservation_publication_allowed: true
+  core_repo_mutation_allowed: false
+  child_repo_mutation_allowed: false
+  runtime_mutation_allowed: false
+  infrastructure_mutation_allowed: false
+  jira_write_allowed: false
+
+requested_next_step: >
+  Publish and read back this reservation, refresh origin/main, then create one
+  clean control-plane execution worktree to publish the promotion plan and the
+  outbound Core owner handoff without mutating Core.
+
+decision:
+  status: "approved-for-reservation-publication"
+  approver: "4uentes"
+  approved_at: "2026-09-05"
+  approval_text: "avancemos con el siguiente gate; continua"
