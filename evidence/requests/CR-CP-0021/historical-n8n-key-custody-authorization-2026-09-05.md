@@ -48,3 +48,26 @@ preservan ambos secretos para diagnóstico.
 No leer ni modificar workflows, credenciales, ejecuciones, filas de bases ni
 otros campos de configuración. No imprimir valores ni huellas. Registrar sólo
 estados, paths declarados, checks, SHAs y disposición de rollback.
+
+## Resultado observado
+
+El gate se publicó mediante
+`https://github.com/afpogo/4uentes-ards-control-plane/pull/259` y se releyó en
+`main@3fa1a97e837fdf76305187627d6a5b7b885a01ae`. La clave histórica fue
+promovida al target file-backed y validada por huellas internas no publicadas.
+La clave generada anterior permanece en rollback privado y no se eliminó.
+
+`scripts/check.ps1 -LocalStackOnly` pasó. En el arranque, PostgreSQL alcanzó
+estado saludable y pgAdmin respondió por loopback en `5060`. n8n superó el
+blocker de clave de cifrado, pero no pudo autenticar el rol PostgreSQL `n8n`.
+La evidencia de logs fue acotada y sanitizada; no se imprimieron secretos.
+
+El resultado indica que `postgres_data` ya estaba inicializado con el password
+histórico del rol. Las variables de inicialización de la imagen no rotan ese
+password al recrear el contenedor. Se ejecutó `docker compose down` sin `-v` y
+se preservaron datos, bind mounts, `.env`, `.secrets` y rollback.
+
+El siguiente gate recomendado debe rotar únicamente el password del rol local
+`n8n` al secreto file-backed mediante el socket interno de PostgreSQL. El valor
+no debe aparecer en argumentos, logs ni Evidence; no se inspeccionarán filas,
+schemas ni otros roles.
