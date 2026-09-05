@@ -1,0 +1,54 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-HPT-0024"
+title: "Deploy private receipt-object platform"
+status: "planned-retroactive-reconciliation"
+source_request: "requests/inbox/CR-HPT-0024-deploy-private-receipt-object-platform.yaml"
+created_at: "2026-08-28"
+requester: "4uentes"
+
+control_plane_context:
+  initiative_id: "INIT-HPT-0003"
+  predecessor_request_ids: ["CR-HPT-0020", "CR-HPT-0023"]
+  coordinator_request_id: "CR-CP-0024"
+  owner_repository: "sst-4uentes-infra"
+  jira_role: "mirror"
+  jira_issue_key: "HPT-16"
+
+summary: >
+  Preserve the selected zero-license-cost development profile for private
+  receipt custody and reconcile its already integrated owner history before
+  any further documentation or ClamAV remediation is published.
+
+risk:
+  level: "high"
+  drivers: ["encryption-key-custody", "persistent-storage", "malware-boundary", "provider-licensing", "automatic-gitops-sync"]
+
+execution:
+  approval_source: "CR-CP-0024 governed integration gates"
+  control_plane_mutation_allowed: true
+  child_repo_mutation_allowed: false
+  runtime_mutation_allowed: false
+  deployment_allowed: false
+  secret_changes_allowed: false
+  license_acceptance_allowed: false
+  jira_write_allowed: false
+
+owner_documentation:
+  required: true
+  owner_repo: "sst-4uentes-infra"
+  owner_surfaces:
+    - "specs/infra/deployment-contracts/receipt-custody-platform.yaml"
+    - "specs/states/deploy-private-receipt-object-platform.yaml"
+    - "docs/infra/receipt-custody-platform.md"
+    - "docs/runbooks/receipt-custody-development.md"
+
+acceptance:
+  - "Published lifecycle explicitly records the historical ordering deviation."
+  - "PR 23, PR 24 and PR 25 remain attributable to this owner request through immutable readbacks."
+  - "No new child, runtime, secret, license or Jira mutation occurs during lifecycle recovery."
+  - "Future owner gates use the existing clean CR-HPT-0024 Infra worktree and exact SHAs."
+
+decision:
+  status: "ready-for-retroactive-running-reconciliation"
+  next_gate: "Publish and read back the running lifecycle before any further Infra push."

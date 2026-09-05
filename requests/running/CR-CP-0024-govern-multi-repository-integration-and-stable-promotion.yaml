@@ -70,6 +70,7 @@ execution:
     - "reconcile-program-scoreboard-after-infra-readback"
     - "establish-infra-human-learning-playbook-runbook-foundation"
     - "reconcile-cr-sst-0233-retroactive-running-lifecycle"
+    - "recover-cr-hpt-0024-canonical-running-lifecycle"
   control_plane_mutation_allowed: true
   child_repo_mutation_allowed: false
   child_repo_mutation_targets: ["sst-bend", "sst-4uentes-infra"]
@@ -316,6 +317,12 @@ infra_second_remediation:
       runtime_mutation_allowed: false
       jira_write_allowed: false
       evidence: "evidence/requests/CR-CP-0024/infra-human-documentation-publication-authorization-2026-09-05.md"
+    owner_lifecycle_gate:
+      request_id: "CR-HPT-0024"
+      status: "recovery-published-locally-await-canonical-readback"
+      canonical_running_ref: "requests/running/CR-HPT-0024-deploy-private-receipt-object-platform.yaml"
+      recovery_evidence: "evidence/requests/CR-HPT-0024/retroactive-running-reconciliation-2026-09-05.md"
+      owner_push_allowed_before_readback: false
   jira:
     issue: "HPT-16"
     expected_status: "En curso"
@@ -499,5 +506,7 @@ evidence_refs:
   - "evidence/requests/CR-CP-0024/program-scoreboard.md"
   - "evidence/requests/CR-CP-0024/infra-human-documentation-foundation-2026-09-05.md"
   - "evidence/requests/CR-CP-0024/infra-human-documentation-publication-authorization-2026-09-05.md"
+  - "requests/running/CR-HPT-0024-deploy-private-receipt-object-platform.yaml"
+  - "evidence/requests/CR-HPT-0024/retroactive-running-reconciliation-2026-09-05.md"
   - "requests/running/CR-SST-0233-reconcile-fresh-database-migration-baseline.yaml"
   - "evidence/requests/CR-SST-0233/retroactive-running-reconciliation-2026-09-05.md"
