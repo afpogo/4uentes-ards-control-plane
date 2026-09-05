@@ -22,6 +22,31 @@ control_plane_context:
   jira_parent_issue_key: "SST-113"
   jira_start_batch_status: "consumed-2026-08-23"
   jira_start_readback: "SST-118 is En curso without resolution, is a Subtask of SST-113 and has no comments."
+  jira_terminal_preflight_status: "passed-read-only-2026-09-05"
+  jira_terminal_write_authorized: false
+
+jira_terminal_batch:
+  authorization_status: "pending-separate-exact-authorization"
+  preflight_status: "passed-read-only"
+  issue_key: "SST-118"
+  issue_type: "Subtask"
+  expected_current_status: "En curso"
+  expected_current_status_id: "10006"
+  expected_parent_issue_key: "SST-113"
+  expected_resolution: null
+  transition_id: "41"
+  transition_name: "Listo"
+  target_status: "Finalizada"
+  target_status_id: "10008"
+  allowed_write_count_if_authorized: 1
+  proposed_operation: "Transition only SST-118 through transition 41."
+  forbidden_operations:
+    - "comments"
+    - "field edits"
+    - "links"
+    - "assignment changes"
+    - "writes on SST-113, SST-117, SST-124 or any other issue"
+  evidence_ref: "evidence/requests/CR-SST-0217/terminal-readiness-and-jira-preflight-2026-09-05.md"
 
 risk: {level: "high", score: 8, drivers: ["GITOPS", "FEATURE_ENABLEMENT", "VOLATILE_STATE", "LOCAL_CLUSTER_AVAILABILITY"]}
 task_weight: {classification: "complex-high-risk-task", risk_level: "high"}
@@ -86,13 +111,31 @@ runtime_readback:
   deployed_bend_image: "ghcr.io/afpogo/sst-bend:develop-fc5573a7f054"
   recovery_note: "The previously unavailable Docker/Kind control-plane recovered without a successful manual restart, recreation, direct apply or secret mutation."
 
-decision: {status: "approved-running", approver: "4uentes", decided_at: "2026-08-23"}
+decision:
+  status: "technical-execution-complete-terminal-jira-authorization-pending"
+  approver: "4uentes"
+  decided_at: "2026-09-05"
+  next_gate: "Publish and read back this terminal preflight, then obtain separate exact authorization for the single SST-118 transition before preparing the done lifecycle."
+
+knowledge_to_execution_documentation:
+  policy_id: "knowledge-to-execution-documentation-policy"
+  primary_role: "execution-evidence"
+  owner: "4uentes-ards-control-plane"
+  status: "terminal-preflight"
+  applicability: "This lifecycle records owner publication, GitOps reconciliation and readback; it does not replace the Infra owner runbook, specs or manifests."
+  technical_sources:
+    - "requests/planned/CR-SST-0217-enable-development-retention-qa-runtime.yaml"
+    - "sst-4uentes-infra owner publication at merge 85ccc828cc8329d2319e778a9ccd7ac365ed3d61"
+    - "sst-4uentes-infra canonical develop readback 126f25eeed4d20b7ecba35036a7e35530482c946"
+  runbook_required: false
+  runbook_not_applicable_reason: "The Infra owner runbook docs/runbooks/argocd-kind-development.md already operationalizes the deployment and reconciliation path; this checkpoint only records terminal readiness."
 
 evidence_refs:
   - "evidence/requests/CR-SST-0207/runtime-preflight-blocker-2026-08-23.md"
   - "evidence/requests/CR-SST-0217/execution-start-2026-08-23.md"
   - "evidence/requests/CR-SST-0217/jira-start-readback-2026-08-23.md"
   - "evidence/requests/CR-SST-0217/owner-and-runtime-readback-2026-08-24.md"
+  - "evidence/requests/CR-SST-0217/terminal-readiness-and-jira-preflight-2026-09-05.md"
 
 closure_limits:
   - "No cluster restart, recreation or direct apply without a new exact operational gate."
