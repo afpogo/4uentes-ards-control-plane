@@ -12,6 +12,14 @@ capabilities:
       repo: "4uentes-ards-core"
       repo_role: "ards-standard-source"
       adoption_status: "adopted-in-core"
+  - id: "capability.outbound.knowledge-to-execution-policy-core-promotion"
+    title: "Knowledge-to-execution policy Core promotion handoff"
+    status: "draft"
+    spec: "specs/capabilities/outbound/4uentes-orchestor--knowledge-to-execution-policy-core-promotion.yaml"
+    downstream:
+      repo: "4uentes-ards-core"
+      repo_role: "ards-standard-source"
+      adoption_status: "pending-core-owner-workflow"
 states:
   allowed:
     - "draft"
