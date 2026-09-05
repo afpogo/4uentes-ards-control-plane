@@ -80,6 +80,8 @@ source_evidence_refs:
   - "evidence/requests/CR-SST-0232/learning-workspace-source-contract-v1.yaml"
   - "evidence/requests/CR-SST-0232/contract-validation-2026-08-29.md"
   - "evidence/requests/CR-SST-0232/publication-authorization-2026-09-05.md"
+  - "evidence/requests/CR-SST-0232/owner-request-allocation-plan-2026-09-05.md"
+  - "evidence/requests/CR-SST-0232/owner-request-allocation-validation-2026-09-05.md"
   - "docs/projects/sst/contrato-fuentes-learning-workspace-v1.md"
 model_refs:
   - "specs/initiatives/initiative-model.yaml"
@@ -102,6 +104,10 @@ known_change_requests:
   - "CR-SST-0227"
   - "CR-SST-0232"
   - "CR-SST-0233"
+  - "CR-SST-0234"
+  - "CR-SST-0235"
+  - "CR-SST-0236"
+  - "CR-SST-0237"
 candidate_change_requests:
   - id: "CR-SST-TODO"
     title: "Implement encrypted offline device replica and conflict resolution"
@@ -210,7 +216,7 @@ article_processing_adoption:
   first_owner_manual_review: "passed-2026-08-29"
   next_gate: "publish and read back the CR-SST-0223 done lifecycle, retire its worktrees safely, then evaluate CR-SST-0224 as the next independent owner gate"
 learning_workspace_source_adoption:
-  status: "running-contract-prepared-awaiting-publication"
+  status: "owner-lifecycles-prepared-awaiting-publication"
   request_id: "CR-SST-0232"
   predecessor_requests: ["CR-SST-0210", "CR-SST-0193", "CR-SST-0194", "CR-SST-0220", "CR-SST-0223"]
   source_kinds: ["manual_text", "article", "article_document", "agent_output"]
@@ -218,10 +224,13 @@ learning_workspace_source_adoption:
   plan_publication: "merged-and-read-back-pr-192"
   contract_version: "sst-learning-workspace-source-v1@1.0.0"
   owner_readonly_discovery: "completed-on-locally-available-origin-develop-refs"
-  running_publication: "exact-git-batch-authorized-2026-09-05-pending-execution"
+  running_publication: "merged-and-read-back-pr-234"
+  running_merge_commit: "eec2d5aff707a83d7b25cdae0577a6cbbe54d630"
+  owner_request_ids: ["CR-SST-0234", "CR-SST-0235", "CR-SST-0236", "CR-SST-0237"]
+  owner_allocation_status: "prepared-control-plane-only-publication-pending"
   owner_execution_status: "not-authorized"
   jira_status: "read-only-preflight-passed-no-mirror-write-authorized"
-  next_gate: "execute the authorized control-plane commit, push, PR, merge and canonical readback batch"
+  next_gate: "publish and read back the four owner plans, then request a separate running authorization for CR-SST-0234 only"
 migration_baseline_reconciliation:
   status: "planned-publication-pending"
   request_id: "CR-SST-0233"
@@ -306,11 +315,15 @@ progress:
     - "CR-SST-0226"
     - "CR-SST-0227"
     - "CR-SST-0233"
+    - "CR-SST-0234"
+    - "CR-SST-0235"
+    - "CR-SST-0236"
+    - "CR-SST-0237"
   next_recommended_request: >
-    Publish and read back the CR-SST-0223 done lifecycle, then retire its
-    temporary worktrees only after proving clean status and canonical
-    reachability. Keep CR-SST-0224 as the next independent owner execution
-    gate; its planned lifecycle does not authorize child mutation.
+    Publish and read back the CR-SST-0234 through CR-SST-0237 allocation batch.
+    After canonical readback, CR-SST-0234 is the first independent Learning
+    source owner gate. Its planned lifecycle does not authorize child mutation;
+    CR-SST-0235 through CR-SST-0237 remain blocked by predecessor adoption.
   current_runtime_status: >
     CR-SST-0193 canonical persistence and API are implemented, merged and
     validated in local/dev. CR-SST-0210 supplies the merged tenant,

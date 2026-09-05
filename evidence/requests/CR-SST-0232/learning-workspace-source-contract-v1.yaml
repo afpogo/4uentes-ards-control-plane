@@ -188,10 +188,10 @@ minimum_validation:
     - "Secret values cannot enter descriptors, snapshots, logs or evidence."
 
 owner_adoption_sequence:
-  - {order: 1, owner: "sst-bend", responsibility: "Publish and implement descriptor validation, resolver authorization, immutable snapshots and compatibility adapters.", request_id: "TODO-after-contract-publication"}
-  - {order: 2, owner: "authorized BFF boundary", responsibility: "Relay the versioned contract without authorizing or resolving private sources.", request_id: "TODO-after-bend-capability"}
-  - {order: 3, owner: "sst-fend", responsibility: "Expose a source inbox, stable reference selection, snapshot identity, preview state and separate memory-proposal action.", request_id: "TODO-after-bend-capability"}
-  - {order: 4, owner: "end-to-end validation", responsibility: "Prove all source kinds, isolation, stale-source behavior, tags and memory separation through the user-visible flow.", request_id: "TODO-after-owner-adoption"}
+  - {order: 1, owner: "sst-bend", responsibility: "Publish and implement descriptor validation, resolver authorization, immutable snapshots and compatibility adapters.", request_id: "CR-SST-0234"}
+  - {order: 2, owner: "4uentes-auth", responsibility: "Relay the versioned contract without authorizing or resolving private sources.", request_id: "CR-SST-0235"}
+  - {order: 3, owner: "sst-fend", responsibility: "Expose a source inbox, stable reference selection, snapshot identity, preview state and separate memory-proposal action.", request_id: "CR-SST-0236"}
+  - {order: 4, owner: "4uentes-orchestor", responsibility: "Prove all source kinds, isolation, stale-source behavior, tags and memory separation through the user-visible flow.", request_id: "CR-SST-0237"}
 
 out_of_scope_v1:
   - "Secret-backed or credentialed source acquisition"

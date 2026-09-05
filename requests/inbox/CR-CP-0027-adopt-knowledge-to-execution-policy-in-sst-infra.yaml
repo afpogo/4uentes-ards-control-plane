@@ -1,0 +1,34 @@
+schema_version: '1.0'
+phase: 1
+id: 'CR-CP-0027'
+title: 'Adopt knowledge-to-execution documentation policy in sst-4uentes-infra'
+status: 'inbox'
+created_at: '2026-09-05'
+requester: '4uentes'
+business_context: 'CR-CP-0026 defined the origin-repo policy and Infra required a request-scoped adoption manifest.'
+requested_change: 'Adopt the policy in sst-4uentes-infra without redefining it or promoting it to 4uentes-ards-core.'
+expected_outcome: 'Infra proves the governing policy revision while derived guidance remains non-runtime authority.'
+control_plane_context:
+  initiative_id: 'INIT-CP-0003'
+  coordinated_by_request_id: 'CR-CP-0024'
+  predecessor_request_id: 'CR-CP-0026'
+  source_policy_revision: '4uentes-orchestor@7a8ea96'
+  target_repo: 'sst-4uentes-infra'
+initial_scope: {solution: 'sst', services: ['sst-4uentes-infra'], include_optional_services: false}
+risk: {level: 'low', score: 3, drivers: ['source revision auditability', 'owner documentation consistency']}
+execution:
+  requires_human_approval: true
+  approval_source: 'User authorized continuation of the Infra adoption on 2026-09-05.'
+  child_repo_mutation_allowed: false
+  jira_write_allowed: false
+  implementation_boundary: 'Documentation governance only; no runtime, cluster, GitOps, secrets, data or Jira changes.'
+owner_documentation: {required: true, status: 'planned', owner_repo: 'sst-4uentes-infra'}
+manifest_contract:
+  policy_id: 'knowledge-to-execution-documentation-policy'
+  allowed_outcomes: ['adopted', 'exception']
+  source_repo: '4uentes-orchestor'
+  canonical_owner: '4uentes-ards-control-plane'
+  source_revision: '7a8ea96'
+validation:
+  required_checks: ['sst-4uentes-infra: npm.cmd run check', '4uentes-orchestor: npm.cmd run check', 'git diff --check']
+decision: {status: 'inbox', approver: '4uentes', blocker: 'none'}

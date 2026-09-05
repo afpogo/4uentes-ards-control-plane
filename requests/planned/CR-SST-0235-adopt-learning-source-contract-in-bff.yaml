@@ -1,0 +1,48 @@
+schema_version: '1.0'
+phase: 2
+id: 'CR-SST-0235'
+title: 'Adopt the Learning source contract in the authorized BFF'
+status: 'planned'
+source_request: 'requests/inbox/CR-SST-0235-adopt-learning-source-contract-in-bff.yaml'
+created_at: '2026-09-05'
+requester: '4uentes'
+summary: 'Plan the 4uentes-auth relay for Learning source descriptors and snapshot results.'
+depends_on: ['CR-SST-0232', 'CR-SST-0234']
+predecessor_requests: ['CR-SST-0232', 'CR-SST-0234']
+control_plane_context: {initiative_id: 'INIT-SST-0010', parent_request_id: 'CR-SST-0232', owner_repository: '4uentes-auth'}
+risk: {level: 'high', drivers: ['PRIVATE_CONTENT_RELAY', 'AUTH_CONTEXT', 'CONTRACT_DRIFT', 'ERROR_SANITIZATION']}
+model_selection: {provider: 'codex', resource_level: 'normal', task_class: 'complex-high-risk-task', primary_profile: 'gpt-5.6-sol', reasoning_effort: 'max', fallback_profile: 'gpt-5.5 high'}
+subagent_deployment_plan: {required: false, reason: 'No delegation was requested; relay and identity boundaries require direct owner review.'}
+execution:
+  control_plane_reservation_allowed: true
+  child_repo_mutation_allowed: false
+  runtime_mutation_allowed: false
+  jira_write_allowed: false
+  predecessor_gate: 'CR-SST-0234 must publish and pass owner checks.'
+  next_gate: 'Explicit running authorization for 4uentes-auth after predecessor readback.'
+owner_contract:
+  responsibilities:
+    - 'Relay versioned descriptors and snapshot results without semantic changes.'
+    - 'Propagate authenticated principal context through the approved identity boundary.'
+    - 'Sanitize errors and enforce request and payload limits.'
+  prohibited:
+    - 'Resolve source references or fetch private article content.'
+    - 'Persist source snapshots, credentials or accepted memory.'
+owner_documentation:
+  required: true
+  minimum: ['BFF relay contract', 'human boundary guide', 'maps with textual fallback', 'execution and rollback runbook']
+knowledge_to_execution_documentation: {policy_id: 'knowledge-to-execution-documentation-policy', current_role: 'playbook', runbook_required_for_current_gate: false, runbook_required_before_owner_execution: true}
+visual_documentation:
+  policy_id: 'visual-documentation-as-code-policy'
+  shared_map_ref: 'evidence/requests/CR-SST-0232/owner-request-allocation-plan-2026-09-05.md'
+  owner_map_expectation: 'Map browser-to-BFF-to-Bend relay, auth context and sanitized failures with textual fallback.'
+atomized_execution:
+  - {order: 1, objective: 'Publish owner ARDS/SDD and relay runbook.', validation: 'owner documentation review'}
+  - {order: 2, objective: 'Implement versioned relay and auth propagation.', validation: 'contract and auth checks'}
+  - {order: 3, objective: 'Add limits and sanitized failures.', validation: 'negative-path checks'}
+  - {order: 4, objective: 'Publish owner evidence.', validation: 'CI, readback and npm run check'}
+acceptance:
+  - 'The BFF relays V1 data without semantic drift.'
+  - 'Private content and credentials are neither resolved nor persisted by the BFF.'
+  - 'Errors are sanitized and scope context remains explicit.'
+  - 'No implementation starts under this reservation gate.'
