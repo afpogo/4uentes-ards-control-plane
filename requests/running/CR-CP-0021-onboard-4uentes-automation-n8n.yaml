@@ -36,7 +36,7 @@ policy_application:
     - "Do not add capability links or claim runtime, M2M, deployment or secret readiness."
 
 authorization:
-  status: "local-runtime-start-approved"
+  status: "local-runtime-start-consumed-and-rolled-back"
   approved_by: "4uentes"
   approved_at: "2026-09-05"
   approval_text: "ok avancemos con el proximo gate; continuemos"
@@ -47,7 +47,7 @@ authorization:
     excluded.
 
 execution:
-  current_unit: "local-base-runtime-start-and-readiness"
+  current_unit: "blocked-by-pgadmin-port-collision-awaiting-local-config-gate"
   completed_units:
     - "recover-canonical-inbox-identity"
     - "publish-current-onboarding-plan"
@@ -58,6 +58,7 @@ execution:
     - "migrate-secrets-to-stable-owner-root-and-retire-worktree"
     - "publish-and-read-back-owner-env-migration-tool"
     - "reconcile-stable-owner-env-and-validate-compose-without-runtime"
+    - "attempt-local-base-runtime-start-and-rollback-on-port-conflict"
   control_plane_exact_paths:
     - "requests/running/CR-CP-0021-onboard-4uentes-automation-n8n.yaml"
     - "evidence/requests/CR-CP-0021/automation-owner-local-secret-port-authorization-2026-09-05.md"
@@ -84,7 +85,7 @@ execution:
   owner_git_mutation_allowed: true
   existing_secret_or_data_access_allowed: false
   new_secret_generation_allowed: true
-  runtime_mutation_allowed: true
+  runtime_mutation_allowed: false
   infrastructure_mutation_allowed: false
   deployment_allowed: false
   jira_write_allowed: false
@@ -287,7 +288,7 @@ owner_env_reconciliation_gate:
     implementation_branch_status: "local-and-remote-preserved"
 
 local_runtime_start_gate:
-  status: "approved-pending-execution"
+  status: "attempted-and-rolled-back-port-conflict"
   repository: "afpogo/4uentes-automation"
   execution_checkout: "stable-owner-root-main"
   compose_scope:
@@ -320,6 +321,25 @@ local_runtime_start_gate:
     - "run productivity migrations or access PRODUCTIVITY_DB_PASSWORD"
     - "modify Jira, Kubernetes, GitOps, infrastructure or versioned owner files"
     - "print, export or copy .env or secret-file values"
+  result:
+    preflight_owner_main_and_clean: true
+    preflight_secrets_and_configuration_valid: true
+    preflight_ports_free: true
+    compose_command: "docker compose up -d"
+    compose_scope_respected: true
+    postgres_reached_healthy: true
+    n8n_started_before_failure: true
+    pgadmin_started: false
+    blocker: "127.0.0.1:5050 already in use"
+    observed_port_owner: "sst-bend-pgadmin-1"
+    observed_port_owner_image: "dpage/pgadmin4"
+    rollback_command: "docker compose down"
+    rollback_completed: true
+    automation_compose_services_after_rollback: "none"
+    volumes_or_bind_data_removed: false
+    tunnel_used: false
+    workflow_or_database_content_accessed: false
+    secret_values_printed_or_recorded: false
 
 discovery_contract:
   service_id: "4uentes-automation"
@@ -377,10 +397,11 @@ required_checks:
   - "origin/main integration readback"
 
 decision:
-  status: "local-runtime-start-approved-pending-execution"
+  status: "local-runtime-start-rolled-back-port-conflict"
   approver: "4uentes"
   next_gate: >
-    Record readiness evidence after the bounded local base-stack start. Any
+    Authorize a local-only change of N8N_PGADMIN_HOST_PORT to a verified free
+    loopback port, revalidate Compose and retry the same base-stack start. Any
     tunnel, workflow/data operation, productivity migration, capability, M2M,
     Jira or infrastructure work remains separately gated.
 
