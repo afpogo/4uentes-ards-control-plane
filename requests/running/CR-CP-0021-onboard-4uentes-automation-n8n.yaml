@@ -36,7 +36,7 @@ policy_application:
     - "Do not add capability links or claim runtime, M2M, deployment or secret readiness."
 
 authorization:
-  status: "postgres-n8n-role-password-rotation-approved"
+  status: "postgres-n8n-role-password-rotation-consumed-and-completed"
   approved_by: "4uentes"
   approved_at: "2026-09-05"
   approval_text: "ok autorizo los pasos recomendados"
@@ -46,7 +46,7 @@ authorization:
     revalidate the base stack without exposing the value or reading data.
 
 execution:
-  current_unit: "postgres-n8n-role-password-rotation-and-runtime-validation"
+  current_unit: "local-base-runtime-ready-awaiting-next-gate"
   completed_units:
     - "recover-canonical-inbox-identity"
     - "publish-current-onboarding-plan"
@@ -62,6 +62,8 @@ execution:
     - "retry-base-runtime-and-rollback-on-n8n-key-mismatch"
     - "reconcile-historical-n8n-key-into-file-backed-custody"
     - "retry-base-runtime-and-rollback-on-postgres-password-mismatch"
+    - "rotate-postgres-n8n-role-password-to-file-backed-secret"
+    - "validate-local-base-runtime-on-isolated-ports"
   control_plane_exact_paths:
     - "requests/running/CR-CP-0021-onboard-4uentes-automation-n8n.yaml"
     - "evidence/requests/CR-CP-0021/automation-owner-local-secret-port-authorization-2026-09-05.md"
@@ -89,9 +91,9 @@ execution:
   capability_mutation_allowed: false
   child_repo_mutation_allowed: true
   owner_git_mutation_allowed: true
-  existing_secret_or_data_access_allowed: true
+  existing_secret_or_data_access_allowed: false
   new_secret_generation_allowed: false
-  runtime_mutation_allowed: true
+  runtime_mutation_allowed: false
   infrastructure_mutation_allowed: false
   deployment_allowed: false
   jira_write_allowed: false
@@ -453,7 +455,7 @@ historical_n8n_key_custody_gate:
     volumes_bind_data_or_secrets_removed: false
 
 postgres_n8n_role_password_rotation_gate:
-  status: "approved-pending-publication"
+  status: "completed-and-verified"
   repository: "afpogo/4uentes-automation"
   database_scope:
     compose_service: "postgres"
@@ -489,6 +491,24 @@ postgres_n8n_role_password_rotation_gate:
     - "change any role other than the current configured n8n role"
     - "delete data, volumes, .env, .secrets or rollback custody"
     - "use a tunnel or modify SST, Jira, Kubernetes, GitOps or infrastructure"
+  result:
+    authorization_pull_request: "https://github.com/afpogo/4uentes-ards-control-plane/pull/265"
+    authorization_main_readback_sha: "fae07a4ade874c47eac8bfa8809f3b8612ac761e"
+    postgres_started_alone_before_rotation: true
+    postgres_health_before_rotation: "healthy"
+    rotated_role_scope: "current configured n8n role only"
+    password_read_inside_postgres: true
+    secret_in_host_or_process_arguments: false
+    raw_rotation_output_suppressed: true
+    rotation_completed: true
+    base_stack_started_without_tunnel: true
+    runtime_check: "passed"
+    postgres_health_after_rotation: "healthy"
+    n8n_health_endpoint: "passed"
+    pgadmin_loopback_http_on_5060: "passed"
+    runtime_disposition: "running"
+    database_content_or_workflows_accessed: false
+    secret_values_printed_or_recorded: false
 
 discovery_contract:
   service_id: "4uentes-automation"
@@ -546,12 +566,13 @@ required_checks:
   - "origin/main integration readback"
 
 decision:
-  status: "postgres-n8n-role-password-rotation-approved-pending-publication"
+  status: "local-base-runtime-ready"
   approver: "4uentes"
   next_gate: >
-    Publish and read back the rotation gate, rotate the single local role,
-    validate n8n and pgAdmin readiness, and record sanitized evidence. No
-    functional workflow, data, tunnel or infrastructure operation is included.
+    Decide the disposition of the quarantined unused generated n8n key and then
+    select the next functional Automation/Phinance integration gate. Runtime is
+    locally ready, but workflows, capabilities, M2M, tunnel, Jira and
+    infrastructure remain separately gated.
 
 evidence_refs:
   - "evidence/requests/CR-CP-0021/implementation-plan-2026-09-05.md"
