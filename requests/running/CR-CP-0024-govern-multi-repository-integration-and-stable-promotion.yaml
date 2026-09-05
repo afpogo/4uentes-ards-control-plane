@@ -41,7 +41,7 @@ authorization:
   evidence: "evidence/requests/CR-CP-0024/auth-owner-execution-authorization-2026-08-30.md"
 
 execution:
-  current_unit: "infra-human-docs-pr-green-await-merge-authorization"
+  current_unit: "infra-human-docs-authority-clarification-authorized"
   parallel_unit: "worktree-sanitization-disposition-and-selective-recovery"
   completed_units:
     - "publish-plan-and-migration-lifecycle"
@@ -72,10 +72,10 @@ execution:
     - "publish-infra-human-documentation-owner-pr"
     - "reconcile-cr-sst-0233-retroactive-running-lifecycle"
   control_plane_mutation_allowed: true
-  child_repo_mutation_allowed: false
+  child_repo_mutation_allowed: true
   child_repo_mutation_targets: ["sst-bend", "sst-4uentes-infra"]
-  child_repo_mutation_scope: "Create Spanish human-learning and playbook roots for CR-HPT-0024 in the existing sst-4uentes-infra worktree, link the technical runbook, add Mermaid maps with textual fallbacks, and commit locally without publication or runtime mutation."
-  owner_pr_publication_allowed: false
+  child_repo_mutation_scope: "Amend the existing CR-HPT-0024 Infra documentation branch and PR 26 so Learning, playbooks, runbooks and their validator are explicitly scoped as owner-local conventions; link control-plane rollout governance and leave formal knowledge-to-execution policy adoption pending a published versioned source."
+  owner_pr_publication_allowed: true
   owner_pr_merge_allowed: false
   image_publication_allowed: false
   infra_mutation_allowed: false
@@ -83,7 +83,7 @@ execution:
   deployment_allowed: false
   stable_branch_mutation_allowed: false
   jira_write_allowed: false
-  external_execution_gate: "Authorize publication of docs/CR-HPT-0024/human-receipt-custody-guides and creation of an Infra PR separately; merge, runtime mutation and Jira closure remain prohibited."
+  external_execution_gate: "Authorization is limited to updating the existing Infra branch and PR 26 with the documentation-authority clarification. Merge, runtime mutation, stable-branch mutation and Jira closure remain prohibited."
 
 infra_remediation_pr:
   authorization_status: "consumed-by-branch-and-pr-publication"
@@ -479,9 +479,9 @@ required_checks:
   - "owner branch and pull request remote readback"
 
 decision:
-  status: "running-infra-human-documentation-pr-green-await-merge-authorization"
+  status: "running-infra-human-documentation-authority-clarification-authorized"
   approver: "4uentes"
-  next_gate: "Authorize merge of Infra PR 26 separately or leave it open; merge and runtime mutation remain prohibited until that gate."
+  next_gate: "Amend and validate Infra PR 26 at the authorized documentation-only scope; merge and runtime mutation remain prohibited."
 
 program_progress:
   status: "current-derived-view"
@@ -521,5 +521,6 @@ evidence_refs:
   - "evidence/requests/CR-CP-0024/program-scoreboard.md"
   - "evidence/requests/CR-CP-0024/infra-human-documentation-foundation-2026-09-05.md"
   - "evidence/requests/CR-CP-0024/infra-human-documentation-publication-authorization-2026-09-05.md"
+  - "evidence/requests/CR-CP-0024/infra-documentation-authority-clarification-authorization-2026-09-05.md"
   - "requests/running/CR-SST-0233-reconcile-fresh-database-migration-baseline.yaml"
   - "evidence/requests/CR-SST-0233/retroactive-running-reconciliation-2026-09-05.md"
