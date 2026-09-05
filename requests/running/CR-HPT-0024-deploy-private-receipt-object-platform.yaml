@@ -195,8 +195,17 @@ clamav_memory_diagnosis:
 
 adoption_progress:
   policy_id: "knowledge-to-execution-documentation-policy"
-  status: "owner-adopted-operational-remediation-pending"
+  status: "owner-adopted-control-plane-publication-pending-operational-remediation-pending"
   owner_develop_sha: "8efb13ed5724cc52aa3e98db114bc07122229f12"
+  control_plane_adoption_lifecycle:
+    request_id: "CR-CP-0027"
+    local_branch: "agent/cr-cp-0027-infra-knowledge-policy-adoption"
+    local_head: "cac58bf70f1da69db84079841c39699de93f9ef8"
+    worktree_status: "clean"
+    main_contains_lifecycle: false
+    remote_branch_observed: false
+    publication_status: "local-only-publication-pending"
+    authority_effect: "The local lifecycle records completed owner adoption but is not canonical until separately published and merged."
   completed_layers:
     - layer: "learning-playbook-runbook-foundation"
       pull_request: 26
