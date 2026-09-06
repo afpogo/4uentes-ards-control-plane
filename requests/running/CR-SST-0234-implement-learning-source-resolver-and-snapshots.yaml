@@ -1,0 +1,166 @@
+schema_version: '1.0'
+phase: 3
+id: 'CR-SST-0234'
+title: 'Implement Learning source resolver and immutable snapshots'
+status: 'running'
+source_request: 'requests/inbox/CR-SST-0234-implement-learning-source-resolver-and-snapshots.yaml'
+planned_request: 'requests/planned/CR-SST-0234-implement-learning-source-resolver-and-snapshots.yaml'
+created_at: '2026-09-05'
+started_at: '2026-09-05'
+requester: '4uentes'
+summary: >
+  The Bend owner implementation is published in PR 33 with green local and
+  remote checks. The PR remains open because merging to develop triggers image
+  publication and an Infra tag update that require a separate explicit gate.
+depends_on: ['CR-SST-0210', 'CR-SST-0223', 'CR-SST-0232']
+predecessor_requests: ['CR-SST-0210', 'CR-SST-0223', 'CR-SST-0232']
+
+control_plane_context:
+  initiative_id: 'INIT-SST-0010'
+  parent_request_id: 'CR-SST-0232'
+  feature_state_id: 'learning-workspace-source-contract'
+  owner_repository: 'sst-bend'
+  allocation_pull_request: 250
+  allocation_head_commit: '8e9472bdb4a83fde28b5a83dad7fa66b0ab2d6e1'
+  allocation_merge_commit: '2eec87077aa1a630fac36c4a86fbb9da5c554246'
+  owner_baseline_ref: 'origin/develop@5db4dd868f3348f95d6376519be1534be1710d75'
+
+authorization:
+  status: 'approved-running-control-plane-publication-only'
+  approved_by: '4uentes'
+  approved_at: '2026-09-05'
+  approval_text: 'avancemos con elproximo gate'
+  interpreted_scope: >
+    Register allocation readback, complete Bend read-only preflight and publish
+    CR-SST-0234 as running without mutating the owner repository.
+  evidence_ref: 'evidence/requests/CR-SST-0234/running-authorization-2026-09-05.md'
+
+owner_execution_authorization:
+  status: 'approved'
+  approved_by: '4uentes'
+  approved_at: '2026-09-05'
+  approval_text: 'ok avancemos al proximo gate, no olvidemos actualizar jira si es necesario para dar seguimiento y apeguemos a las politicas vivas'
+  evidence_ref: 'evidence/requests/CR-SST-0234/owner-execution-authorization-2026-09-05.md'
+  jira_scope: 'readonly-preflight-only-pending-exact-batch'
+
+execution:
+  current_unit: 'owner-pr-open-awaiting-explicit-merge-and-promotion-gate'
+  control_plane_mutation_allowed: true
+  git_publication_allowed: true
+  child_repo_mutation_allowed: true
+  owner_git_mutation_allowed: true
+  owner_worktree_creation_allowed: true
+  runtime_mutation_allowed: true
+  migration_definition_allowed: true
+  deployment_allowed: false
+  migration_execution_allowed: false
+  shared_environment_mutation_allowed: false
+  production_data_allowed: false
+  secret_or_datastore_access_allowed: false
+  jira_write_allowed: false
+  next_external_gate: >
+    Explicitly authorize or reject merge of owner PR 33, acknowledging that a
+    develop push publishes an image and updates Infra. Jira creation and
+    transition remain a separate exact batch.
+
+owner_publication:
+  status: 'pr-open-checks-green-merge-gated'
+  repository: 'afpogo/sst-bend'
+  base_ref: 'develop'
+  branch: 'agent/cr-sst-0234-learning-source-resolver'
+  commit: '3ff898f0fdf69f950de48cd1bf972f196a2b9a00'
+  pull_request: 33
+  pull_request_url: 'https://github.com/afpogo/sst-bend/pull/33'
+  mergeable_observed: true
+  checks:
+    build_publish_update: 'pass'
+    node_18: 'pass'
+    node_20: 'pass'
+  merge_performed: false
+  reason_merge_blocked: 'develop push publishes the image and updates Infra; deployment/promotion is not authorized in this gate'
+  evidence_ref: 'evidence/requests/CR-SST-0234/owner-publication-readback-2026-09-05.md'
+
+owner_readonly_preflight:
+  status: 'passed'
+  observed_at: '2026-09-05'
+  remote_develop_sha: '5db4dd868f3348f95d6376519be1534be1710d75'
+  local_origin_develop_matches_remote: true
+  existing_cr_sst_0234_branch: false
+  existing_cr_sst_0234_pull_request: false
+  primary_checkout_dirty: true
+  primary_checkout_disposition: 'preserve-read-only-do-not-reuse'
+  evidence_ref: 'evidence/requests/CR-SST-0234/owner-readonly-preflight-2026-09-05.md'
+
+observed_owner_gap:
+  current_contract: 'api.learning-workspaces@1.1.0'
+  current_preview_contract: 'sst-learning-workspace.preview.v1'
+  findings:
+    - 'Preview requires caller-supplied sourceText, rawText, html or document content.'
+    - 'article and originArticleId are optional linkage, not authoritative server-side resolution.'
+    - 'LearningSourceRef persists preview payload and fingerprints but no explicit immutable source snapshot identity.'
+    - 'Existing article documents and agent_summary outputs can become resolver inputs through owner-controlled adapters.'
+    - 'Existing scope middleware and accepted-only context provide reusable authorization and review boundaries.'
+
+owner_execution_contract:
+  required_owner_docs:
+    - 'specs/api/learning-workspaces.yaml'
+    - 'docs/api/26-learning-workspaces.md'
+    - 'specs/capabilities/outbound/learning-workspace-context.yaml'
+    - 'docs/capabilities/outbound/learning-workspace-context.md'
+    - 'owner task playbook and execution/rollback runbook for CR-SST-0234'
+  required_owner_maps:
+    - 'descriptor authorization and resolver sequence'
+    - 'snapshot lifecycle and failure states'
+  implementation_boundaries:
+    - 'Preserve existing preview, accept, reject and accepted-only context semantics.'
+    - 'Prefer authoritative article and agent-output content over caller-supplied bodies.'
+    - 'Create immutable versioned and hashed snapshots without storing credentials.'
+    - 'Keep ArticleTag, Learning content tags and UserMemory decisions separate.'
+
+knowledge_to_execution_documentation:
+  policy_id: 'knowledge-to-execution-documentation-policy'
+  current_role: 'playbook-and-gate-record'
+  runbook_required_for_current_gate: false
+  runbook_required_before_owner_execution: true
+  runbook_status: 'published-in-owner-pr-33'
+  technical_authority_refs:
+    - 'evidence/requests/CR-SST-0232/learning-workspace-source-contract-v1.yaml'
+    - 'sst-bend:specs/api/learning-workspaces.yaml@5db4dd8'
+
+publication_gate:
+  policy_id: 'execution-publication-and-tracker-closure-policy'
+  git_publication:
+    applicable: true
+    running_merge_required: true
+    terminal_merge_required: true
+    owner_pr_status: 'open-checks-green'
+    owner_merge_status: 'blocked-pending-explicit-promotion-authorization'
+  tracker_mirror:
+    applicable: false
+    reason: 'No Jira mirror write or lifecycle is authorized for this gate.'
+  cleanup:
+    remote_readback_required: true
+
+owner_documentation:
+  required_for_this_gate: true
+  status: 'published-in-owner-pr-33'
+  required_before_owner_implementation: true
+
+acceptance:
+  - 'The owner branch and commit are published from a clean worktree based on the refreshed develop baseline.'
+  - 'Owner specs, human docs, capability, playbook, runbook and Mermaid maps are aligned with runtime.'
+  - 'Resolver and immutable snapshot behavior are covered by focused tests and the complete owner check.'
+  - 'Owner PR 33 is open, mergeable and all three remote checks pass.'
+  - 'The primary dirty Bend checkout remains untouched.'
+  - 'No merge, migration execution, deployment, runtime, data, secret, Infra or Jira mutation occurs.'
+
+evidence_refs:
+  - 'evidence/requests/CR-SST-0234/allocation-publication-readback-2026-09-05.md'
+  - 'evidence/requests/CR-SST-0234/owner-readonly-preflight-2026-09-05.md'
+  - 'evidence/requests/CR-SST-0234/running-authorization-2026-09-05.md'
+  - 'evidence/requests/CR-SST-0234/control-plane-validation-2026-09-05.md'
+  - 'evidence/requests/CR-SST-0234/owner-execution-authorization-2026-09-05.md'
+  - 'evidence/requests/CR-SST-0234/owner-execution-plan-2026-09-05.md'
+  - 'evidence/requests/CR-SST-0234/jira-readonly-preflight-2026-09-05.md'
+  - 'evidence/requests/CR-SST-0234/owner-publication-readback-2026-09-05.md'
+  - 'evidence/requests/CR-SST-0234/owner-publication-control-plane-validation-2026-09-05.md'
