@@ -45,7 +45,7 @@ owner_execution_authorization:
   jira_scope: 'readonly-preflight-only-pending-exact-batch'
 
 execution:
-  current_unit: 'post-merge-development-runtime-readback'
+  current_unit: 'protected-positive-learning-qa-and-tracker-gates'
   control_plane_mutation_allowed: true
   git_publication_allowed: true
   child_repo_mutation_allowed: true
@@ -57,15 +57,25 @@ execution:
   migration_execution_allowed: false
   shared_environment_mutation_allowed: false
   production_data_allowed: false
-  secret_or_datastore_access_allowed: false
+  secret_access_allowed: false
+  datastore_schema_metadata_read_allowed: true
+  datastore_business_data_access_allowed: false
   jira_write_allowed: false
   next_external_gate: >
-    Perform non-mutating GitOps/runtime readback and protected Learning QA with
-    authorized fixtures. Jira creation and transition remain a separate exact
-    batch.
+    Authorize protected positive Learning QA with synthetic fixtures and a
+    bounded credential path. Jira creation and transition remain a separate
+    exact batch.
+
+development_runtime_readback_authorization:
+  status: 'approved-and-consumed'
+  approved_by: '4uentes'
+  approved_at: '2026-09-05'
+  approval_text: 'ok verifiquemos y avancemos con el proximo gate, acutalicemos branches'
+  scope: 'refresh canonical refs; read-only GitOps, workload, schema and unauthenticated HTTP verification; publish sanitized evidence'
+  evidence_ref: 'evidence/requests/CR-SST-0234/development-runtime-readback-authorization-2026-09-05.md'
 
 owner_publication:
-  status: 'merged-and-development-promoted-runtime-readback-pending'
+  status: 'merged-development-promoted-live-readback-passed-protected-positive-qa-pending'
   repository: 'afpogo/sst-bend'
   base_ref: 'develop'
   branch: 'agent/cr-sst-0234-learning-source-resolver'
@@ -86,6 +96,24 @@ owner_publication:
   infra_checks: 'ci-gitops-validations-and-cd-success'
   evidence_ref: 'evidence/requests/CR-SST-0234/owner-publication-readback-2026-09-05.md'
   merge_evidence_ref: 'evidence/requests/CR-SST-0234/owner-merge-and-development-promotion-readback-2026-09-05.md'
+
+development_runtime_readback:
+  status: 'passed-with-protected-positive-qa-pending'
+  observed_at: '2026-09-05'
+  control_plane_ref: 'origin/main@5d903e89228f737a0bf815845d003e8c364ffe88'
+  owner_ref: 'origin/develop@fdc753ff0bf96e8b8b5f603a9aae11503aa2ace1'
+  infra_ref: 'origin/develop@c1588779eeafddf19d888fa1142923faa0e214da'
+  argocd_application: 'sst-app'
+  argocd_sync: 'Synced'
+  argocd_health: 'Healthy'
+  active_image: 'ghcr.io/afpogo/sst-bend:develop-fdc753ff0bf9'
+  active_image_digest: 'sha256:59406118cb5c5298bb6f92071270dabbd934156cee01cf890ab8ce14de8e0343'
+  rollout: 'success'
+  migration_schema: 'four snapshot columns and learning_source_refs_snapshot_identity_idx observed'
+  public_http: '200'
+  protected_route_without_jwt: '401-as-expected'
+  positive_protected_qa: 'pending-authorized-credential-and-synthetic-fixtures'
+  evidence_ref: 'evidence/requests/CR-SST-0234/development-runtime-readback-2026-09-05.md'
 
 owner_readonly_preflight:
   status: 'passed'
@@ -161,7 +189,9 @@ acceptance:
   - 'The development image and Infra GitOps tag are published and their pipelines pass.'
   - 'The primary dirty Bend checkout remains untouched.'
   - 'No secret, user-data or Jira access occurs during readback.'
-  - 'Runtime health, active image and migration application remain explicitly unproven until the next gate.'
+  - 'Argo is Synced/Healthy at the expected Infra revision and the Bend rollout is ready on the expected image digest.'
+  - 'The snapshot schema is present and public/negative-auth HTTP probes behave as expected.'
+  - 'Positive protected Learning behavior remains explicitly pending until a bounded credential and synthetic fixtures are authorized.'
 
 evidence_refs:
   - 'evidence/requests/CR-SST-0234/allocation-publication-readback-2026-09-05.md'
@@ -175,3 +205,6 @@ evidence_refs:
   - 'evidence/requests/CR-SST-0234/owner-publication-control-plane-validation-2026-09-05.md'
   - 'evidence/requests/CR-SST-0234/owner-merge-and-development-promotion-readback-2026-09-05.md'
   - 'evidence/requests/CR-SST-0234/owner-merge-control-plane-validation-2026-09-05.md'
+  - 'evidence/requests/CR-SST-0234/development-runtime-readback-authorization-2026-09-05.md'
+  - 'evidence/requests/CR-SST-0234/development-runtime-readback-2026-09-05.md'
+  - 'evidence/requests/CR-SST-0234/development-runtime-control-plane-validation-2026-09-05.md'
