@@ -96,6 +96,7 @@ source_evidence_refs:
   - "evidence/requests/CR-SST-0234/owner-merge-and-development-promotion-readback-2026-09-05.md"
   - "evidence/requests/CR-SST-0234/owner-merge-control-plane-validation-2026-09-05.md"
   - "docs/projects/sst/contrato-fuentes-learning-workspace-v1.md"
+  - "evidence/requests/CR-SST-0224/preflight-publication-and-worktree-readback-2026-09-05.md"
 model_refs:
   - "specs/initiatives/initiative-model.yaml"
   - "docs/requests/initiative-model.md"
@@ -211,7 +212,7 @@ paragraph_derivation_adoption:
   owner_execution_status: "control-plane-only-approved; child-owner-execution-not-authorized"
   next_gate: "publish and read back the validated contract, then perform final human QA"
 article_processing_adoption:
-  status: "cr-sst-0223-owner-and-jira-complete; terminal-control-plane-publication-pending"
+  status: "cr-sst-0223-closed; cr-sst-0224-running-publication-prepared"
   request_id: "CR-SST-0220"
   feature_state_id: "article-agent-processing"
   predecessor_contract_request_id: "CR-SST-0219"
@@ -237,7 +238,10 @@ article_processing_adoption:
   first_owner_control_plane_review: "passed-2026-08-28"
   first_owner_publication: "sst-bend-pr-30-merged-and-read-back-develop-dc67203"
   first_owner_manual_review: "passed-2026-08-29"
-  next_gate: "publish and read back the CR-SST-0223 done lifecycle, retire its worktrees safely, then evaluate CR-SST-0224 as the next independent owner gate"
+  second_owner_request_id: "CR-SST-0224"
+  second_owner_preflight_status: "published-and-read-back; historical worktrees retired"
+  second_owner_execution_status: "running-lifecycle-prepared; owner-and-jira-not-authorized"
+  next_gate: "validate and publish the CR-SST-0224 running lifecycle, then request owner and Jira authorization as separate exact gates"
 learning_workspace_source_adoption:
   status: "first-owner-merged-development-promoted-runtime-readback-pending"
   request_id: "CR-SST-0232"
@@ -299,8 +303,8 @@ boundaries:
   jira_writes_authorized: false
   jira_writes_were_authorized: true
   jira_write_authorization_consumed: true
-  jira_write_authorization_scope: "Historical creation batches, SST-108 closure, the SST-120/SST-122/SST-123 create-and-start batches, the exact SST-123 terminal batch, and the CR-SST-0233 SST-125 create-and-readback batch are consumed; no current Jira write is authorized."
-  child_repo_mutation_requires_later_execution_approval: false
+  jira_write_authorization_scope: "Historical creation batches, SST-108 closure, the SST-120/SST-122/SST-123 create-and-start batches, and the exact SST-123 terminal description-plus-transition batch are consumed; no current Jira write is authorized."
+  child_repo_mutation_requires_later_execution_approval: true
   child_repo_mutation_requires_running_publication_readback: true
   canonical_memory_owner: "sst-bend"
   proposal_and_recall_owner: "sst-chatbot"
@@ -335,6 +339,7 @@ progress:
   active_requests:
     - "CR-SST-0219"
     - "CR-SST-0220"
+    - "CR-SST-0224"
     - "CR-SST-0232"
     - "CR-SST-0234"
   quarantined_request_artifacts:
@@ -344,7 +349,6 @@ progress:
     - "CR-SST-0196"
     - "CR-SST-0197"
     - "CR-SST-0198"
-    - "CR-SST-0224"
     - "CR-SST-0225"
     - "CR-SST-0226"
     - "CR-SST-0227"
@@ -353,9 +357,12 @@ progress:
     - "CR-SST-0236"
     - "CR-SST-0237"
   next_recommended_request: >
-    Run a non-mutating development readback for image, workload health and
-    migration state, followed by protected Learning QA with authorized
-    fixtures. CR-SST-0235 through CR-SST-0237 remain blocked until predecessor
+    Publish and read back the CR-SST-0224 running lifecycle, then refresh its
+    sst-chatbot and Jira preflights before any separately authorized mutation.
+    Independently run the non-mutating CR-SST-0234 development readback for
+    image, workload health and migration state, followed by protected Learning
+    QA with authorized fixtures. Neither track grants authority to the other,
+    and CR-SST-0235 through CR-SST-0237 remain blocked until predecessor
     runtime adoption is verified.
   current_runtime_status: >
     CR-SST-0193 canonical persistence and API are implemented, merged and
@@ -375,10 +382,13 @@ progress:
     parallel job model. CR-SST-0223 is now merged in sst-bend/develop with
     owner ARDS/SDD, reversible migration, persistence aggregate, compatibility
     adapters and tests. The merge intentionally triggered no deployment and
-    no migration was executed. Jira mirror SST-123 remains in progress; its
-    terminal description and transition batch was consumed exactly: SST-123
-    is Finalizada with resolution Listo and no additional Jira write remains
-    authorized. CR-SST-0234 now has a merged Bend implementation from PR 33:
+    no migration was executed. Jira mirror SST-123 was closed by its exact
+    terminal description and transition batch: it is Finalizada with
+    resolution Listo and no additional Jira write remains authorized. The
+    CR-SST-0223 done lifecycle is merged and read back. CR-SST-0224 now has
+    canonical owner/Jira preflights and a locally prepared running lifecycle,
+    but no sst-chatbot or Jira mutation is authorized. CR-SST-0234 now has a
+    merged Bend implementation from PR 33:
     owner-scoped source resolution, immutable snapshot persistence, reversible
     schema, contracts, maps and tests are green. Image
     `develop-fdc753ff0bf9` and Infra commit `c158877` were published and their
@@ -393,7 +403,9 @@ progress:
     contract review passed and confirms policy-compliant maps for later owner
     documentation. CR-SST-0223 now has owner/Jira read-only preflights and a
     policy-compliant persistence map. Its owner publication and final backend
-    walkthrough passed on 2026-08-29. CR-SST-0234 also passed focused tests,
+    walkthrough passed on 2026-08-29. CR-SST-0224 preflight publication is
+    canonically reconciled and its historical worktrees were retired on
+    2026-09-05. CR-SST-0234 also passed focused tests,
     build, the complete owner check, manual contract/security review and all
     three checks on owner PR 33; protected HTTP smoke remains partial without
     `SMOKE_JWT`. This is not user-visible QA: Chrome
