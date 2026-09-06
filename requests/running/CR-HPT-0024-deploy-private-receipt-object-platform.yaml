@@ -56,6 +56,8 @@ execution:
     - "publish-and-read-back-clamav-memory-diagnosis"
     - "read-back-control-plane-pr-267-merge"
     - "audit-jira-mirror-without-mutation"
+    - "publish-jira-reconciliation-through-control-plane-pr-273"
+    - "reconcile-jira-comment-and-predecessor-links"
   control_plane_mutation_allowed: true
   child_repo_mutation_allowed: false
   owner_git_mutation_allowed: false
@@ -227,6 +229,19 @@ control_plane_pr267_merge_readback:
     - "evidence/requests/CR-HPT-0024/control-plane-pr258-merge-readback-2026-09-05.md"
   authority_effect: "The readback is canonical; it does not authorize owner Git, runtime or Jira mutation."
 
+control_plane_pr273_merge_readback:
+  status: "merged-readback-confirmed"
+  repository: "afpogo/4uentes-ards-control-plane"
+  pull_request: 273
+  head_sha: "55e82c753e06495348073b7d938801d423bbb62d"
+  merge_sha: "584538e2fd1de20d5e456e7d141817fe655a33f2"
+  merged_at: "2026-09-06T01:31:32Z"
+  merged_by: "afpogo"
+  changed_paths:
+    - "requests/running/CR-HPT-0024-deploy-private-receipt-object-platform.yaml"
+    - "evidence/requests/CR-HPT-0024/jira-readonly-reconciliation-2026-09-05.md"
+  authority_effect: "The Jira reconciliation plan is canonical; only the subsequently authorized exact batch was executed."
+
 jira_readonly_reconciliation:
   observed_at: "2026-09-05T21:54:34-03:00"
   mode: "strictly-read-only"
@@ -253,7 +268,7 @@ jira_readonly_reconciliation:
     missing_progress: "PR 25 through PR 28, FreshClam OOM diagnosis, resource selection and control-plane PR 258/267 readbacks"
     missing_predecessor_links: ["HPT-13 blocks HPT-16", "HPT-15 blocks HPT-16"]
   proposed_write_batch:
-    status: "not-authorized"
+    status: "not-authorized-at-observation-time"
     operations:
       - "HPT-16: add one consolidated non-terminal progress comment after an immediate duplicate readback"
       - "HPT-13 -> HPT-16: add Blocks link after verifying the Jira link semantics"
@@ -262,6 +277,32 @@ jira_readonly_reconciliation:
     assignments: []
   jira_write_performed: false
   evidence: "evidence/requests/CR-HPT-0024/jira-readonly-reconciliation-2026-09-05.md"
+
+jira_authorized_batch_readback:
+  mode: "authorized-write-and-post-write-readback"
+  approved_by: "4uentes"
+  approval_text: "ok pr fusionado, avancemos y continuemos"
+  preflight_observed_at: "2026-09-05T22:32:44-03:00"
+  post_write_observed_at: "2026-09-05T22:33:55.217-03:00"
+  authorized_write_batch:
+    status: "completed-readback-confirmed"
+    approved_by: "4uentes"
+    operations:
+      - "HPT-16: add one consolidated non-terminal progress comment after an immediate duplicate readback"
+      - "HPT-13 -> HPT-16: add Blocks link after verifying the Jira link semantics"
+      - "HPT-15 -> HPT-16: add Blocks link after verifying the Jira link semantics"
+    results:
+      comment_id: "10426"
+      comment_created_at: "2026-09-05T22:33:44.313-03:00"
+      hpt_13_blocks_hpt_16_link_id: "10091"
+      hpt_15_blocks_hpt_16_link_id: "10092"
+      final_task_status: "En curso"
+      final_resolution: null
+    transitions: []
+    assignments: []
+  jira_write_performed: true
+  jira_write_scope: "one comment and two Blocks links; no transition, assignment or resolution change"
+  evidence: "evidence/requests/CR-HPT-0024/jira-authorized-batch-readback-2026-09-05.md"
 
 adoption_progress:
   policy_id: "knowledge-to-execution-documentation-policy"
@@ -349,7 +390,7 @@ publication_gate:
   tracker_mirror:
     applicable: true
     provider: "jira"
-    write_status: "not-authorized-readback-stale"
+    write_status: "completed-bounded-batch-no-transition"
   cleanup:
     remote_readback_required: true
 
@@ -360,8 +401,8 @@ decision:
     PR that changes receipt-clamav request memory to 3Gi and limit memory to
     4Gi, updates the linked owner playbook and runbook, and proves a successful
     signature update/reload without OOM. Merge, automatic GitOps effects, DNS
-    remediation, secrets, license acceptance and Jira writes remain separate
-    gates.
+    remediation, secrets, license acceptance and any future Jira writes remain
+    separate gates.
 
 evidence_refs:
   - "evidence/requests/CR-HPT-0024/retroactive-running-reconciliation-2026-09-05.md"
@@ -376,3 +417,4 @@ evidence_refs:
   - "evidence/requests/CR-HPT-0024/clamav-memory-diagnosis-and-ceiling-2026-09-05.md"
   - "evidence/requests/CR-HPT-0024/control-plane-pr258-merge-readback-2026-09-05.md"
   - "evidence/requests/CR-HPT-0024/jira-readonly-reconciliation-2026-09-05.md"
+  - "evidence/requests/CR-HPT-0024/jira-authorized-batch-readback-2026-09-05.md"
