@@ -40,7 +40,7 @@ worktree_policy:
   cleanup_allowed: false
 
 execution:
-  current_unit: "clamav-memory-ceiling-selected-awaiting-owner-pr-authorization"
+  current_unit: "clamav-memory-diagnosis-published-awaiting-owner-pr-authorization"
   completed_units:
     - "integrate-private-receipt-custody-through-owner-pr-23"
     - "integrate-clamav-permission-remediation-through-owner-pr-24"
@@ -53,6 +53,7 @@ execution:
     - "read-back-human-documentation-pr-26-merge"
     - "diagnose-clamav-memory-without-runtime-mutation"
     - "select-clamav-memory-ceiling"
+    - "publish-and-read-back-clamav-memory-diagnosis"
   control_plane_mutation_allowed: true
   child_repo_mutation_allowed: false
   owner_git_mutation_allowed: false
@@ -193,6 +194,24 @@ clamav_memory_diagnosis:
     Jira write.
   evidence: "evidence/requests/CR-HPT-0024/clamav-memory-diagnosis-and-ceiling-2026-09-05.md"
 
+clamav_memory_diagnosis_publication:
+  status: "merged-readback-confirmed"
+  repository: "afpogo/4uentes-ards-control-plane"
+  pull_request: 258
+  pull_request_url: "https://github.com/afpogo/4uentes-ards-control-plane/pull/258"
+  base_branch: "main"
+  head_branch: "agent/cr-hpt-0024-clamav-memory-diagnosis"
+  head_sha: "76de8d98da1a869e7c678595023981bb220c52ed"
+  merge_sha: "f8af7e558c4ae887ec810fc2bb5e714ccc325c1e"
+  merged_at: "2026-09-05T23:45:56Z"
+  merged_by: "afpogo"
+  changed_paths:
+    - "requests/running/CR-HPT-0024-deploy-private-receipt-object-platform.yaml"
+    - "evidence/requests/CR-HPT-0024/clamav-memory-diagnosis-and-ceiling-2026-09-05.md"
+  readback_result: "The authorized head and exactly two expected paths are canonical on main."
+  authority_effect: "This publication closes only the read-only diagnosis gate; owner Git and runtime mutation remain unauthorized."
+  evidence: "evidence/requests/CR-HPT-0024/control-plane-pr258-merge-readback-2026-09-05.md"
+
 adoption_progress:
   policy_id: "knowledge-to-execution-documentation-policy"
   status: "owner-and-control-plane-adopted-operational-remediation-pending"
@@ -240,7 +259,7 @@ residual_gates:
   - id: "merge-human-documentation-pr"
     status: "completed-externally-without-prior-canonical-authorization"
   - id: "clamav-memory-diagnosis-and-ceiling-selection"
-    status: "completed-read-only"
+    status: "completed-read-only-and-published-pr-258"
   - id: "clamav-memory-owner-pr"
     status: "not-yet-authorized"
   - id: "infra-owner-merge-with-automatic-gitops"
@@ -304,3 +323,4 @@ evidence_refs:
   - "evidence/requests/CR-HPT-0024/owner-documentation-pr-readback-2026-09-05.md"
   - "evidence/requests/CR-HPT-0024/owner-documentation-pr26-merge-readback-2026-09-05.md"
   - "evidence/requests/CR-HPT-0024/clamav-memory-diagnosis-and-ceiling-2026-09-05.md"
+  - "evidence/requests/CR-HPT-0024/control-plane-pr258-merge-readback-2026-09-05.md"
