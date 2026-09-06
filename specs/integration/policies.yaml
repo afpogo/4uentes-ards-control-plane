@@ -517,11 +517,16 @@ policies:
   - id: "knowledge-to-execution-documentation-policy"
     name: "Knowledge to Execution Documentation Policy"
     type: "ards-sdd-governance-policy"
-    policy_class: "origin-repo-policy"
+    policy_class: "core-profile-scoped"
     origin_repo: "4uentes-orchestor"
-    canonical_owner: "4uentes-ards-control-plane"
+    canonical_owner: "4uentes-ards-core"
+    canonical_source_repo: "4uentes-ards-core"
+    canonical_source_ref: "docs/policies/knowledge-to-execution-documentation-policy.md"
+    core_commit: "1dcad5745a8a7c86f842953cb0a57b2bebdf5d5a"
+    core_merge_commit: "376aa401f8b8cc7ea5a7362a8c114ebbf80a2fa4"
+    core_pull_request: 5
     applicability: "new or materially modified human guidance linked to technical authority"
-    adoption_mode: "local-required-and-request-driven-child-adoption"
+    adoption_mode: "required-by-profile-or-request-driven"
     required_for_profiles:
       - "control-plane"
     optional_for_profiles:
@@ -530,7 +535,7 @@ policies:
       - "infra-gitops"
     template_binding: null
     local_aliases: []
-    status: "active-local"
+    status: "adopted-from-core"
     scope:
       - "learning-purpose"
       - "playbook-decision-guidance"
@@ -538,7 +543,7 @@ policies:
       - "technical-authority-linkage"
       - "external-execution-authorization"
       - "governed-evidence-feedback"
-    owner: "4uentes-ards-control-plane"
+    owner: "4uentes-ards-core"
     human_doc: "docs/policies/knowledge-to-execution-documentation-policy.md"
     pattern_provenance:
       repo: "sst-4uentes-infra"
@@ -571,7 +576,7 @@ policies:
       target_repo: "4uentes-ards-core"
       target_class: "core-profile-scoped"
       request_id: "CR-CP-0028"
-      status: "handoff-published-and-read-back-core-owner-workflow-pending"
+      status: "core-policy-published-and-read-back"
       handoff_ref: "specs/capabilities/outbound/4uentes-orchestor--knowledge-to-execution-policy-core-promotion.yaml"
     evidence:
       - "requests/done/CR-CP-0026-define-knowledge-to-execution-documentation-policy.yaml"
@@ -582,15 +587,16 @@ policies:
       - "evidence/requests/CR-CP-0027/infra-policy-adoption-merge-readback-2026-09-05.md"
       - "requests/inbox/CR-CP-0028-promote-knowledge-to-execution-documentation-policy-to-core.yaml"
       - "requests/planned/CR-CP-0028-promote-knowledge-to-execution-documentation-policy-to-core.yaml"
-      - "requests/running/CR-CP-0028-promote-knowledge-to-execution-documentation-policy-to-core.yaml"
+      - "requests/done/CR-CP-0028-promote-knowledge-to-execution-documentation-policy-to-core.yaml"
       - "evidence/requests/CR-CP-0028/reservation-preflight-2026-09-05.md"
       - "evidence/requests/CR-CP-0028/implementation-plan.md"
       - "evidence/requests/CR-CP-0028/handoff-contract-and-boundary-2026-09-05.md"
       - "evidence/requests/CR-CP-0028/control-plane-handoff-validation-2026-09-05.md"
       - "evidence/requests/CR-CP-0028/control-plane-handoff-publication-readback-2026-09-05.md"
+      - "evidence/requests/CR-CP-0028/core-policy-publication-readback-2026-09-06.md"
       - "specs/capabilities/outbound/4uentes-orchestor--knowledge-to-execution-policy-core-promotion.yaml"
     gaps:
-      - "CR-CP-0028 handoff is published and read back; Core owner workflow acceptance remains pending."
+      - "Core policy is published and read back; child adoption remains request-driven."
       - "Child adoption requires a request plus policy_adoption_manifest or policy_exception_manifest."
       - "A declarative chain manifest and structural validator remain a separate increment."
       - "No policy_overlay kind, schema or resolver is active; CR-CP-0025 remains architecture-only."

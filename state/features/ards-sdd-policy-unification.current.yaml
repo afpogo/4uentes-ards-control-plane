@@ -89,6 +89,7 @@ evidence_refs:
   - "evidence/requests/CR-CP-0028/handoff-contract-and-boundary-2026-09-05.md"
   - "evidence/requests/CR-CP-0028/control-plane-handoff-validation-2026-09-05.md"
   - "evidence/requests/CR-CP-0028/control-plane-handoff-publication-readback-2026-09-05.md"
+  - "evidence/requests/CR-CP-0028/core-policy-publication-readback-2026-09-06.md"
 open_gaps:
   - "Handoff `human-doc-language` to 4uentes-ards-core as a reusable policy template while preserving the now-active orchestrator registry entry and local source docs."
   - "Resolve canonical identity for 4uentes-core versus 4uentes-ards-core."
@@ -98,4 +99,4 @@ open_gaps:
   - "CR-SST-0174 refreshes sst-fend through request-driven manifests and local enforcement; publication remains pending."
   - "sst-fend keeps a time-bounded http-qa-harness-policy exception until a versioned .http harness is added."
   - "sst-4uentes-infra adopted knowledge-to-execution-documentation-policy through CR-CP-0027 at merge 8efb13e, pinned to 4uentes-orchestor@7a8ea96."
-  - "CR-CP-0028 draft handoff is published and read back; Core owner acceptance and mutation remain pending in a separate workflow."
+  - "CR-CP-0028 published the Core canon; Infra remains pinned to the origin revision until a separate adoption or exception request reconciles it."
