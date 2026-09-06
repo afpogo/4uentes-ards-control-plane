@@ -43,6 +43,9 @@ evidence_refs:
   - "evidence/requests/CR-SST-0234/owner-publication-control-plane-validation-2026-09-05.md"
   - "evidence/requests/CR-SST-0234/owner-merge-and-development-promotion-readback-2026-09-05.md"
   - "evidence/requests/CR-SST-0234/owner-merge-control-plane-validation-2026-09-05.md"
+  - "evidence/requests/CR-SST-0234/development-runtime-readback-authorization-2026-09-05.md"
+  - "evidence/requests/CR-SST-0234/development-runtime-readback-2026-09-05.md"
+  - "evidence/requests/CR-SST-0234/development-runtime-control-plane-validation-2026-09-05.md"
   - "docs/projects/sst/contrato-fuentes-learning-workspace-v1.md"
 open_gaps:
   - "The CR-SST-0232 contract was merged and read back through PR 234 at merge commit eec2d5aff707a83d7b25cdae0577a6cbbe54d630."
@@ -50,6 +53,7 @@ open_gaps:
   - "CR-SST-0234 running was merged through PR 256 at merge commit 546c02865b4367740cbda4585c1a5d6db61a9cd4; Bend owner execution is now authorized."
   - "Jira has no CR-SST-0232 or CR-SST-0234 mirror; the required two-issue batch remains pending exact authorization."
   - "The Bend resolver and snapshots are merged through PR 33; image develop-fdc753ff0bf9 and Infra commit c158877 were published with green pipelines."
-  - "Live application health, active pod image, migration state and protected Learning QA remain unverified."
+  - "Argo Synced/Healthy, active image digest, rollout, snapshot schema and public/negative-auth HTTP probes passed in development."
+  - "Positive authenticated Learning QA with synthetic owner fixtures remains pending."
   - "BFF relay, Fend source inbox and integrated validation remain unimplemented under CR-SST-0235 through CR-SST-0237."
   - "Secret-backed source acquisition remains explicitly excluded from V1."
