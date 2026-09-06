@@ -60,26 +60,41 @@ worktree_exception:
   legacy_worktree: "worktrees/CR-SST-0233-migration-reconciliation"
   legacy_branch: "agent/cr-sst-0233-migration-reconciliation"
   legacy_head: "799b7d5383af7f8cca35b99319a0c9b6a7c59e87"
-  legacy_status_observed: "one tracked modification and three untracked status entries"
+  legacy_status_observed: "one tracked modification and five untracked files"
   legacy_ownership: "read-only provenance pending selective disposition"
+  legacy_classification_status: "complete-nondestructive"
+  legacy_head_vs_canonical: "zero ahead and 140 behind origin/main@371ef18"
+  legacy_recovered_paths:
+    - "evidence/requests/CR-SST-0233/fresh-database-drift-observation-2026-08-29.md"
+  legacy_superseded_units:
+    - "initiative snapshot"
+    - "implementation plan snapshot"
+    - "2026-08-29 Jira preflight snapshot"
+    - "inbox snapshot"
+    - "planned snapshot"
+  legacy_classification_evidence: "evidence/requests/CR-SST-0233/legacy-worktree-classification-2026-09-05.md"
   execution_worktree: "worktrees/CR-SST-0233-retroactive-running"
   execution_branch: "agent/cr-sst-0233-retroactive-running"
   execution_ownership: "control-plane-only retroactive lifecycle publication"
   continuation_worktree: ".worktrees/CR-SST-0233-health-readback"
-  continuation_branch: "agent/cr-sst-0233-health-readback"
-  continuation_base_sha: "532daf0db616a59cef9ecd37a227aca531bc9dd3"
-  continuation_ownership: "control-plane-only runtime health and Jira preflight reconciliation"
+  published_continuation_branch: "agent/cr-sst-0233-health-readback"
+  published_continuation_head: "407a0858cbbad7ccf576d6ce5b0220fd1ae1f932"
+  published_continuation_merge: "371ef18ec358b306f69a431730bc014a61396205"
+  continuation_branch: "agent/cr-sst-0233-jira-create-readback"
+  continuation_base_sha: "371ef18ec358b306f69a431730bc014a61396205"
+  continuation_ownership: "control-plane-only Jira create result and terminal readiness reconciliation"
   exception_extension_reason: >
-    The prior clean execution worktree is bound to the consumed running
-    publication and is behind the refreshed canonical ref. Reusing it would
-    mix publication history with this separately reviewable continuation gate.
+    The clean continuation worktree was reused after its prior head became
+    reachable from origin/main. It was switched to a request-scoped branch from
+    the refreshed canonical ref, avoiding another active worktree while the
+    legacy dirty tree remains quarantined.
   cleanup_allowed: false
   dissolution_rule: >
     Retire the clean execution worktree only after canonical merge readback.
     Preserve the legacy dirty worktree until every unique entry is classified.
 
 execution:
-  current_unit: "publish-health-and-jira-preflight-readbacks"
+  current_unit: "publish-jira-create-readback-and-evaluate-terminal-readiness"
   completed_units:
     - "publish-control-plane-plan"
     - "freeze-historical-schema-in-owner-pr-32"
@@ -88,6 +103,9 @@ execution:
     - "publish-retroactive-running-lifecycle-and-readback"
     - "reconcile-backend-and-infra-runtime-health"
     - "reconcile-jira-metadata-duplicates-and-hierarchy-read-only"
+    - "publish-health-and-jira-preflight-readbacks"
+    - "create-and-read-back-jira-primary-mirror-sst-125"
+    - "classify-legacy-worktree-and-recover-unique-drift-evidence"
   control_plane_mutation_allowed: true
   child_repo_mutation_allowed: false
   owner_git_mutation_allowed: false
@@ -98,6 +116,7 @@ execution:
   production_data_allowed: false
   shared_environment_mutation_allowed: false
   jira_write_allowed: false
+  jira_write_authorization_status: "consumed-by-sst-125-create-and-readback"
 
 task_weight:
   classification: "short-defined-task"
@@ -179,16 +198,43 @@ runtime_health_readback:
     permanent remediation or authorize stable promotion.
   evidence: "evidence/requests/CR-SST-0233/runtime-health-reconciliation-2026-09-05.md"
 
+control_plane_publication_readback:
+  pull_request: 251
+  state: "MERGED"
+  head_sha: "407a0858cbbad7ccf576d6ce5b0220fd1ae1f932"
+  merge_sha: "371ef18ec358b306f69a431730bc014a61396205"
+  merged_at: "2026-09-05T21:58:42Z"
+  canonical_ref: "origin/main"
+  canonical_sha: "371ef18ec358b306f69a431730bc014a61396205"
+
+jira_create_readback:
+  provider: "jira"
+  project_key: "SST"
+  authorization_status: "consumed"
+  approval_text: "autorizo a ejecutar el lote jira"
+  authorized_operations: ["create exactly one Subtask", "read back the created issue"]
+  issue_key: "SST-125"
+  issue_type: "Subtask"
+  parent_issue_key: "SST-122"
+  epic_key: "SST-105"
+  summary: "[SST][CR-SST-0233] Reconcile fresh-database migration baseline"
+  observed_status: "Tareas por hacer"
+  description_match: true
+  forbidden_operations_performed: []
+  additional_writes_allowed: false
+  observed_at: "2026-09-05T23:34:25Z"
+  evidence: "evidence/requests/CR-SST-0233/jira-create-and-publication-readback-2026-09-05.md"
+
 residual_blockers:
   - id: "backend-clamav-rollout-health"
     status: "resolved-at-observation"
     effect: "No longer blocks current Backend or Infra rollout health; historical OOM evidence remains preserved."
   - id: "jira-mirror-not-reconciled"
-    status: "ready-for-exact-create-authorization"
-    effect: "Read-only preflight passed; no Jira create, comment or transition is authorized yet."
+    status: "resolved-primary-created"
+    effect: "SST-125 is the primary mirror; status synchronization requires a later exact batch."
   - id: "legacy-worktree-dirty-provenance"
-    status: "open"
-    effect: "Blocks removal of the legacy CR-SST-0233 worktree."
+    status: "classified-preserved-awaiting-cleanup-gate"
+    effect: "Unique evidence is recovered, but removal remains prohibited until publication readback and explicit cleanup authorization."
 
 publication_gate:
   policy_id: "execution-publication-and-tracker-closure-policy"
@@ -199,12 +245,15 @@ publication_gate:
   tracker_mirror:
     applicable: true
     provider: "jira"
-    write_status: "not-authorized"
+    write_status: "create-and-readback-batch-consumed"
     preflight_status: "passed-read-only"
     preflight_observed_at: "2026-09-05T21:54:36Z"
     candidate_operation: "create exactly one Subtask under SST-122 and read it back"
     candidate_summary: "[SST][CR-SST-0233] Reconcile fresh-database migration baseline"
     evidence: "evidence/requests/CR-SST-0233/jira-readonly-preflight-2026-09-05.md"
+    issue_key: "SST-125"
+    observed_status: "Tareas por hacer"
+    result_evidence: "evidence/requests/CR-SST-0233/jira-create-and-publication-readback-2026-09-05.md"
   cleanup:
     remote_readback_required: true
 
@@ -214,17 +263,21 @@ owner_documentation:
   existing_owner_document: "docs/tasks/2026-08-31-cr-sst-0233-migration-baseline.md"
 
 decision:
-  status: "health-and-jira-preflight-reconciled-awaiting-publication"
+  status: "jira-mirror-and-legacy-provenance-reconciled-awaiting-publication"
   approver: "4uentes"
   next_gate: >
-    Publish and read back the runtime and Jira preflight evidence. Then request
-    a fresh exact authorization to create one Subtask under SST-122 and read it
-    back. Comments, transitions, links and other writes remain prohibited.
+    Publish and read back the Jira creation, recovered diagnosis and legacy
+    classification evidence. Then request a separate controlled worktree
+    retirement gate before evaluating the terminal lifecycle. Jira transitions,
+    comments, links and other writes remain prohibited.
 
 evidence_refs:
   - "evidence/requests/CR-SST-0233/implementation-plan.md"
   - "evidence/requests/CR-SST-0233/retroactive-running-reconciliation-2026-09-05.md"
   - "evidence/requests/CR-SST-0233/runtime-health-reconciliation-2026-09-05.md"
   - "evidence/requests/CR-SST-0233/jira-readonly-preflight-2026-09-05.md"
+  - "evidence/requests/CR-SST-0233/jira-create-and-publication-readback-2026-09-05.md"
+  - "evidence/requests/CR-SST-0233/fresh-database-drift-observation-2026-08-29.md"
+  - "evidence/requests/CR-SST-0233/legacy-worktree-classification-2026-09-05.md"
   - "evidence/requests/CR-CP-0024/backend-owner-pr-publication-readback-2026-08-31.md"
   - "evidence/requests/CR-CP-0024/backend-merge-rollout-and-health-readback-2026-08-31.md"

@@ -23,8 +23,9 @@ El registry machine-readable esta en:
 - `worktree-request-lifecycle-policy` nace como policy local del control plane;
   su promoción al canon compartido requiere un request/handoff a Core.
 - `knowledge-to-execution-documentation-policy` se incuba localmente como
-  policy durable; su procedencia en Infra no implica adopción del child y su
-  promoción `core-profile-scoped` requiere otro request/handoff.
+  policy durable y hoy se adopta desde el canon `core-profile-scoped` de Core;
+  su procedencia en Infra no implica adopción del child y cualquier migración
+  posterior requiere otro request/handoff.
 - La policy core-owned `http-qa-harness-policy` queda adoptada localmente y se
   rastrea desde `specs/integration/policies.yaml`, `AGENTS.md` y
   `state/policy-links.yaml`.

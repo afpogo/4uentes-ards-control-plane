@@ -54,6 +54,8 @@ execution:
     - "diagnose-clamav-memory-without-runtime-mutation"
     - "select-clamav-memory-ceiling"
     - "publish-and-read-back-clamav-memory-diagnosis"
+    - "read-back-control-plane-pr-267-merge"
+    - "audit-jira-mirror-without-mutation"
   control_plane_mutation_allowed: true
   child_repo_mutation_allowed: false
   owner_git_mutation_allowed: false
@@ -212,6 +214,55 @@ clamav_memory_diagnosis_publication:
   authority_effect: "This publication closes only the read-only diagnosis gate; owner Git and runtime mutation remain unauthorized."
   evidence: "evidence/requests/CR-HPT-0024/control-plane-pr258-merge-readback-2026-09-05.md"
 
+control_plane_pr267_merge_readback:
+  status: "merged-readback-confirmed"
+  repository: "afpogo/4uentes-ards-control-plane"
+  pull_request: 267
+  head_sha: "87f9b1851babdc076b0c83ccee8ddee30186df8d"
+  merge_sha: "a8ecae1677476525790487fe7a4dc057be176392"
+  merged_at: "2026-09-06T00:52:04Z"
+  merged_by: "afpogo"
+  changed_paths:
+    - "requests/running/CR-HPT-0024-deploy-private-receipt-object-platform.yaml"
+    - "evidence/requests/CR-HPT-0024/control-plane-pr258-merge-readback-2026-09-05.md"
+  authority_effect: "The readback is canonical; it does not authorize owner Git, runtime or Jira mutation."
+
+jira_readonly_reconciliation:
+  observed_at: "2026-09-05T21:54:34-03:00"
+  mode: "strictly-read-only"
+  epic:
+    key: "HPT-8"
+    status: "En curso"
+    resolution: null
+    comment_count: 2
+  task:
+    key: "HPT-16"
+    status: "En curso"
+    resolution: null
+    assignee: null
+    parent: "HPT-8"
+    comment_count: 9
+    latest_comment_id: "10425"
+    latest_comment_at: "2026-09-05T00:28:28.114-03:00"
+  duplicate_search:
+    exact_request_matches: ["HPT-16"]
+    exact_epic_matches: ["HPT-8"]
+    duplicate_found: false
+  drift:
+    mirror_status: "stale-but-non-terminal-status-correct"
+    missing_progress: "PR 25 through PR 28, FreshClam OOM diagnosis, resource selection and control-plane PR 258/267 readbacks"
+    missing_predecessor_links: ["HPT-13 blocks HPT-16", "HPT-15 blocks HPT-16"]
+  proposed_write_batch:
+    status: "not-authorized"
+    operations:
+      - "HPT-16: add one consolidated non-terminal progress comment after an immediate duplicate readback"
+      - "HPT-13 -> HPT-16: add Blocks link after verifying the Jira link semantics"
+      - "HPT-15 -> HPT-16: add Blocks link after verifying the Jira link semantics"
+    transitions: []
+    assignments: []
+  jira_write_performed: false
+  evidence: "evidence/requests/CR-HPT-0024/jira-readonly-reconciliation-2026-09-05.md"
+
 adoption_progress:
   policy_id: "knowledge-to-execution-documentation-policy"
   status: "owner-and-control-plane-adopted-operational-remediation-pending"
@@ -298,7 +349,7 @@ publication_gate:
   tracker_mirror:
     applicable: true
     provider: "jira"
-    write_status: "not-authorized"
+    write_status: "not-authorized-readback-stale"
   cleanup:
     remote_readback_required: true
 
@@ -324,3 +375,4 @@ evidence_refs:
   - "evidence/requests/CR-HPT-0024/owner-documentation-pr26-merge-readback-2026-09-05.md"
   - "evidence/requests/CR-HPT-0024/clamav-memory-diagnosis-and-ceiling-2026-09-05.md"
   - "evidence/requests/CR-HPT-0024/control-plane-pr258-merge-readback-2026-09-05.md"
+  - "evidence/requests/CR-HPT-0024/jira-readonly-reconciliation-2026-09-05.md"
