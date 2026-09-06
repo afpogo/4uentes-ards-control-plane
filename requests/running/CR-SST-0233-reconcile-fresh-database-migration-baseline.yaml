@@ -52,7 +52,7 @@ ordering_deviation:
 
 worktree_exception:
   policy_id: "worktree-request-lifecycle-policy"
-  status: "active-bounded-exception"
+  status: "classified-awaiting-explicit-retirement-authorization"
   reason: >
     The pre-existing CR-SST-0233 worktree contains uncommitted request evidence
     and initiative edits. Policy requires preserving it and opening a clean
@@ -61,9 +61,9 @@ worktree_exception:
   legacy_branch: "agent/cr-sst-0233-migration-reconciliation"
   legacy_head: "799b7d5383af7f8cca35b99319a0c9b6a7c59e87"
   legacy_status_observed: "one tracked modification and five untracked files"
-  legacy_ownership: "read-only provenance pending selective disposition"
+  legacy_ownership: "classified provenance preserved pending an archival commit and explicit worktree removal authorization"
   legacy_classification_status: "complete-nondestructive"
-  legacy_head_vs_canonical: "zero ahead and 140 behind origin/main@371ef18"
+  legacy_head_vs_canonical: "zero ahead and 176 behind origin/main@5d903e8"
   legacy_recovered_paths:
     - "evidence/requests/CR-SST-0233/fresh-database-drift-observation-2026-08-29.md"
   legacy_superseded_units:
@@ -80,9 +80,9 @@ worktree_exception:
   published_continuation_branch: "agent/cr-sst-0233-health-readback"
   published_continuation_head: "407a0858cbbad7ccf576d6ce5b0220fd1ae1f932"
   published_continuation_merge: "371ef18ec358b306f69a431730bc014a61396205"
-  continuation_branch: "agent/cr-sst-0233-jira-create-readback"
-  continuation_base_sha: "371ef18ec358b306f69a431730bc014a61396205"
-  continuation_ownership: "control-plane-only Jira create result and terminal readiness reconciliation"
+  continuation_branch: "agent/cr-sst-0233-legacy-cleanup-gate"
+  continuation_base_sha: "5d903e89228f737a0bf815845d003e8c364ffe88"
+  continuation_ownership: "control-plane-only publication readback and legacy cleanup gate preparation"
   exception_extension_reason: >
     The clean continuation worktree was reused after its prior head became
     reachable from origin/main. It was switched to a request-scoped branch from
@@ -94,7 +94,7 @@ worktree_exception:
     Preserve the legacy dirty worktree until every unique entry is classified.
 
 execution:
-  current_unit: "publish-jira-create-readback-and-evaluate-terminal-readiness"
+  current_unit: "obtain-explicit-legacy-worktree-retirement-authorization"
   completed_units:
     - "publish-control-plane-plan"
     - "freeze-historical-schema-in-owner-pr-32"
@@ -106,6 +106,8 @@ execution:
     - "publish-health-and-jira-preflight-readbacks"
     - "create-and-read-back-jira-primary-mirror-sst-125"
     - "classify-legacy-worktree-and-recover-unique-drift-evidence"
+    - "publish-and-read-back-jira-and-legacy-classification-evidence"
+    - "preflight-legacy-worktree-retirement"
   control_plane_mutation_allowed: true
   child_repo_mutation_allowed: false
   owner_git_mutation_allowed: false
@@ -207,6 +209,16 @@ control_plane_publication_readback:
   canonical_ref: "origin/main"
   canonical_sha: "371ef18ec358b306f69a431730bc014a61396205"
 
+jira_and_legacy_publication_readback:
+  pull_request: 270
+  state: "MERGED"
+  head_sha: "714ec4f23457d01f555566a5339799314e4fbcd9"
+  merge_sha: "5d903e89228f737a0bf815845d003e8c364ffe88"
+  merged_at: "2026-09-06T01:34:05Z"
+  canonical_ref: "origin/main"
+  canonical_sha: "5d903e89228f737a0bf815845d003e8c364ffe88"
+  evidence: "evidence/requests/CR-SST-0233/pr-270-merge-and-cleanup-preflight-2026-09-05.md"
+
 jira_create_readback:
   provider: "jira"
   project_key: "SST"
@@ -233,8 +245,8 @@ residual_blockers:
     status: "resolved-primary-created"
     effect: "SST-125 is the primary mirror; status synchronization requires a later exact batch."
   - id: "legacy-worktree-dirty-provenance"
-    status: "classified-preserved-awaiting-cleanup-gate"
-    effect: "Unique evidence is recovered, but removal remains prohibited until publication readback and explicit cleanup authorization."
+    status: "publication-readback-passed-awaiting-explicit-cleanup-authorization"
+    effect: "All six local units remain preserved; cleanup is blocked only on an exact user authorization for archival commit and worktree removal."
 
 publication_gate:
   policy_id: "execution-publication-and-tracker-closure-policy"
@@ -256,6 +268,11 @@ publication_gate:
     result_evidence: "evidence/requests/CR-SST-0233/jira-create-and-publication-readback-2026-09-05.md"
   cleanup:
     remote_readback_required: true
+    remote_readback_status: "passed-pr-270-merged"
+    legacy_worktree_preflight_status: "passed-read-only"
+    legacy_worktree_removal_authorized: false
+    legacy_branch_deletion_authorized: false
+    preservation_method: "commit exactly the six classified local units on the local legacy branch before removing the clean worktree without force"
 
 owner_documentation:
   required_for_this_gate: false
@@ -263,13 +280,13 @@ owner_documentation:
   existing_owner_document: "docs/tasks/2026-08-31-cr-sst-0233-migration-baseline.md"
 
 decision:
-  status: "jira-mirror-and-legacy-provenance-reconciled-awaiting-publication"
+  status: "cleanup-preflight-passed-awaiting-explicit-worktree-retirement-authorization"
   approver: "4uentes"
   next_gate: >
-    Publish and read back the Jira creation, recovered diagnosis and legacy
-    classification evidence. Then request a separate controlled worktree
-    retirement gate before evaluating the terminal lifecycle. Jira transitions,
-    comments, links and other writes remain prohibited.
+    Obtain an exact authorization to commit the six classified local units on
+    the local legacy branch and remove only its worktree without force. Keep the
+    branch, do not publish or merge the archival commit, and do not perform Jira
+    transitions, comments, links or any other tracker write.
 
 evidence_refs:
   - "evidence/requests/CR-SST-0233/implementation-plan.md"
@@ -279,5 +296,6 @@ evidence_refs:
   - "evidence/requests/CR-SST-0233/jira-create-and-publication-readback-2026-09-05.md"
   - "evidence/requests/CR-SST-0233/fresh-database-drift-observation-2026-08-29.md"
   - "evidence/requests/CR-SST-0233/legacy-worktree-classification-2026-09-05.md"
+  - "evidence/requests/CR-SST-0233/pr-270-merge-and-cleanup-preflight-2026-09-05.md"
   - "evidence/requests/CR-CP-0024/backend-owner-pr-publication-readback-2026-08-31.md"
   - "evidence/requests/CR-CP-0024/backend-merge-rollout-and-health-readback-2026-08-31.md"
