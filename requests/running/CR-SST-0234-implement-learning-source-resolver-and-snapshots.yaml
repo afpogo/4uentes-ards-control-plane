@@ -9,9 +9,9 @@ created_at: '2026-09-05'
 started_at: '2026-09-05'
 requester: '4uentes'
 summary: >
-  Start the Bend owner lifecycle after canonical allocation and read-only owner
-  discovery. This gate publishes execution readiness only; it does not create
-  an owner worktree or modify Bend, runtime, data, migrations, secrets or Jira.
+  The Bend owner implementation is published in PR 33 with green local and
+  remote checks. The PR remains open because merging to develop triggers image
+  publication and an Infra tag update that require a separate explicit gate.
 depends_on: ['CR-SST-0210', 'CR-SST-0223', 'CR-SST-0232']
 predecessor_requests: ['CR-SST-0210', 'CR-SST-0223', 'CR-SST-0232']
 
@@ -44,7 +44,7 @@ owner_execution_authorization:
   jira_scope: 'readonly-preflight-only-pending-exact-batch'
 
 execution:
-  current_unit: 'owner-contract-and-implementation'
+  current_unit: 'owner-pr-open-awaiting-explicit-merge-and-promotion-gate'
   control_plane_mutation_allowed: true
   git_publication_allowed: true
   child_repo_mutation_allowed: true
@@ -59,8 +59,26 @@ execution:
   secret_or_datastore_access_allowed: false
   jira_write_allowed: false
   next_external_gate: >
-    Publish and read back the owner implementation if all checks pass. Jira
-    creation and transition remain a separate exact batch.
+    Explicitly authorize or reject merge of owner PR 33, acknowledging that a
+    develop push publishes an image and updates Infra. Jira creation and
+    transition remain a separate exact batch.
+
+owner_publication:
+  status: 'pr-open-checks-green-merge-gated'
+  repository: 'afpogo/sst-bend'
+  base_ref: 'develop'
+  branch: 'agent/cr-sst-0234-learning-source-resolver'
+  commit: '3ff898f0fdf69f950de48cd1bf972f196a2b9a00'
+  pull_request: 33
+  pull_request_url: 'https://github.com/afpogo/sst-bend/pull/33'
+  mergeable_observed: true
+  checks:
+    build_publish_update: 'pass'
+    node_18: 'pass'
+    node_20: 'pass'
+  merge_performed: false
+  reason_merge_blocked: 'develop push publishes the image and updates Infra; deployment/promotion is not authorized in this gate'
+  evidence_ref: 'evidence/requests/CR-SST-0234/owner-publication-readback-2026-09-05.md'
 
 owner_readonly_preflight:
   status: 'passed'
@@ -104,6 +122,7 @@ knowledge_to_execution_documentation:
   current_role: 'playbook-and-gate-record'
   runbook_required_for_current_gate: false
   runbook_required_before_owner_execution: true
+  runbook_status: 'published-in-owner-pr-33'
   technical_authority_refs:
     - 'evidence/requests/CR-SST-0232/learning-workspace-source-contract-v1.yaml'
     - 'sst-bend:specs/api/learning-workspaces.yaml@5db4dd8'
@@ -114,6 +133,8 @@ publication_gate:
     applicable: true
     running_merge_required: true
     terminal_merge_required: true
+    owner_pr_status: 'open-checks-green'
+    owner_merge_status: 'blocked-pending-explicit-promotion-authorization'
   tracker_mirror:
     applicable: false
     reason: 'No Jira mirror write or lifecycle is authorized for this gate.'
@@ -121,16 +142,17 @@ publication_gate:
     remote_readback_required: true
 
 owner_documentation:
-  required_for_this_gate: false
-  reason: 'This gate only records read-only owner observations and does not mutate sst-bend.'
+  required_for_this_gate: true
+  status: 'published-in-owner-pr-33'
   required_before_owner_implementation: true
 
 acceptance:
-  - 'Allocation PR 250 is merged and read back from origin/main.'
-  - 'Bend remote baseline, current contract and implementation gap are recorded read-only.'
-  - 'CR-SST-0234 running state is canonical before any owner mutation.'
+  - 'The owner branch and commit are published from a clean worktree based on the refreshed develop baseline.'
+  - 'Owner specs, human docs, capability, playbook, runbook and Mermaid maps are aligned with runtime.'
+  - 'Resolver and immutable snapshot behavior are covered by focused tests and the complete owner check.'
+  - 'Owner PR 33 is open, mergeable and all three remote checks pass.'
   - 'The primary dirty Bend checkout remains untouched.'
-  - 'No child repository, runtime, migration, deployment, data, secret or Jira mutation occurs.'
+  - 'No merge, migration execution, deployment, runtime, data, secret, Infra or Jira mutation occurs.'
 
 evidence_refs:
   - 'evidence/requests/CR-SST-0234/allocation-publication-readback-2026-09-05.md'
@@ -140,3 +162,5 @@ evidence_refs:
   - 'evidence/requests/CR-SST-0234/owner-execution-authorization-2026-09-05.md'
   - 'evidence/requests/CR-SST-0234/owner-execution-plan-2026-09-05.md'
   - 'evidence/requests/CR-SST-0234/jira-readonly-preflight-2026-09-05.md'
+  - 'evidence/requests/CR-SST-0234/owner-publication-readback-2026-09-05.md'
+  - 'evidence/requests/CR-SST-0234/owner-publication-control-plane-validation-2026-09-05.md'
