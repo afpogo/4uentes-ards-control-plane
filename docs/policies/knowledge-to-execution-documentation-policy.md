@@ -1,5 +1,16 @@
 # Policy de documentación desde conocimiento hasta ejecución
 
+## Estado de adopción local
+
+La policy canónica vive en `4uentes-ards-core` desde el merge
+`376aa401f8b8cc7ea5a7362a8c114ebbf80a2fa4` sobre `develop`.
+`4uentes-orchestor` conserva este documento como procedencia, adopción local y
+evidencia de su incubación. Ante una divergencia, prevalece el documento
+canónico de Core.
+
+La adopción existente de Infra permanece fijada a su revisión de origen hasta
+que un request separado publique una adopción o excepción respecto de Core.
+
 ## Propósito
 
 Definir el propósito, los límites y las relaciones de autoridad de Learning,
@@ -19,11 +30,11 @@ cronológico obligatorio, precedencia normativa ni autorización para ejecutar.
 ## Clasificación y alcance
 
 - `policy_id`: `knowledge-to-execution-documentation-policy`.
-- Clase actual: `origin-repo-policy`.
+- Clase actual: `core-profile-scoped`.
 - Origin repo de la policy: `4uentes-orchestor`.
-- Owner de la incubación local: `4uentes-ards-control-plane`.
+- Owner canónico: `4uentes-ards-core`.
 - Procedencia del patrón: `sst-4uentes-infra`, bajo `CR-HPT-0024`.
-- Destino reusable propuesto: `core-profile-scoped` en `4uentes-ards-core`.
+- Fuente canónica: `4uentes-ards-core/docs/policies/knowledge-to-execution-documentation-policy.md`.
 - Aplicabilidad temporal: artefactos nuevos o materialmente modificados después
   de la adopción local.
 
