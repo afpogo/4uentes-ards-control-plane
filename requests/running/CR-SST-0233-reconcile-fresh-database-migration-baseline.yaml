@@ -52,7 +52,7 @@ ordering_deviation:
 
 worktree_exception:
   policy_id: "worktree-request-lifecycle-policy"
-  status: "classified-awaiting-explicit-retirement-authorization"
+  status: "legacy-retired-local-archive-branch-preserved"
   reason: >
     The pre-existing CR-SST-0233 worktree contains uncommitted request evidence
     and initiative edits. Policy requires preserving it and opening a clean
@@ -61,7 +61,9 @@ worktree_exception:
   legacy_branch: "agent/cr-sst-0233-migration-reconciliation"
   legacy_head: "799b7d5383af7f8cca35b99319a0c9b6a7c59e87"
   legacy_status_observed: "one tracked modification and five untracked files"
-  legacy_ownership: "classified provenance preserved pending an archival commit and explicit worktree removal authorization"
+  legacy_ownership: "retired checkout; classified provenance preserved on the local legacy branch"
+  legacy_archive_sha: "2808791853a70edc95c09b1f14e3f97f896fb45c"
+  legacy_retirement_evidence: "evidence/requests/CR-SST-0233/legacy-retirement-readback-2026-09-07.md"
   legacy_classification_status: "complete-nondestructive"
   legacy_head_vs_canonical: "zero ahead and 176 behind origin/main@5d903e8"
   legacy_recovered_paths:
@@ -94,7 +96,7 @@ worktree_exception:
     Preserve the legacy dirty worktree until every unique entry is classified.
 
 execution:
-  current_unit: "obtain-explicit-legacy-worktree-retirement-authorization"
+  current_unit: "publish-retirement-readback-and-evaluate-terminal-readiness"
   completed_units:
     - "publish-control-plane-plan"
     - "freeze-historical-schema-in-owner-pr-32"
@@ -108,6 +110,7 @@ execution:
     - "classify-legacy-worktree-and-recover-unique-drift-evidence"
     - "publish-and-read-back-jira-and-legacy-classification-evidence"
     - "preflight-legacy-worktree-retirement"
+    - "preserve-six-legacy-units-and-retire-clean-checkout"
   control_plane_mutation_allowed: true
   child_repo_mutation_allowed: false
   owner_git_mutation_allowed: false
@@ -245,8 +248,8 @@ residual_blockers:
     status: "resolved-primary-created"
     effect: "SST-125 is the primary mirror; status synchronization requires a later exact batch."
   - id: "legacy-worktree-dirty-provenance"
-    status: "publication-readback-passed-awaiting-explicit-cleanup-authorization"
-    effect: "All six local units remain preserved; cleanup is blocked only on an exact user authorization for archival commit and worktree removal."
+    status: "resolved-local-archive-preserved-checkout-retired"
+    effect: "All six local units are preserved in archive commit 2808791; the clean legacy checkout was removed without force."
 
 publication_gate:
   policy_id: "execution-publication-and-tracker-closure-policy"
@@ -270,7 +273,12 @@ publication_gate:
     remote_readback_required: true
     remote_readback_status: "passed-pr-270-merged"
     legacy_worktree_preflight_status: "passed-read-only"
-    legacy_worktree_removal_authorized: false
+    legacy_worktree_removal_authorized: true
+    authorization_status: "consumed-by-legacy-only-retirement"
+    approval_text: "ok avancemos con el siguiente gate de forma ordenada"
+    legacy_worktree_removal_status: "completed-read-back"
+    legacy_archive_sha: "2808791853a70edc95c09b1f14e3f97f896fb45c"
+    result_evidence: "evidence/requests/CR-SST-0233/legacy-retirement-readback-2026-09-07.md"
     legacy_branch_deletion_authorized: false
     preservation_method: "commit exactly the six classified local units on the local legacy branch before removing the clean worktree without force"
 
@@ -280,15 +288,15 @@ owner_documentation:
   existing_owner_document: "docs/tasks/2026-08-31-cr-sst-0233-migration-baseline.md"
 
 decision:
-  status: "cleanup-preflight-passed-awaiting-explicit-worktree-retirement-authorization"
+  status: "legacy-retirement-complete-awaiting-readback-publication-and-terminal-evaluation"
   approver: "4uentes"
   next_gate: >
-    Obtain an exact authorization to commit the six classified local units on
-    the local legacy branch and remove only its worktree without force. Keep the
-    branch, do not publish or merge the archival commit, and do not perform Jira
-    transitions, comments, links or any other tracker write.
+    Publish and read back the legacy retirement evidence, then evaluate the
+    terminal lifecycle. Preserve the local archive branch. Jira synchronization
+    remains a separate exact batch after canonical terminal publication.
 
 evidence_refs:
+  - "evidence/requests/CR-SST-0233/legacy-retirement-readback-2026-09-07.md"
   - "evidence/requests/CR-SST-0233/implementation-plan.md"
   - "evidence/requests/CR-SST-0233/retroactive-running-reconciliation-2026-09-05.md"
   - "evidence/requests/CR-SST-0233/runtime-health-reconciliation-2026-09-05.md"
