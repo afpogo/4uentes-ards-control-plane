@@ -67,7 +67,8 @@ execution:
     remain a separate exact enumerated batch.
 
 manual_chrome_devtools_qa:
-  status: 'negative-readonly-pass-positive-pending'
+  status: 'authenticated-ui-and-context-read-pass-persistence-pending'
+  authenticated_evidence_ref: 'evidence/requests/CR-SST-0234/manual-authenticated-qa-2026-09-07.md'
   observed_at: '2026-09-07'
   browser: 'independent named Chrome DevTools MCP with isolated context'
   requested_url: 'http://localhost:8088/learning'
@@ -219,6 +220,8 @@ acceptance:
   - 'Manual isolated Chrome DevTools QA confirms unauthenticated access remains non-mutating and returns to the public home.'
 
 evidence_refs:
+  - 'evidence/requests/CR-SST-0234/bff-adoption-readiness-2026-09-07.md'
+  - 'evidence/requests/CR-SST-0234/manual-authenticated-qa-2026-09-07.md'
   - 'evidence/requests/CR-SST-0234/allocation-publication-readback-2026-09-05.md'
   - 'evidence/requests/CR-SST-0234/owner-readonly-preflight-2026-09-05.md'
   - 'evidence/requests/CR-SST-0234/running-authorization-2026-09-05.md'
