@@ -415,5 +415,11 @@ progress:
     three checks on owner PR 33; protected HTTP smoke remains partial without
     `SMOKE_JWT`. This is not user-visible QA: Chrome
     DevTools-only QA starts after chatbot integration and Fend adoption under
-    the later owner requests. The initiative closes only through terminal
-    evidence.
+    the later owner requests. On 2026-09-07 an independent isolated Chrome
+    DevTools context verified the non-mutating unauthenticated `/learning`
+    boundary: the document returned 200, the client presented the public home,
+    the console stayed clean and only GET requests occurred. Positive protected
+    QA remains pending because this gate explicitly prohibited seeders and
+    database mutation. The Jira mirrors for CR-SST-0232 and CR-SST-0234 remain
+    absent pending an exact enumerated write batch. The initiative closes only
+    through terminal evidence.
