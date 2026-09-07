@@ -47,7 +47,7 @@ authorization:
   jira_write_allowed: false
 
 execution:
-  current_unit: "prepare-running-lifecycle-publication"
+  current_unit: "owner-implementation-preparation-after-running-readback"
   control_plane_mutation_allowed: true
   child_repo_mutation_allowed: false
   owner_git_mutation_allowed: false
@@ -127,12 +127,20 @@ required_checks:
   - "git diff --check"
   - "remote main readback after separately authorized publication"
 
+publication_readback:
+  pull_request: 261
+  head_sha: "5ed1b92feb014725c2ca97bb85f28890a129ee58"
+  merge_sha: "a7ec111b2edd709e5b4d710d622ede2062679032"
+  status: "merged-and-read-back"
+  observed_at: "2026-09-07"
+  preparation_ref: "evidence/requests/CR-SST-0224/owner-preparation-2026-09-07.md"
+
 decision:
-  status: "ready-for-running-publication-authorization"
+  status: "owner-scope-and-jira-batch-prepared"
   next_gate: >
-    Validate and commit this exact control-plane batch locally, then request
-    explicit authorization to push it and create the running lifecycle pull
-    request. Owner and Jira gates remain separate after canonical readback.
+    Review the owner implementation scope and exact Jira batch in the
+    preparation evidence. Running publication is complete; owner execution,
+    tracker writes and owner promotion retain their own authorization scope.
 
 evidence_refs:
   - "evidence/requests/CR-SST-0224/owner-readonly-preflight-2026-08-29.md"

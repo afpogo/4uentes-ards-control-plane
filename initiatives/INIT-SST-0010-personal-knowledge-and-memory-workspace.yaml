@@ -215,7 +215,7 @@ paragraph_derivation_adoption:
   owner_execution_status: "control-plane-only-approved; child-owner-execution-not-authorized"
   next_gate: "publish and read back the validated contract, then perform final human QA"
 article_processing_adoption:
-  status: "cr-sst-0223-closed; cr-sst-0224-running-publication-prepared"
+  status: "cr-sst-0223-closed; cr-sst-0224-running-published-owner-preparation"
   request_id: "CR-SST-0220"
   feature_state_id: "article-agent-processing"
   predecessor_contract_request_id: "CR-SST-0219"
@@ -243,8 +243,8 @@ article_processing_adoption:
   first_owner_manual_review: "passed-2026-08-29"
   second_owner_request_id: "CR-SST-0224"
   second_owner_preflight_status: "published-and-read-back; historical worktrees retired"
-  second_owner_execution_status: "running-lifecycle-prepared; owner-and-jira-not-authorized"
-  next_gate: "validate and publish the CR-SST-0224 running lifecycle, then request owner and Jira authorization as separate exact gates"
+  second_owner_execution_status: "running-merged-pr-261; owner-and-jira-preflights-refreshed-2026-09-07"
+  next_gate: "review the prepared CR-SST-0224 owner implementation scope and exact Jira batch"
 learning_workspace_source_adoption:
   status: "first-owner-live-readback-passed-protected-positive-qa-pending"
   request_id: "CR-SST-0232"
@@ -306,7 +306,7 @@ boundaries:
   jira_writes_authorized: false
   jira_writes_were_authorized: true
   jira_write_authorization_consumed: true
-  jira_write_authorization_scope: "Historical creation batches, SST-108 closure, the SST-120/SST-122/SST-123 create-and-start batches, and the exact SST-123 terminal description-plus-transition batch are consumed; no current Jira write is authorized."
+  jira_write_authorization_scope: "Historical creation batches, SST-108 closure, the SST-120/SST-122/SST-123 create-and-start batches, the exact SST-123 terminal batch, and the CR-SST-0233 SST-125 create-and-readback batch are consumed; no current Jira write is authorized."
   child_repo_mutation_requires_later_execution_approval: true
   child_repo_mutation_requires_running_publication_readback: true
   canonical_memory_owner: "sst-bend"
@@ -360,8 +360,8 @@ progress:
     - "CR-SST-0236"
     - "CR-SST-0237"
   next_recommended_request: >
-    Publish and read back the CR-SST-0224 running lifecycle, then refresh its
-    sst-chatbot and Jira preflights before any separately authorized mutation.
+    Review the prepared CR-SST-0224 owner scope and Jira batch after its
+    running publication in PR 261 and refreshed preflights on 2026-09-07.
     Independently run positive protected CR-SST-0234 Learning QA with a
     bounded credential path and synthetic article, document and completed
     agent-output fixtures. Neither track grants authority to the other, and
@@ -389,7 +389,7 @@ progress:
     terminal description and transition batch: it is Finalizada with
     resolution Listo and no additional Jira write remains authorized. The
     CR-SST-0223 done lifecycle is merged and read back. CR-SST-0224 now has
-    canonical owner/Jira preflights and a locally prepared running lifecycle,
+    refreshed owner/Jira preflights and a canonically merged running lifecycle,
     but no sst-chatbot or Jira mutation is authorized. CR-SST-0234 now has a
     merged Bend implementation from PR 33:
     owner-scoped source resolution, immutable snapshot persistence, reversible

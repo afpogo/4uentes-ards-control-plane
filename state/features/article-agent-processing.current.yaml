@@ -3,7 +3,7 @@ kind: "feature_state"
 id: "article-agent-processing"
 title: "SST Article Agent Processing"
 status: "runtime-partial"
-updated_at: "2026-09-05"
+updated_at: "2026-09-07"
 solution_id: "sst"
 affected_services:
   - "sst-bend"
@@ -58,7 +58,7 @@ evidence_refs:
   - "evidence/requests/CR-SST-0224/preflight-publication-and-worktree-readback-2026-09-05.md"
 open_gaps:
   - "The materialized contract is published and human-approved; Jira mirror SST-122 is in progress with empty resolution and its one-use authorization is consumed."
-  - "CR-SST-0224 running lifecycle is prepared locally but still requires validation, exact Git publication authorization, merge and canonical readback before owner execution."
+  - "CR-SST-0224 running lifecycle is merged in PR 261; refreshed owner/Jira preflights and implementation preparation do not yet authorize owner mutation or tracker writes."
   - "CR-SST-0225 through CR-SST-0227 remain canonical planned lifecycles without owner execution authorization."
   - "CR-SST-0223 Bend implementation and owner ARDS/SDD are merged and read back; its reversible migration was not executed or deployed."
   - "CR-SST-0223 owner, Jira and terminal control-plane lifecycle are complete and canonically read back."
