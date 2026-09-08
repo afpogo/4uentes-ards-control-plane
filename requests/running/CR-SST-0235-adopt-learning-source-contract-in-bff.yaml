@@ -1,0 +1,79 @@
+schema_version: '1.0'
+phase: 3
+id: 'CR-SST-0235'
+title: 'Adopt the Learning source contract in the authorized BFF'
+status: 'running'
+source_request: 'requests/inbox/CR-SST-0235-adopt-learning-source-contract-in-bff.yaml'
+planned_request: 'requests/planned/CR-SST-0235-adopt-learning-source-contract-in-bff.yaml'
+created_at: '2026-09-05'
+started_at: '2026-09-08'
+requester: '4uentes'
+summary: >
+  Start the scoped BFF adoption lifecycle after published Bend owner checks and
+  merged manual QA evidence. Existing generic relay must be verified before
+  changes; persistence QA and end-to-end acceptance remain pending.
+depends_on: ['CR-SST-0232', 'CR-SST-0234']
+predecessor_requests: ['CR-SST-0232', 'CR-SST-0234']
+control_plane_context:
+  initiative_id: 'INIT-SST-0010'
+  parent_request_id: 'CR-SST-0232'
+  owner_repository: '4uentes-auth'
+authorization:
+  status: 'approved-running-control-plane-gate'
+  approved_by: '4uentes'
+  approved_at: '2026-09-08'
+  approval_text: 'ok avancemos'
+  evidence_ref: 'evidence/requests/CR-SST-0235/running-gate-2026-09-08.md'
+execution:
+  current_unit: 'publish-running-lifecycle-before-owner-mutation'
+  control_plane_mutation_allowed: true
+  git_publication_allowed: true
+  child_repo_mutation_allowed: false
+  runtime_mutation_allowed: false
+  deployment_allowed: false
+  migration_execution_allowed: false
+  seeders_allowed: false
+  database_mutation_allowed: false
+  jira_write_allowed: false
+  next_gate: 'Merge/read back this running gate, then begin separately authorized owner implementation.'
+predecessor_readback:
+  bend_owner_pull_request: 33
+  bend_owner_merge: 'fdc753ff0bf96e8b8b5f603a9aae11503aa2ace1'
+  owner_checks: 'passed-per-published-evidence'
+  control_plane_qa_pull_request: 279
+  control_plane_qa_merge: '0bfd831213efbbac435a940eb549dd5625cc1d9a'
+  positive_persistence_qa: 'pending-not-waived'
+owner_preflight:
+  baseline: 'ff5605c67d412e3e363d58de14a5b6b98b38c4ad'
+  baseline_observed_at: '2026-09-07'
+  existing_owner_pr_search_at: '2026-09-08'
+  existing_owner_pr_found: false
+  primary_checkout: 'dirty-preserve'
+  refresh_required_before_owner_mutation: true
+owner_contract:
+  responsibilities:
+    - 'Preserve versioned source descriptors and immutable snapshot results.'
+    - 'Propagate the existing authenticated principal context.'
+    - 'Sanitize failures and verify payload limits.'
+  prohibited:
+    - 'Resolve private source content in the BFF.'
+    - 'Persist snapshots, secrets or accepted memory in Auth.'
+owner_documentation:
+  required_for_this_gate: false
+  reason: 'Control-plane-only start; no owner mutation.'
+  required_before_owner_implementation: true
+  minimum: ['BFF relay contract', 'inbound and outbound capability adoption', 'human guide and Mermaid map', 'execution and rollback runbook']
+knowledge_to_execution_documentation:
+  policy_id: 'knowledge-to-execution-documentation-policy'
+  current_role: 'playbook-and-gate-record'
+  runbook_required_for_current_gate: false
+  runbook_required_before_owner_execution: true
+acceptance:
+  - 'Running gate is published and its merge read back before owner mutation.'
+  - 'Later owner checks prove descriptor/snapshot preservation and sanitized errors.'
+  - 'No deployment, seeders, database mutation or Jira write occurs in this gate.'
+  - 'Pending positive persistence and E2E QA remain explicit.'
+evidence_refs:
+  - 'evidence/requests/CR-SST-0234/bff-adoption-readiness-2026-09-07.md'
+  - 'evidence/requests/CR-SST-0234/manual-authenticated-qa-2026-09-07.md'
+  - 'evidence/requests/CR-SST-0235/running-gate-2026-09-08.md'

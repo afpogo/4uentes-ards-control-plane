@@ -343,6 +343,7 @@ progress:
     - "CR-SST-0194"
     - "CR-SST-0223"
   active_requests:
+    - "CR-SST-0235"
     - "CR-SST-0219"
     - "CR-SST-0220"
     - "CR-SST-0224"
@@ -359,7 +360,6 @@ progress:
     - "CR-SST-0226"
     - "CR-SST-0227"
     - "CR-SST-0233"
-    - "CR-SST-0235"
     - "CR-SST-0236"
     - "CR-SST-0237"
   next_recommended_request: >
@@ -368,8 +368,9 @@ progress:
     Independently run positive protected CR-SST-0234 Learning QA with a
     bounded credential path and synthetic article, document and completed
     agent-output fixtures. Neither track grants authority to the other, and
-    CR-SST-0235 through CR-SST-0237 remain blocked until predecessor behavior
-    is verified.
+    CR-SST-0235 now prepares its running publication after PR 279 readback;
+    owner mutation waits for that gate. CR-SST-0236 and CR-SST-0237 remain
+    dependent on owner adoption and verified behavior.
   current_runtime_status: >
     CR-SST-0193 canonical persistence and API are implemented, merged and
     validated in local/dev. CR-SST-0210 supplies the merged tenant,
