@@ -45,7 +45,7 @@ owner_execution_authorization:
   jira_scope: 'readonly-preflight-only-pending-exact-batch'
 
 execution:
-  current_unit: 'protected-positive-learning-qa-and-tracker-gates'
+  current_unit: 'manual-negative-learning-qa-complete-positive-and-tracker-gates-pending'
   control_plane_mutation_allowed: true
   git_publication_allowed: true
   child_repo_mutation_allowed: true
@@ -62,9 +62,34 @@ execution:
   datastore_business_data_access_allowed: false
   jira_write_allowed: false
   next_external_gate: >
-    Authorize protected positive Learning QA with synthetic fixtures and a
-    bounded credential path. Jira creation and transition remain a separate
-    exact batch.
+    Decide a bounded positive Learning QA path compatible with the explicit
+    prohibition on seeders and database mutation. Jira creation and transition
+    remain a separate exact enumerated batch.
+
+manual_chrome_devtools_qa:
+  status: 'authenticated-ui-and-context-read-pass-persistence-pending'
+  authenticated_evidence_ref: 'evidence/requests/CR-SST-0234/manual-authenticated-qa-2026-09-07.md'
+  observed_at: '2026-09-07'
+  browser: 'independent named Chrome DevTools MCP with isolated context'
+  requested_url: 'http://localhost:8088/learning'
+  document_request: 'GET /learning returned 200'
+  unauthenticated_behavior: 'client presented public home with Sign in actions'
+  console: 'no messages'
+  network_mutation: 'none; nine GET requests observed'
+  seeders_used: false
+  database_mutation_performed: false
+  preview_accept_reject_invoked: false
+  evidence_ref: 'evidence/requests/CR-SST-0234/manual-chrome-devtools-qa-2026-09-07.md'
+
+jira_preflight_refresh:
+  status: 'read-only-pass-write-pending-exact-authorization'
+  observed_at: '2026-09-07'
+  cr_sst_0232_matches: 0
+  cr_sst_0234_matches: 0
+  epic_key: 'SST-105'
+  required_hierarchy: 'SST-105 -> CR-SST-0232 Task -> CR-SST-0234 Subtask'
+  write_performed: false
+  evidence_ref: 'evidence/requests/CR-SST-0234/jira-preflight-refresh-2026-09-07.md'
 
 development_runtime_readback_authorization:
   status: 'approved-and-consumed'
@@ -192,8 +217,11 @@ acceptance:
   - 'Argo is Synced/Healthy at the expected Infra revision and the Bend rollout is ready on the expected image digest.'
   - 'The snapshot schema is present and public/negative-auth HTTP probes behave as expected.'
   - 'Positive protected Learning behavior remains explicitly pending until a bounded credential and synthetic fixtures are authorized.'
+  - 'Manual isolated Chrome DevTools QA confirms unauthenticated access remains non-mutating and returns to the public home.'
 
 evidence_refs:
+  - 'evidence/requests/CR-SST-0234/bff-adoption-readiness-2026-09-07.md'
+  - 'evidence/requests/CR-SST-0234/manual-authenticated-qa-2026-09-07.md'
   - 'evidence/requests/CR-SST-0234/allocation-publication-readback-2026-09-05.md'
   - 'evidence/requests/CR-SST-0234/owner-readonly-preflight-2026-09-05.md'
   - 'evidence/requests/CR-SST-0234/running-authorization-2026-09-05.md'
@@ -208,3 +236,6 @@ evidence_refs:
   - 'evidence/requests/CR-SST-0234/development-runtime-readback-authorization-2026-09-05.md'
   - 'evidence/requests/CR-SST-0234/development-runtime-readback-2026-09-05.md'
   - 'evidence/requests/CR-SST-0234/development-runtime-control-plane-validation-2026-09-05.md'
+  - 'evidence/requests/CR-SST-0234/manual-chrome-devtools-qa-2026-09-07.md'
+  - 'evidence/requests/CR-SST-0234/jira-preflight-refresh-2026-09-07.md'
+  - 'evidence/requests/CR-SST-0234/manual-qa-control-plane-validation-2026-09-07.md'
