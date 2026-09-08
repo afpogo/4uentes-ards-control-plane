@@ -33,7 +33,7 @@ visual_map:
   abstraction_level: "request lifecycle deviation"
   source_refs:
     - "requests/planned/CR-SST-0233-reconcile-fresh-database-migration-baseline.yaml"
-    - "requests/running/CR-SST-0233-reconcile-fresh-database-migration-baseline.yaml"
+    - "requests/done/CR-SST-0233-reconcile-fresh-database-migration-baseline.yaml"
     - "evidence/requests/CR-CP-0024/backend-merge-rollout-and-health-readback-2026-08-31.md"
   observed_at: "2026-09-05"
   authority_boundary: "Vista derivada; los lifecycles publicados y los readbacks Git conservan autoridad."
