@@ -40,7 +40,7 @@ worktree_policy:
   cleanup_allowed: false
 
 execution:
-  current_unit: "clamav-memory-diagnosis-published-awaiting-owner-pr-authorization"
+  current_unit: "clamav-memory-owner-pr29-integrated-runtime-validation-pending"
   completed_units:
     - "integrate-private-receipt-custody-through-owner-pr-23"
     - "integrate-clamav-permission-remediation-through-owner-pr-24"
@@ -58,6 +58,8 @@ execution:
     - "audit-jira-mirror-without-mutation"
     - "publish-jira-reconciliation-through-control-plane-pr-273"
     - "reconcile-jira-comment-and-predecessor-links"
+    - "read-back-control-plane-pr274-merge"
+    - "verify-existing-infra-pr29-memory-remediation-and-ci"
   control_plane_mutation_allowed: true
   child_repo_mutation_allowed: false
   owner_git_mutation_allowed: false
@@ -133,6 +135,39 @@ current_authorization:
   owner_merge_allowed: false
   runtime_mutation_allowed: false
   jira_write_allowed: false
+
+clamav_memory_owner_reconciliation:
+  observed_at: "2026-09-07"
+  approval_text: "autorizo"
+  authorized_scope: "Prepare and publish the memory owner PR without merge or cluster mutation."
+  disposition: "Already fulfilled by existing owner PR 29; do not duplicate implementation or publication."
+  repository: "afpogo/sst-4uentes-infra"
+  pull_request: 29
+  head_sha: "b654f1ae2210c471c53f0db49da6cb40bd276fb8"
+  merge_sha: "a3522df6fcefcda116af3a776ad2b45130f69125"
+  merged_at: "2026-09-07T23:19:13Z"
+  changed_paths_count: 7
+  post_merge_ci: "four workflows completed successfully on the merge SHA"
+  ordering_note: "The owner merge predates this authorization. This observation does not confer retroactive merge or runtime authorization."
+  control_plane_pr274_merge_sha: "d84d1f672efae0acfa94d1dab4626b8d2f85230a"
+  owner_mutation_performed_this_gate: false
+  runtime_mutation_performed: false
+  jira_write_performed: false
+  runtime_acceptance: "pending; desired-state validation does not prove signature freshness or reload without OOM"
+  runtime_readback:
+    mode: "read-only"
+    argo_revision: "a3522df6fcefcda116af3a776ad2b45130f69125"
+    argo_sync: "Synced"
+    argo_health: "Healthy"
+    pod: "sst-bend-78887f869-k6wbj"
+    scanner_ready: true
+    scanner_restarts: 0
+    request_memory: "3Gi"
+    limit_memory: "4Gi"
+    daily_database_version: 28116
+    database_test: "passed"
+    reload_evidence: "pending; FreshClam could not notify clamd before the socket existed at startup"
+  evidence: "evidence/requests/CR-HPT-0024/infra-pr29-reconciliation-2026-09-07.md"
 
 clamav_memory_diagnosis_authorization:
   status: "consumed-read-only-diagnosis-and-ceiling-selection"
@@ -335,14 +370,15 @@ adoption_progress:
   already_treating_memory_gap:
     owner_playbook: "declares OOMKilled as a stop condition and requires a bounded owner subgate"
     owner_runbook: "blocks AIStor/KMS and manual adjustments until memory remediation is measured and authorized"
-    owner_manifest: "still declares request 768Mi and limit 1536Mi"
+    owner_manifest: "historical pre-PR29 observation: request 768Mi and limit 1536Mi; PR29 now declares 3Gi and 4Gi"
   duplication_readback:
     open_owner_pull_requests: 0
     dedicated_memory_remediation_branch_observed: false
     disposition: "The numeric ceiling evidence fills a pending decision and does not duplicate an active owner implementation."
   remaining_adoption_step: >
-    Publish a separately authorized owner PR for the selected 3Gi request and
-    4Gi limit, update owner guidance, and validate real signature freshness.
+    Owner PR 29 has integrated the selected 3Gi request, 4Gi limit and owner
+    guidance. Validate GitOps convergence and real signature freshness;
+    any active runtime operation requires a separate authorization.
   authority_effect: "Progress recording does not authorize the remaining owner or runtime step."
 
 residual_gates:
@@ -353,7 +389,7 @@ residual_gates:
   - id: "clamav-memory-diagnosis-and-ceiling-selection"
     status: "completed-read-only-and-published-pr-258"
   - id: "clamav-memory-owner-pr"
-    status: "not-yet-authorized"
+    status: "completed-existing-pr29-merged-readback-confirmed"
   - id: "infra-owner-merge-with-automatic-gitops"
     status: "not-applicable-to-docs-only-pr-26-no-deployment-workflow-observed"
   - id: "runtime-health-and-terminal-evidence"
@@ -397,14 +433,15 @@ publication_gate:
 decision:
   status: "running-owner-documentation-integrated"
   next_gate: >
-    Obtain explicit authorization to publish, without merge, one Infra owner
-    PR that changes receipt-clamav request memory to 3Gi and limit memory to
-    4Gi, updates the linked owner playbook and runbook, and proves a successful
-    signature update/reload without OOM. Merge, automatic GitOps effects, DNS
-    remediation, secrets, license acceptance and any future Jira writes remain
-    separate gates.
+    Verify the signature version loaded by clamd and successful reload without
+    OOM after existing owner PR 29. Read-only observation already confirms
+    GitOps convergence, 3Gi/4Gi, zero restarts and daily database update to 28116.
+    FreshClam could not notify clamd during startup; keep reload acceptance pending. Manual
+    sync, restart, active signature update, DNS remediation, secrets, license
+    acceptance and future Jira writes require separately scoped authorization.
 
 evidence_refs:
+  - "evidence/requests/CR-HPT-0024/infra-pr29-reconciliation-2026-09-07.md"
   - "evidence/requests/CR-HPT-0024/retroactive-running-reconciliation-2026-09-05.md"
   - "evidence/requests/CR-CP-0024/infra-remediation-pr-publication-readback-2026-09-05.md"
   - "evidence/requests/CR-CP-0024/infra-second-remediation-prepublication-2026-09-05.md"
