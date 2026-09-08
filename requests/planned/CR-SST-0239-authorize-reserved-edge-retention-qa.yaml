@@ -1,0 +1,185 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0239"
+title: "Authorize retention QA through the reserved development edge"
+status: "planned"
+source_request: "requests/inbox/CR-SST-0239-authorize-reserved-edge-retention-qa.yaml"
+created_at: "2026-09-07"
+requester: "4uentes"
+depends_on: ["CR-SST-0207", "CR-SST-0217", "CR-SST-0218", "CR-SST-0230"]
+
+summary: >
+  Close only the reserved-edge row of CR-SST-0207 by reusing the existing
+  OAuth-protected ngrok development edge and an explicitly allowed interactive
+  operator browser session. Preserve all application, identity and
+  infrastructure ownership boundaries.
+
+control_plane_context:
+  initiative_id: "INIT-SST-0007"
+  parent_request_id: "CR-SST-0202"
+  source_qa_request_id: "CR-SST-0207"
+  source_qa_jira_issue_key: "SST-117"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  proposed_jira_issue_type: "Subtask"
+  proposed_jira_parent_issue_key: "SST-113"
+  jira_issue_key: null
+  jira_write_authorized: false
+
+impact_analysis:
+  required: true
+  affected_authorities: ["sst-4uentes-infra", "ngrok GitHub OAuth Traffic Policy", "CR-SST-0207 QA harness"]
+  intentionally_unaffected_services: ["sst-fend", "sst-bend", "4uentes-auth", "sst-chatbot", "sst-extension"]
+  observed_baseline:
+    control_plane: "origin/main@75cab78"
+    terminal_lifecycle: "CR-SST-0217 merged by PR 278 at 5311af220a2a513aa145517676a076ef5fae9e65"
+    jira_readback: "SST-117 remains En curso without resolution under SST-113; SST-113 and SST-86 remain open."
+    qa_evidence: "evidence/requests/CR-SST-0207/integrated-matrix-checkpoint-2026-08-24.md"
+    owner_sources:
+      - "sst-4uentes-infra/docs/runbooks/ngrok-durable-development.md"
+      - "sst-4uentes-infra/docs/runbooks/add-oauth-collaborator-access.md"
+      - "sst-4uentes-infra/docs/runbooks/access-urls-and-credentials.md"
+      - "sst-4uentes-infra/specs/states/implement-durable-ngrok-edge.yaml"
+  ownership:
+    edge_and_access_policy: "sst-4uentes-infra"
+    product_authentication_and_retention_contracts: "4uentes-auth and sst-bend, unchanged"
+    lifecycle_and_sanitized_evidence: "4uentes-orchestor"
+
+risk:
+  level: "high"
+  score: 8
+  drivers: ["PUBLIC_DEVELOPMENT_EDGE", "EXTERNAL_OAUTH_SESSION", "SYNTHETIC_IDENTITY", "PRIVACY_EVIDENCE"]
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5"
+  fallback_reasoning_effort: "high"
+  reason: "The gate crosses a public edge, an external OAuth session and privacy-sensitive retention QA."
+
+subagent_deployment_plan:
+  mode: "none"
+  reason: "No delegation was requested; the public-edge security boundary remains on one auditable execution path."
+
+contract:
+  surface: "reserved ngrok HTTPS development edge"
+  edge_authentication: "existing GitHub OAuth Traffic Policy"
+  preferred_access_path: "already allowlisted operator completes OAuth interactively in the controlled browser"
+  fallback_access_path: "stop and request exact authorization before any local allowlist configuration or ngrok service restart"
+  qa_path: "browser-origin product requests through the public single origin; no direct backing-service route"
+  application_identity: "new synthetic SST identity created only after edge authentication"
+  qa_matrix_source: "CR-SST-0207"
+  cleanup: "conversation cleanup through product contracts in a finally path; identity deletion remains unavailable and out of scope"
+  evidence: "status, outcome and counts only; no secrets, private URL, identifiers or content"
+
+execution:
+  requires_human_approval: true
+  approval_status: "pending-plan-publication-authorization"
+  control_plane_mutation_allowed: true
+  child_repo_mutation_allowed: false
+  runtime_mutation_allowed: false
+  planned_runtime_scope: "one separately authorized operator-authenticated reserved-edge QA session with synthetic data"
+  ngrok_configuration_mutation_allowed: false
+  ngrok_service_restart_allowed: false
+  deployment_allowed: false
+  cluster_mutation_allowed: false
+  production_mutation_allowed: false
+  datastore_mutation_allowed: false
+  secret_mutation_allowed: false
+  jira_write_allowed: false
+
+atomized_execution:
+  - order: 1
+    id: "publish-and-readback-plan"
+    objective: "Merge this planned lifecycle and read it back from canonical main before any runtime access."
+    validation: "Control-plane full check passes and the merge is reachable from origin/main."
+  - order: 2
+    id: "oauth-browser-preflight"
+    objective: "After exact authorization, verify an allowed operator can complete edge OAuth without changing policy or config."
+    validation: "Unauthenticated requests remain redirected and the controlled authenticated browser reaches the SST origin."
+  - order: 3
+    id: "run-reserved-edge-matrix"
+    objective: "Create synthetic SST state and execute the CR-SST-0207 retention matrix through the browser origin."
+    validation: "The applicable HTTP and realtime rows match localhost semantics without a direct service route."
+  - order: 4
+    id: "product-contract-cleanup"
+    objective: "Delete synthetic conversations through product APIs and record any unavoidable identity residue."
+    validation: "No direct datastore access; cleanup outcomes are counts-only and secret-safe."
+  - order: 5
+    id: "reconcile-source-qa"
+    objective: "Update CR-SST-0207 evidence and determine whether any remaining limit blocks closure."
+    validation: "Reserved-edge status is evidence-backed; identity cleanup is not silently waived or absorbed."
+  - order: 6
+    id: "separate-tracker-and-terminal-gates"
+    objective: "Use fresh preflights and exact authorizations for any Jira mirror or terminal publication."
+    validation: "No Jira write occurs under this planning authorization."
+
+owner_documentation:
+  required: true
+  status: "existing-owner-runbooks-sufficient-for-plan"
+  owner_repo: "sst-4uentes-infra"
+  role: "edge configuration, OAuth access policy and operational procedure authority"
+  planned_change: "none unless execution finds an owner documentation gap"
+  sources:
+    - "docs/runbooks/ngrok-durable-development.md"
+    - "docs/runbooks/add-oauth-collaborator-access.md"
+    - "docs/runbooks/access-urls-and-credentials.md"
+    - "specs/states/implement-durable-ngrok-edge.yaml"
+
+validation:
+  - "Unauthenticated reserved-edge requests still stop at the ngrok OAuth boundary."
+  - "An already allowlisted operator completes OAuth interactively; automation never captures or persists the OAuth credential or cookie."
+  - "All SST calls use the public browser origin and existing Auth facade or Socket.IO product boundaries."
+  - "Synthetic conversations are removed through product contracts even when a QA row fails."
+  - "Evidence excludes private URLs, account names, emails, conversation IDs, cookies, tokens, credentials and message bodies."
+  - "4uentes-orchestor npm run check and git diff --check pass before plan publication and terminal closure."
+
+acceptance:
+  - "The reserved-edge CR-SST-0207 matrix reaches the application only after successful OAuth."
+  - "OAuth remains enabled with the existing least-privilege individual-user policy; no bypass or public unauthenticated application route is introduced."
+  - "Retention behavior through the reserved edge matches the already accepted localhost contracts."
+  - "No owner repository, ngrok config, service, deployment, cluster, datastore, secret or production state changes without a later exact authorization."
+  - "Synthetic identity cleanup remains an explicit separate follow-up when no product deletion contract exists."
+
+proposed_jira_batch:
+  status: "not-authorized"
+  prerequisites: ["plan merged and read back", "fresh duplicate and hierarchy preflight", "exact operator authorization"]
+  candidate:
+    project: "SST"
+    issue_type: "Subtask"
+    parent: "SST-113"
+    summary: "[CR-SST-0239] Validar retencion por el edge reservado"
+  proposed_operations: ["create exactly one candidate if no compatible mirror exists", "transition only that issue to En curso"]
+  forbidden_operations: ["comments", "links", "assignment changes", "edits to SST-117, SST-113, SST-86 or any other issue"]
+
+knowledge_to_execution_documentation:
+  policy_id: "knowledge-to-execution-documentation-policy"
+  primary_role: "execution-plan"
+  owner: "4uentes-ards-control-plane"
+  status: "planned"
+  applicability: "This lifecycle coordinates a one-time QA gate and points to existing Infra owner runbooks; it does not redefine edge operation."
+  technical_sources:
+    - "requests/running/CR-SST-0207-integrated-chat-retention-qa.yaml"
+    - "sst-4uentes-infra owner runbooks for durable ngrok and OAuth collaborator access"
+  runbook_required: false
+  runbook_not_applicable_reason: "Infra already owns current operational runbooks; this request records authorization and evidence only."
+
+rollback: >
+  Before runtime execution, abandon the plan without external mutation. During
+  an authorized QA session, close the controlled browser context and clean
+  synthetic conversations through product contracts. Do not weaken OAuth,
+  mutate backing stores or use direct cluster actions as rollback.
+
+decision:
+  status: "local-plan-ready-publication-not-authorized"
+  approver: "4uentes"
+  decided_at: "2026-09-07"
+  blocker: "Obtain explicit authorization to publish this plan; runtime, Jira and all external state changes remain separately gated."

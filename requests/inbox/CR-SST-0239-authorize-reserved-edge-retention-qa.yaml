@@ -1,0 +1,46 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0239"
+title: "Authorize retention QA through the reserved development edge"
+status: "inbox"
+created_at: "2026-09-07"
+requester: "4uentes"
+business_context: >
+  CR-SST-0207 passed its localhost retention matrix but the reserved ngrok
+  surface stopped at the expected external GitHub OAuth redirect before a
+  synthetic SST identity could be created. The public development edge must
+  remain protected while QA obtains a governed authenticated browser path.
+requested_change: >
+  Define and execute one bounded reserved-edge QA gate using the existing
+  ngrok GitHub OAuth boundary and product contracts, without bypassing edge
+  authentication, exposing credentials or changing application ownership.
+expected_outcome: >
+  An explicitly allowed operator browser session reaches SST through the
+  reserved edge and runs the CR-SST-0207 retention checks with synthetic data,
+  sanitized evidence and product-contract cleanup.
+initial_scope:
+  initiative_id: "INIT-SST-0007"
+  parent_request_id: "CR-SST-0202"
+  source_qa_request_id: "CR-SST-0207"
+  solution: "sst"
+  control_repository: "4uentes-orchestor"
+  edge_owner_repository: "sst-4uentes-infra"
+  expected_runtime_repositories: []
+  excluded_followups:
+    - "product identity deletion or historical synthetic-identity cleanup"
+    - "application runtime changes"
+    - "production exposure"
+constraints:
+  - "This intake and plan do not authorize Jira, runtime, child-repository, ngrok configuration, service restart, deployment, cluster, datastore, secret or production writes."
+  - "Do not disable, bypass or weaken the ngrok GitHub OAuth Traffic Policy."
+  - "Do not persist the reserved URL, OAuth cookies, tokens, credentials, synthetic identities, message bodies or private request headers."
+  - "Prefer an already allowlisted operator browser session; collaborator allowlist changes require a separate exact operational authorization."
+  - "All synthetic conversation cleanup must use SST product contracts; no direct Redis, PostgreSQL or identity-store mutation is allowed."
+requested_next_step: >
+  Publish and read back the planned lifecycle, then obtain an exact runtime
+  authorization for one operator-authenticated reserved-edge QA session.
+decision:
+  status: "accepted-for-local-planning"
+  approver: "4uentes"
+  approved_at: "2026-09-07"
+  approval_text: "ok pr fusionado, continuemos"
