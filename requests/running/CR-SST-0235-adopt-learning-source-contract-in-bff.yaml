@@ -25,17 +25,23 @@ authorization:
   approval_text: 'ok avancemos'
   evidence_ref: 'evidence/requests/CR-SST-0235/running-gate-2026-09-08.md'
 execution:
-  current_unit: 'publish-running-lifecycle-before-owner-mutation'
+  current_unit: 'owner-relay-implementation-and-validation'
   control_plane_mutation_allowed: true
   git_publication_allowed: true
-  child_repo_mutation_allowed: false
+  child_repo_mutation_allowed: true
   runtime_mutation_allowed: false
   deployment_allowed: false
   migration_execution_allowed: false
   seeders_allowed: false
   database_mutation_allowed: false
   jira_write_allowed: false
-  next_gate: 'Merge/read back this running gate, then begin separately authorized owner implementation.'
+  next_gate: 'Publish owner implementation and checks; no deployment or database mutation.'
+owner_execution_authorization:
+  approved_by: '4uentes'
+  approved_at: '2026-09-08'
+  approval_text: 'listo pr fusionado. continuemos'
+  running_merge: '75cab7844fc5bb0518b8f384d596efeaeb9b55c1'
+  scope: '4uentes-auth Learning relay, owner documentation and isolated tests; publication for review'
 predecessor_readback:
   bend_owner_pull_request: 33
   bend_owner_merge: 'fdc753ff0bf96e8b8b5f603a9aae11503aa2ace1'
@@ -50,6 +56,15 @@ owner_preflight:
   existing_owner_pr_found: false
   primary_checkout: 'dirty-preserve'
   refresh_required_before_owner_mutation: true
+owner_implementation:
+  status: 'published-owner-pr-open-ci-pending'
+  repository: 'afpogo/4uentes-auth'
+  branch: 'agent/cr-sst-0235-learning-source-relay'
+  commit: '25f4abc'
+  owner_check: 'passed-including-learning-postcheck'
+  push_performed: true
+  pull_request: 16
+  pull_request_url: 'https://github.com/afpogo/4uentes-auth/pull/16'
 owner_contract:
   responsibilities:
     - 'Preserve versioned source descriptors and immutable snapshot results.'
@@ -59,8 +74,9 @@ owner_contract:
     - 'Resolve private source content in the BFF.'
     - 'Persist snapshots, secrets or accepted memory in Auth.'
 owner_documentation:
-  required_for_this_gate: false
-  reason: 'Control-plane-only start; no owner mutation.'
+  status: 'updated-in-owner-branch'
+  required_for_this_gate: true
+  reason: 'Owner relay implementation now authorized after running merge readback.'
   required_before_owner_implementation: true
   minimum: ['BFF relay contract', 'inbound and outbound capability adoption', 'human guide and Mermaid map', 'execution and rollback runbook']
 knowledge_to_execution_documentation:
@@ -74,6 +90,7 @@ acceptance:
   - 'No deployment, seeders, database mutation or Jira write occurs in this gate.'
   - 'Pending positive persistence and E2E QA remain explicit.'
 evidence_refs:
+  - 'evidence/requests/CR-SST-0235/owner-implementation-2026-09-08.md'
   - 'evidence/requests/CR-SST-0234/bff-adoption-readiness-2026-09-07.md'
   - 'evidence/requests/CR-SST-0234/manual-authenticated-qa-2026-09-07.md'
   - 'evidence/requests/CR-SST-0235/running-gate-2026-09-08.md'
