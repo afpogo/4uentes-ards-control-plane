@@ -57,7 +57,9 @@ owner_preflight:
   primary_checkout: 'dirty-preserve'
   refresh_required_before_owner_mutation: true
 owner_implementation:
-  status: 'published-owner-pr-open-ci-pending'
+  status: 'published-owner-pr-open-ci-passed'
+  ci_run: 34295551169
+  ci_result: 'success'
   repository: 'afpogo/4uentes-auth'
   branch: 'agent/cr-sst-0235-learning-source-relay'
   commit: '25f4abc'

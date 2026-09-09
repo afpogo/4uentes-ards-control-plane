@@ -52,6 +52,10 @@ El push pasó y se abrió PR #16: https://github.com/afpogo/4uentes-auth/pull/16
 GitHub confirmó HEAD `25f4abc7466c0c08c90ce84841ef624391bd96c5`, estado OPEN
 y MERGEABLE. El check build-publish-update estaba en ejecución al primer readback.
 
+Readback final: run `34295551169` completó con SUCCESS. Pasaron el check owner
+y la construcción de imagen. Los pasos de login/publicación GHCR y actualización
+de Infra se omitieron por tratarse de un PR. No se realizó merge ni despliegue.
+
 El PR owner apunta a develop. Su workflow de PR valida y construye la
 imagen; el push a develop después de un futuro merge publica imagen y actualiza
 Infra automáticamente. Por ese efecto, este gate no fusiona el PR owner.
