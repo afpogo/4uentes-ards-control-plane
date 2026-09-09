@@ -1,0 +1,122 @@
+schema_version: "1.0"
+id: "sst-evolutionary-onboarding-v1"
+status: "coordinator-handoff"
+request_id: "CR-SST-0240"
+initiative_id: "INIT-SST-0011"
+journey_version: 1
+observed_at: "2026-09-08"
+authority:
+  coordinator: "4uentes-orchestor owns approved scope and orchestration."
+  runtime_contract_owner: "sst-bend"
+  relay_owner: "4uentes-auth"
+  experience_owner: "sst-fend"
+  adoption: "Future owner CRs must adopt and publish this handoff in owner ARDS/SDD before implementation acceptance."
+  standard: "4uentes-ards-core; no new ARDS kind or schema is defined here."
+entry:
+  route: "/onboard"
+  protected: true
+  resumable: true
+  new_registration: "Auth initial-registration signal triggers idempotent durable start; navigate only after success. Never use the signal as progress authority."
+  existing_without_state: "Stay in Home; show a dismissible invitation and permanent reopen entry. Start only on explicit acceptance."
+  returning_in_progress: "Resume from durable state when explicitly entering onboard; avoid forced loops from Home."
+  skipped_or_completed: "Stay in Home; offer explicit reopen."
+  failure: "API unavailable, unsupported journey version or disabled flag returns Home without recursive redirects or automatic retry loops."
+  expired_session: "Use existing authentication recovery with a safe Home return; onboarding never bypasses session checks."
+durable_state:
+  scope: "Authenticated principal under existing owner identity and tenant contracts; never accept user identity from the body."
+  fields:
+    journeyVersion: "positive integer; V1 = 1"
+    status: "not_started | in_progress | skipped | completed"
+    selectedGoal: "null | articles; future goals require published readiness"
+    verifiedOutcomes: "Server-verified receipt references, goal, outcome type and verifiedAt; no copied article content."
+    createdAt: "server timestamp"
+    startedAt: "nullable server timestamp"
+    updatedAt: "server timestamp"
+    skippedAt: "nullable server timestamp"
+    completedAt: "nullable server timestamp"
+    reopenedAt: "nullable server timestamp"
+    revision: "monotonically increasing integer for optimistic concurrency"
+  absence: "GET returns an effective not_started view with revision 0 and exists false; GET does not create durable state."
+  creation: "start with expectedRevision 0 atomically creates the record if absent; a concurrent creator causes a revision conflict."
+  history: "Retain prior verified outcomes and completion timestamps as history when reopened; do not silently erase progress."
+  version_evolution: "An additive new version does not erase prior completion or force re-entry. Unsupported versions degrade to Home until adopted."
+api:
+  get:
+    method: "GET"
+    path: "/4uentes/v1/onboarding/me"
+    response: "200: exists, durable/effective state and goal readiness; authenticated and private, no shared caching."
+  patch:
+    method: "PATCH"
+    path: "/4uentes/v1/onboarding/me"
+    body: "action, journeyVersion, expectedRevision; selectedGoal only for select_goal"
+    actions: ["start", "select_goal", "skip", "reopen"]
+    idempotency: "Idempotency-Key required for retryable mutations; bind to principal, operation and payload hash."
+    response: "200: canonical updated state; unknown fields/actions and direct status writes rejected."
+  outcomes:
+    method: "POST"
+    path: "/4uentes/v1/onboarding/me/outcomes"
+    body: "journeyVersion, expectedRevision, selectedGoal, outcomeType, resourceRef"
+    headers: ["Idempotency-Key", "existing correlation header"]
+    response: "200: canonical state and verified receipt; no content echo."
+    validation: "Server verifies resource existence, authenticated ownership/scope, successful durable result and agreement with the selected goal. Client assertions are insufficient."
+  errors:
+    authentication: "401 uses existing session recovery"
+    authorization: "403 or owner-standard non-disclosing 404; never disclose another user's resource"
+    malformed: "400 for invalid shape/action"
+    invalid_outcome: "422 for a missing, failed or incompatible outcome without sensitive details"
+    revision: "409 revision_conflict; refetch and re-evaluate intent, never overwrite blindly"
+    idempotency: "409 idempotency_conflict for same key with a different payload"
+    unavailable: "503 or transport failure; Home fallback with an explicit retry option"
+  concurrency:
+    - "Expected revision compare-and-swap, outcome insertion and completion are atomic."
+    - "A previously accepted identical idempotency key returns the original response before checking a now-stale revision."
+    - "The same verified resource/outcome is deduplicated even if a second device uses a new key."
+    - "After refresh or another-tab/device mutation, refetch canonical state before further changes."
+    - "A timeout is an unknown result: retry with the same key or refetch, never invent completion."
+  owner_decisions_before_implementation:
+    - "Bind resourceRef to the persisted article ID from article-text-ingestion: POST /4uentes/v1/articulos, payload.kind=text, successful 201. CR-SST-0242 must publish server-verifiable actor/attempt proof; account membership and recent timestamps alone are insufficient."
+    - "TODO: publish correlation-header spelling, error envelope, idempotency retention and resource deduplication scope under the Bend owner CR."
+    - "TODO: publish state/receipt retention and deletion behavior aligned with existing user-data lifecycle."
+transitions:
+  - {action: "start", from: "absent | not_started", to: "in_progress", condition: "flag enabled, supported version and successful durable creation"}
+  - {action: "start", from: "in_progress", to: "in_progress", condition: "idempotent resume; does not reset selected goal or receipts"}
+  - {action: "select_goal", from: "in_progress", to: "in_progress", condition: "goal is published-ready and allowed; V1 articles only"}
+  - {action: "skip", from: "not_started | in_progress", to: "skipped", condition: "persist user intent and return Home; retain prior progress"}
+  - {action: "reopen", from: "skipped | completed", to: "in_progress", condition: "explicit user action; preserve historical completion; a new result is required for renewed activation"}
+  - {action: "verified_outcome", from: "in_progress", to: "completed", condition: "selected goal matches a server-verified successful outcome; not a route visit or historical replay"}
+  - {action: "other transition", from: "any", to: "unchanged", condition: "reject invalid transition; retries of accepted operations return their recorded response"}
+activation:
+  selected_goal: "articles"
+  first_verifiable_outcome: "article_saved"
+  definition: "V1 uses successful native text article creation via article-text-ingestion, authorized for this actor and attempt and verified by Bend; drafts or updates require a later explicit outcome contract."
+  freshness: "Outcome must belong to the current start/reopen attempt; a prior receipt or merely loading an existing route cannot activate it again."
+  rejected: ["route visit", "client-only checkbox", "missing resource", "foreign resource", "failed save", "goal mismatch", "unavailable goal", "chatbot assertion"]
+relay:
+  mapping:
+    - "GET /api/onboarding/me -> GET /4uentes/v1/onboarding/me"
+    - "PATCH /api/onboarding/me -> PATCH /4uentes/v1/onboarding/me"
+    - "POST /api/onboarding/me/outcomes -> POST /4uentes/v1/onboarding/me/outcomes"
+  obligations: "Propagate authenticated JWT, existing correlation and idempotency unchanged through the approved trust boundary; retain standard validation/error sanitization."
+  prohibited: "No product progress storage, goal completion inference, domain resource validation or use of firstLogin as truth."
+readiness:
+  articles: "Required V1 goal; publish capability readiness and successful-save verifier before rollout."
+  learning: "Hidden as an actionable goal until its readiness is published; not required by V1."
+  chat: "Hidden as an actionable goal until its readiness is published; not required by V1."
+  source: "TODO: owner-published versioned readiness contract; absence is not ready, not an optimistic default."
+  unavailable_selected_goal: "Preserve progress; explain unavailability and offer retry/Home/skip without completion."
+assistant:
+  level: "L1 optional, read-only"
+  allowed: ["explain SST", "orient toward available goals", "answer general onboarding questions"]
+  prohibited: ["complete steps", "execute actions", "write progress", "automatically persist memory", "require chat to finish onboarding"]
+  temperature: 0.3
+  unsupported_parameter: "Document adapter/model limitation and effective configuration; preserve static flow, do not silently claim 0.3 was applied."
+privacy:
+  telemetry_default: "Off until purpose and retention are approved; progress is functional state, not analytics consent."
+  telemetry_allowlist: ["journey version", "controlled goal code", "controlled event/outcome code", "cohort code", "bucketed latency"]
+  forbidden_in_telemetry_jira_evidence: ["prompts", "educational content", "article text or titles", "messages", "JWT", "cookies", "credentials", "private URLs", "user/tenant identifiers", "resource identifiers"]
+  evidence: "Synthetic scenarios, aggregate counts and sanitized outcome codes only."
+rollout:
+  strategy: "Additive schema and backward-compatible API, feature flag off by default."
+  cohorts: ["internal", "new registrations", "existing-user invitations"]
+  gates: "Owner checks, reproducible HTTP/browser QA, accessibility and full control-plane check pass before cohort expansion."
+  rollback: "Disable entry flag and return Home; keep durable progress and prior completions. Do not perform destructive schema rollback."

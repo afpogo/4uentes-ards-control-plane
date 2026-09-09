@@ -1,0 +1,53 @@
+schema_version: "1.0"
+kind: "cross_repo_promotion_manifest"
+id: "CR-HPT-0017-receipt-intake-activation"
+status: "blocked-by-runtime-prerequisites"
+initiative_id: "INIT-HPT-0003"
+jira_task: "HPT-11"
+
+artifacts:
+  auth:
+    required_capability: "automation-receipt-intake-service-token-grant-v1"
+    current_state: "validated-local-isolated-uncommitted"
+    release_requirement: "reviewed immutable commit and deployable image"
+  sst:
+    required_contract: "specs/api/automation-receipt-intake-v0.1.yaml"
+    current_state: "contract-ready-runtime-pending"
+    release_requirement: "recipient, verifier, binding, idempotency, limits and persistence validated"
+  automation:
+    required_contract: "specs/contracts/sst-receipt-intake-v0.1.yaml"
+    current_state: "contract-ready-runtime-pending-non-routable"
+    release_requirement: "inactive reviewed workflow with sanitized export and exact delivery contract"
+
+custody:
+  secret_name_auth: "M2M_AUTOMATION_RECEIPT_INTAKE_CLIENT_SECRET"
+  auth_local_surface: "ignored .env"
+  automation_local_surface: "encrypted n8n credential store"
+  managed_environment_surface: "TODO: approved secret manager references"
+  forbidden_surfaces: [git, jira, evidence, workflow_json, logs, shell_arguments, prompts]
+
+ordered_gates:
+  - id: "G0"
+    name: "immutable-artifacts"
+    requires: [auth_release_artifact, sst_release_artifact, inactive_automation_workflow]
+  - id: "G1"
+    name: "recipient-prerequisites"
+    requires: [object_controls, binding_resolution, idempotency, rate_limit, review_pending_persistence]
+  - id: "G2"
+    name: "operator-secret-provisioning"
+    requires: [G0, G1, explicit_human_authorization]
+    evidence: "presence-only; never value or token"
+  - id: "G3"
+    name: "auth-and-sst-deploy"
+    requires: [G2, health_checks, jwks_reachable]
+  - id: "G4"
+    name: "protected-negative-and-positive-qa"
+    requires: [G3, synthetic_binding, synthetic_object_reference]
+  - id: "G5"
+    name: "automation-activation"
+    requires: [G4, explicit_human_authorization]
+
+rollback:
+  order: [disable_automation_workflow, revoke_or_blank_caller_secret, rollback_runtime_artifacts]
+  data_deletion: "forbidden"
+  evidence: "sanitized status and reason codes only"

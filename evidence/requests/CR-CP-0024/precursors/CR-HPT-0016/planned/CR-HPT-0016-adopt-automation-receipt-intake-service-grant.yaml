@@ -1,0 +1,119 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-HPT-0016"
+title: "Adopt the Automation receipt-intake service grant in 4uentes-auth"
+status: "planned"
+source_request: "evidence/requests/CR-CP-0024/precursors/CR-HPT-0016/inbox/CR-HPT-0016-adopt-automation-receipt-intake-service-grant.yaml"
+created_at: "2026-08-27"
+requester: "4uentes"
+
+control_plane_context:
+  initiative_id: "INIT-HPT-0003"
+  predecessor_request_ids:
+    - "CR-HPT-0007"
+    - "CR-CP-0021"
+    - "CR-SST-0208"
+  state_id: "telegram-receipt-intake-adoption"
+  jira_epic_key: "HPT-8"
+
+summary: >
+  Extend the isolated 4uentes-auth service-grant baseline with the dedicated
+  4uentes-automation receipt-intake grant agreed in CR-HPT-0007. This request
+  implements and validates provider-side code and owner contracts locally but
+  does not create secrets, deploy Auth or enable downstream routes.
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "shared authentication provider"
+    - "service credentials and cross-repo trust"
+    - "financial-document intake"
+
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5-high"
+
+subagent_deployment_plan:
+  required: false
+  roles: []
+  reason: "Security-sensitive provider and architecture changes remain in the primary agent."
+
+execution:
+  requires_human_approval: true
+  approval_source: "User approved continuation with the separate 4uentes-auth adoption/provisioning gate on 2026-08-27."
+  child_repo_mutation_allowed: true
+  owner_repo: "4uentes-auth"
+  active_owner_worktree_mutation_allowed: false
+  isolated_worktree_required: true
+  isolated_base_ref: "agent/cr-cp-0021-automation-m2m-auth@1808bfe"
+  isolated_branch: "feat/CR-HPT-0016/automation-receipt-intake-grant"
+  runtime_implementation_allowed: true
+  runtime_scope: "Local Auth provider registration and tests for one exact service grant only."
+  dependency_changes_allowed: false
+  infrastructure_changes_allowed: false
+  deployment_changes_allowed: false
+  secret_changes_allowed: false
+  real_secret_generation_allowed: false
+  downstream_route_activation_allowed: false
+  jira_write_allowed: true
+  jira_write_scope: "Create and read back exactly one Tarea for CR-HPT-0016 under HPT-8; no transition, comment or assignment."
+
+grant_contract:
+  grant_type: "client_credentials"
+  issuer: "sst-auth"
+  client_id: "4uentes-automation-receipt-intake"
+  subject: "4uentes-automation-receipt-intake"
+  audience: "sst-api"
+  exact_scope: "finance:receipt-intake:create"
+  token_use: "service"
+  signing: "RS256"
+  maximum_ttl_seconds: 300
+  refresh_token: false
+  user_claims: false
+  secret_policy: "Dedicated environment value, empty in .env.example and never recorded in Evidence."
+
+isolation_rules:
+  - "Do not reuse sst-bend, sst-chatbot or existing Automation command credentials."
+  - "Reject any other audience, scope, client_id, secret, grant_type or TTL above 300 seconds."
+  - "Do not emit user identity, account membership, finance_profile_id or finance entitlement claims."
+  - "Publishing the grant does not authorize SST routing or Phinance invocation."
+
+owner_documentation:
+  required: true
+  status: "planned"
+  owner_repo: "4uentes-auth"
+  planned_owner_docs:
+    - "specs/auth.yaml"
+    - "specs/capabilities/outbound/automation-receipt-intake-service-token-grant-v1.yaml"
+    - "docs/security/service-token-lifecycle.md"
+    - "docs/capabilities/outbound/automation-receipt-intake-service-token-grant-v1.md"
+    - "docs/tasks/2026-08-27-cr-hpt-0016-automation-receipt-intake-grant.md"
+
+implementation_plan:
+  - "Create the isolated owner worktree from the reconciled service-grant branch."
+  - "Add dedicated environment bindings with empty versioned secret placeholders."
+  - "Register one exact grant with a 300-second TTL ceiling and credential-isolation checks."
+  - "Publish the outbound capability and Spanish human documentation."
+  - "Add executable positive and negative provider tests without exposing secrets."
+  - "Run 4uentes-auth npm run check, targeted tests, diff checks and full control-plane npm run check."
+
+jira_mirror:
+  jira_source_of_truth: false
+  project_key: "HPT"
+  initiative_issue_key: "HPT-8"
+  request_issue_type: "Tarea"
+  request_issue_key: "HPT-10"
+  expected_parent: "HPT-8"
+  write_batch_ref: "evidence/requests/CR-HPT-0016/jira-write-batch.md"
+
+decision:
+  status: "approved-for-isolated-provider-adoption"
+  approver: "4uentes"
+  approved_at: "2026-08-27"
+  blocker: "Real secret provisioning, deployment and route activation remain forbidden."

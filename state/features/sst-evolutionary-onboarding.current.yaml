@@ -1,0 +1,19 @@
+schema_version: "1.0"
+kind: "feature_state"
+id: "sst-evolutionary-onboarding"
+title: "SST Evolutionary Onboarding"
+status: "planned"
+updated_at: "2026-09-08"
+solution_id: "sst"
+affected_services: ["sst-bend", "4uentes-auth", "sst-fend", "sst-chatbot"]
+request_ids: ["CR-SST-0240", "CR-SST-0242", "CR-SST-0243", "CR-SST-0244", "CR-SST-0245"]
+capability_refs: []
+spec_refs:
+  - "evidence/requests/CR-SST-0240/onboarding-v1-contract.yaml"
+  - "requests/planned/CR-SST-0240-define-and-coordinate-evolutionary-onboarding-v1.yaml"
+evidence_refs:
+  - "docs/projects/sst/onboarding-evolutivo-v1.md"
+  - "evidence/requests/CR-SST-0240/initiative-and-execution-plan.md"
+open_gaps:
+  - "Runtime not implemented; allocated owner plans require canonical readback and explicit running batches."
+  - "CR-SST-0238 navigation and CR-SST-0241 Compose parity remain prerequisite gates."

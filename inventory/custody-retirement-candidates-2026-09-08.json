@@ -1,0 +1,92 @@
+[
+    {
+        "path":  "C:/Users/andre/Desktop/4uentes/apps/4uentes-orchestor/.worktrees/cr-cp-0021-automation-owner-authorization",
+        "branch":  "refs/heads/agent/cr-cp-0021-automation-owner-authorization",
+        "head":  "ab77f91d9b93b71364466980bae2cd1b4f3985a7",
+        "canonical_ref":  "origin/main",
+        "clean_now":  true,
+        "process_references":  [
+
+                               ],
+        "mounts":  [
+
+                   ],
+        "disposition":  "eligible-only-after-final-active-use-confirmation-and-explicit-removal-authorization",
+        "remove_now":  false
+    },
+    {
+        "path":  "C:/Users/andre/Desktop/4uentes/apps/4uentes-orchestor/worktrees/CR-HPT-0021-private-dev-planning",
+        "branch":  "refs/heads/agent/cr-hpt-0021-private-dev-planning",
+        "head":  "dbd55158024704a81489fed1063095d8446f0cfb",
+        "canonical_ref":  "origin/main",
+        "clean_now":  true,
+        "process_references":  [
+
+                               ],
+        "mounts":  [
+
+                   ],
+        "disposition":  "eligible-only-after-final-active-use-confirmation-and-explicit-removal-authorization",
+        "remove_now":  false
+    },
+    {
+        "path":  "C:/Users/andre/Desktop/4uentes/apps/4uentes-orchestor/worktrees/CR-HPT-0024-control-plane-recovery",
+        "branch":  "refs/heads/agent/cr-hpt-0024-infra-pr29-reconciliation",
+        "head":  "8795091f036549b77a201067f45217b47bf7c921",
+        "canonical_ref":  "origin/main",
+        "clean_now":  true,
+        "process_references":  [
+
+                               ],
+        "mounts":  [
+
+                   ],
+        "disposition":  "eligible-only-after-final-active-use-confirmation-and-explicit-removal-authorization",
+        "remove_now":  false
+    },
+    {
+        "path":  "C:/Users/andre/Desktop/4uentes/apps/4uentes-orchestor/worktrees/CR-HPT-0024-owner-pr-readback",
+        "branch":  "refs/heads/agent/cr-hpt-0024-owner-pr-readback",
+        "head":  "95ebde5704c1b6184a847546f8da12555b5d4aad",
+        "canonical_ref":  "origin/main",
+        "clean_now":  true,
+        "process_references":  [
+
+                               ],
+        "mounts":  [
+
+                   ],
+        "disposition":  "eligible-only-after-final-active-use-confirmation-and-explicit-removal-authorization",
+        "remove_now":  false
+    },
+    {
+        "path":  "C:/Users/andre/Desktop/4uentes/apps/4uentes-orchestor/worktrees/CR-HPT-0024-owner-pr26-merge-readback",
+        "branch":  "refs/heads/agent/cr-hpt-0024-owner-pr26-merge-readback",
+        "head":  "a4d61b0cb08325e5440b25527f7539a2cbf4db06",
+        "canonical_ref":  "origin/main",
+        "clean_now":  true,
+        "process_references":  [
+
+                               ],
+        "mounts":  [
+
+                   ],
+        "disposition":  "eligible-only-after-final-active-use-confirmation-and-explicit-removal-authorization",
+        "remove_now":  false
+    },
+    {
+        "path":  "C:/Users/andre/Desktop/4uentes/apps/4uentes-orchestor/worktrees/CR-HPT-0021-infra-owner",
+        "branch":  "refs/heads/feat/CR-HPT-0021/private-development-gitops",
+        "head":  "b8d79014e81d7c881b58932f78284d1f5f33e27e",
+        "canonical_ref":  "origin/develop",
+        "clean_now":  true,
+        "process_references":  [
+
+                               ],
+        "mounts":  [
+
+                   ],
+        "disposition":  "eligible-only-after-final-active-use-confirmation-and-explicit-removal-authorization",
+        "remove_now":  false
+    }
+]

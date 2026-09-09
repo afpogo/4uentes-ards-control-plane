@@ -1,0 +1,17 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-HPT-0016"
+title: "Adopt the Automation receipt-intake service grant in 4uentes-auth"
+status: "inbox"
+created_at: "2026-08-27"
+requester: "4uentes"
+initiative_id: "INIT-HPT-0003"
+source_request_id: "CR-HPT-0007"
+summary: >
+  Adopt and validate the dedicated 4uentes-automation receipt-intake
+  client/scope in the 4uentes-auth owner without creating a real secret,
+  deploying the provider or enabling the SST receipt-intake route.
+requested_outcome:
+  - "Publish the exact client_credentials grant for audience sst-api and scope finance:receipt-intake:create."
+  - "Keep the client secret empty in versioned examples and unprovisioned in environments."
+  - "Validate positive claims, exact-scope isolation, TTL and negative reuse cases."

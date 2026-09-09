@@ -1,0 +1,32 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-HPT-0022"
+title: "Adopt the Automation receipt-object service grant in 4uentes-auth"
+status: "accepted-for-planning"
+created_at: "2026-08-28"
+requester: "4uentes"
+initiative_id: "INIT-HPT-0003"
+source_request_id: "CR-CP-0024"
+predecessor_request_ids: [CR-CP-0024]
+business_context: >
+  Automation needs a second, independently credentialed grant for receipt
+  object upload. Reusing or composing the existing receipt-intake grant would
+  collapse two trust boundaries and is forbidden.
+requested_outcomes:
+  - "Publish an exact client_credentials grant for audience sst-api and scope finance:receipt-object:create."
+  - "Use a dedicated Automation principal and secret binding, with RS256 service tokens and a maximum TTL of 300 seconds."
+  - "Keep finance:receipt-intake:create independent and reject combined or wildcard scopes."
+  - "Publish owner contracts and executable positive and negative grant tests."
+constraints:
+  - "Do not generate, read, print or persist a real secret or token."
+  - "Do not deploy Auth, activate Automation or enable an SST upload route."
+  - "Do not modify the active dirty 4uentes-auth worktree."
+  - "Do not emit user, account, membership, reviewer or financial entitlement claims."
+
+recovery_2026_09_08:
+  coordinator_request_id: "CR-CP-0024"
+  ordering: "retroactive; owner implementation and integration preceded canonical lifecycle recovery"
+  original_sha256: "8d4fd9eafa29c07dafe52412f1ba39dde994a253a1fd7d8983b0f18ab5b7a3d2"
+  provenance_ref: "evidence/requests/CR-CP-0024/custody-recovery-2026-09-08.md"
+  historical_state_not_current_validation: true
+  tracker_terminal_transition_authorized: false

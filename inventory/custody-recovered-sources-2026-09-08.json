@@ -1,0 +1,42 @@
+[
+  {
+    "source": "requests\\inbox\\CR-HPT-0022-adopt-automation-receipt-object-service-grant.yaml",
+    "sha256": "8d4fd9eafa29c07dafe52412f1ba39dde994a253a1fd7d8983b0f18ab5b7a3d2"
+  },
+  {
+    "source": "requests\\inbox\\CR-HPT-0023-implement-sst-receipt-binding-provisioning.yaml",
+    "sha256": "a471c8b04efa45be9afcb9464a3cbbda609b2f9f015e1a58f4e7baf603042a82"
+  },
+  {
+    "source": "requests\\inbox\\CR-HPT-0025-implement-sst-receipt-object-upload-custody-retention.yaml",
+    "sha256": "0856b28faf0c7a2703e37ad296e01f18f746d270cda6493937a73008224452eb"
+  },
+  {
+    "source": "requests\\inbox\\CR-HPT-0026-adopt-automation-receipt-custody-and-integrated-qa.yaml",
+    "sha256": "801f985da6ff06d94a3fc7dda8d993c2158628bb5cd06e5744aac699eec3b030"
+  },
+  {
+    "source": "requests\\planned\\CR-HPT-0022-adopt-automation-receipt-object-service-grant.yaml",
+    "sha256": "9f12eda5dc4d4731f0115c18291ace1b7e742ea42fd3177c1e7a5a0e0bd7acee"
+  },
+  {
+    "source": "requests\\planned\\CR-HPT-0023-implement-sst-receipt-binding-provisioning.yaml",
+    "sha256": "4d06d100d5fcb7309452015402ce9da222eb4b63c0a6399674dff266876880b3"
+  },
+  {
+    "source": "requests\\planned\\CR-HPT-0025-implement-sst-receipt-object-upload-custody-retention.yaml",
+    "sha256": "cb2181f24958d5126af29dce1762a0e9e05782c8888c1afc37af31ee7c8f8a4b"
+  },
+  {
+    "source": "requests\\planned\\CR-HPT-0026-adopt-automation-receipt-custody-and-integrated-qa.yaml",
+    "sha256": "851208f67ba6ce00f81099f0ca3e04862a9f7ad536542ae9db15a026aac0a827"
+  },
+  {
+    "source": "requests\\running\\CR-HPT-0022-adopt-automation-receipt-object-service-grant.yaml",
+    "sha256": "da4a1295b28293c44474c9740e86551c50d4913fbe8dc70c9032b0a1afe06ee9"
+  },
+  {
+    "source": "requests\\running\\CR-HPT-0023-implement-sst-receipt-binding-provisioning.yaml",
+    "sha256": "95ed8fb932f1d63558e317021bdf1d1aa145fe9e277a1c5572b07108be442c68"
+  }
+]

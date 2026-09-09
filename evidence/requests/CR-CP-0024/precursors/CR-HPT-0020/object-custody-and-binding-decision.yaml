@@ -1,0 +1,113 @@
+schema_version: "1.0"
+kind: "receipt_object_custody_and_binding_boundary"
+id: "CR-HPT-0020-receipt-object-custody-and-binding"
+status: "validated-control-plane-boundary-with-owner-todos"
+initiative_id: "INIT-HPT-0003"
+jira_task_key: "HPT-13"
+
+authority:
+  source_of_truth: "ARDS/SDD owner artifacts after approved child adoption"
+  control_plane_role: "record requirements, observed ownership and unresolved decisions"
+  jira_role: "operational mirror only"
+
+observed_contract:
+  acceptance_owner: "sst-bend"
+  acceptance_endpoint: "POST /4uentes/v1/automation/receipt-intakes"
+  required_binding: "active opaque receipt binding"
+  required_object: "registered, binding-owned, CLEAN and unexpired opaque object reference"
+  maximum_object_bytes: 10485760
+  inline_binary: false
+  raw_telegram_identity: false
+
+ownership:
+  acceptance_metadata_registry:
+    owner: "sst-bend"
+    status: "confirmed-by-CR-HPT-0019-local-implementation"
+  binary_object_custodian:
+    owner: "TODO"
+    status: "owner-decision-required"
+  malware_verdict_producer:
+    owner: "TODO"
+    status: "owner-decision-required"
+  binding_issuer_and_revoker:
+    owner: "TODO"
+    status: "owner-decision-required"
+  protected_qa_fixture_owner:
+    owner: "TODO"
+    status: "owner-decision-required"
+
+object_boundary:
+  proposed_upstream_states: [REGISTERED, SCANNING, CLEAN, REJECTED, EXPIRED, DELETED]
+  intake_eligible_state: "CLEAN"
+  required_metadata:
+    - "opaque object reference"
+    - "opaque binding id"
+    - "media type"
+    - "size in bytes"
+    - "SHA-256 digest"
+    - "scan status and verdict timestamp"
+    - "retention deadline"
+    - "creation and update timestamps"
+  forbidden_metadata:
+    - "raw Telegram identity"
+    - "access token or authorization header"
+    - "secret"
+    - "inline binary"
+  required_controls:
+    encryption_at_rest: "required-owner-contract-pending"
+    encryption_in_transit: "required-owner-contract-pending"
+    least_privilege_access: "required-owner-contract-pending"
+    malware_scan_before_clean: "required"
+    retention_and_deletion: "required-owner-contract-pending"
+    audit: "sanitized status, reason, digest and timestamps only"
+
+binding_boundary:
+  identifier: "opaque rb_ identifier; no external platform identity"
+  proposed_states: [ACTIVE, REVOKED, EXPIRED]
+  intake_eligible_state: "ACTIVE"
+  required_operations: [issue, resolve, revoke, expire]
+  issuance_inputs:
+    - "trusted SST principal context"
+    - "account id"
+    - "stable subject"
+    - "permitted reviewer references"
+  forbidden_inputs:
+    - "raw Telegram identity persisted as the binding key"
+    - "caller-provided account or reviewer authority without SST validation"
+  fail_closed_rules:
+    - "unknown, revoked or expired binding rejects intake"
+    - "object binding must equal request binding"
+    - "binding resolution never trusts Automation user claims"
+
+qa_boundary:
+  required_fixtures:
+    - "synthetic active binding"
+    - "synthetic CLEAN unexpired object"
+    - "synthetic rejected, expired and cross-binding objects"
+  required_cases:
+    - "active binding plus CLEAN object accepts to REVIEW_PENDING"
+    - "unknown, revoked and expired binding reject"
+    - "SCANNING, REJECTED, EXPIRED and DELETED object reject"
+    - "object from another binding rejects"
+  evidence_forbidden: [binary, secret, token, authorization_header, raw_external_identity]
+
+follow_up_gates:
+  - id: "object-custody-owner-adoption"
+    status: "blocked-owner-todo"
+    purpose: "Approve custodian and malware-verdict owners plus provider-neutral owner contracts."
+  - id: "binding-provisioning-owner-adoption"
+    status: "blocked-owner-todo"
+    purpose: "Approve binding issuer/revoker owner and trusted SST principal inputs."
+  - id: "owner-runtime-implementation"
+    status: "blocked-by-owner-adoption"
+    purpose: "Implement storage, scan and binding operations in isolated owner worktrees."
+  - id: "protected-integrated-qa"
+    status: "blocked-by-promotion-and-fixtures"
+    purpose: "Execute the CR-HPT-0017 positive and negative QA manifest."
+
+non_goals:
+  - "select a concrete storage, malware or cloud provider"
+  - "assign an unresolved owner without owner approval"
+  - "implement runtime, migrations, infrastructure or deployment"
+  - "provision secrets or access real documents"
+  - "activate n8n, invoke Phinance, run OCR or materialize financial data"

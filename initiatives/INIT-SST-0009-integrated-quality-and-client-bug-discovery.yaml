@@ -3,7 +3,7 @@ kind: "initiative"
 id: "INIT-SST-0009"
 title: "SST Integrated Quality and Client-Like Bug Discovery"
 status: "active"
-updated_at: "2026-08-29"
+updated_at: "2026-09-08"
 owner_repository: "4uentes-orchestor"
 objective: >
   Establish a repeatable SST quality cycle that combines repository-owned unit
@@ -17,6 +17,10 @@ initial_hypothesis: >
   usability and regression defects earlier while preventing stale evidence or
   healthy-looking infrastructure from producing false-positive closure.
 source_evidence_refs:
+  - "evidence/requests/CR-SST-0238/discovery-and-plan-2026-09-07.md"
+  - "evidence/requests/CR-SST-0238/evolutionary-onboarding-recommendation-2026-09-07.md"
+  - "evidence/requests/CR-SST-0241/discovery-and-plan-2026-09-07.md"
+  - "evidence/requests/CR-SST-0241/identity-reconciliation-2026-09-08.md"
   - "evidence/initiatives/INIT-SST-0009/initiative-decision.md"
   - "evidence/initiatives/INIT-SST-0009/jira-readonly-preflight.md"
   - "evidence/requests/CR-SST-0222/identity-preflight-2026-08-27.md"
@@ -29,6 +33,8 @@ model_refs:
   - "specs/initiatives/initiative-model.yaml"
   - "docs/requests/initiative-model.md"
 known_change_requests:
+  - "CR-SST-0238"
+  - "CR-SST-0241"
   - "CR-SST-0222"
   - "CR-SST-0229"
   - "CR-SST-0231"

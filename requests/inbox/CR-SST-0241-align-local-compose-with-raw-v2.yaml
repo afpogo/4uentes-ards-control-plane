@@ -1,0 +1,24 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0241"
+title: "Align SST local Compose with the raw-v2 development release"
+status: "inbox"
+created_at: "2026-09-07"
+requester: "4uentes"
+summary: >
+  Reserve the sst-fend local-readiness correction so Docker Compose cannot
+  silently compile or run the development frontend with legacy credential
+  protocol defaults while the development release uses raw-v2.
+requested_scope:
+  initiative_id: "INIT-SST-0009"
+  coordinator_request_id: "CR-SST-0222"
+  owner_repository: "sst-fend"
+  affected_surface: "local Docker Compose build and runtime configuration"
+constraints:
+  - "This reservation and plan change control-plane artifacts only."
+  - "Do not change remote HTTPS requirements or production-safe Dockerfile defaults."
+  - "Do not persist real KDF material, credentials, cookies or encryption keys."
+  - "No Jira write, container recreation or owner publication is authorized by this reservation."
+requested_next_step: >
+  Validate and publish the plan, read it back from main, and then request the
+  exact Compose owner running batch.

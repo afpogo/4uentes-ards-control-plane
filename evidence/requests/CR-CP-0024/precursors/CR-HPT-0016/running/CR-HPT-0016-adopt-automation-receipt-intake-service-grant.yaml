@@ -1,0 +1,103 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-HPT-0016"
+title: "Adopt the Automation receipt-intake service grant in 4uentes-auth"
+status: "running"
+source_request: "evidence/requests/CR-CP-0024/precursors/CR-HPT-0016/planned/CR-HPT-0016-adopt-automation-receipt-intake-service-grant.yaml"
+started_at: "2026-08-27"
+requester: "4uentes"
+
+control_plane_context:
+  initiative_id: "INIT-HPT-0003"
+  predecessor_request_ids: [CR-HPT-0007, CR-CP-0021, CR-SST-0208]
+  jira_epic_key: "HPT-8"
+  jira_task_key: "HPT-10"
+  state_id: "telegram-receipt-intake-adoption"
+
+execution:
+  approval_source: "User approved continuation with the separate Auth adoption/provisioning gate on 2026-08-27."
+  owner_repo: "4uentes-auth"
+  child_repo_mutation_allowed: true
+  active_owner_worktree_mutation_allowed: false
+  isolated_worktree_required: true
+  isolated_worktree_path: "worktrees/CR-HPT-0016-auth-owner"
+  isolated_base_ref: "agent/cr-cp-0021-automation-m2m-auth@1808bfe"
+  isolated_branch: "feat/CR-HPT-0016/automation-receipt-intake-grant"
+  owner_commit_ref: "4uentes-auth@b5ff812"
+  promotion_worktree_path: "worktrees/CR-HPT-0022-auth-promotion-ready"
+  promotion_branch: "agent/cr-hpt-0022-promotion-ready"
+  promotion_ready_tip: "4uentes-auth@1a9cee2"
+  documentation_language_exception: "Feature-specific Markdown is English by explicit user instruction on 2026-08-29."
+  runtime_implementation_allowed: true
+  runtime_scope: "Register and validate exactly one local provider grant."
+  dependency_changes_allowed: false
+  infrastructure_changes_allowed: false
+  deployment_changes_allowed: false
+  secret_changes_allowed: false
+  real_secret_generation_allowed: false
+  downstream_route_activation_allowed: false
+  jira_write_allowed: true
+  jira_write_scope: "HPT-10 was reconciled to En curso with objective, start comment and accumulated progress under the authorized 2026-08-29 batch."
+
+grant_contract:
+  grant_type: "client_credentials"
+  issuer: "sst-auth"
+  client_id: "4uentes-automation-receipt-intake"
+  subject: "4uentes-automation-receipt-intake"
+  audience: "sst-api"
+  exact_scope: "finance:receipt-intake:create"
+  token_use: "service"
+  signing: "RS256"
+  maximum_ttl_seconds: 300
+  refresh_token: false
+  user_claims: false
+  secret_policy: "Dedicated environment value, empty in .env.example and absent from Evidence."
+
+allowed_mutations:
+  - "4uentes-auth isolated worktree: environment schema/example, service-grant registry, provider tests, specs, capabilities and scoped English owner docs"
+  - "4uentes-orchestor: CR-HPT-0016 lifecycle, state, Jira mirror and sanitized Evidence"
+
+forbidden_mutations:
+  - "active dirty 4uentes-auth worktree"
+  - "real .env values, secrets, credentials or token capture"
+  - "deployment, infrastructure, dependency or database changes"
+  - "SST, n8n or Phinance runtime changes"
+  - "route activation or integrated protected traffic"
+
+owner_documentation:
+  required: true
+  status: "satisfied"
+  owner_repo: "4uentes-auth"
+  planned_owner_docs:
+    - "specs/auth.yaml"
+    - "specs/capabilities/outbound/automation-receipt-intake-service-token-grant-v1.yaml"
+    - "docs/security/service-token-lifecycle.md"
+    - "docs/capabilities/outbound/automation-receipt-intake-service-token-grant-v1.md"
+    - "docs/tasks/2026-08-27-cr-hpt-0016-automation-receipt-intake-grant.md"
+
+jira_mirror:
+  jira_source_of_truth: false
+  project_key: "HPT"
+  initiative_issue_key: "HPT-8"
+  request_issue_type: "Tarea"
+  request_issue_key: "HPT-10"
+  expected_parent: "HPT-8"
+  evidence_ref: "evidence/requests/CR-HPT-0016/jira-task-sync-summary.md"
+
+implementation_status:
+  lifecycle_and_jira: "validated"
+  isolated_owner_worktree: "validated"
+  provider_grant: "validated-local-disabled-without-secret"
+  owner_contracts: "validated"
+  validation: "passed"
+  promotion_preflight: "passed-current-develop-local-no-push"
+  overall: "validated-local-promotion-ready-running"
+
+evidence_refs:
+  - "evidence/requests/CR-HPT-0016/jira-task-sync-summary.md"
+  - "evidence/requests/CR-HPT-0016/working-tree-isolation.md"
+  - "evidence/requests/CR-HPT-0016/provider-validation.md"
+  - "evidence/requests/CR-HPT-0016/changed-files-summary.md"
+  - "evidence/initiatives/INIT-HPT-0003/owner-branch-consolidation-2026-08-29.md"
+  - "evidence/initiatives/INIT-HPT-0003/owner-promotion-preflight-2026-08-29.md"
+  - "evidence/initiatives/INIT-HPT-0003/owner-develop-reconciliation-2026-08-29.md"

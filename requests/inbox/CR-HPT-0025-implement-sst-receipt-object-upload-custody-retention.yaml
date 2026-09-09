@@ -1,0 +1,27 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-HPT-0025"
+title: "Implement SST receipt-object upload custody and retention"
+status: "accepted-for-planning"
+created_at: "2026-08-28"
+requester: "4uentes"
+initiative_id: "INIT-HPT-0003"
+source_request_id: "CR-CP-0024"
+predecessor_request_ids: [CR-CP-0024, CR-HPT-0022, CR-HPT-0023, CR-HPT-0024]
+requested_outcomes:
+  - "Expose POST /4uentes/v1/automation/receipt-objects as a multipart, idempotent, 10 MiB maximum service boundary."
+  - "Validate real media type, active binding, SHA-256 and CLEAN malware verdict before durable storage."
+  - "Reuse the CR-CP-0024 (historical intake precursor) object model and DocumentStoragePort and add a provider-neutral malware scanning port."
+  - "Enforce 24-hour rejected, 7-day confirmed-handoff and 30-day absolute retention with sanitized tombstones."
+constraints:
+  - "CR-CP-0024 (historical intake precursor) must be integrated and the CR-HPT-0024 private platform must be available before owner mutation."
+  - "Fail closed when scanner, KMS or object storage is unavailable."
+  - "Do not implement approval, OCR, financial creation or Phinance invocation."
+
+recovery_2026_09_08:
+  coordinator_request_id: "CR-CP-0024"
+  ordering: "retroactive; owner implementation and integration preceded canonical lifecycle recovery"
+  original_sha256: "0856b28faf0c7a2703e37ad296e01f18f746d270cda6493937a73008224452eb"
+  provenance_ref: "evidence/requests/CR-CP-0024/custody-recovery-2026-09-08.md"
+  historical_state_not_current_validation: true
+  tracker_terminal_transition_authorized: false
