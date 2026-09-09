@@ -1,0 +1,24 @@
+{
+  "preflight": {
+    "jql": "project = SST AND text ~ \"CR-SST-0242\"",
+    "count": 1,
+    "observedAt": "2026-09-09T04:51:32.235Z"
+  },
+  "key": "SST-129",
+  "type": "Subtask",
+  "parent": "SST-128",
+  "status": "En curso",
+  "comments": [
+    {
+      "id": "10433",
+      "body": "CR-SST-0242 inicio: lote aprobado el 2026-09-09, running publicado en PR #291 antes de mutar Bend. Implementación aislada y pruebas Postgres descartables; no deployment ni datos reales. Jira es espejo.",
+      "created": "2026-09-09T01:39:04.331-0300"
+    },
+    {
+      "id": "10434",
+      "body": "CR-SST-0242 avance owner: implementacion y contrato publicados en https://github.com/afpogo/sst-bend/pull/35 (bc40bd3), revision sin bloqueantes y pruebas HTTP/Postgres aprobadas. Merge pendiente: workflow escribe infra development, fuera del lote aprobado. Gate ARDS: evidence/requests/CR-SST-0242/integration-gate.md. Smoke protegido parcial por falta JWT; sin QA integrada ni deployment. Jira conserva En curso.",
+      "created": "2026-09-09T01:51:33.474-0300"
+    }
+  ],
+  "observedAt": "2026-09-09T04:51:34.010Z"
+}
