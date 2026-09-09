@@ -59,9 +59,12 @@ jira_mirror:
   evidence_ref: "evidence/requests/CR-HPT-0023/jira-task-sync-summary.md"
 
 implementation_status:
-  integrated_base: "fdc753ff0bf96e8b8b5f603a9aae11503aa2ace1"
-  overall: "synthetic-matrix-passed-correction-publication-pending"
-  validation_evidence: "evidence/requests/CR-CP-0024/custody-validation-2026-09-08.md"
+  integrated_base: "e425355f65cfd1b70abbe6e38df579d905252459"
+  overall: "technically-validated-synthetic-integrated-and-deployed-tracker-pending"
+  validation_evidence: "evidence/requests/CR-CP-0024/sst-pr34-authorized-rollout-2026-09-09.md"
+  correction_pull_request: 34
+  deployed_image: "ghcr.io/afpogo/sst-bend:develop-e425355f65cf"
+  infra_pin_commit: "35891be72a37bbfdf7615f9632289df3161f0f77"
   terminal_tracker_authorized: false
 
 validation:

@@ -10,18 +10,15 @@ started_at: "2026-08-30"
 requester: "4uentes"
 
 summary: >
-  Backend owner PR 32 is integrated and its image is pinned in Infra. The new
-  Backend pod exposed a receipt-clamav capability failure while the previous
-  ready pod preserved availability. Infra PR 24 was published with green
-  checks, then merged outside the agent gate and applied by Argo CD autosync.
-  The CAP_CHOWN-only remediation was insufficient. Infra PR 25 replaced the
-  root entrypoint, added the governed delivery plan and was merged under an
-  explicit gate. Its autosync removed the permission failure but exposed a
-  repeatable ClamAV OOM during signature update; the previous pod still
-  preserves availability while a bounded memory remediation is gated. The
-  governed program scoreboard records 46 of 100 evidence-backed points, keeps
-  phase 2 at zero and contains later Portfolio and Automation documentation
-  drift without treating it as retroactive authorization.
+  Custody traceability was recovered through control-plane PR 288. Auth
+  grants and the synthetic binding/intake matrix are validated. SST PR 34
+  fixes admission of expired bindings and is integrated and deployed under
+  explicit user authorization. Its cold rollout reproduced a ClamAV startup
+  race: database 28117 on disk but 28102 active. Infra PR 31 introduces a
+  verified synchronous initial update; cold start with 28117, clean/EICAR and
+  unavailable socket checks passed with Argo Synced/Healthy and zero restarts.
+  AIStor/KMS prerequisites and tracker terminal transitions remain separate
+  gates. No Auth/SST stable promotion or worktree retirement is authorized.
 
 control_plane_context:
   initiative_id: "INIT-CP-0003"
@@ -41,7 +38,7 @@ authorization:
   evidence: "evidence/requests/CR-CP-0024/auth-owner-execution-authorization-2026-08-30.md"
 
 execution:
-  current_unit: "custody-recovery-and-synthetic-validation"
+  current_unit: "aistor-kms-external-prerequisites-pending"
   parallel_unit: "worktree-sanitization-disposition-and-selective-recovery"
   completed_units:
     - "publish-plan-and-migration-lifecycle"
