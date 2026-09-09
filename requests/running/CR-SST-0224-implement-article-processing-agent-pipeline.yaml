@@ -47,7 +47,7 @@ authorization:
   jira_write_allowed: false
 
 execution:
-  current_unit: "owner-sequential-checkpoints-unit-4"
+  current_unit: "owner-final-synthesis-unit-5"
   control_plane_mutation_allowed: true
   child_repo_mutation_allowed: true
   owner_git_mutation_allowed: true
@@ -94,9 +94,9 @@ worktree_lifecycle:
     initial_status: "clean-and-synchronized"
 
 owner_preflight:
-  status: "refreshed-and-owner-unit-4-validated"
+  status: "refreshed-and-owner-unit-5-validated"
   observed_owner_ref: "origin/develop@5b96bbb4c08731785f007ecaabd9e8c03bc88283"
-  evidence_ref: "evidence/requests/CR-SST-0224/owner-unit-4-checkpoints-2026-09-08.md"
+  evidence_ref: "evidence/requests/CR-SST-0224/owner-unit-5-final-synthesis-2026-09-09.md"
   owner_files_mutated: true
   next_requirement: >
     Continue the approved local plan with the provider boundary and the
@@ -179,6 +179,7 @@ decision:
     local plan. Publication, tracker writes and deployment remain excluded.
 
 evidence_refs:
+  - "evidence/requests/CR-SST-0224/owner-unit-5-final-synthesis-2026-09-09.md"
   - "evidence/requests/CR-SST-0224/consolidation-and-jira-2026-09-09.md"
   - "evidence/requests/CR-SST-0224/owner-unit-4-checkpoints-2026-09-08.md"
   - "evidence/requests/CR-SST-0224/owner-unit-3-provider-2026-09-08.md"

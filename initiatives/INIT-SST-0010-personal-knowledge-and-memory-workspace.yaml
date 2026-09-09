@@ -247,10 +247,10 @@ article_processing_adoption:
   first_owner_manual_review: "passed-2026-08-29"
   second_owner_request_id: "CR-SST-0224"
   second_owner_preflight_status: "published-and-read-back; historical worktrees retired"
-  second_owner_execution_status: "running-merged-pr-261; owner-unit-4-checkpoints-validated-local-2026-09-08; jira-sst-126-created-and-read-back-2026-09-07"
+  second_owner_execution_status: "running-merged-pr-261; owner-unit-5-final-candidate-validated-local-2026-09-09; jira-sst-126-en-curso"
   second_owner_jira_issue_key: "SST-126"
   second_owner_jira_evidence_ref: "evidence/requests/CR-SST-0224/jira-create-readback-2026-09-07.md"
-  next_gate: "continue the approved local CR-SST-0224 plan with final synthesis and provenance"
+  next_gate: "review remaining token-budget, provider and lifecycle integration gaps before owner completion"
 learning_workspace_source_adoption:
   status: "first-owner-live-readback-passed-protected-positive-qa-pending"
   request_id: "CR-SST-0232"
