@@ -74,7 +74,7 @@ api:
     - "After refresh or another-tab/device mutation, refetch canonical state before further changes."
     - "A timeout is an unknown result: retry with the same key or refetch, never invent completion."
   owner_decisions_before_implementation:
-    - "TODO: bind resourceRef and article success predicate to the exact owner Articles contract and published capability."
+    - "Bind resourceRef to the persisted article ID from article-text-ingestion: POST /4uentes/v1/articulos, payload.kind=text, successful 201. CR-SST-0242 must publish server-verifiable actor/attempt proof; account membership and recent timestamps alone are insufficient."
     - "TODO: publish correlation-header spelling, error envelope, idempotency retention and resource deduplication scope under the Bend owner CR."
     - "TODO: publish state/receipt retention and deletion behavior aligned with existing user-data lifecycle."
 transitions:
@@ -88,7 +88,7 @@ transitions:
 activation:
   selected_goal: "articles"
   first_verifiable_outcome: "article_saved"
-  definition: "A successful durable article/draft save through the real Articles flow, authorized for this user and verified by Bend."
+  definition: "V1 uses successful native text article creation via article-text-ingestion, authorized for this actor and attempt and verified by Bend; drafts or updates require a later explicit outcome contract."
   freshness: "Outcome must belong to the current start/reopen attempt; a prior receipt or merely loading an existing route cannot activate it again."
   rejected: ["route visit", "client-only checkbox", "missing resource", "foreign resource", "failed save", "goal mismatch", "unavailable goal", "chatbot assertion"]
 relay:

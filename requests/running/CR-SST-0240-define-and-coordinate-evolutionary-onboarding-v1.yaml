@@ -46,7 +46,7 @@ execution:
   git_publication_allowed: true
   jira_write_allowed: false
   jira_batch_status: "initial-batch-complete; authorization-consumed"
-  next_gate: "Stabilize owner bindings and derive executable owner CRs after a fresh identity preflight."
+  next_gate: "Read back CR-SST-0242 through CR-SST-0245 plans; enumerate the Bend running batch and a new Jira batch before execution."
 publication_policy:
   policy_id: "execution-publication-and-tracker-closure-policy"
   enforcement_activation: "Add the enforcement marker to planned and running together at execution start; the validator requires an execution state."
@@ -66,9 +66,11 @@ acceptance:
   - "Contract covers automatic new-user entry, existing-user invitation, verified outcomes, skip, resume and reopen."
   - "Durable progress belongs to sst-bend; Auth only relays; Chat L1 is optional and read-only."
   - "Capability readiness, revision conflicts, idempotency, failure fallback, privacy, accessibility and rollback are explicit."
-  - "All owner implementation requests remain unallocated until a fresh preflight."
+  - "Owner requests are allocated only after fresh Git/worktree/PR/JQL preflight; allocation alone does not authorize mutation."
   - "Full control-plane check passes and Jira keys are captured after readback."
 evidence_refs:
+  - "evidence/requests/CR-SST-0240/owner-binding-and-slice-plan.md"
+  - "evidence/requests/CR-SST-0240/owner-slice-jql-preflight.json"
   - "evidence/requests/CR-SST-0240/jira-and-canonical-readback.md"
   - "evidence/requests/CR-SST-0240/jira-batch-readback.json"
   - "evidence/requests/CR-SST-0240/initiative-and-execution-plan.md"
@@ -90,5 +92,6 @@ plan_publication:
   merge_commit: "d2a892b"
   readback: "Canonical planned request read after fetch."
 coordination_deliverables:
+  owner_slices: ["CR-SST-0242", "CR-SST-0243", "CR-SST-0244", "CR-SST-0245"]
   contract: "evidence/requests/CR-SST-0240/onboarding-v1-contract.yaml"
   human_map_and_matrix: "docs/projects/sst/onboarding-evolutivo-v1.md"

@@ -1,0 +1,82 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0244"
+title: "Implement the onboarding hub and resumable Home invitation"
+status: "planned"
+created_at: "2026-09-08"
+requester: "4uentes"
+source_request: "requests/inbox/CR-SST-0244-implement-onboarding-hub-and-home-invitation.yaml"
+summary: "Prepare the bounded sst-fend execution slice of onboarding V1."
+depends_on: ["CR-SST-0240","CR-SST-0242","CR-SST-0243","CR-SST-0238"]
+control_plane_context:
+  initiative_id: "INIT-SST-0011"
+  parent_request_id: "CR-SST-0240"
+  owner_repository: "sst-fend"
+  feature_state_id: "sst-evolutionary-onboarding"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  jira_issue_key: null
+  proposed_jira_issue_type: "Subtask"
+  proposed_jira_parent_issue_key: "SST-128"
+  jira_epic_issue_key: "SST-127"
+  jira_write_authorized: false
+risk:
+  level: "high"
+  drivers: ["DURABLE_USER_PROGRESS", "AUTHENTICATED_RESOURCE_SCOPE", "PRIVACY", "FALSE_POSITIVE_ACTIVATION"]
+task_weight:
+  classification: "complex-high-risk-task"
+model_selection:
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5"
+  reason: "Keep identity, privacy and cross-repository contracts under high-reasoning review."
+subagent_deployment_plan:
+  mode: "none"
+  reason: "Bounded sequential lifecycle preparation; no owner mutation or delegated decisions."
+contract_ref: "evidence/requests/CR-SST-0240/onboarding-v1-contract.yaml"
+owner_binding_ref: "evidence/requests/CR-SST-0240/owner-binding-and-slice-plan.md"
+planned_surfaces:
+  - "specs/31-auth-frontend.yml"
+  - "specs/33-articles-frontend.yml"
+  - "specs/capabilities/inbound/4uentes-auth--onboarding-v1.yaml (new)"
+  - "docs/onboarding-v1.md (new)"
+  - "src/machines/AuthMachine/ entry integration"
+  - "src/App/ protected routing"
+  - "src/pages/Onboard/ and Home invitation (new or existing owner layout)"
+  - "src/pages/Articles/ successful-create integration"
+  - "owner UI, accessibility and browser tests"
+objectives:
+  - "Create a real protected /onboard hub gated by durable state and feature flag."
+  - "New registration starts durably; existing users without state stay Home and receive a re-openable invitation."
+  - "Use canonical POST /api/articles for native text and report its real outcome; do not treat route visits as completion."
+  - "Implement skip/resume/reopen, conflict refetch, safe Home fallback and optional static-first L1 guidance."
+execution_gates:
+  - "CR-SST-0238 navigation fix and CR-SST-0243 BFF capability published/read back."
+  - "No reuse of the old unsupported /onboard redirect as proof of completed implementation."
+  - "Explicit owner running batch; flag stays off until integrated QA passes."
+execution:
+  control_plane_mutation_allowed: true
+  child_repo_mutation_allowed: false
+  runtime_mutation_allowed: false
+  jira_write_allowed: false
+  next_gate: "Canonical plan readback, owner preflight and explicit running batch."
+owner_documentation:
+  required: true
+  status: "planned"
+  reason: "Publish owner specs, capabilities, Spanish docs, tests and request linkage with implementation."
+acceptance:
+  - "New/existing/skipped/completed users follow the approved entry matrix."
+  - "Refresh, multiple tabs/devices and stale responses converge on canonical state."
+  - "Feature flag off, API failure and expired session never cause redirect loops."
+  - "Keyboard, focus restoration, contrast, mobile and reduced motion pass."
+  - "Chat/Learning missing cannot block static Articles onboarding; no sensitive telemetry."
+validation:
+  control_plane: "npm.cmd run check"
+  owner: "Full owner check plus focused contract, negative-path and concurrency tests"
+  closure: "Owner publication/readback, sanitized evidence and full control-plane gate before done."
+evidence_refs:
+  - "evidence/requests/CR-SST-0240/owner-binding-and-slice-plan.md"
+  - "evidence/requests/CR-SST-0240/owner-slice-jql-preflight.json"
