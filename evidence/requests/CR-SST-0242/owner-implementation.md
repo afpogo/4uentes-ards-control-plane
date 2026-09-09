@@ -39,8 +39,9 @@ El flag permanece apagado por defecto; no hay migración automática ni deployme
   integrada de los consumidores ni del runtime publicado.
 - `npm run check` completo del control plane: exit 0, owner documentation
   incluido; 53 documentos, 67 mapas visuales y 0 FAIL.
-- CI del head `bc40bd3`: Node 18/20 aprobados; build de imagen de PR en curso
-  al preparar esta evidencia. La ejecución PR no publica imagen ni modifica infra.
+- CI del head `bc40bd3`: Node 18/20 y build de imagen de PR aprobados;
+  readback final 2026-09-09. La ejecución PR no publica imagen ni modifica infra.
+  Runs: `34312511655` (Node) y `34312511661` (imagen).
 
 Postgres de prueba: contenedor exclusivo etiquetado CR-SST-0242, loopback y
 base descartable `onboarding_test`; no se usó base compartida ni datos reales.
