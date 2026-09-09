@@ -1,0 +1,30 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0238"
+title: "Reconcile SST authenticated entry and React compatibility"
+status: "inbox"
+created_at: "2026-09-07"
+requester: "4uentes"
+summary: >
+  Reserve the sst-fend correction for the stale first-login /onboard
+  navigation and the three development-console compatibility warnings found
+  during the governed landing, login and Home walkthrough.
+requested_scope:
+  initiative_id: "INIT-SST-0009"
+  coordinator_request_id: "CR-SST-0222"
+  owner_repository: "sst-fend"
+  observed_surfaces:
+    - "first-login navigation"
+    - "Landing hero image"
+    - "SstButton references consumed by Ant Design overlays"
+    - "React Router transition compatibility"
+constraints:
+  - "This reservation and plan change control-plane artifacts only."
+  - "Do not add an onboarding route or screen without an owner product contract."
+  - "Do not remove React StrictMode or suppress console output."
+  - "Do not change login, refresh, logout, CSRF, credential or backend contracts."
+  - "Owner specs and human documentation must change with owner runtime code."
+  - "No Jira write, runtime mutation or owner publication is authorized by this reservation."
+requested_next_step: >
+  Validate and publish the plan, read it back from main, and then request the
+  exact sst-fend running batch.
