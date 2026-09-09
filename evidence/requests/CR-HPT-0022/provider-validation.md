@@ -45,4 +45,3 @@ La repetición del check owner pasó completa.
 
 No se registraron JWT, headers de autorización reales, credenciales ni datos
 financieros.
-

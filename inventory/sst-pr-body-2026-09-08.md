@@ -1,4 +1,4 @@
-﻿Un binding con status=active pero expires_at vencido permitía un intake nuevo con 202. El servicio pasa ahora el instante de admisión y la consulta exige expires_at > now, devolviendo 403 sin cambiar el replay idempotente ni agregar endpoints.
+Un binding con status=active pero expires_at vencido permitía un intake nuevo con 202. El servicio pasa ahora el instante de admisión y la consulta exige expires_at > now, devolviendo 403 sin cambiar el replay idempotente ni agregar endpoints.
 
 Incluye harness HTTP con rutas y middleware reales, JWKS efímero y PostgreSQL desechable: 30 aserciones de binding/intake, scopes, aislamiento, rollback, revocación y vencimiento. El harness de migraciones existente pasó fresh, upgrade, down/up, preservación y paridad.
 

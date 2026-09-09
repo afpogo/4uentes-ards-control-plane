@@ -22,4 +22,3 @@ Archivos propios del gate:
 El worktree también preserva la base owner todavía no integrada de
 `CR-HPT-0016`; esos archivos no se atribuyen a `CR-HPT-0022` y no se alteró el
 worktree fuente.
-

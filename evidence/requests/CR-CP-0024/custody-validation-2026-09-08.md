@@ -12,7 +12,7 @@ Coordinación: CR-CP-0024. Owner bindings/intake: CR-HPT-0023.
 | SST PostgreSQL `test-migration-chain-postgres.js` | fdc753f | PASS: fresh, upgrade, down/up, preservación de datos y paridad; sin modificar migraciones |
 | SST `test-custody-http-postgres.js` | fdc753f + corrección | PASS: 30 aserciones HTTP con rutas reales, middleware real, JWKS efímero y PostgreSQL desechable |
 | Infra `npm run check` | ba618db | PASS completo, incluidos renders y dry-runs; log en inventory |
-| CP `npm run check` | recuperación local | PASS completo tras recuperar referencias históricas; repetir después del último cambio documental |
+| CP `npm run check` | recuperación local | PASS completo final, incluidas owner-docs y 53 documentos con 67 mapas; 0 FAIL |
 
 El primer intento del harness de migraciones dentro del sandbox falló al
 ejecutar sequelize-cli sin salida de error; la repetición fuera del sandbox
@@ -87,5 +87,7 @@ La corrección SST está publicada en PR #34, HEAD
 UTF-8). Necesita integración antes de declarar validado
 el código canónico. Su workflow de push a develop construye imagen y cambia
 el pin Infra: el merge necesita un gate que abarque ese efecto de despliegue.
+Readback de ese HEAD: los tres checks GitHub están SUCCESS (`sst` Node 18/20
+y `build-publish-update`); estado del PR OPEN/CLEAN.
 La cobertura general omitida por el smoke owner queda explícita; las 30
 aserciones sintéticas acreditan exclusivamente custodia/intake.
