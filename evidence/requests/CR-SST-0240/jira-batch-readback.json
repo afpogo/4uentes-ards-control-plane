@@ -1,0 +1,96 @@
+{
+  "request": "CR-SST-0240",
+  "project": "SST",
+  "status": "complete",
+  "issues": [
+    {
+      "identity": "INIT-SST-0011",
+      "key": "SST-127",
+      "type": "Epic",
+      "parent": null,
+      "createdAt": "2026-09-09T00:14:22.253Z",
+      "comments": [
+        {
+          "id": "10428",
+          "created": "2026-09-08T21:14:23.633-0300",
+          "body": "[CR-SST-0240 inicio] Coordinación iniciada bajo INIT-SST-0011. Plan canónico PR #284; contrato y running publicados en PR #285. Jira es espejo operativo; ARDS/SDD conserva autoridad. Este lote no modifica repos funcionales."
+        },
+        {
+          "id": "10429",
+          "created": "2026-09-08T21:14:25.820-0300",
+          "body": "[CR-SST-0240 avance V1] Contrato funcional/API, mapa visual y matrices de capacidades y QA publicados. npm.cmd run check completo pasó: 49 documentos, 63 mapas, 0 FAIL. Feature planificada; CR coordinador running. Dependencias: CR-SST-0238 y CR-SST-0241. Próximo gate: estabilizar bindings owner y derivar slices con nuevo preflight; no se reservaron IDs."
+        }
+      ],
+      "status": "En curso",
+      "readbackAt": "2026-09-09T00:15:07.080Z"
+    },
+    {
+      "identity": "CR-SST-0240",
+      "key": "SST-128",
+      "type": "Tarea",
+      "parent": "SST-127",
+      "createdAt": "2026-09-09T00:15:08.285Z",
+      "comments": [
+        {
+          "id": "10430",
+          "created": "2026-09-08T21:15:09.699-0300",
+          "body": "[CR-SST-0240 inicio] Coordinación iniciada bajo INIT-SST-0011. Plan canónico PR #284; contrato y running publicados en PR #285. Jira es espejo operativo; ARDS/SDD conserva autoridad. Este lote no modifica repos funcionales."
+        },
+        {
+          "id": "10431",
+          "created": "2026-09-08T21:15:12.276-0300",
+          "body": "[CR-SST-0240 avance V1] Contrato funcional/API, mapa visual y matrices de capacidades y QA publicados. npm.cmd run check completo pasó: 49 documentos, 63 mapas, 0 FAIL. Feature planificada; CR coordinador running. Dependencias: CR-SST-0238 y CR-SST-0241. Próximo gate: estabilizar bindings owner y derivar slices con nuevo preflight; no se reservaron IDs."
+        }
+      ],
+      "status": "En curso",
+      "readbackAt": "2026-09-09T00:15:12.530Z"
+    }
+  ],
+  "preflight": [
+    {
+      "jql": "project = SST AND text ~ \"INIT-SST-0011\"",
+      "matches": [],
+      "observedAt": "2026-09-09T00:14:19.174Z"
+    },
+    {
+      "jql": "project = SST AND text ~ \"CR-SST-0240\"",
+      "matches": [],
+      "observedAt": "2026-09-09T00:14:19.574Z"
+    },
+    {
+      "jql": "project = SST AND text ~ \"INIT-SST-0011\"",
+      "matches": [
+        {
+          "key": "SST-127",
+          "summary": "[SST][INIT-SST-0011] Evolutionary onboarding and first-value activation"
+        }
+      ],
+      "observedAt": "2026-09-09T00:15:04.469Z"
+    },
+    {
+      "jql": "project = SST AND text ~ \"CR-SST-0240\"",
+      "matches": [
+        {
+          "key": "SST-127",
+          "summary": "[SST][INIT-SST-0011] Evolutionary onboarding and first-value activation"
+        }
+      ],
+      "observedAt": "2026-09-09T00:15:05.037Z"
+    }
+  ],
+  "completedAt": "2026-09-09T00:15:12.530Z",
+  "finalIdentityReadback": [
+    {
+      "jql": "project = SST AND issuetype = Epic AND summary ~ \"INIT-SST-0011\"",
+      "key": "SST-127",
+      "count": 1,
+      "observedAt": "2026-09-09T00:16:34.465Z"
+    },
+    {
+      "jql": "project = SST AND issuetype = 10008 AND summary ~ \"CR-SST-0240\"",
+      "key": "SST-128",
+      "count": 1,
+      "observedAt": "2026-09-09T00:16:34.936Z"
+    }
+  ]
+}

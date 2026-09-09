@@ -16,7 +16,9 @@ control_plane_context:
   feature_state_id: "sst-evolutionary-onboarding"
   jira_role: "mirror"
   jira_source_of_truth: false
-  jira_issue_key: null
+  jira_issue_key: "SST-128"
+  jira_parent_issue_key: "SST-127"
+  jira_status_observed: "En curso"
   proposed_jira_issue_type: "Tarea"
   proposed_jira_parent: "Primary Epic of INIT-SST-0011"
   proposed_jira_summary: "[SST][INIT-SST-0011][CR-SST-0240] Define and coordinate evolutionary onboarding V1"
@@ -42,8 +44,9 @@ execution:
   child_repo_mutation_allowed: false
   runtime_mutation_allowed: false
   git_publication_allowed: true
-  jira_write_allowed: true
-  next_gate: "Publish and read back running, then apply the exact Jira batch; owner slices remain unallocated."
+  jira_write_allowed: false
+  jira_batch_status: "initial-batch-complete; authorization-consumed"
+  next_gate: "Stabilize owner bindings and derive executable owner CRs after a fresh identity preflight."
 publication_policy:
   policy_id: "execution-publication-and-tracker-closure-policy"
   enforcement_activation: "Add the enforcement marker to planned and running together at execution start; the validator requires an execution state."
@@ -66,6 +69,8 @@ acceptance:
   - "All owner implementation requests remain unallocated until a fresh preflight."
   - "Full control-plane check passes and Jira keys are captured after readback."
 evidence_refs:
+  - "evidence/requests/CR-SST-0240/jira-and-canonical-readback.md"
+  - "evidence/requests/CR-SST-0240/jira-batch-readback.json"
   - "evidence/requests/CR-SST-0240/initiative-and-execution-plan.md"
 execution_publication_rule:
   rule_id: "execution-publication-and-tracker-closure-rule"

@@ -13,6 +13,7 @@ initial_hypothesis: >
   read-only guidance can shorten time to first value without coupling
   activation to Chat, Learning, authentication flags or route visits.
 source_evidence_refs:
+  - "evidence/requests/CR-SST-0240/jira-and-canonical-readback.md"
   - "evidence/requests/CR-SST-0240/onboarding-v1-contract.yaml"
   - "docs/projects/sst/onboarding-evolutivo-v1.md"
   - "evidence/requests/CR-SST-0238/evolutionary-onboarding-recommendation-2026-09-07.md"
@@ -30,9 +31,11 @@ tracking:
     source_of_truth: false
     project_key: "SST"
     issue_type: "Epic"
-    issue_key: null
+    issue_key: "SST-127"
     proposed_summary: "[SST][INIT-SST-0011] Evolutionary onboarding and first-value activation"
-    write_status: "authorized-after-canonical-running-readback"
+    current_status_observed: "En curso"
+    write_status: "initial-batch-complete; authorization-consumed"
+    evidence_ref: "evidence/requests/CR-SST-0240/jira-batch-readback.json"
 candidate_change_requests:
   - {owner: "sst-bend", title: "Implement durable onboarding and verified outcomes", identity_status: "unreserved-requires-fresh-global-preflight"}
   - {owner: "4uentes-auth", title: "Relay onboarding API through BFF", identity_status: "unreserved-requires-fresh-global-preflight"}
