@@ -1,0 +1,87 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0238"
+title: "Reconcile SST authenticated entry and React compatibility"
+status: "planned"
+source_request: "requests/inbox/CR-SST-0238-reconcile-authenticated-entry-and-react-compatibility.yaml"
+created_at: "2026-09-07"
+requester: "4uentes"
+summary: >
+  Reconcile the implemented SST entry journey as public Landing to auth to the
+  authorized default module, and remove three reproducible React development
+  warnings through supported component and router contracts.
+control_plane_context:
+  initiative_id: "INIT-SST-0009"
+  coordinator_request_id: "CR-SST-0222"
+  related_request_id: "CR-SST-0231"
+  owner_repository: "sst-fend"
+  planning_base: "origin/main@d84d1f672efae0acfa94d1dab4626b8d2f85230a"
+risk:
+  level: "high"
+  drivers: ["AUTHENTICATED_NAVIGATION", "SHARED_BUTTON_REF_CONTRACT", "ROUTER_TRANSITION_BEHAVIOR"]
+model_selection:
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  task_class: "complex-high-risk-task"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5 high"
+subagent_deployment_plan:
+  required: false
+  reason: "Delegation was not requested; auth navigation and compatibility decisions stay on one auditable path."
+observed_gap:
+  onboard: >
+    firstLogin sends /onboard, but no current or historical owner route or page
+    implements that destination; the wildcard therefore renders Not Found.
+  fetch_priority: "Landing passes fetchPriority to React 18.2 and reproduces an unknown DOM property warning."
+  strict_mode: >
+    Header Popover receives SstButton, whose wrapper does not forward the Ant
+    Button ref, so the overlay stack falls back to deprecated findDOMNode.
+  router_future: "RouterProvider does not opt into the available v7_startTransition compatibility flag."
+owner_change_contract:
+  allowed_runtime_paths:
+    - "src/machines/AuthMachine/states/isValidUser.ts"
+    - "src/pages/Landing/index.tsx"
+    - "src/components/SstButton/index.tsx"
+    - "src/App/index.tsx"
+  allowed_test_paths:
+    - "focused auth-machine navigation test"
+    - "focused SstButton ref test"
+    - "focused App/router future-flag test when practical"
+  required_owner_documentation:
+    - "specs/31-auth-frontend.yml"
+    - "docs/31-auth-frontend.md"
+    - "owner task record for CR-SST-0238"
+  decisions:
+    - "Route firstLogin through the existing defaultModule/Home contract; do not create a placeholder /onboard route."
+    - "Remove the unsupported fetchPriority prop from the Landing image."
+    - "Forward SstButton refs to AntButton; preserve StrictMode."
+    - "Enable RouterProvider v7_startTransition through the supported future prop."
+atomized_execution:
+  - {order: 1, objective: "Update owner auth contract and Spanish owner documentation.", validation: "YAML parse, references and diff review."}
+  - {order: 2, objective: "Correct navigation and three compatibility warnings with focused tests.", validation: "Focused tests and complete owner npm run check."}
+  - {order: 3, objective: "Run clean-source localhost:4090 browser QA for landing, login and Home.", validation: "Console, network, route, desktop and mobile readback."}
+false_positive_controls:
+  - "A 200 response does not prove that the current owner source is running."
+  - "A clean console before exercising login, profile overlays and navigation is insufficient."
+  - "Redirecting /onboard to Home does not by itself repair the stale state-machine decision."
+  - "Removing StrictMode or filtering console messages is a failed gate."
+  - "Existing-account login does not substitute for a focused firstLogin navigation test."
+execution:
+  control_plane_mutation_allowed: true
+  child_repo_mutation_allowed: false
+  child_repo_git_publication_allowed: false
+  runtime_mutation_allowed: false
+  jira_write_allowed: false
+  next_gate: "Publish and read back this plan before creating the exact owner running batch."
+owner_documentation: {required: true, status: "planned"}
+acceptance:
+  - "No executed auth path lands on the unimplemented /onboard location."
+  - "Landing, Header overlays and RouterProvider no longer emit the three classified warnings."
+  - "StrictMode remains enabled and existing auth/session contracts remain unchanged."
+  - "Owner tests, full owner check and clean-source localhost:4090 QA pass."
+  - "No owner, runtime, Jira or external Git mutation occurs under this plan."
+evidence_refs:
+  - "evidence/requests/CR-SST-0238/discovery-and-plan-2026-09-07.md"
+  - "evidence/requests/CR-SST-0238/evolutionary-onboarding-recommendation-2026-09-07.md"
