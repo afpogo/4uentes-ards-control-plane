@@ -2,7 +2,7 @@ schema_version: "1.0"
 kind: "initiative"
 id: "INIT-SST-0011"
 title: "SST Evolutionary Onboarding and First-Value Activation"
-status: "planned"
+status: "active"
 updated_at: "2026-09-08"
 owner_repository: "4uentes-orchestor"
 objective: >
@@ -13,6 +13,8 @@ initial_hypothesis: >
   read-only guidance can shorten time to first value without coupling
   activation to Chat, Learning, authentication flags or route visits.
 source_evidence_refs:
+  - "evidence/requests/CR-SST-0240/onboarding-v1-contract.yaml"
+  - "docs/projects/sst/onboarding-evolutivo-v1.md"
   - "evidence/requests/CR-SST-0238/evolutionary-onboarding-recommendation-2026-09-07.md"
   - "evidence/requests/CR-SST-0240/initiative-and-execution-plan.md"
 known_change_requests:

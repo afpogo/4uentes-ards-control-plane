@@ -1,8 +1,8 @@
 schema_version: "1.0"
-phase: 2
+phase: 3
 id: "CR-SST-0240"
 title: "Define and coordinate SST evolutionary onboarding V1"
-status: "planned"
+status: "running"
 created_at: "2026-09-08"
 requester: "4uentes"
 source_request: "requests/inbox/CR-SST-0240-define-and-coordinate-evolutionary-onboarding-v1.yaml"
@@ -43,7 +43,7 @@ execution:
   runtime_mutation_allowed: false
   git_publication_allowed: true
   jira_write_allowed: true
-  next_gate: "Publish and read back planned; materialize V1 contract and publish running before Jira batch."
+  next_gate: "Publish and read back running, then apply the exact Jira batch; owner slices remain unallocated."
 publication_policy:
   policy_id: "execution-publication-and-tracker-closure-policy"
   enforcement_activation: "Add the enforcement marker to planned and running together at execution start; the validator requires an execution state."
@@ -79,3 +79,11 @@ execution_publication_rule:
     provider: "jira"
   cleanup:
     remote_readback_required: true
+started_at: "2026-09-08"
+plan_publication:
+  pull_request: 284
+  merge_commit: "d2a892b"
+  readback: "Canonical planned request read after fetch."
+coordination_deliverables:
+  contract: "evidence/requests/CR-SST-0240/onboarding-v1-contract.yaml"
+  human_map_and_matrix: "docs/projects/sst/onboarding-evolutivo-v1.md"

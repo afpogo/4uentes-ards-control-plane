@@ -9,8 +9,10 @@ affected_services: ["sst-bend", "4uentes-auth", "sst-fend", "sst-chatbot"]
 request_ids: ["CR-SST-0240"]
 capability_refs: []
 spec_refs:
+  - "evidence/requests/CR-SST-0240/onboarding-v1-contract.yaml"
   - "requests/planned/CR-SST-0240-define-and-coordinate-evolutionary-onboarding-v1.yaml"
 evidence_refs:
+  - "docs/projects/sst/onboarding-evolutivo-v1.md"
   - "evidence/requests/CR-SST-0240/initiative-and-execution-plan.md"
 open_gaps:
   - "Runtime not implemented; owner requests require a fresh identity preflight and approved plans."
