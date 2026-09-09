@@ -101,7 +101,7 @@ current_read_model:
   retention_terminal_event_remediation_request: "CR-SST-0218"
   retention_terminal_event_remediation_status: "complete-owner-published-integrated-qa-passed-jira-reconciled"
   retention_reserved_edge_qa_request: "CR-SST-0239"
-  retention_reserved_edge_qa_status: "planned-publication-not-authorized"
+  retention_reserved_edge_qa_status: "running-documentary-preflight-publication-pending"
   namespace_reconciliation_request: "CR-SST-0208"
   auth_registration_session_request: "CR-SST-0209"
   auth_retention_facade_request: "CR-SST-0211"
