@@ -15,7 +15,8 @@ control_plane_context:
   feature_state_id: "sst-evolutionary-onboarding"
   jira_role: "mirror"
   jira_source_of_truth: false
-  jira_issue_key: null
+  jira_issue_key: "SST-129"
+  jira_status_observed: "En curso"
   proposed_jira_issue_type: "Subtask"
   proposed_jira_parent_issue_key: "SST-128"
   jira_epic_issue_key: "SST-127"
@@ -34,8 +35,8 @@ model_selection:
   fallback_profile: "gpt-5.5"
   reason: "Keep identity, privacy and cross-repository contracts under high-reasoning review."
 subagent_deployment_plan:
-  mode: "none"
-  reason: "Bounded sequential lifecycle preparation; no owner mutation or delegated decisions."
+  mode: "owner-required-review"
+  reason: "Owner model-selection policy requires gpt-5.5/high review for high risk; read-only review completed without blockers."
 contract_ref: "evidence/requests/CR-SST-0240/onboarding-v1-contract.yaml"
 owner_binding_ref: "evidence/requests/CR-SST-0240/owner-binding-and-slice-plan.md"
 planned_surfaces:
@@ -60,8 +61,8 @@ execution:
   child_repo_mutation_allowed: true
   runtime_mutation_allowed: false
   jira_write_allowed: true
-  next_gate: "Read back running, execute the approved owner/Jira batch, validate and publish owner evidence."
-  gate_readiness: "owner-base-verified; actor-attempt-and-retention-proposal-ready"
+  next_gate: "Approve integration-gate.md: PR #35 merge triggers image publication and automatic infra development update outside the initial authorization."
+  gate_readiness: "owner-implemented-and-reviewed; canonical-merge-awaiting-expanded-authorization"
 owner_documentation:
   required: true
   status: "running"
@@ -77,6 +78,9 @@ validation:
   owner: "Full owner check plus focused contract, negative-path and concurrency tests"
   closure: "Owner publication/readback, sanitized evidence and full control-plane gate before done."
 evidence_refs:
+  - "evidence/requests/CR-SST-0242/integration-gate.md"
+  - "evidence/requests/CR-SST-0242/owner-implementation.md"
+  - "evidence/requests/CR-SST-0242/jira-readback.json"
   - "evidence/requests/CR-SST-0242/execution-gate.md"
   - "evidence/requests/CR-SST-0240/owner-binding-and-slice-plan.md"
   - "evidence/requests/CR-SST-0240/owner-slice-jql-preflight.json"
