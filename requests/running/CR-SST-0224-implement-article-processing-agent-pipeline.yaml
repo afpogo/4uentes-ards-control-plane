@@ -102,6 +102,15 @@ owner_preflight:
     Continue the approved local plan with the provider boundary and the
     execution pipeline; publication and runtime promotion remain excluded.
 
+jira_progress_readback:
+  observed_at: "2026-09-09"
+  issue_key: "SST-126"
+  status: "En curso"
+  comment_id: "10432"
+  transition_id: "21"
+  authorization_status: "consumed-comment-and-transition"
+  evidence_ref: "evidence/requests/CR-SST-0224/consolidation-and-jira-2026-09-09.md"
+
 jira_preflight:
   status: "creation-completed-and-read-back"
   evidence_ref: "evidence/requests/CR-SST-0224/jira-create-readback-2026-09-07.md"
@@ -170,6 +179,7 @@ decision:
     local plan. Publication, tracker writes and deployment remain excluded.
 
 evidence_refs:
+  - "evidence/requests/CR-SST-0224/consolidation-and-jira-2026-09-09.md"
   - "evidence/requests/CR-SST-0224/owner-unit-4-checkpoints-2026-09-08.md"
   - "evidence/requests/CR-SST-0224/owner-unit-3-provider-2026-09-08.md"
   - "evidence/requests/CR-SST-0224/owner-unit-2-prompts-2026-09-08.md"
