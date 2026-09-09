@@ -1,0 +1,90 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-HPT-0023"
+title: "Implement SST receipt-intake binding provisioning"
+status: "running"
+source_request: "requests/planned/CR-HPT-0023-implement-sst-receipt-binding-provisioning.yaml"
+started_at: "2026-08-28"
+requester: "4uentes"
+
+control_plane_context:
+  initiative_id: "INIT-HPT-0003"
+  predecessor_request_ids: [CR-CP-0024]
+  coordinator_request_id: "CR-CP-0024"
+  jira_epic_key: "HPT-8"
+  jira_task_key: "HPT-15"
+  state_id: "telegram-receipt-intake-adoption"
+
+execution:
+  approval_source: "User instructed implementation of the five enumerated gates on 2026-08-28."
+  owner_repo: "sst-bend"
+  child_repo_mutation_allowed: true
+  active_owner_worktree_mutation_allowed: false
+  isolated_worktree_required: true
+  isolated_worktree_path: "worktrees/CR-HPT-0023-sst-owner"
+  isolated_base_ref: "feat/CR-HPT-0019/receipt-intake-acceptance@f8f5919"
+  isolated_branch: "feat/CR-HPT-0023/receipt-binding-provisioning"
+  owner_commit_ref: "sst-bend@1fdac8e"
+  promotion_worktree_path: "worktrees/CR-HPT-0023-sst-promotion-ready"
+  promotion_branch: "agent/cr-hpt-0023-promotion-ready"
+  promotion_ready_tip: "sst-bend@2a0de56"
+  documentation_language_exception: "Feature-specific Markdown is English by explicit user instruction on 2026-08-29."
+  runtime_implementation_allowed: true
+  database_changes_allowed: true
+  infrastructure_changes_allowed: false
+  deployment_changes_allowed: false
+  secret_changes_allowed: false
+  n8n_activation_allowed: false
+  phinance_invocation_allowed: false
+  jira_write_scope: "HPT-15 was reconciled to En curso with objective, start comment and accumulated progress under the authorized 2026-08-29 batch."
+
+owner_documentation:
+  required: true
+  status: "satisfied"
+  owner_repo: "sst-bend"
+  planned_owner_docs:
+    - "specs/api/receipt-intake-binding-v1.yaml"
+    - "specs/capabilities/outbound/receipt-intake-binding-provisioning-v1.yaml"
+    - "docs/api/30-receipt-intake-binding.md"
+    - "docs/capabilities/outbound/receipt-intake-binding-provisioning-v1.md"
+    - "docs/tasks/2026-08-28-cr-hpt-0023-receipt-binding-provisioning.md"
+
+jira_mirror:
+  jira_source_of_truth: false
+  project_key: "HPT"
+  initiative_issue_key: "HPT-8"
+  request_issue_type: "Tarea"
+  request_issue_key: "HPT-15"
+  expected_parent: "HPT-8"
+  evidence_ref: "evidence/requests/CR-HPT-0023/jira-task-sync-summary.md"
+
+implementation_status:
+  integrated_base: "fdc753ff0bf96e8b8b5f603a9aae11503aa2ace1"
+  overall: "synthetic-matrix-passed-correction-publication-pending"
+  validation_evidence: "evidence/requests/CR-CP-0024/custody-validation-2026-09-08.md"
+  terminal_tracker_authorized: false
+
+validation:
+  owner_command: "npm run check"
+  focused_command: "node scripts/test-receipt-binding-provisioning.js"
+  control_plane_command: "npm run check"
+
+evidence_refs:
+  - "evidence/requests/CR-HPT-0023/jira-task-sync-summary.md"
+  - "evidence/requests/CR-HPT-0023/provider-validation.md"
+  - "evidence/requests/CR-HPT-0023/changed-files-summary.md"
+  - "evidence/initiatives/INIT-HPT-0003/integration-status-2026-08-28.md"
+  - "evidence/initiatives/INIT-HPT-0003/owner-branch-consolidation-2026-08-29.md"
+  - "evidence/initiatives/INIT-HPT-0003/owner-promotion-preflight-2026-08-29.md"
+  - "evidence/initiatives/INIT-HPT-0003/owner-develop-reconciliation-2026-08-29.md"
+  - "evidence/initiatives/INIT-HPT-0003/owner-promotion-readiness-2026-08-29.md"
+  - "evidence/initiatives/INIT-HPT-0003/sst-owner-documentation-policy-review-2026-08-29.md"
+  - "evidence/initiatives/INIT-HPT-0003/sst-isolated-service-check-2026-08-29.md"
+
+recovery_2026_09_08:
+  coordinator_request_id: "CR-CP-0024"
+  ordering: "retroactive; owner implementation and integration preceded canonical lifecycle recovery"
+  original_sha256: "95ed8fb932f1d63558e317021bdf1d1aa145fe9e277a1c5572b07108be442c68"
+  provenance_ref: "evidence/requests/CR-CP-0024/custody-recovery-2026-09-08.md"
+  historical_state_not_current_validation: true
+  tracker_terminal_transition_authorized: false

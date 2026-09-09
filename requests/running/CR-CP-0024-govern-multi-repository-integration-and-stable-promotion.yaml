@@ -41,7 +41,7 @@ authorization:
   evidence: "evidence/requests/CR-CP-0024/auth-owner-execution-authorization-2026-08-30.md"
 
 execution:
-  current_unit: "infra-human-docs-publication-blocked-by-local-kubernetes-api-timeout"
+  current_unit: "custody-recovery-and-synthetic-validation"
   parallel_unit: "worktree-sanitization-disposition-and-selective-recovery"
   completed_units:
     - "publish-plan-and-migration-lifecycle"
@@ -69,12 +69,15 @@ execution:
     - "read-back-infra-pr25-automatic-gitops-sync"
     - "reconcile-program-scoreboard-after-infra-readback"
     - "establish-infra-human-learning-playbook-runbook-foundation"
+    - "publish-infra-human-documentation-owner-pr"
+    - "publish-infra-human-documentation-corrective-pr"
+    - "read-back-infra-human-documentation-corrective-pr-merge"
     - "reconcile-cr-sst-0233-retroactive-running-lifecycle"
     - "recover-cr-hpt-0024-canonical-running-lifecycle"
   control_plane_mutation_allowed: true
   child_repo_mutation_allowed: false
   child_repo_mutation_targets: ["sst-bend", "sst-4uentes-infra"]
-  child_repo_mutation_scope: "Create Spanish human-learning and playbook roots for CR-HPT-0024 in the existing sst-4uentes-infra worktree, link the technical runbook, add Mermaid maps with textual fallbacks, and commit locally without publication or runtime mutation."
+  child_repo_mutation_scope: "Amend the existing CR-HPT-0024 Infra documentation branch and PR 26 so Learning, playbooks, runbooks and their validator are explicitly scoped as owner-local conventions; link control-plane rollout governance and leave formal knowledge-to-execution policy adoption pending a published versioned source."
   owner_pr_publication_allowed: false
   owner_pr_merge_allowed: false
   image_publication_allowed: false
@@ -83,7 +86,7 @@ execution:
   deployment_allowed: false
   stable_branch_mutation_allowed: false
   jira_write_allowed: false
-  external_execution_gate: "Authorize publication of docs/CR-HPT-0024/human-receipt-custody-guides and creation of an Infra PR separately; merge, runtime mutation and Jira closure remain prohibited."
+  external_execution_gate: "Corrective Infra PR 27 was observed merged at its authorized head. Formal knowledge-to-execution policy promotion remains a separate request; runtime mutation and Jira closure remain prohibited."
 
 infra_remediation_pr:
   authorization_status: "consumed-by-branch-and-pr-publication"
@@ -277,7 +280,7 @@ infra_second_remediation:
       - "linked technical runbook"
       - "documentation information architecture"
       - "Mermaid maps, legends and textual fallbacks"
-    publication_allowed: true
+    publication_allowed: false
     merge_allowed: false
     runtime_mutation_allowed: false
     jira_write_allowed: false
@@ -304,7 +307,7 @@ infra_second_remediation:
       worktree_clean: true
     evidence: "evidence/requests/CR-CP-0024/infra-human-documentation-foundation-2026-09-05.md"
     publication_authorization:
-      status: "authorized-but-blocked-by-required-owner-full-check"
+      status: "consumed-by-exact-branch-and-pr-publication"
       approved_by: "4uentes"
       approved_at: "2026-09-05"
       approval_text: "ok avancemos con el siguiente gate"
@@ -317,6 +320,90 @@ infra_second_remediation:
       runtime_mutation_allowed: false
       jira_write_allowed: false
       evidence: "evidence/requests/CR-CP-0024/infra-human-documentation-publication-authorization-2026-09-05.md"
+    publication:
+      branch_push: "published-and-read-back"
+      remote_head_sha: "67c4874b2404235d70dc56ce143343954f5c707e"
+      develop_readback_sha: "a4d120061d0d4d53352b1de766858602ff759750"
+      pull_request: 26
+      pull_request_url: "https://github.com/afpogo/sst-4uentes-infra/pull/26"
+      pull_request_state: "OPEN"
+      mergeable: "MERGEABLE"
+      merge_state_status: "CLEAN"
+      commits: 1
+      changed_files: 12
+      additions: 781
+      deletions: 4
+      auto_merge: false
+      checks:
+        validate_repository: "SUCCESS"
+        path_filtered_manifest_checks: "NOT_APPLICABLE"
+      merge_allowed: false
+      runtime_mutation_allowed: false
+      runtime_readback: "unavailable-due-local-kubernetes-api-tls-handshake-timeout"
+      runtime_inference: "develop unchanged; no GitOps revision change caused by this publication"
+    authority_clarification:
+      authorization_status: "consumed-by-owner-commit-and-branch-push-before-unexpected-merge-readback"
+      control_plane_authorization_commit: "ed5f3cc"
+      owner_commit: "83bac64d5a7323276af4b691b666890c9cda81fe"
+      changed_files: 5
+      owner_full_check: "PASS"
+      focused_human_docs_check: "PASS"
+      branch_push: "published-over-https"
+      observed_pull_request_state: "MERGED"
+      observed_pull_request_head: "67c4874b2404235d70dc56ce143343954f5c707e"
+      observed_merge_commit: "4ab3e7e9f0869c7c035d75a85149977994aa0af9"
+      observed_merged_at: "2026-09-05T18:36:52Z"
+      observed_merged_by: "afpogo"
+      merge_executed_by_agent: false
+      merge_authorized: false
+      remote_branch_head: "83bac64d5a7323276af4b691b666890c9cda81fe"
+      develop_head: "4ab3e7e9f0869c7c035d75a85149977994aa0af9"
+      compare_to_develop:
+        status: "diverged"
+        ahead_by: 1
+        behind_by: 1
+        changed_files: 5
+        runtime_files_changed: 0
+      disposition: "Preserve the branch and owner commit; require a new authorization before opening a corrective PR."
+      evidence: "evidence/requests/CR-CP-0024/infra-pr26-unexpected-merge-and-adoption-disposition-2026-09-05.md"
+      corrective_pr_authorization:
+        status: "consumed-by-single-pr-publication-and-readback"
+        approved_by: "4uentes"
+        approved_at: "2026-09-05"
+        approval_text: "si continuemos"
+        repository: "afpogo/sst-4uentes-infra"
+        source_branch: "docs/CR-HPT-0024/human-receipt-custody-guides"
+        authorized_head: "83bac64d5a7323276af4b691b666890c9cda81fe"
+        target_branch: "develop"
+        observed_target_head: "4ab3e7e9f0869c7c035d75a85149977994aa0af9"
+        open_pr_preflight_count: 0
+        merge_allowed: false
+        runtime_mutation_allowed: false
+        stable_branch_mutation_allowed: false
+        jira_write_allowed: false
+        evidence: "evidence/requests/CR-CP-0024/infra-corrective-pr-authorization-2026-09-05.md"
+        publication:
+          pull_request: 27
+          pull_request_url: "https://github.com/afpogo/sst-4uentes-infra/pull/27"
+          state: "MERGED"
+          is_draft: false
+          head_sha: "83bac64d5a7323276af4b691b666890c9cda81fe"
+          base_sha: "4ab3e7e9f0869c7c035d75a85149977994aa0af9"
+          commits: 1
+          changed_files: 5
+          mergeable: "MERGEABLE"
+          merge_state_status: "CLEAN"
+          auto_merge: false
+          checks:
+            validate_repository: "SUCCESS"
+          merged_at: "2026-09-05T19:52:51Z"
+          merged_by: "afpogo"
+          merge_commit: "6379f5f54d0ef1623c9d58aeb222e290f8240db2"
+          merge_executed_by_agent: false
+          develop_unchanged: false
+          develop_head_after_merge: "6379f5f54d0ef1623c9d58aeb222e290f8240db2"
+          runtime_mutation_performed: false
+          evidence: "evidence/requests/CR-CP-0024/infra-corrective-pr-merge-readback-2026-09-05.md"
     publication_preflight:
       status: "blocked-environment"
       owner_commit: "67c4874b2404235d70dc56ce143343954f5c707e"
@@ -474,9 +561,9 @@ required_checks:
   - "owner branch and pull request remote readback"
 
 decision:
-  status: "running-infra-human-documentation-publication-validation-blocked"
+  status: "running-infra-human-documentation-corrective-pr-merged-readback"
   approver: "4uentes"
-  next_gate: "Restore local Kubernetes API reachability through a separate operational authorization, rerun the full owner check, then publish commit 67c4874 and open its Infra PR without merge."
+  next_gate: "Create or advance a separately governed request for formal knowledge-to-execution policy promotion and Infra adoption manifest; no runtime or Jira transition is implied."
 
 program_progress:
   status: "current-derived-view"
@@ -516,8 +603,24 @@ evidence_refs:
   - "evidence/requests/CR-CP-0024/program-scoreboard.md"
   - "evidence/requests/CR-CP-0024/infra-human-documentation-foundation-2026-09-05.md"
   - "evidence/requests/CR-CP-0024/infra-human-documentation-publication-authorization-2026-09-05.md"
+  - "evidence/requests/CR-CP-0024/infra-documentation-authority-clarification-authorization-2026-09-05.md"
+  - "evidence/requests/CR-CP-0024/infra-pr26-unexpected-merge-and-adoption-disposition-2026-09-05.md"
+  - "evidence/requests/CR-CP-0024/infra-corrective-pr-authorization-2026-09-05.md"
+  - "evidence/requests/CR-CP-0024/infra-corrective-pr-publication-readback-2026-09-05.md"
+  - "evidence/requests/CR-CP-0024/infra-corrective-pr-merge-readback-2026-09-05.md"
   - "requests/running/CR-HPT-0024-deploy-private-receipt-object-platform.yaml"
   - "evidence/requests/CR-HPT-0024/retroactive-running-reconciliation-2026-09-05.md"
   - "evidence/requests/CR-HPT-0024/owner-documentation-publication-preflight-2026-09-05.md"
   - "requests/running/CR-SST-0233-reconcile-fresh-database-migration-baseline.yaml"
   - "evidence/requests/CR-SST-0233/retroactive-running-reconciliation-2026-09-05.md"
+
+custody_recovery_2026_09_08:
+  user_authorized: true
+  source: "User implementation plan in current session"
+  evidence: "evidence/requests/CR-CP-0024/custody-validation-2026-09-08.md"
+  auth: "synthetic-http-and-full-owner-check-passed"
+  sst: "expired-binding-admission-reproduced-fixed-synthetic-matrix-passed"
+  infra_documentation_pr: "https://github.com/afpogo/sst-4uentes-infra/pull/30"
+  stable_promotion_allowed: false
+  terminal_jira_transition_allowed: false
+  worktree_removal_allowed: false

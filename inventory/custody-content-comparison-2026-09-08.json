@@ -1,0 +1,540 @@
+[
+  {
+    "repository": "4uentes-auth",
+    "source": "f9fe6b5",
+    "base": "13ebe6f",
+    "canonical": "ff5605c67d412e3e363d58de14a5b6b98b38c4ad",
+    "merge": "ff5605c",
+    "files": [
+      {
+        "path": ".env.example",
+        "source_blob": "615654a3921363c624848d5a6802957816444a85",
+        "integrated_blob": "615654a3921363c624848d5a6802957816444a85",
+        "canonical_blob": "615654a3921363c624848d5a6802957816444a85",
+        "disposition": "integrated-identical"
+      },
+      {
+        "path": "docs/capabilities/outbound/automation-receipt-intake-service-token-grant-v1.md",
+        "source_blob": "7ae4030f210b6497b533e2e9893e63671086ebf9",
+        "integrated_blob": "3e710e070320e796b266a038592db27386671145",
+        "canonical_blob": "3e710e070320e796b266a038592db27386671145",
+        "disposition": "integrated-with-modifications"
+      },
+      {
+        "path": "docs/capabilities/outbound/automation-receipt-object-service-token-grant-v1.md",
+        "source_blob": "aecce37bf928cd6aa6321dd2c753c73dd94e4c56",
+        "integrated_blob": "39913a858e9704ae0048d79d137f1b87736c836a",
+        "canonical_blob": "39913a858e9704ae0048d79d137f1b87736c836a",
+        "disposition": "integrated-with-modifications"
+      },
+      {
+        "path": "docs/capabilities/outbound/automation-service-token-grant-v1.md",
+        "source_blob": "85d3e54d98721994ed1af90a296c0e874f4622ed",
+        "integrated_blob": "85688c91df51773c2c7d896b37ef18ab6b0a9b2d",
+        "canonical_blob": "85688c91df51773c2c7d896b37ef18ab6b0a9b2d",
+        "disposition": "integrated-with-modifications"
+      },
+      {
+        "path": "docs/security/service-token-lifecycle.md",
+        "source_blob": "a2a6e6183e4769018a05114e0945eab627f0a645",
+        "integrated_blob": "299ddff58361fb4da635a21751b3670d85801f45",
+        "canonical_blob": "299ddff58361fb4da635a21751b3670d85801f45",
+        "disposition": "integrated-with-modifications"
+      },
+      {
+        "path": "docs/tasks/2026-08-23-cr-cp-0021-automation-service-grant.md",
+        "source_blob": "b36d1b62e784edfbcd0f80acabb4861e59996b2f",
+        "integrated_blob": "ae263c9b3a029d60a11f093129dab8fcff883ffa",
+        "canonical_blob": "ae263c9b3a029d60a11f093129dab8fcff883ffa",
+        "disposition": "integrated-with-modifications"
+      },
+      {
+        "path": "docs/tasks/2026-08-27-cr-hpt-0016-automation-receipt-intake-grant.md",
+        "source_blob": "3c5c02b978abe2561a017e4cb52ca5e33eb37566",
+        "integrated_blob": "c084819bf1add9f19c6fc64339fc9756a6f96055",
+        "canonical_blob": "c084819bf1add9f19c6fc64339fc9756a6f96055",
+        "disposition": "integrated-with-modifications"
+      },
+      {
+        "path": "docs/tasks/2026-08-28-cr-hpt-0022-automation-receipt-object-grant.md",
+        "source_blob": "4e709097146162fc032c8e6935d75e9d12fdc8c9",
+        "integrated_blob": "0fc29b628286b132df10bf786571e0aad8a545bc",
+        "canonical_blob": "0fc29b628286b132df10bf786571e0aad8a545bc",
+        "disposition": "integrated-with-modifications"
+      },
+      {
+        "path": "package.json",
+        "source_blob": "aae663a183cf39cb478bcf845312300589d98ea1",
+        "integrated_blob": "aae663a183cf39cb478bcf845312300589d98ea1",
+        "canonical_blob": "aae663a183cf39cb478bcf845312300589d98ea1",
+        "disposition": "integrated-identical"
+      },
+      {
+        "path": "scripts/ards-check.js",
+        "source_blob": "fced32d85dd5fa84416d575fc1ac1f576d9e3be4",
+        "integrated_blob": "fced32d85dd5fa84416d575fc1ac1f576d9e3be4",
+        "canonical_blob": "fced32d85dd5fa84416d575fc1ac1f576d9e3be4",
+        "disposition": "integrated-identical"
+      },
+      {
+        "path": "scripts/test-automation-receipt-intake-service-grant.js",
+        "source_blob": "ed431e4ca99add2d10b900d595eb598a5804c3db",
+        "integrated_blob": "85a08cee08d36564387dd6be8e4c298acb0dfa93",
+        "canonical_blob": "85a08cee08d36564387dd6be8e4c298acb0dfa93",
+        "disposition": "integrated-with-modifications"
+      },
+      {
+        "path": "scripts/test-automation-receipt-object-service-grant.js",
+        "source_blob": "ae0a4a82816eddef4a667dec4799ad106b544ce1",
+        "integrated_blob": "4fdb7e20a2fe98fba69bd2cdfcec639ca629c6b3",
+        "canonical_blob": "4fdb7e20a2fe98fba69bd2cdfcec639ca629c6b3",
+        "disposition": "integrated-with-modifications"
+      },
+      {
+        "path": "scripts/test-automation-service-grant.js",
+        "source_blob": "d614190ce66aacf6a3552eb026dc2f822d549d5f",
+        "integrated_blob": "cb9178b56dfb675e5958198522cb5947afaccc5c",
+        "canonical_blob": "cb9178b56dfb675e5958198522cb5947afaccc5c",
+        "disposition": "integrated-with-modifications"
+      },
+      {
+        "path": "specs/auth.yaml",
+        "source_blob": "82fdb7d70385a174e3393c97c9faaf801f2375f4",
+        "integrated_blob": "82fdb7d70385a174e3393c97c9faaf801f2375f4",
+        "canonical_blob": "82fdb7d70385a174e3393c97c9faaf801f2375f4",
+        "disposition": "integrated-identical"
+      },
+      {
+        "path": "specs/capabilities/outbound/00-index.yaml",
+        "source_blob": "7411dee0005079ea5b173c21ca0c97e00adc191f",
+        "integrated_blob": "7411dee0005079ea5b173c21ca0c97e00adc191f",
+        "canonical_blob": "7411dee0005079ea5b173c21ca0c97e00adc191f",
+        "disposition": "integrated-identical"
+      },
+      {
+        "path": "specs/capabilities/outbound/automation-receipt-intake-service-token-grant-v1.yaml",
+        "source_blob": "e8b93a68a2d429d1669a5c2ea30189c68c05391f",
+        "integrated_blob": "e8b93a68a2d429d1669a5c2ea30189c68c05391f",
+        "canonical_blob": "e8b93a68a2d429d1669a5c2ea30189c68c05391f",
+        "disposition": "integrated-identical"
+      },
+      {
+        "path": "specs/capabilities/outbound/automation-receipt-object-service-token-grant-v1.yaml",
+        "source_blob": "bcf847b88481a21062683621c43234c29a214e77",
+        "integrated_blob": "bcf847b88481a21062683621c43234c29a214e77",
+        "canonical_blob": "bcf847b88481a21062683621c43234c29a214e77",
+        "disposition": "integrated-identical"
+      },
+      {
+        "path": "specs/capabilities/outbound/automation-service-token-grant-v1.yaml",
+        "source_blob": "68ebcacfa335c3b0bb5ff25c48f53c7911f83596",
+        "integrated_blob": "68ebcacfa335c3b0bb5ff25c48f53c7911f83596",
+        "canonical_blob": "68ebcacfa335c3b0bb5ff25c48f53c7911f83596",
+        "disposition": "integrated-identical"
+      },
+      {
+        "path": "src/configs/env.ts",
+        "source_blob": "5bb046f776a3cb4ce28ee84c6a8baaa11870d686",
+        "integrated_blob": "5bb046f776a3cb4ce28ee84c6a8baaa11870d686",
+        "canonical_blob": "5bb046f776a3cb4ce28ee84c6a8baaa11870d686",
+        "disposition": "integrated-identical"
+      },
+      {
+        "path": "src/domain/services/service-credentials.ts",
+        "source_blob": "0d9b4a3b0bae8c705f3196c43da0a18637c82d11",
+        "integrated_blob": "0d9b4a3b0bae8c705f3196c43da0a18637c82d11",
+        "canonical_blob": "0d9b4a3b0bae8c705f3196c43da0a18637c82d11",
+        "disposition": "integrated-identical"
+      }
+    ]
+  },
+  {
+    "repository": "sst-bend",
+    "source": "2a0de56",
+    "base": "dc67203",
+    "canonical": "fdc753ff0bf96e8b8b5f603a9aae11503aa2ace1",
+    "merge": "5db4dd8",
+    "files": [
+      {
+        "path": ".env.example",
+        "source_blob": "862fd07fa9dc418f69a683c7cb05ced42a2f2f38",
+        "integrated_blob": "ecb38f791788a286b07bd7c750a83acb9eb17160",
+        "canonical_blob": "ecb38f791788a286b07bd7c750a83acb9eb17160",
+        "disposition": "integrated-with-modifications"
+      },
+      {
+        "path": "db/migrations/20260827120000-create-receipt-intake-boundary.js",
+        "source_blob": "10990983b0d724c8b04d99d53caedb4cafa74310",
+        "integrated_blob": "10990983b0d724c8b04d99d53caedb4cafa74310",
+        "canonical_blob": "10990983b0d724c8b04d99d53caedb4cafa74310",
+        "disposition": "integrated-identical"
+      },
+      {
+        "path": "db/migrations/20260828100000-add-receipt-binding-provisioning.js",
+        "source_blob": "0ad2f97ba97c806434461e542c922db9785ddde8",
+        "integrated_blob": "0ad2f97ba97c806434461e542c922db9785ddde8",
+        "canonical_blob": "0ad2f97ba97c806434461e542c922db9785ddde8",
+        "disposition": "integrated-identical"
+      },
+      {
+        "path": "db/models/index.js",
+        "source_blob": "43e2b5247683402e28a50442cf11a28d134ee4da",
+        "integrated_blob": "43e2b5247683402e28a50442cf11a28d134ee4da",
+        "canonical_blob": "43e2b5247683402e28a50442cf11a28d134ee4da",
+        "disposition": "integrated-identical"
+      },
+      {
+        "path": "db/models/receipt-intake-binding.js",
+        "source_blob": "6a3d8de46fb61d70e18dc0cd02d2792e1fdb5df1",
+        "integrated_blob": "6a3d8de46fb61d70e18dc0cd02d2792e1fdb5df1",
+        "canonical_blob": "6a3d8de46fb61d70e18dc0cd02d2792e1fdb5df1",
+        "disposition": "integrated-identical"
+      },
+      {
+        "path": "db/models/receipt-intake-candidate.js",
+        "source_blob": "e7743913d9dc1116bc53bc1b0d0f1e247bf2dcae",
+        "integrated_blob": "e7743913d9dc1116bc53bc1b0d0f1e247bf2dcae",
+        "canonical_blob": "e7743913d9dc1116bc53bc1b0d0f1e247bf2dcae",
+        "disposition": "integrated-identical"
+      },
+      {
+        "path": "db/models/receipt-intake-object.js",
+        "source_blob": "cfb987a81809fdeccb88eb0604216fffb373f23c",
+        "integrated_blob": "cfb987a81809fdeccb88eb0604216fffb373f23c",
+        "canonical_blob": "cfb987a81809fdeccb88eb0604216fffb373f23c",
+        "disposition": "integrated-identical"
+      },
+      {
+        "path": "docs/api/28-automation-receipt-intake.md",
+        "source_blob": "05c0597c9032dc738fe107c2a2a27652184bf782",
+        "integrated_blob": "7d7006fdcc6318b9c7677fb167810b3b7ebb8b48",
+        "canonical_blob": "7d7006fdcc6318b9c7677fb167810b3b7ebb8b48",
+        "disposition": "integrated-with-modifications"
+      },
+      {
+        "path": "docs/api/30-receipt-intake-binding.md",
+        "source_blob": "5c36eaf8042ad51e7c06311f82c9f5489b4581f3",
+        "integrated_blob": "1860ac62413fa99b579fd83edca7aee2f1189753",
+        "canonical_blob": "1860ac62413fa99b579fd83edca7aee2f1189753",
+        "disposition": "integrated-with-modifications"
+      },
+      {
+        "path": "docs/api/README.md",
+        "source_blob": "ce74aa4e0e55bda1638ef2c9e122ea005f7cc84e",
+        "integrated_blob": "ce74aa4e0e55bda1638ef2c9e122ea005f7cc84e",
+        "canonical_blob": "ce74aa4e0e55bda1638ef2c9e122ea005f7cc84e",
+        "disposition": "integrated-identical"
+      },
+      {
+        "path": "docs/capabilities/00-overview.md",
+        "source_blob": "56e295e20e5c63808cf58eb58e7857492be0a56e",
+        "integrated_blob": "38ab39eeb09819e21975960f1d098f00b836d3d9",
+        "canonical_blob": "38ab39eeb09819e21975960f1d098f00b836d3d9",
+        "disposition": "integrated-with-modifications"
+      },
+      {
+        "path": "docs/capabilities/inbound/4uentes-auth--automation-service-token-grant-v1.md",
+        "source_blob": "8d2e4c72b33197ac358711eea06fc6cfa97fc97b",
+        "integrated_blob": "e30fe23f4a34ee133ae6c11fc8a652f90876dcce",
+        "canonical_blob": "e30fe23f4a34ee133ae6c11fc8a652f90876dcce",
+        "disposition": "integrated-with-modifications"
+      },
+      {
+        "path": "docs/capabilities/outbound/automation-receipt-intake-acceptance-v0.1.md",
+        "source_blob": "0f809520b72985f0a97a039b88f57812053120ce",
+        "integrated_blob": "c6ab76dbfae95c40c7acc027688ca09819ac7e96",
+        "canonical_blob": "c6ab76dbfae95c40c7acc027688ca09819ac7e96",
+        "disposition": "integrated-with-modifications"
+      },
+      {
+        "path": "docs/capabilities/outbound/receipt-intake-binding-provisioning-v1.md",
+        "source_blob": "0cb75fb53ba02adb4e970470bc97fefcfc1c1e05",
+        "integrated_blob": "00f096bfe4982b7032d5e695bf74cce3bc971bb4",
+        "canonical_blob": "00f096bfe4982b7032d5e695bf74cce3bc971bb4",
+        "disposition": "integrated-with-modifications"
+      },
+      {
+        "path": "docs/tasks/2026-08-23-cr-cp-0021-automation-token-consumer.md",
+        "source_blob": "1ddb9ed0135762bfed8d6a3c8aeac8dee9aacbc4",
+        "integrated_blob": "151f157ccdd4688eda216d4df6dc6dd0e59273a2",
+        "canonical_blob": "151f157ccdd4688eda216d4df6dc6dd0e59273a2",
+        "disposition": "integrated-with-modifications"
+      },
+      {
+        "path": "docs/tasks/2026-08-27-cr-hpt-0019-receipt-intake-acceptance.md",
+        "source_blob": "75b14a2cb4cf310f337192390f9ee40a5744d142",
+        "integrated_blob": "155910d0f9a7fe8f202fce98e68adaea4f330315",
+        "canonical_blob": "155910d0f9a7fe8f202fce98e68adaea4f330315",
+        "disposition": "integrated-with-modifications"
+      },
+      {
+        "path": "docs/tasks/2026-08-28-cr-hpt-0023-receipt-binding-provisioning.md",
+        "source_blob": "252d3dece5dfec0c03ea4f979066da46d5aa3e43",
+        "integrated_blob": "dcf3589c6842d3fbd0504d68d7b720b41e0b98b9",
+        "canonical_blob": "dcf3589c6842d3fbd0504d68d7b720b41e0b98b9",
+        "disposition": "integrated-with-modifications"
+      },
+      {
+        "path": "docs/tasks/README.md",
+        "source_blob": "74211b8a5b652c9b0522da0140b2bcb537bfd31c",
+        "integrated_blob": "9a795970f700e6ed25936e2d68d70c403cea58f3",
+        "canonical_blob": "0d4a8d0956bc121cd555c4f6abe53d055668936b",
+        "disposition": "integrated-with-modifications"
+      },
+      {
+        "path": "httpPruebas/automation-receipt-intake-v0.1.http",
+        "source_blob": "edb6577cc077d8abb4c8df55a6446fa0b98d4162",
+        "integrated_blob": "edb6577cc077d8abb4c8df55a6446fa0b98d4162",
+        "canonical_blob": "edb6577cc077d8abb4c8df55a6446fa0b98d4162",
+        "disposition": "integrated-identical"
+      },
+      {
+        "path": "httpPruebas/receipt-intake-binding.http",
+        "source_blob": "e19b179f803bec9c8bdbc92fbed211d2f6d9a54f",
+        "integrated_blob": "28bd13dc97701290a72cd66269ab32146eed75df",
+        "canonical_blob": "28bd13dc97701290a72cd66269ab32146eed75df",
+        "disposition": "integrated-with-modifications"
+      },
+      {
+        "path": "package.json",
+        "source_blob": "560c2808c0be37d845b30a845802e95fbc298b89",
+        "integrated_blob": "adc61ba6ebcff80b073b1663866815b441c30c92",
+        "canonical_blob": "5f0ef3b079292a523b791a67cc5bdd9561dc27ab",
+        "disposition": "integrated-with-modifications"
+      },
+      {
+        "path": "scripts/ards-check.js",
+        "source_blob": "904b02f100200ea4f93ecf4774bf743dc283babd",
+        "integrated_blob": "0de00bbe02accbe747ded983969e63eeea306b29",
+        "canonical_blob": "5c31fec2e5f95766a419aa568a5e7aa76a9af9ed",
+        "disposition": "integrated-with-modifications"
+      },
+      {
+        "path": "scripts/protected-coverage.config.js",
+        "source_blob": "0e0d0952a3776eee3708019a6e204d93eb945d83",
+        "integrated_blob": "0e0d0952a3776eee3708019a6e204d93eb945d83",
+        "canonical_blob": "0e0d0952a3776eee3708019a6e204d93eb945d83",
+        "disposition": "integrated-identical"
+      },
+      {
+        "path": "scripts/smoke-test.js",
+        "source_blob": "7756dfc6f2ad432ef251657caa3b4b782b3c9fb5",
+        "integrated_blob": "7756dfc6f2ad432ef251657caa3b4b782b3c9fb5",
+        "canonical_blob": "7756dfc6f2ad432ef251657caa3b4b782b3c9fb5",
+        "disposition": "integrated-identical"
+      },
+      {
+        "path": "scripts/test-automation-service-token-provider.js",
+        "source_blob": "253c1fb7a2a6d5b61b32915bd3240c158a5011d4",
+        "integrated_blob": "253c1fb7a2a6d5b61b32915bd3240c158a5011d4",
+        "canonical_blob": "253c1fb7a2a6d5b61b32915bd3240c158a5011d4",
+        "disposition": "integrated-identical"
+      },
+      {
+        "path": "scripts/test-receipt-binding-provisioning.js",
+        "source_blob": "741499c1d477d96d6dffe109dcdceb6afb124196",
+        "integrated_blob": "34084595426ec00f62a91ee3e2cda6406bce48c4",
+        "canonical_blob": "34084595426ec00f62a91ee3e2cda6406bce48c4",
+        "disposition": "integrated-with-modifications"
+      },
+      {
+        "path": "scripts/test-receipt-intake.js",
+        "source_blob": "0e3bab435b34128bbc6387c81a29d422a2797395",
+        "integrated_blob": "0e3bab435b34128bbc6387c81a29d422a2797395",
+        "canonical_blob": "0e3bab435b34128bbc6387c81a29d422a2797395",
+        "disposition": "integrated-identical"
+      },
+      {
+        "path": "specs/api/00-index.yaml",
+        "source_blob": "a9fc2429b2854867f87f9a168d75fcdac80047e7",
+        "integrated_blob": "a9fc2429b2854867f87f9a168d75fcdac80047e7",
+        "canonical_blob": "a9fc2429b2854867f87f9a168d75fcdac80047e7",
+        "disposition": "integrated-identical"
+      },
+      {
+        "path": "specs/api/automation-receipt-intake-v0.1.yaml",
+        "source_blob": "5e2195a9bfc3a0c6f77b46691460ab61c1184f74",
+        "integrated_blob": "5e2195a9bfc3a0c6f77b46691460ab61c1184f74",
+        "canonical_blob": "5e2195a9bfc3a0c6f77b46691460ab61c1184f74",
+        "disposition": "integrated-identical"
+      },
+      {
+        "path": "specs/api/receipt-intake-binding-v1.yaml",
+        "source_blob": "701bb1c014cd9d2be96568a37399d7bd85782e67",
+        "integrated_blob": "701bb1c014cd9d2be96568a37399d7bd85782e67",
+        "canonical_blob": "701bb1c014cd9d2be96568a37399d7bd85782e67",
+        "disposition": "integrated-identical"
+      },
+      {
+        "path": "specs/capabilities/00-index.yaml",
+        "source_blob": "8cef8997a06df87637a28b86b9fca84ad159de15",
+        "integrated_blob": "8cef8997a06df87637a28b86b9fca84ad159de15",
+        "canonical_blob": "8cef8997a06df87637a28b86b9fca84ad159de15",
+        "disposition": "integrated-identical"
+      },
+      {
+        "path": "specs/capabilities/inbound/00-index.yaml",
+        "source_blob": "06c7b23200697aaff9a3c79cd865eac140370994",
+        "integrated_blob": "681e0ad1cd9f71a6329f130b95c11d9d1b6cf8c8",
+        "canonical_blob": "681e0ad1cd9f71a6329f130b95c11d9d1b6cf8c8",
+        "disposition": "integrated-with-modifications"
+      },
+      {
+        "path": "specs/capabilities/inbound/4uentes-auth--automation-service-token-grant-v1.yaml",
+        "source_blob": "2a52b982dbfab6576f0f49967f662b216d5d8beb",
+        "integrated_blob": "2a52b982dbfab6576f0f49967f662b216d5d8beb",
+        "canonical_blob": "2a52b982dbfab6576f0f49967f662b216d5d8beb",
+        "disposition": "integrated-identical"
+      },
+      {
+        "path": "specs/capabilities/outbound/00-index.yaml",
+        "source_blob": "839365f049355398d2faf163842ad8d0fa2b3797",
+        "integrated_blob": "839365f049355398d2faf163842ad8d0fa2b3797",
+        "canonical_blob": "41fc0afc9518bf72ac19ba908077c8457e34b6cf",
+        "disposition": "integrated-with-modifications"
+      },
+      {
+        "path": "specs/capabilities/outbound/automation-receipt-intake-acceptance-v0.1.yaml",
+        "source_blob": "c61c37fc2e3be2821db7dfcb502998c1e5a34d4a",
+        "integrated_blob": "c61c37fc2e3be2821db7dfcb502998c1e5a34d4a",
+        "canonical_blob": "c61c37fc2e3be2821db7dfcb502998c1e5a34d4a",
+        "disposition": "integrated-identical"
+      },
+      {
+        "path": "specs/capabilities/outbound/receipt-intake-binding-provisioning-v1.yaml",
+        "source_blob": "c587a3c90512398b01759e1cc21533444580cac8",
+        "integrated_blob": "c587a3c90512398b01759e1cc21533444580cac8",
+        "canonical_blob": "c587a3c90512398b01759e1cc21533444580cac8",
+        "disposition": "integrated-identical"
+      },
+      {
+        "path": "src/apps/sst/application/receipt-intake/accept-receipt-intake.service.js",
+        "source_blob": "2786fb0cd8acf6aaf74235daf04827a7668c59cf",
+        "integrated_blob": "2786fb0cd8acf6aaf74235daf04827a7668c59cf",
+        "canonical_blob": "2786fb0cd8acf6aaf74235daf04827a7668c59cf",
+        "disposition": "integrated-identical"
+      },
+      {
+        "path": "src/apps/sst/application/receipt-intake/manage-receipt-binding.service.js",
+        "source_blob": "04b74849994831ea1b682a69104a7e0307c00020",
+        "integrated_blob": "04b74849994831ea1b682a69104a7e0307c00020",
+        "canonical_blob": "04b74849994831ea1b682a69104a7e0307c00020",
+        "disposition": "integrated-identical"
+      },
+      {
+        "path": "src/apps/sst/domain/receipt-intake/receipt-binding.policy.js",
+        "source_blob": "8c7bf4efb2fdd47282e409bbf5a383db94d7b988",
+        "integrated_blob": "8c7bf4efb2fdd47282e409bbf5a383db94d7b988",
+        "canonical_blob": "8c7bf4efb2fdd47282e409bbf5a383db94d7b988",
+        "disposition": "integrated-identical"
+      },
+      {
+        "path": "src/apps/sst/domain/receipt-intake/receipt-intake.errors.js",
+        "source_blob": "6d58732c8bf980995e7f42008ab54fc22f8a8781",
+        "integrated_blob": "6d58732c8bf980995e7f42008ab54fc22f8a8781",
+        "canonical_blob": "6d58732c8bf980995e7f42008ab54fc22f8a8781",
+        "disposition": "integrated-identical"
+      },
+      {
+        "path": "src/apps/sst/domain/receipt-intake/receipt-intake.policy.js",
+        "source_blob": "50dae4ed94f241c985477dea9704ff3c0d191965",
+        "integrated_blob": "50dae4ed94f241c985477dea9704ff3c0d191965",
+        "canonical_blob": "50dae4ed94f241c985477dea9704ff3c0d191965",
+        "disposition": "integrated-identical"
+      },
+      {
+        "path": "src/apps/sst/infrastructure/db/postgres/receipt-intake/sequelize-receipt-binding.repository.js",
+        "source_blob": "affb9960864894f4e0c8e007044c8d06649748b4",
+        "integrated_blob": "affb9960864894f4e0c8e007044c8d06649748b4",
+        "canonical_blob": "affb9960864894f4e0c8e007044c8d06649748b4",
+        "disposition": "integrated-identical"
+      },
+      {
+        "path": "src/apps/sst/infrastructure/db/postgres/receipt-intake/sequelize-receipt-intake.repository.js",
+        "source_blob": "cc422c892129c37b37ef994cf5a3454885627c8e",
+        "integrated_blob": "cc422c892129c37b37ef994cf5a3454885627c8e",
+        "canonical_blob": "cc422c892129c37b37ef994cf5a3454885627c8e",
+        "disposition": "integrated-identical"
+      },
+      {
+        "path": "src/apps/sst/infrastructure/integrations/automation/automation-service-token-provider.js",
+        "source_blob": "bf69f11e6dd3a7d63e4f1581adb089f725787a7a",
+        "integrated_blob": "bf69f11e6dd3a7d63e4f1581adb089f725787a7a",
+        "canonical_blob": "bf69f11e6dd3a7d63e4f1581adb089f725787a7a",
+        "disposition": "integrated-identical"
+      },
+      {
+        "path": "src/apps/sst/presentation/controllers/receipt-binding.controller.js",
+        "source_blob": "25372048c3d28a5d1c9389f7726fb92866875448",
+        "integrated_blob": "25372048c3d28a5d1c9389f7726fb92866875448",
+        "canonical_blob": "25372048c3d28a5d1c9389f7726fb92866875448",
+        "disposition": "integrated-identical"
+      },
+      {
+        "path": "src/apps/sst/presentation/controllers/receipt-intake.controller.js",
+        "source_blob": "4dce84b62ad6a7bc1f95735ab6bb32e9f5890890",
+        "integrated_blob": "4dce84b62ad6a7bc1f95735ab6bb32e9f5890890",
+        "canonical_blob": "4dce84b62ad6a7bc1f95735ab6bb32e9f5890890",
+        "disposition": "integrated-identical"
+      },
+      {
+        "path": "src/apps/sst/presentation/middlewares/require-account-role.middleware.js",
+        "source_blob": "c8fea08cf021619069f1b069a00ce6c3d7f6b654",
+        "integrated_blob": "c8fea08cf021619069f1b069a00ce6c3d7f6b654",
+        "canonical_blob": "c8fea08cf021619069f1b069a00ce6c3d7f6b654",
+        "disposition": "integrated-identical"
+      },
+      {
+        "path": "src/apps/sst/presentation/middlewares/verify-automation-receipt-intake-service.middleware.js",
+        "source_blob": "8c9bda37e382e2e449f606273f17da55642e490a",
+        "integrated_blob": "8c9bda37e382e2e449f606273f17da55642e490a",
+        "canonical_blob": "8c9bda37e382e2e449f606273f17da55642e490a",
+        "disposition": "integrated-identical"
+      },
+      {
+        "path": "src/apps/sst/presentation/routes/index.js",
+        "source_blob": "a3b8bd0d1f7823cacc818b7d147b1e1069819ceb",
+        "integrated_blob": "a3b8bd0d1f7823cacc818b7d147b1e1069819ceb",
+        "canonical_blob": "a3b8bd0d1f7823cacc818b7d147b1e1069819ceb",
+        "disposition": "integrated-identical"
+      },
+      {
+        "path": "src/apps/sst/presentation/routes/integrations.routes.js",
+        "source_blob": "6a7919a262c5dceb1f817c6951f41a0f3caf9e1d",
+        "integrated_blob": "6a7919a262c5dceb1f817c6951f41a0f3caf9e1d",
+        "canonical_blob": "6a7919a262c5dceb1f817c6951f41a0f3caf9e1d",
+        "disposition": "integrated-identical"
+      },
+      {
+        "path": "src/apps/sst/presentation/routes/receipt-intake.routes.js",
+        "source_blob": "3a62422efc282ac49857df2a547516db6be4cb8c",
+        "integrated_blob": "3a62422efc282ac49857df2a547516db6be4cb8c",
+        "canonical_blob": "3a62422efc282ac49857df2a547516db6be4cb8c",
+        "disposition": "integrated-identical"
+      }
+    ]
+  },
+  {
+    "repository": "sst-4uentes-infra",
+    "source": "a01c28d",
+    "base": "a3522df",
+    "canonical": "a3522df6fcefcda116af3a776ad2b45130f69125",
+    "merge": "origin/develop",
+    "files": [
+      {
+        "path": "docs/learning/README.md",
+        "source_blob": "b8a891c32f3f67e8b3daf7f252bf76e37185330a",
+        "integrated_blob": "e1cb325adefeb8daac52c4223a3053f5d47ae3ad",
+        "canonical_blob": "e1cb325adefeb8daac52c4223a3053f5d47ae3ad",
+        "disposition": "integrated-with-modifications"
+      },
+      {
+        "path": "docs/learning/clamav-in-receipt-custody.md",
+        "source_blob": "48399d26650d7be623d3ebce900ff61f24386ef6",
+        "integrated_blob": null,
+        "canonical_blob": null,
+        "disposition": "documentation-evidence-pending"
+      }
+    ]
+  }
+]

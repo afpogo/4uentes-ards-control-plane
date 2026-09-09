@@ -1,0 +1,53 @@
+
+> sst@1.1.0 check
+> node scripts/test-compose-local-development.js && node scripts/test-chat-retention.js && node scripts/test-chat-retention-http.js && node scripts/test-chat-terminal-event.js && node scripts/test-phinance-consumer-principal.js && node scripts/test-phinance-facade-shell.js && node scripts/test-phinance-proxy.js && node scripts/test-automation-service-token-provider.js && node scripts/test-receipt-intake.js && node scripts/test-receipt-binding-provisioning.js && node scripts/test-smoke-http.js && node scripts/test-article-agent-processing.js && node scripts/test-learning-workspace.js && node scripts/ards-check.js
+
+PASS compose local secret and port contract
+PASS chat retention: TTL, pagination, request-scoped cache outcomes, fail-open cache, promotion order, idempotency and state separation
+PASS chat retention HTTP: validation, transitions and cache outcome response metadata
+PASS chat terminal event: two-session delivery, exact payload, active-turn fence and no resurrection
+PASS Phinance consumer principal: least privilege, fail-closed negatives and exact service grant
+OK: SST Phinance Swagger shell is mounted without forwarding business data
+PASS Phinance proxy: feature gate, exact trusted headers, entitlement isolation and fail-closed upstreams
+PASS automation token consumer: dedicated tuple, cache, refresh, deduplication and fail-closed config
+PASS receipt intake: exact service identity, validation, durable semantics, limits and reversible migration
+receipt binding provisioning tests: ok
+smoke HTTP timeout test: ok
+PASS article agent processing persistence, scope, idempotency and compatibility tests
+Learning workspace tests passed: owner-resolved sources, immutable snapshots and review boundaries
+node.exe : [ARDS CHECK] SKIP scrapper protected preflight: set SMOKE_JWT (or SMOKE_JWT_OWNER) to validate scrapper auth
+At C:\Program Files\nodejs\npm.ps1:29 char:3
++   & $NODE_EXE $NPM_CLI_JS $args
++   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([ARDS CHECK] SK...e scrapper auth:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+GET /public/gallery 200 {
+  items: [],
+  page: 1,
+  limit: 10,
+  total: 0,
+  totalPages: 0,
+  source: 'public_channel'
+}
+SKIP protected article smoke: set SMOKE_JWT (or SMOKE_JWT_OWNER) to validate preview/pdf end-to-end
+SKIP scrapper protected smoke: set SMOKE_JWT (or SMOKE_JWT_OWNER) to validate scrapper endpoints
+SKIP scrapper negative smoke: set SMOKE_JWT (or SMOKE_JWT_OWNER) to validate blocked URLs
+[ARDS CHECK] Partial protected smoke coverage. Skipped: sst.automation.receipt-intakes.create, sst.integrations.plaud.sync, sst.integrations.plaud.status,
+sst.articulos.create, sst.articulos.get, sst.articulos.preview, sst.articulos.documents.list, sst.articulos.documents.get, sst.articulos.filter.get, sst.me,
+sst.accounts.list, sst.article-nodes.tree, sst.article-nodes.children, sst.article-nodes.node.articles, sst.articulos.filter.validate-active,
+sst.articulos.filter.update, sst.articulos.update, sst.articulos.delete, sst.articulos.documents.source-pdf.trigger, sst.articulos.documents.delete,
+sst.extensions.articles.create, sst.extensions.text-articles.create, sst.extensions.sessions.create, sst.extensions.sessions.deploy,
+sst.article-nodes.create, sst.article-nodes.rename, sst.article-nodes.move, sst.article-nodes.delete, sst.article-nodes.assign-article,
+sst.article-nodes.remove-article, sst.diccionario.sheets.list, sst.diccionario.sheets.get, sst.diccionario.sheets.create, sst.diccionario.sheets.update,
+sst.diccionario.sheets.delete, sst.diccionario.entries.list, sst.diccionario.entries.create, sst.diccionario.entries.get, sst.diccionario.entries.update,
+sst.diccionario.entries.delete, sst.diccionario.entries.reveal, sst.diccionario.tag-values.list, sst.diccionario.tag-occurrences.list,
+sst.diccionario.imports.create, sst.diccionario.exports.account, sst.diccionario.exports.sheet, sst.tags.prefix-engine.preview, sst.learning-workspaces.me,
+sst.learning-workspaces.context, sst.learning-workspaces.sources.preview, sst.learning-workspaces.sources.accept, sst.learning-workspaces.sources.reject,
+scrapper.scrapWeb, scrapper.scrapWeb.validate-active, scrapper.scrapWeb.urisInfo
+[ARDS CHECK] Skip reasons: Receipt-intake protected smoke requires a promoted runtime, synthetic binding/object fixtures, and RECEIPT_INTAKE_SMOKE_JWT |
+Missing SMOKE_JWT (or SMOKE_JWT_OWNER) for protected SST article smoke | Missing SMOKE_JWT for scrapper protected smoke | Missing SMOKE_JWT for scrapper
+negative smoke
+[ARDS CHECK] Protected coverage: 1/2 endpoints (50%). Minimum=80% => FAIL | Optimal=100% => FAIL
+[ARDS CHECK] Uncovered protected endpoints: sst.articulos.list
+[ARDS CHECK] OK

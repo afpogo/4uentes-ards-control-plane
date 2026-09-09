@@ -1,0 +1,121 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-HPT-0019"
+title: "Implement the governed SST receipt-intake acceptance boundary"
+status: "planned"
+source_request: "evidence/requests/CR-CP-0024/precursors/CR-HPT-0019/inbox/CR-HPT-0019-implement-sst-receipt-intake-acceptance-boundary.yaml"
+created_at: "2026-08-27"
+requester: "4uentes"
+
+control_plane_context:
+  initiative_id: "INIT-HPT-0003"
+  predecessor_request_ids: [CR-HPT-0007, CR-HPT-0016, CR-HPT-0017]
+  state_id: "telegram-receipt-intake-adoption"
+  jira_epic_key: "HPT-8"
+
+summary: >
+  Implement and validate the SST-owned acceptance boundary for Automation
+  receipt candidates. The slice terminates in durable REVIEW_PENDING state and
+  explicitly excludes Phinance invocation, human approval, deployment,
+  credential provisioning and n8n activation.
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "service JWT verification"
+    - "financial-document metadata persistence"
+    - "idempotency and abuse limits"
+    - "cross-repo owner contract"
+
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5-high"
+
+subagent_deployment_plan:
+  required: false
+  roles: []
+  reason: "The security and persistence boundary remains under one primary agent."
+
+execution:
+  requires_human_approval: true
+  approval_source: "User approved advancing to the SST owner gate on 2026-08-27."
+  child_repo_mutation_allowed: true
+  owner_repo: "sst-bend"
+  active_owner_worktree_mutation_allowed: false
+  isolated_worktree_required: true
+  isolated_base_ref: "agent/cr-cp-0021-automation-m2m-sst@72a406d"
+  isolated_branch: "feat/CR-HPT-0019/receipt-intake-acceptance"
+  isolated_worktree_path: "worktrees/CR-HPT-0019-sst-owner"
+  runtime_implementation_allowed: true
+  database_changes_allowed: true
+  reversible_migration_required: true
+  dependency_changes_allowed: false
+  infrastructure_changes_allowed: false
+  deployment_changes_allowed: false
+  secret_changes_allowed: false
+  real_secret_generation_allowed: false
+  n8n_activation_allowed: false
+  phinance_invocation_allowed: false
+  jira_write_allowed: true
+  jira_write_scope: "Create and read back exactly one Tarea for CR-HPT-0019 under HPT-8; no transition, comment or assignment."
+
+acceptance_contract:
+  method: "POST"
+  path: "/4uentes/v1/automation/receipt-intakes"
+  accepted_status: 202
+  accepted_state: "REVIEW_PENDING"
+  replay_status: 200
+  exact_service_identity:
+    issuer: "sst-auth"
+    audience: "sst-api"
+    subject: "4uentes-automation-receipt-intake"
+    client_id: "4uentes-automation-receipt-intake"
+    token_use: "service"
+    scope: "finance:receipt-intake:create"
+    maximum_ttl_seconds: 300
+  maximum_body_bytes: 32768
+  maximum_object_bytes: 10485760
+  maximum_candidates: 16
+  maximum_provenance_refs_per_candidate: 8
+  persistence_boundary: "Metadata and candidates only; no inline binary, raw Telegram identity or token."
+
+implementation_plan:
+  - "Create the isolated SST worktree from the reconciled Automation M2M baseline."
+  - "Add reversible tables for active opaque bindings, clean object references, review candidates and idempotency."
+  - "Implement exact service-JWT middleware, payload validation, binding/object resolution and governed acceptance use case."
+  - "Enforce replay/conflict semantics and contract ceilings without invoking Phinance."
+  - "Register the route and publish runtime spec, outbound capability and Spanish owner docs."
+  - "Add unit/contract tests and a sanitized executable HTTP harness."
+  - "Run targeted tests, migration up/down/up where feasible, SST npm run check and full control-plane npm run check."
+
+owner_documentation:
+  required: true
+  status: "planned"
+  owner_repo: "sst-bend"
+  planned_owner_docs:
+    - "specs/api/automation-receipt-intake-v0.1.yaml"
+    - "specs/capabilities/outbound/automation-receipt-intake-acceptance-v0.1.yaml"
+    - "docs/api/28-automation-receipt-intake.md"
+    - "docs/capabilities/outbound/automation-receipt-intake-acceptance-v0.1.md"
+    - "docs/tasks/2026-08-27-cr-hpt-0019-receipt-intake-acceptance.md"
+
+jira_mirror:
+  jira_source_of_truth: false
+  project_key: "HPT"
+  initiative_issue_key: "HPT-8"
+  request_issue_type: "Tarea"
+  request_issue_key: "HPT-12"
+  expected_parent: "HPT-8"
+  write_batch_ref: "evidence/requests/CR-HPT-0019/jira-write-batch.md"
+
+decision:
+  status: "approved-for-isolated-owner-implementation"
+  approver: "4uentes"
+  approved_at: "2026-08-27"
+  blocker: "Deployment, secret provisioning, n8n activation and Phinance invocation remain forbidden."

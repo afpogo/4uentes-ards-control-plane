@@ -44,3 +44,23 @@ después de publicar y releer este PR documental.
 - `npm run check`, `npm run check:human-docs`, enlaces, Mermaid,
   `git diff --check` y el scan sensible deben conservar `PASS`;
 - cualquier drift de base, head o paths detiene la publicación.
+
+## Resultado de publicación
+
+La rama fue publicada exactamente en
+`67c4874b2404235d70dc56ce143343954f5c707e` y se abrió
+[Infra PR #26](https://github.com/afpogo/sst-4uentes-infra/pull/26) hacia
+`develop@a4d120061d0d4d53352b1de766858602ff759750`.
+
+El readback confirmó `OPEN`, `MERGEABLE`, `CLEAN`, sin auto-merge, un commit y
+doce archivos. El check `validate-repository` concluyó `SUCCESS`; los workflows
+de manifests no aplicaron porque el cambio es exclusivamente documental y del
+validador docs-as-code.
+
+`develop` permaneció sin cambios. Una lectura adicional del cluster no estuvo
+disponible porque el API local agotó el TLS handshake. No se intentó reparar o
+reiniciar Kubernetes: la inmutabilidad de `develop` demuestra que esta
+publicación no produjo una nueva revisión GitOps.
+
+La autorización quedó consumida. El PR no fue fusionado y requiere un gate
+separado para merge.
