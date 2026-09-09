@@ -1,0 +1,18 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-SST-0240"
+title: "Define and coordinate SST evolutionary onboarding V1"
+status: "inbox"
+created_at: "2026-09-08"
+requester: "4uentes"
+summary: >
+  Reserve the independent onboarding coordinator under INIT-SST-0011.
+  Establish a functional/API V1 contract, capability matrix, visual map and
+  validation plan before allocating executable requests to owner repositories.
+requested_scope:
+  initiative_id: "INIT-SST-0011"
+  owner_repository: "4uentes-orchestor"
+constraints:
+  - "Control-plane artifacts only; no child repository or runtime mutation."
+  - "ARDS/SDD remains authoritative; Jira is an operational mirror."
+  - "Do not reserve owner slice IDs before a new global preflight."
