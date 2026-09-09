@@ -60,7 +60,8 @@ execution:
   child_repo_mutation_allowed: false
   runtime_mutation_allowed: false
   jira_write_allowed: false
-  next_gate: "Canonical plan readback, owner preflight and explicit running batch."
+  next_gate: "Approve the concrete owner/Jira batch in execution-gate.md; publish and read back running before owner mutation."
+  gate_readiness: "owner-base-verified; actor-attempt-and-retention-proposal-ready"
 owner_documentation:
   required: true
   status: "planned"
@@ -76,5 +77,6 @@ validation:
   owner: "Full owner check plus focused contract, negative-path and concurrency tests"
   closure: "Owner publication/readback, sanitized evidence and full control-plane gate before done."
 evidence_refs:
+  - "evidence/requests/CR-SST-0242/execution-gate.md"
   - "evidence/requests/CR-SST-0240/owner-binding-and-slice-plan.md"
   - "evidence/requests/CR-SST-0240/owner-slice-jql-preflight.json"
