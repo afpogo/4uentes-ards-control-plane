@@ -1,0 +1,21 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-HPT-0024"
+title: "Deploy private receipt-object platform"
+status: "accepted-for-retroactive-reconciliation"
+created_at: "2026-08-28"
+requester: "4uentes"
+initiative_id: "INIT-HPT-0003"
+source_request_id: "CR-HPT-0020"
+predecessor_request_ids: ["CR-HPT-0020", "CR-HPT-0023"]
+business_context: >
+  SST requires private object custody, external key custody and malware
+  scanning before receipt bytes can be accepted or retained.
+requested_outcomes:
+  - "Deploy digest-pinned private object storage, key management and malware scanning."
+  - "Require encrypted transport, external key custody and server-side encryption."
+  - "Keep scanner staging memory-backed and every custody service outside public ingress."
+constraints:
+  - "Do not commit secrets, certificates, API keys, licenses or generated key material."
+  - "Do not mutate runtime, Kubernetes or Jira without a separately published gate."
+  - "Record that historical owner execution preceded canonical lifecycle publication."

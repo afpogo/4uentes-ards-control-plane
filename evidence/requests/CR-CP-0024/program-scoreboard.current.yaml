@@ -8,7 +8,7 @@ observed_at: "2026-09-05"
 authority:
   repository: "afpogo/4uentes-ards-control-plane"
   ref: "origin/main"
-  sha: "b8a81958512a128a5000ab267dcb74b0332c6414"
+  sha: "532daf0db616a59cef9ecd37a227aca531bc9dd3"
   lifecycle_ref: "requests/running/CR-CP-0024-govern-multi-repository-integration-and-stable-promotion.yaml"
   plan_ref: "evidence/requests/CR-CP-0024/implementation-plan.md"
   disposition_ref: "evidence/requests/CR-CP-0024/promotion-disposition-manifest.yaml"
@@ -35,9 +35,9 @@ calculation:
 summary:
   current_phase: "phase-1-owner-development-integration"
   overall_status: "blocked"
-  earned_points: 46
+  earned_points: 49
   total_points: 100
-  progress_percent: 46
+  progress_percent: 49
   phase_1_status: "active"
   phase_2_status: "not-started"
   phase_2_progress_percent: 0
@@ -45,8 +45,6 @@ summary:
   clean_seed_readiness_percent: 100
   historical_root_sanitization_percent: 20
   blocking_checkpoint_ids:
-    - "backend-rollout-healthy"
-    - "infra-rollout-healthy"
     - "portfolio-feature-readiness"
     - "sanitize-control-plane-root"
     - "sanitize-auth-root"
@@ -79,12 +77,12 @@ phases:
   - id: "owner-development-integration"
     order: 1
     weight_points: 55
-    earned_points: 24
+    earned_points: 27
     status: "blocked"
     checkpoints:
       - {id: "auth-development-integration", points: 7, status: "satisfied", earned_points: 7}
       - {id: "backend-merge-image-and-pin", points: 8, status: "satisfied", earned_points: 8}
-      - {id: "backend-rollout-healthy", points: 2, status: "blocked", earned_points: 0, blocker_ids: ["backend-clamav-rollout-health"]}
+      - {id: "backend-rollout-healthy", points: 2, status: "satisfied", earned_points: 2}
       - {id: "chatbot-development-reconciliation", points: 5, status: "pending", earned_points: 0}
       - {id: "extension-development-integration", points: 6, status: "pending", earned_points: 0}
       - {id: "fend-development-integration", points: 6, status: "pending", earned_points: 0}
@@ -92,7 +90,7 @@ phases:
       - {id: "portfolio-feature-readiness", points: 3, status: "blocked", earned_points: 0, blocker_ids: ["portfolio-readiness-gaps"]}
       - {id: "phinance-additive-integration", points: 4, status: "pending", earned_points: 0}
       - {id: "infra-governed-remediation-merges", points: 3, status: "satisfied", earned_points: 3}
-      - {id: "infra-rollout-healthy", points: 1, status: "blocked", earned_points: 0, blocker_ids: ["backend-clamav-rollout-health"]}
+      - {id: "infra-rollout-healthy", points: 1, status: "satisfied", earned_points: 1}
       - {id: "automation-private-baseline-and-discovery", points: 2, status: "satisfied", earned_points: 2}
       - {id: "automation-functional-owner-integration", points: 4, status: "active", earned_points: 0}
 
@@ -148,10 +146,11 @@ repositories:
   - repository: "sst-bend"
     development_destination: "develop"
     stable_destination: "master"
-    status: "development-integrated-rollout-blocked"
+    status: "development-integrated-rollout-healthy"
     documented_sha: "5db4dd868f"
     evidence_refs:
       - "evidence/requests/CR-CP-0024/backend-merge-rollout-and-health-readback-2026-08-31.md"
+      - "evidence/requests/CR-SST-0233/runtime-health-reconciliation-2026-09-05.md"
   - repository: "sst-chatbot"
     development_destination: "develop"
     stable_destination: "main"
@@ -182,10 +181,11 @@ repositories:
   - repository: "sst-4uentes-infra"
     development_destination: "develop"
     stable_destination: null
-    status: "remediation-integrated-rollout-blocked"
-    documented_sha: "a4d120061d0d4d53352b1de766858602ff759750"
+    status: "remediation-integrated-rollout-healthy"
+    documented_sha: "8efb13ed5724cc52aa3e98db114bc07122229f12"
     evidence_refs:
       - "evidence/requests/CR-CP-0024/infra-pr25-merge-and-runtime-readback-2026-09-05.md"
+      - "evidence/requests/CR-SST-0233/runtime-health-reconciliation-2026-09-05.md"
   - repository: "4uentes-automation"
     development_destination: "main"
     stable_destination: "main"
@@ -195,13 +195,6 @@ repositories:
       - "requests/running/CR-CP-0021-onboard-4uentes-automation-n8n.yaml"
 
 blockers:
-  - id: "backend-clamav-rollout-health"
-    severity: "global-gate"
-    status: "open"
-    description: >
-      Infra PR 25 removed the prior permission failure, but the replacement
-      receipt-clamav container was observed OOMKilled during signature update.
-    blocks: ["backend-rollout-healthy", "infra-rollout-healthy", "global-gate-and-stable-promotion"]
   - id: "portfolio-readiness-gaps"
     severity: "owner"
     status: "open"
@@ -225,6 +218,11 @@ resolved_gaps:
     evidence_refs:
       - "requests/running/CR-SST-0233-reconcile-fresh-database-migration-baseline.yaml"
       - "evidence/requests/CR-SST-0233/retroactive-running-reconciliation-2026-09-05.md"
+  - id: "backend-clamav-rollout-health"
+    status: "resolved-at-observation"
+    evidence_refs:
+      - "evidence/requests/CR-CP-0024/infra-pr25-merge-and-runtime-readback-2026-09-05.md"
+      - "evidence/requests/CR-SST-0233/runtime-health-reconciliation-2026-09-05.md"
 
 evidence_refs:
   - "evidence/requests/CR-CP-0024/program-scoreboard.md"
@@ -233,3 +231,5 @@ evidence_refs:
   - "requests/running/CR-4UENTES-0039-portfolio-publication-base-reconciliation.yaml"
   - "requests/running/CR-CP-0021-onboard-4uentes-automation-n8n.yaml"
   - "requests/running/CR-SST-0233-reconcile-fresh-database-migration-baseline.yaml"
+  - "evidence/requests/CR-SST-0233/runtime-health-reconciliation-2026-09-05.md"
+  - "evidence/requests/CR-SST-0233/jira-readonly-preflight-2026-09-05.md"

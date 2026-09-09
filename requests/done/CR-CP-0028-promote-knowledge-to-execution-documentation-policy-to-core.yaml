@@ -1,0 +1,78 @@
+schema_version: "1.0"
+phase: 4
+id: "CR-CP-0028"
+title: "Promote knowledge-to-execution documentation policy to Core"
+status: "done"
+source_request: "requests/planned/CR-CP-0028-promote-knowledge-to-execution-documentation-policy-to-core.yaml"
+started_at: "2026-09-05"
+completed_at: "2026-09-06"
+requester: "4uentes"
+
+summary: >
+  The control plane published the promotion handoff, Core accepted and
+  published the canonical core-profile-scoped policy, and the control plane
+  reconciled its local adoption without changing child repositories.
+
+control_plane_context:
+  initiative_id: "INIT-CP-0003"
+  predecessor_requests: ["CR-CP-0026", "CR-CP-0027"]
+  origin_repo: "4uentes-orchestor"
+  canonical_owner: "4uentes-ards-core"
+
+publication_result:
+  status: "merged-and-read-back"
+  github_pr: "https://github.com/afpogo/4uentes-ards-core/pull/5"
+  policy_commit: "1dcad5745a8a7c86f842953cb0a57b2bebdf5d5a"
+  merge_commit: "376aa401f8b8cc7ea5a7362a8c114ebbf80a2fa4"
+  canonical_branch: "develop"
+  merged_at: "2026-09-06T00:49:15Z"
+  ancestry_check: "PASS: policy commit is an ancestor of Core develop"
+
+implementation_result:
+  status: "canonical-in-core"
+  canonical_policy_id: "knowledge-to-execution-documentation-policy"
+  policy_class: "core-profile-scoped"
+  artifacts:
+    - "4uentes-ards-core: docs/policies/knowledge-to-execution-documentation-policy.md"
+    - "4uentes-ards-core: specs/integration/policies.yaml"
+    - "4uentes-ards-core: docs/reference-sources.md"
+    - "4uentes-ards-core: standard/ARDS_CONTROL_PLANE_CORE_PROFILE_v1.md"
+    - "4uentes-ards-core: templates/specs/integration/policies.template.yaml"
+    - "4uentes-ards-core: templates/docs/policies/README.template.md"
+    - "4uentes-ards-core: AGENTS.md"
+
+validation:
+  core_check: "PASS: 0 errors, 0 warnings"
+  core_diff_check: "PASS"
+  canonical_readback: "PASS"
+  control_plane_check: "PASS"
+  evidence_refs:
+    - "evidence/requests/CR-CP-0028/core-policy-publication-readback-2026-09-06.md"
+
+closure:
+  status: "complete"
+  child_rollout_effect: "Infra remains pinned to the origin revision; future adoption or exception is request-driven."
+  limits:
+    - "No child repository was mutated by this reconciliation."
+    - "No runtime or Jira write was performed."
+    - "The duplicate CP publication was closed as superseded and remains evidenced separately."
+
+execution_publication_rule:
+  rule_id: "execution-publication-and-tracker-closure-rule"
+  adoption_status: "adopted"
+  git_publication:
+    applicable: true
+    plan_merge_required: true
+    terminal_merge_required: true
+  tracker_mirror:
+    applicable: false
+    not_applicable_reason: "No Jira write or mapping is authorized for this promotion gate."
+  cleanup:
+    remote_readback_required: true
+  trial_result:
+    status: "passed"
+    plan_publication: "merged-and-read-back"
+    implementation_publication: "merged-and-read-back"
+    tracker_reconciliation: "not-applicable"
+    terminal_publication_contract: "merge-and-readback-before-cleanup"
+    cleanup_gate: "remote-readback-required"

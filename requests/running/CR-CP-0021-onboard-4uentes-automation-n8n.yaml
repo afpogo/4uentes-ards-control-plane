@@ -36,26 +36,44 @@ policy_application:
     - "Do not add capability links or claim runtime, M2M, deployment or secret readiness."
 
 authorization:
-  status: "owner-local-secrets-and-ports-approved"
+  status: "postgres-n8n-role-password-rotation-consumed-and-completed"
   approved_by: "4uentes"
   approved_at: "2026-09-05"
-  approval_text: "ok avancemos con la recomendacion, necesito el playbook para generar los secretos"
+  approval_text: "ok autorizo los pasos recomendados"
   approval_consumed_for: >
-    Publish this B4 authorization, then implement and statically validate the
-    owner-local secret bootstrap and port contract in an isolated clean
-    4uentes-automation worktree. Runtime and persistent secret generation remain
-    outside this authorization.
+    Rotate only the local PostgreSQL current n8n role password to the existing
+    file-backed postgres secret through the container-local socket, then
+    revalidate the base stack without exposing the value or reading data.
 
 execution:
-  current_unit: "owner-local-secrets-and-ports-readback-complete"
+  current_unit: "local-base-runtime-ready-awaiting-next-gate"
   completed_units:
     - "recover-canonical-inbox-identity"
     - "publish-current-onboarding-plan"
     - "publish-control-plane-discovery"
     - "publish-owner-local-secret-and-port-contract"
+    - "read-back-owner-local-secret-and-port-contract"
+    - "generate-persistent-owner-secrets-in-retained-worktree"
+    - "migrate-secrets-to-stable-owner-root-and-retire-worktree"
+    - "publish-and-read-back-owner-env-migration-tool"
+    - "reconcile-stable-owner-env-and-validate-compose-without-runtime"
+    - "attempt-local-base-runtime-start-and-rollback-on-port-conflict"
+    - "remediate-local-pgadmin-port-to-5060-and-revalidate"
+    - "retry-base-runtime-and-rollback-on-n8n-key-mismatch"
+    - "reconcile-historical-n8n-key-into-file-backed-custody"
+    - "retry-base-runtime-and-rollback-on-postgres-password-mismatch"
+    - "rotate-postgres-n8n-role-password-to-file-backed-secret"
+    - "validate-local-base-runtime-on-isolated-ports"
   control_plane_exact_paths:
     - "requests/running/CR-CP-0021-onboard-4uentes-automation-n8n.yaml"
     - "evidence/requests/CR-CP-0021/automation-owner-local-secret-port-authorization-2026-09-05.md"
+    - "evidence/requests/CR-CP-0021/persistent-secret-generation-authorization-2026-09-05.md"
+    - "evidence/requests/CR-CP-0021/stable-owner-secret-custody-migration-2026-09-05.md"
+    - "evidence/requests/CR-CP-0021/owner-env-reconciliation-authorization-2026-09-05.md"
+    - "evidence/requests/CR-CP-0021/local-runtime-start-authorization-2026-09-05.md"
+    - "evidence/requests/CR-CP-0021/local-pgadmin-port-remediation-authorization-2026-09-05.md"
+    - "evidence/requests/CR-CP-0021/historical-n8n-key-custody-authorization-2026-09-05.md"
+    - "evidence/requests/CR-CP-0021/postgres-role-password-rotation-authorization-2026-09-05.md"
   owner_exact_paths:
     - ".gitignore"
     - ".env.example"
@@ -73,7 +91,8 @@ execution:
   capability_mutation_allowed: false
   child_repo_mutation_allowed: true
   owner_git_mutation_allowed: true
-  secret_or_data_access_allowed: false
+  existing_secret_or_data_access_allowed: false
+  new_secret_generation_allowed: false
   runtime_mutation_allowed: false
   infrastructure_mutation_allowed: false
   deployment_allowed: false
@@ -141,6 +160,356 @@ owner_execution_result:
     - "Legacy productivity playbooks still consume PRODUCTIVITY_DB_PASSWORD from .env and require a separate owner request to migrate."
     - "Jira, Kubernetes, GitOps, infrastructure, capabilities and M2M were not mutated."
 
+persistent_secret_generation_gate:
+  status: "completed-and-superseded-by-stable-custody"
+  target_worktree: "4uentes-automation/.worktrees/cr-cp-0021-local-secrets-ports"
+  target_directory: ".secrets"
+  worktree_retention_rule: >
+    Do not retire or prune this owner worktree while it is the only custody
+    location for generated secrets. Relocation or rotation requires a separate
+    approved gate.
+  exact_targets:
+    - ".secrets/n8n_encryption_key"
+    - ".secrets/postgres_password"
+    - ".secrets/pgadmin_default_password"
+    - ".secrets/productivity_db_password"
+  allowed_commands:
+    - "scripts/bootstrap-local-secrets.ps1 -Mode Plan"
+    - "scripts/bootstrap-local-secrets.ps1 -Mode Generate"
+    - "metadata-only verification of file presence, length, ACL and Git ignore status"
+  forbidden_actions:
+    - "read or print secret file content"
+    - "read or modify .env"
+    - "overwrite, rotate, copy, export or back up secret material"
+    - "start, stop, restart or inspect containers"
+    - "inspect workflows, credentials or persistent data"
+    - "commit or publish .secrets"
+    - "write Jira or mutate Kubernetes, GitOps or infrastructure"
+  rollback: >
+    No automatic deletion is authorized after successful generation. If the
+    run fails, the playbook may remove only files it created during that failed
+    run. Any later deletion requires path verification and a separate approval.
+
+stable_custody_migration_gate:
+  status: "completed-and-verified"
+  repository: "afpogo/4uentes-automation"
+  canonical_ref: "origin/main"
+  source: ".worktrees/cr-cp-0021-local-secrets-ports/.secrets"
+  target: ".secrets"
+  exact_secret_names:
+    - "n8n_encryption_key"
+    - "postgres_password"
+    - "pgadmin_default_password"
+    - "productivity_db_password"
+  required_sequence:
+    - "Verify root and source worktree state without reading secret content."
+    - "Verify docs/1-trunk-based-agent-flow is preserved remotely by open PR 2."
+    - "Switch the clean owner root to local main and fast-forward to origin/main."
+    - "Verify target .secrets is absent and ignored by the canonical checkout."
+    - "Copy exactly four files without content output and apply private ACLs."
+    - "Compare only names and byte lengths between source and target."
+    - "Remove exactly the four source files and their now-empty source directory."
+    - "Confirm the owner worktree is clean, unused and its commit is integrated."
+    - "Retire the owner worktree while preserving its branch."
+  stop_conditions:
+    - "owner root is dirty"
+    - "documentation branch is not remotely preserved"
+    - "local main cannot fast-forward to origin/main"
+    - "any target secret already exists"
+    - "source names or lengths differ from the exact contract"
+    - "a process, mount or container depends on the owner worktree"
+  forbidden_actions:
+    - "read or print secret values"
+    - "overwrite target secrets"
+    - "read or modify .env"
+    - "delete the documentation branch or owner implementation branch"
+    - "start, stop or restart runtime"
+  result:
+    owner_root_branch: "main"
+    owner_root_sha: "9c1e75dcd1e39adf9a6ce3b1dcd850a2b998825d"
+    documentation_pr: "afpogo/4uentes-automation#2-open-and-preserved"
+    target_status: "four-files-present-private-acl-git-ignored"
+    target_file_lengths: "four-files-64-bytes-each"
+    source_status: "secret-copies-and-empty-source-directory-removed"
+    worktree_status: "retired"
+    branch_status: "local-and-remote-preserved"
+    runtime_dependency_check: "no-process-or-container-mount"
+    secret_content_access: "none"
+
+owner_env_reconciliation_gate:
+  status: "completed-and-verified"
+  repository: "afpogo/4uentes-automation"
+  canonical_ref: "origin/main"
+  versioned_paths:
+    - "scripts/migrate-local-env.ps1"
+    - "specs/system/local-stack.yaml"
+    - "docs/operations/local-stack.md"
+    - "docs/tasks/2026-09-05-cr-cp-0021-env-reconciliation.md"
+  local_path: ".env"
+  migration_contract:
+    remove_keys:
+      - "N8N_ENCRYPTION_KEY"
+      - "POSTGRES_PASSWORD"
+      - "PGADMIN_DEFAULT_PASSWORD"
+    preserve_without_output:
+      - "all unrelated configuration"
+      - "PRODUCTIVITY_DB_PASSWORD compatibility value"
+      - "SMTP configuration"
+    ensure_defaults:
+      LOCAL_SECRETS_DIR: ".secrets"
+      N8N_HOST_PORT: "5678"
+      N8N_PGADMIN_HOST_PORT: "5050"
+    require_non_empty:
+      - "POSTGRES_USER"
+      - "POSTGRES_DB"
+      - "PGADMIN_DEFAULT_EMAIL"
+  execution_rules:
+    - "Develop and validate the migration tool with synthetic temporary fixtures only."
+    - "Merge and read back the tool from owner main before touching the stable .env."
+    - "Perform an atomic replacement without a plaintext backup copy."
+    - "Print key names and status only; never print values."
+    - "Run scripts/check.ps1 -LocalStackOnly and docker compose config only."
+    - "Retire the clean implementation worktree after owner readback."
+  forbidden_actions:
+    - "print, export or copy .env values"
+    - "change PRODUCTIVITY_DB_PASSWORD or SMTP values"
+    - "start, stop, restart or inspect runtime containers"
+    - "modify workflows, data, Jira, Kubernetes, GitOps or infrastructure"
+  result:
+    owner_pull_request: "https://github.com/afpogo/4uentes-automation/pull/4"
+    owner_main_readback_sha: "5c2a24eeaaf957de1728ea601da668f78d19f63f"
+    execution_checkout: "stable-owner-root-main"
+    plan_read_only: true
+    atomic_migration_completed: true
+    removed_plaintext_secret_keys: true
+    required_identifiers_non_empty: true
+    local_secrets_directory_reference_valid: true
+    host_ports_valid: true
+    unrelated_configuration_preserved: true
+    temporary_candidates_absent: true
+    local_stack_check: "passed"
+    compose_base_config: "passed"
+    compose_tunnel_override_config: "passed"
+    runtime_started: false
+    secret_values_printed_or_recorded: false
+    implementation_worktree_status: "retired"
+    implementation_branch_status: "local-and-remote-preserved"
+
+local_runtime_start_gate:
+  status: "attempted-and-rolled-back-port-conflict"
+  repository: "afpogo/4uentes-automation"
+  execution_checkout: "stable-owner-root-main"
+  compose_scope:
+    included_services: ["postgres", "n8n", "pgadmin"]
+    excluded_compose_files: ["docker-compose.tunnel.yml"]
+    host_exposure: "n8n-and-pgadmin-loopback-only; postgres-not-published"
+  preconditions:
+    - "owner root is clean and on the merged main containing the reconciled .env tool"
+    - "LocalStackOnly validation has passed after .env reconciliation"
+    - "Docker daemon and selected loopback ports are available"
+    - "no secret values, workflow payloads or database rows are read or printed"
+  allowed_actions:
+    - "docker compose up -d using only docker-compose.yml"
+    - "docker compose ps for service and health status"
+    - "scripts/check.ps1 -Runtime for loopback readiness"
+    - "bounded sanitized logs only if readiness fails"
+  stop_conditions:
+    - "Docker daemon is unavailable"
+    - "a required host port is occupied by an unrelated process"
+    - "a service fails to become healthy or its loopback readiness check fails"
+    - "the base Compose command requests a tunnel, non-loopback exposure or an unapproved mutation"
+  rollback:
+    command: "docker compose down"
+    constraints:
+      - "run only if this gate started the failing stack"
+      - "never add -v and never remove bind-mounted data"
+  forbidden_actions:
+    - "use docker-compose.tunnel.yml or create a public tunnel"
+    - "inspect or mutate workflows, executions, database rows or credentials"
+    - "run productivity migrations or access PRODUCTIVITY_DB_PASSWORD"
+    - "modify Jira, Kubernetes, GitOps, infrastructure or versioned owner files"
+    - "print, export or copy .env or secret-file values"
+  result:
+    preflight_owner_main_and_clean: true
+    preflight_secrets_and_configuration_valid: true
+    preflight_ports_free: true
+    compose_command: "docker compose up -d"
+    compose_scope_respected: true
+    postgres_reached_healthy: true
+    n8n_started_before_failure: true
+    pgadmin_started: false
+    blocker: "127.0.0.1:5050 already in use"
+    observed_port_owner: "sst-bend-pgadmin-1"
+    observed_port_owner_image: "dpage/pgadmin4"
+    rollback_command: "docker compose down"
+    rollback_completed: true
+    automation_compose_services_after_rollback: "none"
+    volumes_or_bind_data_removed: false
+    tunnel_used: false
+    workflow_or_database_content_accessed: false
+    secret_values_printed_or_recorded: false
+
+local_pgadmin_port_remediation_gate:
+  status: "port-remediated-runtime-retry-rolled-back"
+  repository: "afpogo/4uentes-automation"
+  execution_checkout: "stable-owner-root-main"
+  local_file: ".env"
+  exact_key: "N8N_PGADMIN_HOST_PORT"
+  target_value: "5060"
+  preflight:
+    target_port_free: true
+    docker_owner: "none"
+  allowed_actions:
+    - "atomically replace only N8N_PGADMIN_HOST_PORT in the ignored local .env"
+    - "run scripts/check.ps1 -LocalStackOnly and base docker compose config"
+    - "run docker compose up -d without the tunnel override"
+    - "run docker compose ps and scripts/check.ps1 -Runtime"
+  stop_conditions:
+    - "the key is absent, duplicated or its current value is not 5050"
+    - "port 5060 becomes occupied before replacement or startup"
+    - "any unrelated .env line changes"
+    - "Compose or runtime readiness fails"
+  rollback_or_compensation:
+    - "if replacement validation fails, restore the prior non-secret port value atomically"
+    - "if runtime startup fails, run docker compose down without -v"
+    - "never remove volumes, bind data, .env or .secrets"
+  forbidden_actions:
+    - "modify versioned owner files or the SST stack"
+    - "use docker-compose.tunnel.yml or publish a tunnel"
+    - "read or mutate workflows, executions, database rows or credentials"
+    - "print, export or copy any secret value"
+  result:
+    authorization_pull_request: "https://github.com/afpogo/4uentes-ards-control-plane/pull/249"
+    authorization_main_readback_sha: "3159e67b435a9dc8e5c378d277f46ae5a94b730a"
+    atomic_local_env_replacement: true
+    configured_pgadmin_host_port: "5060"
+    unrelated_env_lines_preserved: true
+    temporary_candidate_absent: true
+    local_stack_check_after_change: "passed"
+    postgres_reached_healthy: true
+    pgadmin_loopback_http_responded: true
+    n8n_health_endpoint_responded: false
+    blocker: "historical n8n settings encryption key does not match file-backed key"
+    bounded_sanitized_logs_used: true
+    secret_values_read_or_printed_by_agent: false
+    runtime_rollback_command: "docker compose down"
+    runtime_rollback_completed: true
+    volumes_or_bind_data_removed: false
+    local_port_configuration_retained: "5060"
+
+historical_n8n_key_custody_gate:
+  status: "key-reconciled-runtime-retry-rolled-back"
+  repository: "afpogo/4uentes-automation"
+  execution_checkout: "stable-owner-root-main"
+  source:
+    path: "n8n_data/config"
+    exact_field: "encryptionKey"
+    access: "internal-read-without-output"
+  target:
+    path: ".secrets/n8n_encryption_key"
+    update: "atomic-replacement"
+  rollback_custody:
+    path: ".secrets/.rollback/n8n_encryption_key.generated-unused-2026-09-05"
+    status: "private-local-quarantine-pending-separate-disposition"
+  preconditions:
+    - "Automation Compose has no active services"
+    - "source config is valid JSON with one non-empty encryptionKey string"
+    - "target secret exists and satisfies minimum length"
+    - "source and current target differ, compared only by internal digests"
+    - "rollback target does not already exist and private ACL can be enforced"
+  allowed_actions:
+    - "read only the exact historical encryptionKey field without output"
+    - "move the unused generated target into private rollback custody"
+    - "write and atomically promote a private staged file with the historical key"
+    - "verify equality by internal digest without printing either digest or value"
+    - "run LocalStackOnly, base docker compose up -d, ps and Runtime checks"
+  stop_conditions:
+    - "source JSON or field is absent, duplicated, empty or malformed"
+    - "target or rollback custody preconditions fail"
+    - "private ACL, atomic promotion or digest verification fails"
+    - "Compose configuration or runtime readiness fails"
+  rollback_or_compensation:
+    - "before verified promotion, restore the generated target from quarantine on any failure"
+    - "after verified equality with historical config, retain the historical target as authoritative"
+    - "on runtime failure, run docker compose down without -v and retain both secret files for diagnosis"
+    - "delete neither the historical config nor the quarantined generated key in this gate"
+  forbidden_actions:
+    - "print, log, export or copy secret values outside the declared private paths"
+    - "modify or delete n8n_data, workflows, credentials, executions or database rows"
+    - "use a tunnel or change versioned owner files, SST, Jira, Kubernetes or infrastructure"
+  result:
+    authorization_pull_request: "https://github.com/afpogo/4uentes-ards-control-plane/pull/259"
+    authorization_main_readback_sha: "3fa1a97e837fdf76305187627d6a5b7b885a01ae"
+    historical_key_promoted: true
+    target_matches_historical_config: true
+    generated_key_private_rollback_preserved: true
+    secret_values_or_digests_output: false
+    local_stack_check_after_promotion: "passed"
+    postgres_reached_healthy: true
+    pgadmin_loopback_http_responded_on_5060: true
+    n8n_health_endpoint_responded: false
+    blocker: "password authentication failed for historical PostgreSQL role n8n"
+    interpretation: "existing postgres_data retained its prior role password; image initialization variables do not rotate an initialized cluster"
+    runtime_rollback_command: "docker compose down"
+    runtime_rollback_completed: true
+    volumes_bind_data_or_secrets_removed: false
+
+postgres_n8n_role_password_rotation_gate:
+  status: "completed-and-verified"
+  repository: "afpogo/4uentes-automation"
+  database_scope:
+    compose_service: "postgres"
+    connection: "container-local-unix-socket"
+    database_role: "current POSTGRES_USER; observed runtime role n8n"
+    allowed_statement: "ALTER ROLE current_user PASSWORD <file-backed-secret>"
+    secret_source: "/run/secrets/postgres_password"
+  execution_rules:
+    - "start only the postgres Compose service before rotation"
+    - "read the mounted secret inside PostgreSQL; never place it in host or process arguments"
+    - "capture and suppress raw command output; publish status only"
+    - "do not query schemas, tables, rows, other roles or password hashes"
+    - "after success, start the base stack without tunnel and run Runtime checks"
+  preconditions:
+    - "Automation Compose has no active services before the gate"
+    - "LocalStackOnly passes and postgres secret exists with private custody"
+    - "postgres reaches healthy using the existing data directory"
+  stop_conditions:
+    - "postgres does not reach healthy"
+    - "the mounted secret cannot be read by the database server"
+    - "the exact ALTER ROLE command fails"
+    - "n8n or pgAdmin readiness fails after rotation"
+  rollback_or_compensation:
+    reversible_to_historical_password: false
+    reason: "the historical PostgreSQL role password is not recoverable from postgres_data"
+    compensation: >
+      Keep the role aligned with the existing file-backed secret. If later
+      runtime validation fails, stop Compose without -v and preserve all data
+      and secret custody for diagnosis.
+  forbidden_actions:
+    - "print, export, log or pass the postgres password in command arguments"
+    - "inspect or mutate database content, schemas, workflows or credentials"
+    - "change any role other than the current configured n8n role"
+    - "delete data, volumes, .env, .secrets or rollback custody"
+    - "use a tunnel or modify SST, Jira, Kubernetes, GitOps or infrastructure"
+  result:
+    authorization_pull_request: "https://github.com/afpogo/4uentes-ards-control-plane/pull/265"
+    authorization_main_readback_sha: "fae07a4ade874c47eac8bfa8809f3b8612ac761e"
+    postgres_started_alone_before_rotation: true
+    postgres_health_before_rotation: "healthy"
+    rotated_role_scope: "current configured n8n role only"
+    password_read_inside_postgres: true
+    secret_in_host_or_process_arguments: false
+    raw_rotation_output_suppressed: true
+    rotation_completed: true
+    base_stack_started_without_tunnel: true
+    runtime_check: "passed"
+    postgres_health_after_rotation: "healthy"
+    n8n_health_endpoint: "passed"
+    pgadmin_loopback_http_on_5060: "passed"
+    runtime_disposition: "running"
+    database_content_or_workflows_accessed: false
+    secret_values_printed_or_recorded: false
+
 discovery_contract:
   service_id: "4uentes-automation"
   owner_repository: "afpogo/4uentes-automation"
@@ -197,14 +566,22 @@ required_checks:
   - "origin/main integration readback"
 
 decision:
-  status: "owner-slice-merged-and-read-back"
+  status: "local-base-runtime-ready"
   approver: "4uentes"
   next_gate: >
-    Request a separate explicit gate before generating persistent local secrets
-    or starting the Automation runtime. The productivity password consumer
-    migration, capabilities, M2M, Jira and infrastructure remain separate.
+    Decide the disposition of the quarantined unused generated n8n key and then
+    select the next functional Automation/Phinance integration gate. Runtime is
+    locally ready, but workflows, capabilities, M2M, tunnel, Jira and
+    infrastructure remain separately gated.
 
 evidence_refs:
   - "evidence/requests/CR-CP-0021/implementation-plan-2026-09-05.md"
   - "evidence/requests/CR-CP-0021/automation-owner-local-secret-port-authorization-2026-09-05.md"
+  - "evidence/requests/CR-CP-0021/persistent-secret-generation-authorization-2026-09-05.md"
+  - "evidence/requests/CR-CP-0021/stable-owner-secret-custody-migration-2026-09-05.md"
+  - "evidence/requests/CR-CP-0021/owner-env-reconciliation-authorization-2026-09-05.md"
+  - "evidence/requests/CR-CP-0021/local-runtime-start-authorization-2026-09-05.md"
+  - "evidence/requests/CR-CP-0021/local-pgadmin-port-remediation-authorization-2026-09-05.md"
+  - "evidence/requests/CR-CP-0021/historical-n8n-key-custody-authorization-2026-09-05.md"
+  - "evidence/requests/CR-CP-0021/postgres-role-password-rotation-authorization-2026-09-05.md"
   - "docs/cross-repo/local-development-secret-and-compose-governance.md"

@@ -3,7 +3,7 @@ kind: "initiative"
 id: "INIT-CP-0003"
 title: "ARDS/SDD Runtime Enforcement MVP"
 status: "planned"
-updated_at: "2026-08-23"
+updated_at: "2026-09-05"
 owner_repository: "4uentes-orchestor"
 objective: >
   Build the initial ARDS/SDD runtime enforcement MVP so policies and living
@@ -39,6 +39,8 @@ source_evidence_refs:
   - "evidence/requests/CR-CP-0024/backend-owner-execution-preflight-2026-08-31.md"
   - "evidence/requests/CR-CP-0024/backend-owner-execution-authorization-2026-08-31.md"
   - "evidence/requests/CR-CP-0024/worktree-inventory-2026-08-30.json"
+  - "evidence/requests/CR-CP-0027/infra-policy-adoption-merge-readback-2026-09-05.md"
+  - "evidence/requests/CR-CP-0028/reservation-preflight-2026-09-05.md"
 model_refs:
   - "specs/initiatives/initiative-model.yaml"
   - "docs/requests/initiative-model.md"
@@ -58,6 +60,9 @@ known_change_requests:
   - "CR-CP-0023"
   - "CR-CP-0024"
   - "CR-CP-0025"
+  - "CR-CP-0026"
+  - "CR-CP-0027"
+  - "CR-CP-0028"
 candidate_change_requests:
   - id: "CR-CP-0014"
     title: "Promote policy audit runtime pack to core canon"
@@ -112,6 +117,8 @@ policy_application:
     The runtime must not become autonomous authority. It audits, gates, records
     evidence, and proposes follow-up work under Control Plane governance.
 open_gaps:
+  - "CR-CP-0027 closed the sst-4uentes-infra adoption of knowledge-to-execution-documentation-policy at owner merge 8efb13e, pinned to 4uentes-orchestor@7a8ea96; no runtime, GitOps, secrets, data or Jira changed."
+  - "CR-CP-0028 reserves promotion of knowledge-to-execution-documentation-policy to 4uentes-ards-core; the plan, owner handoff and Core execution have not started."
   - "Backend image and exact Infra pin were published, but CR-HPT-0024 receipt-clamav is CrashLoopBackOff; previous pod preserves availability while remediation or rollback awaits authorization."
   - "CR-CP-0024 has one-time authorization to merge sst-bend PR 32 and verify only its Backend image publication plus bounded Infra pin update."
   - "sst-bend PR 32 is green and open; merge, image publication and the automatic Infra pin update await an explicit CR-CP-0024 gate."

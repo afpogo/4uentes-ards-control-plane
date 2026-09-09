@@ -22,6 +22,7 @@ Incluye:
 - Promotion path allowlist: [../../cross-repo/release-allowlists.md](../../cross-repo/release-allowlists.md)
 - Chatbot handoff: [../../cross-repo/sst-chatbot-orchestrator-handoff.md](../../cross-repo/sst-chatbot-orchestrator-handoff.md)
 - Contrato de derivacion secuencial por parrafos V1: [contrato-derivacion-secuencial-por-parrafos-v1.md](contrato-derivacion-secuencial-por-parrafos-v1.md)
+- Contrato de fuentes de Learning Workspace V1: [contrato-fuentes-learning-workspace-v1.md](contrato-fuentes-learning-workspace-v1.md)
 - Gobierno del cifrado de Secrets de Kubernetes: [gobierno-cifrado-secrets-kubernetes.md](gobierno-cifrado-secrets-kubernetes.md)
 
 ## Documentos Por App

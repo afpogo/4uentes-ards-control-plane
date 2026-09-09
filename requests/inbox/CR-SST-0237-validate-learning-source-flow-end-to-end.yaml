@@ -1,0 +1,18 @@
+schema_version: '1.0'
+phase: 1
+id: 'CR-SST-0237'
+title: 'Validate the Learning source flow end to end'
+status: 'inbox'
+created_at: '2026-09-05'
+requester: '4uentes'
+summary: 'Reserve integrated validation across Bend, BFF and Fend after all owner adoptions are canonical.'
+requested_scope:
+  initiative_id: 'INIT-SST-0010'
+  parent_request_id: 'CR-SST-0232'
+  owner_repository: '4uentes-orchestor'
+  predecessor_requests: ['CR-SST-0234', 'CR-SST-0235', 'CR-SST-0236']
+constraints:
+  - 'This reservation changes control-plane artifacts only.'
+  - 'No environment, deployment, migration, Jira or integrated QA mutation is authorized.'
+  - 'Validation must use sanitized synthetic fixtures and publish cross-repo evidence.'
+requested_next_step: 'Keep planned until CR-SST-0234, CR-SST-0235 and CR-SST-0236 are canonical and accepted.'

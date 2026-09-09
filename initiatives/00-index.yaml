@@ -4,6 +4,7 @@ status: "active"
 updated_at: "2026-08-28"
 model: "specs/initiatives/initiative-model.yaml"
 initiatives:
+  - "initiatives/INIT-SST-0011-evolutionary-onboarding-and-first-value-activation.yaml"
   - "initiatives/INIT-CP-0001-control-plane-lifecycle-enforcement.yaml"
   - "initiatives/INIT-CP-0002-core-living-resource-standardization.yaml"
   - "initiatives/INIT-CP-0003-ards-sdd-runtime-enforcement.yaml"

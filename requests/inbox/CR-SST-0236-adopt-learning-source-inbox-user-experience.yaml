@@ -1,0 +1,18 @@
+schema_version: '1.0'
+phase: 1
+id: 'CR-SST-0236'
+title: 'Adopt the Learning source inbox user experience'
+status: 'inbox'
+created_at: '2026-09-05'
+requester: '4uentes'
+summary: 'Reserve the sst-fend flow for selecting sources, reviewing snapshots and proposing memory explicitly.'
+requested_scope:
+  initiative_id: 'INIT-SST-0010'
+  parent_request_id: 'CR-SST-0232'
+  owner_repository: 'sst-fend'
+  predecessor_requests: ['CR-SST-0232', 'CR-SST-0235']
+constraints:
+  - 'This reservation changes control-plane artifacts only.'
+  - 'No sst-fend mutation is authorized until Bend and BFF are canonical and this request receives running approval.'
+  - 'The UX must not collect, display or persist secret values.'
+requested_next_step: 'Keep planned until CR-SST-0235 publishes its relay contract and readback.'

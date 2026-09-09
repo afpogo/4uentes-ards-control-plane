@@ -73,6 +73,7 @@ execution:
     - "publish-infra-human-documentation-corrective-pr"
     - "read-back-infra-human-documentation-corrective-pr-merge"
     - "reconcile-cr-sst-0233-retroactive-running-lifecycle"
+    - "recover-cr-hpt-0024-canonical-running-lifecycle"
   control_plane_mutation_allowed: true
   child_repo_mutation_allowed: false
   child_repo_mutation_targets: ["sst-bend", "sst-4uentes-infra"]
@@ -403,6 +404,22 @@ infra_second_remediation:
           develop_head_after_merge: "6379f5f54d0ef1623c9d58aeb222e290f8240db2"
           runtime_mutation_performed: false
           evidence: "evidence/requests/CR-CP-0024/infra-corrective-pr-merge-readback-2026-09-05.md"
+    publication_preflight:
+      status: "blocked-environment"
+      owner_commit: "67c4874b2404235d70dc56ce143343954f5c707e"
+      human_documentation_check: "PASS"
+      owner_full_check: "BLOCKED"
+      blocker: "Local Kubernetes API OpenAPI and readyz returned TLS handshake timeout on three observations."
+      owner_push_performed: false
+      owner_pull_request_created: false
+      cluster_mutation_performed: false
+      evidence: "evidence/requests/CR-HPT-0024/owner-documentation-publication-preflight-2026-09-05.md"
+    owner_lifecycle_gate:
+      request_id: "CR-HPT-0024"
+      status: "recovery-published-locally-await-canonical-readback"
+      canonical_running_ref: "requests/running/CR-HPT-0024-deploy-private-receipt-object-platform.yaml"
+      recovery_evidence: "evidence/requests/CR-HPT-0024/retroactive-running-reconciliation-2026-09-05.md"
+      owner_push_allowed_before_readback: false
   jira:
     issue: "HPT-16"
     expected_status: "En curso"
@@ -591,5 +608,8 @@ evidence_refs:
   - "evidence/requests/CR-CP-0024/infra-corrective-pr-authorization-2026-09-05.md"
   - "evidence/requests/CR-CP-0024/infra-corrective-pr-publication-readback-2026-09-05.md"
   - "evidence/requests/CR-CP-0024/infra-corrective-pr-merge-readback-2026-09-05.md"
+  - "requests/running/CR-HPT-0024-deploy-private-receipt-object-platform.yaml"
+  - "evidence/requests/CR-HPT-0024/retroactive-running-reconciliation-2026-09-05.md"
+  - "evidence/requests/CR-HPT-0024/owner-documentation-publication-preflight-2026-09-05.md"
   - "requests/running/CR-SST-0233-reconcile-fresh-database-migration-baseline.yaml"
   - "evidence/requests/CR-SST-0233/retroactive-running-reconciliation-2026-09-05.md"

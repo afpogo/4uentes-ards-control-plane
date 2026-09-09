@@ -1,0 +1,159 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-CP-0028"
+title: "Promote knowledge-to-execution documentation policy to Core"
+status: "planned"
+source_request: "requests/inbox/CR-CP-0028-promote-knowledge-to-execution-documentation-policy-to-core.yaml"
+created_at: "2026-09-05"
+requester: "4uentes"
+
+summary: >
+  Publish a bounded, provider-agnostic handoff for Core to evaluate and own the
+  knowledge-to-execution documentation policy as core-profile-scoped, without
+  modifying Core or treating an active Infra adoption as canonical evidence.
+
+control_plane_context:
+  initiative_id: "INIT-CP-0003"
+  predecessor_request_id: "CR-CP-0026"
+  reservation_pull_request: 248
+  reservation_merge_sha: "8e1a30390198e9655974d3e420f9e60f01436db3"
+  execution_base_ref: "origin/main"
+  execution_base_sha: "8e1a30390198e9655974d3e420f9e60f01436db3"
+  implementation_plan_ref: "evidence/requests/CR-CP-0028/implementation-plan.md"
+
+policy_contract:
+  policy_id: "knowledge-to-execution-documentation-policy"
+  current_class: "origin-repo-policy"
+  origin_repo: "4uentes-orchestor"
+  current_owner: "4uentes-ards-control-plane"
+  target_repo: "4uentes-ards-core"
+  target_class: "core-profile-scoped"
+  proposed_required_profiles:
+    - "control-plane"
+  proposed_optional_profiles:
+    - "functional-repo"
+    - "child-repo"
+    - "infra-gitops"
+  adoption_mode: "required-by-profile-or-request-driven"
+  overlay_decision: "not-applicable-durable-shared-policy-not-contextual-delta"
+  authority_rule: >
+    Learning informs, Playbooks guide decisions, authorized Runbooks
+    operationalize, and owner-published Specs/manifests constrain; navigation
+    order never grants authority or execution permission by itself.
+
+risk:
+  level: "high"
+  score: 8
+  drivers:
+    - "CORE_CANON"
+    - "CROSS_REPO_OWNERSHIP"
+    - "DOCUMENT_AUTHORITY"
+    - "CHILD_ADOPTION_BOUNDARY"
+
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  provider: "codex"
+  resource_level: "degraded"
+  resource_source: "account-capacity"
+  task_class: "complex-high-risk-task"
+  primary_profile: "session-assigned"
+  requested_analysis_temperature: 0.5
+  temperature_control_available: false
+  subagent_deployment_plan: "Requested parallel read-only audits degraded to sequential primary-agent verification."
+  reason: "Promotion changes shared policy ownership and profile applicability."
+
+execution:
+  approval_source: >
+    Operator authorized publication and continuation on 2026-09-05 after
+    explicitly approving the reservation payload and destination.
+  approval_consumed_for: "control-plane plan, running lifecycle and outbound handoff publication"
+  control_plane_mutation_allowed: true
+  core_repo_mutation_allowed: false
+  core_owner_workflow_required: true
+  child_repo_mutation_allowed: false
+  runtime_mutation_allowed: false
+  infrastructure_mutation_allowed: false
+  jira_write_allowed: false
+  boundary: >
+    This workflow ends after publishing and reading back the control-plane
+    handoff. Core mutation requires a workflow situated in 4uentes-ards-core
+    with its owner instructions, clean worktree, validation and publication.
+
+atomized_execution:
+  - order: 1
+    id: "publish-plan-and-running"
+    objective: "Merge and read back this plan, the running lifecycle and implementation plan."
+  - order: 2
+    id: "materialize-owner-handoff"
+    objective: "Create a dedicated draft outbound capability containing the provider-agnostic policy contract and exact Core acceptance criteria."
+  - order: 3
+    id: "reconcile-derived-control-plane-state"
+    objective: "Link CR-CP-0028 and the pending handoff without changing current policy ownership or class."
+  - order: 4
+    id: "validate-and-publish-handoff"
+    objective: "Run the full control-plane check and diff review, then merge and read back the handoff package."
+  - order: 5
+    id: "stop-at-core-owner-boundary"
+    objective: "Leave Core unchanged and expose the next owner-workflow gate explicitly."
+  - order: 6
+    id: "future-core-owner-execution"
+    objective: "In a separate Core workflow, accept or reject the handoff, implement canon, validate, publish and read back."
+  - order: 7
+    id: "future-control-plane-reconciliation"
+    objective: "After Core publication evidence exists, update local adoption and close CR-CP-0028 in a finite terminal publication."
+
+planned_control_plane_artifacts:
+  - "requests/running/CR-CP-0028-promote-knowledge-to-execution-documentation-policy-to-core.yaml"
+  - "specs/capabilities/outbound/4uentes-orchestor--knowledge-to-execution-policy-core-promotion.yaml"
+  - "specs/capabilities/outbound/00-index.yaml"
+  - "state/features/ards-sdd-policy-unification.current.yaml"
+  - "state/policy-links.yaml"
+  - "evidence/requests/CR-CP-0028/"
+
+expected_core_owner_artifacts:
+  - "docs/policies/knowledge-to-execution-documentation-policy.md"
+  - "specs/integration/policies.yaml"
+  - "docs/reference-sources.md"
+  - "docs/policies/README.md"
+  - "standard/ARDS_CONTROL_PLANE_CORE_PROFILE_v1.md"
+  - "templates/specs/integration/policies.template.yaml"
+  - "templates/docs/policies/README.template.md"
+  - "AGENTS.md"
+
+execution_publication_rule:
+  rule_id: "execution-publication-and-tracker-closure-rule"
+  adoption_status: "adopted"
+  git_publication:
+    applicable: true
+    plan_merge_required: true
+    terminal_merge_required: true
+  tracker_mirror:
+    applicable: false
+    not_applicable_reason: "No Jira write or mapping is authorized for this promotion gate."
+  cleanup:
+    remote_readback_required: true
+
+required_checks:
+  - "4uentes-orchestor: npm.cmd run check"
+  - "git diff --check"
+  - "manual authority, profile-scope and overlay review"
+  - "Core owner workflow later: npm run check plus canonical publication readback"
+
+acceptance:
+  - "The handoff is provider-agnostic and contains no local paths, Jira keys or request-instance rules as Core canon."
+  - "The hierarchy is expressed as typed relations, not universal chronology or authority precedence."
+  - "Specs/manifests remain owner-scoped technical authority and approved decisions remain execution authorization."
+  - "The target class is core-profile-scoped and overlay is explicitly inapplicable."
+  - "The current control-plane policy remains origin-repo-policy until Core publication is proven."
+  - "CR-CP-0027 remains a distinct Infra adoption and is not mutated or retroactively canonicalized."
+  - "Child adoption remains request-driven through adoption or exception manifests."
+
+decision:
+  status: "approved-for-plan-publication"
+  approver: "4uentes"
+  decided_at: "2026-09-05"
+  blocker: "Materialize the handoff only after this plan and running lifecycle are merged and read back."
+
+evidence_refs:
+  - "evidence/requests/CR-CP-0028/reservation-preflight-2026-09-05.md"
+  - "evidence/requests/CR-CP-0028/implementation-plan.md"

@@ -1,0 +1,128 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-CP-0026"
+title: "Define knowledge-to-execution documentation policy"
+status: "planned"
+source_request: "requests/inbox/CR-CP-0026-define-knowledge-to-execution-documentation-policy.yaml"
+created_at: "2026-09-05"
+requester: "4uentes"
+
+summary: >
+  Define, register and validate a control-plane-local policy for the path from
+  Learning through Playbook and Runbook to Specs/manifests, without confusing
+  document purpose, technical authority or execution authorization.
+
+control_plane_context:
+  initiative_id: "INIT-CP-0003"
+  origin_repo: "4uentes-orchestor"
+  provenance_request_id: "CR-HPT-0024"
+  reservation_merge_sha: "5b4fdb16c89b40e6e9a30e6cd69eac74d3f4a405"
+  implementation_plan_ref: "evidence/requests/CR-CP-0026/implementation-plan.md"
+
+risk:
+  level: "medium"
+  score: 6
+  drivers:
+    - "DOCUMENT_AUTHORITY"
+    - "CROSS_REPO_REUSE"
+    - "POLICY_CLASSIFICATION"
+
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  task_class: "complex-governance-task"
+  primary_profile: "session-assigned"
+  requested_analysis_temperature: 0.5
+  temperature_control_available: false
+  subagent_deployment_plan: "Three parallel read-only audits plus primary-agent integration."
+  reason: >
+    The policy changes documentation authority semantics and is a candidate for
+    later shared Core promotion.
+
+execution:
+  approval_source: >
+    Operator requested the policy transformation, parallel validation and
+    policy-compliant worktree integration on 2026-09-05.
+  approval_consumed_for: "control-plane plan, local policy implementation and Git publication"
+  control_plane_mutation_allowed: true
+  core_repo_mutation_allowed: false
+  child_repo_mutation_allowed: false
+  runtime_mutation_allowed: false
+  infrastructure_mutation_allowed: false
+  jira_write_allowed: false
+  next_gate: "Merge and read back planned plus running before porting the policy implementation."
+
+atomized_execution:
+  - order: 1
+    id: "publish-plan-and-running"
+    objective: "Merge and read back this plan, the running lifecycle and its implementation plan."
+  - order: 2
+    id: "port-policy-selectively"
+    objective: "Port only reviewed CR-CP-0026 policy and evidence artifacts from the dirty source; exclude the premature done lifecycle."
+  - order: 3
+    id: "integrate-discovery-and-state"
+    objective: "Update policy registry, human discovery, agent discovery and derived state links without redefining Core kinds."
+  - order: 4
+    id: "validate-authority-and-structure"
+    objective: "Run the full control-plane gate, diff checks and manual authority/overlay review."
+  - order: 5
+    id: "publish-implementation-and-close-separately"
+    objective: "Merge and read back implementation, then publish terminal lifecycle and read it back before cleanup."
+
+planned_artifacts:
+  - "docs/policies/knowledge-to-execution-documentation-policy.md"
+  - "docs/policies/README.md"
+  - "specs/integration/policies.yaml"
+  - "AGENTS.md"
+  - "state/00-index.yaml"
+  - "state/policy-links.yaml"
+  - "state/features/knowledge-to-execution-documentation-policy.current.yaml"
+  - "evidence/requests/CR-CP-0026/"
+
+policy_decision:
+  policy_id: "knowledge-to-execution-documentation-policy"
+  current_class: "origin-repo-policy"
+  policy_origin_repo: "4uentes-orchestor"
+  local_owner: "4uentes-ards-control-plane"
+  pattern_provenance:
+    repository: "sst-4uentes-infra"
+    request_id: "CR-HPT-0024"
+  target_class: "core-profile-scoped"
+  overlay_status: "not-used; policy_overlay kind, schema and resolver remain future work under CR-CP-0025"
+
+execution_publication_rule:
+  rule_id: "execution-publication-and-tracker-closure-rule"
+  adoption_status: "adopted"
+  git_publication:
+    applicable: true
+    plan_merge_required: true
+    terminal_merge_required: true
+  tracker_mirror:
+    applicable: false
+    not_applicable_reason: "No tracker write or mapping is authorized for this control-plane-local policy-definition lifecycle."
+  cleanup:
+    remote_readback_required: true
+
+required_checks:
+  - "npm.cmd run check"
+  - "git diff --check"
+  - "manual policy authority and overlay review"
+
+acceptance:
+  - "Each document role has a distinct purpose and explicit authority boundary."
+  - "Specs and manifests constrain human guidance without becoming a universal chronological source."
+  - "Requests, approvals and applicable policies remain the execution authorization mechanism."
+  - "The local policy is durable and is not represented as a contextual overlay."
+  - "Core promotion and child adoption remain separate lifecycles."
+
+decision:
+  status: "approved-for-plan-publication"
+  approver: "4uentes"
+  decided_at: "2026-09-05"
+  blocker: "Policy implementation must wait for canonical plan and running readback."
+
+evidence_refs:
+  - "evidence/requests/CR-CP-0026/promotion-readiness-audit-2026-09-05.md"
+  - "evidence/requests/CR-CP-0026/implementation-plan.md"

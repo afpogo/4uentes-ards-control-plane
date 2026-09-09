@@ -1,0 +1,97 @@
+schema_version: "1.0"
+phase: 4
+id: "CR-CP-0026"
+title: "Define knowledge-to-execution documentation policy"
+status: "done"
+source_request: "requests/inbox/CR-CP-0026-define-knowledge-to-execution-documentation-policy.yaml"
+planned_request: "requests/planned/CR-CP-0026-define-knowledge-to-execution-documentation-policy.yaml"
+closed_at: "2026-09-05"
+requester: "4uentes"
+
+summary: >
+  Defined, registered, validated, published and read back the durable local
+  knowledge-to-execution documentation policy without modifying Core, child
+  repositories, Jira, infrastructure or runtime.
+
+control_plane_context:
+  initiative_id: "INIT-CP-0003"
+  provenance_request_id: "CR-HPT-0024"
+  reservation_merge_sha: "5b4fdb16c89b40e6e9a30e6cd69eac74d3f4a405"
+  planning_merge_sha: "c286d54848caff419f80a1cc90e0ec43c719ad2c"
+  implementation_merge_sha: "6ba7a046e71ca5525a011da2ea585ceb1bad2cb9"
+
+execution:
+  control_plane_mutation_performed: true
+  core_repo_mutation_performed: false
+  child_repo_mutation_performed: false
+  runtime_mutation_performed: false
+  infrastructure_mutation_performed: false
+  jira_write_performed: false
+
+policy_result:
+  policy_id: "knowledge-to-execution-documentation-policy"
+  policy_class: "origin-repo-policy"
+  origin_repo: "4uentes-orchestor"
+  canonical_owner: "4uentes-ards-control-plane"
+  local_status: "active"
+  pattern_provenance:
+    repo: "sst-4uentes-infra"
+    request_id: "CR-HPT-0024"
+  future_core_class: "core-profile-scoped"
+  core_promotion: "not-performed-separate-request-required"
+  child_rollout: "not-performed-request-driven"
+  overlay: "not-used-no-active-kind-schema-or-resolver"
+
+publication_evidence:
+  reservation_pr: 239
+  reservation_commit: "e4b074b8fb2db0d5ee5d60a53af36bf5c3610aa3"
+  reservation_merge_commit: "5b4fdb16c89b40e6e9a30e6cd69eac74d3f4a405"
+  plan_pr: 241
+  plan_commit: "8c17825949100f8977730d6fd15207d900206028"
+  plan_merge_commit: "c286d54848caff419f80a1cc90e0ec43c719ad2c"
+  implementation_pr: 242
+  implementation_commit: "9f1cd2f7b1275456ed243c05fd5d0f426f4b7432"
+  implementation_merge_commit: "6ba7a046e71ca5525a011da2ea585ceb1bad2cb9"
+
+validation:
+  result: "passed"
+  checks:
+    - "npm.cmd run check: 0 failures"
+    - "git diff --check"
+    - "visual documentation: 43 documents, 57 maps, 0 failures"
+    - "state model: 62 checks, 0 failures"
+    - "two independent final staged-diff audits: PASS"
+    - "canonical implementation readback"
+  evidence_refs:
+    - "evidence/requests/CR-CP-0026/promotion-readiness-audit-2026-09-05.md"
+    - "evidence/requests/CR-CP-0026/implementation-plan.md"
+    - "evidence/requests/CR-CP-0026/policy-analysis.md"
+    - "evidence/requests/CR-CP-0026/validation-results.md"
+    - "evidence/requests/CR-CP-0026/changed-files-summary.md"
+    - "evidence/requests/CR-CP-0026/terminal-publication-readiness.md"
+
+execution_publication_rule:
+  rule_id: "execution-publication-and-tracker-closure-rule"
+  adoption_status: "adopted"
+  git_publication:
+    applicable: true
+    plan_merge_required: true
+    terminal_merge_required: true
+  tracker_mirror:
+    applicable: false
+    not_applicable_reason: "No tracker write or mapping was authorized for this control-plane-local policy-definition lifecycle."
+  cleanup:
+    remote_readback_required: true
+  trial_result:
+    status: "passed"
+    plan_publication: "merged-and-read-back"
+    implementation_publication: "merged-and-read-back"
+    tracker_reconciliation: "not-applicable"
+    terminal_publication_contract: "merge-and-readback-before-cleanup"
+    cleanup_gate: "remote-readback-required"
+
+decision:
+  status: "closed-local-policy-definition"
+  approver: "4uentes"
+  blocker: "none"
+  next_gate: "terminal merge/readback, then a separate Core promotion request if selected"

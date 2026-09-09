@@ -70,9 +70,9 @@ execution:
     read it back before promoting CR-SST-0232 to running or materializing the
     versioned contract.
 
-publication_gate:
-  policy_id: "execution-publication-and-tracker-closure-policy"
-  activation: "The enforceable execution_publication_rule block is added when a separately authorized running state exists."
+execution_publication_rule:
+  rule_id: "execution-publication-and-tracker-closure-rule"
+  adoption_status: "adopted"
   git_publication:
     applicable: true
     plan_merge_required: true

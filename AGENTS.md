@@ -72,6 +72,7 @@ Locally documented policies:
 - `owner-documentation-authority-policy`
 - `visual-documentation-as-code-policy`
 - `worktree-request-lifecycle-policy`
+- `knowledge-to-execution-documentation-policy`
 
 Core-owned policy adoptions tracked locally:
 
@@ -83,7 +84,10 @@ resources are limited, atomize tasks, delegate work, manage context, respect
 architecture boundaries, and keep reproducible HTTP QA harnesses aligned with
 the core-owned canon when that policy is adopted locally. The local worktree
 policy additionally governs request reservation, isolated execution,
-information recovery and controlled retirement of worktrees.
+information recovery and controlled retirement of worktrees. The local
+knowledge-to-execution policy separates the purpose and authority of Learning,
+playbooks, runbooks, specs and manifests without treating that reading path as
+execution authorization.
 
 Local policy enforcement:
 

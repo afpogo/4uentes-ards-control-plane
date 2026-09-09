@@ -1,0 +1,113 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-CP-0026"
+title: "Define knowledge-to-execution documentation policy"
+status: "inbox"
+created_at: "2026-09-05"
+requester: "4uentes"
+
+business_context: >
+  CR-HPT-0024 established a reusable human documentation path from learning
+  through decision and execution guidance to technical authority. The pattern
+  needs explicit authority, authorization and feedback semantics before it can
+  be reused safely or proposed for the shared Core canon.
+
+requested_change: >
+  Define and validate a control-plane policy for the relationship Learning,
+  Playbook, Runbook and Specs/manifests; preserve the HPT-0024 origin; clarify
+  authority, authorization and governed feedback; and assess a later promotion
+  to 4uentes-ards-core as core-profile-scoped.
+
+expected_outcome: >
+  Humans and agents can navigate from rationale to execution without treating
+  explanatory documents as technical authority or execution authorization,
+  while any Core promotion or child-repository adoption remains a separate
+  request-driven lifecycle.
+
+initial_scope:
+  initiative_id: "INIT-CP-0003"
+  origin_repository: "4uentes-orchestor"
+  provenance_request_id: "CR-HPT-0024"
+  predecessor_requests:
+    - "CR-HPT-0024"
+    - "CR-CP-0024"
+  delivery: "local policy definition, registry/state integration and evidence"
+  future_core_class: "core-profile-scoped"
+  core_promotion: false
+
+constraints:
+  - "This inbox reserves identity and authorizes control-plane planning only."
+  - "Do not modify 4uentes-ards-core under this reservation."
+  - "Do not modify functional, Auth or infrastructure repositories under this reservation."
+  - "Do not create a policy_overlay unless later analysis proves a contextual delta over a published base policy."
+  - "Do not publish done state before required checks, merge and canonical readback."
+  - "Jira is a mirror; no create, edit, comment or transition is authorized by this reservation."
+  - "The dirty originating worktree must be preserved and must not be merged wholesale."
+
+identity_preflight:
+  observed_at: "2026-09-05"
+  canonical_ref: "origin/main@ba3851fd3ca1c4cd5afbfd49593a610c2ff69cba"
+  canonical_tree_match: false
+  reachable_git_ref_match: false
+  active_worktree_match: false
+  jira_exact_text_match: "not-checked-no-authorized-connector"
+  jira_preflight_mode: "read-only-not-applicable-to-local-reservation"
+  decision: "CR-CP-0026 is available for this unique intent at reservation time."
+
+task_weight:
+  classification: "complex-governance-task"
+  risk_level: "medium"
+  drivers:
+    - "POLICY_AUTHORITY_BOUNDARY"
+    - "CORE_PROMOTION_CANDIDATE"
+    - "EXISTING_UNPUBLISHED_LOCAL_DRAFT"
+
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "session-assigned"
+  requested_analysis_temperature: 0.5
+  temperature_control_available: false
+  reason: >
+    The operator requested calibrated analysis and independent validation; the
+    runtime does not expose a temperature control, so no unsupported setting is
+    claimed.
+
+subagent_deployment_plan:
+  mode: "parallel-read-only-audit"
+  agents_used: 3
+  scopes:
+    - "Core canonical and remote-ref audit"
+    - "Promotion lifecycle and worktree-policy audit"
+    - "Semantic duplicate and overlap audit"
+  merge_authority: "primary agent"
+
+execution:
+  approval_source: >
+    Operator instruction on 2026-09-05 authorizing evidence preservation,
+    policy-compliant worktree creation and merge when needed.
+  approval_consumed_for: "reservation commit, push, PR, merge and canonical readback only"
+  control_plane_mutation_allowed: true
+  git_reservation_publication_allowed: true
+  core_repo_mutation_allowed: false
+  child_repo_mutation_allowed: false
+  runtime_mutation_allowed: false
+  infrastructure_mutation_allowed: false
+  jira_write_allowed: false
+
+requested_next_step: >
+  Publish and read back this minimal reservation, refresh origin/main, then
+  create one clean execution worktree and port only the CR-CP-0026 artifacts
+  and audit evidence from the dirty originating worktree.
+
+decision:
+  status: "approved-for-reservation-publication"
+  approver: "4uentes"
+  approved_at: "2026-09-05"
+  approval_text: >
+    ok autorizo crear worktree apegados a la politica viva de worktrees del
+    ARDS/SDD control plane, necesito que antes guardes toda la evidencia de lo
+    que revisamos hasta aca en el ARDS/SDD y que si es necesario se fusione
+    este worktree para no causar mas ruido, avancemos

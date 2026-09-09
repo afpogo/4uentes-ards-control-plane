@@ -1,0 +1,48 @@
+schema_version: '1.0'
+phase: 2
+id: 'CR-SST-0234'
+title: 'Implement Learning source resolver and immutable snapshots'
+status: 'planned'
+source_request: 'requests/inbox/CR-SST-0234-implement-learning-source-resolver-and-snapshots.yaml'
+created_at: '2026-09-05'
+requester: '4uentes'
+summary: 'Plan the sst-bend owner adoption of sst-learning-workspace-source-v1.'
+depends_on: ['CR-SST-0210', 'CR-SST-0223', 'CR-SST-0232']
+predecessor_requests: ['CR-SST-0210', 'CR-SST-0223', 'CR-SST-0232']
+control_plane_context: {initiative_id: 'INIT-SST-0010', parent_request_id: 'CR-SST-0232', owner_repository: 'sst-bend'}
+risk: {level: 'high', drivers: ['PRIVATE_SOURCE_CONTENT', 'TENANT_ISOLATION', 'IMMUTABLE_PROVENANCE', 'SECRET_EXCLUSION']}
+model_selection: {provider: 'codex', resource_level: 'normal', task_class: 'complex-high-risk-task', primary_profile: 'gpt-5.6-sol', reasoning_effort: 'max', fallback_profile: 'gpt-5.5 high'}
+subagent_deployment_plan: {required: false, reason: 'No delegation was requested; authorization and persistence boundaries require direct owner review.'}
+execution:
+  control_plane_reservation_allowed: true
+  child_repo_mutation_allowed: false
+  runtime_mutation_allowed: false
+  jira_write_allowed: false
+  next_gate: 'Merge/readback, then explicit running authorization for sst-bend only.'
+owner_contract:
+  responsibilities:
+    - 'Validate versioned descriptors and enforce tenant, account and application scope before resolution.'
+    - 'Resolve supported source kinds and persist immutable sanitized snapshots with provenance.'
+    - 'Expose stable snapshot identity, freshness and failure semantics to the authorized BFF.'
+  prohibited:
+    - 'Persist credentials, tokens or secret values in descriptors, snapshots, logs or evidence.'
+    - 'Trust caller-supplied source text as authority for article-backed sources.'
+    - 'Accept SST memory as a side effect of snapshot creation.'
+owner_documentation:
+  required: true
+  minimum: ['normative resolver contract', 'human owner playbook', 'maps with textual fallback', 'execution and rollback runbook']
+knowledge_to_execution_documentation: {policy_id: 'knowledge-to-execution-documentation-policy', current_role: 'playbook', runbook_required_for_current_gate: false, runbook_required_before_owner_execution: true}
+visual_documentation:
+  policy_id: 'visual-documentation-as-code-policy'
+  shared_map_ref: 'evidence/requests/CR-SST-0232/owner-request-allocation-plan-2026-09-05.md'
+  owner_map_expectation: 'Map authorization, resolution, snapshot persistence and failures with textual fallback.'
+atomized_execution:
+  - {order: 1, objective: 'Publish owner ARDS/SDD and runbook.', validation: 'owner documentation review'}
+  - {order: 2, objective: 'Implement validation, authorization and adapters.', validation: 'owner checks'}
+  - {order: 3, objective: 'Implement snapshots and provenance.', validation: 'migration, isolation and failure tests'}
+  - {order: 4, objective: 'Publish owner evidence.', validation: 'CI, readback and npm run check'}
+acceptance:
+  - 'Descriptors resolve only after canonical scope authorization.'
+  - 'Snapshots are immutable, provenance-rich and contain no secrets.'
+  - 'Article-backed inputs no longer trust caller-supplied source text.'
+  - 'No implementation starts under this reservation gate.'

@@ -1,12 +1,14 @@
 schema_version: "1.0"
-phase: 3
+phase: 4
 id: "CR-SST-0217"
 title: "Enable the development runtime for integrated retention QA"
-status: "running"
+status: "done"
 source_request: "requests/inbox/CR-SST-0217-enable-development-retention-qa-runtime.yaml"
 planned_request: "requests/planned/CR-SST-0217-enable-development-retention-qa-runtime.yaml"
+running_request: "requests/running/CR-SST-0217-enable-development-retention-qa-runtime.yaml"
 created_at: "2026-08-23"
 started_at: "2026-08-23"
+closed_at: "2026-09-07"
 requester: "4uentes"
 depends_on: ["CR-SST-0205"]
 unblocks: ["CR-SST-0207"]
@@ -22,6 +24,42 @@ control_plane_context:
   jira_parent_issue_key: "SST-113"
   jira_start_batch_status: "consumed-2026-08-23"
   jira_start_readback: "SST-118 is En curso without resolution, is a Subtask of SST-113 and has no comments."
+  jira_terminal_preflight_status: "passed-read-only-2026-09-05"
+  jira_terminal_write_authorized: "consumed-2026-09-07"
+
+jira_terminal_batch:
+  authorization_status: "consumed"
+  authorization_source: "Operator exact authorization on 2026-09-07 for one SST-118 transition 41/Listo and no other Jira operation."
+  preflight_status: "passed-read-only"
+  issue_key: "SST-118"
+  issue_type: "Subtask"
+  expected_current_status: "En curso"
+  expected_current_status_id: "10006"
+  expected_parent_issue_key: "SST-113"
+  expected_resolution: null
+  transition_id: "41"
+  transition_name: "Listo"
+  target_status: "Finalizada"
+  target_status_id: "10008"
+  allowed_write_count_if_authorized: 1
+  proposed_operation: "Transition only SST-118 through transition 41."
+  actual_write_count: 1
+  execution_status: "consumed-success-readback"
+  final_status: "Finalizada"
+  final_status_id: "10008"
+  final_status_category: "Done"
+  final_resolution: "Listo"
+  final_parent_issue_key: "SST-113"
+  final_comments_count: 0
+  terminal_readback_at: "2026-09-07T20:36:13.147-03:00"
+  forbidden_operations:
+    - "comments"
+    - "field edits"
+    - "links"
+    - "assignment changes"
+    - "writes on SST-113, SST-117, SST-124 or any other issue"
+  evidence_ref: "evidence/requests/CR-SST-0217/terminal-readiness-and-jira-preflight-2026-09-05.md"
+  result_evidence_ref: "evidence/requests/CR-SST-0217/jira-terminal-result-2026-09-07.md"
 
 risk: {level: "high", score: 8, drivers: ["GITOPS", "FEATURE_ENABLEMENT", "VOLATILE_STATE", "LOCAL_CLUSTER_AVAILABILITY"]}
 task_weight: {classification: "complex-high-risk-task", risk_level: "high"}
@@ -30,7 +68,7 @@ subagent_deployment_plan: {mode: "sequential-fallback", reason: "Proactive deleg
 
 execution:
   approval_source: "Operator instruction dated 2026-08-23 to advance the separate infrastructure lifecycle."
-  approval_status: "approved-running"
+  approval_status: "approved-complete-jira-terminal-batch-consumed"
   child_repo_mutation_allowed: true
   child_repo_mutation_targets: ["sst-4uentes-infra"]
   deployment_allowed: true
@@ -40,7 +78,7 @@ execution:
   production_mutation_allowed: false
   datastore_mutation_allowed: false
   secret_mutation_allowed: false
-  jira_write_allowed: "Consumed: SST-118 was created under SST-113 and transitioned to En curso; no further Jira write is authorized."
+  jira_write_allowed: "Consumed: SST-118 create/start batch and the separately authorized terminal transition 41/Listo; no further Jira write is authorized."
 
 runtime_target:
   environment: "development"
@@ -52,8 +90,11 @@ runtime_target:
 
 owner_documentation:
   required: true
-  status: "satisfied-in-owner-pr-17"
+  status: "satisfied"
   owner_repo: "sst-4uentes-infra"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0217/owner-and-runtime-readback-2026-08-24.md"
+    - "evidence/requests/CR-SST-0217/terminal-closure-2026-09-07.md"
   planned_surfaces:
     - "specs/infra/environments/development.yaml"
     - "specs/infra/deployment-contracts/sst-bend.yaml"
@@ -86,16 +127,48 @@ runtime_readback:
   deployed_bend_image: "ghcr.io/afpogo/sst-bend:develop-fc5573a7f054"
   recovery_note: "The previously unavailable Docker/Kind control-plane recovered without a successful manual restart, recreation, direct apply or secret mutation."
 
-decision: {status: "approved-running", approver: "4uentes", decided_at: "2026-08-23"}
+decision:
+  status: "complete-owner-runtime-and-jira-terminal-publication-pending"
+  approver: "4uentes"
+  decided_at: "2026-09-05"
+  next_gate: "Publish and read back this done lifecycle before controlled worktree retirement; no additional Jira write is authorized."
+
+knowledge_to_execution_documentation:
+  policy_id: "knowledge-to-execution-documentation-policy"
+  primary_role: "execution-evidence"
+  owner: "4uentes-ards-control-plane"
+  status: "terminal-preflight"
+  applicability: "This lifecycle records owner publication, GitOps reconciliation and readback; it does not replace the Infra owner runbook, specs or manifests."
+  technical_sources:
+    - "requests/planned/CR-SST-0217-enable-development-retention-qa-runtime.yaml"
+    - "sst-4uentes-infra owner publication at merge 85ccc828cc8329d2319e778a9ccd7ac365ed3d61"
+    - "sst-4uentes-infra canonical develop readback 126f25eeed4d20b7ecba35036a7e35530482c946"
+  runbook_required: false
+  runbook_not_applicable_reason: "The Infra owner runbook docs/runbooks/argocd-kind-development.md already operationalizes the deployment and reconciliation path; this checkpoint only records terminal readiness."
 
 evidence_refs:
   - "evidence/requests/CR-SST-0207/runtime-preflight-blocker-2026-08-23.md"
   - "evidence/requests/CR-SST-0217/execution-start-2026-08-23.md"
   - "evidence/requests/CR-SST-0217/jira-start-readback-2026-08-23.md"
   - "evidence/requests/CR-SST-0217/owner-and-runtime-readback-2026-08-24.md"
+  - "evidence/requests/CR-SST-0217/terminal-readiness-and-jira-preflight-2026-09-05.md"
+  - "evidence/requests/CR-SST-0217/jira-terminal-result-2026-09-07.md"
+  - "evidence/requests/CR-SST-0217/terminal-closure-2026-09-07.md"
 
 closure_limits:
   - "No cluster restart, recreation or direct apply without a new exact operational gate."
   - "No production, datastore, secret or application-code mutation."
   - "CR-SST-0207 remains the owner of the integrated product QA matrix."
-  - "Jira closure requires a separate exact authorization."
+  - "The Jira terminal batch is consumed; no additional Jira write is authorized."
+
+closure:
+  status: "complete-terminal-publication-pending"
+  completed_scope:
+    - "The Infra owner change, documentation, renders and dry-runs are merged and read back."
+    - "Argo CD, localhost, reserved-edge reachability and bounded retention runtime checks passed."
+    - "SST-118 is Finalizada with resolution Listo after exactly one terminal write."
+  remaining_operational_gate: "Merge and read back this done lifecycle before controlled worktree retirement."
+  limits:
+    - "CR-SST-0207 and SST-117 remain running for the integrated QA matrix."
+    - "SST-113 and Epic SST-86 remain open."
+    - "No additional Jira, cluster, production, datastore, secret or application-code mutation is authorized."
