@@ -1,0 +1,38 @@
+schema_version: "1.0"
+kind: "initiative"
+id: "INIT-SST-0011"
+title: "SST Evolutionary Onboarding and First-Value Activation"
+status: "planned"
+updated_at: "2026-09-08"
+owner_repository: "4uentes-orchestor"
+objective: >
+  Deliver a protected, resumable and evolutionary onboarding journey that
+  activates users through a verified outcome for their selected goal.
+initial_hypothesis: >
+  A deterministic Articles-first hub with durable progress and optional
+  read-only guidance can shorten time to first value without coupling
+  activation to Chat, Learning, authentication flags or route visits.
+source_evidence_refs:
+  - "evidence/requests/CR-SST-0238/evolutionary-onboarding-recommendation-2026-09-07.md"
+  - "evidence/requests/CR-SST-0240/initiative-and-execution-plan.md"
+known_change_requests:
+  - "CR-SST-0240"
+dependencies:
+  - request_id: "CR-SST-0238"
+    role: "Functional navigation prerequisite before enabling onboard."
+  - request_id: "CR-SST-0241"
+    role: "Operational Compose raw-v2 parity prerequisite for integrated QA."
+tracking:
+  jira:
+    role: "mirror"
+    source_of_truth: false
+    project_key: "SST"
+    issue_type: "Epic"
+    issue_key: null
+    proposed_summary: "[SST][INIT-SST-0011] Evolutionary onboarding and first-value activation"
+    write_status: "authorized-after-canonical-running-readback"
+candidate_change_requests:
+  - {owner: "sst-bend", title: "Implement durable onboarding and verified outcomes", identity_status: "unreserved-requires-fresh-global-preflight"}
+  - {owner: "4uentes-auth", title: "Relay onboarding API through BFF", identity_status: "unreserved-requires-fresh-global-preflight"}
+  - {owner: "sst-fend", title: "Implement onboard hub and Home invitation", identity_status: "unreserved-requires-fresh-global-preflight"}
+  - {owner: "4uentes-orchestor", title: "Validate integrated onboarding and staged rollout", identity_status: "unreserved-requires-fresh-global-preflight"}
