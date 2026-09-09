@@ -1,0 +1,79 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0243"
+title: "Relay onboarding V1 through the authenticated BFF"
+status: "planned"
+created_at: "2026-09-08"
+requester: "4uentes"
+source_request: "requests/inbox/CR-SST-0243-relay-onboarding-v1-through-auth-bff.yaml"
+summary: "Prepare the bounded 4uentes-auth execution slice of onboarding V1."
+depends_on: ["CR-SST-0240","CR-SST-0242"]
+control_plane_context:
+  initiative_id: "INIT-SST-0011"
+  parent_request_id: "CR-SST-0240"
+  owner_repository: "4uentes-auth"
+  feature_state_id: "sst-evolutionary-onboarding"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  jira_issue_key: null
+  proposed_jira_issue_type: "Subtask"
+  proposed_jira_parent_issue_key: "SST-128"
+  jira_epic_issue_key: "SST-127"
+  jira_write_authorized: false
+risk:
+  level: "high"
+  drivers: ["DURABLE_USER_PROGRESS", "AUTHENTICATED_RESOURCE_SCOPE", "PRIVACY", "FALSE_POSITIVE_ACTIVATION"]
+task_weight:
+  classification: "complex-high-risk-task"
+model_selection:
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5"
+  reason: "Keep identity, privacy and cross-repository contracts under high-reasoning review."
+subagent_deployment_plan:
+  mode: "none"
+  reason: "Bounded sequential lifecycle preparation; no owner mutation or delegated decisions."
+contract_ref: "evidence/requests/CR-SST-0240/onboarding-v1-contract.yaml"
+owner_binding_ref: "evidence/requests/CR-SST-0240/owner-binding-and-slice-plan.md"
+planned_surfaces:
+  - "specs/routing.yaml"
+  - "specs/integrations-api.yaml"
+  - "specs/capabilities/inbound/sst-bend--onboarding-v1.yaml (new)"
+  - "specs/capabilities/outbound/onboarding-v1.yaml (new)"
+  - "docs/bf/onboarding.md (new)"
+  - "src/presentation/ onboarding routes and controller"
+  - "src/infrastructure/datasources/ onboarding relay"
+  - "owner relay contract and authentication tests"
+objectives:
+  - "Adopt the published Bend onboarding capability without inventing domain semantics."
+  - "Expose GET/PATCH /api/onboarding/me and POST /api/onboarding/me/outcomes."
+  - "Propagate JWT, Idempotency-Key and X-Correlation-Id; preserve optimistic revision and sanitized owner error codes."
+  - "Keep product state and completion exclusively in Bend."
+execution_gates:
+  - "CR-SST-0242 owner API/capability published and read back; shared DTO fixtures available."
+  - "Fresh owner ref and explicit running batch before mutation."
+execution:
+  control_plane_mutation_allowed: true
+  child_repo_mutation_allowed: false
+  runtime_mutation_allowed: false
+  jira_write_allowed: false
+  next_gate: "Canonical plan readback, owner preflight and explicit running batch."
+owner_documentation:
+  required: true
+  status: "planned"
+  reason: "Publish owner specs, capabilities, Spanish docs, tests and request linkage with implementation."
+acceptance:
+  - "Unauthorized and expired sessions use established authentication behavior."
+  - "Relay method/body/revision/idempotency/correlation have no semantic drift."
+  - "Unknown fields, sensitive error payloads, upstream timeout and 409 are handled under owner contract."
+  - "No product-state persistence, actor inference or completion logic in the BFF."
+validation:
+  control_plane: "npm.cmd run check"
+  owner: "Full owner check plus focused contract, negative-path and concurrency tests"
+  closure: "Owner publication/readback, sanitized evidence and full control-plane gate before done."
+evidence_refs:
+  - "evidence/requests/CR-SST-0240/owner-binding-and-slice-plan.md"
+  - "evidence/requests/CR-SST-0240/owner-slice-jql-preflight.json"

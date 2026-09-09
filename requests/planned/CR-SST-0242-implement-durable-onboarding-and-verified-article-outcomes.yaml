@@ -1,0 +1,80 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0242"
+title: "Implement durable onboarding and verified article outcomes"
+status: "planned"
+created_at: "2026-09-08"
+requester: "4uentes"
+source_request: "requests/inbox/CR-SST-0242-implement-durable-onboarding-and-verified-article-outcomes.yaml"
+summary: "Prepare the bounded sst-bend execution slice of onboarding V1."
+depends_on: ["CR-SST-0240"]
+control_plane_context:
+  initiative_id: "INIT-SST-0011"
+  parent_request_id: "CR-SST-0240"
+  owner_repository: "sst-bend"
+  feature_state_id: "sst-evolutionary-onboarding"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  jira_issue_key: null
+  proposed_jira_issue_type: "Subtask"
+  proposed_jira_parent_issue_key: "SST-128"
+  jira_epic_issue_key: "SST-127"
+  jira_write_authorized: false
+risk:
+  level: "high"
+  drivers: ["DURABLE_USER_PROGRESS", "AUTHENTICATED_RESOURCE_SCOPE", "PRIVACY", "FALSE_POSITIVE_ACTIVATION"]
+task_weight:
+  classification: "complex-high-risk-task"
+model_selection:
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5"
+  reason: "Keep identity, privacy and cross-repository contracts under high-reasoning review."
+subagent_deployment_plan:
+  mode: "none"
+  reason: "Bounded sequential lifecycle preparation; no owner mutation or delegated decisions."
+contract_ref: "evidence/requests/CR-SST-0240/onboarding-v1-contract.yaml"
+owner_binding_ref: "evidence/requests/CR-SST-0240/owner-binding-and-slice-plan.md"
+planned_surfaces:
+  - "specs/api/onboarding.yaml (new owner contract)"
+  - "specs/capabilities/outbound/onboarding-v1.yaml (new)"
+  - "docs/api/onboarding.md (new)"
+  - "src/apps/sst/presentation/routes/ and controllers/ onboarding handlers"
+  - "src/apps/sst/application/ and domain/ onboarding use cases"
+  - "src/apps/sst/infrastructure/db/ onboarding repository and additive migrations"
+  - "owner HTTP harness and onboarding integration tests"
+objectives:
+  - "Publish exact DTO/error/retention/readiness contracts before implementation."
+  - "Implement principal-scoped durable state, optimistic revisions and atomic idempotent mutations."
+  - "Bind article_saved to a real text article creation and server-side actor/attempt evidence; never infer actor from account membership alone."
+  - "Expose Articles readiness only after verifier and migration are validated; fail closed for unsupported goals."
+execution_gates:
+  - "Fresh owner canonical ref and clean owner worktree after reservation readback."
+  - "Resolve server-verifiable actor/attempt proof and publish retention/error details before accepting runtime."
+  - "An approved running batch must enumerate owner files, checks and publication scope."
+execution:
+  control_plane_mutation_allowed: true
+  child_repo_mutation_allowed: false
+  runtime_mutation_allowed: false
+  jira_write_allowed: false
+  next_gate: "Canonical plan readback, owner preflight and explicit running batch."
+owner_documentation:
+  required: true
+  status: "planned"
+  reason: "Publish owner specs, capabilities, Spanish docs, tests and request linkage with implementation."
+acceptance:
+  - "GET absence is side-effect free; concurrent starts create one state."
+  - "Fresh successful text create completes only for the matching actor, goal and attempt."
+  - "Reject absent, foreign-account, same-account/different-actor, historical and failed outcomes."
+  - "Concurrent revision conflicts, same-key replay and changed-payload rejection survive restarts."
+  - "Deletion/retention and additive migration rollback preserve the documented privacy contract."
+validation:
+  control_plane: "npm.cmd run check"
+  owner: "Full owner check plus focused contract, negative-path and concurrency tests"
+  closure: "Owner publication/readback, sanitized evidence and full control-plane gate before done."
+evidence_refs:
+  - "evidence/requests/CR-SST-0240/owner-binding-and-slice-plan.md"
+  - "evidence/requests/CR-SST-0240/owner-slice-jql-preflight.json"

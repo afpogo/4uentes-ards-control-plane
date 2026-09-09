@@ -13,10 +13,10 @@ recibe una invitación que puede volver a abrir. La señal inicial de Auth dispa
 el inicio; Bend determina siempre el progreso real.
 
 V1 propone Articles como primer objetivo. Para hacerlo verificable, la primera
-utilidad será guardar un artículo o borrador mediante el flujo real: Bend
+utilidad será crear un artículo de texto nativo mediante el flujo real: Bend
 verifica el recurso y el resultado. Una visita, checkbox o afirmación del
-chatbot no activa la experiencia. El binding exacto al contrato Articles es
-un gate del CR owner antes de implementar, no una capability ya disponible.
+chatbot no activa la experiencia. El binding al create existente y la prueba
+de actor/intento se detallan en el plan de slices; onboarding sigue pendiente.
 
 El usuario puede omitir, reanudar y reabrir. Al reabrir se preserva el historial,
 pero la nueva activación requiere un resultado de ese intento. Un conflicto
@@ -111,5 +111,6 @@ runtime se declara probada en este lote documental.
 
 Rollout: flag apagado, cohorte interna, registros nuevos y luego invitación a
 existentes. El rollback apaga la entrada y vuelve a Home preservando progreso.
-Los IDs de los CRs Bend, Auth, Fend y QA se asignarán después de estabilizar
-el handoff y repetir el preflight global.
+Tras repetir el preflight global se asignaron Bend CR-SST-0242, Auth
+CR-SST-0243, Fend CR-SST-0244 y QA CR-SST-0245. Ver el
+[binding y gates owner](../../../evidence/requests/CR-SST-0240/owner-binding-and-slice-plan.md).

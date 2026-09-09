@@ -13,12 +13,17 @@ initial_hypothesis: >
   read-only guidance can shorten time to first value without coupling
   activation to Chat, Learning, authentication flags or route visits.
 source_evidence_refs:
+  - "evidence/requests/CR-SST-0240/owner-binding-and-slice-plan.md"
   - "evidence/requests/CR-SST-0240/jira-and-canonical-readback.md"
   - "evidence/requests/CR-SST-0240/onboarding-v1-contract.yaml"
   - "docs/projects/sst/onboarding-evolutivo-v1.md"
   - "evidence/requests/CR-SST-0238/evolutionary-onboarding-recommendation-2026-09-07.md"
   - "evidence/requests/CR-SST-0240/initiative-and-execution-plan.md"
 known_change_requests:
+  - "CR-SST-0242"
+  - "CR-SST-0243"
+  - "CR-SST-0244"
+  - "CR-SST-0245"
   - "CR-SST-0240"
 dependencies:
   - request_id: "CR-SST-0238"
@@ -36,8 +41,4 @@ tracking:
     current_status_observed: "En curso"
     write_status: "initial-batch-complete; authorization-consumed"
     evidence_ref: "evidence/requests/CR-SST-0240/jira-batch-readback.json"
-candidate_change_requests:
-  - {owner: "sst-bend", title: "Implement durable onboarding and verified outcomes", identity_status: "unreserved-requires-fresh-global-preflight"}
-  - {owner: "4uentes-auth", title: "Relay onboarding API through BFF", identity_status: "unreserved-requires-fresh-global-preflight"}
-  - {owner: "sst-fend", title: "Implement onboard hub and Home invitation", identity_status: "unreserved-requires-fresh-global-preflight"}
-  - {owner: "4uentes-orchestor", title: "Validate integrated onboarding and staged rollout", identity_status: "unreserved-requires-fresh-global-preflight"}
+candidate_change_requests: []
