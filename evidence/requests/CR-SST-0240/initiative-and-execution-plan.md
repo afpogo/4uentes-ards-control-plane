@@ -68,4 +68,4 @@ El gate completo de precondiciones pasó. Cada publicación siguiente requiere
 `npm.cmd run check`, incluyendo owner docs y mapas. Las pruebas runtime,
 HTTP/browser, privacidad, accesibilidad y rollout pertenecen a los slices
 posteriores; este lote sólo valida coordinación y contrato.
-TODO: registrar merge del plan, del inicio y claves/readback Jira.
+Merges y claves observadas: ver `jira-and-canonical-readback.md`.

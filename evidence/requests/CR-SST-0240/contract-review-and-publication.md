@@ -24,5 +24,6 @@ en planned y running, sin debilitar el validador ni anticipar ejecución.
 
 La iniciativa pasa a active y el coordinador a running. La feature permanece
 planned. Owners, runtime y Jira todavía no fueron modificados.
-TODO: ejecutar check del contrato/running, publicar/readback y aplicar el lote
-Jira ya enumerado en initiative-and-execution-plan.md.
+El check del contrato/running pasó: 49 documentos, 63 mapas, 0 FAIL.
+El PR #285 se integró en `bc558e3` y se leyó running desde `origin/main`.
+El resultado posterior de Jira está en `jira-and-canonical-readback.md`.
