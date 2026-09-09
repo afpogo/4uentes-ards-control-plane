@@ -113,3 +113,17 @@ existencia devuelve NotFound para namespaces `aistor-system`, `receipt-custody`
 y Secret `sst-receipt-object-store`; no se leyeron valores ni se creó plataforma.
 HPT-16 permanece En curso. El lote Jira se actualiza como propuesta, sin enviar
 comentarios ni aplicar transiciones. No se retiran worktrees ni ramas.
+
+## Publicación documental y disposición
+
+Infra PR #32 integra el readback en Learning, playbook, runbook y tarea owner:
+merge `755c6eb9b91c1055b1189487e34bff211a857fee`, 04:53:27 UTC, CI SUCCESS.
+Es un cambio exclusivamente documental. Full check Infra PASS; full check CP
+PASS también después de incorporar los diez commits concurrentes de main.
+
+El lote vigente es `jira-reconciliation-batch-2026-09-09.json`, preparado sin
+aplicar. Requiere refrescar timestamps/descripciones antes de cualquier envío.
+La disposición histórica de worktrees permanece en el inventario de recuperación.
+Los worktrees Auth/SST se conservan con referencias de las pruebas; Infra se
+conserva para el gate plataforma y CP para la coordinación. No hay información
+única descartada ni retiro ejecutado durante esta ventana.
