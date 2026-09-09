@@ -1,8 +1,8 @@
 schema_version: "1.0"
-phase: 2
+phase: 3
 id: "CR-SST-0242"
 title: "Implement durable onboarding and verified article outcomes"
-status: "planned"
+status: "running"
 created_at: "2026-09-08"
 requester: "4uentes"
 source_request: "requests/inbox/CR-SST-0242-implement-durable-onboarding-and-verified-article-outcomes.yaml"
@@ -19,7 +19,7 @@ control_plane_context:
   proposed_jira_issue_type: "Subtask"
   proposed_jira_parent_issue_key: "SST-128"
   jira_epic_issue_key: "SST-127"
-  jira_write_authorized: false
+  jira_write_authorized: true
 risk:
   level: "high"
   drivers: ["DURABLE_USER_PROGRESS", "AUTHENTICATED_RESOURCE_SCOPE", "PRIVACY", "FALSE_POSITIVE_ACTIVATION"]
@@ -57,14 +57,14 @@ execution_gates:
   - "An approved running batch must enumerate owner files, checks and publication scope."
 execution:
   control_plane_mutation_allowed: true
-  child_repo_mutation_allowed: false
+  child_repo_mutation_allowed: true
   runtime_mutation_allowed: false
-  jira_write_allowed: false
-  next_gate: "Approve the concrete owner/Jira batch in execution-gate.md; publish and read back running before owner mutation."
+  jira_write_allowed: true
+  next_gate: "Read back running, execute the approved owner/Jira batch, validate and publish owner evidence."
   gate_readiness: "owner-base-verified; actor-attempt-and-retention-proposal-ready"
 owner_documentation:
   required: true
-  status: "planned"
+  status: "running"
   reason: "Publish owner specs, capabilities, Spanish docs, tests and request linkage with implementation."
 acceptance:
   - "GET absence is side-effect free; concurrent starts create one state."
@@ -92,3 +92,6 @@ execution_publication_rule:
     provider: "jira"
   cleanup:
     remote_readback_required: true
+
+started_at: "2026-09-09"
+approval_ref: "evidence/requests/CR-SST-0242/approved-execution.md"
