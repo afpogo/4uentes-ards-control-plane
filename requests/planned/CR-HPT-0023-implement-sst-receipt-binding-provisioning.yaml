@@ -1,0 +1,126 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-HPT-0023"
+title: "Implement SST receipt-intake binding provisioning"
+status: "planned"
+source_request: "requests/inbox/CR-HPT-0023-implement-sst-receipt-binding-provisioning.yaml"
+created_at: "2026-08-28"
+requester: "4uentes"
+
+control_plane_context:
+  initiative_id: "INIT-HPT-0003"
+  predecessor_request_ids: [CR-CP-0024]
+  state_id: "telegram-receipt-intake-adoption"
+  jira_epic_key: "HPT-8"
+
+summary: >
+  Implement the SST-owned provisioning boundary for opaque receipt-intake
+  bindings. Account, subject and owner authority come exclusively from the
+  verified user and active SST membership context.
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "owner-only RBAC"
+    - "account isolation"
+    - "binding lifecycle and atomic rotation"
+    - "cross-repo Automation contract"
+
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5-high"
+
+subagent_deployment_plan:
+  required: false
+  roles: []
+  reason: "RBAC, account authority and persistence decisions remain with the primary agent under the current core delegation policy."
+
+execution:
+  requires_human_approval: true
+  approval_source: "User instructed implementation of the five enumerated gates on 2026-08-28."
+  child_repo_mutation_allowed: true
+  owner_repo: "sst-bend"
+  active_owner_worktree_mutation_allowed: false
+  isolated_worktree_required: true
+  isolated_base_ref: "feat/CR-HPT-0019/receipt-intake-acceptance@72a406d plus its preserved local owner result"
+  isolated_branch: "feat/CR-HPT-0023/receipt-binding-provisioning"
+  isolated_worktree_path: "worktrees/CR-HPT-0023-sst-owner"
+  runtime_implementation_allowed: true
+  database_changes_allowed: true
+  reversible_migration_required: true
+  dependency_changes_allowed: false
+  infrastructure_changes_allowed: false
+  deployment_changes_allowed: false
+  secret_changes_allowed: false
+  n8n_activation_allowed: false
+  phinance_invocation_allowed: false
+  jira_write_allowed: true
+  jira_write_scope: "Create and read back exactly one Tarea for CR-HPT-0023 under HPT-8; no transition, comment or assignment."
+
+api_contract:
+  base_path: "/4uentes/v1/integrations/receipt-intake/binding"
+  operations:
+    - "GET /4uentes/v1/integrations/receipt-intake/binding"
+    - "POST /4uentes/v1/integrations/receipt-intake/binding"
+    - "POST /4uentes/v1/integrations/receipt-intake/binding/rotate"
+    - "DELETE /4uentes/v1/integrations/receipt-intake/binding"
+  middleware: [verifyJWT, resolveAccountContext, "requireAccountRole([owner])"]
+  account_source: "req.accountContext from active SST membership"
+  binding_id: "rb_ plus at least 128 bits of CSPRNG entropy"
+  active_cardinality: "one per account"
+  lifetime_days: 90
+  rotation: "atomic revoke old and create replacement"
+
+owner_documentation:
+  required: true
+  status: "planned"
+  owner_repo: "sst-bend"
+  planned_owner_docs:
+    - "specs/api/receipt-intake-binding-v1.yaml"
+    - "specs/capabilities/outbound/receipt-intake-binding-provisioning-v1.yaml"
+    - "docs/api/30-receipt-intake-binding.md"
+    - "docs/capabilities/outbound/receipt-intake-binding-provisioning-v1.md"
+    - "docs/tasks/2026-08-28-cr-hpt-0023-receipt-binding-provisioning.md"
+
+implementation_plan:
+  - "Create an isolated SST worktree preserving the CR-HPT-0019 local owner result."
+  - "Add a reversible schema extension for account ownership, stable reviewer membership references, expiry and revocation."
+  - "Implement owner-only get/create/rotate/revoke use cases using existing account middleware."
+  - "Generate opaque binding IDs with at least 128 bits of entropy and enforce one active binding per account."
+  - "Resolve reviewer membership IDs against active memberships of the same account."
+  - "Publish owner API/capability docs, unit/contract tests and an HTTP harness."
+  - "Run npm run check in SST and the full control-plane npm run check."
+
+validation:
+  owner_command: "npm run check"
+  focused_command: "node scripts/test-receipt-binding-provisioning.js"
+  control_plane_command: "npm run check"
+
+jira_mirror:
+  jira_source_of_truth: false
+  project_key: "HPT"
+  initiative_issue_key: "HPT-8"
+  request_issue_type: "Tarea"
+  request_issue_key: "HPT-15"
+  expected_parent: "HPT-8"
+  write_batch_ref: "evidence/requests/CR-HPT-0023/jira-write-batch.md"
+
+decision:
+  status: "approved-for-isolated-owner-implementation"
+  approver: "4uentes"
+  approved_at: "2026-08-28"
+  blocker: "Deployment, shared-database migration and Automation activation remain forbidden."
+
+recovery_2026_09_08:
+  coordinator_request_id: "CR-CP-0024"
+  ordering: "retroactive; owner implementation and integration preceded canonical lifecycle recovery"
+  original_sha256: "4d06d100d5fcb7309452015402ce9da222eb4b63c0a6399674dff266876880b3"
+  provenance_ref: "evidence/requests/CR-CP-0024/custody-recovery-2026-09-08.md"
+  historical_state_not_current_validation: true
+  tracker_terminal_transition_authorized: false

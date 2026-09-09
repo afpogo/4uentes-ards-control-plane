@@ -1,0 +1,26 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-HPT-0019"
+title: "Implement the governed SST receipt-intake acceptance boundary"
+status: "accepted-for-planning"
+created_at: "2026-08-27"
+requester: "4uentes"
+initiative_id: "INIT-HPT-0003"
+state_id: "telegram-receipt-intake-adoption"
+predecessor_request_ids: [CR-HPT-0007, CR-HPT-0016, CR-HPT-0017]
+business_context: >
+  SST owns the trust and persistence boundary between Automation receipt
+  candidates and any later human review. The route must fail closed unless the
+  exact service identity, opaque binding, clean object reference, payload,
+  idempotency and limits are valid.
+requested_outcomes:
+  - "Implement POST /4uentes/v1/automation/receipt-intakes in an isolated SST worktree."
+  - "Validate the exact Automation service JWT and never accept user-session tokens."
+  - "Resolve opaque active bindings and clean registered object references."
+  - "Persist only REVIEW_PENDING candidates with durable idempotency and governed limits."
+  - "Publish owner contracts, capability handoff and executable sanitized QA."
+constraints:
+  - "Do not invoke Phinance or materialize financial records."
+  - "Do not provision credentials, deploy SST or activate n8n."
+  - "Do not modify the active dirty SST worktree."
+  - "Do not persist raw Telegram identities, binary content, tokens or secrets."

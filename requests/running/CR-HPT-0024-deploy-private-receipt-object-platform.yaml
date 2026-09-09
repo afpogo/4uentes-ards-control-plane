@@ -455,3 +455,15 @@ evidence_refs:
   - "evidence/requests/CR-HPT-0024/control-plane-pr258-merge-readback-2026-09-05.md"
   - "evidence/requests/CR-HPT-0024/jira-readonly-reconciliation-2026-09-05.md"
   - "evidence/requests/CR-HPT-0024/jira-authorized-batch-readback-2026-09-05.md"
+
+validation_readback_2026_09_08:
+  coordinator_request_id: "CR-CP-0024"
+  latest_evidence: "evidence/requests/CR-CP-0024/custody-validation-2026-09-08.md"
+  documentary_pr: 30
+  documentary_merge: "e050fd0d80cc6afc894d00cf6d024e2a4b41b654"
+  active_signature_database: 28117
+  scanner_restarts: 0
+  cold_start_and_scan_gate: "pending"
+  jira_status: "En curso"
+  tracker_write_performed: false
+  cleanup_allowed: false

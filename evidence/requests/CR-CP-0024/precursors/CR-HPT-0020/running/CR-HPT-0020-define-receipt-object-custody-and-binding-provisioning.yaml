@@ -1,0 +1,56 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-HPT-0020"
+title: "Define receipt object custody and binding provisioning boundary"
+status: "running"
+source_request: "evidence/requests/CR-CP-0024/precursors/CR-HPT-0020/planned/CR-HPT-0020-define-receipt-object-custody-and-binding-provisioning.yaml"
+started_at: "2026-08-27"
+requester: "4uentes"
+
+control_plane_context:
+  initiative_id: "INIT-HPT-0003"
+  predecessor_request_ids: [CR-HPT-0017, CR-HPT-0019]
+  jira_epic_key: "HPT-8"
+  jira_task_key: "HPT-13"
+  state_id: "telegram-receipt-intake-adoption"
+
+execution:
+  approval_source: "User approved continuing with the next gate on 2026-08-27."
+  control_plane_only: true
+  child_repo_mutation_allowed: false
+  runtime_implementation_allowed: false
+  infrastructure_changes_allowed: false
+  deployment_changes_allowed: false
+  secret_changes_allowed: false
+  real_document_access_allowed: false
+  n8n_activation_allowed: false
+  phinance_invocation_allowed: false
+  jira_write_scope: "HPT-13 was reconciled to En curso with objective, start comment and accumulated progress under the authorized 2026-08-29 batch."
+
+owner_documentation:
+  required: false
+  status: "not-applicable-control-plane-only"
+  reason: "The gate records a decision boundary and owner TODOs without mutating child repositories."
+
+jira_mirror:
+  jira_source_of_truth: false
+  project_key: "HPT"
+  initiative_issue_key: "HPT-8"
+  request_issue_type: "Tarea"
+  request_issue_key: "HPT-13"
+  expected_parent: "HPT-8"
+  evidence_ref: "evidence/requests/CR-HPT-0020/jira-task-sync-summary.md"
+
+implementation_status:
+  lifecycle_and_jira: "validated"
+  custody_boundary: "validated-with-owner-todos"
+  binding_boundary: "validated-with-owner-todos"
+  visual_documentation: "validated"
+  child_owner_implementation: "not-authorized"
+  overall: "validated-control-plane-running"
+
+evidence_refs:
+  - "evidence/requests/CR-HPT-0020/jira-task-sync-summary.md"
+  - "evidence/requests/CR-HPT-0020/object-custody-and-binding-decision.yaml"
+  - "evidence/requests/CR-HPT-0020/object-custody-and-binding-decision.md"
+  - "evidence/initiatives/INIT-HPT-0003/integration-status-2026-08-27.md"

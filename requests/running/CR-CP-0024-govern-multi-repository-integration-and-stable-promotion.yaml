@@ -41,7 +41,7 @@ authorization:
   evidence: "evidence/requests/CR-CP-0024/auth-owner-execution-authorization-2026-08-30.md"
 
 execution:
-  current_unit: "infra-human-docs-corrective-pr-merged-readback"
+  current_unit: "custody-recovery-and-synthetic-validation"
   parallel_unit: "worktree-sanitization-disposition-and-selective-recovery"
   completed_units:
     - "publish-plan-and-migration-lifecycle"
@@ -613,3 +613,14 @@ evidence_refs:
   - "evidence/requests/CR-HPT-0024/owner-documentation-publication-preflight-2026-09-05.md"
   - "requests/running/CR-SST-0233-reconcile-fresh-database-migration-baseline.yaml"
   - "evidence/requests/CR-SST-0233/retroactive-running-reconciliation-2026-09-05.md"
+
+custody_recovery_2026_09_08:
+  user_authorized: true
+  source: "User implementation plan in current session"
+  evidence: "evidence/requests/CR-CP-0024/custody-validation-2026-09-08.md"
+  auth: "synthetic-http-and-full-owner-check-passed"
+  sst: "expired-binding-admission-reproduced-fixed-synthetic-matrix-passed"
+  infra_documentation_pr: "https://github.com/afpogo/sst-4uentes-infra/pull/30"
+  stable_promotion_allowed: false
+  terminal_jira_transition_allowed: false
+  worktree_removal_allowed: false

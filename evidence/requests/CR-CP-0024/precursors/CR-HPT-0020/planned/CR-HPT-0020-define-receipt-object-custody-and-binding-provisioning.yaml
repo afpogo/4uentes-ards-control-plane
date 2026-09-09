@@ -1,0 +1,96 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-HPT-0020"
+title: "Define receipt object custody and binding provisioning boundary"
+status: "planned"
+source_request: "evidence/requests/CR-CP-0024/precursors/CR-HPT-0020/inbox/CR-HPT-0020-define-receipt-object-custody-and-binding-provisioning.yaml"
+created_at: "2026-08-27"
+requester: "4uentes"
+
+control_plane_context:
+  initiative_id: "INIT-HPT-0003"
+  predecessor_request_ids: [CR-HPT-0017, CR-HPT-0019]
+  state_id: "telegram-receipt-intake-adoption"
+  jira_epic_key: "HPT-8"
+
+summary: >
+  Establish the decision contract that must precede receipt-object storage and
+  opaque binding provisioning. This gate is control-plane-only and leaves
+  concrete owner implementation, provider selection and deployment to later
+  approved requests.
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "sensitive financial document custody"
+    - "malware and retention policy boundaries"
+    - "cross-repo ownership"
+    - "binding issuance and revocation"
+
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5-high"
+
+subagent_deployment_plan:
+  required: false
+  roles: []
+  reason: "Security, ownership and sensitive-data decisions remain with the primary agent."
+
+execution:
+  requires_human_approval: true
+  approval_source: "User approved continuing with the next gate on 2026-08-27."
+  child_repo_mutation_allowed: false
+  runtime_implementation_allowed: false
+  infrastructure_changes_allowed: false
+  deployment_changes_allowed: false
+  secret_changes_allowed: false
+  real_document_access_allowed: false
+  n8n_activation_allowed: false
+  phinance_invocation_allowed: false
+  jira_write_allowed: true
+  jira_write_scope: "Create and read back exactly one Tarea for CR-HPT-0020 under HPT-8; no transition, comment or assignment."
+
+decision_scope:
+  required:
+    - "Identify owner roles for object custody, malware verdicts and opaque bindings."
+    - "Define logical object states, binding issuance, expiry and revocation requirements."
+    - "Define encryption, access, retention, deletion and sanitized audit requirements."
+    - "Define synthetic fixture requirements for protected QA."
+  deferred:
+    - "Concrete storage or malware provider selection."
+    - "Child repository implementation or migration."
+    - "Deployment, secret provisioning and protected integrated traffic."
+    - "Telegram upload, OCR, AI, Phinance invocation and financial materialization."
+
+documentation:
+  human_language: "Spanish"
+  normative_yaml_language: "English"
+  visual_documentation_required: true
+  visual_profile_ref: "specs/integration/visual-documentation-as-code-profile.yaml"
+  status_document: "evidence/initiatives/INIT-HPT-0003/integration-status-2026-08-27.md"
+
+owner_documentation:
+  required: false
+  status: "not-applicable-control-plane-only"
+  reason: "No child repo mutation is authorized in this decision gate."
+
+jira_mirror:
+  jira_source_of_truth: false
+  project_key: "HPT"
+  initiative_issue_key: "HPT-8"
+  request_issue_type: "Tarea"
+  request_issue_key: "HPT-13"
+  expected_parent: "HPT-8"
+  write_batch_ref: "evidence/requests/CR-HPT-0020/jira-write-batch.md"
+
+decision:
+  status: "approved-for-control-plane-decision"
+  approver: "4uentes"
+  approved_at: "2026-08-27"
+  blocker: "Owner assignments and implementation remain forbidden until approved follow-up requests."
