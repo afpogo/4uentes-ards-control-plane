@@ -1,0 +1,73 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0241"
+title: "Align SST local Compose with the raw-v2 development release"
+status: "planned"
+source_request: "requests/inbox/CR-SST-0241-align-local-compose-with-raw-v2.yaml"
+created_at: "2026-09-07"
+requester: "4uentes"
+summary: >
+  Make the local Compose build and runtime consume explicit raw-v2 development
+  defaults and document a reproducible readiness readback without changing the
+  secure Dockerfile fallback for unspecified environments.
+control_plane_context:
+  initiative_id: "INIT-SST-0009"
+  coordinator_request_id: "CR-SST-0222"
+  related_request_id: "CR-SST-0238"
+  owner_repository: "sst-fend"
+  planning_base: "origin/main@d84d1f672efae0acfa94d1dab4626b8d2f85230a"
+risk:
+  level: "high"
+  drivers: ["CREDENTIAL_PROTOCOL_DRIFT", "BUILD_TIME_ENVIRONMENT", "FALSE_POSITIVE_LOCAL_QA"]
+model_selection:
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  task_class: "complex-high-risk-task"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5 high"
+subagent_deployment_plan:
+  required: false
+  reason: "Delegation was not requested and credential-mode configuration requires one reviewed path."
+observed_gap:
+  release: "The development image workflow explicitly builds with raw-v2 and loopback HTTP enabled."
+  compose: >
+    docker-compose.yml omits both variables from shared build args and runtime
+    environment, so Dockerfile legacy/false defaults can be consumed silently.
+  env_example: ".env.example also advertises legacy/false despite the adopted development release contract."
+owner_change_contract:
+  allowed_paths:
+    - "docker-compose.yml"
+    - ".env.example"
+    - "specs/31-auth-frontend.yml"
+    - "docs/31-auth-frontend.md"
+    - "owner task record for CR-SST-0241"
+  decisions:
+    - "Pass both auth-mode variables through Compose build args and runtime environment."
+    - "Default the local Compose and example development profile to raw-v2 and true."
+    - "Preserve Dockerfile legacy/false as the fail-safe default outside an explicit release profile."
+atomized_execution:
+  - {order: 1, objective: "Update owner credential-release contract and local readiness documentation.", validation: "YAML parse and configuration matrix review."}
+  - {order: 2, objective: "Align Compose build/runtime interpolation and example defaults.", validation: "docker compose config with placeholders and owner check."}
+  - {order: 3, objective: "Recreate only the authorized local frontend and verify localhost:4090.", validation: "Identity, raw-v2 semantics and browser readback."}
+false_positive_controls:
+  - "Shell environment from a prior preview process cannot prove Compose configuration."
+  - "Runtime environment alone cannot replace build-arg verification for a bundled frontend."
+  - "A successful container start cannot prove raw-v2 request semantics."
+  - "No evidence may contain actual KDF material, passwords, cookies or encryption keys."
+execution:
+  control_plane_mutation_allowed: true
+  child_repo_mutation_allowed: false
+  child_repo_git_publication_allowed: false
+  runtime_mutation_allowed: false
+  jira_write_allowed: false
+  next_gate: "Publish and read back this plan before creating the exact owner running batch."
+owner_documentation: {required: true, status: "planned"}
+acceptance:
+  - "Resolved Compose config exposes raw-v2/true identically to build and runtime without exposing secret values."
+  - "Dockerfile retains legacy/false as a secure unspecified-profile fallback."
+  - "The raw-v2 local login path is verified from the recreated Compose service on localhost:4090."
+  - "Owner and control-plane full checks pass before closure."
+  - "No owner, runtime, Jira or external Git mutation occurs under this plan."
+evidence_refs: ["evidence/requests/CR-SST-0241/discovery-and-plan-2026-09-07.md"]

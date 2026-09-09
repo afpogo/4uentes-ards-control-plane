@@ -1,0 +1,41 @@
+schema_version: "1.0"
+kind: "protected_http_qa_manifest"
+id: "CR-HPT-0017-receipt-intake-protected-qa"
+status: "static-ready-runtime-blocked"
+
+preconditions:
+  - "Promotion gates G0 through G3 are satisfied."
+  - "A synthetic receipt binding resolves only to a synthetic QA principal."
+  - "A synthetic object reference points to non-sensitive fixture content."
+  - "Token and secret values exist only in process memory or approved credential stores."
+
+positive_case:
+  token_request:
+    issuer: "sst-auth"
+    grant_type: "client_credentials"
+    client_id: "4uentes-automation-receipt-intake"
+    audience: "sst-api"
+    scope: "finance:receipt-intake:create"
+  intake_request:
+    method: "POST"
+    path: "/4uentes/v1/automation/receipt-intakes"
+    expected_status: 202
+    expected_state: "REVIEW_PENDING"
+    forbidden_effects: [phinance_invocation, financial_record_creation, automatic_approval]
+
+negative_cases:
+  - {case: "missing-token", expected_status: 401}
+  - {case: "wrong-issuer", expected_status: 401}
+  - {case: "wrong-audience", expected_status: 401}
+  - {case: "wrong-client-or-subject", expected_status: 401}
+  - {case: "scope-missing-extra-or-wildcard", expected_status: 403}
+  - {case: "expired-or-ttl-over-300", expected_status: 401}
+  - {case: "unknown-binding", expected_status: 403}
+  - {case: "same-idempotency-key-different-body", expected_status: 409}
+  - {case: "body-over-32-kib", expected_status: 413}
+  - {case: "unsupported-media-type", expected_status: 415}
+
+evidence_policy:
+  allowed: [status_codes, reason_codes, correlation_id, hashed_idempotency_key, timestamps, artifact_digests]
+  forbidden: [secret, access_token, authorization_header, payload, raw_telegram_identity, object_content]
+  cleanup: "unset ephemeral process variables and disable the workflow after QA"

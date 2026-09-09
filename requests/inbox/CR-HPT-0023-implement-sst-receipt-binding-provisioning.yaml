@@ -1,0 +1,32 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-HPT-0023"
+title: "Implement SST receipt-intake binding provisioning"
+status: "accepted-for-planning"
+created_at: "2026-08-28"
+requester: "4uentes"
+initiative_id: "INIT-HPT-0003"
+source_request_id: "CR-CP-0024"
+predecessor_request_ids: [CR-CP-0024]
+business_context: >
+  SST must issue, inspect, rotate and revoke opaque receipt-intake bindings
+  from its authoritative account and membership context before Automation can
+  upload a document against a governed account boundary.
+requested_outcomes:
+  - "Expose owner-only GET, POST, rotate and DELETE binding operations under /4uentes/v1/integrations/receipt-intake/binding."
+  - "Maintain one active binding per account, with opaque rb_ identifiers, at least 128 bits of entropy and a 90-day lifetime."
+  - "Resolve reviewer_membership_ids only from active memberships of the authenticated account."
+  - "Publish owner API/capability contracts and an executable sanitized HTTP harness."
+constraints:
+  - "Never accept accountId, subject or reviewer authority supplied by the caller as authoritative."
+  - "Reviewer membership does not grant binding issue, rotate or revoke permission."
+  - "Do not modify the active dirty sst-bend worktree or sst-fend."
+  - "Do not deploy SST, apply migrations to a shared database or activate Automation."
+
+recovery_2026_09_08:
+  coordinator_request_id: "CR-CP-0024"
+  ordering: "retroactive; owner implementation and integration preceded canonical lifecycle recovery"
+  original_sha256: "a471c8b04efa45be9afcb9464a3cbbda609b2f9f015e1a58f4e7baf603042a82"
+  provenance_ref: "evidence/requests/CR-CP-0024/custody-recovery-2026-09-08.md"
+  historical_state_not_current_validation: true
+  tracker_terminal_transition_authorized: false

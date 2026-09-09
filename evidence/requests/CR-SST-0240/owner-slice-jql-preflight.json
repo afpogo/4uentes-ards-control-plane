@@ -1,0 +1,30 @@
+{
+  "observedAt": "2026-09-09T00:34:32.043Z",
+  "writeOperations": 0,
+  "results": [
+    {
+      "id": "CR-SST-0242",
+      "jql": "project = SST AND text ~ \"CR-SST-0242\"",
+      "matches": 0,
+      "isLast": true
+    },
+    {
+      "id": "CR-SST-0243",
+      "jql": "project = SST AND text ~ \"CR-SST-0243\"",
+      "matches": 0,
+      "isLast": true
+    },
+    {
+      "id": "CR-SST-0244",
+      "jql": "project = SST AND text ~ \"CR-SST-0244\"",
+      "matches": 0,
+      "isLast": true
+    },
+    {
+      "id": "CR-SST-0245",
+      "jql": "project = SST AND text ~ \"CR-SST-0245\"",
+      "matches": 0,
+      "isLast": true
+    }
+  ]
+}

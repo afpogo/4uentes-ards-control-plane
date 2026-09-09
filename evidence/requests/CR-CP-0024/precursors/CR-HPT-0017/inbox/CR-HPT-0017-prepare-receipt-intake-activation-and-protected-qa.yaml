@@ -1,0 +1,25 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-HPT-0017"
+title: "Prepare governed receipt-intake activation and protected QA"
+status: "accepted-for-planning"
+created_at: "2026-08-27"
+requester: "4uentes"
+initiative_id: "INIT-HPT-0003"
+state_id: "telegram-receipt-intake-adoption"
+predecessor_request_ids: [CR-HPT-0007, CR-HPT-0016]
+business_context: >
+  The provider grant is validated locally, but the SST recipient remains
+  non-routable and Automation cannot execute protected delivery. Establish a
+  secret-safe promotion and protected-QA gate before any credential is created
+  or runtime is activated.
+requested_outcomes:
+  - "Reconcile the exact promotion prerequisites across Auth, SST and Automation."
+  - "Select and document the approved credential custody surfaces without recording a value."
+  - "Define an executable, sanitized protected-QA manifest and rollback boundary."
+  - "Prevent secret provisioning and deployment while the recipient route remains absent."
+constraints:
+  - "Do not generate, read, print or persist a real secret or token."
+  - "Do not deploy, activate routes or execute protected traffic in the readiness slice."
+  - "Do not treat isolated uncommitted Auth changes as a deployable artifact."
+  - "Do not mutate child repositories until the planned request explicitly authorizes the owner and worktree."

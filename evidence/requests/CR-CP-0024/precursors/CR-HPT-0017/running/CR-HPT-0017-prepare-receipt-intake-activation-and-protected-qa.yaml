@@ -1,0 +1,58 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-HPT-0017"
+title: "Prepare governed receipt-intake activation and protected QA"
+status: "running"
+source_request: "evidence/requests/CR-CP-0024/precursors/CR-HPT-0017/planned/CR-HPT-0017-prepare-receipt-intake-activation-and-protected-qa.yaml"
+started_at: "2026-08-27"
+requester: "4uentes"
+
+control_plane_context:
+  initiative_id: "INIT-HPT-0003"
+  predecessor_request_ids: [CR-HPT-0007, CR-HPT-0016]
+  jira_epic_key: "HPT-8"
+  jira_task_key: "HPT-11"
+  state_id: "telegram-receipt-intake-adoption"
+
+execution:
+  approval_source: "User approved advancing to the next gate on 2026-08-27."
+  child_repo_mutation_allowed: false
+  runtime_implementation_allowed: false
+  infrastructure_changes_allowed: false
+  deployment_changes_allowed: false
+  secret_changes_allowed: false
+  real_secret_generation_allowed: false
+  protected_traffic_allowed: false
+  jira_write_allowed: true
+  jira_write_scope: "HPT-11 was reconciled to En curso with objective, start comment and accumulated progress under the authorized 2026-08-29 batch."
+
+implementation_status:
+  lifecycle: "running"
+  jira_mirror: "validated"
+  readiness_reconciliation: "validated"
+  custody_decision: "validated"
+  promotion_manifest: "validated-static"
+  protected_qa_manifest: "validated-static-runtime-blocked"
+  follow_up_owner_request: "identified-CR-HPT-0019-candidate; CR-HPT-0018 was already allocated"
+  validation: "passed"
+  overall: "validated-readiness-running"
+
+owner_documentation:
+  required: false
+  status: "not-applicable-control-plane-readiness-only"
+  reason: "No child owner artifact is mutated in this request."
+
+forbidden_actions:
+  - "Generate, read, print or persist a real secret or token."
+  - "Modify child repositories, deployments, infrastructure or databases."
+  - "Activate the SST route or an n8n workflow."
+  - "Treat an isolated uncommitted branch as a release artifact."
+
+evidence_refs:
+  - "evidence/requests/CR-HPT-0017/jira-task-sync-summary.md"
+  - "evidence/requests/CR-HPT-0017/activation-readiness-assessment.md"
+  - "evidence/requests/CR-HPT-0017/credential-custody-decision.md"
+  - "evidence/requests/CR-HPT-0017/promotion-manifest.yaml"
+  - "evidence/requests/CR-HPT-0017/protected-qa-manifest.yaml"
+  - "evidence/requests/CR-HPT-0017/follow-up-owner-slices.md"
+  - "evidence/requests/CR-HPT-0017/validation-results.md"

@@ -16,6 +16,8 @@ initial_hypothesis: >
   canonical structured memory model from optional physical, downloadable and
   device-replicated workspace projections.
 source_evidence_refs:
+  - "evidence/requests/CR-SST-0233/terminal-assessment-2026-09-07.md"
+  - "evidence/requests/CR-SST-0233/legacy-retirement-readback-2026-09-07.md"
   - "evidence/initiatives/INIT-SST-0010/initiative-decision.md"
   - "evidence/initiatives/INIT-SST-0010/source-intent-review.md"
   - "evidence/initiatives/INIT-SST-0010/jira-mirror-plan.md"
@@ -23,6 +25,7 @@ source_evidence_refs:
   - "evidence/initiatives/INIT-SST-0010/jira-write-batch-authorization.md"
   - "evidence/requests/CR-SST-0233/jira-create-and-publication-readback-2026-09-05.md"
   - "evidence/requests/CR-SST-0233/fresh-database-drift-observation-2026-08-29.md"
+  - "evidence/requests/CR-SST-0233/pr-270-merge-and-cleanup-preflight-2026-09-05.md"
   - "evidence/initiatives/INIT-SST-0010/jira-write-summary.md"
   - "evidence/initiatives/INIT-SST-0010/jira-final-readback.md"
   - "evidence/initiatives/INIT-SST-0010/validation-results.md"
@@ -274,7 +277,7 @@ learning_workspace_source_adoption:
   jira_status: "readonly-preflight-passed-two-issue-batch-pending-exact-authorization"
   next_gate: "authorize positive protected Learning QA with synthetic fixtures; keep Jira write blocked until an exact batch is approved"
 migration_baseline_reconciliation:
-  status: "owner-integrated-runtime-healthy-jira-primary-created-terminal-pending"
+  status: "technical-scope-complete-terminal-publication-and-jira-sync-pending"
   request_id: "CR-SST-0233"
   coordinator_request_id: "CR-CP-0024"
   defect: >
@@ -285,11 +288,11 @@ migration_baseline_reconciliation:
     Freeze the historical creation schema at its original shape and preserve
     20260829010000-adopt-article-agent-processing-v1 as the sole owner of the
     later columns.
-  quarantined_source: "pre-publication dirty worktree; preserve and do not promote"
+  quarantined_source: "checkout retired; six classified units preserved on local archive branch at 2808791"
   owner_execution_status: "sst-bend-pr-32-merged-and-read-back-no-new-owner-mutation-authorized"
   jira_status: "sst-125-tareas-por-hacer-create-and-readback-batch-consumed"
   jira_issue_key: "SST-125"
-  next_gate: "publish the Jira readback, classify legacy worktree provenance and evaluate terminal lifecycle readiness"
+  next_gate: "merge and read back the done lifecycle, then prepare an exact SST-125 terminal synchronization batch"
 relationships:
   depends_on:
     - {initiative_id: "INIT-SST-0007", role: "authenticated realtime chat and internal chatbot runtime"}
@@ -343,6 +346,7 @@ progress:
     - "CR-SST-0194"
     - "CR-SST-0223"
   active_requests:
+    - "CR-SST-0235"
     - "CR-SST-0219"
     - "CR-SST-0220"
     - "CR-SST-0224"
@@ -359,7 +363,6 @@ progress:
     - "CR-SST-0226"
     - "CR-SST-0227"
     - "CR-SST-0233"
-    - "CR-SST-0235"
     - "CR-SST-0236"
     - "CR-SST-0237"
   next_recommended_request: >
@@ -368,8 +371,9 @@ progress:
     Independently run positive protected CR-SST-0234 Learning QA with a
     bounded credential path and synthetic article, document and completed
     agent-output fixtures. Neither track grants authority to the other, and
-    CR-SST-0235 through CR-SST-0237 remain blocked until predecessor behavior
-    is verified.
+    CR-SST-0235 now prepares its running publication after PR 279 readback;
+    owner mutation waits for that gate. CR-SST-0236 and CR-SST-0237 remain
+    dependent on owner adoption and verified behavior.
   current_runtime_status: >
     CR-SST-0193 canonical persistence and API are implemented, merged and
     validated in local/dev. CR-SST-0210 supplies the merged tenant,
@@ -418,5 +422,11 @@ progress:
     three checks on owner PR 33; protected HTTP smoke remains partial without
     `SMOKE_JWT`. This is not user-visible QA: Chrome
     DevTools-only QA starts after chatbot integration and Fend adoption under
-    the later owner requests. The initiative closes only through terminal
-    evidence.
+    the later owner requests. On 2026-09-07 an independent isolated Chrome
+    DevTools context verified the non-mutating unauthenticated `/learning`
+    boundary: the document returned 200, the client presented the public home,
+    the console stayed clean and only GET requests occurred. Positive protected
+    QA remains pending because this gate explicitly prohibited seeders and
+    database mutation. The Jira mirrors for CR-SST-0232 and CR-SST-0234 remain
+    absent pending an exact enumerated write batch. The initiative closes only
+    through terminal evidence.

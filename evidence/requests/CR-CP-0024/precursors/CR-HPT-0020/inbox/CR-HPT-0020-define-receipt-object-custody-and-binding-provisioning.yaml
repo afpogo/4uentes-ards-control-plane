@@ -1,0 +1,26 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-HPT-0020"
+title: "Define receipt object custody and binding provisioning boundary"
+status: "inbox"
+created_at: "2026-08-27"
+requester: "4uentes"
+initiative_id: "INIT-HPT-0003"
+predecessor_request_ids: [CR-HPT-0017, CR-HPT-0019]
+summary: >
+  Define the owner, lifecycle, security, retention and QA requirements for
+  opaque receipt objects and receipt-intake bindings before any storage,
+  scanning, upload or provisioning runtime is implemented.
+requested_outcome:
+  - "Record one Jira Task under HPT-8 and keep Jira as an operational mirror."
+  - "Define the custody and binding decision boundary without selecting an undeclared provider."
+  - "Publish a current initiative status and lifecycle map with textual fallback."
+constraints:
+  child_repo_mutation_allowed: false
+  runtime_implementation_allowed: false
+  infrastructure_changes_allowed: false
+  secret_changes_allowed: false
+  real_document_access_allowed: false
+  deployment_changes_allowed: false
+  n8n_activation_allowed: false
+  phinance_invocation_allowed: false

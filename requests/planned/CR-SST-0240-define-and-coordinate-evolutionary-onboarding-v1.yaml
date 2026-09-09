@@ -1,0 +1,81 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-SST-0240"
+title: "Define and coordinate SST evolutionary onboarding V1"
+status: "planned"
+created_at: "2026-09-08"
+requester: "4uentes"
+source_request: "requests/inbox/CR-SST-0240-define-and-coordinate-evolutionary-onboarding-v1.yaml"
+summary: >
+  Define the approved V1 journey and API handoff, publish its capability and
+  validation matrices, then start coordinator execution and mirror it in Jira.
+depends_on: ["CR-SST-0238", "CR-SST-0241"]
+control_plane_context:
+  initiative_id: "INIT-SST-0011"
+  owner_repository: "4uentes-orchestor"
+  feature_state_id: "sst-evolutionary-onboarding"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  jira_issue_key: null
+  proposed_jira_issue_type: "Tarea"
+  proposed_jira_parent: "Primary Epic of INIT-SST-0011"
+  proposed_jira_summary: "[SST][INIT-SST-0011][CR-SST-0240] Define and coordinate evolutionary onboarding V1"
+dependency_gates:
+  navigation: "CR-SST-0238 must finish before enabling the new onboard entry."
+  compose: "CR-SST-0241 must finish before accepting integrated Compose QA; coordinator documentation may proceed."
+task_weight: {classification: "complex-high-risk-task", risk_level: "high"}
+model_selection:
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5"
+  reason: "Cross-repository durable state, authentication boundaries and privacy require high reasoning."
+  runtime_note: "Parent model is environment-selected; no model switch or temperature setting is claimed."
+subagent_deployment_plan:
+  mode: "none"
+  reason: "Sequential coordinator integration; no delegated architecture or security decisions."
+execution:
+  approval_status: "user-approved-plan-implementation"
+  control_plane_mutation_allowed: true
+  child_repo_mutation_allowed: false
+  runtime_mutation_allowed: false
+  git_publication_allowed: true
+  jira_write_allowed: true
+  next_gate: "Publish and read back planned; materialize V1 contract and publish running before Jira batch."
+publication_policy:
+  policy_id: "execution-publication-and-tracker-closure-policy"
+  enforcement_activation: "Add the enforcement marker to planned and running together at execution start; the validator requires an execution state."
+  plan_merge_required: true
+  terminal_merge_required: true
+  tracker_provider: "jira"
+  remote_readback_required: true
+owner_documentation:
+  required: false
+  reason: "Coordinator handoff only. Future owner CRs must publish technical contracts, docs and checks in each owner repo."
+atomized_execution:
+  - {order: 1, objective: "Reserve and publish initiative, plan and feature state", validation: "Full control-plane check and canonical readback"}
+  - {order: 2, objective: "Materialize functional/API contract, visual map and capability matrix", validation: "Contract scenario review and full check"}
+  - {order: 3, objective: "Publish running coordinator", validation: "Canonical running readback"}
+  - {order: 4, objective: "Mirror exactly one Epic and one primary Task", validation: "JQL, type, parent, status and comments readback"}
+acceptance:
+  - "Contract covers automatic new-user entry, existing-user invitation, verified outcomes, skip, resume and reopen."
+  - "Durable progress belongs to sst-bend; Auth only relays; Chat L1 is optional and read-only."
+  - "Capability readiness, revision conflicts, idempotency, failure fallback, privacy, accessibility and rollback are explicit."
+  - "All owner implementation requests remain unallocated until a fresh preflight."
+  - "Full control-plane check passes and Jira keys are captured after readback."
+evidence_refs:
+  - "evidence/requests/CR-SST-0240/initiative-and-execution-plan.md"
+execution_publication_rule:
+  rule_id: "execution-publication-and-tracker-closure-rule"
+  adoption_status: "adopted"
+  git_publication:
+    applicable: true
+    plan_merge_required: true
+    terminal_merge_required: true
+  tracker_mirror:
+    applicable: true
+    provider: "jira"
+  cleanup:
+    remote_readback_required: true

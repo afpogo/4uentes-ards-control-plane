@@ -1,0 +1,100 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-HPT-0017"
+title: "Prepare governed receipt-intake activation and protected QA"
+status: "planned"
+source_request: "evidence/requests/CR-CP-0024/precursors/CR-HPT-0017/inbox/CR-HPT-0017-prepare-receipt-intake-activation-and-protected-qa.yaml"
+created_at: "2026-08-27"
+requester: "4uentes"
+
+control_plane_context:
+  initiative_id: "INIT-HPT-0003"
+  predecessor_request_ids: [CR-HPT-0007, CR-HPT-0016]
+  state_id: "telegram-receipt-intake-adoption"
+  jira_epic_key: "HPT-8"
+
+summary: >
+  Produce the promotion-readiness, credential-custody and protected-QA
+  manifest required before the receipt-intake M2M path can be activated. This
+  request does not provision a secret or deploy a runtime while SST and
+  Automation still declare the path non-routable.
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "cross-repo service credentials"
+    - "financial-document transport"
+    - "deployment and rollback boundary"
+
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5-high"
+
+subagent_deployment_plan:
+  required: false
+  roles: []
+  reason: "The gate is security-sensitive and remains under the primary agent."
+
+execution:
+  requires_human_approval: true
+  approval_source: "User approved advancing to the next gate on 2026-08-27."
+  child_repo_mutation_allowed: false
+  runtime_implementation_allowed: false
+  infrastructure_changes_allowed: false
+  deployment_changes_allowed: false
+  secret_changes_allowed: false
+  real_secret_generation_allowed: false
+  protected_traffic_allowed: false
+  jira_write_allowed: true
+  jira_write_scope: "Create and read back exactly one Tarea for CR-HPT-0017 under HPT-8; no transition, comment or assignment."
+
+observed_readiness:
+  auth_provider_grant: "validated-local in isolated uncommitted worktree CR-HPT-0016"
+  sst_recipient_route: "contract-ready-runtime-pending"
+  automation_delivery: "contract-ready-runtime-pending and non-routable"
+  credential_provisioning: "not-authorized"
+  object_storage_retention_malware: "pending"
+  durable_idempotency_and_rate_limit: "pending"
+  human_review_runtime: "pending"
+
+activation_invariants:
+  - "The same dedicated credential is injected only into Auth verifier and Automation caller custody surfaces."
+  - "The secret value never enters Git, Jira, Evidence, workflow JSON, logs or prompts."
+  - "Automation obtains a short-lived token from Auth and sends it only to SST."
+  - "SST validates RS256/JWKS, issuer, audience, subject, client_id, token_use, exact scope and TTL."
+  - "The Automation token is never forwarded to Phinance."
+  - "Rollback disables the caller or verifier without deleting persistent data."
+
+implementation_plan:
+  - "Record current Auth, SST and Automation deployability and working-tree constraints."
+  - "Select the custody mechanism separately for local development and future managed environments."
+  - "Define a promotion manifest with artifact, configuration, health, negative tests and rollback gates."
+  - "Define a sanitized protected-QA sequence that creates no durable token evidence."
+  - "Identify the minimum follow-up owner request required to implement the SST recipient before provisioning."
+  - "Run full control-plane validation."
+
+owner_documentation:
+  required: false
+  status: "not-applicable-control-plane-readiness-only"
+  reason: "No owner runtime or contract is modified by this readiness slice."
+
+jira_mirror:
+  jira_source_of_truth: false
+  project_key: "HPT"
+  initiative_issue_key: "HPT-8"
+  request_issue_type: "Tarea"
+  request_issue_key: "HPT-11"
+  expected_parent: "HPT-8"
+  write_batch_ref: "evidence/requests/CR-HPT-0017/jira-write-batch.md"
+
+decision:
+  status: "approved-for-readiness-analysis"
+  approver: "4uentes"
+  approved_at: "2026-08-27"
+  blocker: "Provisioning and protected traffic remain forbidden until the SST recipient exists and the deployable Auth artifact is approved."

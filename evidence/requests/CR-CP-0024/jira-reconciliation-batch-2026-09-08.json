@@ -1,0 +1,46 @@
+{
+  "request_id": "CR-CP-0024",
+  "status": "prepared-not-applied",
+  "authorization": "comments and description clarification require exact-batch approval before send; terminal transitions not authorized",
+  "observed_states": {
+    "HPT-14": "En curso",
+    "HPT-15": "En curso",
+    "HPT-16": "En curso"
+  },
+  "operations": [
+    {
+      "issue": "HPT-14",
+      "operation": "add_comment",
+      "body": "CR-CP-0024 recupera la trazabilidad de CR-HPT-0022. Auth PR #15 integrado en ff5605c. Check owner completo y matrices HTTP sintéticas de grants Automation/intake/objetos PASS: RS256, audience sst-api, TTL máximo 300, scope exacto y secretos independientes. Validado técnicamente en entorno sintético, pendiente de cierre del tracker. No se promovió Auth a stable ni se desplegó una imagen nueva. CR-HPT-0016 es etiqueta histórica de procedencia, no el request canónico actual de ese número."
+    },
+    {
+      "issue": "HPT-14",
+      "operation": "update_description",
+      "expected_updated": "2026-08-29T14:10:02.411-0300",
+      "description": "## Objetivo\n\nCrear en 4uentes-auth un grant independiente para objetos de comprobantes, exclusivo del principal Automation dedicado y del scope `finance:receipt-object:create`, sin aceptar tokens compuestos.\n\n## Trazabilidad\n\n* Request: `CR-HPT-0022`\n* Iniciativa: `INIT-HPT-0003`\n\n\n\n## Aclaración de procedencia\n\nLa cadena de custodia y sus etiquetas históricas se reconcilian bajo CR-CP-0024. CR-HPT-0016, 0017, 0019 y 0020 en evidencia antigua no identifican los requests canónicos actuales de esos números. Auth PR #15, SST PR #32 y los lifecycles CR-HPT-0022/0023/0024 conservan su alcance. Se preserva el historial; no se crean tareas duplicadas.\n"
+    },
+    {
+      "issue": "HPT-15",
+      "operation": "add_comment",
+      "body": "CR-CP-0024 recupera CR-HPT-0023. Intake/bindings integrados por SST PR #32 (5db4dd8); harness PostgreSQL PASS para fresh, upgrade, down/up y preservación. La nueva matriz HTTP reprodujo aceptación 202 de un binding vencido. Corrección y 30 aserciones PASS publicadas en SST PR #34 (bc97a40; fix a38b484). Pendiente integración y gate de despliegue por workflow automático; no declarar cerrado el develop actual. El check general exit 0 informa cobertura protegida 50%/80%, pendiente fuera de la matriz acotada. CR-HPT-0019 y CR-HPT-0020 son etiquetas históricas, no dependencias de requests canónicos de otro alcance."
+    },
+    {
+      "issue": "HPT-15",
+      "operation": "update_description",
+      "expected_updated": "2026-09-05T22:33:55.191-0300",
+      "description": "## Objetivo\n\nImplementar en SST el aprovisionamiento, consulta, rotación y revocación de bindings de receipt-intake por cuenta, autorizado únicamente para owners y con aislamiento estricto entre cuentas.\n\n## Trazabilidad\n\n* Request: `CR-HPT-0023`\n* Iniciativa: `INIT-HPT-0003`\n\n\n\n## Aclaración de procedencia\n\nLa cadena de custodia y sus etiquetas históricas se reconcilian bajo CR-CP-0024. CR-HPT-0016, 0017, 0019 y 0020 en evidencia antigua no identifican los requests canónicos actuales de esos números. Auth PR #15, SST PR #32 y los lifecycles CR-HPT-0022/0023/0024 conservan su alcance. Se preserva el historial; no se crean tareas duplicadas.\n"
+    },
+    {
+      "issue": "HPT-16",
+      "operation": "add_comment",
+      "body": "Se mantiene En curso. Infra PR #29 (a3522df) integrado y desplegado con memoria request 3Gi / limit 4Gi. Se conserva evidencia de recarga manual a 28116; readback posterior confirmó 28117, activación en logs 2026-09-08 23:23:25 UTC, Ready y cero reinicios. Guía y snapshots publicados en Infra PR #30 integrado en e050fd0 con check owner y CI PASS. La recarga continua no acredita arranque desde cero, EICAR, archivo limpio ni indisponibilidad. Esos gates y luego AIStor/KMS siguen pendientes; no se habilitó upload, Telegram ni Phinance."
+    },
+    {
+      "issue": "HPT-16",
+      "operation": "update_description",
+      "expected_updated": "2026-09-05T22:33:55.217-0300",
+      "description": "## Objetivo\n\nDesplegar una plataforma privada de objetos para comprobantes con almacenamiento S3-compatible, cifrado administrado por KMS y escaneo antimalware, sin ingress público y con secretos fuera de Git.\n\n## Trazabilidad\n\n* Request: `CR-HPT-0024`\n* Iniciativa: `INIT-HPT-0003`\n\n\n\n## Aclaración de procedencia\n\nLa cadena de custodia y sus etiquetas históricas se reconcilian bajo CR-CP-0024. CR-HPT-0016, 0017, 0019 y 0020 en evidencia antigua no identifican los requests canónicos actuales de esos números. Auth PR #15, SST PR #32 y los lifecycles CR-HPT-0022/0023/0024 conservan su alcance. Se preserva el historial; no se crean tareas duplicadas.\n"
+    }
+  ],
+  "terminal_operations": []
+}

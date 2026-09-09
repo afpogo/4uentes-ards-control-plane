@@ -1,0 +1,81 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-HPT-0019"
+title: "Implement the governed SST receipt-intake acceptance boundary"
+status: "running"
+source_request: "evidence/requests/CR-CP-0024/precursors/CR-HPT-0019/planned/CR-HPT-0019-implement-sst-receipt-intake-acceptance-boundary.yaml"
+started_at: "2026-08-27"
+requester: "4uentes"
+
+control_plane_context:
+  initiative_id: "INIT-HPT-0003"
+  predecessor_request_ids: [CR-HPT-0007, CR-HPT-0016, CR-HPT-0017]
+  jira_epic_key: "HPT-8"
+  jira_task_key: "HPT-12"
+  state_id: "telegram-receipt-intake-adoption"
+
+execution:
+  approval_source: "User approved advancing to the SST owner gate on 2026-08-27."
+  owner_repo: "sst-bend"
+  child_repo_mutation_allowed: true
+  active_owner_worktree_mutation_allowed: false
+  isolated_worktree_required: true
+  isolated_worktree_path: "worktrees/CR-HPT-0019-sst-owner"
+  isolated_base_ref: "agent/cr-cp-0021-automation-m2m-sst@72a406d"
+  isolated_branch: "feat/CR-HPT-0019/receipt-intake-acceptance"
+  owner_commit_ref: "sst-bend@d5755d7"
+  promotion_worktree_path: "worktrees/CR-HPT-0023-sst-promotion-ready"
+  promotion_branch: "agent/cr-hpt-0023-promotion-ready"
+  promotion_ready_tip: "sst-bend@558db68"
+  documentation_language_exception: "Feature-specific Markdown is English by explicit user instruction on 2026-08-29."
+  runtime_implementation_allowed: true
+  database_changes_allowed: true
+  dependency_changes_allowed: false
+  infrastructure_changes_allowed: false
+  deployment_changes_allowed: false
+  secret_changes_allowed: false
+  n8n_activation_allowed: false
+  phinance_invocation_allowed: false
+  jira_write_allowed: true
+  jira_write_scope: "HPT-12 was reconciled to En curso with objective, start comment and accumulated progress under the authorized 2026-08-29 batch."
+
+owner_documentation:
+  required: true
+  status: "satisfied"
+  owner_repo: "sst-bend"
+  planned_owner_docs:
+    - "specs/api/automation-receipt-intake-v0.1.yaml"
+    - "specs/capabilities/outbound/automation-receipt-intake-acceptance-v0.1.yaml"
+    - "docs/api/28-automation-receipt-intake.md"
+    - "docs/capabilities/outbound/automation-receipt-intake-acceptance-v0.1.md"
+    - "docs/tasks/2026-08-27-cr-hpt-0019-receipt-intake-acceptance.md"
+
+jira_mirror:
+  jira_source_of_truth: false
+  project_key: "HPT"
+  initiative_issue_key: "HPT-8"
+  request_issue_type: "Tarea"
+  request_issue_key: "HPT-12"
+  expected_parent: "HPT-8"
+  evidence_ref: "evidence/requests/CR-HPT-0019/jira-task-sync-summary.md"
+
+implementation_status:
+  lifecycle_and_jira: "validated"
+  isolated_owner_worktree: "validated"
+  migration_and_models: "validated-structurally-not-applied-to-shared-database"
+  service_auth_boundary: "validated"
+  acceptance_use_case: "validated"
+  owner_contracts: "validated"
+  qa: "passed-local-protected-live-deferred"
+  validation: "passed"
+  promotion_preflight: "passed-current-develop-local-no-push"
+  overall: "validated-local-promotion-ready-running"
+
+evidence_refs:
+  - "evidence/requests/CR-HPT-0019/jira-task-sync-summary.md"
+  - "evidence/requests/CR-HPT-0019/working-tree-isolation.md"
+  - "evidence/requests/CR-HPT-0019/owner-validation.md"
+  - "evidence/requests/CR-HPT-0019/changed-files-summary.md"
+  - "evidence/initiatives/INIT-HPT-0003/owner-branch-consolidation-2026-08-29.md"
+  - "evidence/initiatives/INIT-HPT-0003/owner-promotion-preflight-2026-08-29.md"
+  - "evidence/initiatives/INIT-HPT-0003/owner-develop-reconciliation-2026-08-29.md"

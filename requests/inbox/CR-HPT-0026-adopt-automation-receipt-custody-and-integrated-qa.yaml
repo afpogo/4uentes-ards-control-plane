@@ -1,0 +1,28 @@
+schema_version: "1.0"
+phase: 1
+id: "CR-HPT-0026"
+title: "Adopt Automation receipt custody and run integrated QA"
+status: "accepted-for-planning"
+created_at: "2026-08-28"
+requester: "4uentes"
+initiative_id: "INIT-HPT-0003"
+source_request_id: "CR-CP-0024"
+predecessor_request_ids: [CR-CP-0024, CR-HPT-0022, CR-HPT-0023, CR-HPT-0024, CR-HPT-0025]
+requested_outcomes:
+  - "Configure separate managed credentials for intake and receipt-object M2M grants."
+  - "Keep receipt_binding_id in protected local configuration and out of exported workflows."
+  - "Upload a synthetic file, require a CLEAN object_ref and then submit metadata/candidates to receipt-intakes."
+  - "Run protected QA for REVIEW_PENDING, idempotency, revocation, expiry, isolation, malware and dependency failures."
+constraints:
+  - "Keep the production Telegram trigger inactive; activation is limited to a protected manual harness."
+  - "Do not store credentials, JWTs, Telegram raw IDs or financial data in Git or Evidence."
+  - "No request may reach Phinance."
+  - "Do not make terminal Jira transitions without separate explicit authorization."
+
+recovery_2026_09_08:
+  coordinator_request_id: "CR-CP-0024"
+  ordering: "retroactive; owner implementation and integration preceded canonical lifecycle recovery"
+  original_sha256: "801f985da6ff06d94a3fc7dda8d993c2158628bb5cd06e5744aac699eec3b030"
+  provenance_ref: "evidence/requests/CR-CP-0024/custody-recovery-2026-09-08.md"
+  historical_state_not_current_validation: true
+  tracker_terminal_transition_authorized: false

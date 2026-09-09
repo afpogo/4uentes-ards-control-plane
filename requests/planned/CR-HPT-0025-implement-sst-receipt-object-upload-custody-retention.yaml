@@ -1,0 +1,97 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-HPT-0025"
+title: "Implement SST receipt-object upload custody and retention"
+status: "planned-blocked"
+source_request: "requests/inbox/CR-HPT-0025-implement-sst-receipt-object-upload-custody-retention.yaml"
+created_at: "2026-08-28"
+requester: "4uentes"
+
+control_plane_context:
+  initiative_id: "INIT-HPT-0003"
+  predecessor_request_ids: [CR-CP-0024, CR-HPT-0022, CR-HPT-0023, CR-HPT-0024]
+  state_id: "telegram-receipt-intake-adoption"
+  jira_epic_key: "HPT-8"
+
+summary: >
+  Implement the SST-owned multipart upload, scan-before-store custody and
+  retention lifecycle. The intake base is integrated through CR-CP-0024 / SST PR 32. Execution remains
+  blocked by scanner validation and CR-HPT-0024 storage/KMS readiness.
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers: ["untrusted file upload", "malware scanning", "encrypted custody", "physical deletion"]
+
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5-high"
+
+subagent_deployment_plan:
+  required: false
+  roles: []
+  reason: "Dependency preflight blocks owner implementation before work can be atomized safely."
+
+execution:
+  requires_human_approval: true
+  approval_source: "User instructed implementation of the five enumerated gates on 2026-08-28."
+  child_repo_mutation_allowed: false
+  owner_repo: "sst-bend"
+  isolated_worktree_required: true
+  isolated_base_ref: "origin/develop; intake integrated through SST PR 32; platform gate remains blocked"
+  isolated_worktree_path: "TODO: create after dependencies are integrated"
+  runtime_implementation_allowed: false
+  database_changes_allowed: false
+  deployment_changes_allowed: false
+  secret_changes_allowed: false
+  phinance_invocation_allowed: false
+  jira_write_allowed: true
+  jira_write_scope: "Create and read back exactly one Tarea for CR-HPT-0025 under HPT-8; no transition, comment or assignment."
+
+dependency_preflight:
+  status: "blocked"
+  blockers:
+    - "The intake precursor is integrated through SST PR 32 (5db4dd8); validate current develop before upload implementation."
+    - "CR-HPT-0024 has deployed ClamAV; cold start, scanning and AIStor/KMS readiness remain open."
+    - "Auth PR 15 and SST PR 32 are integrated; current synthetic runtime validation is tracked by CR-CP-0024."
+  evidence_ref: "evidence/requests/CR-HPT-0025/dependency-blocker-and-sequence-map.md"
+
+owner_documentation:
+  required: true
+  status: "blocked-before-owner-mutation"
+  owner_repo: "sst-bend"
+  planned_owner_docs:
+    - "specs/api/automation-receipt-objects-v1.yaml"
+    - "specs/capabilities/outbound/automation-receipt-object-custody-v1.yaml"
+    - "docs/api/31-automation-receipt-objects.md"
+    - "docs/tasks/2026-08-28-cr-hpt-0025-receipt-object-custody.md"
+
+validation:
+  owner_command: "not run: dependencies blocked"
+  control_plane_command: "npm run check"
+
+jira_mirror:
+  jira_source_of_truth: false
+  project_key: "HPT"
+  initiative_issue_key: "HPT-8"
+  request_issue_type: "Tarea"
+  request_issue_key: "HPT-17"
+  expected_parent: "HPT-8"
+  write_batch_ref: "evidence/requests/CR-HPT-0025/jira-write-batch.md"
+
+decision:
+  status: "blocked-at-dependency-preflight"
+  blocker: "The intake base is integrated; CR-HPT-0024 platform validation and AIStor/KMS readiness remain open."
+
+recovery_2026_09_08:
+  coordinator_request_id: "CR-CP-0024"
+  ordering: "retroactive; owner implementation and integration preceded canonical lifecycle recovery"
+  original_sha256: "cb2181f24958d5126af29dce1762a0e9e05782c8888c1afc37af31ee7c8f8a4b"
+  provenance_ref: "evidence/requests/CR-CP-0024/custody-recovery-2026-09-08.md"
+  historical_state_not_current_validation: true
+  tracker_terminal_transition_authorized: false

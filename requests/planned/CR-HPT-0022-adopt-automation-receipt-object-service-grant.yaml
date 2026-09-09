@@ -1,0 +1,134 @@
+schema_version: "1.0"
+phase: 2
+id: "CR-HPT-0022"
+title: "Adopt the Automation receipt-object service grant in 4uentes-auth"
+status: "planned"
+source_request: "requests/inbox/CR-HPT-0022-adopt-automation-receipt-object-service-grant.yaml"
+created_at: "2026-08-28"
+requester: "4uentes"
+
+control_plane_context:
+  initiative_id: "INIT-HPT-0003"
+  predecessor_request_ids: [CR-CP-0024]
+  state_id: "telegram-receipt-intake-adoption"
+  jira_epic_key: "HPT-8"
+
+summary: >
+  Add one dedicated Automation receipt-object client grant to 4uentes-auth.
+  The new grant remains cryptographically and semantically independent from
+  finance:receipt-intake:create and does not provision credentials or deploy
+  any runtime.
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  drivers:
+    - "shared authentication provider"
+    - "service credential isolation"
+    - "exact-scope authorization"
+    - "cross-repo trust contract"
+
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5-high"
+
+subagent_deployment_plan:
+  required: true
+  roles: [security-contract-reviewer]
+  reason: "The Auth owner policy requires an independent bounded review for complex security work; the primary agent retains all decisions and integration."
+  fallback: "Execute the same matrix sequentially with the strongest available profile and record the unavailable reviewer."
+
+execution:
+  requires_human_approval: true
+  approval_source: "User instructed implementation of the five enumerated gates on 2026-08-28."
+  child_repo_mutation_allowed: true
+  owner_repo: "4uentes-auth"
+  active_owner_worktree_mutation_allowed: false
+  isolated_worktree_required: true
+  isolated_base_ref: "feat/CR-HPT-0016/automation-receipt-intake-grant@1808bfe plus its preserved local owner result"
+  isolated_branch: "feat/CR-HPT-0022/automation-receipt-object-grant"
+  isolated_worktree_path: "worktrees/CR-HPT-0022-auth-owner"
+  runtime_implementation_allowed: true
+  runtime_scope: "Local provider registration, owner contracts and tests for one exact grant."
+  dependency_changes_allowed: false
+  infrastructure_changes_allowed: false
+  deployment_changes_allowed: false
+  secret_changes_allowed: false
+  real_secret_generation_allowed: false
+  downstream_route_activation_allowed: false
+  jira_write_allowed: true
+  jira_write_scope: "Create and read back exactly one Tarea for CR-HPT-0022 under HPT-8; no transition, comment or assignment."
+
+grant_contract:
+  grant_type: "client_credentials"
+  issuer: "sst-auth"
+  client_id: "4uentes-automation-receipt-object"
+  subject: "4uentes-automation-receipt-object"
+  audience: "sst-api"
+  exact_scope: "finance:receipt-object:create"
+  token_use: "service"
+  signing: "RS256"
+  maximum_ttl_seconds: 300
+  refresh_token: false
+  user_claims: false
+  composite_scopes_allowed: false
+  secret_policy: "Dedicated environment value, empty in .env.example and never recorded in evidence."
+
+negative_matrix:
+  - "Reject finance:receipt-intake:create for the object principal."
+  - "Reject composed intake and object scopes."
+  - "Reject wildcard scopes."
+  - "Reject TTL values above 300 seconds."
+  - "Reject user tokens, wrong principals and wrong audiences."
+
+owner_documentation:
+  required: true
+  status: "planned"
+  owner_repo: "4uentes-auth"
+  planned_owner_docs:
+    - "specs/auth.yaml"
+    - "specs/capabilities/outbound/automation-receipt-object-service-token-grant-v1.yaml"
+    - "docs/security/service-token-lifecycle.md"
+    - "docs/capabilities/outbound/automation-receipt-object-service-token-grant-v1.md"
+    - "docs/tasks/2026-08-28-cr-hpt-0022-automation-receipt-object-grant.md"
+
+implementation_plan:
+  - "Create an isolated owner worktree without changing the dirty active Auth worktree."
+  - "Preserve the CR-HPT-0016 receipt-intake result and add a separate principal, secret binding and TTL binding."
+  - "Register one exact receipt-object grant and reject composed or wildcard scope requests."
+  - "Publish the outbound capability and Spanish owner documentation."
+  - "Add executable positive and negative provider tests without exposing secrets or JWT values."
+  - "Run the Auth owner check, targeted matrix and full control-plane check."
+
+validation:
+  owner_command: "npm run check"
+  control_plane_command: "npm run check"
+  closure_rule: "The full control-plane check is mandatory before local closure; check:owner-docs alone is diagnostic only."
+
+jira_mirror:
+  jira_source_of_truth: false
+  project_key: "HPT"
+  initiative_issue_key: "HPT-8"
+  request_issue_type: "Tarea"
+  request_issue_key: "HPT-14"
+  expected_parent: "HPT-8"
+  write_batch_ref: "evidence/requests/CR-HPT-0022/jira-write-batch.md"
+
+decision:
+  status: "approved-for-isolated-provider-adoption"
+  approver: "4uentes"
+  approved_at: "2026-08-28"
+  blocker: "Real secret provisioning, deployment and route activation remain forbidden."
+
+recovery_2026_09_08:
+  coordinator_request_id: "CR-CP-0024"
+  ordering: "retroactive; owner implementation and integration preceded canonical lifecycle recovery"
+  original_sha256: "9f12eda5dc4d4731f0115c18291ace1b7e742ea42fd3177c1e7a5a0e0bd7acee"
+  provenance_ref: "evidence/requests/CR-CP-0024/custody-recovery-2026-09-08.md"
+  historical_state_not_current_validation: true
+  tracker_terminal_transition_authorized: false
