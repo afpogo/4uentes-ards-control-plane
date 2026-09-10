@@ -20,8 +20,8 @@ visual_map:
   question: "¿Qué gates de custodia están listos para cierre técnico y cuál continúa abierto?"
   abstraction_level: "Lifecycle de requests y tracker Jira."
   source_refs:
-    - "requests/running/CR-HPT-0022-adopt-automation-receipt-object-service-grant.yaml"
-    - "requests/running/CR-HPT-0023-implement-sst-receipt-binding-provisioning.yaml"
+    - "requests/done/CR-HPT-0022-adopt-automation-receipt-object-service-grant.yaml"
+    - "requests/done/CR-HPT-0023-implement-sst-receipt-binding-provisioning.yaml"
     - "requests/running/CR-HPT-0024-deploy-private-receipt-object-platform.yaml"
     - "evidence/requests/CR-CP-0024/jira-terminal-readiness-batch-2026-09-10.json"
   request_ids: ["CR-CP-0024", "CR-HPT-0022", "CR-HPT-0023", "CR-HPT-0024"]
