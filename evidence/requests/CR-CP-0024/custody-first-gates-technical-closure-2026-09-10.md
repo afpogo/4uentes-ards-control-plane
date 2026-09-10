@@ -10,20 +10,49 @@ una operación separada y todavía no fue autorizada. `CR-HPT-0024` continúa
 abierto: el subgate de ClamAV pasó, pero AIStor/KMS aún no fue puesto en
 servicio.
 
-```mermaid
-flowchart LR
-  A[CR-HPT-0022<br/>grant de objetos] --> A1[Validado en Auth develop]
-  B[CR-HPT-0023<br/>bindings SST] --> B1[Validado y desplegado]
-  A1 --> C[HPT-14 listo para cierre técnico]
-  B1 --> D[HPT-15 listo para cierre técnico]
-  E[CR-HPT-0024<br/>plataforma privada] --> E1[ClamAV validado]
-  E1 --> E2[Gate C: licencia y custodia KMS pendientes]
-  E2 --> F[HPT-16 permanece En curso]
+<!-- visual-map:start -->
+
+```yaml
+visual_map:
+  schema_version: "1.0"
+  id: "custody-first-gates-technical-closure"
+  type: "lifecycle"
+  question: "¿Qué gates de custodia están listos para cierre técnico y cuál continúa abierto?"
+  abstraction_level: "Lifecycle de requests y tracker Jira."
+  source_refs:
+    - "requests/running/CR-HPT-0022-adopt-automation-receipt-object-service-grant.yaml"
+    - "requests/running/CR-HPT-0023-implement-sst-receipt-binding-provisioning.yaml"
+    - "requests/running/CR-HPT-0024-deploy-private-receipt-object-platform.yaml"
+    - "evidence/requests/CR-CP-0024/jira-terminal-readiness-batch-2026-09-10.json"
+  request_ids: ["CR-CP-0024", "CR-HPT-0022", "CR-HPT-0023", "CR-HPT-0024"]
+  initiative_ids: ["INIT-HPT-0003"]
+  observed_at: "2026-09-10"
+  authority_boundary: "Vista derivada; los lifecycles del control plane conservan la autoridad sobre el estado técnico y Jira es sólo el mirror operativo."
+  textual_fallback_required: true
 ```
 
-Fallback textual: los gates de Auth y bindings pueden cerrarse de forma
-independiente. La plataforma Infra no puede cerrarse hasta resolver sus
-prerrequisitos externos y probar AIStor/KMS.
+```mermaid
+flowchart LR
+  G[INIT-HPT-0003<br/>iniciativa] -->|coordina la custodia| H[CR-CP-0024<br/>coordinación]
+  H -->|gate Auth| A
+  H -->|gate SST| B
+  H -->|gate Infra| E
+  A[CR-HPT-0022<br/>grant de objetos] -->|check owner PASS| A1[Validado en Auth develop]
+  B[CR-HPT-0023<br/>bindings SST] -->|check owner PASS| B1[Validado y desplegado]
+  A1 -->|lote terminal pendiente de autorización| C[HPT-14 listo para cierre técnico]
+  B1 -->|lote terminal pendiente de autorización| D[HPT-15 listo para cierre técnico]
+  E[CR-HPT-0024<br/>plataforma privada] -->|subgate completado| E1[ClamAV validado]
+  E1 -->|bloqueo externo vigente| E2[Gate C: licencia y custodia KMS pendientes]
+  E2 -->|sin transición terminal| F[HPT-16 permanece En curso]
+```
+
+### Fallback textual
+
+```text
+En INIT-HPT-0003, CR-HPT-0022 avanza mediante check owner PASS hasta Auth develop validado y deja HPT-14 listo para cierre técnico, pero el lote terminal requiere autorización. CR-HPT-0023 avanza mediante check owner PASS hasta SST validado y desplegado y deja HPT-15 en la misma condición. CR-HPT-0024 completó el subgate ClamAV, pero permanece bloqueado en Gate C por licencia y custodia KMS; por eso HPT-16 continúa En curso y no recibe transición terminal. CR-CP-0024 conserva la autoridad de coordinación sobre esta vista derivada.
+```
+
+<!-- visual-map:end -->
 
 ## Readback de owners
 
@@ -67,6 +96,28 @@ escritura. No incluye transición de `HPT-16`.
 - El worktree Infra se conserva para Gate C. Su HEAD coincide con `develop` y
   no contiene trabajo único pendiente de conciliación.
 - No se autoriza retiro de worktrees o ramas en esta ventana.
+
+## Readback de concurrencia y causa de duplicación
+
+Durante el staging de esta evidencia, un segundo flujo de Gate C utilizó el
+mismo worktree físico y el mismo índice Git. Ese flujo creó el commit
+`516e382` incluyendo tanto sus archivos de playbook como los cinco archivos que
+ya estaban staged para el cierre técnico. GitHub lo integró mediante el PR
+control-plane #295 en `main@50bee7e`. El PR #295 contiene exactamente siete
+rutas y su HEAD coincide con el commit observado localmente.
+
+No se perdió ni se reimplementó funcionalidad, pero sí se incumplió la
+exclusividad operacional esperada: una rama nueva no aísla el índice cuando dos
+flujos comparten el mismo directorio de worktree. La contención fue no ejecutar
+reset, rebase ni force-push; leer el PR remoto, comparar sus rutas, validar el
+commit combinado y dejar el PR #296 limitado a corregir el contrato formal del
+mapa Mermaid.
+
+Regla preventiva para las siguientes ventanas: un worktree físico sólo puede
+tener un flujo activo. Si ya existe otra ejecución, el nuevo flujo debe esperar
+o recibir otro worktree gobernado; cambiar únicamente de branch no provee
+aislamiento. Antes de commit y push se debe releer `HEAD`, branch, status y el
+diff contra la base remota.
 
 ## Límites
 
