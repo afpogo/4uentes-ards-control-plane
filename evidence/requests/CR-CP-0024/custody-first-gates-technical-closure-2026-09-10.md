@@ -97,6 +97,28 @@ escritura. No incluye transición de `HPT-16`.
   no contiene trabajo único pendiente de conciliación.
 - No se autoriza retiro de worktrees o ramas en esta ventana.
 
+## Readback de concurrencia y causa de duplicación
+
+Durante el staging de esta evidencia, un segundo flujo de Gate C utilizó el
+mismo worktree físico y el mismo índice Git. Ese flujo creó el commit
+`516e382` incluyendo tanto sus archivos de playbook como los cinco archivos que
+ya estaban staged para el cierre técnico. GitHub lo integró mediante el PR
+control-plane #295 en `main@50bee7e`. El PR #295 contiene exactamente siete
+rutas y su HEAD coincide con el commit observado localmente.
+
+No se perdió ni se reimplementó funcionalidad, pero sí se incumplió la
+exclusividad operacional esperada: una rama nueva no aísla el índice cuando dos
+flujos comparten el mismo directorio de worktree. La contención fue no ejecutar
+reset, rebase ni force-push; leer el PR remoto, comparar sus rutas, validar el
+commit combinado y dejar el PR #296 limitado a corregir el contrato formal del
+mapa Mermaid.
+
+Regla preventiva para las siguientes ventanas: un worktree físico sólo puede
+tener un flujo activo. Si ya existe otra ejecución, el nuevo flujo debe esperar
+o recibir otro worktree gobernado; cambiar únicamente de branch no provee
+aislamiento. Antes de commit y push se debe releer `HEAD`, branch, status y el
+diff contra la base remota.
+
 ## Límites
 
 Esta evidencia no autoriza transiciones Jira, merge del PR del control plane,
