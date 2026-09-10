@@ -1,0 +1,56 @@
+schema_version: "1.0"
+phase: 4
+id: "CR-HPT-0022"
+title: "Adopt the Automation receipt-object service grant in 4uentes-auth"
+status: "done"
+source_request: "requests/inbox/CR-HPT-0022-adopt-automation-receipt-object-service-grant.yaml"
+planned_request: "requests/planned/CR-HPT-0022-adopt-automation-receipt-object-service-grant.yaml"
+started_at: "2026-08-28"
+closed_at: "2026-09-10"
+requester: "4uentes"
+
+summary: >
+  Closed the independently scoped Automation receipt-object service grant after
+  integration in 4uentes-auth, current-develop owner validation and exact Jira
+  terminal reconciliation.
+
+implementation:
+  owner_repo: "4uentes-auth"
+  integrated_base: "ff5605c67d412e3e363d58de14a5b6b98b38c4ad"
+  validated_develop: "d9263d1801963047eb01a1956b2a5ee54244a12f"
+  owner_check: "PASS"
+  exact_scope: "finance:receipt-object:create"
+  separate_from_intake_scope: true
+  stable_promotion_performed: false
+
+jira_mirror:
+  source_of_truth: false
+  issue: "HPT-14"
+  parent: "HPT-8"
+  final_status: "Listo"
+  final_resolution: "Listo"
+  closing_comment_id: "10435"
+  terminal_transition_id: "41"
+  batch_status: "consumed-successfully"
+
+validation:
+  status: "passed"
+  owner_full_check: "PASS"
+  control_plane_full_check: "PASS"
+  auth_matrix: "PASS for RS256/JWKS, audience, exact scope, TTL, principal, user-token and wildcard/compound-scope rejection"
+
+owner_documentation:
+  required: true
+  status: "satisfied"
+  owner_repo: "4uentes-auth"
+
+evidence_refs:
+  - "evidence/requests/CR-CP-0024/custody-first-gates-technical-closure-2026-09-10.md"
+  - "evidence/requests/CR-CP-0024/jira-terminal-readiness-batch-2026-09-10.json"
+  - "evidence/requests/CR-CP-0024/jira-terminal-batch-readback-2026-09-10.md"
+
+decision:
+  status: "closed-technical-gate-and-jira-mirror-reconciled"
+  approver: "4uentes"
+  blocker: "none"
+  next_gate: "Receipt upload custody remains a separate request; this closure grants no runtime or stable-promotion authority."

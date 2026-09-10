@@ -1,0 +1,57 @@
+schema_version: "1.0"
+phase: 4
+id: "CR-HPT-0023"
+title: "Implement SST receipt-intake binding provisioning"
+status: "done"
+source_request: "requests/inbox/CR-HPT-0023-implement-sst-receipt-binding-provisioning.yaml"
+planned_request: "requests/planned/CR-HPT-0023-implement-sst-receipt-binding-provisioning.yaml"
+started_at: "2026-08-28"
+closed_at: "2026-09-10"
+requester: "4uentes"
+
+summary: >
+  Closed SST receipt-binding provisioning after owner integration, the expired
+  binding correction, synthetic HTTP validation, deployed-image readback and
+  exact Jira terminal reconciliation.
+
+implementation:
+  owner_repo: "sst-bend"
+  integrated_base: "e425355f65cfd1b70abbe6e38df579d905252459"
+  deployed_image: "ghcr.io/afpogo/sst-bend:develop-e425355f65cf"
+  owner_check: "PASS"
+  dedicated_http_assertions: 30
+  general_ards_protected_coverage: "50 percent; retained as an explicit limitation outside the dedicated gate"
+  stable_promotion_performed: false
+
+jira_mirror:
+  source_of_truth: false
+  issue: "HPT-15"
+  parent: "HPT-8"
+  final_status: "Listo"
+  final_resolution: "Listo"
+  closing_comment_id: "10436"
+  terminal_transition_id: "41"
+  batch_status: "consumed-successfully"
+
+validation:
+  status: "passed"
+  owner_full_check: "PASS with temporary local transport to the deployed service"
+  control_plane_full_check: "PASS"
+  focused_matrix: "PASS for owner authorization, isolation, duplicate creation, atomic rotation, revocation and 90-day expiration"
+
+owner_documentation:
+  required: true
+  status: "satisfied"
+  owner_repo: "sst-bend"
+
+evidence_refs:
+  - "evidence/requests/CR-CP-0024/custody-first-gates-technical-closure-2026-09-10.md"
+  - "evidence/requests/CR-CP-0024/sst-pr34-authorized-rollout-2026-09-09.md"
+  - "evidence/requests/CR-CP-0024/jira-terminal-readiness-batch-2026-09-10.json"
+  - "evidence/requests/CR-CP-0024/jira-terminal-batch-readback-2026-09-10.md"
+
+decision:
+  status: "closed-technical-gate-and-jira-mirror-reconciled"
+  approver: "4uentes"
+  blocker: "none"
+  next_gate: "Receipt object upload and custody remain separate requests; this closure grants no stable-promotion authority."
