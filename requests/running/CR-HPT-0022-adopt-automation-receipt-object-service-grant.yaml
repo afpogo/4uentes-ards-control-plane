@@ -60,8 +60,12 @@ jira_mirror:
 
 implementation_status:
   integrated_base: "ff5605c67d412e3e363d58de14a5b6b98b38c4ad"
-  overall: "technically-validated-synthetic-tracker-closure-pending"
-  validation_evidence: "evidence/requests/CR-CP-0024/custody-validation-2026-09-08.md"
+  overall: "technically-validated-current-develop-terminal-batch-prepared"
+  validation_evidence: "evidence/requests/CR-CP-0024/custody-first-gates-technical-closure-2026-09-10.md"
+  current_develop_sha: "d9263d1801963047eb01a1956b2a5ee54244a12f"
+  current_develop_check: "PASS"
+  receipt_grant_delta_since_integration: "none; intervening changes belong to the Learning relay"
+  jira_terminal_batch: "evidence/requests/CR-CP-0024/jira-terminal-readiness-batch-2026-09-10.json"
   terminal_tracker_authorized: false
 
 validation:
@@ -69,6 +73,8 @@ validation:
   control_plane_command: "npm run check"
 
 evidence_refs:
+  - "evidence/requests/CR-CP-0024/custody-first-gates-technical-closure-2026-09-10.md"
+  - "evidence/requests/CR-CP-0024/jira-terminal-readiness-batch-2026-09-10.json"
   - "evidence/requests/CR-HPT-0022/jira-task-sync-summary.md"
   - "evidence/requests/CR-HPT-0022/provider-validation.md"
   - "evidence/requests/CR-HPT-0022/changed-files-summary.md"
