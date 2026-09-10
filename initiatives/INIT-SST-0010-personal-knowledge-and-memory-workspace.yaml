@@ -248,10 +248,10 @@ article_processing_adoption:
   first_owner_manual_review: "passed-2026-08-29"
   second_owner_request_id: "CR-SST-0224"
   second_owner_preflight_status: "published-and-read-back; historical worktrees retired"
-  second_owner_execution_status: "running-merged-pr-261; owner-unit-5-final-candidate-validated-local-2026-09-09; jira-sst-126-en-curso"
+  second_owner_execution_status: "running-merged-pr-261; owner-unit-6-execution-guard-validated-local-2026-09-10; jira-sst-126-en-curso"
   second_owner_jira_issue_key: "SST-126"
   second_owner_jira_evidence_ref: "evidence/requests/CR-SST-0224/jira-create-readback-2026-09-07.md"
-  next_gate: "review remaining token-budget, provider and lifecycle integration gaps before owner completion"
+  next_gate: "review real provider, model-token counter and durable lifecycle adapters before owner completion"
 learning_workspace_source_adoption:
   status: "first-owner-live-readback-passed-protected-positive-qa-pending"
   request_id: "CR-SST-0232"
@@ -368,7 +368,7 @@ progress:
     - "CR-SST-0237"
   next_recommended_request: >
     Continue the approved local CR-SST-0224 implementation after consolidating
-    four owner units and reconciling SST-126 to En curso on 2026-09-09.
+    six owner units and reconciling SST-126 to En curso on 2026-09-09.
     Independently run positive protected CR-SST-0234 Learning QA with a
     bounded credential path and synthetic article, document and completed
     agent-output fixtures. Neither track grants authority to the other, and
@@ -398,7 +398,7 @@ progress:
     resolution Listo and no additional Jira write remains authorized. The
     CR-SST-0223 done lifecycle is merged and read back. CR-SST-0224 now has
     refreshed owner/Jira preflights and a canonically merged running lifecycle,
-    with local sst-chatbot implementation authorized and four units consolidated;
+    with local sst-chatbot implementation authorized and six units consolidated;
     SST-126 progress writes are consumed. CR-SST-0234 now has a
     merged Bend implementation from PR 33:
     owner-scoped source resolution, immutable snapshot persistence, reversible
