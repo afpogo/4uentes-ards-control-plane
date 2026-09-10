@@ -47,7 +47,7 @@ authorization:
   jira_write_allowed: false
 
 execution:
-  current_unit: "owner-execution-guard-unit-6"
+  current_unit: "owner-merge-readback-and-final-contract-review"
   control_plane_mutation_allowed: true
   child_repo_mutation_allowed: true
   owner_git_mutation_allowed: true
@@ -94,13 +94,13 @@ worktree_lifecycle:
     initial_status: "clean-and-synchronized"
 
 owner_preflight:
-  status: "owner-pr-12-open-ci-passed"
+  status: "owner-merged-readback-contract-review-passed"
   observed_owner_ref: "origin/develop@5b96bbb4c08731785f007ecaabd9e8c03bc88283"
-  evidence_ref: "evidence/requests/CR-SST-0224/owner-pr-12-publication-readback-2026-09-10.md"
+  evidence_ref: "evidence/requests/CR-SST-0224/owner-merge-readback-and-contract-review-2026-09-10.md"
   owner_files_mutated: true
   next_requirement: >
-    Merge and read back owner PR 12, then perform the final contract review.
-    Runtime promotion remains excluded.
+    Publish and read back this control-plane evidence, then prepare the terminal
+    lifecycle and a separately authorized Jira closure batch.
 
 owner_publication:
   observed_at: "2026-09-10"
@@ -109,9 +109,15 @@ owner_publication:
   base_ref: "develop"
   head_ref: "agent/cr-sst-0224-article-pipeline"
   head_sha: "3114cbc42e0660d0bac8129779d7f18ee8f535a1"
-  state: "open-mergeable-ci-passed"
-  deployment_executed: false
-  evidence_ref: "evidence/requests/CR-SST-0224/owner-pr-12-publication-readback-2026-09-10.md"
+  merge_sha: "a0ce974b9b02be55d11609ae757fbcee569dcfa8"
+  merged_at: "2026-09-10T23:52:41Z"
+  state: "merged-canonical-ci-passed"
+  automatic_delivery:
+    workflow_run: 34544071590
+    image_tag: "develop-a0ce974b9b02"
+    infra_commit: "5fc609f064032f553b4a33933bc75ac48a3b77b6"
+    cluster_rollout_verified: false
+  evidence_ref: "evidence/requests/CR-SST-0224/owner-merge-readback-and-contract-review-2026-09-10.md"
 
 jira_progress_readback:
   observed_at: "2026-09-09"
@@ -184,12 +190,13 @@ publication_readback:
   preparation_ref: "evidence/requests/CR-SST-0224/owner-preparation-2026-09-07.md"
 
 decision:
-  status: "owner-pr-open-awaiting-human-merge"
+  status: "owner-acceptance-passed-ready-for-terminal-preparation"
   next_gate: >
-    Merge owner PR 12 and read back origin/develop. Tracker writes and runtime
-    deployment remain excluded.
+    Publish/read back the control-plane evidence, then prepare the terminal
+    lifecycle and exact Jira closure batch. No current Jira write is authorized.
 
 evidence_refs:
+  - "evidence/requests/CR-SST-0224/owner-merge-readback-and-contract-review-2026-09-10.md"
   - "evidence/requests/CR-SST-0224/owner-pr-12-publication-readback-2026-09-10.md"
   - "evidence/requests/CR-SST-0224/owner-unit-6-execution-guard-2026-09-10.md"
   - "evidence/requests/CR-SST-0224/owner-unit-5-final-synthesis-2026-09-09.md"
