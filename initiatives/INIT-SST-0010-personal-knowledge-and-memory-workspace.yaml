@@ -248,10 +248,10 @@ article_processing_adoption:
   first_owner_manual_review: "passed-2026-08-29"
   second_owner_request_id: "CR-SST-0224"
   second_owner_preflight_status: "published-and-read-back; historical worktrees retired"
-  second_owner_execution_status: "running-merged-pr-261; owner-unit-6-execution-guard-validated-local-2026-09-10; jira-sst-126-en-curso"
+  second_owner_execution_status: "running-merged-pr-261; owner-pr-12-open-mergeable-ci-passed; jira-sst-126-en-curso"
   second_owner_jira_issue_key: "SST-126"
   second_owner_jira_evidence_ref: "evidence/requests/CR-SST-0224/jira-create-readback-2026-09-07.md"
-  next_gate: "review real provider, model-token counter and durable lifecycle adapters before owner completion"
+  next_gate: "merge and read back sst-chatbot PR 12, then perform final owner contract review"
 learning_workspace_source_adoption:
   status: "first-owner-live-readback-passed-protected-positive-qa-pending"
   request_id: "CR-SST-0232"

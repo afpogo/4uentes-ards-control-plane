@@ -94,13 +94,24 @@ worktree_lifecycle:
     initial_status: "clean-and-synchronized"
 
 owner_preflight:
-  status: "refreshed-and-owner-unit-6-validated"
+  status: "owner-pr-12-open-ci-passed"
   observed_owner_ref: "origin/develop@5b96bbb4c08731785f007ecaabd9e8c03bc88283"
-  evidence_ref: "evidence/requests/CR-SST-0224/owner-unit-6-execution-guard-2026-09-10.md"
+  evidence_ref: "evidence/requests/CR-SST-0224/owner-pr-12-publication-readback-2026-09-10.md"
   owner_files_mutated: true
   next_requirement: >
-    Review the remaining real provider, model-token counter and durable
-    lifecycle adapter boundaries; publication and runtime promotion remain excluded.
+    Merge and read back owner PR 12, then perform the final contract review.
+    Runtime promotion remains excluded.
+
+owner_publication:
+  observed_at: "2026-09-10"
+  repository: "sst-chatbot"
+  pull_request: 12
+  base_ref: "develop"
+  head_ref: "agent/cr-sst-0224-article-pipeline"
+  head_sha: "3114cbc42e0660d0bac8129779d7f18ee8f535a1"
+  state: "open-mergeable-ci-passed"
+  deployment_executed: false
+  evidence_ref: "evidence/requests/CR-SST-0224/owner-pr-12-publication-readback-2026-09-10.md"
 
 jira_progress_readback:
   observed_at: "2026-09-09"
@@ -173,12 +184,13 @@ publication_readback:
   preparation_ref: "evidence/requests/CR-SST-0224/owner-preparation-2026-09-07.md"
 
 decision:
-  status: "owner-local-implementation-authorized"
+  status: "owner-pr-open-awaiting-human-merge"
   next_gate: >
-    Continue after the validated execution-control unit within the approved
-    local plan. Publication, tracker writes and deployment remain excluded.
+    Merge owner PR 12 and read back origin/develop. Tracker writes and runtime
+    deployment remain excluded.
 
 evidence_refs:
+  - "evidence/requests/CR-SST-0224/owner-pr-12-publication-readback-2026-09-10.md"
   - "evidence/requests/CR-SST-0224/owner-unit-6-execution-guard-2026-09-10.md"
   - "evidence/requests/CR-SST-0224/owner-unit-5-final-synthesis-2026-09-09.md"
   - "evidence/requests/CR-SST-0224/consolidation-and-jira-2026-09-09.md"
