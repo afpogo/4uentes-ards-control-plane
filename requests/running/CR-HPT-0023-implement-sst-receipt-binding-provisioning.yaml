@@ -60,8 +60,12 @@ jira_mirror:
 
 implementation_status:
   integrated_base: "e425355f65cfd1b70abbe6e38df579d905252459"
-  overall: "technically-validated-synthetic-integrated-and-deployed-tracker-pending"
-  validation_evidence: "evidence/requests/CR-CP-0024/sst-pr34-authorized-rollout-2026-09-09.md"
+  overall: "technically-validated-current-develop-and-deployed-terminal-batch-prepared"
+  validation_evidence: "evidence/requests/CR-CP-0024/custody-first-gates-technical-closure-2026-09-10.md"
+  current_develop_check: "PASS with temporary local port-forward to the deployed service"
+  dedicated_http_assertions: 30
+  general_ards_protected_coverage: "50 percent; explicit non-blocking limitation outside the dedicated gate"
+  jira_terminal_batch: "evidence/requests/CR-CP-0024/jira-terminal-readiness-batch-2026-09-10.json"
   correction_pull_request: 34
   deployed_image: "ghcr.io/afpogo/sst-bend:develop-e425355f65cf"
   infra_pin_commit: "35891be72a37bbfdf7615f9632289df3161f0f77"
@@ -73,6 +77,8 @@ validation:
   control_plane_command: "npm run check"
 
 evidence_refs:
+  - "evidence/requests/CR-CP-0024/custody-first-gates-technical-closure-2026-09-10.md"
+  - "evidence/requests/CR-CP-0024/jira-terminal-readiness-batch-2026-09-10.json"
   - "evidence/requests/CR-HPT-0023/jira-task-sync-summary.md"
   - "evidence/requests/CR-HPT-0023/provider-validation.md"
   - "evidence/requests/CR-HPT-0023/changed-files-summary.md"

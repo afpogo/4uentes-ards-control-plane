@@ -1,0 +1,77 @@
+{
+  "request_id": "CR-CP-0024",
+  "status": "prepared-not-applied",
+  "authorization_required": "explicit approval of this exact five-operation batch",
+  "observed_at": "2026-09-10",
+  "preconditions": {
+    "HPT-14": {
+      "status": "En curso",
+      "resolution": null,
+      "updated": "2026-08-29T14:10:02.411-0300",
+      "comment_count": 2,
+      "parent": "HPT-8",
+      "transition": { "id": "41", "name": "Listo" }
+    },
+    "HPT-15": {
+      "status": "En curso",
+      "resolution": null,
+      "updated": "2026-09-05T22:33:55.191-0300",
+      "comment_count": 2,
+      "parent": "HPT-8",
+      "transition": { "id": "41", "name": "Listo" }
+    },
+    "HPT-16": {
+      "status": "En curso",
+      "resolution": null,
+      "updated": "2026-09-05T22:33:55.217-0300",
+      "comment_count": 10,
+      "parent": "HPT-8"
+    }
+  },
+  "operations": [
+    {
+      "sequence": 1,
+      "issue": "HPT-14",
+      "operation": "add_comment",
+      "body": "Cierre técnico preparado — corte 2026-09-10\n\nCR-HPT-0022 está integrado en 4uentes-auth desde PR #15 (`ff5605c`). El check completo fue repetido sobre el `develop` actual (`d9263d1`) y pasó, incluidas las matrices del grant Automation para objetos: RS256/JWKS, audience `sst-api`, TTL máximo 300 segundos, scope exacto, rechazo de scope compuesto/wildcard, usuario y principal incorrecto, y aislamiento de secretos. Los cambios posteriores corresponden al relay Learning y no modifican este grant. No se promovió stable ni se creó un despliegue por esta validación. Evidencia: `evidence/requests/CR-CP-0024/custody-first-gates-technical-closure-2026-09-10.md`."
+    },
+    {
+      "sequence": 2,
+      "issue": "HPT-14",
+      "operation": "transition",
+      "transition_id": "41",
+      "target_status": "Listo"
+    },
+    {
+      "sequence": 3,
+      "issue": "HPT-15",
+      "operation": "add_comment",
+      "body": "Cierre técnico preparado — corte 2026-09-10\n\nCR-HPT-0023 está integrado en SST desde PR #32 y su corrección de expiración desde PR #34 (`e425355`). El check completo fue repetido sobre esa revisión y pasó; intake y bindings conservan creación, consulta, rotación atómica, revocación, expiración a 90 días, aislamiento entre cuentas y autorización exclusiva de owner. La evidencia dedicada previa registra 30 aserciones HTTP sintéticas PASS. El smoke ARDS general conserva una limitación explícita de cobertura protegida 50% y no se presenta como QA integral de SST. La imagen `develop-e425355f65cf` fue desplegada previamente vía GitOps. Evidencia: `evidence/requests/CR-CP-0024/custody-first-gates-technical-closure-2026-09-10.md`."
+    },
+    {
+      "sequence": 4,
+      "issue": "HPT-15",
+      "operation": "transition",
+      "transition_id": "41",
+      "target_status": "Listo"
+    },
+    {
+      "sequence": 5,
+      "issue": "HPT-16",
+      "operation": "add_comment",
+      "body": "Avance de plataforma privada — corte 2026-09-10\n\nEl subgate ClamAV quedó integrado: Infra PR #31 (`322487c`) corrigió el arranque secuencial y la evidencia verificó firmas 28117, stream limpio, detección EICAR y fallo sin veredicto ante socket ausente. Infra PR #32 (`755c6eb`) publicó el readback en Learning/playbook/runbook. Argo CD fue observado Synced/Healthy. HPT-16 permanece En curso: no existen todavía recursos `receipt-custody` y Gate C requiere confirmar archivo de licencia AIStor, backup cifrado HSM/KMS y contratos de Secrets antes del bootstrap. Upload, SSE, persistencia y retención continúan pendientes en gates posteriores. No se autoriza transición terminal de HPT-16. Evidencia: `evidence/requests/CR-CP-0024/custody-first-gates-technical-closure-2026-09-10.md`."
+    }
+  ],
+  "terminal_operations": [
+    { "issue": "HPT-14", "sequence": 2, "transition_id": "41" },
+    { "issue": "HPT-15", "sequence": 4, "transition_id": "41" }
+  ],
+  "excluded_operations": [
+    "No transition or resolution change for HPT-16",
+    "No assignment changes",
+    "No description replacement",
+    "No writes outside HPT-14, HPT-15 and HPT-16"
+  ],
+  "pre_send_requirement": "Refresh all three Jira issues and both terminal transitions. Abort on any status, resolution, parent, updated timestamp, comment count or transition drift.",
+  "supersedes": "jira-reconciliation-batch-2026-09-09.json"
+}

@@ -41,7 +41,7 @@ worktree_policy:
   cleanup_allowed: false
 
 execution:
-  current_unit: "aistor-kms-external-prerequisites-pending"
+  current_unit: "gate-c-stepwise-execution-license-pending"
   completed_units:
     - "integrate-private-receipt-custody-through-owner-pr-23"
     - "integrate-clamav-permission-remediation-through-owner-pr-24"
@@ -436,11 +436,25 @@ decision:
   next_gate: >
     Scanner cold start, active signatures 28117, clean/EICAR streams and
     unavailable socket behavior passed after authorized Infra PR 31 rollout.
-    Confirm Gate C license archival, encrypted HSM/KMS backup and prepared
-    Secret contracts before any AIStor/KMS bootstrap. Upload fail-closed QA
-    remains downstream; terminal tracker transitions are not authorized.
+    Follow the owner playbook integrated by Infra PR 33. Gate C Unit A is
+    license acceptance and encrypted external archival; Unit B is recoverable
+    soft-HSM custody; Unit C prepares Secret contracts by creation stage.
+    Upload fail-closed QA remains downstream; terminal tracker transitions are
+    not authorized.
+
+technical_closure_preparation_2026_09_10:
+  evidence: "evidence/requests/CR-CP-0024/custody-first-gates-technical-closure-2026-09-10.md"
+  jira_batch: "evidence/requests/CR-CP-0024/jira-terminal-readiness-batch-2026-09-10.json"
+  jira_status: "En curso"
+  jira_progress_comment_prepared: true
+  jira_write_performed: false
+  terminal_tracker_authorized: false
+  owner_worktree_disposition: "preserve for Gate C; clean and aligned with Infra develop"
+  next_gate: "Confirm AIStor license archive, encrypted HSM/KMS backup and Secret contracts before bootstrap."
 
 evidence_refs:
+  - "evidence/requests/CR-CP-0024/custody-first-gates-technical-closure-2026-09-10.md"
+  - "evidence/requests/CR-CP-0024/jira-terminal-readiness-batch-2026-09-10.json"
   - "evidence/requests/CR-HPT-0024/infra-pr29-reconciliation-2026-09-07.md"
   - "evidence/requests/CR-HPT-0024/retroactive-running-reconciliation-2026-09-05.md"
   - "evidence/requests/CR-CP-0024/infra-remediation-pr-publication-readback-2026-09-05.md"
@@ -455,6 +469,7 @@ evidence_refs:
   - "evidence/requests/CR-HPT-0024/control-plane-pr258-merge-readback-2026-09-05.md"
   - "evidence/requests/CR-HPT-0024/jira-readonly-reconciliation-2026-09-05.md"
   - "evidence/requests/CR-HPT-0024/jira-authorized-batch-readback-2026-09-05.md"
+  - "evidence/requests/CR-CP-0024/aistor-kms-prerequisites-playbook-2026-09-10.md"
 
 validation_readback_2026_09_08:
   coordinator_request_id: "CR-CP-0024"
@@ -467,6 +482,21 @@ validation_readback_2026_09_08:
   jira_status: "En curso"
   tracker_write_performed: false
   cleanup_allowed: false
+
+gate_c_documentation_2026_09_10:
+  evidence: "evidence/requests/CR-CP-0024/aistor-kms-prerequisites-playbook-2026-09-10.md"
+  owner_pull_request: 33
+  owner_merge: "226443397d07ac8e59f83b408dbcf34b25364d79"
+  playbook: "docs/playbooks/aistor-kms-prerequisites.md"
+  runbook: "docs/runbooks/aistor-kms-prerequisites.md"
+  delegation_scope: "bounded-document-review-only"
+  owner_full_check: "PASS"
+  owner_ci: "SUCCESS"
+  runtime_mutation: false
+  license_accepted: false
+  hsm_material_generated_for_use: false
+  secret_resources_created: false
+  next_unit: "license-acceptance-and-encrypted-archival"
 
 validation_readback_2026_09_09:
   latest_evidence: "evidence/requests/CR-CP-0024/sst-pr34-authorized-rollout-2026-09-09.md"
