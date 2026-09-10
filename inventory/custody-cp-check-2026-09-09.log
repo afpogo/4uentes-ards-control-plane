@@ -1,0 +1,316 @@
+
+> 4uentes-ards-control-plane@0.1.0 check
+> node scripts/verify-request-identities.js && node scripts/verify-worktree-request-lifecycle-policy.js && node scripts/verify-execution-publication-rule.js && node scripts/verify-catalog.js && node scripts/verify-local-bindings.js --optional && node scripts/verify-state-model.js && node scripts/verify-initiatives.js && node scripts/verify-owner-documentation.js && node scripts/verify-visual-documentation.js
+
+WARN: CR-SST-0016 matches the frozen historical exception exactly; no new file is allowed
+
+Summary: 822 lifecycle files scanned, 1 WARN, 0 FAIL
+OK: worktree-request-lifecycle-policy is registered, discoverable and wired into the full gate
+
+Summary: 1 OK, 0 WARN, 0 FAIL
+OK: execution-publication-and-tracker-closure-rule validates 42 opted-in lifecycle files
+Summary: 1 OK, 0 WARN, 0 FAIL
+OK: Found 10 service files
+OK: Found 3 solution files
+OK: 4uentes-auth is modeled as shared-auth-provider/shared service
+OK: sst-extension is optional-active
+OK: sst-4uentes-infra is modeled as infra-gitops
+
+Summary: 5 OK, 0 WARN, 0 FAIL
+WARN: environments/local/bindings.local.yaml not found
+OK: state/00-index.yaml exists
+OK: Loaded 10 service ids
+OK: Loaded 3 solution ids
+OK: state/00-index.yaml lists 58 state files
+OK: auth-session-stale-recovery state structure is valid
+OK: login-504-proxy-timeout state structure is valid
+OK: sst-bend-emfile-watchers state structure is valid
+OK: agentic-model-deployment-policy state structure is valid
+OK: ards-sdd-policy-unification state structure is valid
+OK: article-agent-processing state structure is valid
+OK: article-semantic-kind state structure is valid
+OK: auth-frontend-access-ui state structure is valid
+OK: capability-state-linkage state structure is valid
+OK: child-repo-orchestrator-link-rule state structure is valid
+OK: child-repo-orchestrator-rules-adoption state structure is valid
+OK: cluster-publication-ngrok-domain state structure is valid
+OK: dictionary-secret-management state structure is valid
+OK: dictionary-tags state structure is valid
+OK: document-agent state structure is valid
+OK: feature-bugfix-state-read-model state structure is valid
+OK: finanzas-personales-control-plane-onboarding state structure is valid
+OK: kubernetes-secret-storage-encryption state structure is valid
+OK: learning-content-tags state structure is valid
+OK: learning-workspace-source-contract state structure is valid
+OK: multi-solution-scope-partition state structure is valid
+OK: paragraph-sequential-derivation state structure is valid
+OK: phinance-sst-trust-chain state structure is valid
+OK: portfolio-bilingual-es-en-qa state structure is valid
+OK: portfolio-browser-smoke-baseline state structure is valid
+OK: portfolio-child-policy-adoption state structure is valid
+OK: portfolio-contact-exposure-policy state structure is valid
+OK: portfolio-cv-publication-qa state structure is valid
+OK: portfolio-experience-copy-review state structure is valid
+OK: portfolio-experience-i18n-jira-structure state structure is valid
+OK: portfolio-experience-impact-narrative state structure is valid
+OK: portfolio-experience-initiatives-i18n state structure is valid
+OK: portfolio-experience-readable-impact state structure is valid
+OK: portfolio-github-evidence-allowlist-review state structure is valid
+OK: portfolio-home-hero-positioning state structure is valid
+OK: portfolio-local-stabilization-baseline state structure is valid
+OK: portfolio-mobile-linear-layout state structure is valid
+OK: portfolio-mobile-publication-qa-readiness state structure is valid
+OK: portfolio-owner-docs-evidence-taxonomy-adoption state structure is valid
+OK: portfolio-positioning-and-evidence-taxonomy state structure is valid
+OK: portfolio-professionalization-intake state structure is valid
+OK: portfolio-project-evidence-labels state structure is valid
+OK: portfolio-projects-evidence-system state structure is valid
+OK: portfolio-publication-base-reconciliation state structure is valid
+OK: portfolio-sanitized-cv-asset-replacement state structure is valid
+OK: portfolio-spa-preview-fallback state structure is valid
+OK: portfolio-validation-warning-remediation state structure is valid
+OK: portfolio-visual-screenshot-publication-qa state structure is valid
+OK: robots state structure is valid
+OK: shared-automation-control-plane-onboarding state structure is valid
+OK: sst-chatbot state structure is valid
+OK: sst-evolutionary-onboarding state structure is valid
+OK: sst-sheet-workspace-ui state structure is valid
+OK: sst-stakeholder-metrics-rag state structure is valid
+OK: sst-tag-prefix-engine state structure is valid
+OK: sst-tags-governance state structure is valid
+OK: sst-user-ards-rag state structure is valid
+OK: visual-documentation-as-code-adoption state structure is valid
+OK: state/capability-links.yaml validates 52 capability links
+
+Summary: 63 OK, 0 WARN, 0 FAIL
+OK: initiatives/00-index.yaml exists
+OK: initiatives/00-index.yaml lists 21 initiative files
+OK: INIT-CP-0001 initiative structure is valid
+OK: INIT-CP-0002 initiative structure is valid
+OK: INIT-CP-0003 initiative structure is valid
+OK: INIT-FUENTES-0001 initiative structure is valid
+OK: INIT-HPT-0001 initiative structure is valid
+OK: INIT-HPT-0002 initiative structure is valid
+OK: INIT-HPT-0003 initiative structure is valid
+OK: INIT-PORTFOLIO-0001 initiative structure is valid
+OK: INIT-PORTFOLIO-0002 initiative structure is valid
+OK: INIT-PORTFOLIO-0003 initiative structure is valid
+OK: INIT-SST-0001 initiative structure is valid
+OK: INIT-SST-0002 initiative structure is valid
+OK: INIT-SST-0003 initiative structure is valid
+OK: INIT-SST-0004 initiative structure is valid
+OK: INIT-SST-0005 initiative structure is valid
+OK: INIT-SST-0006 initiative structure is valid
+OK: INIT-SST-0007 initiative structure is valid
+OK: INIT-SST-0008 initiative structure is valid
+OK: INIT-SST-0009 initiative structure is valid
+OK: INIT-SST-0010 initiative structure is valid
+OK: INIT-SST-0011 initiative structure is valid
+
+Summary: 23 OK, 0 WARN, 0 FAIL
+OK: CR-4UENTES-0002 owner_documentation gate is valid
+OK: CR-4UENTES-0003 owner_documentation gate is valid
+OK: CR-4UENTES-0005 owner_documentation gate is valid
+OK: CR-4UENTES-0006 owner_documentation gate is valid
+OK: CR-4UENTES-0007 owner_documentation gate is valid
+OK: CR-4UENTES-0011 owner_documentation gate is valid
+OK: CR-4UENTES-0012 owner_documentation gate is valid
+OK: CR-4UENTES-0013 owner_documentation gate is valid
+OK: CR-4UENTES-0014 owner_documentation gate is valid
+OK: CR-4UENTES-0015 owner_documentation gate is valid
+OK: CR-4UENTES-0016 owner_documentation gate is valid
+OK: CR-4UENTES-0017 owner_documentation gate is valid
+OK: CR-4UENTES-0018 owner_documentation gate is valid
+OK: CR-4UENTES-0020 owner_documentation gate is valid
+OK: CR-4UENTES-0022 owner_documentation gate is valid
+OK: CR-4UENTES-0023 owner_documentation gate is valid
+OK: CR-4UENTES-0024 owner_documentation gate is valid
+OK: CR-4UENTES-0027 owner_documentation gate is valid
+OK: CR-4UENTES-0034 owner_documentation gate is valid
+OK: CR-4UENTES-0039 owner_documentation gate is valid
+OK: CR-4UENTES-0040 owner_documentation gate is valid
+OK: CR-CP-0027 owner_documentation gate is valid
+OK: CR-HPT-0002 owner_documentation gate is valid
+OK: CR-HPT-0003 owner_documentation gate is valid
+OK: CR-HPT-0004 owner_documentation gate is valid
+OK: CR-HPT-0008 owner_documentation gate is valid
+OK: CR-HPT-0011 owner_documentation gate is valid
+OK: CR-HPT-0012 owner_documentation gate is valid
+OK: CR-HPT-0013 owner_documentation gate is valid
+OK: CR-HPT-0014 owner_documentation gate is valid
+OK: CR-HPT-0017 owner_documentation gate is valid
+OK: CR-HPT-0018 owner_documentation gate is valid
+OK: CR-HPT-0022 owner_documentation gate is valid
+OK: CR-HPT-0023 owner_documentation gate is valid
+OK: CR-SST-0092 owner_documentation gate is valid
+OK: CR-SST-0097 owner_documentation gate is valid
+OK: CR-SST-0098 owner_documentation gate is valid
+OK: CR-SST-0099 owner_documentation gate is valid
+OK: CR-SST-0100 owner_documentation gate is valid
+OK: CR-SST-0101 owner_documentation gate is valid
+OK: CR-SST-0102 owner_documentation gate is valid
+OK: CR-SST-0103 owner_documentation gate is valid
+OK: CR-SST-0107 owner_documentation gate is valid
+OK: CR-SST-0108 owner_documentation gate is valid
+OK: CR-SST-0109 owner_documentation gate is valid
+OK: CR-SST-0110 owner_documentation gate is valid
+OK: CR-SST-0113 owner_documentation gate is valid
+OK: CR-SST-0114 owner_documentation gate is valid
+OK: CR-SST-0116 owner_documentation gate is valid
+OK: CR-SST-0117 owner_documentation gate is valid
+OK: CR-SST-0119 owner_documentation gate is valid
+OK: CR-SST-0120 owner_documentation gate is valid
+OK: CR-SST-0121 owner_documentation gate is valid
+OK: CR-SST-0122 owner_documentation gate is valid
+OK: CR-SST-0123 owner_documentation gate is valid
+OK: CR-SST-0124 owner_documentation gate is valid
+OK: CR-SST-0125 owner_documentation gate is valid
+OK: CR-SST-0126 owner_documentation gate is valid
+OK: CR-SST-0127 owner_documentation gate is valid
+OK: CR-SST-0129 owner_documentation gate is valid
+OK: CR-SST-0130 owner_documentation gate is valid
+OK: CR-SST-0131 owner_documentation gate is valid
+OK: CR-SST-0132 owner_documentation gate is valid
+OK: CR-SST-0133 owner_documentation gate is valid
+OK: CR-SST-0134 owner_documentation gate is valid
+OK: CR-SST-0135 owner_documentation gate is valid
+OK: CR-SST-0136 owner_documentation gate is valid
+OK: CR-SST-0137 owner_documentation gate is valid
+OK: CR-SST-0138 owner_documentation gate is valid
+OK: CR-SST-0139 owner_documentation gate is valid
+OK: CR-SST-0140 owner_documentation gate is valid
+OK: CR-SST-0141 owner_documentation gate is valid
+OK: CR-SST-0142 owner_documentation gate is valid
+OK: CR-SST-0143 owner_documentation gate is valid
+OK: CR-SST-0145 owner_documentation gate is valid
+OK: CR-SST-0147 owner_documentation gate is valid
+OK: CR-SST-0148 owner_documentation gate is valid
+OK: CR-SST-0149 owner_documentation gate is valid
+OK: CR-SST-0150 owner_documentation gate is valid
+OK: CR-SST-0151 owner_documentation gate is valid
+OK: CR-SST-0152 owner_documentation gate is valid
+OK: CR-SST-0153 owner_documentation gate is valid
+OK: CR-SST-0154 owner_documentation gate is valid
+OK: CR-SST-0155 owner_documentation gate is valid
+OK: CR-SST-0156 owner_documentation gate is valid
+OK: CR-SST-0160 owner_documentation gate is valid
+OK: CR-SST-0161 owner_documentation gate is valid
+OK: CR-SST-0165 owner_documentation gate is valid
+OK: CR-SST-0166 owner_documentation gate is valid
+OK: CR-SST-0167 owner_documentation gate is valid
+OK: CR-SST-0168 owner_documentation gate is valid
+OK: CR-SST-0169 owner_documentation gate is valid
+OK: CR-SST-0170 owner_documentation gate is valid
+OK: CR-SST-0171 owner_documentation gate is valid
+OK: CR-SST-0172 owner_documentation gate is valid
+OK: CR-SST-0173 owner_documentation gate is valid
+OK: CR-SST-0174 owner_documentation gate is valid
+OK: CR-SST-0178 owner_documentation gate is valid
+OK: CR-SST-0180 owner_documentation gate is valid
+OK: CR-SST-0181 owner_documentation gate is valid
+OK: CR-SST-0182 owner_documentation gate is valid
+OK: CR-SST-0183 owner_documentation gate is valid
+OK: CR-SST-0184 owner_documentation gate is valid
+OK: CR-SST-0185 owner_documentation gate is valid
+OK: CR-SST-0186 owner_documentation gate is valid
+OK: CR-SST-0187 owner_documentation gate is valid
+OK: CR-SST-0188 owner_documentation gate is valid
+OK: CR-SST-0189 owner_documentation gate is valid
+OK: CR-SST-0190 owner_documentation gate is valid
+OK: CR-SST-0191 owner_documentation gate is valid
+OK: CR-SST-0199 owner_documentation gate is valid
+OK: CR-SST-0200 owner_documentation gate is valid
+OK: CR-SST-0201 owner_documentation gate is valid
+OK: CR-SST-0204 owner_documentation gate is valid
+OK: CR-SST-0205 owner_documentation gate is valid
+OK: CR-SST-0206 owner_documentation gate is valid
+OK: CR-SST-0214 owner_documentation gate is valid
+OK: CR-SST-0216 owner_documentation gate is valid
+OK: CR-SST-0217 owner_documentation gate is valid
+OK: CR-SST-0221 owner_documentation gate is valid
+OK: CR-4UENTES-0034 owner_documentation gate is valid
+OK: CR-4UENTES-0035 owner_documentation gate is valid
+OK: CR-4UENTES-0036 owner_documentation gate is valid
+OK: CR-4UENTES-0040 owner_documentation gate is valid
+OK: CR-HPT-0002 owner_documentation gate is valid
+OK: CR-HPT-0003 owner_documentation gate is valid
+OK: CR-HPT-0008 owner_documentation gate is valid
+OK: CR-HPT-0011 owner_documentation gate is valid
+OK: CR-HPT-0012 owner_documentation gate is valid
+OK: CR-HPT-0014 owner_documentation gate is valid
+OK: CR-HPT-0017 owner_documentation gate is valid
+OK: CR-HPT-0018 owner_documentation gate is valid
+OK: CR-SST-0107 owner_documentation gate is valid
+OK: CR-SST-0109 owner_documentation gate is valid
+OK: CR-SST-0123 owner_documentation gate is valid
+OK: CR-SST-0124 owner_documentation gate is valid
+OK: CR-SST-0186 owner_documentation gate is valid
+OK: CR-SST-0187 owner_documentation gate is valid
+OK: CR-SST-0188 owner_documentation gate is valid
+OK: CR-SST-0189 owner_documentation gate is valid
+OK: CR-SST-0190 owner_documentation gate is valid
+OK: CR-SST-0191 owner_documentation gate is valid
+OK: CR-SST-0193 owner_documentation gate is valid
+OK: CR-SST-0194 owner_documentation gate is valid
+OK: CR-SST-0214 owner_documentation gate is valid
+OK: CR-SST-0216 owner_documentation gate is valid
+OK: CR-SST-0217 owner_documentation gate is valid
+OK: CR-SST-0223 owner_documentation gate is valid
+OK: CR-SST-0229 owner_documentation gate is valid
+OK: CR-SST-0230 owner_documentation gate is valid
+
+Summary: 150 OK, 0 WARN, 0 FAIL
+OK: docs/cross-repo/local-development-secret-and-compose-governance.md validates 2 visual map(s)
+OK: docs/platform/ards-sdd-dynamic-policy-administration-console.md validates 6 visual map(s)
+OK: docs/policies/knowledge-to-execution-documentation-policy.md validates 1 visual map(s)
+OK: docs/projects/sst/contrato-derivacion-secuencial-por-parrafos-v1.md validates 1 visual map(s)
+OK: docs/projects/sst/contrato-fuentes-learning-workspace-v1.md validates 3 visual map(s)
+OK: docs/projects/sst/contrato-procesamiento-articulos-con-agente-v1.md validates 2 visual map(s)
+OK: docs/projects/sst/gobierno-cifrado-secrets-kubernetes.md validates 4 visual map(s)
+OK: docs/projects/sst/onboarding-evolutivo-v1.md validates 1 visual map(s)
+OK: docs/projects/sst/propuesta-derivacion-secuencial-por-parrafos.md validates 3 visual map(s)
+OK: evidence/initiatives/INIT-HPT-0003/integration-status-2026-08-28.md validates 1 visual map(s)
+OK: evidence/initiatives/INIT-SST-0007/canonical-reconciliation-2026-08-18.md validates 1 visual map(s)
+OK: evidence/initiatives/INIT-SST-0010/paragraph-sequential-derivation-adoption-plan.md validates 1 visual map(s)
+OK: evidence/requests/CR-CP-0006/implementation-plan.md validates 1 visual map(s)
+OK: evidence/requests/CR-CP-0021/implementation-plan-2026-09-05.md validates 1 visual map(s)
+OK: evidence/requests/CR-CP-0024/auth-merge-deviation-and-containment-2026-08-31.md validates 1 visual map(s)
+OK: evidence/requests/CR-CP-0024/auth-owner-execution-preflight-2026-08-30.md validates 1 visual map(s)
+OK: evidence/requests/CR-CP-0024/backend-owner-execution-preflight-2026-08-31.md validates 1 visual map(s)
+OK: evidence/requests/CR-CP-0024/implementation-plan.md validates 1 visual map(s)
+OK: evidence/requests/CR-CP-0024/precursors/CR-HPT-0020/object-custody-and-binding-decision.md validates 1 visual map(s)
+OK: evidence/requests/CR-CP-0024/program-scoreboard.md validates 1 visual map(s)
+OK: evidence/requests/CR-CP-0024/worktree-sanitization-policy-application-2026-09-03.md validates 1 visual map(s)
+OK: evidence/requests/CR-CP-0026/implementation-plan.md validates 1 visual map(s)
+OK: evidence/requests/CR-HPT-0013/principal-context-v1-analysis.md validates 1 visual map(s)
+OK: evidence/requests/CR-HPT-0024/clamav-memory-diagnosis-and-ceiling-2026-09-05.md validates 1 visual map(s)
+OK: evidence/requests/CR-HPT-0024/jira-readonly-reconciliation-2026-09-05.md validates 1 visual map(s)
+OK: evidence/requests/CR-HPT-0024/retroactive-running-reconciliation-2026-09-05.md validates 1 visual map(s)
+OK: evidence/requests/CR-HPT-0025/dependency-blocker-and-sequence-map.md validates 1 visual map(s)
+OK: evidence/requests/CR-SST-0178/integrated-chat-raw-v2-plan-2026-08-21.md validates 1 visual map(s)
+OK: evidence/requests/CR-SST-0179/implementation-plan.md validates 1 visual map(s)
+OK: evidence/requests/CR-SST-0194/implementation-plan-2026-08-23.md validates 1 visual map(s)
+OK: evidence/requests/CR-SST-0199/implementation-plan.md validates 1 visual map(s)
+OK: evidence/requests/CR-SST-0202/architecture-and-execution-plan.md validates 1 visual map(s)
+OK: evidence/requests/CR-SST-0210/implementation-plan.md validates 1 visual map(s)
+OK: evidence/requests/CR-SST-0211/implementation-plan.md validates 1 visual map(s)
+OK: evidence/requests/CR-SST-0218/implementation-plan-2026-08-24.md validates 1 visual map(s)
+OK: evidence/requests/CR-SST-0219/implementation-plan.md validates 1 visual map(s)
+OK: evidence/requests/CR-SST-0220/implementation-plan.md validates 1 visual map(s)
+OK: evidence/requests/CR-SST-0220/owner-request-allocation-preflight-2026-08-27.md validates 1 visual map(s)
+OK: evidence/requests/CR-SST-0223/implementation-plan.md validates 1 visual map(s)
+OK: evidence/requests/CR-SST-0224/execution-authorization-preview-2026-08-29.md validates 1 visual map(s)
+OK: evidence/requests/CR-SST-0228/shared-migration-readiness-plan-2026-08-28.md validates 1 visual map(s)
+OK: evidence/requests/CR-SST-0230/implementation-plan-2026-08-28.md validates 1 visual map(s)
+OK: evidence/requests/CR-SST-0232/implementation-plan.md validates 1 visual map(s)
+OK: evidence/requests/CR-SST-0232/owner-request-allocation-plan-2026-09-05.md validates 1 visual map(s)
+OK: evidence/requests/CR-SST-0233/implementation-plan.md validates 1 visual map(s)
+OK: evidence/requests/CR-SST-0233/retroactive-running-reconciliation-2026-09-05.md validates 1 visual map(s)
+OK: evidence/requests/CR-SST-0234/owner-readonly-preflight-2026-09-05.md validates 1 visual map(s)
+OK: evidence/requests/CR-SST-0238/evolutionary-onboarding-recommendation-2026-09-07.md validates 1 visual map(s)
+OK: evidence/requests/CR-SST-0240/owner-binding-and-slice-plan.md validates 1 visual map(s)
+OK: templates/visual-documentation/data-map.template.md validates 1 visual map(s)
+OK: templates/visual-documentation/dependency-map.template.md validates 1 visual map(s)
+OK: templates/visual-documentation/lifecycle-map.template.md validates 1 visual map(s)
+OK: templates/visual-documentation/sequence-map.template.md validates 1 visual map(s)
+Summary: 53 documents, 67 visual maps, 0 FAIL
