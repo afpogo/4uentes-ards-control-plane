@@ -50,3 +50,10 @@ CR-SST-0243 para adoptar la capability desde `4uentes-auth`. El comentario Jira
 autorizado se agrega sólo después de publicar y leer esta evidencia y el ledger
 `jira-integration-comment-authorization-2026-09-10.json` desde la rama canónica
 del control plane.
+
+El ledger se publicó mediante PR #304 y se leyó desde `origin/main@de6beb4`
+antes de escribir. Jira conservaba tipo Subtask, padre SST-128, estado En curso,
+resolución vacía y dos comentarios. Se agregó exactamente el cuerpo autorizado;
+el readback confirmó el comentario `10439` como tercero, sin transición ni
+edición de campos. El resultado sanitizado vive en
+`jira-integration-comment-readback-2026-09-10.json`; el lote quedó consumido.

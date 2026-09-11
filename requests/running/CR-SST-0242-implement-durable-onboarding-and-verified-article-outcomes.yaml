@@ -20,9 +20,9 @@ control_plane_context:
   proposed_jira_issue_type: "Subtask"
   proposed_jira_parent_issue_key: "SST-128"
   jira_epic_issue_key: "SST-127"
-  jira_write_authorized: true
-  jira_write_scope: "One sanitized integration progress comment to SST-129; no transition, assignment, priority or resolution change."
-  jira_write_window: "2026-09-10 owner-integration batch; consumed after comment readback."
+  jira_write_authorized: false
+  jira_write_scope: "Consumed: one sanitized integration progress comment to SST-129; no transition, assignment, priority or resolution change."
+  jira_write_window: "2026-09-10 owner-integration batch; consumed after comment 10439 readback."
 risk:
   level: "high"
   drivers: ["DURABLE_USER_PROGRESS", "AUTHENTICATED_RESOURCE_SCOPE", "PRIVACY", "FALSE_POSITIVE_ACTIVATION"]
@@ -64,9 +64,10 @@ execution:
   runtime_mutation_allowed: true
   runtime_mutation_scope: "Automatic development GitOps controller effects from the approved owner merge only; no manual runtime command, migration, flag enablement or QA data."
   runtime_readback: "Not observed in this gate; Git/CI desired-state publication is proven and no cluster rollout is claimed."
-  jira_write_allowed: true
-  next_gate: "Publish/read back owner integration evidence, consume the authorized SST-129 progress comment, then prepare the exact CR-SST-0243 owner/Jira batch."
-  gate_readiness: "owner-canonical-published; image-and-infra-development-read-back; no-migration-or-flag-change"
+  jira_write_allowed: false
+  jira_batch_status: "integration-progress-comment-complete; authorization-consumed"
+  next_gate: "Prepare and obtain approval for the exact CR-SST-0243 Auth/BFF owner and Jira batch."
+  gate_readiness: "owner-canonical-published; image/Infra/Jira read back; no-migration-or-flag-change"
 owner_documentation:
   required: true
   status: "published"
@@ -82,6 +83,7 @@ validation:
   owner: "Full owner check plus focused contract, negative-path and concurrency tests"
   closure: "Owner publication/readback, sanitized evidence and full control-plane gate before done."
 evidence_refs:
+  - "evidence/requests/CR-SST-0242/jira-integration-comment-readback-2026-09-10.json"
   - "evidence/requests/CR-SST-0242/jira-integration-comment-authorization-2026-09-10.json"
   - "evidence/requests/CR-SST-0242/owner-integration-readback-2026-09-10.md"
   - "evidence/requests/CR-SST-0242/integration-gate.md"
@@ -109,6 +111,7 @@ integration_authorization:
   approved_at: "2026-09-10"
   approval_text: "avancemos con el proximo gate"
   scope: "Merge owner PR #35; allow its GHCR and automatic Infra/GitOps update; read back; publish evidence; add one SST-129 progress comment."
+  jira_comment_batch_status: "consumed; comment 10439 read back; no transition or field edit"
 owner_publication:
   repository: "afpogo/sst-bend"
   pull_request: 35

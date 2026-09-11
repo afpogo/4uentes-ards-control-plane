@@ -1,0 +1,21 @@
+{
+  "request_id": "CR-SST-0242",
+  "provider": "jira",
+  "project_key": "SST",
+  "issue_key": "SST-129",
+  "issue_type": "Subtask",
+  "parent": "SST-128",
+  "status": "En curso",
+  "resolution": null,
+  "operation": "addCommentToJiraIssue",
+  "maximum_write_count": 1,
+  "writes_observed": 1,
+  "comment_id": "10439",
+  "comment_body_sha256_utf8": "1f7d696e7d24cd008bf35d8e44fcf3c94c07e7dbba7c0627e597a50610708eea",
+  "comment_created_local": "2026-09-10T21:29:15.911-03:00",
+  "comments_before": 2,
+  "comments_after": 3,
+  "readback_result": "pass",
+  "authorization_consumed": true,
+  "observed_at_local": "2026-09-10"
+}
