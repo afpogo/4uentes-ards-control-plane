@@ -1,12 +1,14 @@
 schema_version: "1.0"
-phase: 3
+phase: 4
 id: "CR-SST-0239"
 title: "Authorize retention QA through the reserved development edge"
-status: "running"
+status: "done"
 source_request: "requests/inbox/CR-SST-0239-authorize-reserved-edge-retention-qa.yaml"
 planned_request: "requests/planned/CR-SST-0239-authorize-reserved-edge-retention-qa.yaml"
+running_request: "requests/running/CR-SST-0239-authorize-reserved-edge-retention-qa.yaml"
 created_at: "2026-09-07"
 started_at: "2026-09-08"
+closed_at: "2026-09-11"
 requester: "4uentes"
 depends_on: ["CR-SST-0207", "CR-SST-0217", "CR-SST-0218", "CR-SST-0230"]
 
@@ -161,7 +163,7 @@ next_runtime_gate:
 
 owner_documentation:
   required: true
-  status: "satisfied-for-runtime-result"
+  status: "satisfied"
   owner_repo: "sst-4uentes-infra"
   role: "edge configuration, OAuth access policy and operational procedure authority"
   change_required: false
@@ -184,12 +186,19 @@ execution_publication_rule:
     not_applicable_reason: "No Jira mirror exists and no Jira write is authorized for this lifecycle."
   cleanup:
     remote_readback_required: true
+  trial_result:
+    status: "passed"
+    plan_publication: "merged-and-read-back"
+    implementation_publication: "merged-and-read-back"
+    tracker_reconciliation: "not-applicable"
+    terminal_publication_contract: "merge-and-readback-before-cleanup"
+    cleanup_gate: "remote-readback-required"
 
 knowledge_to_execution_documentation:
   policy_id: "knowledge-to-execution-documentation-policy"
   primary_role: "execution-evidence"
   owner: "4uentes-ards-control-plane"
-  status: "runtime-completion-result"
+  status: "terminal-closure"
   applicability: "This lifecycle records authorization, sanitized runtime completion and cleanup; Infra owner runbooks remain operational authority."
   technical_sources:
     - "requests/planned/CR-SST-0239-authorize-reserved-edge-retention-qa.yaml"
@@ -204,14 +213,14 @@ validation:
   runtime_validation: "PASS: the partial HTTP run plus the bounded completion run proved OAuth edge access, same-principal sessions, TTL, save/read/delete, cross-principal isolation, browser clear-local recovery and a two-session temporary terminal event."
   completion_budget: "PASS: exactly two identities, six conversations and one message; all six conversations were removed through product contracts."
   cleanup_readback: "PASS: final finish calls returned 204, subsequent history reads returned 404 and the cleaned conversations were not enumerated."
-  control_plane_check: "PASS on 2026-09-11: full npm run check completed with 0 FAIL."
+  control_plane_check: "PASS on 2026-09-11 after terminal transition: full npm run check completed with 0 FAIL; the only lifecycle warning is the frozen historical CR-SST-0016 exception."
 
 decision:
-  status: "running-runtime-completion-publication-pending"
+  status: "complete-terminal-publication-pending"
   approver: "4uentes"
   decided_at: "2026-09-08"
   updated_at: "2026-09-11"
-  next_gate: "Publish and merge the sanitized completion result, then assess terminal closure and Jira in separate exact gates."
+  next_gate: "Publish and merge this done lifecycle, then read it back from origin/main; no Jira write is authorized."
 
 evidence_refs:
   - "evidence/requests/CR-SST-0239/identity-and-boundary-preflight-2026-09-07.md"
@@ -220,10 +229,25 @@ evidence_refs:
   - "evidence/requests/CR-SST-0239/jira-partial-result-comment-readback-2026-09-10.md"
   - "evidence/requests/CR-SST-0239/completion-gate-preflight-2026-09-11.md"
   - "evidence/requests/CR-SST-0239/completion-runtime-result-2026-09-11.md"
+  - "evidence/requests/CR-SST-0239/terminal-closure-2026-09-11.md"
 
 closure_limits:
   - "All runtime authorizations were consumed; no further runtime write is authorized."
   - "Three identities created across both CR-SST-0239 runtime runs remain because no product identity deletion contract exists."
-  - "The request remains running until the completion evidence is published and a separate terminal gate is authorized."
+  - "Terminal publication and canonical readback remain pending; this local preparation does not publish the lifecycle."
   - "No Jira, ngrok configuration, service restart, child repository, deployment, cluster, datastore, secret or production write."
   - "CR-SST-0207 and SST-117 remain running until independent closure gates pass."
+
+closure:
+  status: "complete-terminal-publication-pending"
+  completed_scope:
+    - "The reserved-edge HTTP, cross-principal, browser clear-local and two-session terminal QA rows passed within the authorized synthetic-data budget."
+    - "All six conversations from the completion run were removed through product contracts and their terminal absence was read back."
+    - "The completion result is merged and reachable from origin/main at 37574518f761336d108c25523b3158f49a141171."
+    - "Existing Infra owner runbooks remain the operational authority; no owner contract or repository required modification."
+  accepted_residue:
+    - "Three synthetic identities created across both CR-SST-0239 runtime runs remain because no product identity deletion contract exists."
+  remaining_operational_gate: "Merge and read back this done lifecycle before controlled worktree retirement."
+  limits:
+    - "CR-SST-0207 and SST-117 remain running; their reconciliation and closure require independent exact gates."
+    - "No Jira write, runtime rerun, ngrok change, child repository mutation, deployment, cluster operation or production action is authorized."
