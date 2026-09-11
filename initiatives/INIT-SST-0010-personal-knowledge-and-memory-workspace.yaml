@@ -252,7 +252,7 @@ article_processing_adoption:
   second_owner_execution_status: "running-merged-pr-261; sst-chatbot-pr-12-merged-develop-a0ce974-ci-passed; jira-sst-126-en-curso"
   second_owner_jira_issue_key: "SST-126"
   second_owner_jira_evidence_ref: "evidence/requests/CR-SST-0224/jira-create-readback-2026-09-07.md"
-  next_gate: "publish owner merge evidence, then prepare CR-SST-0224 terminal lifecycle and exact SST-126 closure batch"
+  next_gate: "publish and read back the CR-SST-0224 Jira terminal preflight, then request the exact SST-126 two-write closure authorization"
 learning_workspace_source_adoption:
   status: "first-owner-live-readback-passed-protected-positive-qa-pending"
   request_id: "CR-SST-0232"

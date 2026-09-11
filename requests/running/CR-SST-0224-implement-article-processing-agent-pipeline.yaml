@@ -47,7 +47,7 @@ authorization:
   jira_write_allowed: false
 
 execution:
-  current_unit: "owner-merge-readback-and-final-contract-review"
+  current_unit: "terminal-jira-preflight-publication-preparation"
   control_plane_mutation_allowed: true
   child_repo_mutation_allowed: true
   owner_git_mutation_allowed: true
@@ -190,12 +190,33 @@ publication_readback:
   preparation_ref: "evidence/requests/CR-SST-0224/owner-preparation-2026-09-07.md"
 
 decision:
-  status: "owner-acceptance-passed-ready-for-terminal-preparation"
+  status: "terminal-preflight-prepared-publication-pending"
   next_gate: >
-    Publish/read back the control-plane evidence, then prepare the terminal
-    lifecycle and exact Jira closure batch. No current Jira write is authorized.
+    Publish and read back the exact terminal Jira draft and preflight. Then
+    request a fresh two-write Jira authorization. No current write is authorized.
+
+terminal_preparation:
+  owner_merge_readback: "passed-sst-chatbot-pr-12-develop-a0ce974"
+  control_plane_merge_readback: "passed-pr-302-main-38b07a9"
+  terminal_worktree: "worktrees/CR-SST-0224-terminal"
+  terminal_branch: "agent/cr-sst-0224-terminal"
+  terminal_base_ref: "origin/main"
+  terminal_base_sha: "38b07a9d15b04c4cbeca3fd7fdd7606f287773f7"
+  jira_issue_key: "SST-126"
+  jira_preflight_status: "passed-read-only"
+  jira_observed_status: "En curso"
+  jira_observed_status_id: "10006"
+  jira_observed_resolution: null
+  jira_terminal_transition_id: "41"
+  jira_terminal_target_status: "Finalizada"
+  jira_write_authorized: false
+  description_draft_ref: "evidence/requests/CR-SST-0224/jira-terminal-description-draft-2026-09-10.md"
+  preflight_ref: "evidence/requests/CR-SST-0224/jira-terminal-preflight-2026-09-10.md"
+  done_lifecycle_rule: "Create phase-4 done only after terminal Jira readback; do not claim done in this preparation gate."
 
 evidence_refs:
+  - "evidence/requests/CR-SST-0224/jira-terminal-preflight-2026-09-10.md"
+  - "evidence/requests/CR-SST-0224/jira-terminal-description-draft-2026-09-10.md"
   - "evidence/requests/CR-SST-0224/owner-merge-readback-and-contract-review-2026-09-10.md"
   - "evidence/requests/CR-SST-0224/owner-pr-12-publication-readback-2026-09-10.md"
   - "evidence/requests/CR-SST-0224/owner-unit-6-execution-guard-2026-09-10.md"
