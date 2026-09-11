@@ -41,7 +41,7 @@ worktree_policy:
   cleanup_allowed: false
 
 execution:
-  current_unit: "gate-c-stepwise-execution-license-pending"
+  current_unit: "gate-c-development-age-custody-operator-encryption-pending"
   completed_units:
     - "integrate-private-receipt-custody-through-owner-pr-23"
     - "integrate-clamav-permission-remediation-through-owner-pr-24"
@@ -61,9 +61,19 @@ execution:
     - "reconcile-jira-comment-and-predecessor-links"
     - "read-back-control-plane-pr274-merge"
     - "verify-existing-infra-pr29-memory-remediation-and-ci"
+    - "select-age-development-custody-profile"
+    - "publish-age-development-custody-through-owner-pr-34"
+    - "install-and-prioritize-helm-3-19-4"
+    - "publish-cross-platform-open-close-pattern-through-owner-pr-35"
+    - "publish-encrypted-usb-recovery-procedure-through-owner-pr-36"
   control_plane_mutation_allowed: true
-  child_repo_mutation_allowed: false
-  owner_git_mutation_allowed: false
+  child_repo_mutation_allowed: true
+  owner_git_mutation_allowed: true
+  owner_git_mutation_scope:
+    - "docs/playbooks/aistor-kms-prerequisites.md"
+    - "docs/runbooks/aistor-kms-prerequisites.md"
+    - "docs/tasks/2026-09-10-cr-hpt-0024-aistor-kms-prerequisites.md"
+    - "scripts/verify-human-documentation.js"
   runtime_mutation_allowed: false
   deployment_allowed: false
   secret_changes_allowed: false
@@ -453,6 +463,7 @@ technical_closure_preparation_2026_09_10:
   next_gate: "Confirm AIStor license archive, encrypted HSM/KMS backup and Secret contracts before bootstrap."
 
 evidence_refs:
+  - "evidence/requests/CR-HPT-0024/gate-c-development-custody-selection-2026-09-11.md"
   - "evidence/requests/CR-HPT-0024/gate-c-unit-a-preflight-2026-09-10.md"
   - "evidence/requests/CR-CP-0024/custody-first-gates-technical-closure-2026-09-10.md"
   - "evidence/requests/CR-CP-0024/jira-terminal-readiness-batch-2026-09-10.json"
@@ -517,6 +528,39 @@ gate_c_unit_a_preflight_2026_09_10:
   runtime_mutation_performed: false
   jira_write_performed: false
   next_unit: "operator accepts AIStor Free agreement and archives minio.license in encrypted custody"
+
+gate_c_development_custody_selection_2026_09_11:
+  status: "age-profile-selected-operator-encryption-pending"
+  evidence: "evidence/requests/CR-HPT-0024/gate-c-development-custody-selection-2026-09-11.md"
+  operator_authorization: "continue with temporary development custody and remaining prerequisite preparation"
+  development_custody: "age-passphrase-encrypted-files"
+  primary_store: "operator-private-local-path-pending"
+  recovery_store: "operator-selected-removable-usb-pending-interactive-write"
+  dictionary_secrets_disposition: "future-derived-credentials-or-opaque-references-only-under-separate-owner-request"
+  production_root_custody: "external-independent-vault-or-hsm-pending-selection"
+  owner_documentation_mutation_allowed: true
+  owner_pull_request: 34
+  owner_merge: "00049b7636c06aa34d9b5b77fe70eeb2be9df503"
+  cross_platform_pull_request: 35
+  cross_platform_merge: "3afe7dd240ada84396575c0ecb38106d6156a75e"
+  usb_procedure_pull_request: 36
+  usb_procedure_merge: "12219e55889e6dcf5bff96646ddc3ef26e8c05f7"
+  owner_ci: "SUCCESS"
+  owner_full_check: "PASS"
+  bash_blocks_syntax: "6-PASS"
+  powershell_blocks_syntax: "8-PASS"
+  owner_runtime_mutation_allowed: false
+  license_file_preflight: "present-readable-nonempty-content-not-read"
+  license_encrypted: false
+  recovery_read_tested: false
+  hsm_generated_for_use: false
+  root_credentials_generated: false
+  secret_resources_created: false
+  helm_version_observed_before: "3.16.1"
+  helm_version_installed: "3.19.4"
+  helm_user_path_priority: "PASS"
+  helm_minimum_required: "3.17.0"
+  next_unit: "operator selects independent paths and runs interactive age encryption for Unit A"
 
 validation_readback_2026_09_09:
   latest_evidence: "evidence/requests/CR-CP-0024/sst-pr34-authorized-rollout-2026-09-09.md"
