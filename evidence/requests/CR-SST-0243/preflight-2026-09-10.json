@@ -1,0 +1,87 @@
+{
+  "schema_version": "1.0",
+  "request_id": "CR-SST-0243",
+  "observed_at": "2026-09-10",
+  "mode": "read-only-preflight",
+  "result": "ready-to-propose-execution-batch",
+  "canonical_control_plane": {
+    "repository": "afpogo/4uentes-ards-control-plane",
+    "branch": "main",
+    "commit": "eceaa7935f9903dfe902ed4ba68fd74e73392113",
+    "request_status": "planned",
+    "running_record_present": false,
+    "jira_issue_key": null,
+    "jira_write_authorized": false,
+    "child_repo_mutation_allowed": false,
+    "runtime_mutation_allowed": false
+  },
+  "upstream_contract": {
+    "repository": "afpogo/sst-bend",
+    "branch": "develop",
+    "merge_commit": "cbb2222bb3a0898be328dc4e6765eb72f853745e",
+    "capability_id": "onboarding-v1",
+    "publication_status": "ready-for-consumer",
+    "api_spec": "specs/api/onboarding.yaml",
+    "capability_spec": "specs/capabilities/outbound/onboarding-v1.yaml",
+    "fixture_decision": "The exact owner API schema, enumerated values and owner HTTP test cases are the contractual fixtures for adoption. No independent shared executable fixture was published or is required by the contract. Auth must materialize consumer fixtures from the pinned owner revision and detect drift in its focused tests."
+  },
+  "owner": {
+    "repository": "afpogo/4uentes-auth",
+    "branch": "develop",
+    "commit": "d9263d1801963047eb01a1956b2a5ee54244a12f",
+    "open_request_branch_present": false,
+    "open_pull_request_present": false,
+    "primary_checkout_clean": false,
+    "required_isolation": "fresh worktree from refreshed develop",
+    "proposed_worktree": "worktrees/CR-SST-0243-auth-owner",
+    "pull_request_workflow": ".github/workflows/build-publish-development.yml",
+    "pull_request_effect": "Run owner check and build the Docker image with push=false; GHCR login, image publication and Infra update are push-to-develop-only effects."
+  },
+  "functional_gap": {
+    "status": "confirmed-by-read-only-source-review",
+    "description": "The current BFF article DTO, idempotency request body and entity path discard optional onboardingAttemptId, so Bend cannot bind a text article create to the active onboarding attempt.",
+    "required_scope": "Preserve and validate optional onboardingAttemptId through POST /api/articles and include it in the local idempotency hash without adding product-state semantics."
+  },
+  "jira": {
+    "provider": "jira",
+    "project": "SST",
+    "exact_request_search_count": 0,
+    "parent_issue": "SST-128",
+    "parent_type": "Task",
+    "parent_status": "En curso",
+    "epic_issue": "SST-127",
+    "epic_type": "Epic",
+    "epic_status": "En curso",
+    "existing_child": "SST-129",
+    "proposed_issue_type": "Subtask",
+    "proposed_target_status": "En curso",
+    "required_fresh_readback": [
+      "project and issue metadata",
+      "zero duplicate candidates",
+      "SST-127 and SST-128 hierarchy/status/resolution",
+      "Subtask issue type availability",
+      "applicable transition to En curso",
+      "Blocks link type and direction"
+    ],
+    "write_performed": false
+  },
+  "proposed_execution_window": {
+    "starts": "Immediately after the running lifecycle and exact authorization ledger are published and read back from canonical main in the authorized agent turn.",
+    "expires": "At final Jira and owner-PR readback, the first failed or uncertain external write, credential/session loss, or 60 minutes after start, whichever occurs first.",
+    "single_use": "The external-write batch becomes non-reusable at its first write. Any partial or uncertain result consumes it and requires read-only reconciliation plus new human authorization."
+  },
+  "authorization": {
+    "control_plane_gate_publication_only": true,
+    "running_publication": false,
+    "owner_write": false,
+    "jira_write": false,
+    "runtime_write": false
+  },
+  "stop_conditions": [
+    "A duplicate Jira issue or owner branch/PR appears before execution.",
+    "The refreshed owner develop commit differs without a new read-only diff review.",
+    "The running lifecycle and exact authorization ledger are not published and read back before owner or Jira mutation.",
+    "The implementation stores onboarding progress or infers actor/account/completion inside Auth.",
+    "The owner pull request would publish an image or mutate Infra before a separate integration authorization."
+  ]
+}
