@@ -75,3 +75,14 @@ No se autorizó cerrar el issue ni escribir en padres.
 La política owner exigió un reviewer gpt-5.5/high para riesgo alto; se desplegó
 una revisión read-only de seguridad/concurrencia/retención y el agente principal
 integra sus hallazgos. No se modificaron Auth, Fend, infra ni el core.
+
+## Actualización de integración 2026-09-10
+
+La ampliación fue aprobada después de publicar el gate. PR #35 quedó fusionado
+en `sst-bend:develop` mediante `cbb2222bb3a0898be328dc4e6765eb72f853745e`.
+El workflow owner y los cuatro checks Infra terminaron con éxito; Infra quedó
+en `e52c0c17cc3a38435ba99298b9f19989736bb434` con la imagen
+`develop-cbb2222bb3a0`. La evidencia autoritativa de esta actualización es
+`owner-integration-readback-2026-09-10.md`. CR-SST-0242 permanece running: no
+se ejecutó la migración compartida, no se habilitó el flag y no existe todavía
+QA integrada de Auth/Fend.
