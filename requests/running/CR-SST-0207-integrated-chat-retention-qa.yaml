@@ -7,6 +7,7 @@ source_request: "requests/inbox/CR-SST-0207-integrated-chat-retention-qa.yaml"
 planned_request: "requests/planned/CR-SST-0207-integrated-chat-retention-qa.yaml"
 created_at: "2026-08-22"
 started_at: "2026-08-23"
+updated_at: "2026-09-11"
 requester: "4uentes"
 depends_on: ["CR-SST-0204", "CR-SST-0205", "CR-SST-0211", "CR-SST-0206"]
 
@@ -54,16 +55,16 @@ subagent_deployment_plan:
 execution:
   requires_human_approval: true
   approval_source: "Explicit user approval dated 2026-08-23 to advance CR-SST-0207 and update Jira."
-  approval_status: "approved-running"
+  approval_status: "consumed-no-new-runtime-or-jira-write-authorized"
   child_repo_mutation_allowed: false
   child_repo_mutation_targets: []
-  synthetic_runtime_test_data_allowed: true
+  synthetic_runtime_test_data_allowed: false
   synthetic_data_cleanup_required: true
   deployment_allowed: false
   cluster_direct_mutation_allowed: false
   production_mutation_allowed: false
   feature_flag_mutation_allowed: false
-  jira_write_allowed: "Consumed: the 2026-08-29 conservative reconciliation corrected the SST-117 label and added exactly one checkpoint comment; no further Jira write is authorized."
+  jira_write_allowed: "Consumed: the 2026-08-29 conservative reconciliation and the 2026-09-10 reserved-edge result comment; no further Jira write is authorized."
 
 qa_scope:
   target_environment: "development"
@@ -93,20 +94,91 @@ qa_matrix:
 validation:
   dependency_lifecycles: "PASS: CR-SST-0204, CR-SST-0205, CR-SST-0206 and CR-SST-0211 are done."
   runtime_preflight: "PASS after CR-SST-0217: Argo is Synced/Healthy, localhost root and JWKS return HTTP 200, retention is true and the bounded temporary TTL is 120 seconds."
-  localhost_matrix: "PARTIAL: facade, multi-session replay, TTL, cross-principal isolation, save/session durability, clear-local recovery, finish/delete terminal notification and active-turn no-resurrection passed; product-safe cache eviction remains unsatisfied."
+  localhost_matrix: "PASS by accumulated authorized evidence: facade routing, multi-session replay, TTL, cross-principal isolation, save/session durability, clear-local recovery, terminal notification, active-turn no-resurrection and product-safe cache-aside invalidation passed across CR-SST-0207, CR-SST-0218 and CR-SST-0230."
   reserved_ngrok_matrix: "PASS after CR-SST-0239: the authenticated public origin matched the HTTP retention contracts; cross-principal isolation, browser clear-local recovery and two-session temporary terminal delivery also passed within the bounded completion run."
   owner_checks: "PASS: CR-SST-0217 Infra owner check, renders and dry-runs passed on 2026-08-24."
   cache_aside_matrix: "PASS after CR-SST-0230: one localhost synthetic run proved miss-hit, invalidation through a normal protected Socket.IO turn, miss-hit and conversation cleanup through product contracts without direct Redis access."
   realtime_terminal_event: "PASS after CR-SST-0218: two active sessions each received exactly one chat:conversation:terminated event with the exact allowlisted payload for both temporary_finished and saved_deleted."
   delete_saved_active_turn_race: "PASS after CR-SST-0218: deletion fenced and cancelled an accepted turn, emitted no assistant completion after the fence, returned history 404 and did not resurrect the saved list entry."
   browser_consent_and_clear_local: "PASS: consent copy, explicit save, clear-local recovery and confirmed saved deletion passed in Chrome headless with sanitized screenshots."
-  synthetic_cleanup: "PARTIAL accepted residue: both CR-SST-0239 runs cleaned every synthetic conversation through product contracts. Three identities created across those runs remain because no product deletion route exists; historical residue was not re-read or mutated."
-  control_plane_check: "PASS after CR-SST-0218 QA: full gate completed with 0 FAIL; execution publication, owner documentation and visual documentation passed."
+  synthetic_cleanup: "PARTIAL pending disposition: later governed gates cleaned their conversations through product contracts, but published evidence documents a minimum of thirteen synthetic identities without a deletion contract and two inaccessible saved conversations from the original CR-SST-0207 run. No residue was re-read or mutated in this documentary gate."
+  control_plane_check: "PASS on 2026-09-11: full npm run check completed with 0 FAIL after lifecycle-wide adoption of the execution publication rule; the only lifecycle warning is the frozen historical CR-SST-0016 exception."
+
+documentary_reconciliation:
+  observed_at: "2026-09-11"
+  status: "matrix-complete-cleanup-disposition-pending"
+  evidence_mode: "accumulated-authorized-subgates-no-runtime-rerun"
+  completed_rows:
+    - "facade-routing"
+    - "temporary-multi-session-ttl"
+    - "saved-durability"
+    - "cache-aside"
+    - "clear-local"
+    - "finish-temporary"
+    - "delete-from-sst"
+    - "cross-principal-isolation"
+  completed_surfaces: ["localhost", "reserved-ngrok"]
+  runtime_rerun_required: false
+  cleanup_disposition:
+    status: "pending-explicit-terminal-decision"
+    documented_minimum_identity_residue: 13
+    documented_inaccessible_saved_conversations: 2
+    counting_basis:
+      - "Eight identities and two saved conversations documented by the 2026-08-24 CR-SST-0207 checkpoint."
+      - "One identity documented by CR-SST-0218 after its two conversations were cleaned."
+      - "One identity documented by CR-SST-0230 after its conversation was cleaned."
+      - "Three identities documented and accepted by CR-SST-0239 after its conversations were cleaned."
+    observation_limit: "Documentary aggregation only; no datastore, product API, browser or runtime readback was performed."
+  jira_terminal_gate: "Pending a separate exact transition-only authorization after local ARDS/SDD closure is prepared."
+
+owner_documentation:
+  required: true
+  status: "satisfied"
+  change_required: false
+  reason: "This gate reconciles control-plane evidence only. Owner contracts and documentation were published and read back by CR-SST-0217, CR-SST-0218 and CR-SST-0230; CR-SST-0239 changed no owner contract."
+  evidence_refs:
+    - "evidence/requests/CR-SST-0217/owner-and-runtime-readback-2026-08-24.md"
+    - "evidence/requests/CR-SST-0218/bend-owner-merge-readback-2026-08-27.md"
+    - "evidence/requests/CR-SST-0218/fend-owner-merge-readback-2026-08-27.md"
+    - "evidence/requests/CR-SST-0230/bend-owner-publication-readback-2026-08-29.md"
+    - "evidence/requests/CR-SST-0230/auth-owner-publication-readback-2026-08-29.md"
+
+execution_publication_rule:
+  rule_id: "execution-publication-and-tracker-closure-rule"
+  adoption_status: "adopted"
+  git_publication:
+    applicable: true
+    plan_merge_required: true
+    terminal_merge_required: true
+  tracker_mirror:
+    applicable: true
+    provider: "jira"
+    project_key: "SST"
+    parent_issue_key: "SST-113"
+    issue_key: "SST-117"
+  cleanup:
+    remote_readback_required: true
+
+knowledge_to_execution_documentation:
+  policy_id: "knowledge-to-execution-documentation-policy"
+  primary_role: "execution-evidence"
+  owner: "4uentes-ards-control-plane"
+  status: "documentary-reconciliation"
+  applicability: "This lifecycle aggregates published QA evidence and separates matrix completion from unresolved synthetic residue; it does not redefine owner contracts or authorize execution."
+  technical_sources:
+    - "requests/planned/CR-SST-0207-integrated-chat-retention-qa.yaml"
+    - "requests/done/CR-SST-0218-retention-terminal-event-propagation.yaml"
+    - "requests/done/CR-SST-0230-product-safe-chat-cache-qa.yaml"
+    - "requests/done/CR-SST-0239-authorize-reserved-edge-retention-qa.yaml"
+  runbook_required: false
+  runbook_not_applicable_reason: "No new operation is introduced; all executable QA paths remain governed by their already published harnesses and owner documentation."
 
 decision:
-  status: "approved-running"
+  status: "running-matrix-reconciled-cleanup-disposition-pending"
   approver: "4uentes"
   decided_at: "2026-08-23"
+  updated_at: "2026-09-11"
+  next_gate: "Publish and read back this documentary reconciliation, then decide whether to accept or remediate the historical synthetic residue before preparing local terminal closure; Jira remains separate."
 
 evidence_refs:
   - "evidence/requests/CR-SST-0207/execution-start-2026-08-23.md"
@@ -122,10 +194,12 @@ evidence_refs:
   - "evidence/requests/CR-SST-0239/reserved-edge-runtime-result-2026-09-10.md"
   - "evidence/requests/CR-SST-0239/jira-partial-result-comment-readback-2026-09-10.md"
   - "evidence/requests/CR-SST-0239/completion-runtime-result-2026-09-11.md"
+  - "evidence/requests/CR-SST-0207/documentary-matrix-reconciliation-2026-09-11.md"
 
 closure_limits:
-  - "Every QA matrix row must pass on localhost and reserved ngrok before complete closure."
+  - "The functional QA matrix is complete by accumulated authorized evidence; this documentary reconciliation is not a runtime rerun."
   - "A failed row is recorded as a blocker or follow-up; it is not silently waived."
+  - "Historical synthetic residue requires an explicit terminal disposition and is not silently treated as cleanup PASS."
   - "No child repository change may be used to repair a finding inside this lifecycle."
   - "No direct datastore, cluster, production or feature-flag mutation is authorized."
   - "Jira closure requires a separate exact authorization batch after ARDS/SDD closure."
