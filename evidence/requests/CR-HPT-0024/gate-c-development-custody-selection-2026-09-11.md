@@ -67,6 +67,16 @@ Infra PR #39 añadió el procedimiento reversible de cuarentena para las salidas
 `c27e7f70984c810cd40fffa58a1abb8f41a61c11`; `validate-repository` terminó
 `SUCCESS`. El corte valida nueve bloques Bash y once PowerShell.
 
+Infra PR #40 convirtió generación, cifrado directo, copia y recuperación del
+soft-HSM en una unidad fail-closed. Quedó integrado mediante
+`418a35c1cc5c2eb3546827a99efb69d25795eefa`; `validate-repository` terminó
+`SUCCESS`. La ejecución HSM permanece pendiente del operador.
+
+Infra PR #42 sustituyó antes de futuras ejecuciones el dry-run con HSM real por
+un fixture sintético y quedó integrado mediante
+`1ac78027408818b4afeffef7c93afc3491727fd6`; `validate-repository` terminó
+`SUCCESS`. El bloque sintético exacto pasó localmente sin acceso al HSM real.
+
 ## Cierre técnico de Unidad A
 
 Timestamp del operador: `2026-09-11T18:46:32-03:00`.
@@ -86,6 +96,29 @@ No se conserva en evidencia el contenido, la frase de paso, un hash, una ruta
 personal ni salida cruda. Unidad A queda validada técnicamente. Gate C continúa
 abierto para la Unidad B de generación, cifrado y recuperación del soft-HSM y
 para los contratos/materialización por etapas de Secrets.
+
+## Avance técnico de Unidad B
+
+Timestamp del operador: `2026-09-11T19:18:27-03:00`.
+
+| Check | Resultado sanitizado |
+| --- | --- |
+| Imagen KMS fijada por digest disponible | `PASS` |
+| Generación y cifrado directo del soft-HSM | `PASS` |
+| Copias cifradas primaria e independiente presentes | `PASS` |
+| Igualdad local de ambas copias | `PASS` |
+| Apertura en memoria y formato HSM | `PASS` |
+| Dry-run client de `receipt-kms-hsm:hsm` | `PASS` |
+| Recurso ausente del cluster después del dry-run | `PASS` |
+| Directorio efímero sin entradas después del cierre | `PASS` |
+
+El operador alcanzó a ejecutar el bloque de PR #41 antes de su sustitución: el
+HSM real se materializó temporalmente bajo ACL privada, el dry-run no lo envió
+al API Server y el `finally` retiró el archivo. La comprobación posterior no
+encontró entradas efímeras ni el Secret en el contexto actual. La eliminación
+normal no constituye borrado forense; por ello el owner reemplaza este dry-run
+por un fixture sintético y mantiene cifrado el HSM real en futuras ejecuciones.
+No se registra contexto local, ruta, contenido, frase de paso ni hash.
 
 La frase de paso no puede pasar por chat, logs, Git, Jira ni comandos con valor
 literal. Por ello, el cifrado y la prueba de recuperación son una acción
