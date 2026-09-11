@@ -39,18 +39,21 @@ authorization:
   scope: 'Publish the CR-SST-0236 running gate and prepare read-only owner preflight; no sst-fend mutation.'
   evidence_ref: 'evidence/requests/CR-SST-0236/running-gate-2026-09-10.md'
 execution:
-  current_unit: 'owner-readonly-preflight-complete'
+  current_unit: 'owner-execution-authorization-publication'
   control_plane_mutation_allowed: true
   git_publication_allowed: true
-  child_repo_mutation_allowed: false
+  child_repo_mutation_allowed: true
   runtime_mutation_allowed: false
   deployment_allowed: false
   migration_execution_allowed: false
   seeders_allowed: false
   database_mutation_allowed: false
   jira_write_allowed: false
-  next_gate: 'Publish the owner preflight; after merge/readback, obtain explicit authorization for the scoped sst-fend owner implementation.'
+  next_gate: 'Merge and read back this owner execution authorization; only then create the clean sst-fend worktree and execute the authorized first slice.'
 predecessor_readback:
+  owner_preflight_pull_request: 312
+  owner_preflight_merge: '09c15cb61ede2c8a9c63b69caca79a27e6629c5a'
+  owner_preflight_merged_at: '2026-09-11T22:00:16Z'
   running_gate_pull_request: 301
   running_gate_merge: '148cb887ab62ea50db8fed3df67b2d61cad46c96'
   running_gate_merged_at: '2026-09-11T01:16:08Z'
@@ -87,7 +90,7 @@ owner_preflight:
     owner_documentation_authority_policy: 'adopted'
     http_qa_harness_policy: 'open-exception-on-canonical-baseline'
 owner_execution_candidate:
-  status: 'planned-not-authorized'
+  status: 'authorized-pending-control-plane-publication-and-readback'
   branch: 'agent/cr-sst-0236-learning-source-inbox'
   first_slice:
     - 'Upgrade the owner inbound capability and LearningWorkspace spec/docs from 1.0.0 to the published 1.2.0 BFF contract.'
@@ -102,6 +105,26 @@ owner_execution_candidate:
     - 'Caller-supplied source bodies for article, article_document or agent_output.'
     - 'Automatic article publication, TagDefinition creation or UserMemory acceptance.'
     - 'Runtime, data, Jira or repository publication before their applicable gates.'
+owner_execution_authorization:
+  approved_by: '4uentes'
+  approved_at: '2026-09-11'
+  approval_text: 'ok avancemos con el proximo gate'
+  interpreted_gate: 'Scoped sst-fend owner execution described in the merged PR 312 preflight and the immediately preceding handoff.'
+  allowed_repository: 'afpogo/sst-fend'
+  allowed_branch: 'agent/cr-sst-0236-learning-source-inbox'
+  allowed_changes:
+    - 'Owner LearningWorkspace spec and derived human documentation.'
+    - 'Inbound node-auth learning-workspace-context capability adoption at 1.2.0.'
+    - 'Typed sourceDescriptor and immutable source.snapshot frontend models.'
+    - 'Source inbox UI for manual_text, article, article_document and agent_output.'
+    - 'Visible source identity, provenance, freshness, sanitized failures and explicit tag/article/memory boundaries.'
+    - 'Focused tests, styles, UX playbook, Mermaid map with textual fallback and manual QA runbook.'
+  publication_allowed: false
+  publication_rule: 'Owner implementation may be committed locally after this control-plane gate is merged and read back; pushing or opening the sst-fend PR requires a later publication gate.'
+  excluded:
+    - 'Secret values, browser credentials or credentialed acquisition.'
+    - 'Runtime deployment, database writes, migrations, seeders, preview/accept/reject against shared runtime and Jira writes.'
+    - 'Direct sst-bend access, backend contract changes, automatic ArticleTag/TagDefinition/UserMemory mutation or policy adoption.'
 owner_contract:
   responsibilities:
     - 'Expose a comprehensible source inbox for manual text, article, article document and agent output.'
@@ -145,6 +168,7 @@ acceptance:
   - 'The source-to-snapshot-to-article flow is mapped without conflating tags or memory acceptance.'
   - 'No child repository, runtime, data or Jira mutation occurs in this gate.'
 evidence_refs:
+  - 'evidence/requests/CR-SST-0236/owner-execution-authorization-2026-09-11.md'
   - 'evidence/requests/CR-SST-0236/owner-readonly-preflight-2026-09-10.md'
   - 'evidence/requests/CR-SST-0236/running-gate-2026-09-10.md'
   - 'evidence/requests/CR-SST-0235/owner-merge-readback-2026-09-09.md'
