@@ -31,8 +31,8 @@ abierta la selección de un gestor externo de Secrets o HSM independiente.
 | Destino primario privado | Copia cifrada presente y no vacía |
 | Destino de recuperación independiente | Copia cifrada presente y no vacía en pendrive |
 | Archivo de licencia cifrado y recuperación comprobada | `PASS` |
-| HSM utilizable | No generado |
-| Credenciales root | No generadas |
+| HSM utilizable | Generado, cifrado y con recuperación comprobada |
+| Credenciales root | Generadas, cifradas y con recuperación comprobada |
 | Secrets Kubernetes | No creados |
 | Mutación de runtime | No realizada |
 | Helm | `v3.19.4` instalado y priorizado en el PATH del usuario; mínimo `3.17+` satisfecho |
@@ -76,6 +76,12 @@ Infra PR #42 sustituyó antes de futuras ejecuciones el dry-run con HSM real por
 un fixture sintético y quedó integrado mediante
 `1ac78027408818b4afeffef7c93afc3491727fd6`; `validate-repository` terminó
 `SUCCESS`. El bloque sintético exacto pasó localmente sin acceso al HSM real.
+
+Infra PR #43 convirtió la generación y custodia de las credenciales root en
+una unidad fail-closed, agregó la recuperación comprobada y reemplazó el
+dry-run con credenciales reales por un fixture sintético. Quedó integrado
+mediante `e44a56a79b2a108356e68820e31841521c9f3f05`;
+`validate-repository` terminó `SUCCESS`.
 
 ## Cierre técnico de Unidad A
 
@@ -124,6 +130,34 @@ La frase de paso no puede pasar por chat, logs, Git, Jira ni comandos con valor
 literal. Por ello, el cifrado y la prueba de recuperación son una acción
 interactiva del operador guiada por el runbook owner.
 
+## Cierre técnico de Unidad C1
+
+Timestamp del operador: `2026-09-11`.
+
+| Check | Resultado sanitizado |
+| --- | --- |
+| Generación en memoria de usuario y password root | `PASS` |
+| Cifrado directo sin persistir plaintext | `PASS` |
+| Copias cifradas primaria e independiente presentes y no vacías | `PASS` |
+| Igualdad local de ambas copias | `PASS` |
+| Apertura en memoria y formato `config.env` | `PASS` |
+| Dry-run client de `receipt-objectstore-root:config.env` con fixture sintético | `PASS` |
+| Fixture efímero retirado después del dry-run | `PASS` |
+| Secret Kubernetes real creado | No |
+
+La comprobación independiente observó dos artefactos cifrados no vacíos e
+idénticos. El dry-run usó valores públicos sintéticos, construyó localmente el
+objeto esperado y retiró el archivo temporal. No se descifraron las
+credenciales reales durante ese dry-run y no se envió ningún Secret al API
+Server. No se registran rutas locales, tamaños, hashes, contenido ni frases de
+paso.
+
+El PR de evidencia de Unidad B, control-plane PR #318, quedó integrado en
+`main` mediante `37a604f9de9e16f1a9dc2120d6d0d4c90d561ce7`. El gate local
+completo `npm run check` terminó con código 0 antes de la fusión; el PR no
+tenía checks remotos configurados y la fusión se realizó con autorización
+explícita del operador para usar ese gate local.
+
 ## Cambios owner autorizados
 
 La instrucción de continuar autoriza la actualización documental acotada de
@@ -159,9 +193,12 @@ integrado mediante `32ab87691f12992b92743e50164c1b693dd082bc`, con CI
 
 ## Siguiente unidad
 
-El destino de recuperación seleccionado es un pendrive y la Unidad A quedó en
-`PASS`. La siguiente unidad genera y cifra directamente el soft-HSM, sin
-persistir una copia en claro.
+El destino de recuperación seleccionado es un pendrive. Las unidades A, B y C1
+quedaron en `PASS`: licencia, soft-HSM y credenciales root tienen custodia
+cifrada recuperable. La siguiente unidad es C2. Debe crear durante el bootstrap
+el endpoint privado, la CA, el bucket y una identidad de mínimo privilegio
+antes de materializar el contrato SST. No se deben crear claves vacías ni
+reutilizar las credenciales root como credenciales de aplicación.
 
 Fuentes owner:
 
