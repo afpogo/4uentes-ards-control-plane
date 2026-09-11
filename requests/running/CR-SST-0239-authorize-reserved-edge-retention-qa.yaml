@@ -26,6 +26,8 @@ control_plane_context:
   proposed_jira_parent_issue_key: "SST-113"
   jira_issue_key: null
   jira_write_authorized: false
+  source_qa_jira_comment_batch_status: "consumed-2026-09-10"
+  source_qa_jira_comment_readback: "Comment 10438 records CR-SST-0239 PARTIAL PASS on SST-117; SST-117 remains En curso without resolution under SST-113."
 
 authorization:
   status: "consumed-runtime-one-synthetic-identity"
@@ -197,6 +199,7 @@ evidence_refs:
   - "evidence/requests/CR-SST-0239/identity-and-boundary-preflight-2026-09-07.md"
   - "evidence/requests/CR-SST-0239/running-documentary-preflight-2026-09-08.md"
   - "evidence/requests/CR-SST-0239/reserved-edge-runtime-result-2026-09-10.md"
+  - "evidence/requests/CR-SST-0239/jira-partial-result-comment-readback-2026-09-10.md"
 
 closure_limits:
   - "The authorized browser OAuth and one-identity runtime mutation were consumed; no further runtime write is authorized."
