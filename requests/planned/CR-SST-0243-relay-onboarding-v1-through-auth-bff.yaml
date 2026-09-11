@@ -34,8 +34,8 @@ model_selection:
   fallback_profile: "gpt-5.5"
   reason: "Keep identity, privacy and cross-repository contracts under high-reasoning review."
 subagent_deployment_plan:
-  mode: "none"
-  reason: "Bounded sequential lifecycle preparation; no owner mutation or delegated decisions."
+  mode: "read-only-audit"
+  reason: "Bounded subagents reviewed owner surfaces and Jira hierarchy; the primary agent retained all auth, contract, scope and authorization decisions."
 contract_ref: "evidence/requests/CR-SST-0240/onboarding-v1-contract.yaml"
 owner_binding_ref: "evidence/requests/CR-SST-0240/owner-binding-and-slice-plan.md"
 planned_surfaces:
@@ -43,24 +43,28 @@ planned_surfaces:
   - "specs/integrations-api.yaml"
   - "specs/capabilities/inbound/sst-bend--onboarding-v1.yaml (new)"
   - "specs/capabilities/outbound/onboarding-v1.yaml (new)"
+  - "specs/capabilities/inbound/sst-bend--article-text-ingestion.yaml and owner doc"
+  - "specs/capabilities/outbound/article-text-ingestion.yaml and owner doc"
   - "docs/bf/onboarding.md (new)"
-  - "src/presentation/ onboarding routes and controller"
-  - "src/infrastructure/datasources/ onboarding relay"
-  - "owner relay contract and authentication tests"
+  - "src/presentation/onboarding routes and controller"
+  - "src/infrastructure/datasources/onboarding relay"
+  - "ArticuloDTO, ArticuloEntity, create idempotency body and upstream payload for optional onboardingAttemptId"
+  - "owner relay, authentication, sanitization, concurrency and article-metadata tests"
 objectives:
   - "Adopt the published Bend onboarding capability without inventing domain semantics."
   - "Expose GET/PATCH /api/onboarding/me and POST /api/onboarding/me/outcomes."
   - "Propagate JWT, Idempotency-Key and X-Correlation-Id; preserve optimistic revision and sanitized owner error codes."
+  - "Preserve optional onboardingAttemptId through POST /api/articles and its local idempotency hash without interpreting product semantics."
   - "Keep product state and completion exclusively in Bend."
 execution_gates:
-  - "CR-SST-0242 owner API/capability published and read back; shared DTO fixtures available."
+  - "CR-SST-0242 owner API/capability published and read back at Bend develop cbb2222; its pinned API schema, enumerated values and HTTP cases are the contractual fixtures, so no parallel shared fixture source is required."
   - "Fresh owner ref and explicit running batch before mutation."
 execution:
   control_plane_mutation_allowed: true
   child_repo_mutation_allowed: false
   runtime_mutation_allowed: false
   jira_write_allowed: false
-  next_gate: "Canonical plan readback, owner preflight and explicit running batch."
+  next_gate: "Obtain exact human approval to publish/read back running, execute the bounded Jira batch, and implement/test/open the Auth owner PR without merge or runtime effects."
 owner_documentation:
   required: true
   status: "planned"
@@ -68,12 +72,16 @@ owner_documentation:
 acceptance:
   - "Unauthorized and expired sessions use established authentication behavior."
   - "Relay method/body/revision/idempotency/correlation have no semantic drift."
-  - "Unknown fields, sensitive error payloads, upstream timeout and 409 are handled under owner contract."
+  - "Only the exact Authorization/account/correlation/idempotency header allowlist crosses the relay; mutation keys use the owner 1-128 printable non-space ASCII rule."
+  - "Only the exact owner status/code matrix is preserved; unknown combinations, sensitive payloads, upstream timeout and redirects are sanitized."
+  - "Optional onboardingAttemptId reaches Bend, participates in Auth idempotency hashing and does not change normal article creation when absent."
   - "No product-state persistence, actor inference or completion logic in the BFF."
 validation:
   control_plane: "npm.cmd run check"
   owner: "Full owner check plus focused contract, negative-path and concurrency tests"
   closure: "Owner publication/readback, sanitized evidence and full control-plane gate before done."
 evidence_refs:
+  - "evidence/requests/CR-SST-0243/execution-gate-2026-09-10.md"
+  - "evidence/requests/CR-SST-0243/preflight-2026-09-10.json"
   - "evidence/requests/CR-SST-0240/owner-binding-and-slice-plan.md"
   - "evidence/requests/CR-SST-0240/owner-slice-jql-preflight.json"

@@ -36,8 +36,8 @@ model_selection:
   reason: "Cross-repository durable state, authentication boundaries and privacy require high reasoning."
   runtime_note: "Parent model is environment-selected; no model switch or temperature setting is claimed."
 subagent_deployment_plan:
-  mode: "none"
-  reason: "Sequential coordinator integration; no delegated architecture or security decisions."
+  mode: "read-only-audit"
+  reason: "Bounded subagents reviewed owner surfaces and Jira hierarchy; the primary agent retained architecture, auth and authorization decisions."
 execution:
   approval_status: "user-approved-plan-implementation"
   control_plane_mutation_allowed: true
@@ -46,7 +46,7 @@ execution:
   git_publication_allowed: true
   jira_write_allowed: false
   jira_batch_status: "initial-batch-complete; authorization-consumed"
-  next_gate: "CR-SST-0242 owner merge/image/Infra/Jira readback passed; prepare and obtain approval for the exact CR-SST-0243 Auth/BFF owner and Jira batch."
+  next_gate: "CR-SST-0243 Auth/BFF and Jira execution gate prepared; obtain exact human approval before publishing running or mutating Auth/Jira."
 publication_policy:
   policy_id: "execution-publication-and-tracker-closure-policy"
   enforcement_activation: "Add the enforcement marker to planned and running together at execution start; the validator requires an execution state."
@@ -69,6 +69,8 @@ acceptance:
   - "Owner requests are allocated only after fresh Git/worktree/PR/JQL preflight; allocation alone does not authorize mutation."
   - "Full control-plane check passes and Jira keys are captured after readback."
 evidence_refs:
+  - "evidence/requests/CR-SST-0243/execution-gate-2026-09-10.md"
+  - "evidence/requests/CR-SST-0243/preflight-2026-09-10.json"
   - "evidence/requests/CR-SST-0242/jira-integration-comment-readback-2026-09-10.json"
   - "evidence/requests/CR-SST-0242/owner-integration-readback-2026-09-10.md"
   - "evidence/requests/CR-SST-0242/owner-implementation.md"
