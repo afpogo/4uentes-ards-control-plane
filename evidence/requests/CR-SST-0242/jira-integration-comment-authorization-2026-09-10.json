@@ -15,7 +15,10 @@
   "comment_body_sha256_utf8": "1f7d696e7d24cd008bf35d8e44fcf3c94c07e7dbba7c0627e597a50610708eea",
   "authorization_source": "User confirmation after the exact owner-integration batch was enumerated in the active conversation",
   "execution_window": "active turn of 2026-09-10",
-  "consumed": false,
+  "consumed": true,
+  "consumed_at_local": "2026-09-10T21:29:15.911-03:00",
+  "comment_id": "10439",
+  "readback_evidence_ref": "evidence/requests/CR-SST-0242/jira-integration-comment-readback-2026-09-10.json",
   "prohibited_operations": [
     "transitions",
     "field edits",
