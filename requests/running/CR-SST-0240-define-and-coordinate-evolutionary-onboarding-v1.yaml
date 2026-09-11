@@ -69,6 +69,8 @@ acceptance:
   - "Owner requests are allocated only after fresh Git/worktree/PR/JQL preflight; allocation alone does not authorize mutation."
   - "Full control-plane check passes and Jira keys are captured after readback."
 evidence_refs:
+  - "evidence/requests/CR-SST-0244/xstate-architecture-and-execution-plan-2026-09-11.md"
+  - "docs/projects/sst/onboarding-maquina-de-estados-guia.md"
   - "evidence/requests/CR-SST-0243/execution-gate-2026-09-10.md"
   - "evidence/requests/CR-SST-0243/preflight-2026-09-10.json"
   - "evidence/requests/CR-SST-0242/jira-integration-comment-readback-2026-09-10.json"

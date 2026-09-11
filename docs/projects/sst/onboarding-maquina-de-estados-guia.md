@@ -392,3 +392,16 @@ fijado por el perfil no está disponible en los módulos locales inspeccionados.
 No se incluye un runbook de refactor: el documento es de aprendizaje y evaluación,
 y no se ha seleccionado ni autorizado ese cambio funcional. La operación del
 backend permanece descrita en su runbook owner enlazado arriba.
+
+## 10. Adopción frontend aceptada
+
+El frontend adoptará una máquina XState v5 dedicada. Esta máquina coordinará
+loading, navegación, acciones pendientes, conflictos, reintentos y fallback;
+no reemplazará el estado durable de Bend. Tampoco reutilizará `StepperMachine`,
+porque un índice local de pasos no representa revisión, intento, idempotencia ni
+resultado verificado.
+
+El diseño, eventos, estados de interacción, integración con ArticleModal y
+pruebas están detallados en
+[`xstate-architecture-and-execution-plan-2026-09-11.md`](../../../evidence/requests/CR-SST-0244/xstate-architecture-and-execution-plan-2026-09-11.md).
+CR-SST-0244 permanece planned hasta que Auth publique el relay de CR-SST-0243.

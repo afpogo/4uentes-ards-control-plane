@@ -3,7 +3,7 @@ kind: "initiative"
 id: "INIT-SST-0011"
 title: "SST Evolutionary Onboarding and First-Value Activation"
 status: "active"
-updated_at: "2026-09-08"
+updated_at: "2026-09-11"
 owner_repository: "4uentes-orchestor"
 objective: >
   Deliver a protected, resumable and evolutionary onboarding journey that
@@ -13,6 +13,8 @@ initial_hypothesis: >
   read-only guidance can shorten time to first value without coupling
   activation to Chat, Learning, authentication flags or route visits.
 source_evidence_refs:
+  - "evidence/requests/CR-SST-0244/xstate-architecture-and-execution-plan-2026-09-11.md"
+  - "docs/projects/sst/onboarding-maquina-de-estados-guia.md"
   - "evidence/requests/CR-SST-0243/execution-gate-2026-09-10.md"
   - "evidence/requests/CR-SST-0243/preflight-2026-09-10.json"
   - "evidence/requests/CR-SST-0240/owner-binding-and-slice-plan.md"
