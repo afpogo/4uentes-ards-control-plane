@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0",
+  "request_id": "CR-SST-0243",
+  "provider": "jira",
+  "project_key": "SST",
+  "operation_order": [
+    "createJiraIssue",
+    "readback-created-issue-and-transitions",
+    "transitionJiraIssue-if-not-already-en-curso",
+    "createIssueLink",
+    "addCommentToJiraIssue",
+    "final-readback"
+  ],
+  "maximum_write_count": 4,
+  "candidate": {
+    "summary": "[SST][INIT-SST-0011][CR-SST-0243] Relay onboarding V1 through the authenticated BFF",
+    "issue_type": "Subtask",
+    "parent": "SST-128",
+    "derived_epic": "SST-127",
+    "target_status": "En curso",
+    "target_resolution": null,
+    "description": "Adoptar en 4uentes-auth la capability onboarding-v1 publicada por sst-bend y exponer GET/PATCH /api/onboarding/me y POST /api/onboarding/me/outcomes. El BFF sólo relaya identidad/sesión, Idempotency-Key, X-Correlation-Id, revision y errores sanitizados; también preserva onboardingAttemptId en POST /api/articles. No persiste progreso, no infiere actor ni decide completion. Owner docs, checks y pruebas negativas/concurrencia son gates. ARDS/SDD es autoridad; Jira sólo espejo."
+  },
+  "link": {
+    "type": "Blocks",
+    "inward_issue": "SST-129",
+    "outward_issue": "NEW_CR_SST_0243_KEY"
+  },
+  "comment_body": "CR-SST-0243 inicio: lote Auth/BFF aprobado; lifecycle running publicado y leído desde main antes de modificar 4uentes-auth. Alcance limitado al relay autenticado de onboarding V1 y a preservar onboardingAttemptId en POST /api/articles; sin migración, deployment, habilitación de flags, datos reales ni cambios Bend/Fend/Infra. ARDS/SDD conserva autoridad; Jira es espejo y queda En curso.",
+  "comment_body_sha256_utf8": "81df2b244e9c5a4dceab5a1deff0f42ea8ae24d0fc8bd9d7c579e86e02559696",
+  "authorization_source": "User confirmation after the exact batch and 60-minute window mechanics were enumerated in the active conversation",
+  "execution_window": {
+    "starts": "canonical running and ledger readback in the authorized turn",
+    "maximum_minutes": 60,
+    "expires_on": ["final readback", "first failed or uncertain external write", "credential loss"]
+  },
+  "consumed": false,
+  "consumption_rule": "Single-use at the first write; any failed, partial or uncertain result consumes the batch and forbids retries until read-only reconciliation and new authorization.",
+  "prohibited_operations": [
+    "create more than one issue",
+    "write to SST-127, SST-128 or SST-129 except the single approved link",
+    "additional links or comments",
+    "assignment, priority, resolution, delete, close or reparent",
+    "retry an uncertain creation without reconciliation and new authorization"
+  ]
+}

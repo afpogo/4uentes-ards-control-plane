@@ -34,21 +34,29 @@ model_selection:
   fallback_profile: "gpt-5.5"
   reason: "Keep identity, privacy and cross-repository contracts under high-reasoning review."
 subagent_deployment_plan:
-  mode: "none"
-  reason: "Bounded sequential lifecycle preparation; no owner mutation or delegated decisions."
+  mode: "required-specialized-review-with-sequential-fallback"
+  required: true
+  roles: ["architecture-reviewer", "cross-repo-impact-reviewer"]
+  status: "Reviewer invoked read-only but did not return within the planning window; primary agent completed the documented sequential review."
+  fallback: "Repeat specialized review against the refreshed owner diff before any running publication or child-repo mutation."
+  reason: "The sst-fend owner policy requires architecture and cross-repo review for this complex-high-risk XState adoption; decisions remain with the primary agent."
 contract_ref: "evidence/requests/CR-SST-0240/onboarding-v1-contract.yaml"
 owner_binding_ref: "evidence/requests/CR-SST-0240/owner-binding-and-slice-plan.md"
 planned_surfaces:
+  - "specs/39-onboarding-frontend.yml (new owner contract)"
   - "specs/31-auth-frontend.yml"
   - "specs/33-articles-frontend.yml"
-  - "specs/capabilities/inbound/4uentes-auth--onboarding-v1.yaml (new)"
-  - "docs/onboarding-v1.md (new)"
-  - "src/machines/AuthMachine/ entry integration"
+  - "specs/capabilities/inbound/node-auth--onboarding-v1.yaml and derived doc (new; historical owner filename convention)"
+  - "docs/39-onboarding-frontend.md (new)"
+  - "src/machines/OnboardingMachine/ dedicated XState v5 actor (new)"
+  - "src/context/OnboardingMachineContext.tsx, provider and hook (new)"
+  - "ActorProvider/auth result signal integration without progress authority"
   - "src/App/ protected routing"
   - "src/pages/Onboard/ and Home invitation (new or existing owner layout)"
   - "src/pages/Articles/ successful-create integration"
   - "owner UI, accessibility and browser tests"
 objectives:
+  - "Adopt a dedicated XState v5 machine for ephemeral UI orchestration while Bend remains the only durable state authority."
   - "Create a real protected /onboard hub gated by durable state and feature flag."
   - "New registration starts durably; existing users without state stay Home and receive a re-openable invitation."
   - "Use canonical POST /api/articles for native text and report its real outcome; do not treat route visits as completion."
@@ -62,7 +70,7 @@ execution:
   child_repo_mutation_allowed: false
   runtime_mutation_allowed: false
   jira_write_allowed: false
-  next_gate: "Canonical plan readback, owner preflight and explicit running batch."
+  next_gate: "Complete and read back CR-SST-0243 Auth capability, then refresh Fend and publish an explicit running batch from the accepted XState architecture."
 owner_documentation:
   required: true
   status: "planned"
@@ -78,5 +86,6 @@ validation:
   owner: "Full owner check plus focused contract, negative-path and concurrency tests"
   closure: "Owner publication/readback, sanitized evidence and full control-plane gate before done."
 evidence_refs:
+  - "evidence/requests/CR-SST-0244/xstate-architecture-and-execution-plan-2026-09-11.md"
   - "evidence/requests/CR-SST-0240/owner-binding-and-slice-plan.md"
   - "evidence/requests/CR-SST-0240/owner-slice-jql-preflight.json"
