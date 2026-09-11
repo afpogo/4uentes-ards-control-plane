@@ -132,13 +132,21 @@ execution:
 
 next_runtime_gate:
   status: "partial-result-recorded-next-scope-not-authorized"
+  correction_reason: >
+    The first synthetic identity cannot be reused because its random
+    credentials and tokens were intentionally discarded after cleanup. A real
+    operator identity must not substitute either principal.
   proposed_scope:
-    - "Authorize one additional synthetic identity solely for the cross-principal row."
-    - "Authorize the synthetic browser/realtime rows needed to prove clear-local and terminal delivery through the edge."
-    - "Clean every additional conversation through product contracts and record only sanitized outcomes and counts."
+    - "Create exactly two new synthetic SST identities: principal A for HTTP, browser and realtime reuse, and principal B only for cross-principal isolation."
+    - "Create at most six conversations and two synthetic message bodies across the combined completion run."
+    - "Use two active sessions of principal A to prove browser clear-local and terminal delivery through the reserved edge."
+    - "Use principal B only to prove that list, read, save, finish and delete cannot cross the principal boundary."
+    - "Clean every created conversation through product contracts in a finally path and record only sanitized outcomes and counts."
+    - "Discard credentials and tokens from memory after cleanup; do not persist them in evidence, files, logs or browser storage beyond the active session."
   persistent_residue_warning: >
-    The synthetic SST identity may remain because no product identity deletion
-    contract exists. A future authorization must acknowledge this explicitly.
+    Two additional synthetic SST identities may remain because no product
+    identity deletion contract exists. A future authorization must acknowledge
+    this explicitly.
   forbidden_even_if_runtime_is_authorized:
     - "OAuth bypass, weakening or public unauthenticated SST exposure."
     - "Ngrok allowlist/config mutation or service restart."
@@ -185,21 +193,23 @@ knowledge_to_execution_documentation:
 
 validation:
   plan_readback: "PASS: PR 282 is merged and its plan is reachable from origin/main."
+  partial_result_readback: "PASS: PR 300 merged at 413fdbd0c425cb1ab4a171616c7cdfc613d9b890 and commit 099a60c is reachable from origin/main."
   owner_documentation_readback: "PASS: existing Infra runbooks retain OAuth, least-privilege allowlist and secret-safe evidence boundaries."
   runtime_validation: "PARTIAL PASS: OAuth reached SST; auth gate, multi-session, save/read, delete, finish and TTL passed for one synthetic principal. Cross-principal, browser clear-local and realtime remain unexecuted."
   control_plane_check: "PASS on 2026-09-10: full npm run check completed with 0 FAIL."
 
 decision:
-  status: "running-runtime-partial-publication-pending"
+  status: "running-runtime-partial-merged-completion-preflight-local"
   approver: "4uentes"
   decided_at: "2026-09-08"
-  next_gate: "Publish and merge this sanitized partial result, then obtain exact authorization for a second identity plus browser/realtime completion."
+  next_gate: "Publish and merge the corrected two-identity completion boundary, then obtain exact authorization for the bounded runtime run."
 
 evidence_refs:
   - "evidence/requests/CR-SST-0239/identity-and-boundary-preflight-2026-09-07.md"
   - "evidence/requests/CR-SST-0239/running-documentary-preflight-2026-09-08.md"
   - "evidence/requests/CR-SST-0239/reserved-edge-runtime-result-2026-09-10.md"
   - "evidence/requests/CR-SST-0239/jira-partial-result-comment-readback-2026-09-10.md"
+  - "evidence/requests/CR-SST-0239/completion-gate-preflight-2026-09-11.md"
 
 closure_limits:
   - "The authorized browser OAuth and one-identity runtime mutation were consumed; no further runtime write is authorized."
