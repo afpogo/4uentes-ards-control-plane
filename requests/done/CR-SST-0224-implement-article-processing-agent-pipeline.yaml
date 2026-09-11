@@ -1,0 +1,177 @@
+schema_version: "1.0"
+phase: 4
+id: "CR-SST-0224"
+title: "Implement the governed article processing agent pipeline"
+status: "done"
+source_request: "requests/inbox/CR-SST-0224-implement-article-processing-agent-pipeline.yaml"
+planned_request: "requests/planned/CR-SST-0224-implement-article-processing-agent-pipeline.yaml"
+running_request: "requests/running/CR-SST-0224-implement-article-processing-agent-pipeline.yaml"
+created_at: "2026-08-28"
+started_at: "2026-09-05"
+completed_at: "2026-09-11"
+requester: "4uentes"
+depends_on: ["CR-SST-0219", "CR-SST-0220"]
+unblocks: ["CR-SST-0225"]
+
+summary: >
+  The governed sst-chatbot article-processing pipeline is merged and read back
+  on develop. Full-document and sequential-paragraph modes, versioned prompt
+  composition, execution guards, confirmed context checkpoints and a
+  non-authoritative final candidate passed owner and control-plane validation.
+  The Jira mirror received its exact terminal description and transition batch
+  and was read back as Finalizada with resolution Listo.
+
+control_plane_context:
+  initiative_id: "INIT-SST-0010"
+  parent_request_id: "CR-SST-0220"
+  predecessor_request_id: "CR-SST-0223"
+  next_request_id: "CR-SST-0225"
+  feature_state_id: "article-agent-processing"
+  owner_repository: "sst-chatbot"
+  owner_integration_branch: "develop"
+  jira_role: "mirror"
+  jira_parent_issue_key: "SST-122"
+  jira_issue_key: "SST-126"
+
+owner_result:
+  status: "merged-and-read-back"
+  pull_request: 12
+  head_commit: "3114cbc42e0660d0bac8129779d7f18ee8f535a1"
+  merge_commit: "a0ce974b9b02be55d11609ae757fbcee569dcfa8"
+  canonical_ref: "sst-chatbot/origin/develop@a0ce974b9b02be55d11609ae757fbcee569dcfa8"
+  capabilities:
+    - "full-document analysis"
+    - "sequential-paragraph analysis with confirmed context checkpoints"
+    - "versioned private prompt composition"
+    - "provider output and execution lifecycle guards"
+    - "non-authoritative final synthesis candidate"
+  validation:
+    - "canonical owner CI: PASS"
+    - "272 tests: PASS"
+    - "three deterministic smokes: PASS"
+    - "owner ARDS/SDD and Mermaid maps: PASS"
+    - "manual contract review: PASS"
+  automatic_delivery:
+    image_tag: "develop-a0ce974b9b02"
+    infra_commit: "5fc609f064032f553b4a33933bc75ac48a3b77b6"
+    cluster_rollout_verified: false
+
+jira_terminal_batch:
+  authorization_status: "consumed"
+  approved_by: "4uentes"
+  approved_at: "2026-09-11"
+  source_ref: "main@c4837fb65825563604a04b3523120a695e8e42cd"
+  issue_key: "SST-126"
+  expected_parent_issue_key: "SST-122"
+  description_source: "evidence/requests/CR-SST-0224/jira-terminal-description-draft-2026-09-10.md"
+  transition_id: "41"
+  target_status: "Finalizada"
+  target_status_id: "10008"
+  allowed_write_count: 2
+  actual_write_count: 2
+  actual_operations: ["replace only description", "apply only transition 41"]
+  execution_status: "consumed-success-readback"
+  final_status: "Finalizada"
+  final_status_id: "10008"
+  final_status_category: "Done"
+  final_resolution: "Listo"
+  final_resolution_id: "10000"
+  final_parent_issue_key: "SST-122"
+  description_match: true
+  terminal_readback_at: "2026-09-11T19:21:00.706-0300"
+  forbidden_operations_performed: []
+  additional_writes_allowed: false
+  evidence_ref: "evidence/requests/CR-SST-0224/jira-terminal-result-2026-09-11.md"
+
+execution:
+  completed_units:
+    - "publish and read back the running lifecycle"
+    - "implement and publish the sst-chatbot owner contract"
+    - "validate both analysis modes, prompts, checkpoints and guards"
+    - "publish and read back owner completion evidence"
+    - "consume and verify the exact two-write Jira terminal batch"
+  control_plane_mutation_allowed: true
+  child_repo_mutation_allowed: false
+  owner_git_mutation_allowed: false
+  runtime_mutation_allowed: false
+  deployment_allowed: false
+  migration_execution_allowed: false
+  shared_environment_mutation_allowed: false
+  production_data_allowed: false
+  jira_write_allowed: false
+
+execution_publication_rule:
+  rule_id: "execution-publication-and-tracker-closure-rule"
+  adoption_status: "adopted"
+  git_publication:
+    applicable: true
+    plan_merge_required: true
+    terminal_merge_required: true
+  tracker_mirror:
+    applicable: true
+    provider: "jira"
+    project_key: "SST"
+    epic_key: "SST-105"
+    parent_issue_key: "SST-122"
+    issue_key: "SST-126"
+  cleanup:
+    remote_readback_required: true
+  trial_result:
+    status: "passed"
+    plan_publication: "merged-and-read-back"
+    implementation_publication: "merged-and-read-back"
+    tracker_reconciliation: "merged-and-read-back"
+    terminal_publication_contract: "merge-and-readback-before-cleanup"
+    cleanup_gate: "remote-readback-required"
+
+owner_documentation:
+  required: true
+  status: "satisfied"
+  publication_status: "merged-and-read-back"
+  evidence_refs:
+    - "evidence/requests/CR-SST-0224/owner-unit-1-contracts-2026-09-07.md"
+    - "evidence/requests/CR-SST-0224/owner-unit-2-prompts-2026-09-08.md"
+    - "evidence/requests/CR-SST-0224/owner-unit-3-provider-2026-09-08.md"
+    - "evidence/requests/CR-SST-0224/owner-unit-4-checkpoints-2026-09-08.md"
+    - "evidence/requests/CR-SST-0224/owner-unit-5-final-synthesis-2026-09-09.md"
+    - "evidence/requests/CR-SST-0224/owner-unit-6-execution-guard-2026-09-10.md"
+
+validation_results:
+  owner_check: "PASS"
+  owner_ci: "PASS"
+  owner_tests: "PASS: 272 tests and three deterministic smokes"
+  owner_manual_contract_review: "PASS"
+  owner_publication: "merged-and-read-back"
+  jira_terminal_batch: "PASS: exact two writes and terminal readback"
+  deployment: "not-executed"
+  cluster_rollout: "not-verified"
+  control_plane_check: "PASS: full npm run check with 0 FAIL"
+
+decision:
+  status: "ready-for-terminal-publication-owner-and-jira-complete"
+  approver: "4uentes"
+  decided_at: "2026-09-11"
+  next_gate: >
+    Publish and read back this done lifecycle before retiring the terminal
+    worktree or advancing CR-SST-0225 owner execution.
+
+closure:
+  status: "complete-terminal-publication-pending"
+  completed_scope:
+    - "The owner pipeline is merged and validated on sst-chatbot develop."
+    - "SST-126 contains the terminal description and is Finalizada with resolution Listo."
+    - "No deployment, migration execution, shared-environment or production-data mutation was performed."
+  remaining_operational_gate: "Merge and read back this done lifecycle."
+  limits:
+    - "No additional Jira write is authorized."
+    - "Durable Bend-chatbot integration remains CR-SST-0225."
+    - "Fend UX remains CR-SST-0226."
+    - "Chrome DevTools MCP-only E2E QA without DB scripts or seeders remains CR-SST-0227."
+
+evidence_refs:
+  - "evidence/requests/CR-SST-0224/jira-terminal-result-2026-09-11.md"
+  - "evidence/requests/CR-SST-0224/jira-terminal-preflight-2026-09-10.md"
+  - "evidence/requests/CR-SST-0224/jira-terminal-description-draft-2026-09-10.md"
+  - "evidence/requests/CR-SST-0224/owner-merge-readback-and-contract-review-2026-09-10.md"
+  - "evidence/requests/CR-SST-0224/owner-pr-12-publication-readback-2026-09-10.md"
+  - "docs/projects/sst/plan-pipeline-articulos-sst-chatbot-cr-sst-0224.md"
