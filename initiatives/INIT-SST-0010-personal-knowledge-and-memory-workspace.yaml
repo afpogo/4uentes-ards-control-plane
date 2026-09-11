@@ -145,10 +145,10 @@ tracking:
     issue_type: "Epic"
     issue_key: "SST-105"
     current_status_observed: "Tareas por hacer"
-    write_status: "historical-batches-plus-cr-sst-0233-sst-125-create-consumed-no-current-authorization"
-    read_status: "sst-125-create-readback-passed-2026-09-05"
+    write_status: "historical-batches-plus-sst-126-progress-batch-consumed-no-current-authorization"
+    read_status: "sst-126-en-curso-comment-readback-passed-2026-09-09"
     evidence_ref: "evidence/initiatives/INIT-SST-0010/jira-final-readback.md"
-    associated_issue_keys: ["SST-106", "SST-107", "SST-108", "SST-109", "SST-110", "SST-111", "SST-112", "SST-120", "SST-122", "SST-123", "SST-125"]
+    associated_issue_keys: ["SST-106", "SST-107", "SST-108", "SST-109", "SST-110", "SST-111", "SST-112", "SST-120", "SST-122", "SST-123", "SST-125", "SST-126"]
     request_issue_map:
       CR-SST-0192: "SST-106"
       CR-SST-0193: "SST-107"
@@ -160,6 +160,7 @@ tracking:
       CR-SST-0219: "SST-120"
       CR-SST-0220: "SST-122"
       CR-SST-0223: "SST-123"
+      CR-SST-0224: "SST-126"
       CR-SST-0233: "SST-125"
     issue_status_observed_at: "2026-08-28"
     issue_status_observed:
@@ -175,14 +176,14 @@ tracking:
       SST-122: "En curso"
       SST-123: "En curso"
     latest_request_readback:
-      observed_at: "2026-09-05T23:34:25Z"
-      request_id: "CR-SST-0233"
-      issue_key: "SST-125"
+      observed_at: "2026-09-09"
+      request_id: "CR-SST-0224"
+      issue_key: "SST-126"
       issue_type: "Subtask"
-      status: "Tareas por hacer"
+      status: "En curso"
       parent_issue_key: "SST-122"
       epic_key: "SST-105"
-      write_authorization: "consumed-create-and-readback"
+      write_authorization: "consumed-comment-and-transition"
     reconciliation_request_candidate: "CR-SST-TODO-JIRA-RECONCILIATION"
     reconciliation_batch_status: "quarantined-after-local-cr-sst-0202-id-collision"
 identifier_reconciliation:
@@ -220,7 +221,7 @@ paragraph_derivation_adoption:
   owner_execution_status: "control-plane-only-approved; child-owner-execution-not-authorized"
   next_gate: "publish and read back the validated contract, then perform final human QA"
 article_processing_adoption:
-  status: "cr-sst-0223-closed; cr-sst-0224-running-publication-prepared"
+  status: "cr-sst-0223-closed; cr-sst-0224-running-published-owner-preparation"
   request_id: "CR-SST-0220"
   feature_state_id: "article-agent-processing"
   predecessor_contract_request_id: "CR-SST-0219"
@@ -248,8 +249,10 @@ article_processing_adoption:
   first_owner_manual_review: "passed-2026-08-29"
   second_owner_request_id: "CR-SST-0224"
   second_owner_preflight_status: "published-and-read-back; historical worktrees retired"
-  second_owner_execution_status: "running-lifecycle-prepared; owner-and-jira-not-authorized"
-  next_gate: "validate and publish the CR-SST-0224 running lifecycle, then request owner and Jira authorization as separate exact gates"
+  second_owner_execution_status: "running-merged-pr-261; sst-chatbot-pr-12-merged-develop-a0ce974-ci-passed; jira-sst-126-en-curso"
+  second_owner_jira_issue_key: "SST-126"
+  second_owner_jira_evidence_ref: "evidence/requests/CR-SST-0224/jira-create-readback-2026-09-07.md"
+  next_gate: "publish owner merge evidence, then prepare CR-SST-0224 terminal lifecycle and exact SST-126 closure batch"
 learning_workspace_source_adoption:
   status: "first-owner-live-readback-passed-protected-positive-qa-pending"
   request_id: "CR-SST-0232"
@@ -311,7 +314,7 @@ boundaries:
   jira_writes_authorized: false
   jira_writes_were_authorized: true
   jira_write_authorization_consumed: true
-  jira_write_authorization_scope: "Historical creation batches, SST-108 closure, the SST-120/SST-122/SST-123 create-and-start batches, and the exact SST-123 terminal description-plus-transition batch are consumed; no current Jira write is authorized."
+  jira_write_authorization_scope: "Historical creation and terminal batches, SST-125 creation, SST-126 creation and its 2026-09-09 comment-plus-transition-21 batch are consumed; no current Jira write is authorized."
   child_repo_mutation_requires_later_execution_approval: true
   child_repo_mutation_requires_running_publication_readback: true
   canonical_memory_owner: "sst-bend"
@@ -365,8 +368,8 @@ progress:
     - "CR-SST-0236"
     - "CR-SST-0237"
   next_recommended_request: >
-    Publish and read back the CR-SST-0224 running lifecycle, then refresh its
-    sst-chatbot and Jira preflights before any separately authorized mutation.
+    Continue the approved local CR-SST-0224 implementation after consolidating
+    six owner units and reconciling SST-126 to En curso on 2026-09-09.
     Independently run positive protected CR-SST-0234 Learning QA with a
     bounded credential path and synthetic article, document and completed
     agent-output fixtures. Neither track grants authority to the other, and
@@ -395,8 +398,9 @@ progress:
     terminal description and transition batch: it is Finalizada with
     resolution Listo and no additional Jira write remains authorized. The
     CR-SST-0223 done lifecycle is merged and read back. CR-SST-0224 now has
-    canonical owner/Jira preflights and a locally prepared running lifecycle,
-    but no sst-chatbot or Jira mutation is authorized. CR-SST-0234 now has a
+    refreshed owner/Jira preflights and a canonically merged running lifecycle,
+    with local sst-chatbot implementation authorized and six units consolidated;
+    SST-126 progress writes are consumed. CR-SST-0234 now has a
     merged Bend implementation from PR 33:
     owner-scoped source resolution, immutable snapshot persistence, reversible
     schema, contracts, maps and tests are green. Image
