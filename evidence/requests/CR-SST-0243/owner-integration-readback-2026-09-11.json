@@ -1,0 +1,85 @@
+{
+  "request_id": "CR-SST-0243",
+  "observed_at_local": "2026-09-11T19:27:13.778-03:00",
+  "authorization_reconciliation": {
+    "previous_batch_status": "consumed",
+    "previous_batch_owner_merge_allowed": false,
+    "integration_covered_by_previous_batch": false,
+    "observation_mode": "read-only containment after external merge",
+    "external_actor_observed": "afpogo"
+  },
+  "owner": {
+    "repository": "afpogo/4uentes-auth",
+    "pull_request": 17,
+    "pull_request_state": "merged",
+    "head_commit": "682eff6298154e84fde22010bbb41c8a645be323",
+    "merge_commit": "a49260ff4b178530a1b2fab421b0793ea505d6e3",
+    "merged_at": "2026-09-11T22:22:53Z",
+    "merged_by": "afpogo",
+    "base_before_merge": "d9263d1801963047eb01a1956b2a5ee54244a12f"
+  },
+  "owner_workflow": {
+    "run_id": 34653741919,
+    "event": "push",
+    "head_sha": "a49260ff4b178530a1b2fab421b0793ea505d6e3",
+    "status": "completed",
+    "conclusion": "success",
+    "completed_at": "2026-09-11T22:24:37Z",
+    "repository_check": "success",
+    "image_build_and_push": "success",
+    "infra_checkout_and_update": "success",
+    "image_tag": "ghcr.io/afpogo/4uentes-auth:develop-a49260ff4b17",
+    "image_digest": "sha256:522f2d8396aae474a3b7c961c03d6ae272fb380855f0baa78b59bcebacfb940c",
+    "annotation": "GitHub forced actions targeting Node.js 20 to run on Node.js 24; non-blocking workflow debt."
+  },
+  "infra": {
+    "repository": "afpogo/sst-4uentes-infra",
+    "branch": "develop",
+    "commit": "82cee7c2bfb860d4332ef4399e928459f3148cb3",
+    "parent": "b4abb5c63e58d3d210c5edbe0ef34cf6e81a0cfa",
+    "committed_at": "2026-09-11T22:24:30Z",
+    "files_changed": [
+      {
+        "path": "k8s-manifests/overlays/development/kustomization.yml",
+        "additions": 1,
+        "deletions": 1
+      }
+    ],
+    "desired_auth_tag": "develop-a49260ff4b17",
+    "checks": [
+      {"name": "ARDS Infra Validation / validate-repository", "conclusion": "success"},
+      {"name": "Validate SST-Fend GitOps / validate-manifests", "conclusion": "success"},
+      {"name": "Validate SST-Bend GitOps / validate-manifests", "conclusion": "success"},
+      {"name": "GitOps Desired State Validation / validate-desired-state", "conclusion": "success"}
+    ]
+  },
+  "runtime_boundary": {
+    "dockerfile_command": "npm run dev",
+    "onboarding_or_database_migration_invoked_by_dockerfile_or_workflow": false,
+    "preexisting_identity_index_reconciliation_present": true,
+    "preexisting_identity_index_reconciliation_execution_observed": false,
+    "feature_flag_changed": false,
+    "manual_infra_write_by_agent": false,
+    "cluster_rollout_observed": false,
+    "integrated_runtime_qa_executed": false,
+    "real_data_used": false
+  },
+  "jira_readback": {
+    "issue_key": "SST-130",
+    "issue_id": "10291",
+    "issue_type": "Subtask",
+    "parent": "SST-128",
+    "status": "En curso",
+    "resolution": null,
+    "link_id": "10093",
+    "blocked_by": "SST-129",
+    "comment_ids": ["10440"],
+    "available_terminal_transition": {
+      "id": "41",
+      "name": "Listo",
+      "target_status": "Finalizada"
+    },
+    "writes_performed_during_reconciliation": 0
+  },
+  "result": "integration published; ordering deviation contained; runtime not asserted"
+}

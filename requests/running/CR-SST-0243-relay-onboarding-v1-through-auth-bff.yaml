@@ -71,10 +71,10 @@ execution:
   git_publication_allowed: false
   owner_merge_allowed: false
   jira_batch_status: "complete; four-of-four writes read back; authorization consumed"
-  next_gate: "Review owner PR 17 and request a separate integration authorization; do not merge or trigger push-to-develop effects under this batch."
+  next_gate: "Publish the terminal lifecycle, then execute only the separately authorized two-write SST-130 closure batch; no runtime or owner mutation."
 owner_documentation:
   required: true
-  status: "published-in-owner-pr"
+  status: "satisfied-and-merged"
   reason: "Publish owner specs, capabilities, Spanish docs, tests and request linkage with implementation."
 acceptance:
   - "Unauthorized and expired sessions use established authentication behavior with zero unintended upstream calls."
@@ -88,6 +88,8 @@ validation:
   owner: "Full owner check plus focused contract, negative-path, header, error, idempotency and concurrency tests"
   closure: "Owner PR publication/readback, sanitized evidence and full control-plane gate before any integration proposal."
 evidence_refs:
+  - "evidence/requests/CR-SST-0243/integration-deviation-and-closure-gate-2026-09-11.md"
+  - "evidence/requests/CR-SST-0243/owner-integration-readback-2026-09-11.json"
   - "evidence/requests/CR-SST-0243/owner-pr-publication-2026-09-11.md"
   - "evidence/requests/CR-SST-0243/jira-batch-readback-2026-09-11.json"
   - "evidence/requests/CR-SST-0243/jira-execution-authorization-2026-09-11.json"
@@ -128,11 +130,32 @@ owner_publication:
   branch: "agent/cr-sst-0243-onboarding-relay"
   commit: "682eff6298154e84fde22010bbb41c8a645be323"
   pull_request: 17
-  pull_request_state: "open"
+  pull_request_state: "merged"
   mergeable_observed: true
-  merged: false
+  merged: true
+  merge_commit: "a49260ff4b178530a1b2fab421b0793ea505d6e3"
+  merged_at: "2026-09-11T22:22:53Z"
   owner_check: "pass"
   focused_harness: "pass"
   remote_check: "build-publish-update success at 2026-09-11T19:24:10Z"
-  runtime_effect: "none"
-  next_gate: "independent owner-integration authorization"
+  post_merge_workflow_run: 34653741919
+  post_merge_workflow_result: "success"
+  development_image_tag: "develop-a49260ff4b17"
+  automated_infra_commit: "82cee7c2bfb860d4332ef4399e928459f3148cb3"
+  runtime_effect: "development desired state changed; cluster rollout not observed"
+  next_gate: "terminal control-plane publication and exact SST-130 closure batch"
+integration_deviation:
+  detected_at_local: "2026-09-11T19:22:53-03:00"
+  previous_authorization_covered_merge: false
+  actor_observed: "afpogo"
+  containment: "read-only reconciliation; no corrective owner, Infra, runtime or Jira mutation"
+  content_identity: "Merged head equals the reviewed and validated owner head."
+  evidence_ref: "evidence/requests/CR-SST-0243/integration-deviation-and-closure-gate-2026-09-11.md"
+proposed_terminal_jira_batch:
+  authorization_status: "not-authorized"
+  issue_key: "SST-130"
+  allowed_write_count: 2
+  operations: ["one exact closure comment", "transition 41 to Finalizada"]
+  exact_comment_sha256: "1572e6cf198be66f5f4733814c9b5eb7a4b855c3b8f6d3552f72f82a04ec0f28"
+  window: "30 minutes after canonical terminal-lifecycle readback"
+  failure_rule: "Any failure or uncertainty consumes the batch and blocks further writes."
