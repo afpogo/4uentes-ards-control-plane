@@ -12,6 +12,7 @@ spec_refs:
   - "evidence/requests/CR-SST-0240/onboarding-v1-contract.yaml"
   - "requests/planned/CR-SST-0240-define-and-coordinate-evolutionary-onboarding-v1.yaml"
 evidence_refs:
+  - "evidence/requests/CR-SST-0243/terminal-authorization-2026-09-11.md"
   - "evidence/requests/CR-SST-0243/integration-deviation-and-closure-gate-2026-09-11.md"
   - "evidence/requests/CR-SST-0243/owner-integration-readback-2026-09-11.json"
   - "evidence/requests/CR-SST-0243/owner-pr-publication-2026-09-11.md"
@@ -27,5 +28,5 @@ evidence_refs:
   - "evidence/requests/CR-SST-0240/initiative-and-execution-plan.md"
 open_gaps:
   - "Bend owner capability is published and promoted to development desired state with the flag off; migration and integrated runtime acceptance remain unexecuted."
-  - "Auth relay PR 17 was merged externally and its image/desired-state publication was reconciled as an ordering deviation; terminal Jira closure remains unapproved and no cluster rollout is asserted."
+  - "Auth relay PR 17 was merged externally and reconciled as an ordering deviation; CR-SST-0243 owner scope is terminal with an authorized Jira sync pending, while no cluster rollout is asserted."
   - "CR-SST-0238 navigation and CR-SST-0241 Compose parity remain prerequisite gates."
