@@ -1,0 +1,117 @@
+{
+  "request_id": "CR-SST-0243",
+  "t0_local": "2026-09-11T16:02:05.005-03:00",
+  "expires_at_local": "2026-09-11T17:02:05.005-03:00",
+  "preflight_at_local": "2026-09-11T16:03:42.194-03:00",
+  "final_readback_at": "2026-09-11T19:09:41.065Z",
+  "tracker_role": "mirror",
+  "source_of_truth": "ARDS/SDD",
+  "transport": {
+    "integrated_connector_pre_t0_result": "unauthorized_client: refresh_token is invalid",
+    "fallback": "stdio mcp-remote@latest https://mcp.atlassian.com/v1/mcp",
+    "site_display_name": "developanywhereafpf",
+    "project_key": "SST",
+    "cloud_id_url_and_credentials": "redacted"
+  },
+  "authorization": {
+    "maximum_writes": 4,
+    "writes_executed": 4,
+    "write_retries": 0,
+    "uncertain_write_results": 0,
+    "result": "pass",
+    "status": "consumed"
+  },
+  "preflight": {
+    "exact_duplicates": 0,
+    "subtask_type_id": "10006",
+    "in_progress_transition_id": "21",
+    "blocks_type_id": "10000",
+    "blocks_inward_label": "is blocked by",
+    "blocks_outward_label": "blocks",
+    "hierarchy": [
+      {"key": "SST-127", "type": "Epic", "status": "En curso", "resolution": null},
+      {"key": "SST-128", "type": "Tarea", "parent": "SST-127", "status": "En curso", "resolution": null},
+      {"key": "SST-129", "type": "Subtask", "parent": "SST-128", "status": "En curso", "resolution": null}
+    ]
+  },
+  "writes": [
+    {
+      "order": 1,
+      "operation": "create_issue",
+      "started_at": "2026-09-11T19:04:21.111Z",
+      "readback_at": "2026-09-11T19:04:23.679Z",
+      "issue_key": "SST-130",
+      "issue_id": "10291",
+      "issue_type": "Subtask",
+      "parent": "SST-128",
+      "initial_status": "Tareas por hacer",
+      "resolution": null,
+      "summary_matches": true,
+      "description_matches": true,
+      "initial_comments": 0,
+      "result": "pass"
+    },
+    {
+      "order": 2,
+      "operation": "transition_issue",
+      "transition_id": "21",
+      "started_at": "2026-09-11T19:05:59.038Z",
+      "readback_at": "2026-09-11T19:06:00.530Z",
+      "before": "Tareas por hacer",
+      "after": "En curso",
+      "resolution": null,
+      "result": "pass"
+    },
+    {
+      "order": 3,
+      "operation": "create_issue_link",
+      "started_at": "2026-09-11T19:06:43.685Z",
+      "readback_at": "2026-09-11T19:06:45.710Z",
+      "link_type": "Blocks",
+      "link_type_id": "10000",
+      "link_id": "10093",
+      "inward_issue": "SST-129",
+      "outward_issue": "SST-130",
+      "both_ends_confirmed": true,
+      "result": "pass"
+    },
+    {
+      "order": 4,
+      "operation": "add_comment",
+      "started_at": "2026-09-11T19:08:06.615Z",
+      "readback_at": "2026-09-11T19:08:07.688Z",
+      "comment_id": "10440",
+      "jira_created_updated": "2026-09-11T16:08:07.204-0300",
+      "exact_match_count": 1,
+      "body_sha256": "81df2b244e9c5a4dceab5a1deff0f42ea8ae24d0fc8bd9d7c579e86e02559696",
+      "body": "CR-SST-0243 inicio: lote Auth/BFF aprobado; lifecycle running publicado y leído desde main antes de modificar 4uentes-auth. Alcance limitado al relay autenticado de onboarding V1 y a preservar onboardingAttemptId en POST /api/articles; sin migración, deployment, habilitación de flags, datos reales ni cambios Bend/Fend/Infra. ARDS/SDD conserva autoridad; Jira es espejo y queda En curso.",
+      "result": "pass"
+    }
+  ],
+  "final_readback": {
+    "issue_key": "SST-130",
+    "issue_id": "10291",
+    "issue_type": "Subtask",
+    "status": "En curso",
+    "resolution": null,
+    "parent": "SST-128",
+    "derived_epic": "SST-127",
+    "summary_matches": true,
+    "description_matches": true,
+    "hierarchy_intact": true,
+    "link_id": "10093",
+    "link_confirmed_at_both_ends": true,
+    "comment_id": "10440",
+    "comment_hash_confirmed": true,
+    "jql": "project = SST AND summary ~ \"CR-SST-0243\" ORDER BY created DESC",
+    "jql_result_count": 1,
+    "exact_summary_matches": ["SST-130"],
+    "result": "pass"
+  },
+  "notes": [
+    "The first final-readback attempt failed in local shell parsing before any MCP connection; the corrected retry was read-only.",
+    "The connector fallback changed transport only, not site, project, scope or authorization.",
+    "No Auth owner or filesystem mutation occurred during the Jira batch.",
+    "No Jira closure or additional comment is authorized by this consumed batch."
+  ]
+}

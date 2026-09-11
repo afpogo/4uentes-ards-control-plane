@@ -15,11 +15,13 @@ control_plane_context:
   feature_state_id: "sst-evolutionary-onboarding"
   jira_role: "mirror"
   jira_source_of_truth: false
-  jira_issue_key: null
+  jira_issue_key: "SST-130"
   proposed_jira_issue_type: "Subtask"
   proposed_jira_parent_issue_key: "SST-128"
   jira_epic_issue_key: "SST-127"
-  jira_write_authorized: true
+  jira_status_observed: "En curso"
+  jira_resolution_observed: null
+  jira_write_authorized: false
   jira_write_scope: "Create exactly one CR-SST-0243 Subtask under SST-128; conditionally transition once to En curso; add one Blocks link SST-129 -> new issue; add one exact initial comment; read back."
   jira_write_window: "Single-use window beginning after this running lifecycle and ledger are read back from main; maximum 60 minutes; expires on completion, first failure/uncertainty or credential loss."
 risk:
@@ -63,16 +65,16 @@ execution_gates:
   - "Fresh Git and Jira preflight passed before this running publication; repeat relevant reads immediately before each external write."
 execution:
   control_plane_mutation_allowed: true
-  child_repo_mutation_allowed: true
+  child_repo_mutation_allowed: false
   runtime_mutation_allowed: false
-  jira_write_allowed: true
-  git_publication_allowed: true
+  jira_write_allowed: false
+  git_publication_allowed: false
   owner_merge_allowed: false
-  jira_batch_status: "authorized-unconsumed; becomes single-use at first write"
-  next_gate: "After canonical running readback, execute the exact Jira batch and implement/test/open the 4uentes-auth owner PR; do not merge or trigger push-to-develop effects."
+  jira_batch_status: "complete; four-of-four writes read back; authorization consumed"
+  next_gate: "Review owner PR 17 and request a separate integration authorization; do not merge or trigger push-to-develop effects under this batch."
 owner_documentation:
   required: true
-  status: "in-progress"
+  status: "published-in-owner-pr"
   reason: "Publish owner specs, capabilities, Spanish docs, tests and request linkage with implementation."
 acceptance:
   - "Unauthorized and expired sessions use established authentication behavior with zero unintended upstream calls."
@@ -86,6 +88,8 @@ validation:
   owner: "Full owner check plus focused contract, negative-path, header, error, idempotency and concurrency tests"
   closure: "Owner PR publication/readback, sanitized evidence and full control-plane gate before any integration proposal."
 evidence_refs:
+  - "evidence/requests/CR-SST-0243/owner-pr-publication-2026-09-11.md"
+  - "evidence/requests/CR-SST-0243/jira-batch-readback-2026-09-11.json"
   - "evidence/requests/CR-SST-0243/jira-execution-authorization-2026-09-11.json"
   - "evidence/requests/CR-SST-0243/execution-preflight-2026-09-11.json"
   - "evidence/requests/CR-SST-0243/approved-execution-2026-09-11.md"
@@ -111,8 +115,24 @@ plan_publication:
   merge_commit: "dcfc050d7e86f2429b29b7f23a7ccd8274d6d729"
   readback: "Planned lifecycle and execution gate read from canonical main before authorization."
 execution_authorization:
+  status: "consumed"
   approved_at_local: "2026-09-11T15:57:11.349-03:00"
   approval_text: "ok autorizo el lote y la ventana"
   maximum_minutes_after_running_readback: 60
   scope: "Publish/read back running; execute the exact four-write Jira maximum; implement/test/publish the Auth branch and open its PR."
   prohibited: "No owner PR merge, GHCR publication, Infra/GitOps, runtime, migration, flag, real data or Bend/Fend mutation."
+owner_publication:
+  repository: "4uentes-auth"
+  base_ref: "develop"
+  base_commit: "d9263d1801963047eb01a1956b2a5ee54244a12f"
+  branch: "agent/cr-sst-0243-onboarding-relay"
+  commit: "682eff6298154e84fde22010bbb41c8a645be323"
+  pull_request: 17
+  pull_request_state: "open"
+  mergeable_observed: true
+  merged: false
+  owner_check: "pass"
+  focused_harness: "pass"
+  remote_check: "build-publish-update success at 2026-09-11T19:24:10Z"
+  runtime_effect: "none"
+  next_gate: "independent owner-integration authorization"
