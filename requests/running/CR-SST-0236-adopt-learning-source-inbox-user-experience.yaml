@@ -39,7 +39,7 @@ authorization:
   scope: 'Publish the CR-SST-0236 running gate and prepare read-only owner preflight; no sst-fend mutation.'
   evidence_ref: 'evidence/requests/CR-SST-0236/running-gate-2026-09-10.md'
 execution:
-  current_unit: 'running-gate-publication'
+  current_unit: 'owner-readonly-preflight-complete'
   control_plane_mutation_allowed: true
   git_publication_allowed: true
   child_repo_mutation_allowed: false
@@ -49,8 +49,11 @@ execution:
   seeders_allowed: false
   database_mutation_allowed: false
   jira_write_allowed: false
-  next_gate: 'Merge and read back this running gate; then perform read-only sst-fend preflight and request explicit owner execution authorization.'
+  next_gate: 'Publish the owner preflight; after merge/readback, obtain explicit authorization for the scoped sst-fend owner implementation.'
 predecessor_readback:
+  running_gate_pull_request: 301
+  running_gate_merge: '148cb887ab62ea50db8fed3df67b2d61cad46c96'
+  running_gate_merged_at: '2026-09-11T01:16:08Z'
   control_plane_pull_request: 298
   control_plane_merge: '327628f6ba77d5593304e1d71a0846ddb6bc2578'
   merged_at: '2026-09-10T23:42:47Z'
@@ -60,6 +63,45 @@ predecessor_readback:
   argo_status: 'Synced/Healthy'
   negative_auth_http_probe: 'GET me/context returned 401 without credentials'
   positive_persistence_qa: 'pending-not-waived-and-owned-by-CR-SST-0237'
+owner_preflight:
+  observed_at: '2026-09-10'
+  repository: 'afpogo/sst-fend'
+  canonical_branch: 'develop'
+  canonical_baseline: 'bd9b8d2aa52aab2346b7bf94b0db05ed188c09a3'
+  baseline_commit_date: '2026-08-27T20:59:22-03:00'
+  primary_checkout: 'dirty-preserve'
+  existing_request_branch_found: false
+  existing_request_pull_request_found: false
+  clean_owner_worktree_required: true
+  current_inbound_capability_version: '1.0.0'
+  required_inbound_capability_version: '1.2.0'
+  observed_contract_gaps:
+    - 'Preview input requires sourceText and has no sourceDescriptor discriminated union.'
+    - 'No article_document or agent_output source kind exists in owner types or UI.'
+    - 'Preview response has no typed immutable source.snapshot identity, provenance or freshness model.'
+    - 'The 1323-line LearningWorkspaceSheet combines source editing, annotation, preview and decision concerns.'
+    - 'The active owner spec still describes /learning as a manual-text laboratory and points to older initiative/request ownership.'
+  policy_readback:
+    knowledge_to_execution_documentation_policy: 'not-adopted-locally-do-not-claim-adoption'
+    visual_documentation_as_code_policy: 'adopted'
+    owner_documentation_authority_policy: 'adopted'
+    http_qa_harness_policy: 'open-exception-on-canonical-baseline'
+owner_execution_candidate:
+  status: 'planned-not-authorized'
+  branch: 'agent/cr-sst-0236-learning-source-inbox'
+  first_slice:
+    - 'Upgrade the owner inbound capability and LearningWorkspace spec/docs from 1.0.0 to the published 1.2.0 BFF contract.'
+    - 'Introduce typed sourceDescriptor and source.snapshot models while preserving the legacy manual-text adapter.'
+    - 'Extract a source inbox component for manual_text, article, article_document and agent_output references.'
+    - 'Show snapshot identity, owner provenance, version/hash, freshness and sanitized failure states before accept/reject.'
+    - 'Keep article preparation, ArticleTag, Learning contentTags and any future UserMemoryProposal visibly separate.'
+    - 'Add focused unit/accessibility tests and owner playbook/runbook documentation with Mermaid plus textual fallback.'
+  prohibited:
+    - 'Secret values or browser-visible credentials; V1 permits no credentialed source acquisition.'
+    - 'Direct sst-bend calls or frontend authorization decisions.'
+    - 'Caller-supplied source bodies for article, article_document or agent_output.'
+    - 'Automatic article publication, TagDefinition creation or UserMemory acceptance.'
+    - 'Runtime, data, Jira or repository publication before their applicable gates.'
 owner_contract:
   responsibilities:
     - 'Expose a comprehensible source inbox for manual text, article, article document and agent output.'
@@ -103,6 +145,7 @@ acceptance:
   - 'The source-to-snapshot-to-article flow is mapped without conflating tags or memory acceptance.'
   - 'No child repository, runtime, data or Jira mutation occurs in this gate.'
 evidence_refs:
+  - 'evidence/requests/CR-SST-0236/owner-readonly-preflight-2026-09-10.md'
   - 'evidence/requests/CR-SST-0236/running-gate-2026-09-10.md'
   - 'evidence/requests/CR-SST-0235/owner-merge-readback-2026-09-09.md'
   - 'evidence/requests/CR-SST-0232/owner-request-allocation-plan-2026-09-05.md'
