@@ -453,6 +453,7 @@ technical_closure_preparation_2026_09_10:
   next_gate: "Confirm AIStor license archive, encrypted HSM/KMS backup and Secret contracts before bootstrap."
 
 evidence_refs:
+  - "evidence/requests/CR-HPT-0024/gate-c-unit-a-preflight-2026-09-10.md"
   - "evidence/requests/CR-CP-0024/custody-first-gates-technical-closure-2026-09-10.md"
   - "evidence/requests/CR-CP-0024/jira-terminal-readiness-batch-2026-09-10.json"
   - "evidence/requests/CR-HPT-0024/infra-pr29-reconciliation-2026-09-07.md"
@@ -497,6 +498,25 @@ gate_c_documentation_2026_09_10:
   hsm_material_generated_for_use: false
   secret_resources_created: false
   next_unit: "license-acceptance-and-encrypted-archival"
+
+gate_c_unit_a_preflight_2026_09_10:
+  status: "technical-preflight-passed-operator-license-action-pending"
+  evidence: "evidence/requests/CR-HPT-0024/gate-c-unit-a-preflight-2026-09-10.md"
+  owner_worktree_head: "226443397d07ac8e59f83b408dbcf34b25364d79"
+  owner_remote_develop: "5fc609f064032f553b4a33933bc75ac48a3b77b6"
+  owner_worktree_relation: "clean and one unrelated chatbot image-pin commit behind remote develop"
+  argo_status: "Synced/Healthy"
+  argo_revision: "5fc609f064032f553b4a33933bc75ac48a3b77b6"
+  custody_namespaces_present: false
+  custody_secrets_present: false
+  docker_available: true
+  pinned_kms_image_available_locally: true
+  license_accepted: false
+  hsm_generated_for_use: false
+  secret_resources_created: false
+  runtime_mutation_performed: false
+  jira_write_performed: false
+  next_unit: "operator accepts AIStor Free agreement and archives minio.license in encrypted custody"
 
 validation_readback_2026_09_09:
   latest_evidence: "evidence/requests/CR-CP-0024/sst-pr34-authorized-rollout-2026-09-09.md"
