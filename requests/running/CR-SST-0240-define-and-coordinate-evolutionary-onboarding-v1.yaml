@@ -46,7 +46,7 @@ execution:
   git_publication_allowed: true
   jira_write_allowed: false
   jira_batch_status: "initial-batch-complete; authorization-consumed"
-  next_gate: "CR-SST-0242 implemented in owner PR #35; approve integration-gate.md for automatic infra effects before canonical merge and CR-SST-0243 execution."
+  next_gate: "CR-SST-0242 owner merge/image/Infra readback passed; publish its Jira progress readback, then prepare the exact CR-SST-0243 Auth/BFF owner and Jira batch."
 publication_policy:
   policy_id: "execution-publication-and-tracker-closure-policy"
   enforcement_activation: "Add the enforcement marker to planned and running together at execution start; the validator requires an execution state."
@@ -69,6 +69,7 @@ acceptance:
   - "Owner requests are allocated only after fresh Git/worktree/PR/JQL preflight; allocation alone does not authorize mutation."
   - "Full control-plane check passes and Jira keys are captured after readback."
 evidence_refs:
+  - "evidence/requests/CR-SST-0242/owner-integration-readback-2026-09-10.md"
   - "evidence/requests/CR-SST-0242/owner-implementation.md"
   - "evidence/requests/CR-SST-0242/integration-gate.md"
   - "evidence/requests/CR-SST-0242/execution-gate.md"

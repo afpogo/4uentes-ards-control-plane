@@ -1,6 +1,7 @@
 # Gate de integración owner de CR-SST-0242
 
-Estado: preparado, pendiente de ampliar autorización. Fecha: 2026-09-09.
+Estado: ejecutado con autorización ampliada. Preparado: 2026-09-09.
+Ejecutado: 2026-09-10 (fecha local).
 PR revisable: https://github.com/afpogo/sst-bend/pull/35.
 Head revisado: `bc40bd3001cfc14c127977aa6f32c5f3f4ed1edb`.
 
@@ -41,3 +42,12 @@ detallada: `owner-implementation.md`. La base descartable ya fue retirada.
 CR-SST-0242 y SST-129 permanecen En curso/running hasta reconciliar publicación
 canónica y lifecycle. CR-SST-0243 no comienza mutaciones mientras no se publique
 el contrato canónico y se apruebe su lote propio.
+
+## Resultado de ejecución
+
+El usuario aprobó el lote exacto mediante «avancemos con el próximo gate».
+PR #35 se fusionó en `sst-bend:develop`; el workflow de publicación terminó
+con éxito y actualizó automáticamente el desired state de Infra. No se
+ejecutaron migraciones, no se habilitó el flag y no hubo escritura manual en
+Infra. El readback completo y los SHAs correlacionados viven en
+`owner-integration-readback-2026-09-10.md`.
