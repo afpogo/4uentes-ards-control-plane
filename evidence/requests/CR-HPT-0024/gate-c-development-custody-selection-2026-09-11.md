@@ -158,6 +158,11 @@ completo `npm run check` terminó con código 0 antes de la fusión; el PR no
 tenía checks remotos configurados y la fusión se realizó con autorización
 explícita del operador para usar ese gate local.
 
+El control-plane PR #322 publicó este cierre C1 en `main` mediante
+`70c3572a7f6efdcf0770827815ac3d4553f4e1ad`. El gate local completo terminó
+con código 0 y la fusión fue autorizada explícitamente ante la ausencia de
+checks remotos configurados.
+
 ## Cambios owner autorizados
 
 La instrucción de continuar autoriza la actualización documental acotada de
@@ -191,14 +196,39 @@ verificación, copia, recuperación, retiro del original y expulsión. Quedó
 integrado mediante `32ab87691f12992b92743e50164c1b693dd082bc`, con CI
 `SUCCESS`. El corte final valida siete bloques Bash y nueve PowerShell.
 
+Infra PR #44 añadió el wrapper de `argocd --core` con kubeconfig temporal para
+Bash/Linux y PowerShell/Windows. Quedó integrado en `develop` mediante
+`376cbad3ee96ee7776ed3ea108dd3b2095ea3d02`; `validate-repository` terminó
+`SUCCESS`. La lectura real en modo core pasó y el kubeconfig temporal fue
+retirado. El cambio no sincronizó Applications ni modificó el cluster.
+
+## Cierre técnico de Gate C
+
+| Unidad | Disposición |
+| --- | --- |
+| A: licencia | `PASS`; copia primaria y recuperación cifradas, plaintext retirado |
+| B: soft-HSM | `PASS`; copia primaria y recuperación cifradas, formato comprobado |
+| C1: credenciales root | `PASS`; copia primaria y recuperación cifradas, formato comprobado |
+| C2: acceso mínimo SST | Contrato preparado y diferido hasta crear endpoint, CA, bucket e identidad |
+| Secrets Kubernetes reales | Ausentes; no se ejecutó bootstrap |
+| Preflight del cluster | Contexto esperado, dos nodos `Ready` y CRD de Argo CD presente |
+| Cliente Argo CD | Instalado y lectura `--core` comprobada sin mutación |
+
+Gate C queda validado técnicamente. La materialización de los Secrets iniciales
+y la sincronización GitOps pertenecen a Gate 3 del runbook owner y requieren
+autorización explícita de runtime. El Secret SST continúa bloqueado hasta que
+el bootstrap produzca sus valores y `CR-HPT-0025` fije la representación de
+`S3_CA_BUNDLE` en el contrato owner del consumidor.
+
 ## Siguiente unidad
 
-El destino de recuperación seleccionado es un pendrive. Las unidades A, B y C1
-quedaron en `PASS`: licencia, soft-HSM y credenciales root tienen custodia
-cifrada recuperable. La siguiente unidad es C2. Debe crear durante el bootstrap
-el endpoint privado, la CA, el bucket y una identidad de mínimo privilegio
-antes de materializar el contrato SST. No se deben crear claves vacías ni
-reutilizar las credenciales root como credenciales de aplicación.
+La siguiente unidad es el bootstrap GitOps secuencial. El lote autorizado debe
+aplicar primero el AppProject y las Applications sin autosync, sincronizar
+guardrails y operadores, materializar cada Secret inicial sólo en su momento,
+esperar `Synced/Healthy` entre etapas y detenerse ante degradación, CRD ausente,
+certificado inválido o revisión distinta de la autorizada. La licencia, el
+bucket, SSE-KMS y la identidad mínima SST se ejecutan después de que los
+workloads iniciales estén saludables.
 
 Fuentes owner:
 
