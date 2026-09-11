@@ -27,6 +27,8 @@ Incluye:
 
 ## Documentos Por App
 
+- [Guía didáctica: máquina de estados del onboarding y patrón State](onboarding-maquina-de-estados-guia.md)
+
 - [sst-fend](../../apps/sst-fend.md)
 - [sst-bend](../../apps/sst-bend.md)
 - [sst-extension](../../apps/sst-extension.md)
