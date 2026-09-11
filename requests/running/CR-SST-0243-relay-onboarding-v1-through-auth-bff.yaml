@@ -1,12 +1,12 @@
 schema_version: "1.0"
-phase: 2
+phase: 3
 id: "CR-SST-0243"
 title: "Relay onboarding V1 through the authenticated BFF"
-status: "planned"
+status: "running"
 created_at: "2026-09-08"
 requester: "4uentes"
 source_request: "requests/inbox/CR-SST-0243-relay-onboarding-v1-through-auth-bff.yaml"
-summary: "Prepare the bounded 4uentes-auth execution slice of onboarding V1."
+summary: "Adopt the bounded onboarding V1 relay and article-attempt metadata in 4uentes-auth."
 depends_on: ["CR-SST-0240","CR-SST-0242"]
 control_plane_context:
   initiative_id: "INIT-SST-0011"
@@ -19,7 +19,9 @@ control_plane_context:
   proposed_jira_issue_type: "Subtask"
   proposed_jira_parent_issue_key: "SST-128"
   jira_epic_issue_key: "SST-127"
-  jira_write_authorized: false
+  jira_write_authorized: true
+  jira_write_scope: "Create exactly one CR-SST-0243 Subtask under SST-128; conditionally transition once to En curso; add one Blocks link SST-129 -> new issue; add one exact initial comment; read back."
+  jira_write_window: "Single-use window beginning after this running lifecycle and ledger are read back from main; maximum 60 minutes; expires on completion, first failure/uncertainty or credential loss."
 risk:
   level: "high"
   drivers: ["DURABLE_USER_PROGRESS", "AUTHENTICATED_RESOURCE_SCOPE", "PRIVACY", "FALSE_POSITIVE_ACTIVATION"]
@@ -34,8 +36,8 @@ model_selection:
   fallback_profile: "gpt-5.5"
   reason: "Keep identity, privacy and cross-repository contracts under high-reasoning review."
 subagent_deployment_plan:
-  mode: "read-only-audit"
-  reason: "Bounded subagents reviewed owner surfaces and Jira hierarchy; the primary agent retained all auth, contract, scope and authorization decisions."
+  mode: "bounded-read-and-write-execution"
+  reason: "Subagents may perform auditable Jira transport and read-only review; the primary agent retains auth, contract, scope, stop and acceptance decisions and verifies every result."
 contract_ref: "evidence/requests/CR-SST-0240/onboarding-v1-contract.yaml"
 owner_binding_ref: "evidence/requests/CR-SST-0240/owner-binding-and-slice-plan.md"
 planned_surfaces:
@@ -53,38 +55,43 @@ planned_surfaces:
 objectives:
   - "Adopt the published Bend onboarding capability without inventing domain semantics."
   - "Expose GET/PATCH /api/onboarding/me and POST /api/onboarding/me/outcomes."
-  - "Propagate JWT, Idempotency-Key and X-Correlation-Id; preserve optimistic revision and sanitized owner error codes."
+  - "Propagate only the approved identity, account, idempotency and correlation headers; preserve optimistic revision and the exact sanitized owner error matrix."
   - "Preserve optional onboardingAttemptId through POST /api/articles and its local idempotency hash without interpreting product semantics."
   - "Keep product state and completion exclusively in Bend."
 execution_gates:
-  - "CR-SST-0242 owner API/capability published and read back at Bend develop cbb2222; its pinned API schema, enumerated values and HTTP cases are the contractual fixtures, so no parallel shared fixture source is required."
-  - "Fresh owner ref and explicit running batch before mutation."
+  - "CR-SST-0242 owner API/capability is published at Bend develop cbb2222; its pinned API schema, enumerated values and owner tests are the contractual fixtures."
+  - "Fresh Git and Jira preflight passed before this running publication; repeat relevant reads immediately before each external write."
 execution:
   control_plane_mutation_allowed: true
-  child_repo_mutation_allowed: false
+  child_repo_mutation_allowed: true
   runtime_mutation_allowed: false
-  jira_write_allowed: false
-  next_gate: "Obtain exact human approval to publish/read back running, execute the bounded Jira batch, and implement/test/open the Auth owner PR without merge or runtime effects."
+  jira_write_allowed: true
+  git_publication_allowed: true
+  owner_merge_allowed: false
+  jira_batch_status: "authorized-unconsumed; becomes single-use at first write"
+  next_gate: "After canonical running readback, execute the exact Jira batch and implement/test/open the 4uentes-auth owner PR; do not merge or trigger push-to-develop effects."
 owner_documentation:
   required: true
-  status: "planned"
+  status: "in-progress"
   reason: "Publish owner specs, capabilities, Spanish docs, tests and request linkage with implementation."
 acceptance:
-  - "Unauthorized and expired sessions use established authentication behavior."
+  - "Unauthorized and expired sessions use established authentication behavior with zero unintended upstream calls."
   - "Relay method/body/revision/idempotency/correlation have no semantic drift."
-  - "Only the exact Authorization/account/correlation/idempotency header allowlist crosses the relay; mutation keys use the owner 1-128 printable non-space ASCII rule."
+  - "Only Authorization, X-Active-Account-Id/X-Account-Id, X-Correlation-Id and mutation-only Idempotency-Key cross the relay."
   - "Only the exact owner status/code matrix is preserved; unknown combinations, sensitive payloads, upstream timeout and redirects are sanitized."
   - "Optional onboardingAttemptId reaches Bend, participates in Auth idempotency hashing and does not change normal article creation when absent."
-  - "No product-state persistence, actor inference or completion logic in the BFF."
+  - "No product-state persistence, actor inference, completion logic, autoretry or runtime effect is introduced in the BFF."
 validation:
   control_plane: "npm.cmd run check"
-  owner: "Full owner check plus focused contract, negative-path and concurrency tests"
-  closure: "Owner publication/readback, sanitized evidence and full control-plane gate before done."
+  owner: "Full owner check plus focused contract, negative-path, header, error, idempotency and concurrency tests"
+  closure: "Owner PR publication/readback, sanitized evidence and full control-plane gate before any integration proposal."
 evidence_refs:
+  - "evidence/requests/CR-SST-0243/jira-execution-authorization-2026-09-11.json"
+  - "evidence/requests/CR-SST-0243/execution-preflight-2026-09-11.json"
+  - "evidence/requests/CR-SST-0243/approved-execution-2026-09-11.md"
   - "evidence/requests/CR-SST-0243/execution-gate-2026-09-10.md"
   - "evidence/requests/CR-SST-0243/preflight-2026-09-10.json"
   - "evidence/requests/CR-SST-0240/owner-binding-and-slice-plan.md"
-  - "evidence/requests/CR-SST-0240/owner-slice-jql-preflight.json"
 execution_publication_rule:
   rule_id: "execution-publication-and-tracker-closure-rule"
   adoption_status: "adopted"
@@ -97,3 +104,15 @@ execution_publication_rule:
     provider: "jira"
   cleanup:
     remote_readback_required: true
+started_at: "2026-09-11"
+approval_ref: "evidence/requests/CR-SST-0243/approved-execution-2026-09-11.md"
+plan_publication:
+  pull_request: 306
+  merge_commit: "dcfc050d7e86f2429b29b7f23a7ccd8274d6d729"
+  readback: "Planned lifecycle and execution gate read from canonical main before authorization."
+execution_authorization:
+  approved_at_local: "2026-09-11T15:57:11.349-03:00"
+  approval_text: "ok autorizo el lote y la ventana"
+  maximum_minutes_after_running_readback: 60
+  scope: "Publish/read back running; execute the exact four-write Jira maximum; implement/test/publish the Auth branch and open its PR."
+  prohibited: "No owner PR merge, GHCR publication, Infra/GitOps, runtime, migration, flag, real data or Bend/Fend mutation."

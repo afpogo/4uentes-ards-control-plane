@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0",
+  "request_id": "CR-SST-0243",
+  "observed_at_local": "2026-09-11T15:55:18-03:00/2026-09-11T15:55:55-03:00",
+  "result": "pass-before-running-publication",
+  "writes_performed": 0,
+  "control_plane": {
+    "repository": "afpogo/4uentes-ards-control-plane",
+    "branch": "main",
+    "commit": "6b1d84034dbda432003a1fca90ee47b6d296001e",
+    "drift_since_gate_publication_reviewed": true,
+    "drift_conflict": false,
+    "request_status_before_publication": "planned"
+  },
+  "owner": {
+    "repository": "afpogo/4uentes-auth",
+    "branch": "develop",
+    "commit": "d9263d1801963047eb01a1956b2a5ee54244a12f",
+    "request_branch_present": false,
+    "request_pull_request_present": false,
+    "primary_checkout_clean": false,
+    "required_isolation": "fresh worktree"
+  },
+  "jira": {
+    "transport": "official-atlassian-mcp-fallback",
+    "integrated_connector_status": "blocked-invalid-refresh-token-before-write",
+    "site": "developanywhereafpf",
+    "project_key": "SST",
+    "project_id": "10001",
+    "exact_duplicate_count": 0,
+    "compatible_duplicate_count": 0,
+    "hierarchy": {
+      "epic": {"key": "SST-127", "type": "Epic", "status": "En curso", "resolution": null},
+      "parent": {"key": "SST-128", "type": "Tarea", "status": "En curso", "resolution": null, "parent": "SST-127"},
+      "dependency": {"key": "SST-129", "type": "Subtask", "status": "En curso", "resolution": null, "parent": "SST-128"}
+    },
+    "subtask_type": {"id": "10006", "name": "Subtask", "hierarchy_level": -1},
+    "required_create_fields": ["issuetype", "parent", "project", "reporter", "summary"],
+    "transition": {"id": "21", "name": "En curso", "must_refresh_on_new_issue": true},
+    "link_type": {"id": "10000", "name": "Blocks", "inward": "is blocked by", "outward": "blocks"},
+    "link_arguments": {"inwardIssue": "SST-129", "outwardIssue": "NEW_CR_SST_0243_KEY"}
+  },
+  "stop_conditions": [
+    "Any duplicate appears before create.",
+    "Canonical running or authorization ledger cannot be read back.",
+    "Subtask, transition or Blocks metadata changes before its write.",
+    "Any external write is failed, partial or uncertain.",
+    "The 60-minute window expires or credentials are lost."
+  ]
+}
