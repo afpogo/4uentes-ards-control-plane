@@ -10,7 +10,8 @@ requester: "4uentes"
 
 control_plane_context:
   initiative_id: "INIT-HPT-0003"
-  predecessor_request_ids: ["CR-HPT-0020", "CR-HPT-0023"]
+  predecessor_request_ids: ["CR-HPT-0023"]
+  historical_provenance_labels: ["CR-HPT-0020"]
   coordinator_request_id: "CR-CP-0024"
   jira_epic_key: "HPT-8"
   jira_task_key: "HPT-16"
@@ -40,7 +41,7 @@ worktree_policy:
   cleanup_allowed: false
 
 execution:
-  current_unit: "clamav-memory-owner-pr29-integrated-runtime-validation-pending"
+  current_unit: "gate-c-stepwise-execution-license-pending"
   completed_units:
     - "integrate-private-receipt-custody-through-owner-pr-23"
     - "integrate-clamav-permission-remediation-through-owner-pr-24"
@@ -431,16 +432,30 @@ publication_gate:
     remote_readback_required: true
 
 decision:
-  status: "running-owner-documentation-integrated"
+  status: "running-scanner-validated-platform-prerequisites-pending"
   next_gate: >
-    Verify the signature version loaded by clamd and successful reload without
-    OOM after existing owner PR 29. Read-only observation already confirms
-    GitOps convergence, 3Gi/4Gi, zero restarts and daily database update to 28116.
-    FreshClam could not notify clamd during startup; keep reload acceptance pending. Manual
-    sync, restart, active signature update, DNS remediation, secrets, license
-    acceptance and future Jira writes require separately scoped authorization.
+    Scanner cold start, active signatures 28117, clean/EICAR streams and
+    unavailable socket behavior passed after authorized Infra PR 31 rollout.
+    Follow the owner playbook integrated by Infra PR 33. Gate C Unit A is
+    license acceptance and encrypted external archival; Unit B is recoverable
+    soft-HSM custody; Unit C prepares Secret contracts by creation stage.
+    Upload fail-closed QA remains downstream; terminal tracker transitions are
+    not authorized.
+
+technical_closure_preparation_2026_09_10:
+  evidence: "evidence/requests/CR-CP-0024/custody-first-gates-technical-closure-2026-09-10.md"
+  jira_batch: "evidence/requests/CR-CP-0024/jira-terminal-readiness-batch-2026-09-10.json"
+  jira_status: "En curso"
+  jira_progress_comment_prepared: true
+  jira_write_performed: false
+  terminal_tracker_authorized: false
+  owner_worktree_disposition: "preserve for Gate C; clean and aligned with Infra develop"
+  next_gate: "Confirm AIStor license archive, encrypted HSM/KMS backup and Secret contracts before bootstrap."
 
 evidence_refs:
+  - "evidence/requests/CR-HPT-0024/gate-c-unit-a-preflight-2026-09-10.md"
+  - "evidence/requests/CR-CP-0024/custody-first-gates-technical-closure-2026-09-10.md"
+  - "evidence/requests/CR-CP-0024/jira-terminal-readiness-batch-2026-09-10.json"
   - "evidence/requests/CR-HPT-0024/infra-pr29-reconciliation-2026-09-07.md"
   - "evidence/requests/CR-HPT-0024/retroactive-running-reconciliation-2026-09-05.md"
   - "evidence/requests/CR-CP-0024/infra-remediation-pr-publication-readback-2026-09-05.md"
@@ -455,6 +470,7 @@ evidence_refs:
   - "evidence/requests/CR-HPT-0024/control-plane-pr258-merge-readback-2026-09-05.md"
   - "evidence/requests/CR-HPT-0024/jira-readonly-reconciliation-2026-09-05.md"
   - "evidence/requests/CR-HPT-0024/jira-authorized-batch-readback-2026-09-05.md"
+  - "evidence/requests/CR-CP-0024/aistor-kms-prerequisites-playbook-2026-09-10.md"
 
 validation_readback_2026_09_08:
   coordinator_request_id: "CR-CP-0024"
@@ -466,4 +482,59 @@ validation_readback_2026_09_08:
   cold_start_and_scan_gate: "pending"
   jira_status: "En curso"
   tracker_write_performed: false
+  cleanup_allowed: false
+
+gate_c_documentation_2026_09_10:
+  evidence: "evidence/requests/CR-CP-0024/aistor-kms-prerequisites-playbook-2026-09-10.md"
+  owner_pull_request: 33
+  owner_merge: "226443397d07ac8e59f83b408dbcf34b25364d79"
+  playbook: "docs/playbooks/aistor-kms-prerequisites.md"
+  runbook: "docs/runbooks/aistor-kms-prerequisites.md"
+  delegation_scope: "bounded-document-review-only"
+  owner_full_check: "PASS"
+  owner_ci: "SUCCESS"
+  runtime_mutation: false
+  license_accepted: false
+  hsm_material_generated_for_use: false
+  secret_resources_created: false
+  next_unit: "license-acceptance-and-encrypted-archival"
+
+gate_c_unit_a_preflight_2026_09_10:
+  status: "technical-preflight-passed-operator-license-action-pending"
+  evidence: "evidence/requests/CR-HPT-0024/gate-c-unit-a-preflight-2026-09-10.md"
+  owner_worktree_head: "226443397d07ac8e59f83b408dbcf34b25364d79"
+  owner_remote_develop: "5fc609f064032f553b4a33933bc75ac48a3b77b6"
+  owner_worktree_relation: "clean and one unrelated chatbot image-pin commit behind remote develop"
+  argo_status: "Synced/Healthy"
+  argo_revision: "5fc609f064032f553b4a33933bc75ac48a3b77b6"
+  custody_namespaces_present: false
+  custody_secrets_present: false
+  docker_available: true
+  pinned_kms_image_available_locally: true
+  license_accepted: false
+  hsm_generated_for_use: false
+  secret_resources_created: false
+  runtime_mutation_performed: false
+  jira_write_performed: false
+  next_unit: "operator accepts AIStor Free agreement and archives minio.license in encrypted custody"
+
+validation_readback_2026_09_09:
+  latest_evidence: "evidence/requests/CR-CP-0024/sst-pr34-authorized-rollout-2026-09-09.md"
+  authorization: "User authorized merge and continuation; SST PR34 and bounded scanner correction."
+  scanner_pull_request: 31
+  scanner_merge: "322487cf65b18d63a3ec4bb3e956ebe276a357d2"
+  gitops_status: "Synced/Healthy"
+  pod: "sst-bend-855fb9b9db-84697"
+  ready_containers: "2/2"
+  scanner_restarts: 0
+  active_signature_database: 28117
+  cold_start: "PASS-without-manual-reload"
+  clean_and_eicar_streams: "PASS"
+  unavailable_socket: "ENOENT-no-verdict"
+  failed_initial_update: "PASS-disposable-container-exit23-daemon-not-started"
+  scanner_memory_peak_bytes: 1137446912
+  upload_fail_closed: "not-implemented-downstream-gate"
+  platform_prerequisites: "awaiting-human-confirmation"
+  tracker_write_performed: false
+  terminal_tracker_authorized: false
   cleanup_allowed: false

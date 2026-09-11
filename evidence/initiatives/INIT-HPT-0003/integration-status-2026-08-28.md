@@ -34,8 +34,8 @@ visual_map:
   abstraction_level: "Lifecycle de gates de INIT-HPT-0003."
   source_refs:
     - "initiatives/INIT-HPT-0003-financial-document-intake-and-assisted-accounting.yaml"
-    - "requests/running/CR-HPT-0022-adopt-automation-receipt-object-service-grant.yaml"
-    - "requests/running/CR-HPT-0023-implement-sst-receipt-binding-provisioning.yaml"
+    - "requests/done/CR-HPT-0022-adopt-automation-receipt-object-service-grant.yaml"
+    - "requests/done/CR-HPT-0023-implement-sst-receipt-binding-provisioning.yaml"
     - "requests/planned/CR-HPT-0024-deploy-private-receipt-object-platform.yaml"
     - "evidence/requests/CR-CP-0024/precursors/infra-provider-preflight-blocker.md"
     - "requests/planned/CR-HPT-0025-implement-sst-receipt-object-upload-custody-retention.yaml"

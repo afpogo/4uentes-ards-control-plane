@@ -11,9 +11,9 @@ requester: "4uentes"
 depends_on: ["CR-SST-0207", "CR-SST-0217", "CR-SST-0218", "CR-SST-0230"]
 
 summary: >
-  Start only the documentary preflight for an operator-authenticated retention
-  QA session through the existing reserved ngrok development edge. Runtime
-  access and all external mutations remain blocked behind later exact gates.
+  Record the operator-authenticated retention QA executed through the existing
+  reserved ngrok development edge. The one-identity HTTP subset passed, while
+  cross-principal and browser/realtime rows remain separately gated.
 
 control_plane_context:
   initiative_id: "INIT-SST-0007"
@@ -26,9 +26,11 @@ control_plane_context:
   proposed_jira_parent_issue_key: "SST-113"
   jira_issue_key: null
   jira_write_authorized: false
+  source_qa_jira_comment_batch_status: "consumed-2026-09-10"
+  source_qa_jira_comment_readback: "Comment 10438 records CR-SST-0239 PARTIAL PASS on SST-117; SST-117 remains En curso without resolution under SST-113."
 
 authorization:
-  status: "consumed-running-documentary-preflight-only"
+  status: "consumed-runtime-one-synthetic-identity"
   approved_by: "4uentes"
   approved_at: "2026-09-08"
   approval_text: >
@@ -37,13 +39,20 @@ authorization:
     No autorizo todavia ingresar al navegador OAuth, crear identidades o datos
     sinteticos, modificar o reiniciar ngrok, escribir Jira, modificar repos
     hijos, desplegar, operar el cluster ni produccion.
+  runtime_approval:
+    approved_at: "2026-09-10"
+    source: "Progressive explicit operator authorization in the controlled browser session."
+    exact_signals:
+      - "autorizo a que te conectes al mcp chrome devtools"
+      - "Listo, ya estamos autenticados"
+      - "autorizo"
+    interpreted_boundary: "One allowlisted OAuth session and exactly one synthetic SST identity; no Jira, ngrok, child repository, deployment, cluster or production mutation."
   allowed:
-    - "Read canonical control-plane and Infra owner ARDS/SDD documentation."
-    - "Publish and read back this running documentary preflight."
-    - "Define the exact future runtime authorization boundary."
+    - "Use one already allowlisted interactive operator session to cross the existing OAuth boundary."
+    - "Create exactly one synthetic SST identity and the conversations required by the one-principal HTTP subset."
+    - "Clean synthetic conversations only through product contracts and preserve sanitized evidence."
   forbidden:
-    - "Open or authenticate the browser against the reserved edge."
-    - "Create synthetic identities, conversations, messages or other runtime data."
+    - "Create a second synthetic identity without a new exact authorization."
     - "Read or change the private ngrok configuration or OAuth session material."
     - "Restart or reconfigure ngrok."
     - "Write Jira or mutate child repositories, deployment, cluster, datastore, secrets or production."
@@ -87,26 +96,31 @@ subagent_deployment_plan:
   reason: "No delegation was requested; the security boundary remains on one auditable path."
 
 preflight_result:
-  status: "documentary-pass-runtime-unverified"
+  status: "runtime-partial-pass"
   edge_owner: "sst-4uentes-infra"
   edge_contract: "Reserved HTTPS ngrok edge protected by GitHub OAuth Traffic Policy before SST."
   preferred_path: "Reuse an already allowlisted operator and complete OAuth interactively in the controlled browser."
   fallback_rule: "Stop before access if the operator is not allowed; config or service changes require a separate exact authorization."
   product_path: "Use only the public browser origin and existing Auth facade or Socket.IO boundaries."
   cleanup_rule: "Delete conversations through product contracts; identity cleanup remains a separate lifecycle."
-  unverified_until_runtime_gate:
-    - "The current operator OAuth session is accepted by the edge."
-    - "The authenticated browser reaches the SST application origin."
-    - "The CR-SST-0207 matrix passes through the reserved edge."
+  verified_at_runtime:
+    - "The allowlisted operator completed OAuth and reached the SST application origin."
+    - "The one-identity HTTP subset matched the accepted localhost behavior through the public origin."
+    - "All synthetic conversations created by this run were deleted, finished or expired through product contracts."
+  remaining_limits:
+    - "Cross-principal isolation requires a separately authorized second synthetic identity."
+    - "Browser clear-local and realtime terminal-event coverage were not executed under the synthetic identity."
 
 execution:
   requires_human_approval: true
-  approval_status: "approved-running-documentary-preflight-only"
+  approval_status: "consumed-runtime-one-identity"
   control_plane_mutation_allowed: true
   child_repo_mutation_allowed: false
   runtime_mutation_allowed: false
   browser_oauth_allowed: false
   synthetic_data_allowed: false
+  runtime_authorization_consumed: true
+  consumed_runtime_scope: "One interactive allowlisted operator session, one synthetic identity and its bounded conversation set."
   ngrok_configuration_mutation_allowed: false
   ngrok_service_restart_allowed: false
   deployment_allowed: false
@@ -117,13 +131,11 @@ execution:
   jira_write_allowed: false
 
 next_runtime_gate:
-  status: "not-authorized"
+  status: "partial-result-recorded-next-scope-not-authorized"
   proposed_scope:
-    - "Open the reserved edge in the controlled browser."
-    - "Pause for the operator to complete GitHub OAuth interactively if required."
-    - "After successful edge access, create one synthetic SST identity and only the conversations required by the CR-SST-0207 matrix."
-    - "Execute the reserved-edge matrix and clean conversations through product contracts in a finally path."
-    - "Record only sanitized statuses, outcomes and counts."
+    - "Authorize one additional synthetic identity solely for the cross-principal row."
+    - "Authorize the synthetic browser/realtime rows needed to prove clear-local and terminal delivery through the edge."
+    - "Clean every additional conversation through product contracts and record only sanitized outcomes and counts."
   persistent_residue_warning: >
     The synthetic SST identity may remain because no product identity deletion
     contract exists. A future authorization must acknowledge this explicitly.
@@ -135,7 +147,7 @@ next_runtime_gate:
 
 owner_documentation:
   required: true
-  status: "satisfied-for-documentary-preflight"
+  status: "satisfied-for-runtime-result"
   owner_repo: "sst-4uentes-infra"
   role: "edge configuration, OAuth access policy and operational procedure authority"
   change_required: false
@@ -163,7 +175,7 @@ knowledge_to_execution_documentation:
   policy_id: "knowledge-to-execution-documentation-policy"
   primary_role: "execution-evidence"
   owner: "4uentes-ards-control-plane"
-  status: "running-documentary-preflight"
+  status: "runtime-partial-result"
   applicability: "This lifecycle records authorization and readiness; Infra owner runbooks remain operational authority."
   technical_sources:
     - "requests/planned/CR-SST-0239-authorize-reserved-edge-retention-qa.yaml"
@@ -174,20 +186,24 @@ knowledge_to_execution_documentation:
 validation:
   plan_readback: "PASS: PR 282 is merged and its plan is reachable from origin/main."
   owner_documentation_readback: "PASS: existing Infra runbooks retain OAuth, least-privilege allowlist and secret-safe evidence boundaries."
-  runtime_validation: "NOT RUN: browser OAuth and synthetic data are explicitly unauthorized."
-  control_plane_check: "pending before publication"
+  runtime_validation: "PARTIAL PASS: OAuth reached SST; auth gate, multi-session, save/read, delete, finish and TTL passed for one synthetic principal. Cross-principal, browser clear-local and realtime remain unexecuted."
+  control_plane_check: "PASS on 2026-09-10: full npm run check completed with 0 FAIL."
 
 decision:
-  status: "approved-running-documentary-publication-pending"
+  status: "running-runtime-partial-publication-pending"
   approver: "4uentes"
   decided_at: "2026-09-08"
-  next_gate: "Merge and read back this running lifecycle, then obtain exact authorization for one browser OAuth and synthetic reserved-edge QA session."
+  next_gate: "Publish and merge this sanitized partial result, then obtain exact authorization for a second identity plus browser/realtime completion."
 
 evidence_refs:
   - "evidence/requests/CR-SST-0239/identity-and-boundary-preflight-2026-09-07.md"
   - "evidence/requests/CR-SST-0239/running-documentary-preflight-2026-09-08.md"
+  - "evidence/requests/CR-SST-0239/reserved-edge-runtime-result-2026-09-10.md"
+  - "evidence/requests/CR-SST-0239/jira-partial-result-comment-readback-2026-09-10.md"
 
 closure_limits:
-  - "No browser OAuth or runtime data creation under this authorization."
+  - "The authorized browser OAuth and one-identity runtime mutation were consumed; no further runtime write is authorized."
+  - "One synthetic identity remains because no product deletion contract exists."
+  - "The request remains running until cross-principal and browser/realtime edge rows are resolved or explicitly deferred."
   - "No Jira, ngrok configuration, service restart, child repository, deployment, cluster, datastore, secret or production write."
   - "CR-SST-0207 and SST-117 remain running until independent closure gates pass."

@@ -25,17 +25,27 @@ authorization:
   approval_text: 'ok avancemos'
   evidence_ref: 'evidence/requests/CR-SST-0235/running-gate-2026-09-08.md'
 execution:
-  current_unit: 'publish-running-lifecycle-before-owner-mutation'
+  current_unit: 'owner-development-runtime-readback-complete'
   control_plane_mutation_allowed: true
   git_publication_allowed: true
-  child_repo_mutation_allowed: false
+  child_repo_mutation_allowed: true
   runtime_mutation_allowed: false
-  deployment_allowed: false
+  deployment_allowed: true
   migration_execution_allowed: false
   seeders_allowed: false
   database_mutation_allowed: false
   jira_write_allowed: false
-  next_gate: 'Merge/read back this running gate, then begin separately authorized owner implementation.'
+  next_gate: 'Publish this readback; after merge, open the authorized running gate for CR-SST-0236 without child-repo mutation.'
+owner_merge_authorization:
+  approved_at: '2026-09-09'
+  approval_text: 'ok autorizo fusionar y continuar'
+  scope: 'PR 16 merge and automatic development publication/Infra pipeline; read-only verification'
+owner_execution_authorization:
+  approved_by: '4uentes'
+  approved_at: '2026-09-08'
+  approval_text: 'listo pr fusionado. continuemos'
+  running_merge: '75cab7844fc5bb0518b8f384d596efeaeb9b55c1'
+  scope: '4uentes-auth Learning relay, owner documentation and isolated tests; publication for review'
 predecessor_readback:
   bend_owner_pull_request: 33
   bend_owner_merge: 'fdc753ff0bf96e8b8b5f603a9aae11503aa2ace1'
@@ -50,6 +60,34 @@ owner_preflight:
   existing_owner_pr_found: false
   primary_checkout: 'dirty-preserve'
   refresh_required_before_owner_mutation: true
+owner_implementation:
+  status: 'merged-development-deployed-readback-complete'
+  development_pipeline_result: 'success'
+  development_image: 'ghcr.io/afpogo/4uentes-auth:develop-d9263d180196'
+  infra_commit: 'aff832fc82c2ca32c20d34855d73c2ffb194ed0c'
+  infra_checks: 'four-success'
+  runtime_readback:
+    observed_at: '2026-09-10'
+    argo_revision: '755c6eb9b91c1055b1189487e34bff211a857fee'
+    argo_sync: 'Synced'
+    argo_health: 'Healthy'
+    argo_operation: 'Succeeded'
+    deployment_image: 'ghcr.io/afpogo/4uentes-auth:develop-d9263d180196'
+    deployment_ready: '1/1'
+    image_digest: 'sha256:f6228d826b9fec04e7df39fd56515c9d281b371be726404103456b2aa38fbf5e'
+    unauthenticated_get_me: 401
+    unauthenticated_get_context: 401
+  merge_commit: 'd9263d1801963047eb01a1956b2a5ee54244a12f'
+  development_pipeline: 34311533508
+  ci_run: 34295551169
+  ci_result: 'success'
+  repository: 'afpogo/4uentes-auth'
+  branch: 'agent/cr-sst-0235-learning-source-relay'
+  commit: '25f4abc'
+  owner_check: 'passed-including-learning-postcheck'
+  push_performed: true
+  pull_request: 16
+  pull_request_url: 'https://github.com/afpogo/4uentes-auth/pull/16'
 owner_contract:
   responsibilities:
     - 'Preserve versioned source descriptors and immutable snapshot results.'
@@ -59,8 +97,9 @@ owner_contract:
     - 'Resolve private source content in the BFF.'
     - 'Persist snapshots, secrets or accepted memory in Auth.'
 owner_documentation:
-  required_for_this_gate: false
-  reason: 'Control-plane-only start; no owner mutation.'
+  status: 'merged-in-owner-develop-pr-16'
+  required_for_this_gate: true
+  reason: 'Owner relay implementation now authorized after running merge readback.'
   required_before_owner_implementation: true
   minimum: ['BFF relay contract', 'inbound and outbound capability adoption', 'human guide and Mermaid map', 'execution and rollback runbook']
 knowledge_to_execution_documentation:
@@ -71,9 +110,11 @@ knowledge_to_execution_documentation:
 acceptance:
   - 'Running gate is published and its merge read back before owner mutation.'
   - 'Later owner checks prove descriptor/snapshot preservation and sanitized errors.'
-  - 'No deployment, seeders, database mutation or Jira write occurs in this gate.'
+  - 'Only the explicitly authorized automatic development promotion occurs; no seeders, direct database mutation or Jira write.'
   - 'Pending positive persistence and E2E QA remain explicit.'
 evidence_refs:
+  - 'evidence/requests/CR-SST-0235/owner-merge-readback-2026-09-09.md'
+  - 'evidence/requests/CR-SST-0235/owner-implementation-2026-09-08.md'
   - 'evidence/requests/CR-SST-0234/bff-adoption-readiness-2026-09-07.md'
   - 'evidence/requests/CR-SST-0234/manual-authenticated-qa-2026-09-07.md'
   - 'evidence/requests/CR-SST-0235/running-gate-2026-09-08.md'

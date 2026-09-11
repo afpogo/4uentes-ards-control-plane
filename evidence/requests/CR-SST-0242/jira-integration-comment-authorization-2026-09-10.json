@@ -1,0 +1,29 @@
+{
+  "request_id": "CR-SST-0242",
+  "provider": "jira",
+  "project_key": "SST",
+  "issue_keys": [
+    "SST-129"
+  ],
+  "operation": "addCommentToJiraIssue",
+  "expected_issue_type": "Subtask",
+  "expected_parent": "SST-128",
+  "expected_status": "En curso",
+  "expected_resolution": null,
+  "maximum_write_count": 1,
+  "comment_body": "CR-SST-0242 integración owner: PR #35 fusionado en sst-bend:develop (cbb2222); workflow de imagen aprobado y desired state Infra actualizado automáticamente a develop-cbb2222bb3a0 (e52c0c1), con validaciones GitOps en verde. No se ejecutaron migraciones ni se habilitó el flag; no es QA integrada. Evidencia canónica: evidence/requests/CR-SST-0242/owner-integration-readback-2026-09-10.md. Jira conserva En curso y actúa como espejo.",
+  "comment_body_sha256_utf8": "1f7d696e7d24cd008bf35d8e44fcf3c94c07e7dbba7c0627e597a50610708eea",
+  "authorization_source": "User confirmation after the exact owner-integration batch was enumerated in the active conversation",
+  "execution_window": "active turn of 2026-09-10",
+  "consumed": true,
+  "consumed_at_local": "2026-09-10T21:29:15.911-03:00",
+  "comment_id": "10439",
+  "readback_evidence_ref": "evidence/requests/CR-SST-0242/jira-integration-comment-readback-2026-09-10.json",
+  "prohibited_operations": [
+    "transitions",
+    "field edits",
+    "comments on any other issue",
+    "additional comments on SST-129",
+    "assignment, priority or resolution changes"
+  ]
+}

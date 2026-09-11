@@ -20,7 +20,9 @@ control_plane_context:
   proposed_jira_issue_type: "Subtask"
   proposed_jira_parent_issue_key: "SST-128"
   jira_epic_issue_key: "SST-127"
-  jira_write_authorized: true
+  jira_write_authorized: false
+  jira_write_scope: "Consumed: one sanitized integration progress comment to SST-129; no transition, assignment, priority or resolution change."
+  jira_write_window: "2026-09-10 owner-integration batch; consumed after comment 10439 readback."
 risk:
   level: "high"
   drivers: ["DURABLE_USER_PROGRESS", "AUTHENTICATED_RESOURCE_SCOPE", "PRIVACY", "FALSE_POSITIVE_ACTIVATION"]
@@ -59,13 +61,16 @@ execution_gates:
 execution:
   control_plane_mutation_allowed: true
   child_repo_mutation_allowed: true
-  runtime_mutation_allowed: false
-  jira_write_allowed: true
-  next_gate: "Approve integration-gate.md: PR #35 merge triggers image publication and automatic infra development update outside the initial authorization."
-  gate_readiness: "owner-implemented-and-reviewed; canonical-merge-awaiting-expanded-authorization"
+  runtime_mutation_allowed: true
+  runtime_mutation_scope: "Automatic development GitOps controller effects from the approved owner merge only; no manual runtime command, migration, flag enablement or QA data."
+  runtime_readback: "Not observed in this gate; Git/CI desired-state publication is proven and no cluster rollout is claimed."
+  jira_write_allowed: false
+  jira_batch_status: "integration-progress-comment-complete; authorization-consumed"
+  next_gate: "Prepare and obtain approval for the exact CR-SST-0243 Auth/BFF owner and Jira batch."
+  gate_readiness: "owner-canonical-published; image/Infra/Jira read back; no-migration-or-flag-change"
 owner_documentation:
   required: true
-  status: "running"
+  status: "published"
   reason: "Publish owner specs, capabilities, Spanish docs, tests and request linkage with implementation."
 acceptance:
   - "GET absence is side-effect free; concurrent starts create one state."
@@ -78,6 +83,9 @@ validation:
   owner: "Full owner check plus focused contract, negative-path and concurrency tests"
   closure: "Owner publication/readback, sanitized evidence and full control-plane gate before done."
 evidence_refs:
+  - "evidence/requests/CR-SST-0242/jira-integration-comment-readback-2026-09-10.json"
+  - "evidence/requests/CR-SST-0242/jira-integration-comment-authorization-2026-09-10.json"
+  - "evidence/requests/CR-SST-0242/owner-integration-readback-2026-09-10.md"
   - "evidence/requests/CR-SST-0242/integration-gate.md"
   - "evidence/requests/CR-SST-0242/owner-implementation.md"
   - "evidence/requests/CR-SST-0242/jira-readback.json"
@@ -99,3 +107,21 @@ execution_publication_rule:
 
 started_at: "2026-09-09"
 approval_ref: "evidence/requests/CR-SST-0242/approved-execution.md"
+integration_authorization:
+  approved_at: "2026-09-10"
+  approval_text: "avancemos con el proximo gate"
+  scope: "Merge owner PR #35; allow its GHCR and automatic Infra/GitOps update; read back; publish evidence; add one SST-129 progress comment."
+  jira_comment_batch_status: "consumed; comment 10439 read back; no transition or field edit"
+owner_publication:
+  repository: "afpogo/sst-bend"
+  pull_request: 35
+  head_commit: "bc40bd3001cfc14c127977aa6f32c5f3f4ed1edb"
+  merge_commit: "cbb2222bb3a0898be328dc4e6765eb72f853745e"
+  workflow_run: 34546017830
+  workflow_result: "success"
+  development_image_tag: "develop-cbb2222bb3a0"
+  infra_commit: "e52c0c17cc3a38435ba99298b9f19989736bb434"
+  infra_checks: "sst-bend, sst-fend, desired-state/CD and ARDS CI passed"
+  desired_state_mutation: "automatic Infra Git commit only"
+  runtime_effect_authorized: "automatic development GitOps controller reaction only; not observed or claimed in this readback"
+  excluded_runtime_actions: "no migration, flag enablement, manual infra write or QA data"

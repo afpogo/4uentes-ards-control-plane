@@ -28,6 +28,7 @@ Incluye:
 ## Documentos Por App
 
 - [Guía didáctica: máquina de estados del onboarding y patrón State](onboarding-maquina-de-estados-guia.md)
+- [Guía de arquitectura y plan del pipeline de artículos en sst-chatbot — CR-SST-0224](plan-pipeline-articulos-sst-chatbot-cr-sst-0224.md): propuesta explicativa con mapas Mermaid, modos de análisis, prompts y separación de memoria.
 
 - [sst-fend](../../apps/sst-fend.md)
 - [sst-bend](../../apps/sst-bend.md)

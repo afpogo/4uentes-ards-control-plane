@@ -53,7 +53,7 @@ ordering_deviation:
 
 worktree_exception:
   policy_id: "worktree-request-lifecycle-policy"
-  status: "legacy-retired-local-archive-branch-preserved"
+  status: "request-worktrees-retired-final-readback-publication-pending"
   reason: >
     The pre-existing CR-SST-0233 worktree contains uncommitted request evidence
     and initiative edits. Policy requires preserving it and opening a clean
@@ -91,7 +91,24 @@ worktree_exception:
     reachable from origin/main. It was switched to a request-scoped branch from
     the refreshed canonical ref, avoiding another active worktree while the
     legacy dirty tree remains quarantined.
-  cleanup_allowed: false
+  cleanup_allowed: true
+  final_retirement_authorization: "autorizo, continuemos"
+  retired_request_worktrees:
+    - path: ".worktrees/CR-SST-0233-health-readback"
+      branch: "agent/cr-sst-0233-jira-terminal"
+      head: "3089d01d134338eb6a3dfc1cd8dd428e21bd884d"
+      status: "removed-clean-without-force-branch-preserved"
+    - path: "worktrees/CR-SST-0233-retroactive-running"
+      branch: "agent/cr-sst-0233-retroactive-running"
+      head: "dd3a7c9e1feb593998e318124a1925a098091ef7"
+      status: "removed-clean-without-force-branch-preserved"
+  final_readback_worktree:
+    path: ".worktrees/CR-SST-0233-final-cleanup-readback"
+    branch: "agent/cr-sst-0233-final-cleanup-readback"
+    base_ref: "origin/main"
+    base_sha: "352d6e6433626a8962c17879a7825b388e75404a"
+    disposition: "remove after merge and canonical readback; preserve branch"
+  final_retirement_evidence: "evidence/requests/CR-SST-0233/final-worktree-retirement-readback-2026-09-10.md"
   dissolution_rule: >
     Retire the clean execution worktree only after canonical merge readback.
     Preserve the legacy dirty worktree until every unique entry is classified.
@@ -282,6 +299,11 @@ publication_gate:
     result_evidence: "evidence/requests/CR-SST-0233/legacy-retirement-readback-2026-09-07.md"
     legacy_branch_deletion_authorized: false
     preservation_method: "commit exactly the six classified local units on the local legacy branch before removing the clean worktree without force"
+    remaining_request_worktree_retirement_authorized: true
+    remaining_request_worktree_retirement_status: "completed-read-back"
+    remaining_branches_preserved: true
+    final_readback_worktree_status: "active-until-publication-readback"
+    final_result_evidence: "evidence/requests/CR-SST-0233/final-worktree-retirement-readback-2026-09-10.md"
 
 owner_documentation:
   required: true
@@ -295,13 +317,15 @@ owner_documentation:
     - "evidence/requests/CR-SST-0233/terminal-assessment-2026-09-07.md"
 
 decision:
-  status: "technical-closure-canonical-jira-synchronized"
+  status: "operational-closure-complete-final-cleanup-readback-publication-pending"
   approver: "4uentes"
   next_gate: >
-    Publish the Jira execution evidence and evaluate remaining worktrees through
-    their own controlled retirement checks. No further Jira write is authorized.
+    Publish and read back the final worktree retirement evidence, then remove
+    the final readback worktree while preserving its branch. No further Jira
+    write is authorized.
 
 evidence_refs:
+  - "evidence/requests/CR-SST-0233/final-worktree-retirement-readback-2026-09-10.md"
   - "evidence/requests/CR-SST-0233/jira-terminal-result-2026-09-08.md"
   - "evidence/requests/CR-SST-0233/terminal-assessment-2026-09-07.md"
   - "evidence/requests/CR-SST-0233/legacy-retirement-readback-2026-09-07.md"
@@ -324,15 +348,15 @@ terminal_publication:
   prior_pull_request: 277
   prior_merge_sha: "4e0d224817850d996c7d80a0e9602a7963f98da0"
   prior_merged_at: "2026-09-07T23:51:10Z"
-  canonical_merge_required: true
+  canonical_merge_required: false
 
 closure:
-  status: "technical-scope-complete-operational-reconciliation-pending"
+  status: "operational-closure-complete-final-readback-publication-pending"
   owner_result: "historical schema frozen; fresh, upgrade, down-up and parity passed"
   historical_ordering_deviation: "preserved; no retroactive owner authorization"
   runtime_evidence_date: "2026-09-05"
   jira_terminal_sync: "complete-finalizada-resolution-listo-comment-10427"
-  remaining_worktree_cleanup: "pending-separate-preflight-after-terminal-readback"
+  remaining_worktree_cleanup: "only final readback worktree remains until its merge readback"
   legacy_archive_disposition: "retain-local-branch-at-2808791"
   evidence: "evidence/requests/CR-SST-0233/terminal-assessment-2026-09-07.md"
   required_control_plane_validation: "npm run check"
