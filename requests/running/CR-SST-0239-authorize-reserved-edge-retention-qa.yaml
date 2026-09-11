@@ -11,9 +11,10 @@ requester: "4uentes"
 depends_on: ["CR-SST-0207", "CR-SST-0217", "CR-SST-0218", "CR-SST-0230"]
 
 summary: >
-  Record the operator-authenticated retention QA executed through the existing
-  reserved ngrok development edge. The one-identity HTTP subset passed, while
-  cross-principal and browser/realtime rows remain separately gated.
+  Record completion of the operator-authenticated retention QA through the
+  existing reserved ngrok development edge. The HTTP, cross-principal,
+  browser clear-local and two-session terminal rows now pass within the bounded
+  synthetic-data budget.
 
 control_plane_context:
   initiative_id: "INIT-SST-0007"
@@ -30,7 +31,7 @@ control_plane_context:
   source_qa_jira_comment_readback: "Comment 10438 records CR-SST-0239 PARTIAL PASS on SST-117; SST-117 remains En curso without resolution under SST-113."
 
 authorization:
-  status: "consumed-runtime-one-synthetic-identity"
+  status: "consumed-runtime-completion"
   approved_by: "4uentes"
   approved_at: "2026-09-08"
   approval_text: >
@@ -47,6 +48,11 @@ authorization:
       - "Listo, ya estamos autenticados"
       - "autorizo"
     interpreted_boundary: "One allowlisted OAuth session and exactly one synthetic SST identity; no Jira, ngrok, child repository, deployment, cluster or production mutation."
+  completion_runtime_approval:
+    approved_at: "2026-09-11"
+    status: "consumed"
+    boundary: "Exactly two new synthetic identities, at most six conversations and two messages; cross-principal, browser clear-local and realtime; conversation cleanup by product contracts."
+    accepted_residue: "Two synthetic identities may remain because no product deletion contract exists."
   allowed:
     - "Use one already allowlisted interactive operator session to cross the existing OAuth boundary."
     - "Create exactly one synthetic SST identity and the conversations required by the one-principal HTTP subset."
@@ -96,7 +102,7 @@ subagent_deployment_plan:
   reason: "No delegation was requested; the security boundary remains on one auditable path."
 
 preflight_result:
-  status: "runtime-partial-pass"
+  status: "runtime-completion-pass"
   edge_owner: "sst-4uentes-infra"
   edge_contract: "Reserved HTTPS ngrok edge protected by GitHub OAuth Traffic Policy before SST."
   preferred_path: "Reuse an already allowlisted operator and complete OAuth interactively in the controlled browser."
@@ -108,8 +114,8 @@ preflight_result:
     - "The one-identity HTTP subset matched the accepted localhost behavior through the public origin."
     - "All synthetic conversations created by this run were deleted, finished or expired through product contracts."
   remaining_limits:
-    - "Cross-principal isolation requires a separately authorized second synthetic identity."
-    - "Browser clear-local and realtime terminal-event coverage were not executed under the synthetic identity."
+    - "Synthetic identities remain because no product identity deletion contract exists."
+    - "Terminal lifecycle publication and any Jira reconciliation require separate exact gates."
 
 execution:
   requires_human_approval: true
@@ -120,7 +126,7 @@ execution:
   browser_oauth_allowed: false
   synthetic_data_allowed: false
   runtime_authorization_consumed: true
-  consumed_runtime_scope: "One interactive allowlisted operator session, one synthetic identity and its bounded conversation set."
+  consumed_runtime_scope: "The partial run plus the completion run; the latter used exactly two identities, six conversations and one synthetic message."
   ngrok_configuration_mutation_allowed: false
   ngrok_service_restart_allowed: false
   deployment_allowed: false
@@ -131,12 +137,12 @@ execution:
   jira_write_allowed: false
 
 next_runtime_gate:
-  status: "partial-result-recorded-next-scope-not-authorized"
+  status: "completed-no-further-runtime-authorized"
   correction_reason: >
     The first synthetic identity cannot be reused because its random
     credentials and tokens were intentionally discarded after cleanup. A real
     operator identity must not substitute either principal.
-  proposed_scope:
+  consumed_scope:
     - "Create exactly two new synthetic SST identities: principal A for HTTP, browser and realtime reuse, and principal B only for cross-principal isolation."
     - "Create at most six conversations and two synthetic message bodies across the combined completion run."
     - "Use two active sessions of principal A to prove browser clear-local and terminal delivery through the reserved edge."
@@ -183,8 +189,8 @@ knowledge_to_execution_documentation:
   policy_id: "knowledge-to-execution-documentation-policy"
   primary_role: "execution-evidence"
   owner: "4uentes-ards-control-plane"
-  status: "runtime-partial-result"
-  applicability: "This lifecycle records authorization and readiness; Infra owner runbooks remain operational authority."
+  status: "runtime-completion-result"
+  applicability: "This lifecycle records authorization, sanitized runtime completion and cleanup; Infra owner runbooks remain operational authority."
   technical_sources:
     - "requests/planned/CR-SST-0239-authorize-reserved-edge-retention-qa.yaml"
     - "sst-4uentes-infra owner runbooks for durable ngrok and OAuth collaborator access"
@@ -195,14 +201,17 @@ validation:
   plan_readback: "PASS: PR 282 is merged and its plan is reachable from origin/main."
   partial_result_readback: "PASS: PR 300 merged at 413fdbd0c425cb1ab4a171616c7cdfc613d9b890 and commit 099a60c is reachable from origin/main."
   owner_documentation_readback: "PASS: existing Infra runbooks retain OAuth, least-privilege allowlist and secret-safe evidence boundaries."
-  runtime_validation: "PARTIAL PASS: OAuth reached SST; auth gate, multi-session, save/read, delete, finish and TTL passed for one synthetic principal. Cross-principal, browser clear-local and realtime remain unexecuted."
-  control_plane_check: "PASS on 2026-09-10: full npm run check completed with 0 FAIL."
+  runtime_validation: "PASS: the partial HTTP run plus the bounded completion run proved OAuth edge access, same-principal sessions, TTL, save/read/delete, cross-principal isolation, browser clear-local recovery and a two-session temporary terminal event."
+  completion_budget: "PASS: exactly two identities, six conversations and one message; all six conversations were removed through product contracts."
+  cleanup_readback: "PASS: final finish calls returned 204, subsequent history reads returned 404 and the cleaned conversations were not enumerated."
+  control_plane_check: "PASS on 2026-09-11: full npm run check completed with 0 FAIL."
 
 decision:
-  status: "running-runtime-partial-merged-completion-preflight-local"
+  status: "running-runtime-completion-publication-pending"
   approver: "4uentes"
   decided_at: "2026-09-08"
-  next_gate: "Publish and merge the corrected two-identity completion boundary, then obtain exact authorization for the bounded runtime run."
+  updated_at: "2026-09-11"
+  next_gate: "Publish and merge the sanitized completion result, then assess terminal closure and Jira in separate exact gates."
 
 evidence_refs:
   - "evidence/requests/CR-SST-0239/identity-and-boundary-preflight-2026-09-07.md"
@@ -210,10 +219,11 @@ evidence_refs:
   - "evidence/requests/CR-SST-0239/reserved-edge-runtime-result-2026-09-10.md"
   - "evidence/requests/CR-SST-0239/jira-partial-result-comment-readback-2026-09-10.md"
   - "evidence/requests/CR-SST-0239/completion-gate-preflight-2026-09-11.md"
+  - "evidence/requests/CR-SST-0239/completion-runtime-result-2026-09-11.md"
 
 closure_limits:
-  - "The authorized browser OAuth and one-identity runtime mutation were consumed; no further runtime write is authorized."
-  - "One synthetic identity remains because no product deletion contract exists."
-  - "The request remains running until cross-principal and browser/realtime edge rows are resolved or explicitly deferred."
+  - "All runtime authorizations were consumed; no further runtime write is authorized."
+  - "Three identities created across both CR-SST-0239 runtime runs remain because no product identity deletion contract exists."
+  - "The request remains running until the completion evidence is published and a separate terminal gate is authorized."
   - "No Jira, ngrok configuration, service restart, child repository, deployment, cluster, datastore, secret or production write."
   - "CR-SST-0207 and SST-117 remain running until independent closure gates pass."
