@@ -21,9 +21,9 @@ control_plane_context:
   jira_epic_issue_key: "SST-127"
   jira_status_observed: "En curso"
   jira_resolution_observed: null
-  jira_write_authorized: true
-  jira_write_scope: "After terminal-ready canonical readback, add only the exact authorized closure comment to SST-130 and transition only SST-130 through 41 to Finalizada; read back after each write."
-  jira_write_window: "Maximum 30 minutes after canonical terminal-ready readback; expires on completion, first failure/uncertainty, credential loss or time limit."
+  jira_write_authorized: false
+  jira_write_scope: "Terminal batch consumed and stopped after the exact SST-130 closure comment; transition 41 remains unauthorized because the first readback verifier failed locally."
+  jira_write_window: "Consumed at the first failure after starting 2026-09-11T20:10:49.2113860-03:00; the original expiry was 2026-09-11T20:40:49.2113860-03:00."
 risk:
   level: "high"
   drivers: ["DURABLE_USER_PROGRESS", "AUTHENTICATED_RESOURCE_SCOPE", "PRIVACY", "FALSE_POSITIVE_ACTIVATION"]
@@ -67,12 +67,12 @@ execution:
   control_plane_mutation_allowed: true
   child_repo_mutation_allowed: false
   runtime_mutation_allowed: false
-  jira_write_allowed: true
+  jira_write_allowed: false
   git_publication_allowed: true
   git_publication_scope: "Control-plane terminal-ready and final-evidence publication only; no owner repository publication."
   owner_merge_allowed: false
-  jira_batch_status: "initial batch four-of-four consumed; terminal batch zero-of-two authorized-unconsumed pending canonical readback"
-  next_gate: "After canonical readback of this terminal-ready ledger, execute only the authorized two-write SST-130 closure batch; then publish the evidence and move this lifecycle to done."
+  jira_batch_status: "initial batch four-of-four consumed; terminal batch one-of-two consumed and fail-stopped; no transition executed"
+  next_gate: "Publish and read back the fail-stop evidence; a new explicit transition-only authorization is required before SST-130 can move to Finalizada."
 owner_documentation:
   required: true
   status: "satisfied-and-merged"
@@ -89,6 +89,7 @@ validation:
   owner: "Full owner check plus focused contract, negative-path, header, error, idempotency and concurrency tests"
   closure: "Owner PR publication/readback, sanitized evidence and full control-plane gate before any integration proposal."
 evidence_refs:
+  - "evidence/requests/CR-SST-0243/terminal-jira-fail-stop-2026-09-11.md"
   - "evidence/requests/CR-SST-0243/terminal-authorization-2026-09-11.md"
   - "evidence/requests/CR-SST-0243/integration-deviation-and-closure-gate-2026-09-11.md"
   - "evidence/requests/CR-SST-0243/owner-integration-readback-2026-09-11.json"
@@ -154,23 +155,50 @@ integration_deviation:
   content_identity: "Merged head equals the reviewed and validated owner head."
   evidence_ref: "evidence/requests/CR-SST-0243/integration-deviation-and-closure-gate-2026-09-11.md"
 proposed_terminal_jira_batch:
-  authorization_status: "authorized-unconsumed"
+  authorization_status: "consumed-partial-fail-stopped"
   issue_key: "SST-130"
   allowed_write_count: 2
   operations: ["one exact closure comment", "transition 41 to Finalizada"]
   exact_comment_sha256: "1572e6cf198be66f5f4733814c9b5eb7a4b855c3b8f6d3552f72f82a04ec0f28"
   window: "30 minutes after canonical terminal-lifecycle readback"
   failure_rule: "Any failure or uncertainty consumes the batch and blocks further writes."
+  observed_result: "Write 1 created exact comment 10441; its first readback verifier failed locally before reporting, so write 2 was blocked. A subsequent read-only check confirmed the exact body and unchanged En curso state."
+  remaining_operation_authorized: false
 terminal_authorization:
-  status: "authorized-unconsumed"
+  status: "consumed-partial-fail-stopped"
   approved_at_local: "2026-09-11T20:05:27.023-03:00"
   approval_text: "autorizo"
   scope: "Publish/read back the terminal lifecycle; then one exact SST-130 closure comment and transition 41; read back and publish final evidence."
   maximum_jira_writes: 2
   window_minutes_after_terminal_readback: 30
   prohibited: "No other Jira issue or operation; no owner, Infra, runtime, rollback, migration, flag or real-data mutation."
+terminal_publication:
+  pull_request: 321
+  head_commit: "616792b9b0118005ed3604606afc3302b1187637"
+  merge_commit: "de091cf638f8048afae022e1f70be7e5c259207c"
+  merged_at: "2026-09-11T23:10:30Z"
+  canonical_readback: "passed"
+  jira_window_started_at_local: "2026-09-11T20:10:49.2113860-03:00"
+  jira_window_original_expiry_local: "2026-09-11T20:40:49.2113860-03:00"
+terminal_jira_result:
+  status: "partial-fail-stopped"
+  writes_consumed: 1
+  writes_authorized_maximum: 2
+  comment_id: "10441"
+  comment_created_at_local: "2026-09-11T20:11:08.398-03:00"
+  comment_exact_body_match: true
+  comment_sha256: "1572e6cf198be66f5f4733814c9b5eb7a4b855c3b8f6d3552f72f82a04ec0f28"
+  verifier_failure: "Local readback wrapper raised ReferenceError because TextEncoder was unavailable; no Jira write was attempted by the failed wrapper."
+  fail_stop_applied: true
+  transition_executed: false
+  jira_status_after_readback: "En curso"
+  jira_resolution_after_readback: null
+  readback_comment_ids: ["10440", "10441"]
+  readback_parent_issue_key: "SST-128"
+  readback_issue_link_id: "10093"
+  readback_blocker_issue_key: "SST-129"
 closure:
-  status: "terminal-ready; owner scope complete with external ordering deviation; Jira sync pending"
+  status: "owner scope complete with external ordering deviation; exact Jira closure comment synchronized; terminal transition pending after fail-stop"
   next_request_id: "CR-SST-0238"
   runtime_claim: "No live rollout or integrated QA is claimed."
   separated_followups: ["CR-SST-0238", "CR-SST-0244", "CR-SST-0241", "CR-SST-0245"]
