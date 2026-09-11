@@ -66,6 +66,7 @@ execution:
     - "install-and-prioritize-helm-3-19-4"
     - "publish-cross-platform-open-close-pattern-through-owner-pr-35"
     - "publish-encrypted-usb-recovery-procedure-through-owner-pr-36"
+    - "publish-age-license-encryption-walkthrough-through-owner-pr-37"
   control_plane_mutation_allowed: true
   child_repo_mutation_allowed: true
   owner_git_mutation_allowed: true
@@ -545,10 +546,12 @@ gate_c_development_custody_selection_2026_09_11:
   cross_platform_merge: "3afe7dd240ada84396575c0ecb38106d6156a75e"
   usb_procedure_pull_request: 36
   usb_procedure_merge: "12219e55889e6dcf5bff96646ddc3ef26e8c05f7"
+  age_walkthrough_pull_request: 37
+  age_walkthrough_merge: "32ab87691f12992b92743e50164c1b693dd082bc"
   owner_ci: "SUCCESS"
   owner_full_check: "PASS"
-  bash_blocks_syntax: "6-PASS"
-  powershell_blocks_syntax: "8-PASS"
+  bash_blocks_syntax: "7-PASS"
+  powershell_blocks_syntax: "9-PASS"
   owner_runtime_mutation_allowed: false
   license_file_preflight: "present-readable-nonempty-content-not-read"
   license_encrypted: false

@@ -68,6 +68,12 @@ verificación, retiro del plaintext y expulsión; quedó integrado mediante
 La validación local final cubrió seis bloques Bash, ocho bloques PowerShell y
 el check owner completo.
 
+Infra PR #37 añadió el desglose explícito de la transformación
+`minio.license` plaintext a `minio.license.age` cifrado, incluyendo sellado,
+verificación, copia, recuperación, retiro del original y expulsión. Quedó
+integrado mediante `32ab87691f12992b92743e50164c1b693dd082bc`, con CI
+`SUCCESS`. El corte final valida siete bloques Bash y nueve PowerShell.
+
 ## Siguiente unidad
 
 El destino de recuperación seleccionado es un pendrive; la copia primaria queda
