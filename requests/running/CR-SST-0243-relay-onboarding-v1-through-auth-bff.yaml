@@ -21,9 +21,9 @@ control_plane_context:
   jira_epic_issue_key: "SST-127"
   jira_status_observed: "En curso"
   jira_resolution_observed: null
-  jira_write_authorized: false
-  jira_write_scope: "Create exactly one CR-SST-0243 Subtask under SST-128; conditionally transition once to En curso; add one Blocks link SST-129 -> new issue; add one exact initial comment; read back."
-  jira_write_window: "Single-use window beginning after this running lifecycle and ledger are read back from main; maximum 60 minutes; expires on completion, first failure/uncertainty or credential loss."
+  jira_write_authorized: true
+  jira_write_scope: "After terminal-ready canonical readback, add only the exact authorized closure comment to SST-130 and transition only SST-130 through 41 to Finalizada; read back after each write."
+  jira_write_window: "Maximum 30 minutes after canonical terminal-ready readback; expires on completion, first failure/uncertainty, credential loss or time limit."
 risk:
   level: "high"
   drivers: ["DURABLE_USER_PROGRESS", "AUTHENTICATED_RESOURCE_SCOPE", "PRIVACY", "FALSE_POSITIVE_ACTIVATION"]
@@ -67,11 +67,12 @@ execution:
   control_plane_mutation_allowed: true
   child_repo_mutation_allowed: false
   runtime_mutation_allowed: false
-  jira_write_allowed: false
-  git_publication_allowed: false
+  jira_write_allowed: true
+  git_publication_allowed: true
+  git_publication_scope: "Control-plane terminal-ready and final-evidence publication only; no owner repository publication."
   owner_merge_allowed: false
-  jira_batch_status: "complete; four-of-four writes read back; authorization consumed"
-  next_gate: "Publish the terminal lifecycle, then execute only the separately authorized two-write SST-130 closure batch; no runtime or owner mutation."
+  jira_batch_status: "initial batch four-of-four consumed; terminal batch zero-of-two authorized-unconsumed pending canonical readback"
+  next_gate: "After canonical readback of this terminal-ready ledger, execute only the authorized two-write SST-130 closure batch; then publish the evidence and move this lifecycle to done."
 owner_documentation:
   required: true
   status: "satisfied-and-merged"
@@ -88,6 +89,7 @@ validation:
   owner: "Full owner check plus focused contract, negative-path, header, error, idempotency and concurrency tests"
   closure: "Owner PR publication/readback, sanitized evidence and full control-plane gate before any integration proposal."
 evidence_refs:
+  - "evidence/requests/CR-SST-0243/terminal-authorization-2026-09-11.md"
   - "evidence/requests/CR-SST-0243/integration-deviation-and-closure-gate-2026-09-11.md"
   - "evidence/requests/CR-SST-0243/owner-integration-readback-2026-09-11.json"
   - "evidence/requests/CR-SST-0243/owner-pr-publication-2026-09-11.md"
@@ -152,10 +154,23 @@ integration_deviation:
   content_identity: "Merged head equals the reviewed and validated owner head."
   evidence_ref: "evidence/requests/CR-SST-0243/integration-deviation-and-closure-gate-2026-09-11.md"
 proposed_terminal_jira_batch:
-  authorization_status: "not-authorized"
+  authorization_status: "authorized-unconsumed"
   issue_key: "SST-130"
   allowed_write_count: 2
   operations: ["one exact closure comment", "transition 41 to Finalizada"]
   exact_comment_sha256: "1572e6cf198be66f5f4733814c9b5eb7a4b855c3b8f6d3552f72f82a04ec0f28"
   window: "30 minutes after canonical terminal-lifecycle readback"
   failure_rule: "Any failure or uncertainty consumes the batch and blocks further writes."
+terminal_authorization:
+  status: "authorized-unconsumed"
+  approved_at_local: "2026-09-11T20:05:27.023-03:00"
+  approval_text: "autorizo"
+  scope: "Publish/read back the terminal lifecycle; then one exact SST-130 closure comment and transition 41; read back and publish final evidence."
+  maximum_jira_writes: 2
+  window_minutes_after_terminal_readback: 30
+  prohibited: "No other Jira issue or operation; no owner, Infra, runtime, rollback, migration, flag or real-data mutation."
+closure:
+  status: "terminal-ready; owner scope complete with external ordering deviation; Jira sync pending"
+  next_request_id: "CR-SST-0238"
+  runtime_claim: "No live rollout or integrated QA is claimed."
+  separated_followups: ["CR-SST-0238", "CR-SST-0244", "CR-SST-0241", "CR-SST-0245"]
