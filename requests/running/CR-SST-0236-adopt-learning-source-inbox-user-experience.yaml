@@ -39,7 +39,7 @@ authorization:
   scope: 'Publish the CR-SST-0236 running gate and prepare read-only owner preflight; no sst-fend mutation.'
   evidence_ref: 'evidence/requests/CR-SST-0236/running-gate-2026-09-10.md'
 execution:
-  current_unit: 'owner-execution-authorization-publication'
+  current_unit: 'owner-local-implementation-complete-awaiting-publication-checkpoint'
   control_plane_mutation_allowed: true
   git_publication_allowed: true
   child_repo_mutation_allowed: true
@@ -49,7 +49,7 @@ execution:
   seeders_allowed: false
   database_mutation_allowed: false
   jira_write_allowed: false
-  next_gate: 'Merge and read back this owner execution authorization; only then create the clean sst-fend worktree and execute the authorized first slice.'
+  next_gate: 'Publish a control-plane checkpoint with the exact owner diff and checks; after merge/readback, obtain explicit authorization before pushing the sst-fend branch or opening its PR.'
 predecessor_readback:
   owner_preflight_pull_request: 312
   owner_preflight_merge: '09c15cb61ede2c8a9c63b69caca79a27e6629c5a'
@@ -90,7 +90,7 @@ owner_preflight:
     owner_documentation_authority_policy: 'adopted'
     http_qa_harness_policy: 'open-exception-on-canonical-baseline'
 owner_execution_candidate:
-  status: 'authorized-pending-control-plane-publication-and-readback'
+  status: 'implemented-and-committed-locally-publication-not-authorized'
   branch: 'agent/cr-sst-0236-learning-source-inbox'
   first_slice:
     - 'Upgrade the owner inbound capability and LearningWorkspace spec/docs from 1.0.0 to the published 1.2.0 BFF contract.'
@@ -125,6 +125,29 @@ owner_execution_authorization:
     - 'Secret values, browser credentials or credentialed acquisition.'
     - 'Runtime deployment, database writes, migrations, seeders, preview/accept/reject against shared runtime and Jira writes.'
     - 'Direct sst-bend access, backend contract changes, automatic ArticleTag/TagDefinition/UserMemory mutation or policy adoption.'
+owner_execution_result:
+  observed_at: '2026-09-11'
+  repository: 'afpogo/sst-fend'
+  branch: 'agent/cr-sst-0236-learning-source-inbox'
+  baseline: 'bd9b8d2aa52aab2346b7bf94b0db05ed188c09a3'
+  local_commit: 'bd50484'
+  commit_subject: 'feat(learning): add governed source inbox'
+  publication_status: 'not-published-not-authorized'
+  implementation:
+    - 'Owner spec and inbound capability moved to 1.2.0 under CR-SST-0236.'
+    - 'Standalone /learning now distinguishes manual_text, article, article_document and agent_output.'
+    - 'Persisted kinds send sourceDescriptor without sourceText or browser-supplied persisted bodies.'
+    - 'Preview review shows immutable snapshot identity, capture metadata and allowlisted provenance.'
+    - 'Article publication, governed tags, Learning content tags and memory remain explicit separate boundaries.'
+    - 'Owner playbook, Mermaid plus textual fallback and manual QA runbook were added without adopting a new policy.'
+  validation:
+    focused_tests: '14 passed'
+    full_check: 'PASS'
+    build: 'PASS'
+    test_suites: '36 passed'
+    tests: '244 passed'
+    lint: '0 errors; 22 pre-existing out-of-scope warnings'
+  evidence_ref: 'evidence/requests/CR-SST-0236/owner-local-implementation-result-2026-09-11.md'
 owner_contract:
   responsibilities:
     - 'Expose a comprehensible source inbox for manual text, article, article document and agent output.'
@@ -168,6 +191,7 @@ acceptance:
   - 'The source-to-snapshot-to-article flow is mapped without conflating tags or memory acceptance.'
   - 'No child repository, runtime, data or Jira mutation occurs in this gate.'
 evidence_refs:
+  - 'evidence/requests/CR-SST-0236/owner-local-implementation-result-2026-09-11.md'
   - 'evidence/requests/CR-SST-0236/owner-execution-authorization-2026-09-11.md'
   - 'evidence/requests/CR-SST-0236/owner-readonly-preflight-2026-09-10.md'
   - 'evidence/requests/CR-SST-0236/running-gate-2026-09-10.md'
