@@ -19,9 +19,9 @@ PR:
 
 | Owner | Base refrescada | Rama local | Commit local |
 | --- | --- | --- | --- |
-| `sst-bend` | `cbb2222bb3a0898be328dc4e6765eb72f853745e` | `agent/cr-sst-0225-handoff-contract` | `9b0800d2bb73da5fb14373406b4fd210eb05cd1c` |
-| `sst-chatbot` | `a0ce974b9b02be55d11609ae757fbcee569dcfa8` | `agent/cr-sst-0225-execution-contract` | `ddd84001aaa17c5df05db66a66ae1b726b548efb` |
-| `4uentes-auth` | `a49260ff4b178530a1b2fab421b0793ea505d6e3` | `agent/cr-sst-0225-service-grants-contract` | `64e37947fd3084eb40874acf55f8685cc8270caf` |
+| `sst-bend` | `cbb2222bb3a0898be328dc4e6765eb72f853745e` | `agent/cr-sst-0225-handoff-contract` | `7360976a31d397ebbe0a3272f2718227a451c89b` |
+| `sst-chatbot` | `a0ce974b9b02be55d11609ae757fbcee569dcfa8` | `agent/cr-sst-0225-execution-contract` | `02b7c4a1b8a7e3109f73bc7d95c7600359ab95b2` |
+| `4uentes-auth` | `a49260ff4b178530a1b2fab421b0793ea505d6e3` | `agent/cr-sst-0225-service-grants-contract` | `54207530efe6cc85ae82dd0f299066f2185f3aff` |
 
 El ref local de seguimiento `origin/main` del control plane avanzó después del
 merge solicitado. Esta unidad no tomó ese ref móvil como base: conserva el

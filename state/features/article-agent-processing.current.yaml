@@ -64,10 +64,11 @@ evidence_refs:
   - "evidence/requests/CR-SST-0225/running-authorization-2026-09-12.md"
   - "evidence/requests/CR-SST-0225/implementation-plan.md"
   - "evidence/requests/CR-SST-0225/owner-contract-first-start-2026-09-12.md"
+  - "evidence/requests/CR-SST-0225/owner-contract-first-manual-review-2026-09-12.md"
 open_gaps:
   - "The materialized contract is published and human-approved; Jira mirror SST-122 is in progress with empty resolution and its one-use authorization is consumed."
   - "CR-SST-0224 is complete: the owner pipeline is merged in sst-chatbot PR 12 at develop a0ce974 and SST-126 is Finalizada with resolution Listo."
-  - "CR-SST-0225 running lifecycle and plan are merged through PR 329 at bb7fa4b; its three-owner contract-first unit is materialized only in local isolated worktrees."
+  - "CR-SST-0225 running lifecycle and plan are merged through PR 329 at bb7fa4b; its three-owner contract-first unit passed local manual review and awaits publication authorization."
   - "The exact execute/read/write grant declarations remain draft and non-executable; owner publication and every runtime mutation remain separate gates."
   - "CR-SST-0223 Bend implementation and owner ARDS/SDD are merged and read back; its reversible migration was not executed or deployed."
   - "CR-SST-0223 owner, Jira and terminal control-plane lifecycle are complete and canonically read back."

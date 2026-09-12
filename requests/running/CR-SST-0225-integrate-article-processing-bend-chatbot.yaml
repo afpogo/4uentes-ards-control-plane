@@ -48,7 +48,7 @@ authorization:
     three clean worktrees, then record local validation and control-plane
     evidence. Do not implement or publish runtime behavior.
   prior_authorization_ref: "evidence/requests/CR-SST-0225/running-authorization-2026-09-12.md"
-  publication_status: "owner-contracts-local-awaiting-review; no-push-no-pr"
+  publication_status: "owner-contracts-manual-review-passed; awaiting-separate-push-and-pr-authorization"
 
 execution:
   control_plane_mutation_allowed: true
@@ -65,8 +65,8 @@ execution:
   jira_write_allowed: false
   owner_discovery_mode: "refreshed origin/develop refs with isolated clean worktrees"
   next_external_gate: >
-    Review the three local owner commits and control-plane evidence. Any push,
-    pull request or runtime implementation requires a later exact authorization.
+    Authorize exact push and pull-request publication for the reviewed owner
+    contracts and control-plane readback. Runtime remains a later gate.
 
 task_weight:
   classification: "complex-high-risk-task"
@@ -142,6 +142,13 @@ owner_documentation:
   result: "materialized locally with normative specs, derived documentation, applicable maps and task evidence"
   evidence_ref: "evidence/requests/CR-SST-0225/owner-contract-first-start-2026-09-12.md"
 
+manual_contract_review:
+  status: "passed-with-runtime-gates-pending"
+  reviewed_at: "2026-09-12"
+  evidence_ref: "evidence/requests/CR-SST-0225/owner-contract-first-manual-review-2026-09-12.md"
+  publication_ready: true
+  runtime_ready: false
+
 manual_qa:
   integration_review_required: true
   final_browser_qa_request: "CR-SST-0227"
@@ -168,5 +175,6 @@ evidence_refs:
   - "evidence/requests/CR-SST-0225/running-authorization-2026-09-12.md"
   - "evidence/requests/CR-SST-0225/implementation-plan.md"
   - "evidence/requests/CR-SST-0225/owner-contract-first-start-2026-09-12.md"
+  - "evidence/requests/CR-SST-0225/owner-contract-first-manual-review-2026-09-12.md"
   - "evidence/requests/CR-SST-0225/jira-description-draft-2026-09-11.md"
   - "evidence/requests/CR-SST-0220/article-agent-processing-contract-v1.yaml"
