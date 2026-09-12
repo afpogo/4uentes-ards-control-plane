@@ -17,6 +17,7 @@ initial_hypothesis: >
   usability and regression defects earlier while preventing stale evidence or
   healthy-looking infrastructure from producing false-positive closure.
 source_evidence_refs:
+  - "evidence/requests/CR-SST-0238/owner-pr-result-2026-09-12.md"
   - "evidence/requests/CR-SST-0238/approved-execution-2026-09-12.md"
   - "evidence/requests/CR-SST-0238/execution-gate-2026-09-12.md"
   - "evidence/requests/CR-SST-0238/jira-binding-retry-result-2026-09-12.md"

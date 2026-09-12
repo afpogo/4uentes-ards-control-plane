@@ -23,11 +23,11 @@ control_plane_context:
   proposed_jira_issue_type: "Subtask"
   proposed_jira_parent_issue_key: "SST-102"
   jira_epic_issue_key: "SST-101"
-  jira_status_observed: "Tareas por hacer"
+  jira_status_observed: "En curso"
   jira_resolution_observed: null
-  jira_write_authorized: true
-  jira_write_scope: "On SST-131 only: add the exact approved start comment, then transition from Tareas por hacer to En curso; maximum two writes and no other Jira mutation."
-  jira_write_window: "Maximum 60 minutes starting only after canonical readback of this running lifecycle and authorization ledger."
+  jira_write_authorized: false
+  jira_write_scope: "Consumed successfully on SST-131: one exact start comment and one transition to En curso; no further Jira write is authorized."
+  jira_write_window: "Consumed successfully between 2026-09-12T03:29:24.5548304-03:00 and 2026-09-12T03:29:52.869-03:00."
 risk:
   level: "high"
   drivers: ["AUTHENTICATED_NAVIGATION", "SHARED_BUTTON_REF_CONTRACT", "ROUTER_TRANSITION_BEHAVIOR"]
@@ -82,12 +82,12 @@ false_positive_controls:
   - "Existing-account login does not substitute for a focused firstLogin navigation test."
 execution:
   control_plane_mutation_allowed: true
-  child_repo_mutation_allowed: true
-  child_repo_git_publication_allowed: true
+  child_repo_mutation_allowed: false
+  child_repo_git_publication_allowed: false
   runtime_mutation_allowed: false
-  jira_write_allowed: true
-  next_gate: "After canonical readback, execute the bounded Jira start and sst-fend owner implementation through an open PR; do not merge or run localhost QA."
-owner_documentation: {required: true, status: "running"}
+  jira_write_allowed: false
+  next_gate: "Review owner PR #20 and request separate authorization for its merge; runtime and localhost:4090 QA remain a later independent gate."
+owner_documentation: {required: true, status: "published-in-owner-pr-20"}
 acceptance:
   - "No executed auth path lands on the unimplemented /onboard location."
   - "Landing, Header overlays and RouterProvider no longer emit the three classified warnings."
@@ -97,6 +97,7 @@ acceptance:
 evidence_refs:
   - "evidence/requests/CR-SST-0238/approved-execution-2026-09-12.md"
   - "evidence/requests/CR-SST-0238/execution-gate-2026-09-12.md"
+  - "evidence/requests/CR-SST-0238/owner-pr-result-2026-09-12.md"
   - "evidence/requests/CR-SST-0238/jira-binding-retry-result-2026-09-12.md"
   - "evidence/requests/CR-SST-0238/jira-binding-batch-result-2026-09-12.md"
   - "evidence/requests/CR-SST-0238/jira-binding-batch-authorization-2026-09-12.md"
@@ -114,7 +115,7 @@ jira_binding_batch:
   result_issue_id: "10293"
   result: "Structure and summary passed; markdown readback added hard-break spaces to three metadata lines, so exact description comparison failed and stopped the batch."
 jira_start_batch:
-  status: "authorized-unconsumed"
+  status: "consumed-success-readback"
   approved_at_local: "2026-09-12T03:27:46.2560273-03:00"
   approval_text: "autorizo lote"
   issue_key: "SST-131"
@@ -123,12 +124,32 @@ jira_start_batch:
     - "Add exactly the approved start comment to SST-131."
     - "Transition SST-131 from Tareas por hacer to En curso using the freshly read applicable transition."
   authorization_ref: "evidence/requests/CR-SST-0238/approved-execution-2026-09-12.md"
-  actual_write_count: 0
+  actual_write_count: 2
+  result_comment_id: "10442"
+  result_status: "En curso"
+  result_resolution: null
+  completed_at_local: "2026-09-12T03:29:52.869-03:00"
 owner_execution_batch:
-  status: "authorized-unconsumed"
+  status: "consumed-success-readback"
   owner_repository: "sst-fend"
   base_revision: "origin/develop@d1e9ef5e578220ea666d033c05ba2cccb1bb7e8e"
   branch: "agent/cr-sst-0238-authenticated-entry-react-compatibility"
   worktree: "worktrees/CR-SST-0238-sst-fend-owner"
   publication_limit: "Commit, push and open one PR to develop; merge is not authorized."
   authorization_ref: "evidence/requests/CR-SST-0238/approved-execution-2026-09-12.md"
+  result_commit: "1631dc275aebcde6e394951a67704e6b87ec9aa4"
+  result_pull_request: "https://github.com/afpogo/sst-fend/pull/20"
+  result_ci_run: "https://github.com/afpogo/sst-fend/actions/runs/34678818782"
+  result_ci_status: "completed-success"
+  actual_paths:
+    - "docs/31-auth-frontend.md"
+    - "docs/tasks/2026-09-12-cr-sst-0238-authenticated-entry-react-compatibility.md"
+    - "specs/31-auth-frontend.yml"
+    - "src/App/__tests__/App.test.tsx"
+    - "src/App/index.tsx"
+    - "src/components/SstButton/__tests__/SstButton.test.tsx"
+    - "src/components/SstButton/index.tsx"
+    - "src/machines/AuthMachine/__tests__/isValidUser.test.ts"
+    - "src/machines/AuthMachine/states/isValidUser.ts"
+    - "src/pages/Landing/index.tsx"
+  completed_at_local: "2026-09-12T03:47:36-03:00"
