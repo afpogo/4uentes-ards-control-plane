@@ -9,9 +9,9 @@ created_at: "2026-08-28"
 started_at: "2026-09-12"
 requester: "4uentes"
 summary: >
-  Publish the governed three-owner execution plan for the durable article
-  processing handoff. This gate adds 4uentes-auth as the owner of three exact
-  service grants but does not authorize owner repository or runtime mutation.
+  Execute the contract-first unit for the durable article-processing handoff
+  in three isolated owner worktrees. This gate publishes only local specs,
+  capabilities, ARDS/SDD documentation and maps; runtime remains unchanged.
 depends_on: ["CR-SST-0223", "CR-SST-0224"]
 
 control_plane_context:
@@ -20,30 +20,41 @@ control_plane_context:
   feature_state_id: "article-agent-processing"
   owner_repositories: ["sst-bend", "sst-chatbot", "4uentes-auth"]
   base_ref: "origin/main@6cf950d081ea6122bb83152c9f25479d5d8fe415"
+  running_publication_pull_request: 329
+  running_publication_merge_commit: "bb7fa4b1f4ce6ab72ae86cb1c8df9c348e5e7767"
+  running_publication_readback: "passed-pinned-commit"
   preflight_ref: "evidence/requests/CR-SST-0225/running-preflight-and-auth-boundary-2026-09-11.md"
   jira_role: "mirror"
   jira_source_of_truth: false
   jira_issue_key: "TODO-after-separate-readonly-preflight-and-authorization"
 
 authorization:
-  status: "approved-control-plane-running-and-plan-materialization"
+  status: "approved-owner-contract-first-local-materialization"
   approved_by: "4uentes"
   approved_at: "2026-09-12"
   approval_text: >
-    Autorizo ampliar el alcance owner de CR-SST-0225 para incluir 4uentes-auth
-    exclusivamente en los grants article-processing:execute,
-    article-processing:read y article-processing:write; crear desde
-    origin/main@6cf950d081ea6122bb83152c9f25479d5d8fe415 el lifecycle running y el
-    plan de implementación de los tres owners. Sin modificar todavía
-    repositorios hijos, Jira, runtime, datos, migraciones ni despliegues.
+    Autorizo registrar el readback del PR #329 desde
+    origin/main@bb7fa4b1f4ce6ab72ae86cb1c8df9c348e5e7767; refrescar las
+    referencias origin/develop y crear worktrees aislados y limpios para
+    sst-bend, sst-chatbot y 4uentes-auth; ejecutar exclusivamente la unidad
+    contract-first de CR-SST-0225, publicando localmente specs, capabilities,
+    documentación ARDS/SDD y mapas para el handoff durable y los scopes
+    article-processing:execute, article-processing:read y
+    article-processing:write. Sin implementar todavía runtime, grants
+    ejecutables, secretos, variables, datos, migraciones, infraestructura,
+    despliegues ni Jira; sin push ni PR hasta una revisión posterior.
   interpreted_scope: >
-    Modify only control-plane lifecycle, plan, initiative and feature-state
-    artifacts needed to govern the three-owner integration.
-  publication_status: "local-preparation-awaiting-separate-git-publication-authorization"
+    Materialize matching draft contracts and derived owner documentation in
+    three clean worktrees, then record local validation and control-plane
+    evidence. Do not implement or publish runtime behavior.
+  prior_authorization_ref: "evidence/requests/CR-SST-0225/running-authorization-2026-09-12.md"
+  publication_status: "owner-contracts-manual-review-passed; awaiting-separate-push-and-pr-authorization"
 
 execution:
   control_plane_mutation_allowed: true
-  child_repo_mutation_allowed: false
+  child_repo_mutation_allowed: true
+  child_repo_mutation_boundary: "specs, capability declarations, ARDS/SDD documentation, maps and owner task evidence only"
+  executable_grant_mutation_allowed: false
   core_repo_mutation_allowed: false
   runtime_mutation_allowed: false
   deployment_allowed: false
@@ -52,10 +63,10 @@ execution:
   production_data_allowed: false
   secret_or_datastore_access_allowed: false
   jira_write_allowed: false
-  owner_discovery_mode: "read-only against locally cached origin/develop refs"
+  owner_discovery_mode: "refreshed origin/develop refs with isolated clean worktrees"
   next_external_gate: >
-    Publish and read back this control-plane batch. Only then request exact
-    authorization to create clean owner worktrees and execute the published plan.
+    Authorize exact push and pull-request publication for the reviewed owner
+    contracts and control-plane readback. Runtime remains a later gate.
 
 task_weight:
   classification: "complex-high-risk-task"
@@ -78,11 +89,11 @@ subagent_deployment_plan:
 
 owner_refs:
   observed_at: "2026-09-12"
-  observation_mode: "read-only local refs; no owner fetch or mutation"
+  observation_mode: "origin/develop refreshed before isolated worktree creation"
   sst_bend: "origin/develop@cbb2222bb3a0898be328dc4e6765eb72f853745e"
   sst_chatbot: "origin/develop@a0ce974b9b02be55d11609ae757fbcee569dcfa8"
   four_uentes_auth: "origin/develop@a49260ff4b178530a1b2fab421b0793ea505d6e3"
-  future_execution_rule: "Refresh origin/develop and create clean isolated worktrees after later authorization."
+  worktree_status: "isolated-contract-first-local"
 
 architecture_boundary:
   persistence_authority: "sst-bend"
@@ -126,13 +137,17 @@ execution_publication_rule:
     remote_readback_required: true
 
 owner_documentation:
-  required_for_this_gate: false
-  reason: "This gate mutates only the control plane."
-  required_for_future_owner_execution: true
-  future_owner_repos: ["sst-bend", "sst-chatbot", "4uentes-auth"]
-  future_rule: >
-    Each mutated owner must publish its normative contract, derived Spanish
-    documentation, applicable policy-compliant maps and local validation evidence.
+  required_for_this_gate: true
+  owner_repos: ["sst-bend", "sst-chatbot", "4uentes-auth"]
+  result: "materialized locally with normative specs, derived documentation, applicable maps and task evidence"
+  evidence_ref: "evidence/requests/CR-SST-0225/owner-contract-first-start-2026-09-12.md"
+
+manual_contract_review:
+  status: "passed-with-runtime-gates-pending"
+  reviewed_at: "2026-09-12"
+  evidence_ref: "evidence/requests/CR-SST-0225/owner-contract-first-manual-review-2026-09-12.md"
+  publication_ready: true
+  runtime_ready: false
 
 manual_qa:
   integration_review_required: true
@@ -152,11 +167,14 @@ acceptance:
   - "Only the three exact article-processing grants are planned."
   - "Existing chat, handoff and memory scopes are not reused or broadened."
   - "The restart path is grounded in Bend's durable checkpoint and atomic acceptance."
-  - "No owner repository, Jira, runtime, data, migration or deployment mutation occurs."
+  - "Owner mutation is limited to draft contracts and documentation in isolated worktrees."
+  - "No runtime, executable grant, Jira, secret, variable, data, migration, infrastructure or deployment mutation occurs."
 
 evidence_refs:
   - "evidence/requests/CR-SST-0225/running-preflight-and-auth-boundary-2026-09-11.md"
   - "evidence/requests/CR-SST-0225/running-authorization-2026-09-12.md"
   - "evidence/requests/CR-SST-0225/implementation-plan.md"
+  - "evidence/requests/CR-SST-0225/owner-contract-first-start-2026-09-12.md"
+  - "evidence/requests/CR-SST-0225/owner-contract-first-manual-review-2026-09-12.md"
   - "evidence/requests/CR-SST-0225/jira-description-draft-2026-09-11.md"
   - "evidence/requests/CR-SST-0220/article-agent-processing-contract-v1.yaml"
