@@ -85,7 +85,7 @@ execution:
   child_repo_git_publication_allowed: false
   runtime_mutation_allowed: false
   jira_write_allowed: false
-  next_gate: "Publish and read back the partial binding result; a fresh authorization is required for the three uncreated mirrors before starting the refreshed running lifecycle."
+  next_gate: "Obtain explicit authorization for the bounded running, Jira-start and sst-fend owner-PR batch defined by the 2026-09-12 execution gate."
 owner_documentation: {required: true, status: "planned"}
 acceptance:
   - "No executed auth path lands on the unimplemented /onboard location."
@@ -94,6 +94,8 @@ acceptance:
   - "Owner tests, full owner check and clean-source localhost:4090 QA pass."
   - "No owner, runtime, Jira or external Git mutation occurs under this plan."
 evidence_refs:
+  - "evidence/requests/CR-SST-0238/execution-gate-2026-09-12.md"
+  - "evidence/requests/CR-SST-0238/jira-binding-retry-result-2026-09-12.md"
   - "evidence/requests/CR-SST-0238/jira-binding-batch-result-2026-09-12.md"
   - "evidence/requests/CR-SST-0238/jira-binding-batch-authorization-2026-09-12.md"
   - "evidence/requests/CR-SST-0238/discovery-and-plan-2026-09-07.md"
