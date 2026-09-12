@@ -20,9 +20,9 @@ control_plane_context:
   proposed_jira_parent_issue_key: "SST-128"
   jira_epic_issue_key: "SST-127"
   jira_status_observed: "not-created"
-  jira_write_authorized: true
-  jira_write_scope: "Create exactly one Subtask mirror for CR-SST-0245 under SST-128 as part of the authorized four-create binding batch; no transition or comment."
-  jira_write_window: "Maximum 30 minutes after canonical authorization-ledger readback."
+  jira_write_authorized: false
+  jira_write_scope: "Not executed because the shared four-create batch fail-stopped after SST-131 readback; no Jira write is authorized."
+  jira_write_window: "Shared batch consumed on the first readback mismatch."
 risk:
   level: "high"
   drivers: ["DURABLE_USER_PROGRESS", "AUTHENTICATED_RESOURCE_SCOPE", "PRIVACY", "FALSE_POSITIVE_ACTIVATION"]
@@ -58,8 +58,8 @@ execution:
   control_plane_mutation_allowed: true
   child_repo_mutation_allowed: false
   runtime_mutation_allowed: false
-  jira_write_allowed: true
-  next_gate: "Complete and read back the exact Jira binding batch; integrated QA remains gated by all owner slices and CR-SST-0241."
+  jira_write_allowed: false
+  next_gate: "Publish and read back the partial batch result; require a fresh exact creation authorization while integrated QA remains gated."
 owner_documentation:
   required: false
   status: "planned"
@@ -75,13 +75,15 @@ validation:
   owner: "Published owner checks and reproducible HTTP/browser harness"
   closure: "Owner publication/readback, sanitized evidence and full control-plane gate before done."
 evidence_refs:
+  - "evidence/requests/CR-SST-0238/jira-binding-batch-result-2026-09-12.md"
   - "evidence/requests/CR-SST-0238/jira-binding-batch-authorization-2026-09-12.md"
   - "evidence/requests/CR-SST-0240/owner-binding-and-slice-plan.md"
   - "evidence/requests/CR-SST-0240/owner-slice-jql-preflight.json"
 jira_binding_batch:
-  status: "authorized-unconsumed"
+  status: "consumed-not-executed-after-fail-stop"
   approved_at_local: "2026-09-12T02:30:28.1355225-03:00"
   approval_text: "autorizo lote jira; y su posterior publicacion en ARDS/SDD"
   shared_maximum_writes: 4
   expected_operation: "Create only the CR-SST-0245 Subtask under SST-128 in Tareas por hacer."
   authorization_ref: "evidence/requests/CR-SST-0238/jira-binding-batch-authorization-2026-09-12.md"
+  actual_write_count: 0
