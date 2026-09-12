@@ -46,7 +46,7 @@ execution:
   git_publication_allowed: true
   jira_write_allowed: false
   jira_batch_status: "initial-batch-complete; authorization-consumed"
-  next_gate: "Complete the authorized terminal Jira sync for CR-SST-0243, then execute CR-SST-0238 before starting CR-SST-0244."
+  next_gate: "CR-SST-0243 is owner- and tracker-complete; execute CR-SST-0238 before starting CR-SST-0244."
 publication_policy:
   policy_id: "execution-publication-and-tracker-closure-policy"
   enforcement_activation: "Add the enforcement marker to planned and running together at execution start; the validator requires an execution state."
@@ -69,6 +69,9 @@ acceptance:
   - "Owner requests are allocated only after fresh Git/worktree/PR/JQL preflight; allocation alone does not authorize mutation."
   - "Full control-plane check passes and Jira keys are captured after readback."
 evidence_refs:
+  - "evidence/requests/CR-SST-0243/terminal-closure-2026-09-12.md"
+  - "evidence/requests/CR-SST-0243/transition-only-authorization-2026-09-12.md"
+  - "evidence/requests/CR-SST-0243/terminal-jira-fail-stop-2026-09-11.md"
   - "evidence/requests/CR-SST-0243/terminal-authorization-2026-09-11.md"
   - "evidence/requests/CR-SST-0243/integration-deviation-and-closure-gate-2026-09-11.md"
   - "evidence/requests/CR-SST-0243/owner-integration-readback-2026-09-11.json"
