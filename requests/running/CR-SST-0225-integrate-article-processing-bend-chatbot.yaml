@@ -1,0 +1,162 @@
+schema_version: "1.0"
+phase: 3
+id: "CR-SST-0225"
+title: "Integrate durable article processing across Bend and chatbot"
+status: "running"
+source_request: "requests/inbox/CR-SST-0225-integrate-article-processing-bend-chatbot.yaml"
+planned_request: "requests/planned/CR-SST-0225-integrate-article-processing-bend-chatbot.yaml"
+created_at: "2026-08-28"
+started_at: "2026-09-12"
+requester: "4uentes"
+summary: >
+  Publish the governed three-owner execution plan for the durable article
+  processing handoff. This gate adds 4uentes-auth as the owner of three exact
+  service grants but does not authorize owner repository or runtime mutation.
+depends_on: ["CR-SST-0223", "CR-SST-0224"]
+
+control_plane_context:
+  initiative_id: "INIT-SST-0010"
+  parent_request_id: "CR-SST-0220"
+  feature_state_id: "article-agent-processing"
+  owner_repositories: ["sst-bend", "sst-chatbot", "4uentes-auth"]
+  base_ref: "origin/main@6cf950d081ea6122bb83152c9f25479d5d8fe415"
+  preflight_ref: "evidence/requests/CR-SST-0225/running-preflight-and-auth-boundary-2026-09-11.md"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  jira_issue_key: "TODO-after-separate-readonly-preflight-and-authorization"
+
+authorization:
+  status: "approved-control-plane-running-and-plan-materialization"
+  approved_by: "4uentes"
+  approved_at: "2026-09-12"
+  approval_text: >
+    Autorizo ampliar el alcance owner de CR-SST-0225 para incluir 4uentes-auth
+    exclusivamente en los grants article-processing:execute,
+    article-processing:read y article-processing:write; crear desde
+    origin/main@6cf950d081ea6122bb83152c9f25479d5d8fe415 el lifecycle running y el
+    plan de implementación de los tres owners. Sin modificar todavía
+    repositorios hijos, Jira, runtime, datos, migraciones ni despliegues.
+  interpreted_scope: >
+    Modify only control-plane lifecycle, plan, initiative and feature-state
+    artifacts needed to govern the three-owner integration.
+  publication_status: "local-preparation-awaiting-separate-git-publication-authorization"
+
+execution:
+  control_plane_mutation_allowed: true
+  child_repo_mutation_allowed: false
+  core_repo_mutation_allowed: false
+  runtime_mutation_allowed: false
+  deployment_allowed: false
+  migration_execution_allowed: false
+  shared_environment_mutation_allowed: false
+  production_data_allowed: false
+  secret_or_datastore_access_allowed: false
+  jira_write_allowed: false
+  owner_discovery_mode: "read-only against locally cached origin/develop refs"
+  next_external_gate: >
+    Publish and read back this control-plane batch. Only then request exact
+    authorization to create clean owner worktrees and execute the published plan.
+
+task_weight:
+  classification: "complex-high-risk-task"
+  risk_level: "high"
+  risk_drivers: ["CROSS_REPO_HANDOFF", "IDENTITY_SCOPE", "IDEMPOTENCY", "RESTART_RECOVERY", "PRIVATE_ARTICLE_CONTENT"]
+
+model_selection:
+  policy_ref: "docs/policies/agent-model-selection-policy.md"
+  provider: "codex"
+  resource_level: "normal"
+  resource_source: "default"
+  primary_profile: "gpt-5.6-sol"
+  reasoning_effort: "max"
+  fallback_profile: "gpt-5.5"
+  fallback_reasoning_effort: "high"
+
+subagent_deployment_plan:
+  mode: "none"
+  reason: "No delegation was requested; security and cross-owner decisions stay on one auditable path."
+
+owner_refs:
+  observed_at: "2026-09-12"
+  observation_mode: "read-only local refs; no owner fetch or mutation"
+  sst_bend: "origin/develop@cbb2222bb3a0898be328dc4e6765eb72f853745e"
+  sst_chatbot: "origin/develop@a0ce974b9b02be55d11609ae757fbcee569dcfa8"
+  four_uentes_auth: "origin/develop@a49260ff4b178530a1b2fab421b0793ea505d6e3"
+  future_execution_rule: "Refresh origin/develop and create clean isolated worktrees after later authorization."
+
+architecture_boundary:
+  persistence_authority: "sst-bend"
+  derivation_execution_authority: "sst-chatbot"
+  service_grant_authority: "4uentes-auth"
+  user_memory_adoption_authority: "explicit product review outside the service grant"
+  transport_strategy: "M2M HTTP over existing service identities with Bend's durable run as the recovery source; no new broker in this plan."
+  no_new_identities_or_secrets: true
+
+m2m_grants:
+  single_scope_tokens_required: true
+  exact_tuples:
+    - {caller: "sst-bend", audience: "sst-chatbot", scope: "article-processing:execute", purpose: "start or resume one authorized execution"}
+    - {caller: "sst-chatbot", audience: "sst-api", scope: "article-processing:read", purpose: "read lifecycle and confirmed checkpoint"}
+    - {caller: "sst-chatbot", audience: "sst-api", scope: "article-processing:write", purpose: "propose checkpoint or final candidate for atomic Bend acceptance"}
+  forbidden_reuse: ["chat:process", "agent-handoff:submit", "user-memory:recall", "user-memory:propose"]
+
+atomized_execution:
+  - {order: 1, id: "publish-control-plane-running", objective: "Publish this lifecycle and plan.", validation: "npm run check, diff check and remote main readback"}
+  - {order: 2, id: "freeze-owner-contracts", objective: "Align inbound and outbound contracts in all three owners before runtime code.", validation: "owner ARDS/SDD checks and cross-owner contract review"}
+  - {order: 3, id: "implement-exact-grants", objective: "Add only the three exact grant tuples in Auth.", validation: "positive tuple and negative confusion matrix"}
+  - {order: 4, id: "implement-bend-coordinator", objective: "Dispatch and reconcile execution from the durable Bend run.", validation: "lease, CAS, idempotency and retry tests"}
+  - {order: 5, id: "implement-chatbot-adapters", objective: "Expose execution and consume Bend lifecycle ports without local durable authority.", validation: "resume, stale-output and provider-failure tests"}
+  - {order: 6, id: "integrated-restart-proof", objective: "Prove retries and process restarts do not duplicate confirmed outputs.", validation: "cross-owner failure matrix and readback"}
+  - {order: 7, id: "publish-and-close", objective: "Publish owner evidence and reconcile control plane and Jira under separate gates.", validation: "owner checks, control-plane full check and terminal readbacks"}
+
+execution_publication_rule:
+  rule_id: "execution-publication-and-tracker-closure-rule"
+  adoption_status: "adopted"
+  git_publication:
+    applicable: true
+    plan_merge_required: true
+    terminal_merge_required: true
+  tracker_mirror:
+    applicable: true
+    provider: "jira"
+    project_key: "SST"
+    parent_issue_key: "SST-122"
+    write_allowed_under_this_gate: false
+  cleanup:
+    remote_readback_required: true
+
+owner_documentation:
+  required_for_this_gate: false
+  reason: "This gate mutates only the control plane."
+  required_for_future_owner_execution: true
+  future_owner_repos: ["sst-bend", "sst-chatbot", "4uentes-auth"]
+  future_rule: >
+    Each mutated owner must publish its normative contract, derived Spanish
+    documentation, applicable policy-compliant maps and local validation evidence.
+
+manual_qa:
+  integration_review_required: true
+  final_browser_qa_request: "CR-SST-0227"
+  final_browser_qa_mode: "Chrome DevTools MCP only; create data through product UI without DB scripts or seeders."
+  current_gate_browser_qa_required: false
+  reason: "No product or runtime behavior changes in this control-plane batch."
+
+required_checks:
+  - "npm run check"
+  - "git diff --check"
+  - "visual documentation validator through the full check"
+  - "remote main readback after separately authorized publication"
+
+acceptance:
+  - "The running lifecycle names Bend, Chatbot and Auth with non-overlapping authority."
+  - "Only the three exact article-processing grants are planned."
+  - "Existing chat, handoff and memory scopes are not reused or broadened."
+  - "The restart path is grounded in Bend's durable checkpoint and atomic acceptance."
+  - "No owner repository, Jira, runtime, data, migration or deployment mutation occurs."
+
+evidence_refs:
+  - "evidence/requests/CR-SST-0225/running-preflight-and-auth-boundary-2026-09-11.md"
+  - "evidence/requests/CR-SST-0225/running-authorization-2026-09-12.md"
+  - "evidence/requests/CR-SST-0225/implementation-plan.md"
+  - "evidence/requests/CR-SST-0225/jira-description-draft-2026-09-11.md"
+  - "evidence/requests/CR-SST-0220/article-agent-processing-contract-v1.yaml"

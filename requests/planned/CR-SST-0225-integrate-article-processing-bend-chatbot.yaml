@@ -11,7 +11,12 @@ depends_on: ["CR-SST-0223", "CR-SST-0224"]
 control_plane_context:
   initiative_id: "INIT-SST-0010"
   parent_request_id: "CR-SST-0220"
-  owner_repositories: ["sst-bend", "sst-chatbot"]
+  owner_repositories: ["sst-bend", "sst-chatbot", "4uentes-auth"]
+  owner_scope_expansion:
+    status: "human-approved"
+    approved_at: "2026-09-12"
+    reason: "4uentes-auth owns the exact M2M grants required by the durable handoff."
+    auth_scope: "Service grant definitions and validation only; no new identity, secret or session behavior."
 risk:
   level: "high"
   drivers: ["CROSS_REPO_HANDOFF", "IDENTITY_SCOPE", "IDEMPOTENCY", "RESTART_RECOVERY"]
@@ -31,26 +36,45 @@ execution:
   runtime_mutation_allowed: false
   jira_write_allowed: false
   predecessor_gate: "CR-SST-0223 and CR-SST-0224 must publish and pass owner checks."
-  next_gate: "Explicit cross-repo running authorization after predecessor readback."
+  predecessor_status: "passed"
+  next_gate: "Publish and read back the running lifecycle and three-owner implementation plan; owner mutation requires a later exact authorization."
 integration_contract:
+  m2m_grants:
+    - {caller: "sst-bend", audience: "sst-chatbot", scope: "article-processing:execute"}
+    - {caller: "sst-chatbot", audience: "sst-api", scope: "article-processing:read"}
+    - {caller: "sst-chatbot", audience: "sst-api", scope: "article-processing:write"}
   responsibilities:
     - "Prove authorized command, status and result handoffs for both modes."
     - "Prove stable idempotency, checkpoint resume and failure reconciliation across restarts."
     - "Prove provenance and privacy boundaries across Bend and chatbot."
 owner_documentation:
   required: true
-  minimum: ["owner handoff specs in both repositories", "cross-repo integration doc", "sequence and failure maps"]
+  minimum: ["owner handoff specs in Bend and Chatbot", "Auth service-grant capability", "cross-repo integration doc", "sequence and failure maps"]
 visual_documentation:
   policy_id: "visual-documentation-as-code-policy"
   shared_map_ref: "evidence/requests/CR-SST-0220/owner-request-allocation-preflight-2026-08-27.md"
   owner_map_expectation: "Map successful and failed Bend-chatbot sequences with authority and fallback."
 atomized_execution:
-  - {order: 1, objective: "Read back both predecessor owner contracts.", validation: "canonical merge and version compatibility"}
-  - {order: 2, objective: "Publish integration ARDS/SDD in both owners.", validation: "owner documentation gate"}
-  - {order: 3, objective: "Implement and prove handoff plus restart recovery.", validation: "contract and integration tests"}
-  - {order: 4, objective: "Publish owners and update control plane.", validation: "all owner checks plus npm run check"}
+  - {order: 1, objective: "Publish and read back the running lifecycle and three-owner plan.", validation: "control-plane full check and canonical main readback"}
+  - {order: 2, objective: "Refresh clean owner refs and publish compatible owner contracts.", validation: "owner documentation gates in Bend, Chatbot and Auth"}
+  - {order: 3, objective: "Implement exact grants and the durable handoff without new identities or secrets.", validation: "scope-negative, idempotency and restart tests"}
+  - {order: 4, objective: "Prove checkpoint resume and final-result reconciliation across process restarts.", validation: "cross-owner integration tests and failure matrix"}
+  - {order: 5, objective: "Publish owners and update the control plane.", validation: "all owner checks plus npm run check"}
+execution_publication_rule:
+  rule_id: "execution-publication-and-tracker-closure-rule"
+  adoption_status: "adopted"
+  git_publication:
+    applicable: true
+    plan_merge_required: true
+    terminal_merge_required: true
+  tracker_mirror:
+    applicable: true
+    provider: "jira"
+  cleanup:
+    remote_readback_required: true
 acceptance:
   - "Bend remains scope and persistence authority while chatbot remains derivation executor."
   - "Retries and restarts do not duplicate results, summaries or proposals."
-  - "Both owners publish ARDS/SDD and policy-compliant maps."
-  - "No integration starts under this reservation gate."
+  - "Auth issues only the three exact single-purpose grants and does not broaden existing chat or memory scopes."
+  - "All three owners publish ARDS/SDD and policy-compliant maps where applicable."
+  - "No owner integration starts under the running-publication gate."
