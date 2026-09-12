@@ -113,10 +113,28 @@ sequenceDiagram
 - ESLint: cero errores; 22 warnings baseline fuera del lote.
 - `git diff --check`: PASS.
 
+## Manual Operativo De Prueba
+
+Para convertir los hallazgos en una ronda repetible se agregaron al owner:
+
+- `docs/playbook/learning-workspace-manual-test-playbook.md`: explica las cuatro
+  fuentes, las ocho etiquetas, el modelo fuente/snapshot/preview/contexto, los
+  niveles L0/L1/L2 y como clasificar bugs y gaps.
+- `docs/tasks/2026-09-12-learning-workspace-manual-test-runbook.md`: ejecuta
+  QA-00 a QA-16 con precondiciones, resultados esperados, evidencia,
+  privacidad, stop conditions y compensacion.
+- Commit local: `bf1b797` (`docs(learning): add manual QA playbook`).
+- Publicacion: no realizada y no autorizada en este gate.
+- Validacion posterior: `npm run check` PASS; Webpack PASS; 36 suites y 247
+  tests PASS; cero errores ESLint y 22 warnings baseline.
+
+El runbook separa L0 de solo lectura, L1 de preview y L2 de aceptar/descartar.
+Los casos QA-15 y QA-16 quedan marcados `SKIPPED_NOT_AUTHORIZED` mientras no
+exista autorizacion explicita de escritura sobre el fixture exacto.
+
 ## Proximo Gate
 
 Publicar primero este checkpoint del control plane. Tras su merge/readback se
-puede solicitar autorizacion exacta para commitear/publicar la branch owner y
-abrir un PR de `sst-fend`. El deploy y la repeticion QA de los ajustes siguen
-siendo gates posteriores; la validacion integrada completa permanece en
-`CR-SST-0237`.
+puede solicitar autorizacion exacta para publicar la branch owner y abrir un PR
+de `sst-fend`. El deploy y la repeticion QA de los ajustes siguen siendo gates
+posteriores; la validacion integrada completa permanece en `CR-SST-0237`.

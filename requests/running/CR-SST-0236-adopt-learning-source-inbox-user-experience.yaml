@@ -39,7 +39,7 @@ authorization:
   scope: 'Publish the CR-SST-0236 running gate and prepare read-only owner preflight; no sst-fend mutation.'
   evidence_ref: 'evidence/requests/CR-SST-0236/running-gate-2026-09-10.md'
 execution:
-  current_unit: 'manual-qa-findings-fixed-locally-awaiting-publication-checkpoint'
+  current_unit: 'manual-qa-playbook-added-locally-awaiting-publication-checkpoint'
   control_plane_mutation_allowed: true
   git_publication_allowed: true
   child_repo_mutation_allowed: true
@@ -186,6 +186,15 @@ manual_qa_result:
     commit_subject: 'fix(learning): clarify preview reviewability'
     publication_status: 'not-published-not-authorized'
     focused_tests: '17 passed'
+    full_check: 'PASS; 36 suites and 247 tests; build PASS; 0 lint errors and 22 baseline warnings'
+  operator_documentation:
+    repository: 'afpogo/sst-fend'
+    local_commit: 'bf1b797'
+    commit_subject: 'docs(learning): add manual QA playbook'
+    publication_status: 'not-published-not-authorized'
+    playbook: 'docs/playbook/learning-workspace-manual-test-playbook.md'
+    runbook: 'docs/tasks/2026-09-12-learning-workspace-manual-test-runbook.md'
+    coverage: 'Four source modes, eight selection tags, L0/L1/L2 effects, QA-00 through QA-16, evidence templates, stop conditions and post-fix re-QA.'
     full_check: 'PASS; 36 suites and 247 tests; build PASS; 0 lint errors and 22 baseline warnings'
   prohibited_actions_observed: 'No accept/reject, seeders, database writes, secret changes, Jira writes or runtime mutation.'
   evidence_ref: 'evidence/requests/CR-SST-0236/manual-qa-and-owner-fix-checkpoint-2026-09-12.md'
