@@ -21,9 +21,9 @@ control_plane_context:
   jira_epic_issue_key: "SST-127"
   jira_status_observed: "En curso"
   jira_resolution_observed: null
-  jira_write_authorized: false
-  jira_write_scope: "Terminal batch consumed and stopped after the exact SST-130 closure comment; transition 41 remains unauthorized because the first readback verifier failed locally."
-  jira_write_window: "Consumed at the first failure after starting 2026-09-11T20:10:49.2113860-03:00; the original expiry was 2026-09-11T20:40:49.2113860-03:00."
+  jira_write_authorized: true
+  jira_write_scope: "After canonical readback of the transition-only authorization, execute only transition 41 on SST-130 from En curso to Finalizada and read back the result."
+  jira_write_window: "Maximum 30 minutes after canonical transition-only authorization readback; expires on completion, first failure/uncertainty, credential loss or time limit."
 risk:
   level: "high"
   drivers: ["DURABLE_USER_PROGRESS", "AUTHENTICATED_RESOURCE_SCOPE", "PRIVACY", "FALSE_POSITIVE_ACTIVATION"]
@@ -67,12 +67,12 @@ execution:
   control_plane_mutation_allowed: true
   child_repo_mutation_allowed: false
   runtime_mutation_allowed: false
-  jira_write_allowed: false
+  jira_write_allowed: true
   git_publication_allowed: true
   git_publication_scope: "Control-plane terminal-ready and final-evidence publication only; no owner repository publication."
   owner_merge_allowed: false
-  jira_batch_status: "initial batch four-of-four consumed; terminal batch one-of-two consumed and fail-stopped; no transition executed"
-  next_gate: "Publish and read back the fail-stop evidence; a new explicit transition-only authorization is required before SST-130 can move to Finalizada."
+  jira_batch_status: "initial batch four-of-four consumed; terminal batch one-of-two consumed and fail-stopped; transition-only follow-up zero-of-one authorized-unconsumed pending canonical readback"
+  next_gate: "Publish and read back this transition-only authorization; preflight SST-130 and execute only transition 41 if identity, hierarchy, comment 10441 and transition remain exact."
 owner_documentation:
   required: true
   status: "satisfied-and-merged"
@@ -89,6 +89,7 @@ validation:
   owner: "Full owner check plus focused contract, negative-path, header, error, idempotency and concurrency tests"
   closure: "Owner PR publication/readback, sanitized evidence and full control-plane gate before any integration proposal."
 evidence_refs:
+  - "evidence/requests/CR-SST-0243/transition-only-authorization-2026-09-12.md"
   - "evidence/requests/CR-SST-0243/terminal-jira-fail-stop-2026-09-11.md"
   - "evidence/requests/CR-SST-0243/terminal-authorization-2026-09-11.md"
   - "evidence/requests/CR-SST-0243/integration-deviation-and-closure-gate-2026-09-11.md"
@@ -197,8 +198,34 @@ terminal_jira_result:
   readback_parent_issue_key: "SST-128"
   readback_issue_link_id: "10093"
   readback_blocker_issue_key: "SST-129"
+fail_stop_publication:
+  pull_request: 323
+  head_commit: "6bbf0a00bd563957388369ff0bd95389ec0fa989"
+  merge_commit: "d3db0c101f1d21c98b62e02032d48528581e5a40"
+  merged_at: "2026-09-11T23:19:17Z"
+  canonical_readback: "passed"
+transition_only_authorization:
+  status: "authorized-unconsumed"
+  approved_at_local: "2026-09-12T01:38:11.9552004-03:00"
+  approval_text: "avancemos con el lote"
+  request_id: "CR-SST-0243"
+  provider: "jira"
+  project: "SST"
+  issue_key: "SST-130"
+  expected_issue_id: "10291"
+  expected_issue_type: "Subtask"
+  expected_parent_issue_key: "SST-128"
+  expected_epic_issue_key: "SST-127"
+  expected_status: "En curso"
+  expected_resolution: null
+  required_comment_id: "10441"
+  allowed_write_count: 1
+  allowed_operation: "transition 41 to Finalizada"
+  window_minutes_after_canonical_readback: 30
+  failure_rule: "Any identity, hierarchy, comment, status, transition or credential drift, failure or uncertainty consumes the batch and blocks the write or closure."
+  prohibited: "No comments, field or link edits, other transitions or issues; no owner, Infra, runtime, rollback, migration, flag, real-data or integrated-QA mutation."
 closure:
-  status: "owner scope complete with external ordering deviation; exact Jira closure comment synchronized; terminal transition pending after fail-stop"
+  status: "owner scope complete with external ordering deviation; exact Jira closure comment synchronized; transition-only follow-up authorized pending canonical readback"
   next_request_id: "CR-SST-0238"
   runtime_claim: "No live rollout or integrated QA is claimed."
   separated_followups: ["CR-SST-0238", "CR-SST-0244", "CR-SST-0241", "CR-SST-0245"]
