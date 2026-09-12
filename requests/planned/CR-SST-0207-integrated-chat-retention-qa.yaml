@@ -44,6 +44,21 @@ qa_matrix:
 validation:
   - "Record secret-safe HTTP/realtime evidence with synthetic accounts."
   - "Run owner checks and 4uentes-orchestor npm run check before closure."
+execution_publication_rule:
+  rule_id: "execution-publication-and-tracker-closure-rule"
+  adoption_status: "adopted"
+  git_publication:
+    applicable: true
+    plan_merge_required: true
+    terminal_merge_required: true
+  tracker_mirror:
+    applicable: true
+    provider: "jira"
+    project_key: "SST"
+    parent_issue_key: "SST-113"
+    issue_key: "SST-117"
+  cleanup:
+    remote_readback_required: true
 acceptance:
   - "Every matrix row passes in localhost and the reserved ngrok development route."
   - "Evidence contains no password, token, cookie, message body or Redis credential."
