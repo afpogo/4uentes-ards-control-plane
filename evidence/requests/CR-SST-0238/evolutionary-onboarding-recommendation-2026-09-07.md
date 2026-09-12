@@ -41,7 +41,7 @@ visual_map:
   question: "¿Cómo llega un usuario a su primera utilidad sin delegar autoridad al chatbot?"
   abstraction_level: "Recorrido de producto y límites lógicos, no endpoints ni diseño físico."
   source_refs:
-    - "requests/planned/CR-SST-0238-reconcile-authenticated-entry-and-react-compatibility.yaml"
+    - "requests/running/CR-SST-0238-reconcile-authenticated-entry-and-react-compatibility.yaml"
     - "initiatives/INIT-SST-0007-sst-chatbot-first-connected-version.yaml"
     - "initiatives/INIT-SST-0010-personal-knowledge-and-memory-workspace.yaml"
   request_ids: []

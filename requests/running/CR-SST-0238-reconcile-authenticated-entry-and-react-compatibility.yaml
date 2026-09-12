@@ -2,7 +2,7 @@ schema_version: "1.0"
 phase: 2
 id: "CR-SST-0238"
 title: "Reconcile SST authenticated entry and React compatibility"
-status: "planned"
+status: "running"
 source_request: "requests/inbox/CR-SST-0238-reconcile-authenticated-entry-and-react-compatibility.yaml"
 created_at: "2026-09-07"
 requester: "4uentes"
@@ -16,6 +16,7 @@ control_plane_context:
   related_request_id: "CR-SST-0231"
   owner_repository: "sst-fend"
   planning_base: "origin/main@d84d1f672efae0acfa94d1dab4626b8d2f85230a"
+  execution_base: "sst-fend origin/develop@d1e9ef5e578220ea666d033c05ba2cccb1bb7e8e"
   jira_role: "mirror"
   jira_source_of_truth: false
   jira_issue_key: "SST-131"
@@ -24,9 +25,9 @@ control_plane_context:
   jira_epic_issue_key: "SST-101"
   jira_status_observed: "Tareas por hacer"
   jira_resolution_observed: null
-  jira_write_authorized: false
-  jira_write_scope: "The four-create batch was consumed and fail-stopped after creating SST-131; no additional Jira write is authorized."
-  jira_write_window: "Consumed on the first readback mismatch within the 2026-09-12T02:33:28.2363628-03:00 to 2026-09-12T03:03:28.2363628-03:00 window."
+  jira_write_authorized: true
+  jira_write_scope: "On SST-131 only: add the exact approved start comment, then transition from Tareas por hacer to En curso; maximum two writes and no other Jira mutation."
+  jira_write_window: "Maximum 60 minutes starting only after canonical readback of this running lifecycle and authorization ledger."
 risk:
   level: "high"
   drivers: ["AUTHENTICATED_NAVIGATION", "SHARED_BUTTON_REF_CONTRACT", "ROUTER_TRANSITION_BEHAVIOR"]
@@ -81,19 +82,20 @@ false_positive_controls:
   - "Existing-account login does not substitute for a focused firstLogin navigation test."
 execution:
   control_plane_mutation_allowed: true
-  child_repo_mutation_allowed: false
-  child_repo_git_publication_allowed: false
+  child_repo_mutation_allowed: true
+  child_repo_git_publication_allowed: true
   runtime_mutation_allowed: false
-  jira_write_allowed: false
-  next_gate: "Obtain explicit authorization for the bounded running, Jira-start and sst-fend owner-PR batch defined by the 2026-09-12 execution gate."
-owner_documentation: {required: true, status: "planned"}
+  jira_write_allowed: true
+  next_gate: "After canonical readback, execute the bounded Jira start and sst-fend owner implementation through an open PR; do not merge or run localhost QA."
+owner_documentation: {required: true, status: "running"}
 acceptance:
   - "No executed auth path lands on the unimplemented /onboard location."
   - "Landing, Header overlays and RouterProvider no longer emit the three classified warnings."
   - "StrictMode remains enabled and existing auth/session contracts remain unchanged."
   - "Owner tests, full owner check and clean-source localhost:4090 QA pass."
-  - "No owner, runtime, Jira or external Git mutation occurs under this plan."
+  - "Only the approved owner paths, two Jira start writes and owner branch/PR publication occur; merge and runtime remain excluded."
 evidence_refs:
+  - "evidence/requests/CR-SST-0238/approved-execution-2026-09-12.md"
   - "evidence/requests/CR-SST-0238/execution-gate-2026-09-12.md"
   - "evidence/requests/CR-SST-0238/jira-binding-retry-result-2026-09-12.md"
   - "evidence/requests/CR-SST-0238/jira-binding-batch-result-2026-09-12.md"
@@ -111,3 +113,22 @@ jira_binding_batch:
   result_issue_key: "SST-131"
   result_issue_id: "10293"
   result: "Structure and summary passed; markdown readback added hard-break spaces to three metadata lines, so exact description comparison failed and stopped the batch."
+jira_start_batch:
+  status: "authorized-unconsumed"
+  approved_at_local: "2026-09-12T03:27:46.2560273-03:00"
+  approval_text: "autorizo lote"
+  issue_key: "SST-131"
+  maximum_writes: 2
+  ordered_operations:
+    - "Add exactly the approved start comment to SST-131."
+    - "Transition SST-131 from Tareas por hacer to En curso using the freshly read applicable transition."
+  authorization_ref: "evidence/requests/CR-SST-0238/approved-execution-2026-09-12.md"
+  actual_write_count: 0
+owner_execution_batch:
+  status: "authorized-unconsumed"
+  owner_repository: "sst-fend"
+  base_revision: "origin/develop@d1e9ef5e578220ea666d033c05ba2cccb1bb7e8e"
+  branch: "agent/cr-sst-0238-authenticated-entry-react-compatibility"
+  worktree: "worktrees/CR-SST-0238-sst-fend-owner"
+  publication_limit: "Commit, push and open one PR to develop; merge is not authorized."
+  authorization_ref: "evidence/requests/CR-SST-0238/approved-execution-2026-09-12.md"
