@@ -17,6 +17,7 @@ initial_hypothesis: >
   usability and regression defects earlier while preventing stale evidence or
   healthy-looking infrastructure from producing false-positive closure.
 source_evidence_refs:
+  - "evidence/requests/CR-SST-0238/jira-binding-batch-result-2026-09-12.md"
   - "evidence/requests/CR-SST-0238/jira-binding-batch-authorization-2026-09-12.md"
   - "evidence/requests/CR-SST-0238/discovery-and-plan-2026-09-07.md"
   - "evidence/requests/CR-SST-0238/evolutionary-onboarding-recommendation-2026-09-07.md"
