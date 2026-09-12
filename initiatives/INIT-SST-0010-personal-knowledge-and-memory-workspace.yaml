@@ -221,7 +221,7 @@ paragraph_derivation_adoption:
   owner_execution_status: "control-plane-only-approved; child-owner-execution-not-authorized"
   next_gate: "publish and read back the validated contract, then perform final human QA"
 article_processing_adoption:
-  status: "cr-sst-0223-closed; cr-sst-0224-running-published-owner-preparation"
+  status: "cr-sst-0223-and-cr-sst-0224-closed; cr-sst-0225-running-plan-prepared"
   request_id: "CR-SST-0220"
   feature_state_id: "article-agent-processing"
   predecessor_contract_request_id: "CR-SST-0219"
@@ -232,7 +232,7 @@ article_processing_adoption:
   processing_modes: ["full_document", "sequential_paragraphs"]
   deferred_mode: "hybrid"
   jira_status: "sst-122-en-curso-readback-passed; authorization-consumed"
-  owner_execution_status: "cr-sst-0223-bend-merged-and-read-back; no-deployment-or-migration-execution"
+  owner_execution_status: "cr-sst-0223-bend-and-cr-sst-0224-chatbot-merged-and-read-back; no-cr-sst-0225-owner-execution-authorized"
   browser_discovery_status: "article APIs unhealthy; final QA not ready"
   plan_publication: "merged-and-read-back-pr-144"
   contract_version: "sst-article-agent-processing-v1@1.0.0"
@@ -249,10 +249,14 @@ article_processing_adoption:
   first_owner_manual_review: "passed-2026-08-29"
   second_owner_request_id: "CR-SST-0224"
   second_owner_preflight_status: "published-and-read-back; historical worktrees retired"
-  second_owner_execution_status: "running-merged-pr-261; sst-chatbot-pr-12-merged-develop-a0ce974-ci-passed; jira-sst-126-en-curso"
+  second_owner_execution_status: "done-merged; sst-chatbot-pr-12-merged-develop-a0ce974-ci-passed; jira-sst-126-finalizada-resolution-listo"
   second_owner_jira_issue_key: "SST-126"
   second_owner_jira_evidence_ref: "evidence/requests/CR-SST-0224/jira-create-readback-2026-09-07.md"
-  next_gate: "publish and read back the CR-SST-0224 Jira terminal preflight, then request the exact SST-126 two-write closure authorization"
+  integration_request_id: "CR-SST-0225"
+  integration_owner_repositories: ["sst-bend", "sst-chatbot", "4uentes-auth"]
+  integration_running_status: "prepared-locally-awaiting-git-publication-authorization"
+  integration_auth_scopes: ["article-processing:execute", "article-processing:read", "article-processing:write"]
+  next_gate: "publish and read back the CR-SST-0225 running lifecycle and three-owner implementation plan"
 learning_workspace_source_adoption:
   status: "first-owner-live-readback-passed-protected-positive-qa-pending"
   request_id: "CR-SST-0232"
@@ -347,11 +351,12 @@ progress:
     - "CR-SST-0210"
     - "CR-SST-0194"
     - "CR-SST-0223"
+    - "CR-SST-0224"
   active_requests:
     - "CR-SST-0235"
     - "CR-SST-0219"
     - "CR-SST-0220"
-    - "CR-SST-0224"
+    - "CR-SST-0225"
     - "CR-SST-0232"
     - "CR-SST-0234"
   quarantined_request_artifacts:
@@ -361,15 +366,14 @@ progress:
     - "CR-SST-0196"
     - "CR-SST-0197"
     - "CR-SST-0198"
-    - "CR-SST-0225"
     - "CR-SST-0226"
     - "CR-SST-0227"
     - "CR-SST-0233"
     - "CR-SST-0236"
     - "CR-SST-0237"
   next_recommended_request: >
-    Continue the approved local CR-SST-0224 implementation after consolidating
-    six owner units and reconciling SST-126 to En curso on 2026-09-09.
+    Publish and read back the prepared CR-SST-0225 running lifecycle and
+    three-owner plan before authorizing any Bend, Chatbot or Auth mutation.
     Independently run positive protected CR-SST-0234 Learning QA with a
     bounded credential path and synthetic article, document and completed
     agent-output fixtures. Neither track grants authority to the other, and
