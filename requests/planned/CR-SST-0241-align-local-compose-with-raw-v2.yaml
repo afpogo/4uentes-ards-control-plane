@@ -23,9 +23,9 @@ control_plane_context:
   proposed_jira_parent_issue_key: "SST-102"
   jira_epic_issue_key: "SST-101"
   jira_status_observed: "not-created"
-  jira_write_authorized: false
-  jira_write_scope: "Not executed because the shared four-create batch fail-stopped after SST-131 readback; no Jira write is authorized."
-  jira_write_window: "Shared batch consumed on the first readback mismatch."
+  jira_write_authorized: true
+  jira_write_scope: "Create exactly one CR-SST-0241 Subtask under SST-102 in Tareas por hacer; no comments, transitions or other Jira writes."
+  jira_write_window: "Maximum 30 minutes starting only after canonical authorization-ledger merge readback."
 risk:
   level: "high"
   drivers: ["CREDENTIAL_PROTOCOL_DRIFT", "BUILD_TIME_ENVIRONMENT", "FALSE_POSITIVE_LOCAL_QA"]
@@ -71,8 +71,8 @@ execution:
   child_repo_mutation_allowed: false
   child_repo_git_publication_allowed: false
   runtime_mutation_allowed: false
-  jira_write_allowed: false
-  next_gate: "Publish and read back the partial batch result; require a fresh exact creation authorization."
+  jira_write_allowed: true
+  next_gate: "Publish and read back this corrective authorization, then execute the exact three-create Jira batch with per-write ADF readback and fail-stop."
 owner_documentation: {required: true, status: "planned"}
 acceptance:
   - "Resolved Compose config exposes raw-v2/true identically to build and runtime without exposing secret values."
@@ -81,6 +81,7 @@ acceptance:
   - "Owner and control-plane full checks pass before closure."
   - "No owner, runtime, Jira or external Git mutation occurs under this plan."
 evidence_refs:
+  - "evidence/requests/CR-SST-0238/jira-binding-retry-authorization-2026-09-12.md"
   - "evidence/requests/CR-SST-0238/jira-binding-batch-result-2026-09-12.md"
   - "evidence/requests/CR-SST-0238/jira-binding-batch-authorization-2026-09-12.md"
   - "evidence/requests/CR-SST-0241/discovery-and-plan-2026-09-07.md"
@@ -91,4 +92,12 @@ jira_binding_batch:
   shared_maximum_writes: 4
   expected_operation: "Create only the CR-SST-0241 Subtask under SST-102 in Tareas por hacer."
   authorization_ref: "evidence/requests/CR-SST-0238/jira-binding-batch-authorization-2026-09-12.md"
+  actual_write_count: 0
+jira_binding_retry_batch:
+  status: "authorized-unconsumed"
+  approved_at_local: "2026-09-12T02:42:51.4939519-03:00"
+  approval_text: "autorizo"
+  shared_maximum_writes: 3
+  expected_operation: "Create only the CR-SST-0241 Subtask under SST-102 in Tareas por hacer; compare canonical ADF structure after creation."
+  authorization_ref: "evidence/requests/CR-SST-0238/jira-binding-retry-authorization-2026-09-12.md"
   actual_write_count: 0
