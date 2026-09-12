@@ -1,12 +1,14 @@
 schema_version: "1.0"
-phase: 3
+phase: 4
 id: "CR-SST-0243"
 title: "Relay onboarding V1 through the authenticated BFF"
-status: "running"
+status: "done"
 created_at: "2026-09-08"
 requester: "4uentes"
 source_request: "requests/inbox/CR-SST-0243-relay-onboarding-v1-through-auth-bff.yaml"
-summary: "Adopt the bounded onboarding V1 relay and article-attempt metadata in 4uentes-auth."
+planned_request: "requests/planned/CR-SST-0243-relay-onboarding-v1-through-auth-bff.yaml"
+running_request: "requests/running/CR-SST-0243-relay-onboarding-v1-through-auth-bff.yaml"
+summary: "The bounded Auth onboarding relay was merged and read back; the Jira mirror is Finalizada with resolution Listo. The external merge ordering deviation is preserved and no live rollout or integrated QA is claimed."
 depends_on: ["CR-SST-0240","CR-SST-0242"]
 control_plane_context:
   initiative_id: "INIT-SST-0011"
@@ -19,11 +21,11 @@ control_plane_context:
   proposed_jira_issue_type: "Subtask"
   proposed_jira_parent_issue_key: "SST-128"
   jira_epic_issue_key: "SST-127"
-  jira_status_observed: "En curso"
-  jira_resolution_observed: null
-  jira_write_authorized: true
-  jira_write_scope: "After canonical readback of the transition-only authorization, execute only transition 41 on SST-130 from En curso to Finalizada and read back the result."
-  jira_write_window: "Maximum 30 minutes after canonical transition-only authorization readback; expires on completion, first failure/uncertainty, credential loss or time limit."
+  jira_status_observed: "Finalizada"
+  jira_resolution_observed: "Listo"
+  jira_write_authorized: false
+  jira_write_scope: "Transition-only follow-up consumed successfully; no additional Jira write is authorized."
+  jira_write_window: "Completed within the 2026-09-12T01:40:40.7400001-03:00 to 2026-09-12T02:10:40.7400001-03:00 window."
 risk:
   level: "high"
   drivers: ["DURABLE_USER_PROGRESS", "AUTHENTICATED_RESOURCE_SCOPE", "PRIVACY", "FALSE_POSITIVE_ACTIVATION"]
@@ -67,12 +69,12 @@ execution:
   control_plane_mutation_allowed: true
   child_repo_mutation_allowed: false
   runtime_mutation_allowed: false
-  jira_write_allowed: true
-  git_publication_allowed: true
-  git_publication_scope: "Control-plane terminal-ready and final-evidence publication only; no owner repository publication."
+  jira_write_allowed: false
+  git_publication_allowed: false
+  git_publication_scope: "This terminal lifecycle publication consumes the final control-plane Git scope; no further publication or owner repository change is authorized."
   owner_merge_allowed: false
-  jira_batch_status: "initial batch four-of-four consumed; terminal batch one-of-two consumed and fail-stopped; transition-only follow-up zero-of-one authorized-unconsumed pending canonical readback"
-  next_gate: "Publish and read back this transition-only authorization; preflight SST-130 and execute only transition 41 if identity, hierarchy, comment 10441 and transition remain exact."
+  jira_batch_status: "initial batch four-of-four consumed; terminal comment batch fail-stopped after one write; transition-only follow-up one-of-one consumed-success-readback"
+  next_gate: "Merge and read back this done lifecycle, then proceed with CR-SST-0238 before CR-SST-0244."
 owner_documentation:
   required: true
   status: "satisfied-and-merged"
@@ -89,6 +91,7 @@ validation:
   owner: "Full owner check plus focused contract, negative-path, header, error, idempotency and concurrency tests"
   closure: "Owner PR publication/readback, sanitized evidence and full control-plane gate before any integration proposal."
 evidence_refs:
+  - "evidence/requests/CR-SST-0243/terminal-closure-2026-09-12.md"
   - "evidence/requests/CR-SST-0243/transition-only-authorization-2026-09-12.md"
   - "evidence/requests/CR-SST-0243/terminal-jira-fail-stop-2026-09-11.md"
   - "evidence/requests/CR-SST-0243/terminal-authorization-2026-09-11.md"
@@ -114,7 +117,15 @@ execution_publication_rule:
     provider: "jira"
   cleanup:
     remote_readback_required: true
+  trial_result:
+    status: "passed"
+    plan_publication: "merged-and-read-back"
+    implementation_publication: "merged-and-read-back"
+    tracker_reconciliation: "merged-and-read-back"
+    terminal_publication_contract: "merge-and-readback-before-cleanup"
+    cleanup_gate: "remote-readback-required"
 started_at: "2026-09-11"
+completed_at: "2026-09-12"
 approval_ref: "evidence/requests/CR-SST-0243/approved-execution-2026-09-11.md"
 plan_publication:
   pull_request: 306
@@ -205,7 +216,7 @@ fail_stop_publication:
   merged_at: "2026-09-11T23:19:17Z"
   canonical_readback: "passed"
 transition_only_authorization:
-  status: "authorized-unconsumed"
+  status: "consumed-success-readback"
   approved_at_local: "2026-09-12T01:38:11.9552004-03:00"
   approval_text: "avancemos con el lote"
   request_id: "CR-SST-0243"
@@ -224,8 +235,36 @@ transition_only_authorization:
   window_minutes_after_canonical_readback: 30
   failure_rule: "Any identity, hierarchy, comment, status, transition or credential drift, failure or uncertainty consumes the batch and blocks the write or closure."
   prohibited: "No comments, field or link edits, other transitions or issues; no owner, Infra, runtime, rollback, migration, flag, real-data or integrated-QA mutation."
+  actual_write_count: 1
+authorization_publication:
+  pull_request: 327
+  head_commit: "d29718a4d9be11bc7c183bd421b0b09e47c9db4c"
+  merge_commit: "e338d072c94b2c7ae321f7d2c6e5a6523cf658b9"
+  merged_at: "2026-09-12T04:40:26Z"
+  canonical_readback: "passed"
+  jira_window_started_at_local: "2026-09-12T01:40:40.7400001-03:00"
+  jira_window_expiry_local: "2026-09-12T02:10:40.7400001-03:00"
+transition_only_result:
+  status: "passed-readback"
+  issue_key: "SST-130"
+  issue_id: "10291"
+  actual_write_count: 1
+  transition_id: "41"
+  transition_name: "Listo"
+  final_status: "Finalizada"
+  final_status_id: "10008"
+  final_status_category: "done"
+  final_resolution: "Listo"
+  final_resolution_id: "10000"
+  jira_updated_at_local: "2026-09-12T01:41:00.049-03:00"
+  readback_at_local: "2026-09-12T01:41:49.2618549-03:00"
+  readback_comment_ids: ["10440", "10441"]
+  required_comment_exact_body_match: true
+  readback_parent_issue_key: "SST-128"
+  readback_issue_link_id: "10093"
+  readback_blocker_issue_key: "SST-129"
 closure:
-  status: "owner scope complete with external ordering deviation; exact Jira closure comment synchronized; transition-only follow-up authorized pending canonical readback"
+  status: "complete-with-external-ordering-deviation; terminal publication pending merge-and-readback"
   next_request_id: "CR-SST-0238"
   runtime_claim: "No live rollout or integrated QA is claimed."
   separated_followups: ["CR-SST-0238", "CR-SST-0244", "CR-SST-0241", "CR-SST-0245"]
