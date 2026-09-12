@@ -254,9 +254,11 @@ article_processing_adoption:
   second_owner_jira_evidence_ref: "evidence/requests/CR-SST-0224/jira-create-readback-2026-09-07.md"
   integration_request_id: "CR-SST-0225"
   integration_owner_repositories: ["sst-bend", "sst-chatbot", "4uentes-auth"]
-  integration_running_status: "prepared-locally-awaiting-git-publication-authorization"
+  integration_running_status: "merged-and-read-back-pr-329-bb7fa4b; contract-first-local-awaiting-review"
   integration_auth_scopes: ["article-processing:execute", "article-processing:read", "article-processing:write"]
-  next_gate: "publish and read back the CR-SST-0225 running lifecycle and three-owner implementation plan"
+  integration_contract_protocol: "sst-article-processing-handoff-v1@1.0.0-draft"
+  integration_owner_execution_status: "contract-first-docs-and-specs-only; runtime-not-authorized"
+  next_gate: "review local owner contract commits before any push, PR or runtime implementation"
 learning_workspace_source_adoption:
   status: "first-owner-live-readback-passed-protected-positive-qa-pending"
   request_id: "CR-SST-0232"
@@ -372,8 +374,8 @@ progress:
     - "CR-SST-0236"
     - "CR-SST-0237"
   next_recommended_request: >
-    Publish and read back the prepared CR-SST-0225 running lifecycle and
-    three-owner plan before authorizing any Bend, Chatbot or Auth mutation.
+    Review the locally materialized CR-SST-0225 contracts in Bend, Chatbot and
+    Auth before authorizing publication or any executable implementation.
     Independently run positive protected CR-SST-0234 Learning QA with a
     bounded credential path and synthetic article, document and completed
     agent-output fixtures. Neither track grants authority to the other, and
