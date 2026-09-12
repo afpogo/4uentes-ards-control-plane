@@ -70,7 +70,7 @@ visual_map:
   source_refs:
     - "requests/inbox/CR-SST-0230-product-safe-chat-cache-qa.yaml"
     - "requests/planned/CR-SST-0230-product-safe-chat-cache-qa.yaml"
-    - "requests/running/CR-SST-0207-integrated-chat-retention-qa.yaml"
+    - "requests/done/CR-SST-0207-integrated-chat-retention-qa.yaml"
     - "evidence/requests/CR-SST-0230/identity-and-owner-preflight-2026-08-28.md"
   observed_at: "2026-08-28"
   authority_boundary: "Vista derivada; Bend conserva cache y autoridad durable, Auth el facade HTTP y el control-plane lifecycle/evidencia."
