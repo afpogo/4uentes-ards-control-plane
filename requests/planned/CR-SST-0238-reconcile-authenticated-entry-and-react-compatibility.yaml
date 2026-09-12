@@ -16,6 +16,16 @@ control_plane_context:
   related_request_id: "CR-SST-0231"
   owner_repository: "sst-fend"
   planning_base: "origin/main@d84d1f672efae0acfa94d1dab4626b8d2f85230a"
+  jira_role: "mirror"
+  jira_source_of_truth: false
+  jira_issue_key: null
+  proposed_jira_issue_type: "Subtask"
+  proposed_jira_parent_issue_key: "SST-102"
+  jira_epic_issue_key: "SST-101"
+  jira_status_observed: "not-created"
+  jira_write_authorized: true
+  jira_write_scope: "Create exactly one Subtask mirror for CR-SST-0238 under SST-102 as part of the authorized four-create binding batch; no transition or comment."
+  jira_write_window: "Maximum 30 minutes after canonical authorization-ledger readback."
 risk:
   level: "high"
   drivers: ["AUTHENTICATED_NAVIGATION", "SHARED_BUTTON_REF_CONTRACT", "ROUTER_TRANSITION_BEHAVIOR"]
@@ -73,8 +83,8 @@ execution:
   child_repo_mutation_allowed: false
   child_repo_git_publication_allowed: false
   runtime_mutation_allowed: false
-  jira_write_allowed: false
-  next_gate: "Publish and read back this plan before creating the exact owner running batch."
+  jira_write_allowed: true
+  next_gate: "Complete and read back the exact Jira binding batch, then publish a refreshed running lifecycle before any owner mutation."
 owner_documentation: {required: true, status: "planned"}
 acceptance:
   - "No executed auth path lands on the unimplemented /onboard location."
@@ -83,5 +93,13 @@ acceptance:
   - "Owner tests, full owner check and clean-source localhost:4090 QA pass."
   - "No owner, runtime, Jira or external Git mutation occurs under this plan."
 evidence_refs:
+  - "evidence/requests/CR-SST-0238/jira-binding-batch-authorization-2026-09-12.md"
   - "evidence/requests/CR-SST-0238/discovery-and-plan-2026-09-07.md"
   - "evidence/requests/CR-SST-0238/evolutionary-onboarding-recommendation-2026-09-07.md"
+jira_binding_batch:
+  status: "authorized-unconsumed"
+  approved_at_local: "2026-09-12T02:30:28.1355225-03:00"
+  approval_text: "autorizo lote jira; y su posterior publicacion en ARDS/SDD"
+  shared_maximum_writes: 4
+  expected_operation: "Create only the CR-SST-0238 Subtask under SST-102 in Tareas por hacer."
+  authorization_ref: "evidence/requests/CR-SST-0238/jira-binding-batch-authorization-2026-09-12.md"
