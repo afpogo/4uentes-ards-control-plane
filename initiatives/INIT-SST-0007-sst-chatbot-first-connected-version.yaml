@@ -3,7 +3,7 @@ kind: "initiative"
 id: "INIT-SST-0007"
 title: "SST Chatbot First Connected Version"
 status: "active"
-updated_at: "2026-08-28"
+updated_at: "2026-09-12"
 owner_repository: "4uentes-orchestor"
 objective: >
   Deliver a governed SST chatbot with revocable identity, durable conversation
@@ -30,6 +30,8 @@ source_evidence_refs:
   - "evidence/requests/CR-SST-0207/integrated-matrix-checkpoint-2026-08-24.md"
   - "evidence/requests/CR-SST-0218/implementation-plan-2026-08-24.md"
   - "evidence/requests/CR-SST-0218/execution-start-2026-08-24.md"
+  - "evidence/requests/CR-SST-0207/terminal-closure-2026-09-12.md"
+  - "evidence/requests/CR-SST-0202/jira-terminal-preflight-2026-09-12.md"
 model_refs:
   - "specs/initiatives/initiative-model.yaml"
   - "docs/requests/initiative-model.md"
@@ -59,6 +61,7 @@ known_change_requests:
   - "CR-SST-0213"
   - "CR-SST-0217"
   - "CR-SST-0218"
+  - "CR-SST-0230"
   - "CR-SST-0239"
 tracking:
   jira:
@@ -67,8 +70,8 @@ tracking:
     project_key: "SST"
     issue_type: "Epic"
     issue_key: "SST-86"
-    status_observation: "Tareas por hacer; post-PR35 facts and correction identity reconciled by CR-SST-0213 with Jira readback PASS"
-    observed_at: "2026-08-23"
+    status_observation: "SST-86 remains Tareas por hacer; retention parent SST-113 remains Tareas por hacer without resolution while all seven direct subtasks are Finalizada/Listo."
+    observed_at: "2026-09-12"
     write_authorized: false
     request_issue_mirrors:
       CR-SST-0202: "SST-113"
@@ -79,7 +82,7 @@ tracking:
       CR-SST-0211: null
       CR-SST-0217: "SST-118"
       CR-SST-0218: "SST-121"
-    last_write_batch: "CR-SST-0218-terminal-transition-consumed-2026-08-28"
+    last_write_batch: "CR-SST-0207-terminal-transition-consumed-2026-09-12"
 boundaries:
   control_plane_role: "lifecycle, coordination and evidence only"
   owner_documentation_authority: "functional child repositories"
@@ -96,12 +99,14 @@ current_read_model:
   completed_retention_design_request: "CR-SST-0202"
   completed_retention_frontend_request: "CR-SST-0206"
   next_retention_execution_request: null
-  active_retention_execution_request: "CR-SST-0207"
+  active_retention_execution_request: null
+  completed_retention_execution_request: "CR-SST-0207"
   retention_qa_enablement_request: "CR-SST-0217"
   retention_terminal_event_remediation_request: "CR-SST-0218"
   retention_terminal_event_remediation_status: "complete-owner-published-integrated-qa-passed-jira-reconciled"
   retention_reserved_edge_qa_request: "CR-SST-0239"
-  retention_reserved_edge_qa_status: "running-documentary-preflight-publication-pending"
+  retention_reserved_edge_qa_status: "done-terminal-publication-read-back"
+  retention_parent_tracker_preflight: "SST-113 terminal transition eligible; documentary preflight local and Jira write not authorized"
   namespace_reconciliation_request: "CR-SST-0208"
   auth_registration_session_request: "CR-SST-0209"
   auth_retention_facade_request: "CR-SST-0211"
@@ -116,11 +121,10 @@ security_qualification:
 gaps:
   - "CR-SST-0178 remains running for CR-SST-0200 signup copy, registration continuity and logout teardown retests."
   - "User RAG, stakeholder RAG, multi-session adoption and personal memory remain separate lifecycles and are not absorbed here."
-  - "CR-SST-0202, CR-SST-0204, CR-SST-0205, CR-SST-0206 and CR-SST-0211 are complete; CR-SST-0207 remains the separately gated integrated retention QA lifecycle."
-  - "CR-SST-0217 restored the development preflight: Argo is Synced/Healthy, localhost and the reserved edge are reachable, retention is enabled and TTL is bounded to 120 seconds; lifecycle/Jira closure remains separately gated."
+  - "The retention slice is functionally complete: CR-SST-0202, CR-SST-0204, CR-SST-0205, CR-SST-0206, CR-SST-0207, CR-SST-0211, CR-SST-0217, CR-SST-0218, CR-SST-0230 and CR-SST-0239 are done."
+  - "SST-113 remains open only for its separately authorized terminal tracker transition; closing it must not close SST-86 or INIT-SST-0007."
   - "The CR-SST-0194 chatbot correction merged to main rather than develop; the current development image therefore predates that merge and the branch drift requires a separate lifecycle if promotion is needed."
-  - "CR-SST-0207 localhost QA found no realtime terminal event after finish, no product-safe cache eviction hook, reserved-edge authentication blocking the public matrix and two saved synthetic residues from aborted attempts; remediation must use separate approved lifecycles."
-  - "CR-SST-0218 completed the Bend/Fend terminal-event remediation, owner publication, development readback and integrated terminal/race QA; SST-121 was reconciled to Finalizada through the exact authorized transition-only batch. CR-SST-0207 remains independently running for its other matrix rows."
+  - "CR-SST-0207 closed after the terminal-event, cache-aside and reserved-edge subgates passed; its accepted minimum historical residue of thirteen synthetic identities and two inaccessible conversations remains an explicit terminal limitation."
 namespace_reconciliation:
   request_id: "CR-SST-0208"
   status: "pr37-canonical-map-preserved"

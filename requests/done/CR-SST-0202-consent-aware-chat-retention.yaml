@@ -17,15 +17,18 @@ control_plane_context:
   jira_issue_key: "SST-113"
   jira_parent_epic_key: "SST-86"
   jira_write_authorized: false
+  jira_terminal_preflight_status: "passed-read-only-2026-09-12"
+  jira_terminal_write_status: "not-authorized"
 scope:
   functional_repositories_modified: false
   runtime_code_modified: false
   cluster_modified: false
   production_modified: false
 decision:
-  status: "approved-closed-local"
+  status: "complete-contract-and-children-jira-terminal-preflight-ready"
   approver: "4uentes"
   decided_at: "2026-08-22"
+  reconciled_at: "2026-09-12"
 contract_result:
   temporary: "Redis or compatible volatile memory with TTL; never PostgreSQL"
   saved_in_sst: "PostgreSQL authoritative with Redis cache-aside after explicit user action"
@@ -39,15 +42,22 @@ contract_result:
     save_in_sst: "explicit idempotent promotion to durable storage"
     delete_from_sst: "delete durable conversation and evict cache"
 child_lifecycles:
-  bend: {request_id: "CR-SST-0204", jira_issue_key: "SST-114", status: "planned"}
-  infrastructure: {request_id: "CR-SST-0205", jira_issue_key: "SST-115", status: "planned"}
-  frontend: {request_id: "CR-SST-0206", jira_issue_key: "SST-116", status: "planned"}
-  integrated_qa: {request_id: "CR-SST-0207", jira_issue_key: "SST-117", status: "planned"}
+  bend: {request_id: "CR-SST-0204", jira_issue_key: "SST-114", status: "done"}
+  infrastructure: {request_id: "CR-SST-0205", jira_issue_key: "SST-115", status: "done"}
+  frontend: {request_id: "CR-SST-0206", jira_issue_key: "SST-116", status: "done"}
+  integrated_qa: {request_id: "CR-SST-0207", jira_issue_key: "SST-117", status: "done"}
+supporting_lifecycles:
+  runtime_enablement: {request_id: "CR-SST-0217", jira_issue_key: "SST-118", status: "done"}
+  terminal_event_remediation: {request_id: "CR-SST-0218", jira_issue_key: "SST-121", status: "done"}
+  product_safe_cache_qa: {request_id: "CR-SST-0230", jira_issue_key: "SST-124", status: "done"}
+  reserved_edge_qa: {request_id: "CR-SST-0239", jira_issue_key: null, status: "done"}
 validation:
   architecture_privacy_review: "PASS"
   atomization_review: "PASS"
   jira_hierarchy_readback: "PASS"
-  control_plane_check: "PASS"
+  child_lifecycle_readback: "PASS: CR-SST-0204, CR-SST-0205, CR-SST-0206, CR-SST-0207, CR-SST-0217, CR-SST-0218, CR-SST-0230 and CR-SST-0239 are done in origin/main."
+  jira_terminal_preflight: "PASS read-only on 2026-09-12: SST-113 remains Tareas por hacer without resolution under SST-86; all seven direct subtasks are Finalizada/Listo and transition 41/Listo is available."
+  control_plane_check: "PASS on 2026-09-12: full npm run check completed with 0 FAIL for this documentary preflight."
   diff_check: "PASS"
 evidence_refs:
   - "evidence/requests/CR-SST-0202/architecture-and-execution-plan.md"
@@ -56,10 +66,13 @@ evidence_refs:
   - "evidence/requests/CR-SST-0202/jira-closure-comment-batch.json"
   - "evidence/requests/CR-SST-0202/namespace-collision-reconciliation.md"
   - "evidence/requests/CR-SST-0202/jira-namespace-reconciliation-batch.json"
+  - "evidence/requests/CR-SST-0202/jira-terminal-preflight-2026-09-12.md"
 closure:
-  status: "complete-control-plane-contract"
-  next_request_id: "CR-SST-0204"
+  status: "complete-control-plane-contract-and-execution-tracker-terminal-pending"
+  next_gate: "Publish and read back this documentary preflight, then request exact authorization for only SST-113 transition 41/Listo."
   limits:
-    - "Closure authorizes no child repository mutation."
-    - "CR-SST-0204 requires an explicit execution approval before sst-bend changes."
-    - "A new enumerated batch is required for future Jira edits or transitions."
+    - "The retention contract, child execution and integrated QA are complete; this preflight performs no runtime validation."
+    - "The accepted historical CR-SST-0207 synthetic residue remains a documented terminal limitation."
+    - "No Jira write is authorized by this artifact; a new exact transition-only batch is required."
+    - "SST-86 and INIT-SST-0007 remain open because broader initiative work is outside this parent closure."
+    - "No child repository, runtime, datastore, infrastructure, deployment, cluster or production mutation is authorized."
