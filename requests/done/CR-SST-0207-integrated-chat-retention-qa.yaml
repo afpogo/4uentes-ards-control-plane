@@ -1,13 +1,14 @@
 schema_version: "1.0"
-phase: 3
+phase: 4
 id: "CR-SST-0207"
 title: "Validate consent-aware chat retention end to end"
-status: "running"
+status: "done"
 source_request: "requests/inbox/CR-SST-0207-integrated-chat-retention-qa.yaml"
 planned_request: "requests/planned/CR-SST-0207-integrated-chat-retention-qa.yaml"
+running_request: "requests/running/CR-SST-0207-integrated-chat-retention-qa.yaml"
 created_at: "2026-08-22"
 started_at: "2026-08-23"
-updated_at: "2026-09-12"
+closed_at: "2026-09-12"
 requester: "4uentes"
 depends_on: ["CR-SST-0204", "CR-SST-0205", "CR-SST-0211", "CR-SST-0206"]
 
@@ -29,6 +30,8 @@ control_plane_context:
   jira_conservative_reconciliation_readback: "SST-117 label is cr-sst-0207 and comment 10388 records the current CR-SST-0217, CR-SST-0218 and CR-SST-0230 checkpoint; status remains En curso without resolution under SST-113."
   jira_reserved_edge_comment_batch_status: "consumed-2026-09-10"
   jira_reserved_edge_comment_readback: "Comment 10438 records CR-SST-0239 PARTIAL PASS; SST-117 remains En curso without resolution under SST-113."
+  jira_terminal_preflight_status: "passed-read-only-2026-09-12"
+  jira_terminal_write_authorized: "consumed-2026-09-12"
 
 risk:
   level: "high"
@@ -55,7 +58,7 @@ subagent_deployment_plan:
 execution:
   requires_human_approval: true
   approval_source: "Explicit user approval dated 2026-08-23 to advance CR-SST-0207 and update Jira."
-  approval_status: "terminal-residue-disposition-consumed-no-runtime-or-jira-write-authorized"
+  approval_status: "terminal-jira-transition-consumed-success-readback"
   child_repo_mutation_allowed: false
   child_repo_mutation_targets: []
   synthetic_runtime_test_data_allowed: false
@@ -64,7 +67,7 @@ execution:
   cluster_direct_mutation_allowed: false
   production_mutation_allowed: false
   feature_flag_mutation_allowed: false
-  jira_write_allowed: "Consumed: the 2026-08-29 conservative reconciliation and the 2026-09-10 reserved-edge result comment; no further Jira write is authorized."
+  jira_write_allowed: "Consumed: earlier authorized mirror updates plus the exact 2026-09-12 SST-117 transition 41/Listo; no further Jira write is authorized."
 
 qa_scope:
   target_environment: "development"
@@ -102,11 +105,11 @@ validation:
   delete_saved_active_turn_race: "PASS after CR-SST-0218: deletion fenced and cancelled an accepted turn, emitted no assistant completion after the fence, returned history 404 and did not resurrect the saved list entry."
   browser_consent_and_clear_local: "PASS: consent copy, explicit save, clear-local recovery and confirmed saved deletion passed in Chrome headless with sanitized screenshots."
   synthetic_cleanup: "ACCEPTED HISTORICAL LIMITATION: the operator accepted the documented minimum of thirteen synthetic identities without a deletion contract and two inaccessible saved conversations from the original CR-SST-0207 run. Acceptance does not assert current existence and no residue was re-read, mutated or deleted."
-  control_plane_check: "PASS on 2026-09-12: full npm run check completed with 0 FAIL for the terminal preflight; execution publication, owner documentation and visual documentation gates passed."
+  control_plane_check: "PASS on 2026-09-12: full npm run check completed with 0 FAIL for the local done lifecycle; execution publication, owner documentation and visual documentation gates passed."
 
 documentary_reconciliation:
   observed_at: "2026-09-11"
-  status: "matrix-complete-residue-accepted-terminal-preflight-ready"
+  status: "matrix-complete-residue-accepted-terminal-complete"
   evidence_mode: "accumulated-authorized-subgates-no-runtime-rerun"
   completed_rows:
     - "facade-routing"
@@ -132,10 +135,10 @@ documentary_reconciliation:
       - "One identity documented by CR-SST-0230 after its conversation was cleaned."
       - "Three identities documented and accepted by CR-SST-0239 after its conversations were cleaned."
     observation_limit: "Documentary aggregation only; no datastore, product API, browser or runtime readback was performed."
-  jira_terminal_gate: "Pending publication/readback of this terminal preflight, fresh Jira read-only metadata and transition readback, and a separate exact transition-only authorization."
+  jira_terminal_gate: "PASS on 2026-09-12: after fresh read-only preflight, exactly one authorized transition 41/Listo moved SST-117 to Finalizada with resolution Listo; parent and labels were preserved."
 
 terminal_preflight:
-  status: "ready-for-publication-before-jira"
+  status: "passed-and-consumed"
   assessed_at: "2026-09-12"
   local_closure_conditions:
     functional_matrix: "PASS across all eight rows and both development surfaces by published evidence."
@@ -146,10 +149,44 @@ terminal_preflight:
   tracker_precondition:
     issue_key: "SST-117"
     expected_status_from_last_authorized_readback: "En curso without resolution under SST-113"
-    fresh_read_only_preflight_required: true
-    write_authorized: false
-    required_future_write: "Exactly one transition-only batch after metadata and available transitions are read back."
-  terminal_lifecycle_precondition: "Prepare done only after the Jira terminal batch succeeds and is read back; then publish and read back the done lifecycle before worktree cleanup."
+    fresh_read_only_preflight_required: false
+    write_authorized: "consumed-exact-transition-only-2026-09-12"
+    required_future_write: "None; the single authorized transition-only batch was consumed successfully."
+  terminal_lifecycle_precondition: "SATISFIED: Jira terminal batch succeeded and was read back; publish and read back this done lifecycle before worktree cleanup."
+
+jira_terminal_batch:
+  authorization_status: "consumed"
+  authorization_source: "Operator exact authorization on 2026-09-12 for one SST-117 transition 41/Listo and no other Jira operation."
+  preflight_status: "passed-read-only"
+  issue_key: "SST-117"
+  issue_type: "Subtask"
+  expected_current_status: "En curso"
+  expected_current_status_id: "10006"
+  expected_parent_issue_key: "SST-113"
+  expected_resolution: null
+  transition_id: "41"
+  transition_name: "Listo"
+  target_status: "Finalizada"
+  target_status_id: "10008"
+  allowed_write_count_if_authorized: 1
+  proposed_operation: "Transition only SST-117 through transition 41."
+  actual_write_count: 1
+  execution_status: "consumed-success-readback"
+  final_status: "Finalizada"
+  final_status_id: "10008"
+  final_status_category: "Done"
+  final_resolution: "Listo"
+  final_resolution_id: "10000"
+  final_parent_issue_key: "SST-113"
+  final_labels: ["ards-sdd", "cr-sst-0207", "multi-session", "qa", "retention", "sst-chat"]
+  terminal_readback_at: "2026-09-12T02:31:50.880-03:00"
+  forbidden_operations:
+    - "comments"
+    - "field edits"
+    - "links"
+    - "assignment changes"
+    - "writes on SST-113 or any other issue"
+  result_evidence_ref: "evidence/requests/CR-SST-0207/jira-terminal-result-2026-09-12.md"
 
 owner_documentation:
   required: true
@@ -178,12 +215,19 @@ execution_publication_rule:
     issue_key: "SST-117"
   cleanup:
     remote_readback_required: true
+  trial_result:
+    status: "passed"
+    plan_publication: "merged-and-read-back"
+    implementation_publication: "merged-and-read-back"
+    tracker_reconciliation: "merged-and-read-back"
+    terminal_publication_contract: "merge-and-readback-before-cleanup"
+    cleanup_gate: "remote-readback-required"
 
 knowledge_to_execution_documentation:
   policy_id: "knowledge-to-execution-documentation-policy"
   primary_role: "execution-evidence"
   owner: "4uentes-ards-control-plane"
-  status: "terminal-preflight"
+  status: "terminal-record"
   applicability: "This lifecycle aggregates published QA evidence and separates matrix completion from unresolved synthetic residue; it does not redefine owner contracts or authorize execution."
   technical_sources:
     - "requests/planned/CR-SST-0207-integrated-chat-retention-qa.yaml"
@@ -194,11 +238,11 @@ knowledge_to_execution_documentation:
   runbook_not_applicable_reason: "No new operation is introduced; all executable QA paths remain governed by their already published harnesses and owner documentation."
 
 decision:
-  status: "running-terminal-preflight-ready-publication-pending"
+  status: "complete-functional-residue-and-jira-terminal-publication-pending"
   approver: "4uentes"
   decided_at: "2026-08-23"
   updated_at: "2026-09-12"
-  next_gate: "Publish and read back this terminal preflight, then perform a fresh Jira read-only preflight before requesting an exact SST-117 transition-only authorization."
+  next_gate: "Publish, merge and read back this done lifecycle before controlled worktree retirement; no additional Jira write is authorized."
 
 evidence_refs:
   - "evidence/requests/CR-SST-0207/execution-start-2026-08-23.md"
@@ -216,6 +260,20 @@ evidence_refs:
   - "evidence/requests/CR-SST-0239/completion-runtime-result-2026-09-11.md"
   - "evidence/requests/CR-SST-0207/documentary-matrix-reconciliation-2026-09-11.md"
   - "evidence/requests/CR-SST-0207/terminal-readiness-and-residue-disposition-2026-09-12.md"
+  - "evidence/requests/CR-SST-0207/jira-terminal-result-2026-09-12.md"
+  - "evidence/requests/CR-SST-0207/terminal-closure-2026-09-12.md"
+
+closure:
+  status: "complete-terminal-publication-pending"
+  completed_scope:
+    - "All eight retention QA rows passed across localhost and reserved-ngrok by accumulated authorized evidence."
+    - "The documented historical minimum of thirteen synthetic identities and two inaccessible saved conversations was explicitly accepted as a terminal limitation without asserting current existence."
+    - "The Jira mirror SST-117 is Finalizada with resolution Listo after exactly one authorized terminal write."
+  remaining_operational_gate: "Publish, merge and read back this done lifecycle before controlled worktree retirement."
+  limits:
+    - "No additional Jira write is authorized."
+    - "SST-113 remains open and was not modified by this terminal batch."
+    - "No runtime, datastore, child repository, infrastructure, deployment, cluster or production action is authorized."
 
 closure_limits:
   - "The functional QA matrix is complete by accumulated authorized evidence; this documentary reconciliation is not a runtime rerun."
@@ -223,4 +281,4 @@ closure_limits:
   - "The documented historical residue is accepted as a terminal limitation; acceptance does not authorize or claim runtime cleanup."
   - "No child repository change may be used to repair a finding inside this lifecycle."
   - "No direct datastore, cluster, production or feature-flag mutation is authorized."
-  - "Jira closure requires a separate exact authorization batch after ARDS/SDD closure."
+  - "Jira closure consumed exactly one authorized transition; no additional tracker write is authorized."
