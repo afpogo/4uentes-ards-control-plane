@@ -39,7 +39,7 @@ authorization:
   scope: 'Publish the CR-SST-0236 running gate and prepare read-only owner preflight; no sst-fend mutation.'
   evidence_ref: 'evidence/requests/CR-SST-0236/running-gate-2026-09-10.md'
 execution:
-  current_unit: 'owner-local-implementation-complete-awaiting-publication-checkpoint'
+  current_unit: 'manual-qa-playbook-added-locally-awaiting-publication-checkpoint'
   control_plane_mutation_allowed: true
   git_publication_allowed: true
   child_repo_mutation_allowed: true
@@ -49,7 +49,7 @@ execution:
   seeders_allowed: false
   database_mutation_allowed: false
   jira_write_allowed: false
-  next_gate: 'Publish a control-plane checkpoint with the exact owner diff and checks; after merge/readback, obtain explicit authorization before pushing the sst-fend branch or opening its PR.'
+  next_gate: 'Publish this control-plane QA checkpoint; after merge/readback, obtain explicit authorization before pushing the sst-fend QA-fix branch or opening its PR.'
 predecessor_readback:
   owner_preflight_pull_request: 312
   owner_preflight_merge: '09c15cb61ede2c8a9c63b69caca79a27e6629c5a'
@@ -148,6 +148,56 @@ owner_execution_result:
     tests: '244 passed'
     lint: '0 errors; 22 pre-existing out-of-scope warnings'
   evidence_ref: 'evidence/requests/CR-SST-0236/owner-local-implementation-result-2026-09-11.md'
+owner_publication_readback:
+  observed_at: '2026-09-12'
+  pull_request: 19
+  merge_commit: 'd1e9ef5e578220ea666d033c05ba2cccb1bb7e8e'
+  merged_at: '2026-09-12T04:36:02Z'
+  development_image: 'ghcr.io/afpogo/sst-fend:develop-d1e9ef5e5782'
+  infra_commit: 'b20bcc8f5f7947b9a06e3f461a58ecd190646945'
+  rollout: 'successful'
+manual_qa_authorization:
+  approved_by: '4uentes'
+  approved_at: '2026-09-12'
+  approval_text: 'Ok fusione el pr, realicemos puebas QA manual para ir ajustando la funcionalidad, la idea es refinarlo para atajar todos los posibles bugs o malentendidos'
+  interpreted_scope: 'Authenticated preview-only browser QA and local sst-fend fixes; no accept/reject, seeders, database writes, secrets, Jira or publication.'
+manual_qa_result:
+  observed_at: '2026-09-12'
+  runtime: 'development'
+  browser_mode: 'independent Chrome DevTools MCP isolated context'
+  tested:
+    - 'Authenticated /learning navigation and desktop/mobile rendering.'
+    - 'Manual selection and preview request/response.'
+    - 'Existing article owner resolution without caller sourceText.'
+    - 'Document negative reference and source-type transitions.'
+    - 'Network payload, snapshot metadata and console review.'
+  findings:
+    - 'Annotation-only manual previews were presented as empty.'
+    - 'Fend sent unsupported documentSelectors.learningSheet to the v1 runtime.'
+    - 'Success feedback remained stale after changing source type or IDs.'
+    - 'Persisted-source request failures were hidden by manual palette state.'
+    - 'Resolved sources with zero blocks and zero annotations could be accepted.'
+    - 'Raw UUID discovery remains an open usability gap requiring an owner-backed chooser contract.'
+  local_fix:
+    repository: 'afpogo/sst-fend'
+    branch: 'agent/cr-sst-0236-learning-source-inbox-qa-fixes'
+    baseline: 'd1e9ef5e578220ea666d033c05ba2cccb1bb7e8e'
+    local_commit: '851bad5'
+    commit_subject: 'fix(learning): clarify preview reviewability'
+    publication_status: 'not-published-not-authorized'
+    focused_tests: '17 passed'
+    full_check: 'PASS; 36 suites and 247 tests; build PASS; 0 lint errors and 22 baseline warnings'
+  operator_documentation:
+    repository: 'afpogo/sst-fend'
+    local_commit: 'bf1b797'
+    commit_subject: 'docs(learning): add manual QA playbook'
+    publication_status: 'not-published-not-authorized'
+    playbook: 'docs/playbook/learning-workspace-manual-test-playbook.md'
+    runbook: 'docs/tasks/2026-09-12-learning-workspace-manual-test-runbook.md'
+    coverage: 'Four source modes, eight selection tags, L0/L1/L2 effects, QA-00 through QA-16, evidence templates, stop conditions and post-fix re-QA.'
+    full_check: 'PASS; 36 suites and 247 tests; build PASS; 0 lint errors and 22 baseline warnings'
+  prohibited_actions_observed: 'No accept/reject, seeders, database writes, secret changes, Jira writes or runtime mutation.'
+  evidence_ref: 'evidence/requests/CR-SST-0236/manual-qa-and-owner-fix-checkpoint-2026-09-12.md'
 owner_contract:
   responsibilities:
     - 'Expose a comprehensible source inbox for manual text, article, article document and agent output.'
@@ -179,6 +229,7 @@ manual_qa:
   required: true
   mode: 'independent Chrome DevTools MCP session only'
   fixture_rule: 'No database scripts, seeders or secrets; any UI persistence requires a separately resolved authorization boundary.'
+  current_status: 'baseline runtime QA completed; local fix prepared; post-deploy fix verification pending'
 atomized_execution:
   - {order: 1, objective: 'Read owner baseline and inventory existing /learning behavior without mutation.', validation: 'readonly owner preflight evidence'}
   - {order: 2, objective: 'Publish Fend ARDS/SDD, UX playbook, map and QA runbook.', validation: 'owner documentation review after explicit authorization'}
@@ -191,6 +242,7 @@ acceptance:
   - 'The source-to-snapshot-to-article flow is mapped without conflating tags or memory acceptance.'
   - 'No child repository, runtime, data or Jira mutation occurs in this gate.'
 evidence_refs:
+  - 'evidence/requests/CR-SST-0236/manual-qa-and-owner-fix-checkpoint-2026-09-12.md'
   - 'evidence/requests/CR-SST-0236/owner-local-implementation-result-2026-09-11.md'
   - 'evidence/requests/CR-SST-0236/owner-execution-authorization-2026-09-11.md'
   - 'evidence/requests/CR-SST-0236/owner-readonly-preflight-2026-09-10.md'
