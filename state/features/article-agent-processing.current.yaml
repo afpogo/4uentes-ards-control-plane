@@ -58,10 +58,12 @@ evidence_refs:
   - "evidence/requests/CR-SST-0224/preflight-publication-and-worktree-readback-2026-09-05.md"
   - "evidence/requests/CR-SST-0224/owner-merge-readback-and-contract-review-2026-09-10.md"
   - "evidence/requests/CR-SST-0224/jira-terminal-result-2026-09-11.md"
+  - "evidence/requests/CR-SST-0225/running-preflight-and-auth-boundary-2026-09-11.md"
 open_gaps:
   - "The materialized contract is published and human-approved; Jira mirror SST-122 is in progress with empty resolution and its one-use authorization is consumed."
   - "CR-SST-0224 is complete: the owner pipeline is merged in sst-chatbot PR 12 at develop a0ce974 and SST-126 is Finalizada with resolution Listo."
   - "CR-SST-0225 through CR-SST-0227 remain canonical planned lifecycles without owner execution authorization."
+  - "CR-SST-0225 preflight found no article-processing M2M grants; adding exact scopes requires an approved 4uentes-auth owner boundary before running promotion."
   - "CR-SST-0223 Bend implementation and owner ARDS/SDD are merged and read back; its reversible migration was not executed or deployed."
   - "CR-SST-0223 owner, Jira and terminal control-plane lifecycle are complete and canonically read back."
   - "The chatbot owner pipeline is implemented with provider/lifecycle/token ports and deterministic fakes; real Bend-chatbot integration, Fend UX and Chrome DevTools-only E2E QA remain CR-SST-0225 through CR-SST-0227."
