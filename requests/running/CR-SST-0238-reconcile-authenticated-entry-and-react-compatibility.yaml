@@ -86,8 +86,8 @@ execution:
   child_repo_git_publication_allowed: false
   runtime_mutation_allowed: false
   jira_write_allowed: false
-  next_gate: "Review owner PR #20 and request separate authorization for its merge; runtime and localhost:4090 QA remain a later independent gate."
-owner_documentation: {required: true, status: "published-in-owner-pr-20"}
+  next_gate: "Authorize a bounded development adoption/readback and clean-source localhost:4090 browser QA against image develop-f0b584b61c67; no Jira write or product mutation is implied."
+owner_documentation: {required: true, status: "merged-in-owner-develop"}
 acceptance:
   - "No executed auth path lands on the unimplemented /onboard location."
   - "Landing, Header overlays and RouterProvider no longer emit the three classified warnings."
@@ -98,6 +98,7 @@ evidence_refs:
   - "evidence/requests/CR-SST-0238/approved-execution-2026-09-12.md"
   - "evidence/requests/CR-SST-0238/execution-gate-2026-09-12.md"
   - "evidence/requests/CR-SST-0238/owner-pr-result-2026-09-12.md"
+  - "evidence/requests/CR-SST-0238/owner-merge-publication-readback-2026-09-12.md"
   - "evidence/requests/CR-SST-0238/jira-binding-retry-result-2026-09-12.md"
   - "evidence/requests/CR-SST-0238/jira-binding-batch-result-2026-09-12.md"
   - "evidence/requests/CR-SST-0238/jira-binding-batch-authorization-2026-09-12.md"
@@ -153,3 +154,17 @@ owner_execution_batch:
     - "src/machines/AuthMachine/states/isValidUser.ts"
     - "src/pages/Landing/index.tsx"
   completed_at_local: "2026-09-12T03:47:36-03:00"
+owner_merge_readback:
+  status: "observed-complete-external"
+  performed_by_agent: false
+  pull_request: "https://github.com/afpogo/sst-fend/pull/20"
+  merged_at_utc: "2026-09-13T01:22:44Z"
+  merge_commit: "f0b584b61c67f4df7403595a58058ae5b033c102"
+  publication_workflow: "https://github.com/afpogo/sst-fend/actions/runs/34730374750"
+  publication_status: "completed-success"
+  published_image_tag: "develop-f0b584b61c67"
+  infra_repository: "sst-4uentes-infra"
+  infra_branch: "develop"
+  infra_update_commit: "7cd6f9ff77c0c0834c5f268532d96279927d9c8e"
+  runtime_adoption_verified: false
+  localhost_qa_verified: false
