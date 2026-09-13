@@ -39,7 +39,7 @@ authorization:
   scope: 'Publish the CR-SST-0236 running gate and prepare read-only owner preflight; no sst-fend mutation.'
   evidence_ref: 'evidence/requests/CR-SST-0236/running-gate-2026-09-10.md'
 execution:
-  current_unit: 'manual-qa-playbook-added-locally-awaiting-publication-checkpoint'
+  current_unit: 'owner-fix-publication-gate-awaiting-control-plane-merge'
   control_plane_mutation_allowed: true
   git_publication_allowed: true
   child_repo_mutation_allowed: true
@@ -49,7 +49,7 @@ execution:
   seeders_allowed: false
   database_mutation_allowed: false
   jira_write_allowed: false
-  next_gate: 'Publish this control-plane QA checkpoint; after merge/readback, obtain explicit authorization before pushing the sst-fend QA-fix branch or opening its PR.'
+  next_gate: 'Merge and read back the owner-fix publication gate; then obtain explicit authorization before pushing agent/cr-sst-0236-learning-source-inbox-qa-fixes or opening its sst-fend PR.'
 predecessor_readback:
   owner_preflight_pull_request: 312
   owner_preflight_merge: '09c15cb61ede2c8a9c63b69caca79a27e6629c5a'
@@ -198,6 +198,34 @@ manual_qa_result:
     full_check: 'PASS; 36 suites and 247 tests; build PASS; 0 lint errors and 22 baseline warnings'
   prohibited_actions_observed: 'No accept/reject, seeders, database writes, secret changes, Jira writes or runtime mutation.'
   evidence_ref: 'evidence/requests/CR-SST-0236/manual-qa-and-owner-fix-checkpoint-2026-09-12.md'
+control_plane_qa_checkpoint_readback:
+  observed_at: '2026-09-12'
+  repository: 'afpogo/4uentes-ards-control-plane'
+  pull_request: 339
+  head: 'agent/cr-sst-0236-qa-findings'
+  base: 'main'
+  included_commits: ['a63ee3c', 'e023c33']
+  merge_commit: '89601d5a0239c70072ef5eba5e5bc08b43d27492'
+  merged_at: '2026-09-12T06:29:28Z'
+  github_checks: 'none-reported'
+  local_full_check: 'PASS before publication'
+  evidence_ref: 'evidence/requests/CR-SST-0236/control-plane-qa-checkpoint-merge-readback-2026-09-12.md'
+owner_fix_publication_gate:
+  observed_at: '2026-09-12'
+  status: 'approved-for-control-plane-publication-owner-publication-not-yet-authorized'
+  approved_by: '4uentes'
+  approval_text: 'Autorizo preparar y publicar el gate de autorizacion para los commits 851bad5 y bf1b797 de CR-SST-0236 en afpogo/4uentes-ards-control-plane, incluyendo el readback 7c0b3b3, y abrir un nuevo PR. No autorizo todavia publicar sst-fend, merge, deploy, QA L2, datos, seeders ni Jira.'
+  control_plane_repository: 'afpogo/4uentes-ards-control-plane'
+  control_plane_branch: 'agent/cr-sst-0236-owner-fix-publication-gate'
+  owner_repository: 'afpogo/sst-fend'
+  owner_branch: 'agent/cr-sst-0236-learning-source-inbox-qa-fixes'
+  pinned_owner_commits:
+    - '851bad5 fix(learning): clarify preview reviewability'
+    - 'bf1b797 docs(learning): add manual QA playbook'
+  owner_publication_allowed_now: false
+  activation_rule: 'The control-plane gate must merge and be read back, followed by a new explicit authorization to push the pinned owner branch and open its PR.'
+  excluded: ['owner push', 'owner PR', 'merge', 'deploy', 'runtime QA', 'QA L2', 'data', 'seeders', 'secrets', 'Jira']
+  evidence_ref: 'evidence/requests/CR-SST-0236/owner-fix-publication-gate-2026-09-12.md'
 owner_contract:
   responsibilities:
     - 'Expose a comprehensible source inbox for manual text, article, article document and agent output.'
@@ -242,6 +270,8 @@ acceptance:
   - 'The source-to-snapshot-to-article flow is mapped without conflating tags or memory acceptance.'
   - 'No child repository, runtime, data or Jira mutation occurs in this gate.'
 evidence_refs:
+  - 'evidence/requests/CR-SST-0236/owner-fix-publication-gate-2026-09-12.md'
+  - 'evidence/requests/CR-SST-0236/control-plane-qa-checkpoint-merge-readback-2026-09-12.md'
   - 'evidence/requests/CR-SST-0236/manual-qa-and-owner-fix-checkpoint-2026-09-12.md'
   - 'evidence/requests/CR-SST-0236/owner-local-implementation-result-2026-09-11.md'
   - 'evidence/requests/CR-SST-0236/owner-execution-authorization-2026-09-11.md'
